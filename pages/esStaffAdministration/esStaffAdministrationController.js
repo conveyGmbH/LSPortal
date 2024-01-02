@@ -12,9 +12,11 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EsStaffAdministration";
+
     WinJS.Namespace.define("EsStaffAdministration", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(EsStaffAdministration.employeeView.defaultValue),
                 restriction: getEmptyDefaultValue(EsStaffAdministration.employeeView.defaultRestriction),
@@ -68,18 +70,18 @@
             this.setDataEmployee = setDataEmployee;
 
             var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var lang = AppData.getLanguageId();
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_GetLangText", {
                     pTextID: resultmessageid,
                     pLanguageID: lang
-            }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                }, function (json) {
+                    Log.print(Log.l.info, "call PRC_GetLangText: success! ");
                     errorMsg.data.error.message.value = json.d.results[0].ResultText;
                     AppData.setErrorMsg(that.binding, errorMsg);
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                    Log.print(Log.l.error, "call PRC_GetLangText: error");
 
                 });
                 Log.ret(Log.l.trace);
@@ -87,7 +89,7 @@
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             var cancelMaTicket = function (reasonstring) {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_ESCancelMATicket", {
@@ -95,7 +97,7 @@
                     pTicketCode: null,
                     pReasonString: reasonstring
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_ESCancelMATicket: success! ");
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         master.controller.loadData(recordId);
@@ -103,7 +105,7 @@
                     that.loadData(recordId);
                     alert(getResourceText("esStaffAdministration.ticketcancelconfirm"));
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                    Log.print(Log.l.error, "call PRC_ESCancelMATicket: error");
 
                 });
                 Log.ret(Log.l.trace);
@@ -111,20 +113,20 @@
             this.cancelMaTicket = cancelMaTicket;
 
             var sendPdfWalletMail = function (mailtype) {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_ESSendTicketMail", {
                     pMitarbeiterID: recordId,
                     pMailType: mailtype
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_ESSendTicketMail: success! ");
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         master.controller.loadData(recordId);
                     }
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                    Log.print(Log.l.error, "call PRC_ESSendTicketMail: error");
 
                 });
                 Log.ret(Log.l.trace);
@@ -132,26 +134,40 @@
             this.sendPdfWalletMail = sendPdfWalletMail;
 
             var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (!errorMsg) {
+                    errorMsg = {};
+                }
+                if (!errorMsg.data) {
+                    errorMsg.data = {};
+                }
+                if (!errorMsg.data.error) {
+                    errorMsg.data.error = {
+                        code: 0,
+                        message: {
+                            value: ""
+                        }
+                    };
+                }
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_GetErrorStack", {
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_GetErrorStack: success! ");
                     AppBar.modified = false;
-                    if (json.d.results[0].ResultMessageID > 0) {
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
                         errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
-                    } else {
-                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        Log.print(Log.l.info, "ResultCode=" + errorMsg.data.error.code);
+                        if (json.d.results[0].ResultMessageID > 0) {
+                            errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                        } else {
+                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                        }
+                        Log.print(Log.l.info, "ResultMessage=" + errorMsg.data.error.message.value);
                         AppData.setErrorMsg(that.binding, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
                     AppBar.modified = false;
-
                 });
                 Log.ret(Log.l.trace);
             }
@@ -171,7 +187,7 @@
             this.saveRestriction = saveRestriction;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID;
                 if (!recordId) {
                     var master = Application.navigator.masterControl;
@@ -186,7 +202,7 @@
 
 
             var deleteData = function (complete, error) {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 if (recordId) {
@@ -196,12 +212,12 @@
                             pMitarbeiterID: recordId
                         },
                         function(json) {
-                            Log.print(Log.l.info, "call success! ");
+                            Log.print(Log.l.info, "call PRC_DeleteMA: success! ");
                             AppBar.busy = false;
                             complete(json);
                         },
                         function (errorResponse) {
-                            Log.print(Log.l.error, "call error");
+                            Log.print(Log.l.error, "call PRC_DeleteMA: error");
                             AppBar.busy = false;
                             error(errorResponse);
                         });
@@ -214,7 +230,7 @@
             this.deleteData = deleteData;
 
             var checkingLicence = function() {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return EsStaffAdministration.licenceBView.select(function (json) {
@@ -226,7 +242,7 @@
                         }
 
                     }, function (errorResponse) {
-                        Log.print(Log.l.error, "error selecting mailerzeilen");
+                        Log.print(Log.l.error, "error selecting licenceBView");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, { Login: that.binding.dataEmployee.Login });
                 });
@@ -236,7 +252,7 @@
             this.checkingLicence = checkingLicence;
 
             var checkingReadonlyFlag = function() {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (domain && (AppHeader.controller.binding.userData.SiteAdmin || !AppHeader.controller.binding.userData.HasLocalEvents)) {
                     domain.disabled = false;
                 } else {
@@ -269,14 +285,14 @@
             this.base64ToBlob = base64ToBlob;
 
             var exportContactPdf = function () {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId = getRecordId();
                 if (recordId) {
                     AppBar.busy = true;
                     ret = EsStaffAdministration.pdfView.select(function (json) {
-                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                        Log.print(Log.l.trace, "select pdfView: success!");
                         if (json && json.d && json.d.results.length > 0) {
                             var results = json.d.results[0];
                             var pdfDataraw = results.DocContentDOCCNT1;
@@ -290,13 +306,10 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
-                        }, { MitarbeiterID: recordId });
+                    }, {
+                         MitarbeiterID: recordId
+                    });
                 } else {
-                    var err = { status: 0, statusText: "no record selected" };
-                    error(err);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -305,7 +318,7 @@
             this.exportContactPdf = exportContactPdf;
 
             var checkIfTicket = function() {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (that.binding.dataEmployee.HasTicket) {
                     var inputdis = pageElement.querySelectorAll("input[type=text]");
                     for (var i = 0; i < inputdis.length; i++) {
@@ -327,11 +340,12 @@
                     }
                     pageElement.querySelector("input[type=email]").disabled = false;
                 }
+                Log.ret(Log.l.trace);
             }
             this.checkIfTicket = checkIfTicket;
             
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Mailing.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataEmployee = that.binding.dataEmployee;
@@ -353,21 +367,32 @@
                                 pAcadTitle: that.binding.dataEmployee.AkadTitel,
                                 pSalutationID: parseInt(that.binding.dataEmployee.AnredeID)
                             }, function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
-                                    master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                                    master.controller.loadData().then(function () {
-                                        Log.print(Log.l.info, "master.controller.loadData: success!");
-                                        master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                                    });
+                                Log.print(Log.l.info, "call PRC_UpdateMA: success! ");
+                                if (typeof complete === "function") {
+                                    complete(dataEmployee);
+                                } else {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
+                                        master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                        master.controller.loadData().then(function () {
+                                            Log.print(Log.l.info, "master.controller.loadData: success!");
+                                            master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
+                                        });
+                                    }
                                 }
-                            }, function (error) {
-                                Log.print(Log.l.info, "call error! ");
+                            }, function (errorResponse) {
+                                Log.print(Log.l.info, "call PRC_UpdateMA: error! ");
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                             });
                         });
                     } else {
-                        ret = WinJS.Promise.as();
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (typeof complete === "function") {
+                                complete(dataEmployee);
+                            }
+                        });
                     }
                 } else if (AppBar.busy) {
                     ret = WinJS.Promise.timeout(100).then(function () {
@@ -388,7 +413,7 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.binding.hideStaffInfo) {
                         that.binding.hideStaffInfo = false;
                         AppBar.triggerDisableHandlers();
@@ -400,7 +425,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickDeleteTicket: function() {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var deleteTicketString = prompt(getResourceText("esStaffAdministration.ticketStornoTitle"), "");
                     if (deleteTicketString === null || deleteTicketString === undefined) {
                         Log.print(Log.l.info, "No delete done!");
@@ -414,23 +439,23 @@
                     Log.ret(Log.l.trace);
                 },
                 clickSendPDF: function() {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.sendPdfWalletMail("PDF");
                     Log.ret(Log.l.trace);
                 },
                 clickSendWallet: function () {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.sendPdfWalletMail("WALLET");
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
-                    var id = AppData.getRecordId("Veranstaltung");
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    var veranstaltungId = AppData.getRecordId("Veranstaltung");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + veranstaltungId);
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_CreateMA", {
-                        pVeranstaltungID: id
+                        pVeranstaltungID: veranstaltungId
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_CreateMA: success! ");
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding) {
                             master.controller.binding.employeeId = json.d.results[0];
@@ -439,13 +464,13 @@
                             });
                         }
                     }, function (error) {
-                        Log.print(Log.l.error, "call error");
+                        Log.print(Log.l.error, "call PRC_CreateMA: error");
 
                     });
                     Log.ret(Log.l.trace);
                 },
                 clickDelete: function (event) {
-                    Log.call(Log.l.trace, "Employee.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var confirmTitle = getResourceText("employee.questionDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
@@ -483,39 +508,17 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
                     WinJS.Promise.as().then(function () {
-                        return AppData.call("PRC_UpdateMA", {
-                        pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
-                        pCompanyName: that.binding.dataEmployee.Firma,
-                        pFirstName: that.binding.dataEmployee.Vorname,
-                        pLastName: that.binding.dataEmployee.Nachname,
-                        pLogin: null,
-                        pPassword: null,
-                        pEMail: that.binding.dataEmployee.EMail,
-                        pAcadTitle: that.binding.dataEmployee.AkadTitel,
-                        pSalutationID: parseInt(that.binding.dataEmployee.AnredeID)
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            master.controller.loadData().then(function () {
-                                Log.print(Log.l.info, "master.controller.loadData: success!");
-                                master.controller.selectRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                            });
-                        }
-                    }, function (error) {
-                        Log.print(Log.l.info, "call error! ");
-                    });
+                        return that.saveData();
                     }).then(function () {
                         if (that.binding.hideStaffInfo) {
                             return AppData.call("PRC_OrderTicket", {
                                 pMitarbeiterID: that.binding.dataEmployee.MitarbeiterVIEWID,
                                 pArticleTypeID: parseInt(that.binding.dataEmployee.ArticleTypeID)
                             }, function (json) {
-                                Log.print(Log.l.info, "call success! ");
+                                Log.print(Log.l.info, "call PRC_OrderTicket: success! ");
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller && master.controller.binding) {
                                     master.controller.binding.employeeId =
@@ -528,7 +531,7 @@
                                     that.binding.hideStaffInfo = false;
                                 }
                             }, function (error) {
-                                Log.print(Log.l.error, "call error");
+                                Log.print(Log.l.error, "call PRC_OrderTicket: error");
                             });
                         } else {
                             return WinJS.Promise.as();
@@ -537,7 +540,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickPreOrderTicket: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppBar.modified = true;
                     AppData.setErrorMsg(that.binding);
                     if (!that.binding.dataEmployee.HasTicket) {
@@ -553,22 +556,22 @@
                     Log.ret(Log.l.trace);
                 },
                 clickExport: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.exportContactPdf();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 changeLogin: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (AppBar.notifyModified) {
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
@@ -587,14 +590,14 @@
                     Log.ret(Log.l.trace);
                 },
                 changePassword: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (AppBar.notifyModified) {
                         that.binding.dataEmployee.Password2 = "";
                     }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
@@ -630,7 +633,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.OrderAttribute = "Vorname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("MitarbeiterVIEW_20609", that.binding.restriction);
@@ -650,7 +653,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLastname: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "Nachname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
@@ -670,7 +673,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderCompany: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "Firma";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
@@ -690,7 +693,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -698,7 +701,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -710,7 +713,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changedArticle: function(event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppBar.modified = true;
                     AppData.setErrorMsg(that.binding);
                     var target = event.currentTarget || event.target;
@@ -720,7 +723,6 @@
                     } else {
                         that.binding.ArticleWarning = false;
                     }
-                    
                     that.binding.dataEmployee.ArticleTypeID = value;
                     Log.ret(Log.l.trace);
                 }
@@ -796,12 +798,8 @@
             };
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                /*var id = AppData.getRecordId("MitarbeiterVIEW_20609");
-                if (id) {
-                    recordId = id;
-                }*/
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");
@@ -827,26 +825,9 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    /*if (AppBar.modified) {
-                        return that.saveData(function () {
-                            Log.print(Log.l.trace, "saveData completed...");
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller) {
-                                master.controller.loadData().then(function () {
-                                    master.controller.selectRecordId(recordId);
-                                });
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "saveData error...");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        return WinJS.Promise.as();
-                    }*/
-                }).then(function () {
                     if (recordId) { 
                         //load of format relation record data
-                        Log.print(Log.l.trace, "calling select employeeView...");
+                        Log.print(Log.l.trace, "calling select employeeView...recordId=" + recordId);
                         return EsStaffAdministration.employeeView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "employeeView: success!");
@@ -869,54 +850,39 @@
                     }
                 }).then(function () {
                     if (recordId) {
-                        return AppData.call("PRC_ESGetArticleList",
-                            {
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pLanguageSpecID: AppData.getLanguageId(),
-                                pArticleMode: 'Ticket'
-                            },
-                            function(json) {
-                                Log.print(Log.l.info, "call success! ");
-                                that.articleList = new WinJS.Binding.List([{ArticleTypeID: 0, ArticleText: ""}]);
-                                if (json && json.d.results.length > 0) {
-                                    var results = json.d.results;
-                                    //that.setDataEvent(json.d);
-                                    results.forEach(function (item, index) {
-                                        //that.resultConverter(item, index);
-                                        that.articleList.push(item);
-                                    });
-                                    //that.binding.dataEmployee.ArticleTypeID = 0;
+                        Log.print(Log.l.trace, "calling PRC_ESGetArticleList...recordId=" + recordId);
+                        return AppData.call("PRC_ESGetArticleList", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pLanguageSpecID: AppData.getLanguageId(),
+                            pArticleMode: 'Ticket'
+                        },
+                        function(json) {
+                            Log.print(Log.l.info, "call success! ");
+                            that.articleList = new WinJS.Binding.List([{ArticleTypeID: 0, ArticleText: ""}]);
+                            if (json && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                //that.setDataEvent(json.d);
+                                results.forEach(function (item, index) {
+                                    //that.resultConverter(item, index);
+                                    that.articleList.push(item);
+                                });
+                                //that.binding.dataEmployee.ArticleTypeID = 0;
 
-                                    //that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
-                                } else {
-                                    //that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
-                                }
-                                esArticle.winControl.data = that.articleList;
-                                esArticle.selectedIndex = "0";
-                            },
-                            function(error) {
-                                Log.print(Log.l.error, "call error");
+                                //that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
+                            } else {
+                                //that.binding.hideStaffInfo = !that.binding.dataEmployee.HasTicket;
+                            }
+                            esArticle.winControl.data = that.articleList;
+                            esArticle.selectedIndex = "0";
+                        },
+                        function(error) {
+                            Log.print(Log.l.error, "call error");
 
-                            });
+                        });
                     } else {
                         return WinJS.Promise.as();
                     }
-                })/*.then(function () {
-                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        return empRolesFragmentControl.controller.loadData(recordId);
-                    } else {
-                        var parentElement = pageElement.querySelector("#emproleshost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }
-                    }).then(function () {
-                    AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
-                })*/;
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -926,8 +892,8 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         })

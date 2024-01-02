@@ -6,6 +6,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EsStaffAdministration";
 
     WinJS.Namespace.define("EsStaffAdministration", {
         _employeeView: {
@@ -15,20 +16,20 @@
         },
         employeeView: {
             select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "EsStaffAdministration.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.", "recordId=" + recordId);
                 var ret = EsStaffAdministration._employeeView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
 
             },
             deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "EsStaffAdministration.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.", "recordId=" + recordId);
                 var ret = EsStaffAdministration._employeeView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "EsStaffAdministration.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.", "recordId=" + recordId);
                 var ret = EsStaffAdministration._employeeView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -65,7 +66,7 @@
         },
         pdfView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "EsStaffAdministration.");
+                Log.call(Log.l.trace, namespaceName + ".pdfView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = EsStaffAdministration._pdfView.select(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;

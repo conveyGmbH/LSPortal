@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EsVoucherUsersList";
 
     WinJS.Namespace.define("EsVoucherUsersList", {
         _voucherView: {
@@ -15,11 +16,11 @@
             }
         },
         voucherView: {
-            select: function (complete, error, restriction, recordId) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.");
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".voucherView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret;
-                if (recordId) {
-                    ret = EsVoucherUsersList._voucherView.selectById(complete, error, recordId);
+                if (typeof restriction === "number") {
+                    ret = EsVoucherUsersList._voucherView.selectById(complete, error, restriction);
                 } else {
                     ret = EsVoucherUsersList._voucherView.select(complete, error, restriction, {
                         ordered: true,
@@ -27,19 +28,18 @@
                         orderAttribute: restriction.OrderAttribute
                     });
                 }
-
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.");
+                Log.call(Log.l.trace, namespaceName + ".voucherView.");
                 var ret = EsVoucherUsersList._voucherView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.");
+                Log.call(Log.l.trace, namespaceName + ".voucherView.");
                 var ret = EsVoucherUsersList._voucherView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

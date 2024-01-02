@@ -14,9 +14,11 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EsVoucherUsers";
+
     WinJS.Namespace.define("EsVoucherUsers", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(EsVoucherUsers.voucherView.defaultValue),
                 restriction: getEmptyDefaultValue(EsVoucherUsers.voucherView.defaultRestriction),
@@ -74,18 +76,18 @@
             this.setDataContact = setDataContact;
 
             var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var lang = AppData.getLanguageId();
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_GetLangText", {
                     pTextID: resultmessageid,
                     pLanguageID: lang
-            }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                }, function (json) {
+                    Log.print(Log.l.info, "call PRC_GetLangText: success! ");
                     errorMsg.data.error.message.value = json.d.results[0].ResultText;
                     AppData.setErrorMsg(that.binding, errorMsg);
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                    Log.print(Log.l.error, "call PRC_GetLangText: error");
 
                 });
                 Log.ret(Log.l.trace);
@@ -93,26 +95,40 @@
             this.getLangSpecErrorMsg = getLangSpecErrorMsg;
 
             var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (!errorMsg) {
+                    errorMsg = {};
+                }
+                if (!errorMsg.data) {
+                    errorMsg.data = {};
+                }
+                if (!errorMsg.data.error) {
+                    errorMsg.data.error = {
+                        code: 0,
+                        message: {
+                            value: ""
+                        }
+                    };
+                }
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_GetErrorStack", {
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_GetErrorStack: success! ");
                     AppBar.modified = false;
-                    if (json.d.results[0].ResultMessageID > 0) {
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
                         errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
-                    } else {
-                        errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
+                        Log.print(Log.l.info, "ResultCode=" + errorMsg.data.error.code);
+                        if (json.d.results[0].ResultMessageID > 0) {
+                            errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                        } else {
+                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                        }
+                        Log.print(Log.l.info, "ResultMessage=" + errorMsg.data.error.message.value);
                         AppData.setErrorMsg(that.binding, errorMsg);
-                        Log.print(Log.l.info, "call success! ");
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
                     AppBar.modified = false;
-
                 });
                 Log.ret(Log.l.trace);
             }
@@ -132,7 +148,7 @@
             this.saveRestriction = saveRestriction;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var recordId = that.binding.dataContact && that.binding.dataContact.KontaktVIEWID;
                 if (!recordId) {
                     var master = Application.navigator.masterControl;
@@ -146,7 +162,7 @@
             this.getRecordId = getRecordId;
             
             var checkingLicence = function() {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return EsVoucherUsers.licenceBView.select(function (json) {
@@ -158,7 +174,7 @@
                         }
 
                     }, function (errorResponse) {
-                        Log.print(Log.l.error, "error selecting mailerzeilen");
+                        Log.print(Log.l.error, "error selecting licenceBView");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         }, { Login: that.binding.dataContact.Login });
                 });
@@ -168,7 +184,7 @@
             this.checkingLicence = checkingLicence;
 
             var checkingReadonlyFlag = function() {
-                Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (domain && (AppHeader.controller.binding.userData.SiteAdmin || !AppHeader.controller.binding.userData.HasLocalEvents)) {
                     domain.disabled = false;
                 } else {
@@ -201,7 +217,7 @@
             this.base64ToBlob = base64ToBlob;
 
             var exportContactPdf = function () {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var recordId = getRecordId();
@@ -222,13 +238,10 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
-                        }, { MitarbeiterID: recordId });
+                    }, {
+                         MitarbeiterID: recordId
+                    });
                 } else {
-                    var err = { status: 0, statusText: "no record selected" };
-                    error(err);
                     ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
@@ -237,29 +250,29 @@
             this.exportContactPdf = exportContactPdf;
 
             var disableFields = function() {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
-                    var inputdis = pageElement.querySelectorAll("input[type=text]");
-                    for (var i = 0; i < inputdis.length; i++) {
-                        inputdis[i].disabled = true;
-                    }
-                    var selectdis = pageElement.querySelectorAll("select");
-                    for (var j = 0; j < selectdis.length; j++) {
-                        selectdis[j].disabled = true;
-                    } 
-                    var selectarea = pageElement.querySelectorAll("textarea");
-                    for (var a = 0; a < selectarea.length; a++) {
-                        if (a === 1) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var inputdis = pageElement.querySelectorAll("input[type=text]");
+                for (var i = 0; i < inputdis.length; i++) {
+                    inputdis[i].disabled = true;
+                }
+                var selectdis = pageElement.querySelectorAll("select");
+                for (var j = 0; j < selectdis.length; j++) {
+                    selectdis[j].disabled = true;
+                } 
+                var selectarea = pageElement.querySelectorAll("textarea");
+                for (var a = 0; a < selectarea.length; a++) {
+                    if (a === 1) {
 
-                        } else {
-                            selectarea[a].disabled = true;
-                        }
-                    
+                    } else {
+                        selectarea[a].disabled = true;
                     }
+                }
+                Log.ret(Log.l.trace);
             }
             this.disableFields = disableFields;
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataContact = that.binding.dataContact;
@@ -271,16 +284,17 @@
                             EsVoucherUsers.voucherView.update(function (response) {
                                 AppBar.busy = false;
                                 // called asynchronously if ok
-                                Log.print(Log.l.info, "dataContact update: success!");
+                                Log.print(Log.l.info, "voucherView update: success!");
                                 AppBar.modified = false;
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller) {
-                                    master.controller.loadData().then(function () {
-                                        master.controller.selectRecordId(getRecordId());
-                                    });
-                                }
                                 if (typeof complete === "function") {
                                     complete(dataContact);
+                                } else {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
+                                        master.controller.loadData().then(function () {
+                                            master.controller.selectRecordId(getRecordId());
+                                        });
+                                    }
                                 }
                             }, function (errorResponse) {
                                 AppBar.busy = false;
@@ -290,10 +304,14 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                                }, recordId, dataContact);
+                            }, recordId, dataContact);
                         });
                     } else {
-                        ret = WinJS.Promise.as();
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (typeof complete === "function") {
+                                complete(dataContact);
+                            }
+                        });
                     }
                 } else if (AppBar.busy) {
                     ret = WinJS.Promise.timeout(100).then(function () {
@@ -312,7 +330,7 @@
             this.saveData = saveData;
 
             var exportData = function () {
-                Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var dbViewTitle = null;
                 that.binding.restrictionExport.VeranstaltungID = AppData.getRecordId("Veranstaltung");
                 that.binding.restrictionExport.LanguageSpecID = AppData.getLanguageId();
@@ -345,14 +363,14 @@
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickExportAllVoucherUsers: function(parameters) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppBar.busy = true;
                     AppBar.triggerDisableHandlers();
                     WinJS.Promise.timeout(0).then(function () {
@@ -361,22 +379,22 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 changeLogin: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         pageElement.querySelector("#password").value = "";
                         pageElement.querySelector("#password2").value = "";
@@ -395,14 +413,14 @@
                     Log.ret(Log.l.trace);
                 },
                 changePassword: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified) {
                         pageElement.querySelector("#password2").value = "";
                     }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "EsStaffAdministration.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
@@ -438,7 +456,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.OrderAttribute = "Vorname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("KontaktVIEW_20611", that.binding.restriction);
@@ -458,7 +476,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLastname: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "Name";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
@@ -472,13 +490,12 @@
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
-
                     that.saveRestriction();
                     master.controller.loadData();
                     Log.ret(Log.l.trace);
                 },
                 clickOrderCompany: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var master = Application.navigator.masterControl;
                     that.binding.restriction.OrderAttribute = "Firmenname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
@@ -498,7 +515,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -506,7 +523,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "EsVoucherUsers.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -544,12 +561,8 @@
             };
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Employee.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                /*var id = AppData.getRecordId("MitarbeiterVIEW_20609");
-                if (id) {
-                    recordId = id;
-                }*/
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");
@@ -601,55 +614,24 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    /*if (AppBar.modified) {
-                        return that.saveData(function () {
-                            Log.print(Log.l.trace, "saveData completed...");
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller) {
-                                master.controller.loadData().then(function () {
-                                    master.controller.selectRecordId(recordId);
-                                });
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "saveData error...");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        return WinJS.Promise.as();
-                    }*/
-                }).then(function () {
                     if (recordId) { 
                         //load of format relation record data
-                        Log.print(Log.l.trace, "calling select voucherView...");
+                        Log.print(Log.l.trace, "calling select voucherView...recordId=" + recordId);
                         return EsVoucherUsers.voucherView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
+                            Log.print(Log.l.trace, "select voucherView: success!");
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataContact(json.d);
                             }
                         }, function (errorResponse) {
+                            Log.print(Log.l.error, "select voucherView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                     } else {
                         return WinJS.Promise.as();
                     }
-                })/*.then(function () {
-                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        return empRolesFragmentControl.controller.loadData(recordId);
-                    } else {
-                        var parentElement = pageElement.querySelector("#emproleshost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }
-                    }).then(function () {
-                    AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
-                })*/;
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -659,11 +641,10 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.disableFields();
-            }).then(function () {
-                AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
+                that.disableFields();
+                Log.print(Log.l.trace, "fields disabled");
+                AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
         })

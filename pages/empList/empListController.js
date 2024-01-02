@@ -79,21 +79,22 @@
             this.setSelIndex = setSelIndex;
 
 
-            var cutSerialnumer = function (serialnumer) {
+            var cutSerialNumber = function (serialNumber) {
+                var ret = "";
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                if (serialnumer === null) {
-                    return "";
-                } else {
-                    var serialnumernew = serialnumer;
-                    if (serialnumernew) {
-                        var sub = serialnumernew.search("0000000000");
-                        serialnumernew = serialnumernew.substr(sub + 10);
+                if (typeof serialNumber === "string") {
+                    var sub = serialNumber.search("0000000000");
+                    if (sub >= 0) {
+                        ret = serialNumber.substr(sub + 10);
+                    } else {
+                        ret = serialNumber;
                     }
-                    return serialnumernew;
                 }
+                Log.ret(Log.l.trace, ret);
+                return ret;
             };
-            this.cutSerialnumer = cutSerialnumer;
+            this.cutSerialNumber = cutSerialNumber;
 
             var scrollToRecordId = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
@@ -172,7 +173,7 @@
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
                 if (typeof item.CS1504SerienNr === "string") {
-                    item.CS1504SerienNr = that.cutSerialnumer(item.CS1504SerienNr);
+                    item.CS1504SerienNr = that.cutSerialNumber(item.CS1504SerienNr);
                 }
                 if (item.Gesperrt === 1) {
                     if (AppHeader.controller.binding.userData.SiteAdmin) {
@@ -425,7 +426,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!licenceWarningSelected) {
-                        // only licence user select 
+                        // only licence user select
                         Log.print(Log.l.trace, "calling select employeeView...only licence user select!");
                         return EmpList.employeeView.select(function (json) {
                             // this callback will be called asynchronously

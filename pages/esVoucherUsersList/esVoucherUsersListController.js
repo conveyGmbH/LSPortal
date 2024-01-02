@@ -12,10 +12,11 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "EsVoucherUsersList";
 
     WinJS.Namespace.define("EsVoucherUsersList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0, //AppData.getRecordId("Mitarbeiter")
@@ -25,7 +26,7 @@
                 staffpay: 0,
                 staffordered: 0,
                 stafffreetotal: 0
-                
+
         }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -60,17 +61,8 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
-            var background = function (index) {
-                if (index % 2 === 0) {
-                    return 1;
-                } else {
-                    return null;
-                }
-            };
-            this.background = background;
-
             var setSelIndex = function (index) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller.", "index=" + index);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (that.employees && that.employees.length > 0) {
                     if (index >= that.employees.length) {
                         index = that.employees.length - 1;
@@ -82,25 +74,8 @@
             }
             this.setSelIndex = setSelIndex;
 
-
-            var cutSerialnumer = function (serialnumer) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
-                AppData.setErrorMsg(that.binding);
-                if (serialnumer === null) {
-                    return "";
-                } else {
-                    var serialnumernew = serialnumer;
-                    if (serialnumernew) {
-                    var sub = serialnumernew.search("0000000000");
-                    serialnumernew = serialnumernew.substr(sub + 10);
-                    }
-                    return serialnumernew;
-                }
-            };
-            this.cutSerialnumer = cutSerialnumer;
-
             var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.loading) {
                     WinJS.Promise.timeout(50).then(function () {
                         that.scrollToRecordId(recordId);
@@ -122,7 +97,7 @@
             this.scrollToRecordId = scrollToRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection && that.employees) {
                     for (var i = 0; i < that.employees.length; i++) {
                         var employee = that.employees.getAt(i);
@@ -152,7 +127,7 @@
 
             var scopeFromRecordId = function (recordId) {
                 var i;
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var item = null;
                 for (i = 0; i < that.employees.length; i++) {
                     var employee = that.employees.getAt(i);
@@ -173,13 +148,14 @@
             this.scopeFromRecordId = scopeFromRecordId;
 
             var calcOrdered = function(result) {
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (result.NumFree > result.NumOrdered) {
                     that.binding.stafffree = result.NumOrdered;
                 } else {
                     that.binding.stafffree = result.NumFree;
                     that.binding.staffpay = result.NumOrdered - result.NumFree;
                 }
+                Log.ret(Log.l.trace);
             }
             this.calcOrdered = calcOrdered;
 
@@ -190,14 +166,14 @@
                 item.fullName =
                 (item.Vorname ? (item.Vorname + " ") : "") +
                     (item.Name ? item.Name : "");
-                
+
             }
             this.resultConverter = resultConverter;
 
             // define handlers
             this.eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -234,13 +210,13 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.showDetail();
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
                     var i;
-                    Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -330,27 +306,8 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
-                    if (eventInfo && eventInfo.detail) {
-                        var visible = eventInfo.detail.visible;
-                        if (visible) {
-                            var contentHeader = listView.querySelector(".content-header");
-                            if (contentHeader) {
-                                var halfCircle = contentHeader.querySelector(".half-circle");
-                                if (halfCircle && halfCircle.style) {
-                                    if (halfCircle.style.visibility === "hidden") {
-                                        halfCircle.style.visibility = "";
-                                        WinJS.UI.Animation.enterPage(halfCircle);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "EsVoucherUsersList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -417,7 +374,7 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "EsStaffAdministrationList.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.loading = true;
                 progress = pageElement.querySelector(".list-footer .progress");
                 counter = pageElement.querySelector(".list-footer .counter");
@@ -428,10 +385,10 @@
                     counter.style.display = "none";
                 }
                 var restriction = AppData.getRestriction("KontaktVIEW_20611");
-                Log.call(Log.l.trace, "EsVoucherUsersList.Controller. restriction Employee:" + restriction);
-                var defaultrestriction = EsVoucherUsersList.voucherView.defaultRestriction;
+                Log.print(Log.l.trace, "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
+                var defaultRestriction = EsVoucherUsersList.voucherView.defaultRestriction;
                 if (!restriction) {
-                    restriction = defaultrestriction;
+                    restriction = defaultRestriction;
                 }
                 if (restriction.OrderAttribute === "Vorname") {
                     if (btnName) {
@@ -470,7 +427,7 @@
                     return EsVoucherUsersList.voucherView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "EsStaffAdministrationList: success!");
+                        Log.print(Log.l.trace, "select voucherView: success!");
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
@@ -511,14 +468,15 @@
                             if (json && json.d) {
                                 var employee = json.d;
                                 that.resultConverter(employee);
-                                var objectrec = scopeFromRecordId(recordId);
-                                that.employees.setAt(objectrec.index, employee);
+                                var objectRec = scopeFromRecordId(recordId);
+                                that.employees.setAt(objectRec.index, employee);
                                 that.selectRecordId(recordId);
                             }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
+                        Log.print(Log.l.error, "select voucherView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         progress = listView.querySelector(".list-footer .progress");
                         counter = listView.querySelector(".list-footer .counter");
@@ -529,7 +487,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                    }, restriction, recordId);
+                    }, recordId || restriction);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

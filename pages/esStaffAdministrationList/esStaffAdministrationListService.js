@@ -5,6 +5,7 @@
 
 (function () {
     "use strict";
+    var namespaceName = "EsStaffAdministrationList";
 
     WinJS.Namespace.define("EsStaffAdministrationList", {
         _employeeView: {
@@ -15,11 +16,11 @@
             }
         },
         employeeView: {
-            select: function (complete, error, restriction, recordId) {
-                Log.call(Log.l.trace, "EsStaffAdministrationList.");
+            select: function (complete, error, restriction) {
                 var ret;
-                if (recordId) {
-                    ret = EsStaffAdministrationList._employeeView.selectById(complete, error, recordId);
+                Log.call(Log.l.trace, namespaceName + ".employeeView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
+                if (typeof restriction === "number") {
+                    ret = EsStaffAdministrationList._employeeView.selectById(complete, error, restriction);
                 } else {
                     ret = EsStaffAdministrationList._employeeView.select(complete, error, restriction, {
                         ordered: true,
@@ -33,13 +34,13 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "EsStaffAdministrationList.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.");
                 var ret = EsStaffAdministrationList._employeeView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "EsStaffAdministrationList.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.");
                 var ret = EsStaffAdministrationList._employeeView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
