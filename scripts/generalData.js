@@ -216,12 +216,12 @@
                         }
                         AppData._curGetUserDataId = 0;
                         //TEST
-                        var timeout = 30;
-                        Log.print(Log.l.info, "getUserRemoteData: Now, wait for timeout=" + timeout + "s");
                         if (AppData._userRemoteDataPromise) {
                             Log.print(Log.l.info, "Cancelling previous userRemoteDataPromise");
                             AppData._userRemoteDataPromise.cancel();
                         }
+                        var timeout = 30;
+                        Log.print(Log.l.info, "getUserRemoteData: Now, wait for timeout=" + timeout + "s");
                         AppData._userRemoteDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
                             Log.print(Log.l.info, "getUserRemoteData: Now, timeout=" + timeout + "s is over!");
                             AppData._curGetUserRemoteDataId = 0;
@@ -281,12 +281,13 @@
                             }
                         }
                         //TEST
-                        /*var timeout = 30;
-                        Log.print(Log.l.info, "getMessagesData: Now, wait for timeout=" + timeout + "s");
+                        /*
                         if (AppData._messagesDataPromise) {
                             Log.print(Log.l.info, "Cancelling previous messagesDataPromise");
                             AppData._messagesDataPromise.cancel();
                         }
+                        var timeout = 30;
+                        Log.print(Log.l.info, "getMessagesData: Now, wait for timeout=" + timeout + "s");
                         AppData._messagesDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
                             Log.print(Log.l.info, "getMessagesData: Now, timeout=" + timeout + "s is over!");
                             //AppData._curGetUserRemoteDataId = 0;
