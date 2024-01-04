@@ -25,17 +25,13 @@
                 environment: "Platform: " + navigator.appVersion,
                 timezone: timezone && ("Timezone: " + timezone.name()),
                 expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single),
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                homepageUrl: "https://" + getResourceText("info.homepage")
             }, commandList]);
 
             var expandSubMenuModeSelect = pageElement.querySelector("#expandSubMenuModeSelect");
 
             var that = this;
-
-            var homepageLink = pageElement.querySelector("#homepageLink");
-            if (homepageLink) {
-                homepageLink.innerHTML = "<a target=\"_blank\" href=\"https://" + getResourceText("info.homepage") + "\">" + getResourceText("info.homepage") + "</a>";
-            }
 
             var setupLog = function () {
                 var settings = null;

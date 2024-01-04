@@ -37,8 +37,11 @@
                         </div>
                         <div class="large_field"
                              data-win-res="{innerHTML: 'info.comment'}"></div>
-                        <div class="large_field"
-                             id="homepageLink"></div>
+                        <div class="large_field">
+                            <a target="_blank" data-win-bind="href: homepageUrl">
+                                <span data-win-res="{textContent: 'info.homepage'}"></span>
+                            </a>
+                        </div>
                         <div class="large_field win-type-caption"
                              data-win-bind="textContent: environment"></div>
                         <div class="large_field win-type-caption"
