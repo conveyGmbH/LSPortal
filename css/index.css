@@ -182,8 +182,8 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     border-bottom-width: 1px;
     border-bottom-color: gray;
 }
-.has-resize-helper #navigationbar_horizontal.win-listview:not(.view-size-medium-small) {
-    width: calc(100% - 32px) !important;
+.has-resize-helper #navigationbar_horizontal.win-listview {
+    width: calc(100% - 32px);
 }
 
 #navigationbar_vertical.win-listview {
