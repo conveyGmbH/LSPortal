@@ -31,7 +31,10 @@
                 dataLicence: null,
                 countContacts: true,
                 dataLicenceUser: getEmptyDefaultValue(Start.licenceUserView.defaultValue),
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
                 // add dynamic scripts to page element, src is either a file or inline text:
             }, commandList]);
             this.applist = null;

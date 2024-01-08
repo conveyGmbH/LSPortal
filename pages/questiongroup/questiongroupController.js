@@ -18,7 +18,10 @@
 
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
             }, commandList, false, Questiongroup.CR_V_FragengruppeView, null, listView]);
 
             var that = this;
