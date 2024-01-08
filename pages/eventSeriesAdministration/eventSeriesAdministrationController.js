@@ -368,6 +368,8 @@
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
                 that.setEventId(master.controller.binding.eventId);
+            } else {
+                that.setEventId(AppData.getRecordId("Veranstaltung"));
             }
 
             that.processAll().then(function () {

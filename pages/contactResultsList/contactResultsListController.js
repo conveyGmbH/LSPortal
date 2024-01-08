@@ -100,6 +100,23 @@
             }
             this.resultConverter = resultConverter;
 
+            var handlePageEnable = function (contact) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + (contact && contact.KontaktVIEWID));
+                if (AppData._persistentStates.hideQuestionnaire) {
+                    NavigationBar.disablePage("contactResultsQuestion");
+                } else if (contact && contact.SHOW_Zeilenantwort) {
+                    NavigationBar.enablePage("contactResultsQuestion");
+                } else {
+                    NavigationBar.disablePage("contactResultsQuestion");
+                }
+                if (contact && contact.SHOW_KontaktNotiz) {
+                    NavigationBar.enablePage("contactResultsAttach");
+                } else {
+                    NavigationBar.disablePage("contactResultsAttach");
+                }
+                Log.ret(Log.l.trace);
+            };
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -144,6 +161,11 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
                         AppBar.triggerDisableHandlers();
+                        var scope = that.scopeFromRecordId(that.curRecId);
+                        if (scope) {
+                            handlePageEnable(scope.item);
+                        }
+                        AppData.setRecordId("Kontakt", that.curRecId);
                         if (that.getEventId()) {
                             Application.navigateById("contactResultsEvents");
                         } else {
@@ -248,6 +270,14 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
+
+            var master = Application.navigator.masterControl;
+            if (master && master.controller && master.controller.binding) {
+                that.setEventId(master.controller.binding.eventId);
+            } else {
+                that.setEventId(AppData.getRecordId("Veranstaltung"));
+            }
+            AppData.setRecordId("Kontakt", null);
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

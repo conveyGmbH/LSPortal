@@ -301,7 +301,7 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
+                /*}).then(function () {
                     var curVID = AppData.getRecordId("Veranstaltung");
                     var selVID = AppData.getRecordId("KontaktEventID");
                     if (curVID !== selVID) {
@@ -315,7 +315,7 @@
                         NavigationBar.enablePage("contactResultsCriteria");
                         NavigationBar.enablePage("contactResultsEdit");
                     }
-                    AppBar.notifyModified = true;
+                    AppBar.notifyModified = true;*/
                 });
                 Log.ret(Log.l.trace);
                 return ret;

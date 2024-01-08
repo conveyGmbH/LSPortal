@@ -56,7 +56,8 @@
                 { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
             ];
 
-            this.controller = new EventsList.Controller(element, commandList);
+            var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;
+            this.controller = new EventsList.Controller(element, commandList, isMaster);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));

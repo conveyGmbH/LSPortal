@@ -26,7 +26,13 @@
             select: function (complete, error, restriction, options) {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".contactResultsView.");
-                if (restriction && typeof restriction === "string") {
+                if (!ContactResultsList._eventId) {
+                    ret = new WinJS.Promise.as().then(function() {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    });
+                } else if (restriction && typeof restriction === "string") {
                     var mainLanguage = Application.language.split("-")[0];
                     if (!ContactResultsList._collator) {
                         ContactResultsList._collator = new Intl.Collator(mainLanguage, {
@@ -75,12 +81,10 @@
                     }
                 } else {
                     ContactResultsList._prevRestriction = "";
-                    if (ContactResultsList._eventId) {
-                        if (!restriction) {
-                            restriction = {};
-                        }
-                        restriction.VeranstaltungID = ContactResultsList._eventId;
+                    if (!restriction) {
+                        restriction = {};
                     }
+                    restriction.VeranstaltungID = ContactResultsList._eventId;
                     if (ContactResultsList._orderAttribute) {
                         options = {
                             ordered: true,
