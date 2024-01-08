@@ -17,7 +17,10 @@
                 dataDestEventCombo: getEmptyDefaultValue(EventCopy.VeranstaltungView.defaultValue),
                 dataSrcEventCombo: getEmptyDefaultValue(EventCopy.VeranstaltungView.defaultValue),
                 dataEventCopy: 0,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
             }, commandList]);
 
             var that = this;

@@ -27,7 +27,10 @@
                 nametext: getResourceText("event.showNameInHeader"),
                 userNametext: getResourceText("event.showUsernameInHeader"),
                 actualYear: new Date().getFullYear(),
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
             }, commandList]);
 
             var that = this;

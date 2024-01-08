@@ -11,226 +11,269 @@
     <div class="infodesk fragment">
         <div id="mailingController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-            <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
-            <div class="header-separator float-left"></div>
-            <div class="content-header float-left">
-                <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                <div class="content-header-line win-type-caption">
-                    <span class="id-field"></span>
-                    <span class="caption-field" data-win-res="{textContent: 'infodesk.filter'}"></span>
-                    <span class="date-field"></span>
-                </div>
-            </div>
-            <div class="field_line field_line_odd"
-                 data-win-bind="style.display: messestandData.SkillType1ID Binding.Converter.toDisplay">
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
-                <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType1"></span>
-                <select id="skills1"
-                        class="input_field win-dropdown"
-                        data-win-control="WinJS.UI.Repeater"
-                        data-win-bind="value: restriction.SkillType1Sortierung"
-                        onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
-                    <option data-win-bind="value: value; textContent: title"></option>
-                </select>
-            </div>
-            <div class="field_line field_line_even"
-                 data-win-bind="style.display: messestandData.SkillType2ID Binding.Converter.toDisplay">
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
-                <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
-                <select id="skills2"
-                        class="input_field win-dropdown"
-                        data-win-control="WinJS.UI.Repeater"
-                        data-win-bind="value: restriction.SkillType2Sortierung"
-                        onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
-                    <option data-win-bind="value: value; textContent: title"></option>
-                </select>
-            </div>
-            <div class="field_line field_line_odd"
-                 data-win-bind="style.display: messestandData.SkillType3ID Binding.Converter.toDisplay">
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType3"></span>
-                <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType3"></span>
-                <select id="skills3"
-                        class="input_field win-dropdown"
-                        data-win-control="WinJS.UI.Repeater"
-                        data-win-bind="value: restriction.SkillType3Sortierung"
-                        onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
-                    <option data-win-bind="value: value; textContent: title"></option>
-                </select>
-            </div>
-            <div class="field_line field_line_even"
-                 data-win-bind="style.display: messestandData.SkillType4ID Binding.Converter.toDisplay">
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType4"></span>
-                <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType4"></span>
-                <select id="skills4"
-                        class="input_field win-dropdown"
-                        data-win-control="WinJS.UI.Repeater"
-                        data-win-bind="value: restriction.SkillType4Sortierung"
-                        onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
-                    <option data-win-bind="value: value; textContent: title"></option>
-                </select>
-            </div>
-            <div class="field_line field_line_odd"
-                 data-win-bind="style.display: messestandData.SkillType5ID Binding.Converter.toDisplay">
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType5"></span>
-                <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType5"></span>
-                <select id="skills5"
-                        class="input_field win-dropdown"
-                        data-win-control="WinJS.UI.Repeater"
-                        data-win-bind="value: restriction.SkillType5Sortierung"
-                        onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
-                    <option data-win-bind="value: value; textContent: title"></option>
-                </select>
-            </div>
-            <div class="field_line field_line_even" data-win-bind="style.display: messestandData.SkillType5ID Binding.Converter.toDisplay">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator float-left"></div>
+                    <div class="content-header float-left" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'infodesk.filter'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
+                        <div class="field_line field_line_odd"
+                             data-win-bind="style.display: messestandData.SkillType1ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType1"></span>
+                            <select id="skills1"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType1Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: messestandData.SkillType2ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType2"></span>
+                            <select id="skills2"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType2Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_odd"
+                             data-win-bind="style.display: messestandData.SkillType3ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType3"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType3"></span>
+                            <select id="skills3"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType3Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: messestandData.SkillType4ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType4"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType4"></span>
+                            <select id="skills4"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType4Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_odd"
+                             data-win-bind="style.display: messestandData.SkillType5ID Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType5"></span>
+                            <span class="label landscape_only" data-win-bind="textContent: messestandData.SkillType5"></span>
+                            <select id="skills5"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: restriction.SkillType5Sortierung"
+                                    onchange="AppBar.handleEvent('onchange', 'changedSkill', event)">
+                                <option data-win-bind="value: value; textContent: title"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: messestandData.SkillType5ID Binding.Converter.toDisplay">
 
-            </div>
-            <div class="header-separator float-left"></div>
-            <div class="content-header float-left">
-                <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                <div class="content-header-line win-type-caption">
-                    <span class="id-field"></span>
-                    <span class="caption-field" data-win-res="{textContent: 'infodesk.actualEmployee'}"></span>
-                    <span class="date-field"></span>
-                </div>
-            </div>
-            <div class="content-record"
-                 data-win-bind="style.visibility: employeeId Binding.Converter.toVisibility">
-                <div class="field_line field_line_odd_small">
-                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.firstName'}"></span>
-                    <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.name'}"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-res="{textContent: 'infodesk.firstName'}"></span> / <span data-win-res="{textContent: 'infodesk.name'}"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.Vorname"></span>
-                        <span class="input_small_left" data-win-bind="textContent: dataBenutzer.Vorname; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.Name"></span>
-                        <span class="input_field" data-win-bind="textContent: dataBenutzer.Name; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                    </div>
-                </div>
-                <div class="field_line field_line_odd_small" data-win-bind="style.display: messestandData.SkillType1 Binding.Converter.toDisplay">
-                    <!--data-win-bind="style.display: messestandData.SkillType1 Binding.Converter.toDisplay"-->
-                    <span class="label win-type-caption portrait_only_left" data-win-bind="textContent: messestandData.SkillType1; style.display: messestandData.SkillType1 Binding.Converter.toDisplay"></span>
-                    <span class="label win-type-caption portrait_only_threeQuarter" data-win-bind="textContent: messestandData.SkillType2; style.display: messestandData.SkillType2 Binding.Converter.toDisplay"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-bind="textContent: messestandData.SkillType1; style.display: messestandData.SkillType1 Binding.Converter.toDisplay"></span> <span data-win-bind="textContent: messestandData.SkillType2; style.display: messestandData.SkillType2 Binding.Converter.toDisplay"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataEmployee.firstskill"></span>
-                        <span class="input_small_left" data-win-bind="textContent: messestandData.SkillType1; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        <span class="label_half_right" type="text" data-win-bind="textContent: dataEmployee.secondskill Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
-                        <span class="input_field" data-win-bind="textContent: messestandData.SkillType2; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                    </div>
-                </div>
-                <div class="field_line field_line_odd_small" data-win-bind="style.display: messestandData.SkillType3 Binding.Converter.toDisplay">
-                    <span class="label win-type-caption portrait_only_left" data-win-bind="textContent: messestandData.SkillType3; style.display: messestandData.SkillType3 Binding.Converter.toDisplay"></span>
-                    <span class="label win-type-caption portrait_only_threeQuarter" data-win-bind="textContent: messestandData.SkillType4; style.display: messestandData.SkillType4 Binding.Converter.toDisplay"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-bind="textContent: messestandData.SkillType3; style.display: messestandData.SkillType3 Binding.Converter.toDisplay"></span><br><span data-win-bind="textContent: messestandData.SkillType4; style.display: messestandData.SkillType4 Binding.Converter.toDisplay"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataEmployee.thirdskill; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
-                        <span class="input_small_left" data-win-bind="textContent: messestandData.SkillType3; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        <span class="label_half_right" type="text" data-win-bind="textContent: dataEmployee.fourthskill; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
-                        <span class="input_field" data-win-bind="textContent: messestandData.SkillType4; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                    </div>
-                </div>
-                <div class="field_line field_line_odd_small" data-win-bind="style.display: messestandData.SkillType5 Binding.Converter.toDisplay">
-                    <span class="label win-type-caption portrait_only_left" data-win-bind="textContent: messestandData.SkillType5"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-bind="textContent: messestandData.SkillType5; style.display: messestandData.SkillType5 Binding.Converter.toDisplay"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataEmployee.fifthskill; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
-                    </div>
-                            
-                </div>
-                <div class="field_line field_line_even_small">
-                    <div class="userimg-container">
-                        <img class="userimg" data-win-bind="src: photoData; style.display: photoData Binding.Converter.toDisplay" />
-                        <div name="user" class="svgimg" data-win-bind="style.display: photoData Binding.Converter.toDisplayNone"></div>
-                    </div>
-                </div>
-                <div class="field_line field_line_odd_small">
-                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.phone'}"></span>
-                    <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.mobile'}"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-res="{textContent: 'infodesk.phone'}"></span> / <span data-win-res="{textContent: 'infodesk.mobile'}"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.TelefonFestnetz"></span>
-                        <span class="input_small_left" data-win-bind="textContent: dataBenutzer.TelefonFestnetz; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.TelefonMobil"></span>
-                        <span class="input_field" data-win-bind="textContent: dataBenutzer.TelefonMobil; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                    </div>
-                </div>
-                <div class="field_line field_line_odd_small">
-                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.academicTitle'}"></span>
-                    <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.position'}"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-res="{textContent: 'infodesk.academicTitle'}"></span> / <span data-win-res="{textContent: 'infodesk.position'}"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.Titel"></span>
-                        <span class="input_small_left" data-win-bind="textContent: dataBenutzer.Titel; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                        <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.Position"></span>
-                        <span class="input_field" data-win-bind="textContent: dataBenutzer.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                    </div>
-                </div>
-                <div class="field_line field_line_odd_small">
-                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.email'}"></span>
-                    <div class="label landscape_only_small">
-                        <span data-win-res="{textContent: 'infodesk.email'}"></span>
-                    </div>
-                    <div class="input_group">
-                        <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.EMail; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
-                    </div>
+                        </div>
+                        <div class="header-separator float-left"></div>
+                        <div class="content-header float-left">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'infodesk.actualEmployee'}"></span>
+                                <span class="date-field"></span>
+                            </div>
+                        </div>
+                        <div class="content-record"
+                             data-win-bind="style.visibility: employeeId Binding.Converter.toVisibility">
+                            <div class="field_line field_line_odd_small">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.firstName'}"></span>
+                                <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.name'}"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-res="{textContent: 'infodesk.firstName'}"></span> / <span data-win-res="{textContent: 'infodesk.name'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.Vorname"></span>
+                                    <span class="input_small_left" data-win-bind="textContent: dataBenutzer.Vorname; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.Name"></span>
+                                    <span class="input_field" data-win-bind="textContent: dataBenutzer.Name; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_odd_small" data-win-bind="style.display: messestandData.SkillType1 Binding.Converter.toDisplay">
+                                <!--data-win-bind="style.display: messestandData.SkillType1 Binding.Converter.toDisplay"-->
+                                <span class="label win-type-caption portrait_only_left" data-win-bind="textContent: messestandData.SkillType1; style.display: messestandData.SkillType1 Binding.Converter.toDisplay"></span>
+                                <span class="label win-type-caption portrait_only_threeQuarter" data-win-bind="textContent: messestandData.SkillType2; style.display: messestandData.SkillType2 Binding.Converter.toDisplay"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-bind="textContent: messestandData.SkillType1; style.display: messestandData.SkillType1 Binding.Converter.toDisplay"></span> <span data-win-bind="textContent: messestandData.SkillType2; style.display: messestandData.SkillType2 Binding.Converter.toDisplay"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataEmployee.firstskill"></span>
+                                    <span class="input_small_left" data-win-bind="textContent: messestandData.SkillType1; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="label_half_right" type="text" data-win-bind="textContent: dataEmployee.secondskill Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
+                                    <span class="input_field" data-win-bind="textContent: messestandData.SkillType2; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_odd_small" data-win-bind="style.display: messestandData.SkillType3 Binding.Converter.toDisplay">
+                                <span class="label win-type-caption portrait_only_left" data-win-bind="textContent: messestandData.SkillType3; style.display: messestandData.SkillType3 Binding.Converter.toDisplay"></span>
+                                <span class="label win-type-caption portrait_only_threeQuarter" data-win-bind="textContent: messestandData.SkillType4; style.display: messestandData.SkillType4 Binding.Converter.toDisplay"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-bind="textContent: messestandData.SkillType3; style.display: messestandData.SkillType3 Binding.Converter.toDisplay"></span><br><span data-win-bind="textContent: messestandData.SkillType4; style.display: messestandData.SkillType4 Binding.Converter.toDisplay"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataEmployee.thirdskill; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
+                                    <span class="input_small_left" data-win-bind="textContent: messestandData.SkillType3; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="label_half_right" type="text" data-win-bind="textContent: dataEmployee.fourthskill; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
+                                    <span class="input_field" data-win-bind="textContent: messestandData.SkillType4; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_odd_small" data-win-bind="style.display: messestandData.SkillType5 Binding.Converter.toDisplay">
+                                <span class="label win-type-caption portrait_only_left" data-win-bind="textContent: messestandData.SkillType5"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-bind="textContent: messestandData.SkillType5; style.display: messestandData.SkillType5 Binding.Converter.toDisplay"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataEmployee.fifthskill; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
+                                </div>
 
-                </div>
-            </div>
-            <div class="header-separator float-left"></div>
-            <div class="content-header float-left">
-                <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                <div class="content-header-line win-type-caption">
-                    <span class="id-field"></span>
-                    <span class="caption-field" data-win-res="{textContent: 'infodesk.info'}"></span>
-                    <span class="date-field"></span>
-                </div>
-            </div>
-            <div class="field_line field_line_odd">
-                <!--<div id="userMessageshost" class="fragmenthost"></div>-->
-                <div class="userMessage-title">
-                    <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.newsOverview'}"></span>
-                    <span class="label landscape_only" data-win-res="{textContent: 'infodesk.newsOverview'}"></span>
-                    <span class="input_small_left" data-win-bind="textContent: dataBenutzer.Info1TS Binding.Converter.toDateString"></span>
-                    <span class="input_half_left" data-win-bind="textContent: dataBenutzer.Info1"></span>
-                </div>
-            </div>
-            <div class="field_line field_line_even">
-                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.message'}"></span>
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: dataEmployee.fullname"></span>
-                <!-- <div data-win-bind="style.display: dataBenutzer.Info2TS Binding.Converter.toDisplay">-->
-                <span class="win-type-caption portrait_only" data-win-bind="style.display: dataBenutzer.Info2TS Binding.Converter.toDisplay" data-win-res="{textContent: 'infodesk.message1time'}"></span>
-                <!--</div>-->
-                <span class="label win-type-caption portrait_only" data-win-bind="textContent: dataBenutzer.Info2TS Binding.Converter.toDateString"></span>
-                <span class="label landscape_only_small" data-win-res="{textContent: 'infodesk.message'}"></span>
-                <span class="label landscape_only_small" data-win-bind="textContent: dataEmployee.fullname"></span>
-                <span class="label landscape_only_small" data-win-res="{textContent: 'infodesk.message1time'}"></span>
-                <span class="label landscape_only_small" data-win-bind="textContent: dataBenutzer.Info2TS Binding.Converter.toDateString"></span>
-                <textarea class="textarea_half win-textarea input_text_message" data-win-bind="value: dataBenutzer.Info2 Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                            </div>
+                            <div class="field_line field_line_even_small">
+                                <div class="userimg-container">
+                                    <img class="userimg" data-win-bind="src: photoData; style.display: photoData Binding.Converter.toDisplay" />
+                                    <div name="user" class="svgimg" data-win-bind="style.display: photoData Binding.Converter.toDisplayNone"></div>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_odd_small">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.phone'}"></span>
+                                <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.mobile'}"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-res="{textContent: 'infodesk.phone'}"></span> / <span data-win-res="{textContent: 'infodesk.mobile'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.TelefonFestnetz"></span>
+                                    <span class="input_small_left" data-win-bind="textContent: dataBenutzer.TelefonFestnetz; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.TelefonMobil"></span>
+                                    <span class="input_field" data-win-bind="textContent: dataBenutzer.TelefonMobil; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_odd_small">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.academicTitle'}"></span>
+                                <span class="label win-type-caption portrait_only_threeQuarter" data-win-res="{textContent: 'infodesk.position'}"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-res="{textContent: 'infodesk.academicTitle'}"></span> / <span data-win-res="{textContent: 'infodesk.position'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.Titel"></span>
+                                    <span class="input_small_left" data-win-bind="textContent: dataBenutzer.Titel; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                    <span class="label_half_right" type="text" data-win-bind="textContent: dataBenutzer.Position"></span>
+                                    <span class="input_field" data-win-bind="textContent: dataBenutzer.Position; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                </div>
+                            </div>
+                            <div class="field_line field_line_odd_small">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.email'}"></span>
+                                <div class="label landscape_only_small">
+                                    <span data-win-res="{textContent: 'infodesk.email'}"></span>
+                                </div>
+                                <div class="input_group">
+                                    <span class="label_half_left" type="text" data-win-bind="textContent: dataBenutzer.EMail; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone"></span>
+                                </div>
 
-                <!--<input id="PLZ" class="input_small_left win-textbox" type="text" data-win-bind="src: photoData; style.display: photoData Binding.Converter.toDisplay"/>
-                <img name="user" class="svgimg" data-win-bind="style.display: photoData Binding.Converter.toDisplayNone"/>
-                <span class="input_small_left"></span>
-                <span class="input_small_right" data-win-res="{textContent: 'infodesk.message'}"></span>-->
-            </div>
-            </div>
-            <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
-                <div class="label-text-message">
-                    <span class="large_field"
-                          data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
+                            </div>
+                        </div>
+                        <div class="header-separator float-left"></div>
+                        <div class="content-header float-left">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'infodesk.info'}"></span>
+                                <span class="date-field"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <!--<div id="userMessageshost" class="fragmenthost"></div>-->
+                            <div class="userMessage-title">
+                                <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.newsOverview'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'infodesk.newsOverview'}"></span>
+                                <span class="input_small_left" data-win-bind="textContent: dataBenutzer.Info1TS Binding.Converter.toDateString"></span>
+                                <span class="input_half_left" data-win-bind="textContent: dataBenutzer.Info1"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'infodesk.message'}"></span>
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: dataEmployee.fullname"></span>
+                            <!-- <div data-win-bind="style.display: dataBenutzer.Info2TS Binding.Converter.toDisplay">-->
+                            <span class="win-type-caption portrait_only" data-win-bind="style.display: dataBenutzer.Info2TS Binding.Converter.toDisplay" data-win-res="{textContent: 'infodesk.message1time'}"></span>
+                            <!--</div>-->
+                            <span class="label win-type-caption portrait_only" data-win-bind="textContent: dataBenutzer.Info2TS Binding.Converter.toDateString"></span>
+                            <span class="label landscape_only_small" data-win-res="{textContent: 'infodesk.message'}"></span>
+                            <span class="label landscape_only_small" data-win-bind="textContent: dataEmployee.fullname"></span>
+                            <span class="label landscape_only_small" data-win-res="{textContent: 'infodesk.message1time'}"></span>
+                            <span class="label landscape_only_small" data-win-bind="textContent: dataBenutzer.Info2TS Binding.Converter.toDateString"></span>
+                            <textarea class="textarea_half win-textarea input_text_message" data-win-bind="value: dataBenutzer.Info2 Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+
+                            <!--<input id="PLZ" class="input_small_left win-textbox" type="text" data-win-bind="src: photoData; style.display: photoData Binding.Converter.toDisplay"/>
+                            <img name="user" class="svgimg" data-win-bind="style.display: photoData Binding.Converter.toDisplayNone"/>
+                            <span class="input_small_left"></span>
+                            <span class="input_small_right" data-win-res="{textContent: 'infodesk.message'}"></span>-->
+                        </div>
+                    </div>
+                    <div class="page-content" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
+                        <div class="top">
+                            <div class="ccontainer">
+                                <div class="blockTop">
+                                    <div class="h1">
+                                        <div class="logo alignCenter"><img src="../../images/LeadSuccessLogoOrangeShriftWeissHG.svg" alt="LS Aussteller Portal" /></div>
+
+                                        <span class="large-field"
+                                              data-win-res="{textContent:'general.leadsuccessbasicaccess1'}">
+                                        </span>
+                                        <a class="servicelink" target="_blank" data-win-bind="href: serviceUrl">
+                                            <span data-win-res="{textContent: 'general.servicetext'}"></span>
+                                        </a>
+                                        <span class="large-field"
+                                              data-win-res="{textContent: 'general.leadsuccessbasicaccess2'}">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main">
+                            <div class="ccontainer">
+
+                                <div class="main-image">
+                                    <img data-win-bind="src: imageUrl" alt="LeadSuccess Package" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="ccontainer">
+                                <div class="h1" style="text-align: center;">
+
+                                    <span class="large-field"
+                                          data-win-res="{textContent:'general.leadsuccessinfo1'}">
+                                    </span><br />
+                                    <a class="servicelink" target="_blank" data-win-bind="href: mailUrl">
+                                        <span data-win-res="{textContent: 'general.servicemail'}"></span>
+                                    </a>
+                                    <span class="large-field"
+                                          data-win-res="{textContent: 'general.leadsuccessinfo2'}">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
             </section>
