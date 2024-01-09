@@ -11,7 +11,7 @@
     <div class="settings fragment">
         <div id="infoController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
+                <div class="contentarea win-type-body">
                     <div class="header-separator"></div>
                     <div class="content-header">
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
@@ -21,134 +21,180 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="field_line field_line_full">
-                        <div class="large_field">
-                            <img src="../../images/leadsuccess.svg" width="240" />
-                            <span class="win-type-title logo-title"
-                                  data-win-res="{textContent: 'info.portal'}"></span>
-                        </div>
-                    </div>
-                    <div class="field_line field_line_full">
-                        <div class="large_field"
-                             data-win-bind="textContent: version"></div>
-                        <div class="large_field">
-                            <span data-win-res="{textContent: 'info.dataBaseVersion'}"></span>
-                            <span data-win-bind="textContent: portalInfo.dbVersion"></span>
-                        </div>
-                        <div class="large_field"
-                             data-win-res="{innerHTML: 'info.comment'}"></div>
-                        <div class="large_field"
-                             id="homepageLink"></div>
-                        <div class="large_field win-type-caption"
-                             data-win-bind="textContent: environment"></div>
-                        <div class="large_field win-type-caption"
-                             data-win-bind="textContent: timezone"></div>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_full">
-                        &nbsp;
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="header-separator float-left"></div>
-                    <div class="content-header float-left">
-                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                        <div class="content-header-line win-type-caption">
-                            <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'info.log5'}"></span>
-                            <span class="date-field"></span>
-                        </div>
-                    </div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="turnThumbsLeft"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.turnThumbsLeft Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                    <div data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
+                        <div class="field_line field_line_full">
+                            <div class="large_field">
+                                <img src="../../images/leadsuccess.svg" width="240" />
+                                <span class="win-type-title logo-title"
+                                      data-win-res="{textContent: 'info.portal'}"></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="field_line field_line_even">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.showBackButton'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.showBackButton'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="showBackButton"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.showBackButton Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                        <div class="field_line field_line_full">
+                            <div class="large_field"
+                                 data-win-bind="textContent: version"></div>
+                            <div class="large_field">
+                                <span data-win-res="{textContent: 'info.dataBaseVersion'}"></span>
+                                <span data-win-bind="textContent: portalInfo.dbVersion"></span>
+                            </div>
+                            <div class="large_field"
+                                 data-win-res="{innerHTML: 'info.comment'}"></div>
+                            <div class="large_field">
+                                <a target="_blank" data-win-bind="href: homepageUrl">
+                                    <span data-win-res="{textContent: 'info.homepage'}"></span>
+                                </a>
+                            </div>
+                            <div class="large_field win-type-caption"
+                                 data-win-bind="textContent: environment"></div>
+                            <div class="large_field win-type-caption"
+                                 data-win-bind="textContent: timezone"></div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_full">
+                            &nbsp;
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="header-separator float-left"></div>
+                        <div class="content-header float-left">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'info.log5'}"></span>
+                                <span class="date-field"></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
-                        <select id="expandSubMenuModeSelect"
-                                class="input_field win-dropdown"
-                                data-win-control="WinJS.UI.Repeater"
-                                data-win-bind="value: expandSubMenuMode"
-                                onchange="AppBar.handleEvent('change', 'changedExpandSubMenuMode', event)">
-                            <option data-win-bind="value: mode; textContent: label"></option>
-                        </select>
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="header-separator float-left"></div>
-                    <div class="content-header float-left">
-                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                        <div class="content-header-line win-type-caption">
-                            <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'info.logOptions'}"></span>
-                            <span class="date-field"></span>
-                        </div>
-                    </div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.logenabled'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.logenabled'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="logEnabled"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
-                                <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.turnThumbsLeft'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="turnThumbsLeft"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: generalData.turnThumbsLeft Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="field_line field_line_even" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loglevel'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.loglevel'}"></span>
-                        <span class="input_field" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
-                        <input class="input_field win-range"
-                               type="range" min="1" max="6" step="1"
-                               data-win-bind="value: generalData.logLevel"
-                               onchange="AppBar.handleEvent('change', 'changedLogLevel', event)"
-                               oninput="AppBar.handleEvent('change', 'changedLogLevel', event)" />
-                    </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_odd" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loggroup'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.loggroup'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="logGroup"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.showBackButton'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.showBackButton'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="showBackButton"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: generalData.showBackButton Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="field_line field_line_even" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
-                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.lognostack'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'info.lognostack'}"></span>
-                        <div class="input_field toggle-switch-parent">
-                            <div id="logNoStack"
-                                 data-win-control="WinJS.UI.ToggleSwitch"
-                                 data-win-bind="winControl.checked: generalData.logNoStack; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                 onchange="AppBar.handleEvent('change', 'clickLogNoStack', event)">
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.expandSubMenuMode'}"></span>
+                            <select id="expandSubMenuModeSelect"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: expandSubMenuMode"
+                                    onchange="AppBar.handleEvent('change', 'changedExpandSubMenuMode', event)">
+                                <option data-win-bind="value: mode; textContent: label"></option>
+                            </select>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="header-separator float-left"></div>
+                        <div class="content-header float-left">
+                            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                            <div class="content-header-line win-type-caption">
+                                <span class="id-field"></span>
+                                <span class="caption-field" data-win-res="{textContent: 'info.logOptions'}"></span>
+                                <span class="date-field"></span>
                             </div>
                         </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.logenabled'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.logenabled'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="logEnabled"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: generalData.logEnabled Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                                    <!--onchange="AppBar.handleEvent('change', 'clickLogEnabled', event)"-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loglevel'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.loglevel'}"></span>
+                            <span class="input_field" data-win-bind="textContent: generalData.logLevel Binding.Converter.toLogLevelName"></span>
+                            <input class="input_field win-range"
+                                   type="range" min="1" max="6" step="1"
+                                   data-win-bind="value: generalData.logLevel"
+                                   onchange="AppBar.handleEvent('change', 'changedLogLevel', event)"
+                                   oninput="AppBar.handleEvent('change', 'changedLogLevel', event)" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.loggroup'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.loggroup'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="logGroup"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: generalData.logGroup Binding.Mode.twoway; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even" data-win-bind="style.display: generalData.logEnabled Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'info.lognostack'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'info.lognostack'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="logNoStack"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: generalData.logNoStack; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickLogNoStack', event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
                     </div>
-                    <div class="line-separator"></div>
-                </div>
-                <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
-                    <div class="label-text-message">
-                        <span class="large_field"
-                              data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
+                    <div class="page-content" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
+                        <div class="top">
+                            <div class="ccontainer">
+                                <div class="blockTop">
+                                    <div class="h1">
+                                        <div class="logo alignCenter"><img src="../../images/LeadSuccessLogoOrangeShriftWeissHG.svg" alt="LS Aussteller Portal" /></div>
+
+                                        <span class="large-field"
+                                              data-win-res="{textContent:'general.leadsuccessbasicaccess1'}">
+                                        </span>
+                                        <a class="servicelink" target="_blank" data-win-bind="href: serviceUrl">
+                                            <span data-win-res="{textContent: 'general.servicetext'}"></span>
+                                        </a>
+                                        <span class="large-field"
+                                              data-win-res="{textContent: 'general.leadsuccessbasicaccess2'}">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main">
+                            <div class="ccontainer">
+
+                                <div class="main-image">
+                                    <img data-win-bind="src: imageUrl" alt="LeadSuccess Package" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="ccontainer">
+                                <div class="h1" style="text-align: center;">
+
+                                    <span class="large-field"
+                                          data-win-res="{textContent:'general.leadsuccessinfo1'}">
+                                    </span><br />
+                                    <a class="servicelink" target="_blank" data-win-bind="href: mailUrl">
+                                        <span data-win-res="{textContent: 'general.servicemail'}"></span>
+                                    </a>
+                                    <span class="large-field"
+                                          data-win-res="{textContent: 'general.leadsuccessinfo2'}">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="error-message"

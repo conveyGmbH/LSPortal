@@ -25,7 +25,11 @@
                 environment: "Platform: " + navigator.appVersion,
                 timezone: timezone && ("Timezone: " + timezone.name()),
                 expandSubMenuMode: (AppData.generalData.expandSubMenuMode || Application.expandSubMenuModes.single),
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
+                homepageUrl: "https://" + getResourceText("info.homepage")
             }, commandList]);
 
             var expandSubMenuModeSelect = pageElement.querySelector("#expandSubMenuModeSelect");

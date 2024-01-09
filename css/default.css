@@ -512,6 +512,114 @@ select {
 }
 
 
+/******** START LS PACKAGEOVERVIEW ELEMENTE ********/
+
+.page-content {
+    position: relative;
+    display: block;
+    color: #3d4753;
+    line-height: 25px;
+    font-size: 24px;
+}
+
+.top, .main, .footer {
+    position: relative;
+    display: block;
+    height: auto;
+}
+
+.ccontainer {
+    margin-right: auto;
+    margin-left: auto;
+    float: none;
+    width: 90%;
+    overflow: auto;
+    z-index: 1;
+}
+
+.top > .ccontainer {
+    position: relative;
+    width: 80%;
+    margin: 40px auto;
+    display: block;
+}
+
+.main > .ccontainer {
+    position: relative;
+    width: 90%;
+    display: block;
+}
+
+.footer {margin-bottom: 30px}
+
+.footer > .ccontainer {
+    position: relative;
+    width: 80%;
+    margin: 40px auto;
+    display: block;
+}
+
+.h1 {
+    margin: 30px 0 10px 0;
+    padding: 0 10px;
+}
+.footer .large-field {text-align: center;}
+
+.large-field {
+    font-size: 24px;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.main-image {text-align: center;}
+
+.main-image img {
+    height: auto;
+    width: 100%;
+    position: relative;	
+}
+
+.logo {display: block; width: auto; height: auto; margin-bottom: 30px;}
+
+.logo img {width: 30%; height: auto;}
+
+.alignCenter {
+    text-align: center;
+}
+
+.servicelink { 
+    font-size: 24px;
+    line-height: 1.5;
+    color: #ea5a07;
+    text-decoration: none;
+}
+
+.servicelink:hover {
+    color: #444444;
+    text-decoration: none;
+}
+
+.view-size-small .top > .ccontainer,
+.view-size-small .footer > .ccontainer {
+    width: 90%;
+}
+
+.view-size-small .main > .ccontainer {
+    width: 100%;
+}
+
+.view-size-small .logo img {
+    width: 50%;
+}
+
+.view-size-small .large-field,
+.view-size-small .servicelink {
+    font-size: 20px;
+}
+
+/********ENDE LS PACKAGE OVERVIEW *******/
+
+
 /*
 .input_field{
     float:right;

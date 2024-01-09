@@ -25,15 +25,17 @@
             this.prevHeight = 0;
 
             // add page specific commands to AppBar
-            var commandList = [
-                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickResetRestriction", label: getResourceText("command.resetRestriction"), tooltip: getResourceText("tooltip.resetRestriction"), section: "primary", svg: "funnel_delete" },
-                { id: "clickSendMessage", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.sendMessage"), section: "primary", svg: "paper_jet2", key: WinJS.Utilities.Key.enter }
-            ];
+            var commandList;
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
                 AppData._persistentStates.leadsuccessBasic) {
                 commandList = [
                     { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+                ];
+            } else {
+                commandList = [
+                    { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                    { id: "clickResetRestriction", label: getResourceText("command.resetRestriction"), tooltip: getResourceText("tooltip.resetRestriction"), section: "primary", svg: "funnel_delete" },
+                    { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
                 ];
             }
             this.controller = new Infodesk.Controller(element, commandList);

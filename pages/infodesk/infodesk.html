@@ -11,9 +11,9 @@
     <div class="infodesk fragment">
         <div id="mailingController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-            <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
+                <div class="contentarea win-type-body">
             <div class="header-separator float-left"></div>
-            <div class="content-header float-left">
+                    <div class="content-header float-left" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
                 <div class="half-circle half-circle-textcolor">&nbsp;</div>
                 <div class="content-header-line win-type-caption">
                     <span class="id-field"></span>
@@ -21,6 +21,7 @@
                     <span class="date-field"></span>
                 </div>
             </div>
+                    <div data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
             <div class="field_line field_line_odd"
                  data-win-bind="style.display: messestandData.SkillType1ID Binding.Converter.toDisplay">
                 <span class="label win-type-caption portrait_only" data-win-bind="textContent: messestandData.SkillType1"></span>
@@ -225,10 +226,52 @@
                 <span class="input_small_right" data-win-res="{textContent: 'infodesk.message'}"></span>-->
             </div>
             </div>
-            <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
-                <div class="label-text-message">
-                    <span class="large_field"
-                          data-win-res="{textContent:'general.leadsuccessbasic'}"></span>
+                    <div class="page-content" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
+                        <div class="top">
+                            <div class="ccontainer">
+                                <div class="blockTop">
+                                    <div class="h1">
+                                        <div class="logo alignCenter"><img src="../../images/LeadSuccessLogoOrangeShriftWeissHG.svg" alt="LS Aussteller Portal" /></div>
+
+                                        <span class="large-field"
+                                              data-win-res="{textContent:'general.leadsuccessbasicaccess1'}">
+                                        </span>
+                                        <a class="servicelink" target="_blank" data-win-bind="href: serviceUrl">
+                                            <span data-win-res="{textContent: 'general.servicetext'}"></span>
+                                        </a>
+                                        <span class="large-field"
+                                              data-win-res="{textContent: 'general.leadsuccessbasicaccess2'}">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main">
+                            <div class="ccontainer">
+
+                                <div class="main-image">
+                                    <img data-win-bind="src: imageUrl" alt="LeadSuccess Package" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="ccontainer">
+                                <div class="h1" style="text-align: center;">
+
+                                    <span class="large-field"
+                                          data-win-res="{textContent:'general.leadsuccessinfo1'}">
+                                    </span><br />
+                                    <a class="servicelink" target="_blank" data-win-bind="href: mailUrl">
+                                        <span data-win-res="{textContent: 'general.servicemail'}"></span>
+                                    </a>
+                                    <span class="large-field"
+                                          data-win-res="{textContent: 'general.leadsuccessinfo2'}">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
                 <div class="error-message"

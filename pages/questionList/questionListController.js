@@ -26,7 +26,10 @@
                 questionId: AppData.getRecordId("FragenAntworten"),
                 questiongroupflag: false,
                 dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue),
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;

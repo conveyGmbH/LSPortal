@@ -18,6 +18,9 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
+                imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 doMandatoryShowFlag: null,
                 noticeOn: getResourceText("mandatory.noticeOn"),
                 noticeOff: getResourceText("mandatory.noticeOff")
