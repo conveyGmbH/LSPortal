@@ -612,28 +612,6 @@ select {
     width: 50%;
 }
 
-/*@media (min-height: 1300px) {
-    .page-content {
-        height: 1200px;
-    }
-}
-
-@media (min-height: 1024px) {
-    .page-content { height: 900px; }
-}
-
-.view-size-medium .page-content {
-    height: 900px;
-}
-
-.view-size-medium-small .page-content {
-    height: 700px;
-}
-
-.view-size-small .page-content {
-    height: 550px;
-}*/
-
 .view-size-small .large-field,
 .view-size-small .servicelink {
     font-size: 20px;
