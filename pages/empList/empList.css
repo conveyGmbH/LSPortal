@@ -179,4 +179,6 @@ view-size-smallest #employeeList .win-container {
     text-align: right;
     width: 118%;
 }
-
+.empList .input_group {
+    margin-top: 15px;
+}
