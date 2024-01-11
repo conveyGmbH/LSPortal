@@ -131,7 +131,7 @@
             };
 
             if (thankMail) {
-                this.addRemovableEventListener(thankMail, "change", this.eventHandlers.clickChangeAppSetting.bind(this));
+                this.addRemovableEventListener(thankMail, "click", this.eventHandlers.clickChangeAppSetting.bind(this));
             }
 
             that.processAll().then(function () {
