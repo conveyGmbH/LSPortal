@@ -25,6 +25,8 @@
 
             var that = this;
 
+            var thankMail = pageElement.querySelector("#thankMail");
+
             var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "MailingOptions.Controller.", "toggleId=" + toggleId + " checked=" + checked);
                 var pOptionTypeId = null;
@@ -127,6 +129,10 @@
                     Log.ret(Log.l.trace);
                 }
             };
+
+            if (thankMail) {
+                this.addRemovableEventListener(thankMail, "change", this.eventHandlers.clickChangeAppSetting.bind(this));
+            }
 
             that.processAll().then(function () {
                 return that.loadData();
