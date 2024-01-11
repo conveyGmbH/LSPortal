@@ -23,16 +23,16 @@
                     </div>
                     <div class="fields-container" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
                         <!--<div class="field_line field_line_odd">
-            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingoptions.productMail'}"></span>
-            <span class="label landscape_only" data-win-res="{textContent: 'mailingoptions.productMail'}"></span>
-            <div class="input_field toggle-switch-parent">
-                <div id="productMail" class="input_field"
-                     data-win-control="WinJS.UI.ToggleSwitch"
-                     data-win-bind="winControl.checked: isProductMailOn; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                </div>
-            </div>
-        </div>-->
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingoptions.productMail'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingoptions.productMail'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="productMail" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isProductMailOn; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>
+                            </div>
+                        </div>-->
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingoptions.thankYouMail'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'mailingoptions.thankYouMail'}"></span>
@@ -40,22 +40,22 @@
                                 <div id="thankMail" class="input_field"
                                      data-win-control="WinJS.UI.ToggleSwitch"
                                      data-win-bind="winControl.checked: isThankMailOn; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                 </div>
                             </div>
                         </div>
                         <!--<div class="line-separator"></div>
-        <div class="field_line field_line_odd">
-            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingoptions.nachbearbeitetFlagAutoSetToNull'}"></span>
-            <span class="label landscape_only" data-win-res="{textContent: 'mailingoptions.nachbearbeitetFlagAutoSetToNull'}"></span>
-            <div class="input_field toggle-switch-parent">
-                <div id="nachbearbeitetFlagAutoSetToNull" class="input_field"
-                     data-win-control="WinJS.UI.ToggleSwitch"
-                     data-win-bind="winControl.checked: isNachbearbeitetFlagAutoSetToNull; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
-                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
-                </div>
-            </div>
-        </div>-->
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailingoptions.nachbearbeitetFlagAutoSetToNull'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailingoptions.nachbearbeitetFlagAutoSetToNull'}"></span>
+                            <div class="input_field toggle-switch-parent">
+                                <div id="nachbearbeitetFlagAutoSetToNull" class="input_field"
+                                     data-win-control="WinJS.UI.ToggleSwitch"
+                                     data-win-bind="winControl.checked: isNachbearbeitetFlagAutoSetToNull; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+                                     onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                </div>
+                            </div>
+                        </div>-->
                     </div>
                     <div class="page-content" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
                         <div class="top">
