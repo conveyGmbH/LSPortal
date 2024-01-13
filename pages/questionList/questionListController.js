@@ -380,6 +380,15 @@
                 Log.call(Log.l.trace, "QuestionList.Controller.", "range=" + range);
                 if (that.mouseDown) {
                     Log.print(Log.l.trace, "mouseDown is set!");
+                    if (range && listView && listView.winControl && that.currentlistIndex >= 0) {
+                        var element = listView.winControl.elementFromIndex(that.currentlistIndex);
+                        if (element) {
+                            var rangeOutput = element.querySelector(".answer-count.range_output");
+                            if (rangeOutput) {
+                                rangeOutput.textContent = range.value;
+                            }
+                        }
+                    }
                     WinJS.Promise.timeout(250).then(function () {
                         that.answerCountFromRange(range);
                     });
@@ -919,6 +928,7 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    that.currentlistIndex = item.index;
                                     if (item.data && item.data.FragenAntwortenVIEWID) {
                                         var newRecId = item.data.FragenAntwortenVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
