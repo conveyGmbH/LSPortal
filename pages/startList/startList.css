@@ -1,7 +1,32 @@
-﻿.startList .list-div-left,
-.startList .list-div-right {
-    width: calc(100% - 32px);
-    margin: 0 16px;
+﻿#startList .win-itemcontainer .win-itembox,
+#startList .win-listview .win-itembox {
+    background-color: transparent;
+}
+
+.startList .contentarea {
+    overflow-y: hidden !important;
+}
+
+.startList .content-header {
+    height: auto !important;
+    min-height: 48px;
+}
+
+.startList .master-list-header {
+    min-height: 40px;
+    padding-left: 0;
+}
+
+.startList .master-list-header {
+    height: auto !important;
+}
+
+.startList .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
+
+#startList .list-header {
+    font-weight: bold;
 }
 
 .startList .grayed-out {
@@ -11,55 +36,73 @@
 .startList .semibold {
     font-weight: 600;
 }
+
 /* Styles used for the custom layout */
 .listView .startListLayout {
     position: static;
 }
 
-    .listView .startListLayout .win-surface {
-        margin-left: 0;
-    }
-
-#startList .win-container {
-    margin: 0;
-}
-#startList .win-itembox {
-    width: 100%;
-    min-height: 60px;
-}
-
-#startList .win-container {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    margin-bottom: 0;
-    border-radius: 0;
-    background-color: transparent;
-}
-
-#startList .win-surface {
-    margin-top: 0;
+.listView .startListLayout .win-surface {
     margin-left: 0;
 }
 
-#startList.listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 72px);
+#startList .win-container {
+    margin: 0;
 }
-.view-size-smallest #startList .win-item {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+
+#startList .win-item,
+#startList .list-header {
+    padding-left: 26px;
+    padding-right: 26px;
+    min-height: 40px;
+    width: auto;
     padding-top: 4px;
     padding-bottom: 4px;
 }
-.startList .list-div-left {
-    width: 100%
+
+.view-size-medium #startList .win-item,
+.view-size-medium #startList .list-header {
+    padding-left: 18px;
+    padding-right: 18px;
 }
-.startList #nameInitialcircle {
+
+.view-size-small #startList .win-item,
+.view-size-small #startList .list-header {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.view-size-smallest #startList .win-item,
+.view-size-smallest #startList .list-header {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.startList .content-header .master-list-header {
+    margin-top: 16px;
+}
+
+.view-size-smallest .startList .content-header .field_line {
+    display: none !important;
+}
+
+.startList .list-compressed-title.win-type-body {
+    line-height: 1;
+}
+
+view-size-smallest #startList .win-container {
+    width: 100% !important;
+    padding-left: 0;
+}
+
+.view-size-smallest .startList .list-div-left,
+.view-size-smallest .startList .list-div-right {
+    width: 100%;
+    margin: 0;
+}
+
+#startList #nameInitialcircle {
     display: inline-block;
     width: 45px;
     height: 45px;
@@ -70,3 +113,4 @@
     line-height: 45px;
     font-weight: bold;
 }
+
