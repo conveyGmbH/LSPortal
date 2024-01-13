@@ -1,33 +1,28 @@
-﻿.fields-container {
-    width: 100%;
-    height: auto;
-}
-
-#startdate {
+﻿#clientmanagementlicenseslist #startdate {
     width: 100px;
     text-align: center;
 }
 
-#enddate {
+#clientmanagementlicenseslist #enddate {
     width: 100px;
     text-align: center;
 }
 
-#event {
+#clientmanagementlicenseslist #event {
     width: 300px;
     text-align: left;
 }
 
-#licenses {
+#clientmanagementlicenseslist #licenses {
     width: 100px;
     text-align: center;
 }
 
-.win-itemscontainer {
+#clientmanagementlicenseslist .win-itemscontainer {
     padding-left: 20px;
 }
 
-.list-field-small-fixed {
+#clientmanagementlicenseslist .list-field-small-fixed {
     width: 300px;
     padding-left: 20px;
 }
@@ -37,19 +32,14 @@
     height: auto;
 }
 
-.list-header {
+#clientmanagementlicenseslist .list-header {
     padding-left: 27px;
     font-weight: bold;
 }
-.input {
-    
+#clientmanagementlicenseslist .input {
 }
-#licensesupdatedialog {
-   
+#clientmanagementlicenseslist #licensesupdatedialog {
 }
-.inputPlaceholder {
-   
-}
-.list-footer {
+#clientmanagementlicenseslist .list-footer {
     margin-left: 22px;
 }

@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="editPlaceholder">
+                    <div class="headerFooterPlaceholder">
                         <div class="edit">
                             <div class="field_line" data-win-bind="style.display: editLicensesShowFlag Binding.Converter.toDisplay">
                                 <div class="field_line field_line_odd" id="licenseseditdialog">
@@ -75,20 +75,18 @@
                                     </select>
                                     <br />
                                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br/>
-                                    <input class="input_small_left win-textbox" type="number" data-win-bind="value: dataLicense.NumLicenses Binding.Mode.twoway" min="1" max="100"/><br/><br/>
+                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
+                                    <input class="input_small_left win-textbox" type="number" data-win-bind="value: dataLicense.NumLicenses Binding.Mode.twoway" min="1" max="100" /><br /><br />
                                     <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
                                     <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
-                                    <textarea class="input_field win-textarea input_text_comment" id="editinfoText" data-win-bind="value: dataLicense.InfoText Binding.Mode.twoway"></textarea><br/><br/>
-                                    <br/>
+                                    <textarea class="input_field win-textarea input_text_comment" id="editinfoText" data-win-bind="value: dataLicense.InfoText Binding.Mode.twoway"></textarea><br /><br />
+                                    <br />
                                     <button class="order-button win-button"
                                             data-win-bind="textContent: editlicensebtnLabel;"
                                             onclick="AppBar.handleEvent('click', 'clickEditVeranstaltungLicenses', event)"></button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="inputPlaceholder">
                         <div class="input">
                             <div class="field_line" data-win-bind="style.display: newLicensesShowFlag Binding.Converter.toDisplay">
                                 <div class="field_line field_line_odd" id="licensesupdatedialog">
@@ -114,8 +112,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
@@ -136,7 +132,6 @@
                                 footer: select('.list-footer')
                          }">
                     </div>
-                    
                     <div class="error-message"
                          data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
                 </div>
