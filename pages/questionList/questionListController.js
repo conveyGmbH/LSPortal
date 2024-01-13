@@ -445,26 +445,36 @@
                     if (curScope && curScope.item) {
                         var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
+                            var saveResponse = null;
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = QuestionList.questionListView.update(function (response) {
+                                // called asynchronously if ok
                                 Log.print(Log.l.info, "questionListView update: success!");
+                                saveResponse = response;
                                 if (that.questions) {
                                     that.resultConverter(curScope.item, curScope.index);
                                     that.questions.setAt(curScope.index, curScope.item);
                                 }
-                                AppData.getUserData();
                                 AppBar.modified = false;
-                                // called asynchronously if ok
-                                if (typeof complete === "function") {
-                                    complete(response);
-                                    that.checkingQuestionnaireBarcodePdf();
-                                }
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                            }, recordId, curScope.item);
+                            }, recordId, curScope.item).then(function () {
+                                if (saveResponse) {
+                                    return AppData.getUserData();
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            }).then(function () {
+                                if (saveResponse) {
+                                    that.checkingQuestionnaireBarcodePdf();
+                                    if (typeof complete === "function") {
+                                        complete(saveResponse);
+                                    }
+                                }
+                            });
                         } else {
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
                         }

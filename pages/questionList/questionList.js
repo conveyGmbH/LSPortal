@@ -77,44 +77,30 @@
         canUnload: function (complete, error) {
             Log.call(Log.l.trace, pageName + ".");
             var ret = null;
-            var confirmTitle = getResourceText("publish.publishText");
             if (this.controller) {
-                var saveResponse = null;
                 var that = this;
-                ret = this.controller.saveData(function (response) {
+                ret = this.controller.saveData(function (saveResponse) {
                     // called asynchronously if ok
-                    saveResponse = response;
-                }, function (errorResponse) {
-                    error(errorResponse);
-                }).then(function () {
-                    if (saveResponse && AppData.generalData.publishFlag === 1) {
-                        return confirm(confirmTitle, function (result) {
-                            // called asynchronously if user-choice
-                            if (!result) {
+                    if (AppData.generalData.publishFlag === 1) {
+                        var confirmTitle = getResourceText("publish.publishText");
+                        confirm(confirmTitle).then(function (result) {
+                            if (result && that.controller) {
+                                that.controller.publish(function (response) {
+                                    AppData.getUserData().then(function() {
+                                        complete(response);
+                                    });
+                                }, function (errorResponse) {
+                                    error(errorResponse);
+                                });
+                            } else {
                                 complete(saveResponse);
                             }
-                            return result;
                         });
                     } else {
-                        if (saveResponse) {
-                            complete(saveResponse);
-                        }
-                        return WinJS.Promise.as();
+                        complete(saveResponse);
                     }
-                }).then(function (result) {
-                    if (result) {
-                        if (that.controller) {
-                            return that.controller.publish(function(response) {
-                                AppData.getUserData();
-                             complete(response);
-                        },
-                        function(errorResponse) {
-                             error(errorResponse);
-                         });
-                        }
-                    } else {
-                        return WinJS.Promise.as();
-                    }
+                }, function (errorResponse) {
+                    error(errorResponse);
                 });
             }
             return ret || WinJS.Promise.as();
