@@ -179,6 +179,7 @@
                         if (json && json.d) {
                             var prevUserData = AppData._userData;
                             AppData._userData = json.d;
+                            AppData.setRecordId("Veranstaltung", AppData._userData.VeranstaltungID);
                             if (!AppData.generalUserView.isLocal) {
                                 AppData._userData.AnzLokaleKontakte = AppData._userData.AnzVersendeteKontakte;
                             }
