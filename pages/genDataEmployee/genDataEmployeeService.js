@@ -46,7 +46,7 @@
                 LogInNameBeforeAtSymbol: "",
                 LogInNameAfterAtSymbol: "", 
                 Password: "",
-                VeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                VeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                 INITAPUserRoleID: 3,
                 Password2: ""
             },

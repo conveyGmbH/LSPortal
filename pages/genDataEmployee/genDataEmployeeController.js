@@ -481,8 +481,13 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     if (event.target.value) {
                         that.binding.restriction.VeranstaltungID = event.target.value;
+                        // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                        AppData.setRecordId("Veranstaltung2",
+                            (typeof that.binding.restriction.VeranstaltungID === "string") ?
+                                parseInt(that.binding.restriction.VeranstaltungID) : that.binding.restriction.VeranstaltungID);
                     } else {
                         delete that.binding.restriction.VeranstaltungID;
+                        AppData.setRecordId("Veranstaltung2", 0);
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;

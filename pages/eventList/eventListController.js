@@ -266,6 +266,8 @@
                                             }
                                             that.curRecId = newRecId;
                                             that.binding.eventId = newRecId;
+                                            // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                            AppData.setRecordId("Veranstaltung2", that.binding.eventId);
 
                                             if (AppBar.modified && AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
@@ -448,7 +450,8 @@
                                 listView.winControl.itemDataSource = that.records.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            var recordId = AppData.getRecordId("Veranstaltung");
+                            // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                            var recordId = AppData.getRecordId("Veranstaltung2");
                             if (recordId) {
                                 if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
                                     AppBar.scope.setEventId(recordId);
@@ -499,6 +502,9 @@
                 return ret;
             };
             this.loadData = loadData;
+
+            // initially set selection to own eventId!
+            AppData.setRecordId("Veranstaltung2", AppData.getRecordId("Veranstaltung"));
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
