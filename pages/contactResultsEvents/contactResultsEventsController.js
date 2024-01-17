@@ -301,21 +301,6 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                /*}).then(function () {
-                    var curVID = AppData.getRecordId("Veranstaltung");
-                    var selVID = AppData.getRecordId("KontaktEventID");
-                    if (curVID !== selVID) {
-                        NavigationBar.disablePage("contactResultsQuestion");
-                        NavigationBar.disablePage("contactResultsAttach");
-                        NavigationBar.disablePage("contactResultsCriteria");
-                        NavigationBar.disablePage("contactResultsEdit");
-                    } else {
-                        NavigationBar.enablePage("contactResultsQuestion");
-                        NavigationBar.enablePage("contactResultsAttach");
-                        NavigationBar.enablePage("contactResultsCriteria");
-                        NavigationBar.enablePage("contactResultsEdit");
-                    }
-                    AppBar.notifyModified = true;*/
                 });
                 Log.ret(Log.l.trace);
                 return ret;

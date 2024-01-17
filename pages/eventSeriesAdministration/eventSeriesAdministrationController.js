@@ -366,7 +366,7 @@
             that.setEventId = setEventId;
 
             var master = Application.navigator.masterControl;
-            if (master && master.controller && master.controller.binding) {
+            if (master && master.controller && master.controller.binding && master.controller.binding.eventId) {
                 that.setEventId(master.controller.binding.eventId);
             } else {
                 that.setEventId(AppData.getRecordId("Veranstaltung"));
