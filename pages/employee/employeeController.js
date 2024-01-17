@@ -670,13 +670,8 @@
                             };
                         }
                         alert(getResourceText("employee.alertNewLoginPassword"), function (response) {
-                            // always call 
-                            if (typeof complete === "function") {
-                                complete(dataEmployee);
-                            }
-                            Application.navigateById("login");
+                            return Application.navigateById("login");
                         });
-                        return WinJS.Promise.as();
                     } else {
                         var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                         if (empRolesFragmentControl && empRolesFragmentControl.controller) {
