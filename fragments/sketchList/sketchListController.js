@@ -442,6 +442,8 @@
                                         that.binding.DocFormat = row.DocFormat;
                                     }
                                 });
+                            } else {
+                                return WinJS.Promise.as();
                             }
                         } else {
                             return WinJS.Promise.as();
@@ -456,7 +458,7 @@
                     }
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
-                    return WinJS.Promise.as();
+                    that.forceLayout();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -465,9 +467,11 @@
 
             var forceLayout = function() {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                if (listView && listView.winControl) {
-                    listView.winControl.forceLayout();
-                }
+                WinJS.Promise.timeout(0).then(function() {
+                    if (listView && listView.winControl) {
+                        listView.winControl.forceLayout();
+                    }
+                });
                 Log.ret(Log.l.trace);
             }
             that.forceLayout = forceLayout;
