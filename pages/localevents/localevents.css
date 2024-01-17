@@ -7,7 +7,7 @@
     font-weight: bold;
     display: flex;
 }
-pagecontrol:not(.view-size-bigger) #localevents .win-headercontainer {
+.pagecontrol:not(.view-size-bigger) #localevents .win-headercontainer {
     position: sticky;
     top: 0;
     z-index: 1;

@@ -70,7 +70,7 @@
     overflow: auto;
     max-height: 400px; /* Set a maximum height or adjust as needed */
 }
-pagecontrol:not(.view-size-bigger) #genFragEvents .win-headercontainer {
+.pagecontrol:not(.view-size-bigger) #genFragEvents .win-headercontainer {
     position: sticky;
     top: 0;
     z-index: 1;

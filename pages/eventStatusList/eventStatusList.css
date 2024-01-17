@@ -30,7 +30,7 @@
     display: flex;
 }
 
-pagecontrol:not(.view-size-bigger) #eventstatuslist .win-headercontainer {
+.pagecontrol:not(.view-size-bigger) #eventstatuslist .win-headercontainer {
     position: sticky;
     top: 0;
     z-index: 1;
