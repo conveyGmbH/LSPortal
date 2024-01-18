@@ -1031,6 +1031,7 @@
     "siteevents.standsize" : "Dimensioni dello stand",
     "siteevents.dunsnumber" : "DUNS Numero",
     "siteevents.auswertungsvariante" : "Variante di valutazione",
+    "siteevents.ordernumber" : "Numero d'ordine",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",

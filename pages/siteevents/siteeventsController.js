@@ -118,6 +118,7 @@
                 that.binding.dataSiteeventsHeaderText.StandSize = getResourceText("siteevents.standsize");
                 that.binding.dataSiteeventsHeaderText.DUNSNumber = getResourceText("siteevents.dunsnumber");
                 that.binding.dataSiteeventsHeaderText.Auswertungsvariante = getResourceText("siteevents.auswertungsvariante");
+                that.binding.dataSiteeventsHeaderText.OrderNumber = getResourceText("siteevents.ordernumber");
                //value part
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Name = 1;
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Ansprechpartner = 2;
@@ -140,6 +141,7 @@
                 that.binding.dataSiteeventsHeaderValue.StandSize = 19;
                 that.binding.dataSiteeventsHeaderValue.DUNSNumber = 20;
                 that.binding.dataSiteeventsHeaderValue.Auswertungsvariante = 21;
+                that.binding.dataSiteeventsHeaderValue.OrderNumber = 22;
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
@@ -188,6 +190,8 @@
                         return "DUNSNumber";
                     case getResourceText("siteevents.auswertungsvariante"):
                         return "Auswertungsvariante";
+                    case getResourceText("siteevents.ordernumber"):
+                        return "OrderNumber";
                 default:
                 }
             }
@@ -288,6 +292,9 @@
                     }
                     if (cells[i].title === "21") {
                         cells[i].title = getResourceText("siteevents.auswertungsvariante");
+                    }
+                    if (cells[i].title === "22") {
+                        cells[i].title = getResourceText("siteevents.ordernumber");
                     }
                 }
             }
@@ -829,7 +836,8 @@
                             pRecordID: recordId,
                             pLanguageSpecID: AppData.getLanguageId(),
                             pExportType: "ExhibitorList",
-                            psyncRun: 1
+                            psyncRun: 1,
+                            pFilter: that.searchStringData
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             if (json && json.d && json.d.results.length > 0) {
