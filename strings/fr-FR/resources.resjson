@@ -1032,6 +1032,7 @@
     "siteevents.questionnairestatus" : "Questionnaire Statut",
     "siteevents.numberofemailssent" : "Nombre d'e-mails envoyés",
     "siteevents.lastlogintotheportal" : "Dernière connexion au portail",
+    "siteevents.ordernumber" : "Numéro d'ordre",
 
     "siteeventsneuaus.title" : "Nouvel exposant",
     "siteeventsneuaus.veranstaltungsname" : "nom de l'événement",

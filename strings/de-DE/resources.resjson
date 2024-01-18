@@ -1034,6 +1034,7 @@
     "siteevents.standsize" : "Standgröße",
     "siteevents.dunsnumber" : "DUNS Nummer",
     "siteevents.auswertungsvariante" : "Auswertungsvariante",
+    "siteevents.ordernumber" : "Bestellnummer",
 
 
     "siteeventsneuaus.title" : "Neuer Aussteller",
