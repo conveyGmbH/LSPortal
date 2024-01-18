@@ -77,7 +77,8 @@
             FairMandant_CustomerID: "",
             StandSize: "",
             DUNSNumber: "",
-            Auswertungsvariante: ""
+            Auswertungsvariante: "",
+            OrderNumber: ""
         },
         defaultHeaderLabelRestriction: {
             FairMandant_NameLabel: "",
@@ -100,7 +101,8 @@
             FairMandant_CustomerID: "",
             StandSize: "",
             DUNSNumber: "",
-            Auswertungsvariante: ""
+            Auswertungsvariante: "",
+            OrderNumber: ""
         },
         _registrationView: {
             get: function () {
