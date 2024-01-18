@@ -1929,15 +1929,17 @@ html.win-hoverable .win-itemcontainer.win-selectionstylefilled.win-container.win
 }
 @-moz-document url-prefix() {
     .win-flipview > div > .win-surface.win-horizontal {
-        height: calc(100% + 16px);
-        margin-bottom: -16px;
+        height: calc(100% + 18px) !important;
+        margin-bottom: -18px !important;
     }
+
     .win-flipview > div > .win-surface.win-vertical:not(:dir(rtl)) {
-        width: calc(100% + 16px);
-        margin-right: -16px;
+        width: calc(100% + 18px) !important;
+        margin-right: -18px !important;
     }
+
     .win-flipview > div > .win-surface.win-vertical:dir(rtl) {
-        width: calc(100% + 16px);
-        margin-left: -16px;
+        width: calc(100% + 18px) !important;
+        margin-left: -18px !important;
     }
 }
