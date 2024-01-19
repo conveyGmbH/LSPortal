@@ -1,14 +1,14 @@
 
 .sketchfragmenthost {
     width: 100%;
-    height: calc(100% - 170px);
+    height: calc(100% - 190px);
     z-index: 4;
 }
 
 
 .listfragmenthost {
     width: 100%;
-    height: 170px;
+    height: 190px;
     position: absolute;
     bottom: 0;
     z-index: 5;

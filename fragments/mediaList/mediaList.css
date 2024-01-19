@@ -7,10 +7,11 @@
 }
 
 #mediaListController .contentarea .win-type-body {
-    height: 170px;
+    height: 190px;
+    overflow-y: hidden;
 }
 .mediaList .contentarea .win-type-body .win-listview {
-    height: 170px;
+    height: 190px;
 }
 
 .mediaList .list-img {
@@ -23,6 +24,7 @@
     width: 150px;
     height: 150px;
     display: block;
+    background-color: #fff;
 }
 
 .mediaList .list-icon {
@@ -32,10 +34,11 @@
 }
 
 .mediaList .list-img-item {
-    width: 0;
-    height: 0;
-    margin-left: 0;
-    margin-top: 0;
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    margin-left: auto;
+    margin-top: auto;
 }
 
 .mediaList .list-svg-item {
@@ -43,6 +46,9 @@
     height: auto;
     max-width: 150px;
     max-height: 150px;
+    background-color: #fff;
+    margin-left: auto;
+    margin-top: auto;
 }
 
 .mediaList .list-icon-item {
@@ -54,16 +60,42 @@
 }
 
 .mediaList .list-caption-container {
-    height: 40px;
+    height: 28px;
     bottom: 0;
     position: absolute;
     display: block;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(242, 242, 242, 0.9);
     width: 100%;
     text-align: center;
+    padding-bottom: 4px;
 }
-.mediaList .list-caption {
-    width: 100%;
-    text-align: center;
-    color: #101010;
+
+.mediaList .win-itembox:hover .list-caption-container {
+    background-color: rgba(242, 242, 242, 0.8);
+}
+.mediaList .win-selected .list-caption-container,
+.mediaList .win-itembox:active .list-caption-container {
+    background-color: rgba(242, 242, 242, 0.6);
+}
+
+.cnv-ui-dark .mediaList .list-caption-container {
+    background-color: rgba(57, 57, 57, 0.9);
+}
+
+.cnv-ui-dark .mediaList .win-itembox:hover .list-caption-container {
+    background-color: rgba(57, 57, 57, 0.8);
+}
+.cnv-ui-dark .mediaList .win-selected .list-caption-container,
+.cnv-ui-dark .mediaList .win-itembox:active .list-caption-container {
+    background-color: rgba(57, 57, 57, 0.6);
+}
+
+.mediaList .win-itembox:active .list-caption-container > .label-color,
+.mediaList .win-selected .list-caption-container > .label-color {
+    color: #000;
+}
+
+.cnv-ui-dark .mediaList .win-itembox:active .list-caption-container > .label-color,
+.cnv-ui-dark .mediaList .win-selected .list-caption-container > .label-color {
+    color: #fff;
 }

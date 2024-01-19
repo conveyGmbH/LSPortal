@@ -9,11 +9,11 @@
 }
 
 #sketchListController .contentarea .win-type-body {
-    height: 170px;
+    height: 190px;
     overflow-y: hidden;
 }
 .sketchList .contentarea .win-type-body .win-listview {
-    height: 170px;
+    height: 190px;
 }
 
 .sketchList .list-img {
@@ -36,10 +36,11 @@
 }
 
 .sketchList .list-img-item {
-    width: 0;
-    height: 0;
-    margin-left: 0;
-    margin-top: 0;
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    margin-left: auto;
+    margin-top: auto;
 }
 
 .sketchList .list-svg-item {
@@ -47,6 +48,9 @@
     height: auto;
     max-width: 150px;
     max-height: 150px;
+    background-color: #fff;
+    margin-left: auto;
+    margin-top: auto;
 }
 
 .sketchList .list-icon-item {
@@ -58,16 +62,41 @@
 }
 
 .sketchList .list-caption-container {
-    height: 40px;
+    height: 28px;
     bottom: 0;
     position: absolute;
     display: block;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(242, 242, 242, 0.9);
     width: 100%;
     text-align: center;
-}
-.sketchList .list-caption {
-    color: #101010;
+    padding-bottom: 4px;
 }
 
+.sketchList .win-itembox:hover .list-caption-container {
+    background-color: rgba(242, 242, 242, 0.8);
+}
+.sketchList .win-selected .list-caption-container,
+.sketchList .win-itembox:active .list-caption-container {
+    background-color: rgba(242, 242, 242, 0.6);
+}
 
+.cnv-ui-dark .sketchList .list-caption-container {
+    background-color: rgba(57, 57, 57, 0.9);
+}
+
+.cnv-ui-dark .sketchList .win-itembox:hover .list-caption-container {
+    background-color: rgba(57, 57, 57, 0.8);
+}
+.cnv-ui-dark .sketchList .win-selected .list-caption-container,
+.cnv-ui-dark .sketchList .win-itembox:active .list-caption-container {
+    background-color: rgba(57, 57, 57, 0.6);
+}
+
+.sketchList .win-itembox:active .list-caption-container > .label-color,
+.sketchList .win-selected .list-caption-container > .label-color {
+    color: #000;
+}
+.cnv-ui-dark .sketchList .win-itembox:active .list-caption-container > .label-color,
+.cnv-ui-dark .sketchList .win-selected .list-caption-container > .label-color {
+    color: #fff;
+}
