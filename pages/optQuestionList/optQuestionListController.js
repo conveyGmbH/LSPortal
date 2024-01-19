@@ -433,17 +433,14 @@
                 clickNew: function () {
                     // never disabled!
                     var bHasNew = false;
-                    if (AppHeader.controller.binding.userData.SiteAdmin ||
-                        AppData._persistentStates.leadsuccessBasic) {
                         if (that.records && that.records.length > 0) {
                             var item = that.records.getAt(that.records.length - 1);
-                            if (item && !item.CR_PFFragenAntwortenVIEWID) {
+						if (item && !item.CR_OptFragenAntwortenVIEWID) {
                                 bHasNew = true;
                             }
-                        }
                         return bHasNew || AppBar.busy;
                     } else {
-                        return true;
+                        return false;
                     }
                 },
                 clickOk: function () {
