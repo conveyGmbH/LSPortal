@@ -134,7 +134,7 @@
                                         docWidth = fieldWidth - 16;
                                     }
                                 } else {
-                                    fieldWidth = width - 16;
+                                    fieldWidth = width;
                                     docWidth = 0;
                                 }
                             } else {
