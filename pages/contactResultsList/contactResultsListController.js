@@ -185,10 +185,6 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            var listHeader = listView.querySelector(".list-header");
-                            if (listHeader) {
-                                listHeader.style.backgroundColor = Colors.backgroundColor;
-                            }
                             //set list-order column
                             var headerListFields = listView.querySelectorAll(".list-header-columns > div");
                             if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
