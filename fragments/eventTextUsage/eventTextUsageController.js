@@ -50,6 +50,18 @@
             }
             this.checkForWheelEnd = checkForWheelEnd;
 
+            this.dispose = function () {
+                if (checkForWheelEndPromise) {
+                    checkForWheelEndPromise.cancel();
+                }
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
+                }
+                if (that.textUsage) {
+                    that.textUsage = null;
+                }
+            }
+
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -63,7 +75,7 @@
                                     var item = items[0];
                                     Log.print(Log.l.trace, "item.data.INITDokVerwendungID=" + (item.data && item.data.INITDokVerwendungID));
                                     if (item.data && item.data.INITDokVerwendungID &&
-                                        AppBar.scope && 
+                                        AppBar.scope &&
                                         typeof AppBar.scope.loadData === "function" &&
                                         typeof AppBar.scope.getEventTextUsageId === "function" &&
                                         typeof AppBar.scope.setEventTextUsageId === "function" &&
@@ -131,7 +143,7 @@
                                     wheelValue = Math.abs(eventInfo.wheelDelta || 0);
                                 }
                                 if (wheelValue) {
-                                    wheelValueFactor = 10000 / wheelValue;
+                                    wheelValueFactor = Math.min(10000 / wheelValue, 120);
                                 }
                                 touchPhysics.processDown(MANIPULATION_PROCESSOR_MANIPULATIONS.MANIPULATION_TRANSLATE_X, 0, 0);
                                 WinJS.Promise.timeout(TouchPhysics.wheelStartTimerMs).then(function() {
@@ -160,48 +172,54 @@
             this.eventHandlers = eventHandlers;
 
             var scrollIntoView = function (curIndex) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                Log.call(Log.l.u1, namespaceName + ".Controller.");
                 if (listView && listView.winControl) {
                     var listControl = listView.winControl;
                     var containers = listView.querySelectorAll(".win-container");
-                    if (containers && containers.length === that.textUsage.length && containers[0]) {
+                    if (containers && that.textUsage && containers.length === that.textUsage.length && containers[0]) {
                         var surface = listView.querySelector(".win-surface");
                         if (surface) {
                             var overflow = surface.clientWidth - listView.clientWidth;
                             if (overflow > 0) {
+                                var doScroll = true;
                                 var containersWidth = 0;
-                                for (var i = 0; i < curIndex; i++) {
-                                    containersWidth += containers[i].clientWidth;
-                                    if (i === curIndex - 1) {
-                                        if (containersWidth - Math.max(60, containers[i].clientWidth / 4) < listControl.scrollPosition) {
-                                            containersWidth -= Math.max(60, containers[i].clientWidth / 4);
-                                        } else if (containersWidth + containers[curIndex].clientWidth +
-                                            ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].clientWidth / 4) : 0) -
-                                            listView.clientWidth > listControl.scrollPosition) {
-                                            containersWidth += containers[curIndex].clientWidth +
-                                                ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].clientWidth / 4) : 0) -
-                                                listView.clientWidth;
-                                        } else {
-                                            Log.ret(Log.l.u1, "extra ignored");
-                                            return;
-                                        }
+                                var i = curIndex - 1;
+                                if (i >= 0 && i < containers.length - 1) {
+                                    containersWidth = containers[curIndex].offsetLeft;
+                                    var margin = containers[curIndex].offsetLeft -
+                                        (containers[i].offsetLeft + containers[i].offsetWidth);
+                                    if (containersWidth - Math.max(60, containers[i].offsetWidth / 4) < listControl.scrollPosition) {
+                                        containersWidth -= Math.max(60, containers[i].offsetWidth / 4);
+                                    } else if (containersWidth + containers[curIndex].offsetWidth +
+                                        ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].offsetWidth / 4) : margin) -
+                                        listView.clientWidth > listControl.scrollPosition) {
+                                        containersWidth += containers[curIndex].offsetWidth +
+                                            ((curIndex + 1 < containers.length) ? Math.max(60, containers[curIndex + 1].offsetWidth / 4) : margin) -
+                                            listView.clientWidth;
+                                    } else {
+                                        Log.ret(Log.l.u1, "extra ignored");
+                                        doScroll = false;
                                     }
                                 }
-                                var scrollPosition = Math.floor(containersWidth);
-                                if (scrollPosition < 0) {
-                                    scrollPosition = 0;
-                                } else if (scrollPosition > overflow) {
-                                    scrollPosition = overflow;
-                                }
-                                if (listControl.scrollPosition !== scrollPosition) {
-                                    var prevScrollPosition = listControl.scrollPosition;
-                                    listControl.scrollPosition = scrollPosition;
-                                    if (doScrollIntoViewAnimation) {
-                                        var animationDistanceX = (scrollPosition - prevScrollPosition) / 3;
-                                        var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
-                                        WinJS.UI.Animation.enterContent(surface, animationOptions).done(function() {
-                                            doScrollIntoViewAnimation = false;
-                                        });
+                                if (doScroll) {
+                                    var scrollPosition = Math.floor(containersWidth);
+                                    if (scrollPosition < 0) {
+                                        scrollPosition = 0;
+                                    } else if (scrollPosition > overflow) {
+                                        scrollPosition = overflow;
+                                    }
+                                    if (listControl.scrollPosition !== scrollPosition) {
+                                        if (doScrollIntoViewAnimation) {
+                                            var prevScrollPosition = listControl.scrollPosition;
+                                            var animationDistanceX = (scrollPosition - prevScrollPosition) / 3;
+                                            var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
+                                            listControl.scrollPosition = scrollPosition;
+                                            WinJS.UI.Animation.enterContent(surface, animationOptions).done(function () {
+                                                doScrollIntoViewAnimation = false;
+                                            });
+                                        } else {
+                                            listControl.scrollPosition = scrollPosition;
+                                        }
                                     }
                                 }
                             }

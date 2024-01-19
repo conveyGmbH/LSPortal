@@ -372,7 +372,7 @@
                                     pinchElement.style.touchAction = "pan-x pan-y";
                                 }
                             }
-                            WinJS.Promise.timeout(0).then(function () {
+                            WinJS.Promise.timeout(10).then(function () {
                                 var ret = null;
                                 if (AppBar.scope) {
                                     var pageElement = AppBar.scope.pageElement;
@@ -385,7 +385,7 @@
                                         }
                                     }
                                 }
-                                return ret || WinJS.Promise.as();
+                                return ret || WinJS.Promise.timeout(10);
                             }).then(function () {
                                 imgRotation = 0;
                                 imgScale = 1;
@@ -404,24 +404,40 @@
                                 }
                                 imageItemBox.appendChild(that.img);
 
-                                /*var animationDistanceX = imgWidth / 4;
+                                /*var photoViewport = fragmentElement.querySelector("#notePhoto .win-viewport");
+                                if (photoViewport && photoViewport.style) {
+                                    photoViewport.style.overflow = "hidden";
+                                }
+                                var animationDistanceX = imgWidth / 4;
                                 var animationOptions = { top: "0px", left: animationDistanceX.toString() + "px" };
                                 if (that.img.style) {
                                     that.img.style.visibility = "";
                                 }
                                 WinJS.UI.Animation.enterContent(that.img, animationOptions).then(function () {
+                                    if (photoViewport && photoViewport.style) {
+                                        photoViewport.style.overflow = "";
+                                    }
                                     if (that.img.style) {
                                         that.img.style.display = "";
                                         that.img.style.position = "";
                                     }
-                                    while (imageItemBox.childElementCount > 1) {
-                                        oldElement = imageItemBox.firstElementChild || imageItemBox.firstChild;
+                                    while (photoItemBox.childElementCount > 1) {
+                                        oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                                         if (oldElement) {
-                                            imageItemBox.removeChild(oldElement);
+                                            photoItemBox.removeChild(oldElement);
                                             oldElement.innerHTML = "";
                                         }
                                     }
                                 });
+                                if (photoItemBox.childElementCount > 1) {
+                                    WinJS.Promise.timeout(50).then(function () {
+                                        oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                        if (oldElement) {
+                                            animationOptions.left = (-animationDistanceX).toString() + "px";
+                                            WinJS.UI.Animation.exitContent(oldElement, animationOptions);
+                                        }
+                                    });
+                                }
                                 */
                                 if (that.img.style) {
                                     that.img.style.visibility = "";
@@ -457,19 +473,23 @@
                 Log.ret(Log.l.trace);
             }
 
-            /*var showImageAfterResize = function () {
+            var showImageAfterResize = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                var fragmentControl = fragmentElement.winControl;
-                if (fragmentControl && fragmentControl.updateLayout) {
-                    fragmentControl.prevWidth = 0;
-                    fragmentControl.prevHeight = 0;
-                    var promise = fragmentControl.updateLayout.call(fragmentControl, fragmentElement) || WinJS.Promise.as();
-                    promise.then(function () {
-                        showImage();
-                    });
-                }
+                var ret = WinJS.Promise.timeout(10).then(function () {
+                    var promise = null;
+                    var fragmentControl = fragmentElement.winControl;
+                    if (fragmentControl && fragmentControl.updateLayout) {
+                        fragmentControl.prevWidth = 0;
+                        fragmentControl.prevHeight = 0;
+                        promise = fragmentControl.updateLayout.call(fragmentControl, fragmentElement) || WinJS.Promise.as();
+                        promise.then(function () {
+                            showImage();
+                        });
+                    }
+                    return promise || WinJS.Promise.as();
+                });
                 Log.ret(Log.l.trace);
-            }*/
+            }
 
             var loadData = function (docId) {
                 var ret = null;
@@ -487,8 +507,7 @@
                             if (hasDoc()) {
                                 Log.print(Log.l.trace, "IMG Element: " + getDocData().substr(0, 100) + "...");
                             }
-                            //showImageAfterResize();
-                            showImage();
+                            showImageAfterResize();
                         }
                     },
                     function(errorResponse) {

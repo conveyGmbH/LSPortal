@@ -1,13 +1,13 @@
-﻿#imgMediaController .doc-container {
+﻿.imgMedia .doc-container {
     float: left;
 }
 
-#imgDoc.imgview {
+.imgMedia .imgview {
     width: 100%;
     height: 100%;
 }
 
-#imgDoc.imgview > .win-viewport {
+.imgMedia .imgview > .win-viewport {
     width: 100%;
     height: 100%;
     overflow-x: auto;
@@ -16,13 +16,13 @@
     -webkit-transform: translateZ(0);
 }
 
-#imgDoc.imgview .win-itembox img {
+.imgMedia .imgview .win-itembox img {
     -webkit-filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.6));
     filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.6));
     background-color: transparent;
 }
 
-#imgDoc.imgview .win-itembox img.cnv-ui-dark {
+.imgMedia .imgview .win-itembox img.cnv-ui-dark {
     -webkit-filter: drop-shadow(4px 8px 12px #000000);
     filter: drop-shadow(4px 8px 12px #000000);
     background-color: transparent;

@@ -81,7 +81,7 @@
                                         listControl.selection.getItems().done(function(items) {
                                             var item = items[0];
                                             if (item) {
-                                                that.controller.scrollIntoView(item);
+                                                that.controller.scrollIntoView(item.index);
                                             }
                                         });
                                     }
