@@ -7,8 +7,8 @@
     height: 200px;
 }
 */
-#contactResultsList .win-itemcontainer .win-itembox,
-#contactResultsList .win-listview .win-itembox {
+.contactResultsList .win-itemcontainer .win-itembox,
+.contactResultsList .win-listview .win-itembox {
     background-color: transparent;
 }
 
