@@ -294,6 +294,7 @@
                                                             AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
                                                         }
                                                     }
+                                                    listControl.ensureVisible(item.index);
                                                 }, function(errorResponse) {
                                                     // error handled in saveData!
                                                 });
@@ -308,6 +309,7 @@
                                                 if (typeof AppBar.scope.loadDoc === "function") {
                                                     AppBar.scope.loadDoc(that.binding.docId, that.binding.docGroup, that.binding.docFormat);
                                                 }
+                                                listControl.ensureVisible(item.index);
                                             }
                                             WinJS.Promise.timeout(50).then(function() {
                                                 Log.print(Log.l.trace, "now update layout...");

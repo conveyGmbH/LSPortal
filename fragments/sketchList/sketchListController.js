@@ -250,6 +250,7 @@
                                                 if (AppBar.scope && typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
                                                 }
+                                                listControl.ensureVisible(item.index);
                                             }, function(errorResponse) {
                                                 // error handled in saveData!
                                             });
@@ -258,6 +259,7 @@
                                             if (AppBar.scope && typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData(that.binding.noteId, that.binding.DocGroup, that.binding.DocFormat);
                                             }
+                                            listControl.ensureVisible(item.index);
                                         }
                                     }
                                 });
