@@ -30,14 +30,6 @@
     padding-top: 48px;
 }
 
-#contactResultsList .listview {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: calc(100% - 56px);
-}
-
 #contactResultsList .win-viewport {
     overflow-x: auto;
 }
