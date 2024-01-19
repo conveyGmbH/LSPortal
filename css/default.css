@@ -589,10 +589,10 @@ select {
     text-decoration: none;
 }
 
-.servicelink:hover {
-    color: #444444;
-    text-decoration: none;
-}
+    .servicelink:hover {
+        color: var(--WindowText);
+        text-decoration: none;
+    }
 
 .view-size-small .top > .ccontainer,
 .view-size-small .footer > .ccontainer {
