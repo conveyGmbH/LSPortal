@@ -13,15 +13,18 @@
 
 (function () {
     "use strict";
+
+    var namespaceName = "Infodesk";
+
     WinJS.Namespace.define("Infodesk", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "Infodesk.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 messestandData: getEmptyDefaultValue(Infodesk.Messestand.defaultValue),
                 restriction: getEmptyDefaultValue(Infodesk.defaultRestriction),
-                dataEmployee: getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue),
+                dataSkillEntry: getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue),
+                dataEmployee: getEmptyDefaultValue(Infodesk.employeeView.defaultValue),
                 dataBenutzer: getEmptyDefaultValue(Infodesk.benutzerView.defaultValue),
-                employeeId: null,
                 photoData: "",
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
@@ -31,7 +34,6 @@
 
             var prevMasterLoadPromise = null;
 
-            //Infodesk.controller = this;
             var comboboxSkills1 = pageElement.querySelector("#skills1");
             var comboboxSkills2 = pageElement.querySelector("#skills2");
             var comboboxSkills3 = pageElement.querySelector("#skills3");
@@ -44,36 +46,186 @@
             var fourthskill = [];
             var fifthskill = [];
 
+            this.img = null;
             var that = this;
 
-            var restriction = AppData.getRestriction("SkillEntry"); //
-            if (!restriction) {
-                restriction = Infodesk.defaultRestriction;
+            // show business card photo
+            var imageOffsetX = 0;
+            var imageOffsetY = 0;
+
+            var imgWidth = 0;
+            var imgHeight = 0;
+            var imgLeft = 0;
+            var imgTop = 0;
+            var imgScale = 1;
+
+            var photoView = pageElement.querySelector("#employeePhoto.photoview");
+
+            var getPhotoData = function () {
+                return that.binding.photoData;
             }
-            that.binding.restriction = restriction;
-            var defaultRestriction = Infodesk.defaultRestriction;
-            var prop;
-            for (prop in defaultRestriction) {
-                if (defaultRestriction.hasOwnProperty(prop)) {
-                    if (typeof restriction[prop] === "undefined") {
-                        restriction[prop] = defaultRestriction[prop];
-                    }
+            var setPhotoData = function(newPhotoData) {
+                if (newPhotoData !== that.binding.photoData) {
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
+                    that.binding.photoData = newPhotoData;
+                    AppBar.notifyModified = prevNotifyModified;
+                    that.showPhoto();
                 }
             }
-            that.binding.restriction = restriction;
 
-            var setRecordId = function (recordId) {
-                Log.call(Log.l.trace, "UserInfo.Controller.", recordId);
-                that.binding.employeeId = recordId;
+            this.dispose = function () {
+                if (comboboxSkills1 && comboboxSkills1.winControl) {
+                    comboboxSkills1.winControl.data = null;
+                }
+                if (comboboxSkills2 && comboboxSkills2.winControl) {
+                    comboboxSkills2.winControl.data = null;
+                }
+                if (comboboxSkills3 && comboboxSkills3.winControl) {
+                    comboboxSkills3.winControl.data = null;
+                }
+                if (comboboxSkills4 && comboboxSkills4.winControl) {
+                    comboboxSkills4.winControl.data = null;
+                }
+                if (comboboxSkills5 && comboboxSkills5.winControl) {
+                    comboboxSkills5.winControl.data = null;
+                }
+                if (that.img) {
+                    that.removePhoto();
+                    that.img.src = "";
+                    that.img = null;
+                }
+            }
+
+            var calcImagePosition = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (photoView && that.img) {
+                    var containerWidth = photoView.clientWidth;
+                    var containerHeight = photoView.clientHeight;
+                    if (that.img.naturalWidth && that.img.naturalHeight) {
+                        imgScale = 1;
+                        if (containerWidth * that.img.naturalHeight < containerHeight * that.img.naturalWidth) {
+                            if (containerWidth < that.img.naturalWidth) {
+                                imgScale = containerWidth / that.img.naturalWidth;
+                            }
+                        } else {
+                            if (containerHeight < that.img.naturalHeight) {
+                                imgScale = containerHeight / that.img.naturalHeight;
+                            }
+                        }
+                        imgWidth = that.img.naturalWidth * imgScale;
+                        imgHeight = that.img.naturalHeight * imgScale;
+                    }
+
+                    var photoItemBox = photoView.querySelector(".win-itembox");
+                    if (photoItemBox && photoItemBox.style) {
+                        photoItemBox.style.width = imgWidth + "px";
+                        photoItemBox.style.height = imgHeight + "px";
+                    }
+                    imgLeft = (imgWidth - containerWidth) / 2;
+                    imgTop = (imgHeight - containerHeight) / 2;
+
+                    if (that.img.style) {
+                        that.img.style.marginLeft = -imgLeft + "px";
+                        that.img.style.marginTop = -imgTop + "px";
+                        that.img.style.width = imgWidth + "px";
+                        that.img.style.height = imgHeight + "px";
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.calcImagePosition = calcImagePosition;
+
+            var hasDoc = function () {
+                return (typeof getPhotoData() === "string" && getPhotoData() !== "");
+            }
+            this.hasDoc = hasDoc;
+
+            var showPhoto = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (photoView) {
+                    var photoItemBox = photoView.querySelector(".win-itembox");
+                    if (photoItemBox) {
+                        if (photoItemBox.style) {
+                            photoItemBox.style.visibility = "hidden";
+                        }
+                        if (getPhotoData()) {
+                            that.img = new Image();
+                            photoItemBox.appendChild(that.img);
+                            WinJS.Utilities.addClass(that.img, "active");
+                            that.img.src = "data:image/jpeg;base64," + getPhotoData();
+                            if (photoItemBox.childElementCount > 1) {
+                                var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                                if (oldElement) {
+                                    oldElement.parentNode.removeChild(oldElement);
+                                    oldElement.innerHTML = "";
+                                }
+                            }
+                            that.calcImagePosition();
+                            WinJS.Promise.timeout(0).then(function () {
+                                imageOffsetX = photoItemBox.offsetLeft + pageElement.offsetLeft;
+                                imageOffsetY = photoItemBox.offsetTop + pageElement.offsetTop;
+                                Log.print(Log.l.trace, "imageOffsetX=" + imageOffsetX + " imageOffsetY=" + imageOffsetY);
+                                var pageControl = pageElement.winControl;
+                                if (pageControl && pageControl.updateLayout) {
+                                    pageControl.prevWidth = 0;
+                                    pageControl.prevHeight = 0;
+                                    var promise = pageControl.updateLayout.call(pageControl, pageElement) || WinJS.Promise.as();
+                                    promise.then(function () {
+                                        if (photoItemBox.style) {
+                                            photoItemBox.style.visibility = "";
+                                        }
+                                        var animationDistanceY = imgHeight / 10;
+                                        var animationOptions = { left: "0px", top: animationDistanceY.toString() + "px" };
+                                        return WinJS.UI.Animation.enterContent(photoItemBox, animationOptions);
+                                    }).then(function () {
+                                        AppBar.triggerDisableHandlers();
+                                    });
+                                }
+                            });
+                        } else {
+                            that.removePhoto();
+                            var pageControl = pageElement.winControl;
+                            if (pageControl && pageControl.updateLayout) {
+                                pageControl.prevWidth = 0;
+                                pageControl.prevHeight = 0;
+                                pageControl.updateLayout.call(pageControl, pageElement).then(function () {
+                                    AppBar.triggerDisableHandlers();
+                                });
+                            }
+                        }
+                    }
+                }
                 AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
-            };
-            this.setRecordId = setRecordId;
+            }
+            this.showPhoto = showPhoto;
+
+            var removePhoto = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (photoView) {
+                    var photoItemBox = photoView.querySelector(".win-itembox");
+                    if (photoItemBox) {
+                        var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
+                        if (oldElement) {
+                            oldElement.parentNode.removeChild(oldElement);
+                            oldElement.innerHTML = "";
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.removePhoto = removePhoto;
 
             var getRecordId = function () {
-                Log.call(Log.l.trace, "Infodesk.Controller.");
-                Log.ret(Log.l.trace, that.binding.employeeId);
-                return that.binding.employeeId;
+                var recordId = null;
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    recordId = master.controller.binding.employeeId;
+                }
+                Log.ret(Log.l.trace, recordId);
+                return recordId;
             }
             this.getRecordId = getRecordId;
 
@@ -86,17 +238,17 @@
                 if (newDataBenutzer.Info2 === null) {
                     newDataBenutzer.Info2 = "";
                 }
-                if (that.binding.dataBenutzer.Name !== newDataBenutzer.Name)
-                    that.binding.dataBenutzer = newDataBenutzer;
+                that.binding.dataBenutzer = newDataBenutzer;
                 AppBar.notifyModified = prevNotifyModified;
-                AppData.setRecordId("Benutzer", newDataBenutzer.BenutzerVIEWID);
             };
             this.setDataBenutzer = setDataBenutzer;
 
             var loadInitSelection = function (item) {
-                Log.call(Log.l.trace, "Infodesk.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var keyValue;
 
+                var prevNotifyModified = AppBar.notifyModified;
+                AppBar.notifyModified = false;
                 if (item.Sortierung === 1) {
                     if (that.binding.restriction.SkillType1Sortierung) {
                         if (that.binding.restriction.SkillType1Sortierung < 10)
@@ -161,13 +313,16 @@
                     else
                         comboboxSkills5.value = 0;
                 }
+                AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace);
                 return WinJS.Promise.as();
             }
             this.loadInitSelection = loadInitSelection;
 
             var saveRestriction = function () {
-                Log.call(Log.l.trace, "Infodesk.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var prevNotifyModified = AppBar.notifyModified;
+                AppBar.notifyModified = false;
                 if (typeof firstskill.skilltypesortierung === "undefined")
                     firstskill.skilltypesortierung = null;
                 if (typeof secondskill.skilltypesortierung === "undefined")
@@ -306,6 +461,7 @@
                 that.binding.restriction.bUseOr = false;
                 Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
                 AppData.setRestriction("SkillEntry", that.binding.restriction);
+                AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace, "");
             }
             this.saveRestriction = saveRestriction;
@@ -313,55 +469,45 @@
 
             this.eventHandlers = {
                 clickBack: function (event) {
-                    Log.call(Log.l.trace, "Infodesk.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
-                    that.saveData(function (response) {
-                        Log.print(Log.l.trace, "contact saved");
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving employee");
-                    });
-                    AppBar.triggerDisableHandlers();
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 clickSearch: function (event) {
-                    Log.call(Log.l.trace, "Infodesk.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
-                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
                         if (prevMasterLoadPromise &&
                             typeof prevMasterLoadPromise.cancel === "function") { 
                             prevMasterLoadPromise.cancel();
                         }
-                        prevMasterLoadPromise = master.controller.loadData().then(function () {
-                            prevMasterLoadPromise = null;
-                            if (master && master.controller && that.binding.employeeId) {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            }
-                        });
+                        prevMasterLoadPromise = master.controller.loadData();
                     }
-                    //that.loadData(getRecordId());
                     Log.ret(Log.l.trace);
 
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "QuestionList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 changedSkill: function(event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
                     switch (event.target.id) {
                         case "skills1":
                             that.binding.restriction.SkillType1Sortierung = event.target.value;
@@ -379,25 +525,22 @@
                             that.binding.restriction.SkillType5Sortierung = event.target.value;
                             break;
                     }
+                    AppBar.notifyModified = prevNotifyModified;
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
-                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
                         if (prevMasterLoadPromise &&
                             typeof prevMasterLoadPromise.cancel === "function") {
                             prevMasterLoadPromise.cancel();
                         }
-                        prevMasterLoadPromise = master.controller.loadData().then(function () {
-                            prevMasterLoadPromise = null;
-                            if (master && master.controller && that.binding.employeeId) {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            }
-                        });
+                        prevMasterLoadPromise = master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
@@ -415,6 +558,7 @@
                         that.binding.restriction.Nachname = event.target.value;
                         delete that.binding.restriction.bUseOr;
                     }
+                    AppBar.notifyModified = prevNotifyModified;
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
@@ -422,19 +566,14 @@
                             typeof prevMasterLoadPromise.cancel === "function") {
                             prevMasterLoadPromise.cancel();
                         }
-                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                        prevMasterLoadPromise = master.controller.loadData().then(function () {
-                            prevMasterLoadPromise = null;
-                            if (master && master.controller && that.binding.employeeId) {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            }
-                        });
+                        prevMasterLoadPromise = master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
-                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
-                    that.binding.restriction.OrderAttribute = "SortVorname";
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
 
@@ -447,15 +586,21 @@
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
-                       
-
+                    AppBar.notifyModified = prevNotifyModified;
                     var master = Application.navigator.masterControl;
-                    master.controller.loadData();
+                    if (master && master.controller && master.controller.binding) {
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") {
+                            prevMasterLoadPromise.cancel();
+                        }
+                        prevMasterLoadPromise = master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickOrderLastname: function (event) {
-                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
-                    var master = Application.navigator.masterControl;
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
                     that.binding.restriction.OrderAttribute = "SortNachname";
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
@@ -468,13 +613,21 @@
                         that.binding.restriction.btn_textContent = event.target.textContent;
                         that.binding.restriction.OrderDesc = true;
                     }
-
-
-                    master.controller.loadData();
+                    AppBar.notifyModified = prevNotifyModified;
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller && master.controller.binding) {
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") {
+                            prevMasterLoadPromise.cancel();
+                        }
+                        prevMasterLoadPromise = master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickResetRestriction: function() {
-                    Log.call(Log.l.trace, "InfodeskEmpList.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
                     that.binding.restriction = Infodesk.defaultRestriction;
                     that.binding.restriction.SkillType1Sortierung = 0;
                     that.binding.restriction.SkillType2Sortierung = 0;
@@ -487,25 +640,19 @@
                     that.binding.restriction.Nachname = [null, null, null];
                     that.binding.restriction.countCombobox = 0;
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
+                    AppBar.notifyModified = prevNotifyModified;
                     var master = Application.navigator.masterControl;
-                    master.controller.loadData();
+                    if (master && master.controller && master.controller.binding) {
+                        if (prevMasterLoadPromise &&
+                            typeof prevMasterLoadPromise.cancel === "function") {
+                            prevMasterLoadPromise.cancel();
+                        }
+                        prevMasterLoadPromise = master.controller.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
-                blockEnterKey: function (event) {
-                    for (var i = 0; i < AppBar.commandList.length; i++) {
-                        if (AppBar.commandList[i].id === "clickSendMessage")
-                            AppBar.commandList[i].key = null;
-                    }
-
-                },
-                releaseEnterKey: function (event) {
-                    for (var i = 0; i < AppBar.commandList.length; i++) {
-                        if (AppBar.commandList[i].id === "clickSendMessage")
-                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
-                    }
-                },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -513,7 +660,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -536,8 +683,8 @@
                 clickSearch: function () {
                     return false;
                 },
-                clickSendMessage: function () {
-                    if (that.binding.employeeId && !AppBar.busy) {
+                clickOk: function () {
+                    if (getRecordId() && !AppBar.busy && AppBar.modified) {
                         return false;
                     } else {
                         return true;
@@ -546,7 +693,6 @@
             };
 
             var resultConverter = function (item, index) {
-                Log.call(Log.l.trace, "Infodesk.Controller.");
                 if (index >= 0 && index < 5) {
                     var skills = [
                         {
@@ -554,7 +700,6 @@
                             title: " "
                         }
                     ];
-                    // skills.Sortierung = item.Sortierung;
                     for (var i = 1; i <= 28; i++) {
                         var keyValue;
                         var keyTitle = item.TITLE;
@@ -612,202 +757,17 @@
                             fifthskill.skilltypesortierung = item.SkillTypeSkillsVIEWID;
 
                     }
+                    that.loadInitSelection(item);
                 }
-                Log.ret(Log.l.trace, "");
             }
             this.resultConverter = resultConverter;
 
             // Then, do anything special on this page
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "Infodesk.Controller.");
+                var newPhotoData = "";
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select skillTypeSkills...");
-                    return Infodesk.skillTypeSkills.select(function (json) {
-                        Log.print(Log.l.trace, "skillTypeSkills: success!");
-                        if (json && json.d) {
-                            json.d.results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                        }
-                        Log.print(Log.l.trace, "Infodesk: success!");
-                    });
-                }).then(function () {
-                    //load of format relation record data
-                    // für labels
-                    Log.print(Log.l.trace, "calling select Messestand...");
-                    return Infodesk.Messestand.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "Messestand: success!");
-                        if (json && json.d) {
-                            // now always edit!
-                            // hole Daten aus der Messestand
-                            var results = json.d.results;
-                            if (results.length > 0) {
-                                that.binding.messestandData = results[0];
-                            } else {
-                                that.binding.messestandData = Infodesk.Messestand.defaultValue;
-                            }
-                        }
-                    },
-                        function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                }).then(function () {
-                    var empRolesFragmentControl = Application.navigator
-                        .getFragmentControlFromLocation(Application.getFragmentPath("userMessages"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        return empRolesFragmentControl.controller.loadData();
-                    } else {
-                        var parentElement = pageElement.querySelector("#userMessageshost");
-                        if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "userMessages", { recordId: recordId });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }
-                }).then(function () {
-                    //restriction speichern
-                    var savedRestriction = AppData.getRestriction("SkillEntry"); //
-                    if (!savedRestriction) {
-                        savedRestriction = {};
-                    }
-                    that.binding.restriction = savedRestriction;
-                    var defaultRestriction = Infodesk.defaultRestriction;
-                    var prop;
-                    for (prop in defaultRestriction) {
-                        if (defaultRestriction.hasOwnProperty(prop)) {
-                            if (typeof savedRestriction[prop] === "undefined") {
-                                savedRestriction[prop] = defaultRestriction[prop];
-                            }
-                        }
-                    }
-                    that.binding.restriction = savedRestriction;
-                }).then(function () {
-                    Log.print(Log.l.trace, "calling select skillTypeSkills...");
-                    return Infodesk.skillTypeSkills.select(function (json) {
-                        Log.print(Log.l.trace, "skillTypeSkills: success!");
-                        if (json && json.d) {
-                            json.d.results.forEach(function (item, index) {
-                                that.loadInitSelection(item);
-                            });
-                        }
-                        Log.print(Log.l.trace, "Infodesk: success!");
-                    });
-                }).then(function () {
-                    if (recordId) {
-                        AppData.setErrorMsg(that.binding);
-                        return Infodesk.employeeView.select(function (json) {
-                            Log.print(Log.l.trace, "Infodesk employeeView: success!");
-                                if (json && json.d) {
-                                    that.binding.dataEmployee.Vorname = json.d.Vorname;
-                                    that.binding.dataEmployee.Nachname = json.d.Nachname;
-                                    that.binding.dataEmployee.Login = json.d.Login;
-                                    that.binding.dataEmployee.fullname = json.d.Vorname + " " + json.d.Nachname;
-                                    that.binding.dataEmployee.MitarbeiterID = json.d.MitarbeiterVIEWID;
-                                    setRecordId(that.binding.dataEmployee.MitarbeiterID);
-                                }
-                            },
-                            function (errorResponse) {
-                                that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, recordId);
-                    } else {
-                        that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.SkillEntry.defaultValue);
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (recordId) {
-                        //load of format relation record data
-                        that.binding.dataEmployee.firstskill = "";
-                        that.binding.dataEmployee.secondskill = "";
-                        that.binding.dataEmployee.thirdskill = "";
-                        that.binding.dataEmployee.fourthskill = "";
-                        that.binding.dataEmployee.fifthskill = "";
-                        Log.print(Log.l.trace, "calling select employeeView...");
-                        return Infodesk.SkillEntry.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "skillEntryView: success!");
-                            if (json && json.d && json.d.results.length > 0) {
-                                that.binding.dataEmployee.MitarbeiterVIEWID = json.d.results[0].MitarbeiterID;
-                                setRecordId(that.binding.dataEmployee.MitarbeiterVIEWID);
-                                that.binding.dataEmployee.Vorname = json.d.results[0].Vorname;
-                                that.binding.dataEmployee.Nachname = json.d.results[0].Nachname;
-                                that.binding.dataEmployee.Login = json.d.results[0].Login;
-                                that.binding.dataEmployee.Doc1MitarbeiterID = json.d.results[0].DOC1MitarbeiterID;
-                                for (var i = 0; i < json.d.results.length; i++) {
-                                    //SkillTypeID und Sortierung
-                                    if (json.d.results[i].Aktiv === "X") {
-                                        if (firstskill.skilltypesortierung &&
-                                            json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
-                                            for (var j = 0; j < firstskill.length; j++) {
-                                                if (json.d.results[i].Sortierung === firstskill[j].value) {
-                                                    that.binding.dataEmployee
-                                                        .firstskill =
-                                                        that.binding.dataEmployee.firstskill +
-                                                        firstskill[j].title +
-                                                        "\n";
-                                                }
-                                            }
-                                        } else if (secondskill.skilltypesortierung &&
-                                            json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
-                                            for (var k = 0; k < secondskill.length; k++) {
-                                                if (json.d.results[i].Sortierung === secondskill[k].value) {
-                                                    that.binding.dataEmployee
-                                                        .secondskill =
-                                                        that.binding.dataEmployee.secondskill +
-                                                        secondskill[k].title +
-                                                        "\t";
-                                                }
-                                            }
-                                        } else if (thirdskill.skilltypesortierung &&
-                                            json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
-                                            for (var l = 0; l < thirdskill.length; l++) {
-                                                if (json.d.results[i].Sortierung === thirdskill[l].value) {
-                                                    that.binding.dataEmployee
-                                                        .thirdskill =
-                                                        that.binding.dataEmployee.thirdskill +
-                                                        thirdskill[l].title +
-                                                        "\t";
-                                                }
-                                            }
-                                        } else if (fourthskill.skilltypesortierung &&
-                                            json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
-                                            for (var m = 0; m < fourthskill.length; m++) {
-                                                if (json.d.results[i].Sortierung === fourthskill[m].value) {
-                                                    that.binding.dataEmployee
-                                                        .fourthskill =
-                                                        that.binding.dataEmployee.fourthskill +
-                                                        fourthskill[m].title +
-                                                        "\t";
-                                                }
-                                            }
-                                        } else if (fifthskill.skilltypesortierung &&
-                                            json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
-                                            for (var n = 0; n < fifthskill.length; n++) {
-                                                if (json.d.results[i].Sortierung === fifthskill[n].value) {
-                                                    that.binding.dataEmployee
-                                                        .fifthskill =
-                                                        that.binding.dataEmployee.fifthskill +
-                                                        fifthskill[n].title +
-                                                        "\t";
-                                                }
-                                            }
-                                        }
-                                    }
-                                };
-                            }
-                        },
-                            function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            {
-                                MitarbeiterID: recordId
-                            });
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
                     if (recordId) {
                         //load of format relation record data
                         AppData.setErrorMsg(that.binding);
@@ -824,10 +784,166 @@
                             } else {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }
-                        },
-                        recordId);
+                        }, recordId);
                     } else {
-                        that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (recordId) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "calling select employeeView...");
+                        return Infodesk.employeeView.select(function (json) {
+                            Log.print(Log.l.trace, "employeeView: success!");
+                            if (json && json.d) {
+                                var prevNotifyModified = AppBar.notifyModified;
+                                AppBar.notifyModified = false;
+                                that.binding.dataEmployee.MitarbeiterVIEWID = json.d.MitarbeiterVIEWID;
+                                that.binding.dataEmployee.Doc1MitarbeiterID = json.d.DOC1MitarbeiterID;
+                                if (!that.binding.dataBenutzer.Vorname && !that.binding.dataBenutzer.Name) {
+                                    that.binding.dataBenutzer.Vorname = json.d.Vorname;
+                                    that.binding.dataBenutzer.Name = json.d.Nachname;
+                                }
+                                AppBar.notifyModified = prevNotifyModified;
+                            }
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (!firstskill || !firstskill.length) {
+                        Log.print(Log.l.trace, "calling select skillTypeSkills...");
+                        return Infodesk.skillTypeSkills.select(function (json) {
+                            Log.print(Log.l.trace, "skillTypeSkills: success!");
+                            if (json && json.d) {
+                                var prevNotifyModified = AppBar.notifyModified;
+                                AppBar.notifyModified = false;
+                                json.d.results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                AppBar.notifyModified = prevNotifyModified;
+                            }
+                            Log.print(Log.l.trace, "Infodesk: success!");
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    //load of format relation record data
+                    // für labels
+                    if (!that.binding.messestandData.SkillType1ID) {
+                        Log.print(Log.l.trace, "calling select Messestand...");
+                        return Infodesk.Messestand.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "Messestand: success!");
+                            if (json && json.d) {
+                                // now always edit!
+                                // hole Daten aus der Messestand
+                                var prevNotifyModified = AppBar.notifyModified;
+                                AppBar.notifyModified = false;
+                                var results = json.d.results;
+                                if (results.length > 0) {
+                                    that.binding.messestandData = results[0];
+                                } else {
+                                    that.binding.messestandData = getEmptyDefaultValue(Infodesk.Messestand.defaultValue);
+                                }
+                                AppBar.notifyModified = prevNotifyModified;
+                            }
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (recordId) {
+                        //load of format relation record data
+                        Log.print(Log.l.trace, "calling select SkillEntry...");
+                        return Infodesk.SkillEntry.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "skillEntryView: success!");
+                            var prevNotifyModified = AppBar.notifyModified;
+                            AppBar.notifyModified = false;
+                            that.binding.dataSkillEntry.firstskill = "";
+                            that.binding.dataSkillEntry.secondskill = "";
+                            that.binding.dataSkillEntry.thirdskill = "";
+                            that.binding.dataSkillEntry.fourthskill = "";
+                            that.binding.dataSkillEntry.fifthskill = "";
+                            that.binding.dataSkillEntry.MitarbeiterID = null;
+                            if (json && json.d && json.d.results.length > 0) {
+                                that.binding.dataSkillEntry.MitarbeiterID = json.d.results[0].MitarbeiterID;
+                                for (var i = 0; i < json.d.results.length; i++) {
+                                    //SkillTypeID und Sortierung
+                                    if (json.d.results[i].Aktiv === "X") {
+                                        if (firstskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === firstskill.skilltypesortierung) {
+                                            for (var j = 0; j < firstskill.length; j++) {
+                                                if (json.d.results[i].Sortierung === firstskill[j].value) {
+                                                    that.binding.dataSkillEntry.firstskill +=
+                                                        (that.binding.dataSkillEntry.firstskill ? ", " + firstskill[j].title : firstskill[j].title);
+                                                }
+                                            }
+                                        } else if (secondskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === secondskill.skilltypesortierung) {
+                                            for (var k = 0; k < secondskill.length; k++) {
+                                                if (json.d.results[i].Sortierung === secondskill[k].value) {
+                                                    that.binding.dataSkillEntry.secondskill +=
+                                                        (that.binding.dataSkillEntry.secondskill ? ", " + secondskill[k].title : secondskill[k].title);
+                                                }
+                                            }
+                                        } else if (thirdskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === thirdskill.skilltypesortierung) {
+                                            for (var l = 0; l < thirdskill.length; l++) {
+                                                if (json.d.results[i].Sortierung === thirdskill[l].value) {
+                                                    that.binding.dataSkillEntry.thirdskill +=
+                                                        (that.binding.dataSkillEntry.thirdskill ? ", " + thirdskill[l].title : thirdskill[l].title);
+                                                }
+                                            }
+                                        } else if (fourthskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === fourthskill.skilltypesortierung) {
+                                            for (var m = 0; m < fourthskill.length; m++) {
+                                                if (json.d.results[i].Sortierung === fourthskill[m].value) {
+                                                    that.binding.dataSkillEntry.fourthskill +=
+                                                        (that.binding.dataSkillEntry.fourthskill ? ", " + fourthskill[m].title : fourthskill[m].title);
+                                                }
+                                            }
+                                        } else if (fifthskill.skilltypesortierung &&
+                                            json.d.results[i].SkillTypeID === fifthskill.skilltypesortierung) {
+                                            for (var n = 0; n < fifthskill.length; n++) {
+                                                if (json.d.results[i].Sortierung === fifthskill[n].value) {
+                                                    that.binding.dataSkillEntry.fifthskill +=
+                                                        (that.binding.dataSkillEntry.fifthskill ? ", " + fifthskill[n].title : fifthskill[n].title);
+                                                }
+                                            }
+                                        }
+                                    }
+                                };
+                            }
+                            AppBar.notifyModified = prevNotifyModified;
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                            MitarbeiterID: recordId
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (recordId) {
+                        var empRolesFragmentControl = Application.navigator
+                            .getFragmentControlFromLocation(Application.getFragmentPath("userMessages"));
+                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                            return empRolesFragmentControl.controller.loadData();
+                        } else {
+                            var parentElement = pageElement.querySelector("#userMessageshost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement, "userMessages", { recordId: recordId });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
+                    } else {
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -839,91 +955,82 @@
                             if (json && json.d &&
                                 typeof json.d.DocContentDOCCNT1 === "string") {
                                 var sub = json.d.DocContentDOCCNT1.search("\r\n\r\n");
-                                that.binding.photoData = "data:image/jpeg;base64," + json.d.DocContentDOCCNT1.substr(sub + 4);
+                                newPhotoData = json.d.DocContentDOCCNT1.substr(sub + 4);
                             }
                         }, function (errorResponse) {
-                            that.binding.photoData = "";
                             if (errorResponse.status === 404) {
                                 Log.print(Log.l.trace, "userPhotoView: ignore NOT_FOUND error here!");
                             } else {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }
-                        }, recordId);
+                        }, that.binding.dataEmployee.Doc1MitarbeiterID);
                     } else {
-                        that.binding.photoData = "";
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    //restriction speichern
+                    var savedRestriction = AppData.getRestriction("SkillEntry"); //
+                    if (!savedRestriction) {
+                        savedRestriction = {};
+                    }
+                    var prevNotifyModified = AppBar.notifyModified;
+                    AppBar.notifyModified = false;
+                    that.binding.restriction = savedRestriction;
+                    var defaultRestriction = Infodesk.defaultRestriction;
+                    for (var prop in defaultRestriction) {
+                        if (defaultRestriction.hasOwnProperty(prop)) {
+                            if (typeof savedRestriction[prop] === "undefined") {
+                                savedRestriction[prop] = defaultRestriction[prop];
+                            }
+                        }
+                    }
+                    that.binding.restriction = savedRestriction;
+                    AppBar.notifyModified = prevNotifyModified;
+                    if (recordId) {
+                        setPhotoData(newPhotoData);
+                    }
                 });
+                Log.ret(Log.l.trace);
+                return ret;
             }
             this.loadData = loadData;
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Infodesk.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var recordId = getRecordId();
-                if (!recordId) {
-                    if (data && data.BenutzerVIEWID) {
-                        recordId = data.BenutzerVIEWID;
-                    }
-                }
-                if (recordId) {
-                    AppBar.modified = true;
-                    var dataBenutzer = that.binding.dataBenutzer;
-                    if (dataBenutzer && AppBar.modified && !AppBar.busy) {
-                        if (dataBenutzer.BenutzerVIEWID || data.BenutzerVIEWID) {
-                            ret = Infodesk.benutzerView.update(function(response) {
-                                    // called asynchronously if ok
-                                    // force reload of userData for Present flag
-                                    AppBar.modified = false;
-                                    Log.print(Log.l.trace, "benutzerView: update success!");
-                                    complete(response);
-                                },
-                                function(errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    error(errorResponse);
-                                },
-                                data.BenutzerVIEWID,
-                                dataBenutzer).then(function() {
-                                if (recordId) {
-                                    //load of format relation record data
-                                    AppData.setErrorMsg(that.binding);
-                                    Log.print(Log.l.trace, "calling select benutzerView...");
-                                    return Infodesk.benutzerView.select(function(json) {
-                                        Log.print(Log.l.trace, "benutzerView: success!");
-                                        if (json && json.d) {
-                                            that.binding.dataBenutzer = json.d;
-                                        }
-                                    },
-                                    function(errorResponse) {
-                                        if (errorResponse.status === 404) {
-                                            Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
-                                            that.setDataBenutzer(
-                                                getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
-                                        } else {
-                                            AppData.setErrorMsg(that.binding, errorResponse);
-                                        }
-                                    },
-                                    recordId);
-                                } else {
-                                    that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
-                                    return WinJS.Promise.as();
-                                }
-                            });
+                var dataBenutzer = that.binding.dataBenutzer;
+                if (dataBenutzer && dataBenutzer.BenutzerVIEWID && AppBar.modified && !AppBar.busy) {
+                    AppBar.busy = true;
+                    ret = Infodesk.benutzerView.update(function (response) {
+                        // called asynchronously if ok
+                        // force reload of userData for Present flag
+                        Log.print(Log.l.trace, "benutzerView: update success!");
+                        AppBar.modified = false;
+                        AppBar.busy = false;
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppBar.busy = false;
+                        if (typeof complete === "function") {
+                            error(errorResponse);
                         } else {
-                            ret = new WinJS.Promise.as().then(function () {
-                                complete(dataBenutzer);
-                            });
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         }
-                    } else {
-                        ret = new WinJS.Promise.as().then(function() {
+                    }, dataBenutzer.BenutzerVIEWID, dataBenutzer).then(function () {
+                        if (typeof complete === "function") {
                             complete(dataBenutzer);
-                        });
-                    }
+                            return WinJS.Promise.as();
+                        } else {
+                            return that.loadData(getRecordId());
+                        }
+                    });
                 } else {
-                    ret = WinJS.Promise.as();
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(dataBenutzer);
+                        }
+                    });
                 }
                 Log.ret(Log.l.trace);
                 return ret;

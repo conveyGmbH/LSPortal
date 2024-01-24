@@ -35,7 +35,7 @@
                 commandList = [
                     { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                     { id: "clickResetRestriction", label: getResourceText("command.resetRestriction"), tooltip: getResourceText("tooltip.resetRestriction"), section: "primary", svg: "funnel_delete" },
-                    { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
+                    { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "paper_jet2" }
                 ];
             }
             this.controller = new Infodesk.Controller(element, commandList);
@@ -60,34 +60,86 @@
             /// <param name="element" domElement="true" />
             Log.call(Log.l.u1, pageName + ".");
             // TODO: Respond to changes in viewState.
-            if (element && !this.inResize) {
-                this.inResize = 1;
+            if (element && !that.inResize) {
+                that.inResize = 1;
                 ret = WinJS.Promise.timeout(0).then(function () {
-                    var empList = element.querySelector("#infodeskEmployeeList.listview");
-                    if (empList && empList.style) {
+                    var docContainer = element.querySelector(".doc-container");
+                    var fieldsContainer = element.querySelector(".fields-container");
+                    if (that.controller && fieldsContainer && fieldsContainer.style && docContainer && docContainer.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
                             var height = contentarea.clientHeight - 8;
-                            var contentheader = element.querySelector(".content-header");
-                            if (contentheader) {
-                                height -= contentheader.clientHeight;
+                            var fieldWidth;
+                            if (that.controller.hasDoc()) {
+                                if (width > Application.maxViewSize.mediumSmall) {
+                                    fieldWidth = Math.floor(width / 2) - 16;
+                                } else {
+                                    fieldWidth = width;
+                                }
+                                if (docContainer.style) {
+                                    docContainer.style.display = "inline";
+                                }
+                            } else {
+                                fieldWidth = width;
+                                if (docContainer.style) {
+                                    docContainer.style.display = "none";
+                                }
                             }
+                            var heightDoc = height - fieldsContainer.offsetTop;
+                            var messages = element.querySelectorAll(".message-container > .field-line");
+                            var maxMessageHeight = 0;
+                            if (messages) for (var i = 0; i < messages.length; i++) {
+                                if (messages[i].clientHeight > maxMessageHeight) {
+                                    maxMessageHeight = messages[i].clientHeight;
+                                }
+                            }
+                            heightDoc -= maxMessageHeight;
                             if (width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                contentarea.style.width = width.toString() + "px";
+                                fieldsContainer.style.width = fieldWidth.toString() + "px";
+                                docContainer.style.width = fieldWidth.toString() + "px";
                             }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                contentarea.style.height = height.toString() + "px";
+                                docContainer.style.height = Math.min(heightDoc, 360).toString() + "px";
                             }
+                            if (fieldWidth > Application.maxViewSize.small) {
+                                // remove class: view-size-small  
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-small");
+                            } else {
+                                // add class: view-size-small    
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-small");
+                            }
+                            if (fieldWidth > Application.maxViewSize.mediumSmall) {
+                                // remove class: view-size-medium-small  
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium-small");
+                            } else {
+                                // add class: view-size-medium-small    
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-medium-small");
+                            }
+                            if (fieldWidth > Application.maxViewSize.medium) {
+                                // remove class: view-size-medium    
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-medium");
+                            } else {
+                                // add class: view-size-medium
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-medium");
+                            }
+                            if (fieldWidth > Application.maxViewSize.bigger) {
+                                // remove class: view-size-bigger
+                                WinJS.Utilities.removeClass(fieldsContainer, "view-size-bigger");
+                            } else {
+                                // add class: view-size-bigger
+                                WinJS.Utilities.addClass(fieldsContainer, "view-size-bigger");
+                            }
+                            that.controller.calcImagePosition();
                         }
                     }
                     that.inResize = 0;
                 });
             }
             Log.ret(Log.l.u1);
-            return ret;
+            return ret || WinJS.Promise.as();
         }
     });
 })();

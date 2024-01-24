@@ -91,19 +91,11 @@
             },
             defaultValue: {
                 MitarbeiterID: 0,
-                Vorname: "",
-                Nachname: "",
-                fullname: "",
-                Login:"",
                 firstskill: "",
                 secondskill: "",
                 thirdskill: "",
                 fourthskill: "",
-                fifthskill: "",
-                Info2: "",
-                Info2TS: "",
-                receiver: "",
-                Doc1MitarbeiterID: 0
+                fifthskill: ""
             }
         },
         _benutzerView: {
@@ -131,13 +123,23 @@
                 return ret;
             },
             defaultValue: {
+                BenutzerVIEWID: 0,
                 Info1: "",
-                Info2: ""
+                Info2: "",
+                Info1TS: "",
+                Info2TS: "",
+                Vorname: "",
+                Name: "",
+                TelefonFestnetz: "",
+                TelefonMobil: "",
+                Titel: "",
+                Position: "",
+                EMail: ""
             }
         },
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 0, false);
+                return AppData.getFormatView("Mitarbeiter", 20471, false);
             }
         },
         employeeView: {
@@ -149,10 +151,10 @@
 
             },
             defaultValue: {
+                MitarbeiterVIEWID: 0,
+                Doc1MitarbeiterID: 0,
                 Vorname: "",
-                Nachname: "",
-                Login: "",
-                Names: ""
+                Nachname: ""
             }
         },
         _userPhotoView: {

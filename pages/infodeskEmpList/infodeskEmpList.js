@@ -86,6 +86,9 @@
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 empList.style.height = height.toString() + "px";
+                                if (that.controller && that.controller.binding && that.controller.binding.employeeId) {
+                                    that.selectRecordId(that.binding.employeeId);
+                                }
                             }
                         }
                     }
