@@ -1578,19 +1578,25 @@
     "diaCountrysIndustries.anzkontaktewdatatext" : " Kontakte haben zu diesem Kriterium geantwortet von ",
 
     "diaCountrys.title" : "Top 5 Länder",
-    "diaCountrys.titleTooltip" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
+    "diaCountrys.tooltipPremium" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
+    "diaCountrys.tooltipSupreme1" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
+    "diaCountrys.tooltipSupreme2" : "generell gilt: orangefarbige Prozentzahlen = gescannte Besucher auf Ihrem Messestand, blaue Prozentzahlen = alle auf dem Messegelände da gewesenen Besucher",
     "diaCountrys.top5" : "Top 5 Länder",
     "diaCountrys.top10" : "Top 10 Länder",
     "diaCountrys.visitors" : " Besucher",
     "diaCountrys.remaindata" : "Rest-Daten",
 
     "diaVisitors.title" : "Besucher",
-    "diaVisitors.titleTooltip" : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",
+    "diaVisitors.tooltipPremium"  : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",
+    "diaVisitors.tooltipSupreme1" : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",
+    "diaVisitors.tooltipSupreme2" : "generell gilt: orangefarbige Balken = gescannte Besucher auf Ihrem Messestand, blaue Balken = alle auf dem Messegelände da gewesenen Besucher",
     "diaVisitors.hour" : "Stunden",
     "diaVisitors.day" : "Tage",
 
     "diaYearRange.title" : "Jahrgangsgruppe Ihrer gescannten Besucher (geboren)",
-    "diaYearRange.titleTooltip" : "Wie teilen Ihre gescannten Besucher sich auf die Jahrgangsgruppen auf?",
+    "diaYearRange.tooltipPremium"  : "Wie teilen Ihre gescannten Besucher sich auf die Jahrgangsgruppen auf?",
+    "diaYearRange.tooltipSupreme1" : "Wie teilen Ihre gescannten Besucher sich auf die Jahrgangsgruppen auf?",
+    "diaYearRange.tooltipSupreme2" : "generell gilt: orangefarbige Balken = gescannte Besucher auf Ihrem Messestand, blaue Balken = alle auf dem Messegelände da gewesenen Besucher",
     "diaYearRange.remaindata" : "Rest-Daten",
 
     "startPremium.exportCurrent" : "Download aktuelle Ansicht",
@@ -1632,12 +1638,24 @@
     "genDataModEventsHisto.event"			: "Veranstaltung",
 
     "dashboardFNHour.title"			: "Besucher (Stunde)",
+    "dashboardFNHour.tooltipPremium"  : "Wie verteilen sich Ihre gescannten Besucher während der Stunden / auf die Veranstaltungsstunden?",
+    "dashboardFNHour.tooltipSupreme1" : "Wie verteilen sich Ihre gescannten Besucher während des Stunden / auf die Veranstaltungsstunden?",
+    "dashboardFNHour.tooltipSupreme2" : "generell gilt: orangefarbige Prozentzahlen = gescannte Besucher auf Ihrem Messestand, blaue Prozentzahlen = alle auf dem Messegelände da gewesenen Besucher",
 
     "dashboardFNDay.title"			: "Besucher (Tag)",
+    "dashboardFNDay.tooltipPremium"  : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",
+    "dashboardFNDay.tooltipSupreme1" : "Wie verteilen sich Ihre gescannten Besucher während des Tages / auf die Veranstaltungstage?",
+    "dashboardFNDay.tooltipSupreme2" : "generell gilt: orangefarbige Prozentzahlen = gescannte Besucher auf Ihrem Messestand, blaue Prozentzahlen = alle auf dem Messegelände da gewesenen Besucher",
 	
     "dashboardFNTop10.title"			: "Top 10 Länder",
+    "dashboardFNTop10.tooltipPremium"  : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
+    "dashboardFNTop10.tooltipSupreme1" : "Aus welchen Top 10 Ländern kommen Ihre gescannten Besucher?",
+    "dashboardFNTop10.tooltipSupreme2" : "generell gilt: orangefarbige Balken = gescannte Besucher auf Ihrem Messestand, blaue Balken = alle auf dem Messegelände da gewesenen Besucher",
 
     "dashboardFNIndustries.allcountry"			: "Alle Länder",
+    "dashboardFNIndustries.tooltipPremium"  : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
+    "dashboardFNIndustries.tooltipSupreme1" : "zum Beispiel: Aus welchen Top 10 Branchen (Abteilungen/Funktionen etc.) kommen Ihre gescannten Besucher (ohne Auswahl von Land) / aus Land X?",
+    "dashboardFNIndustries.tooltipSupreme2" : "generell gilt: orangefarbige Balken = gescannte Besucher auf Ihrem Messestand, blaue Balken = alle auf dem Messegelände da gewesenen Besucher",
 
     "eventStatus.title"			: "Session Status",
     "eventStatus.confirmSessionEnd"			: "Wollen Sie die Session wirklich beenden?",

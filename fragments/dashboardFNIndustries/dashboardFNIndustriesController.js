@@ -59,7 +59,7 @@
             var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
             var countrydrop = fragmentElement.querySelector("#countrydropdown");
             var select = fragmentElement.querySelectorAll("select");
-            var countryIndustriestooltip = fragmentElement.querySelector("#mydashboardFNIndustriesElement");
+            var countryIndustriestooltip = fragmentElement.querySelector("#mydashboardFNIndustriesElement2");
             var icons = fragmentElement.querySelector(".countrysindustries-chart-top-container");
 
             this.countryfills = [];
@@ -73,10 +73,10 @@
 
             var setTooltipText = function () {
                 if (that.isSupreme === 3) {
-                    countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipPremium");
+                    countryIndustriestooltip.innerHTML = getResourceText("dashboardFNIndustries.tooltipPremium");
                 }
                 if (that.isSupreme === 4) {
-                    countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipProfessional");
+                    countryIndustriestooltip.innerHTML = getResourceText("dashboardFNIndustries.tooltipSupreme1") + " <br> <p></p>" + getResourceText("dashboardFNIndustries.tooltipSupreme2");
                 }
             }
             this.setTooltipText = setTooltipText;

@@ -59,7 +59,7 @@
             var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
             var countrydrop = fragmentElement.querySelector("#countrydropdown");
             var select = fragmentElement.querySelectorAll("select");
-            var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
+            var countryIndustriestooltip = fragmentElement.querySelector("#mydiaFNTop10Element2");
             var icons = fragmentElement.querySelector(".countrysindustries-chart-top-container");
 
             this.countryfills = [];
@@ -73,9 +73,9 @@
 
             var setTooltipText = function () {
                 if (that.isSupreme === 3) {
-                    countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipPremium");
+                    countryIndustriestooltip.innerHTML = getResourceText("dashboardFNTop10.tooltipPremium");
                 } else {
-                    countryIndustriestooltip.innerHTML = getResourceText("diaCountrysIndustries.tooltipProfessional");
+                    countryIndustriestooltip.innerHTML = getResourceText("dashboardFNTop10.tooltipSupreme1") + " <br> <p></p>" + getResourceText("dashboardFNTop10.tooltipSupreme2");
                 }
             }
             this.setTooltipText = setTooltipText;
@@ -916,6 +916,9 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return dropdowncolor();
             })*/.then(function () {
+                Log.print(Log.l.trace, "Data loaded");
+                return that.setTooltipText();
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.setTooltipText();
             }).then(function () {

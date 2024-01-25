@@ -40,6 +40,7 @@
             var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
             var daycombo = fragmentElement.querySelector("#daydropdown");
             var select = fragmentElement.querySelectorAll("select");
+            var fnHourstooltip = fragmentElement.querySelector("#mydiaFNHoursElement2"); 
 
             var surpremebarcolor = "#092052";
 
@@ -49,6 +50,14 @@
                 dayhourcombo.winControl.data = new WinJS.Binding.List(titlecategorys);
                 dayhourcombo.selectedIndex = 0;
             }
+            var setTooltipText = function () {
+                if (that.isSupreme === 3) {
+                    fnHourstooltip.innerHTML = getResourceText("dashboardFNDay.tooltipPremium");
+                } else {
+                    fnHourstooltip.innerHTML = getResourceText("dashboardFNDay.tooltipSupreme1") + " <br> <p></p>" + getResourceText("dashboardFNDay.tooltipSupreme2");
+                }
+            }
+            this.setTooltipText = setTooltipText;
 
             var dropdowncolor = function () {
                 for (var i = 0; i < select.length; i++) {
@@ -558,6 +567,8 @@
                 return dropdowncolor();
             })*/.then(function () {
                 return that.getVisitorDateAll();
+            }).then(function () {
+                return that.setTooltipText();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 //return getGetDashboardVisitorData(1, moment().valueOf(), moment().valueOf());
