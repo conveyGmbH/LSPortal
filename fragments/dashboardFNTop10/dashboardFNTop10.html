@@ -19,9 +19,6 @@
                                 data-win-bind="value: criteriaMain Binding.Mode.twoway; style.display: dataContact.Flag_NoEdit Binding.Converter.toDisplayNone">
                             <option data-win-bind="value: CriterionID; textContent: CriterionText"></option>
                         </select>
-                        <div style="display: none;">
-                            <div id="mydiaCountrysIndustriesElement"></div>
-                        </div>
                         <select id="countrydropdown"
                                 class="win-dropdown"
                                 data-win-control="WinJS.UI.Repeater"
@@ -30,10 +27,10 @@
                         </select>
                         <div class="countrysindustries-chart-top-container-tooltip" data-html2canvas-ignore="true">
                             <div class="list-symbol-ID">
-                                <button data-win-bind="name: information" class="action-image" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaCountrysIndustriesElement}"></button>
+                                <button data-win-bind="name: information" class="action-image" data-win-control="WinJS.UI.Tooltip" data-win-options="{infotip: true, contentElement: mydiaFNTop10Element2}"></button>
                             </div>
                             <div style="display: none;">
-                                <div id="mydiaCountrysElement2"></div>
+                                <div id="mydiaFNTop10Element2"></div>
                             </div>
                         </div>
                         <span class="visitor-chart-top-text" data-win-res="{textContent: 'dashboardFNTop10.title'}"></span>

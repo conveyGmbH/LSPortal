@@ -1570,19 +1570,25 @@
     "diaCountrysIndustries.anzkontaktewdatatext" : " Contacts have responded to this criterion from ",
 
     "diaCountrys.title" : "Top 5 countries",
-    "diaCountrys.titleTooltip" : "Which top 10 countries do your scanned visitors come from??",
+    "diaCountrys.tooltipPremium" : "Which top 10 countries do your scanned visitors come from?",
+    "diaCountrys.tooltipSupreme1" : "Which top 10 countries do your scanned visitors come from?",
+    "diaCountrys.tooltipSupreme2" : "generally applies: orange percentage figures: scanned visitors at your booth, blue percentage figures: all visitors having visited the fair ground",
     "diaCountrys.top5" : "Top 5 countries",
     "diaCountrys.top10" : "Top 10 countries",
     "diaCountrys.visitors" : " Visitors",
     "diaCountrys.remaindata" : "Rest-Data",
 
     "diaVisitors.title" : "Visitors",
-    "diaVisitors.titleTooltip" : "How are your scanned visitors distributed during the day / over the event days?",
+    "diaVisitors.tooltipPremium"  : "How are your scanned visitors distributed during the day / over the event?",
+    "diaVisitors.tooltipSupreme1" : "How are your scanned visitors distributed during the day / over the event?",
+    "diaVisitors.tooltipSupreme2" : "How are your scanned visitors distributed during the day / over the event?",
     "diaVisitors.hour" : "Hours",
     "diaVisitors.day" : "Days",
 
     "diaYearRange.title" : "Age group of your scanned visitors (born)",
-    "diaYearRange.titleTooltip" : "How do your scanned visitors break down by age group?",
+    "diaYearRange.tooltipPremium"  : "How are your scanned visitors allocated by age group?",
+    "diaYearRange.tooltipSupreme1" : "How are your scanned visitors allocated by age group?",
+    "diaYearRange.tooltipSupreme2" : "generally applies: orange circles: scanned visitors at your booth, blue circles: all visitors having visited the fair ground",
     "diaYearRange.remaindata" : "Rest-Data",
 
     "startPremium.exportCurrent" : "Download current view",
@@ -1625,12 +1631,24 @@
     "genDataModEventsHisto.event"			: "Event",
 
     "dashboardFNHour.title"			: "Visitors (hour)",
+    "dashboardFNHour.tooltipPremium"  : "How are your scanned visitors allocated during the day / during the whole event?",
+    "dashboardFNHour.tooltipSupreme1" : "How are your scanned visitors allocated during the day / during the whole event?",
+    "dashboardFNHour.tooltipSupreme2" : "generally applies: orange percentage figures: scanned visitors at your booth, blue percentage figures: all visitors having visited the fair ground",
 
     "dashboardFNDay.title"			: "Visitors (day)",
+    "dashboardFNDay.tooltipPremium"  : "How are your scanned visitors allocated during the day / during the whole event?",
+    "dashboardFNDay.tooltipSupreme1" : "How are your scanned visitors allocated during the day / during the whole event?",
+    "dashboardFNDay.tooltipSupreme2" : "generally applies: orange percentage figures: scanned visitors at your booth, blue percentage figures: all visitors having visited the fair ground",
 	
     "dashboardFNTop10.title"			: "Top 10 countries",
+    "dashboardFNTop10.tooltipPremium"  : "Which top 10 countries do your scanned visitors come from?",
+    "dashboardFNTop10.tooltipSupreme1" : "Which top 10 countries do your scanned visitors come from?",
+    "dashboardFNTop10.tooltipSupreme2" : "generally applies: orange bars: scanned visitors at your booth, blue bars: all visitors having visited the fair ground",
 
     "dashboardFNIndustries.allcountry"			: "All countries",
+    "dashboardFNIndustries.tooltipPremium"  : "for example: Which top 10 industries (departments/functions etc.) do your scanned visitors come from (without selecting country / from country X?)",
+    "dashboardFNIndustries.tooltipSupreme1" : "for example: Which top 10 industries (departments/functions etc.) do your scanned visitors come from (without selecting country / from country X?)",
+    "dashboardFNIndustries.tooltipSupreme2" : "generally applies: orange bars: scanned visitors at your booth, blue bars: all visitors having visited the fair ground",
 
     "eventStatus.title"			: "Session Status",
     "eventStatus.confirmSessionEnd"			: "Do you really want to end the session?",

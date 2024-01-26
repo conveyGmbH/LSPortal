@@ -57,7 +57,7 @@
                 var criteriadrop = fragmentElement.querySelector("#criteriadropdown");
                 var countrydrop = fragmentElement.querySelector("#countrydropdown");
                 var select = fragmentElement.querySelectorAll("select");
-                var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement");
+            var countryIndustriestooltip = fragmentElement.querySelector("#mydiaCountrysIndustriesElement2");
                 var icons = fragmentElement.querySelector(".countrysindustries-chart-top-container");
 
                 this.countryfills = [];

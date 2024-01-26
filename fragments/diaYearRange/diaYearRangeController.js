@@ -24,6 +24,7 @@
                 var that = this;
 
                 var icons = fragmentElement.querySelector(".yearrange-chart-top-container");
+            var yearrangeTooltip = fragmentElement.querySelector("#mydiaYearRangeElement2");
 
                 var loadIcon = function () {
                     var icon = fragmentElement.querySelector(".action-image");
@@ -33,6 +34,15 @@
                 this.loadIcon = loadIcon;
 
                 this.isSupreme = parseInt(AppData._userData.IsSupreme);
+
+            var setTooltipText = function () {
+                if (that.isSupreme === 1) {
+                    yearrangeTooltip.innerHTML = getResourceText("diaYearRange.tooltipPremium");
+                } else {
+                    yearrangeTooltip.innerHTML = getResourceText("diaYearRange.tooltipSupreme1") + " <br>  <p></p>" + getResourceText("diaYearRange.tooltipSupreme2");
+                }
+            }
+            this.setTooltipText = setTooltipText;
 
                 var yearRangeChart1Legend = {
                     afterUpdate(chart) {
@@ -989,6 +999,9 @@
                     return checkIfSurpreme();
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
+                return setTooltipText();
+            }).then(function () {
+                Log.print(Log.l.trace, "Data loaded");
                     return getGetDashboardDataPremium();
                 }).then(function () {
                     if (that.isSupreme === 2) {

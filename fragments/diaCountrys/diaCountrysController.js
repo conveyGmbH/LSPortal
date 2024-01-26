@@ -25,10 +25,20 @@
 
                 var icons = fragmentElement.querySelector(".country-chart-top-container");
                 var container = fragmentElement.querySelector(".country-chart-holder");
+            var countrytooltip = fragmentElement.querySelector("#mydiaCountrysElement2");
                 var labels = fragmentElement.querySelector(".countrys-label-surpreme");
 
                 var anzKontakte = 0;
                 var anzKontaktePremium = 0;
+
+            var setTooltipText = function () {
+                if (that.isSupreme === 1) {
+                    countrytooltip.innerHTML = getResourceText("diaCountrys.tooltipPremium");
+                } else {
+                    countrytooltip.innerHTML = getResourceText("diaCountrys.tooltipSupreme1") + " <br> <p></p>" + getResourceText("diaCountrys.tooltipSupreme2");
+                }
+            }
+            this.setTooltipText = setTooltipText;
 
                 var langSet = function () {
                     Log.call(Log.l.trace, "DiaIndustries.Controller.");
@@ -500,6 +510,9 @@
                     Log.print(Log.l.trace, "Calling checkIfSurpreme");
                     return that.checkIfSurpreme();
                 }).then(function () {
+                Log.print(Log.l.trace, "Calling checkIfSurpreme");
+                return that.setTooltipText();
+            }).then(function () {
                     Log.print(Log.l.trace, "Calling getGetCountryHitlistData");
                     return getGetCountryHitlistData();
                 }).then(function () {
