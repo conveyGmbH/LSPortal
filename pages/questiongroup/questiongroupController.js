@@ -258,12 +258,13 @@
                 },
                 clickNew: function () {
                     // never disabled!
-                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                    /*if (AppHeader.controller.binding.userData.SiteAdmin ||
                         AppData._persistentStates.leadsuccessBasic) {
                         return AppBar.busy;
                     } else {
                         return true;
-                    }
+                    }*/
+					return AppBar.busy;
                 },
                 clickOk: function () {
                     return !that.curRecId || AppBar.busy;
