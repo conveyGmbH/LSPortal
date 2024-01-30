@@ -242,7 +242,7 @@
                             var newFileUploadId = that.binding.newFileID;
                             newFileUploadId.INITImportfiletypeID = 1;
                             newFileUploadId.Import_Title = files[0].name;
-                            newFileUploadId.EventID = that.vidID;
+                            newFileUploadId.EventID = AppData.getRecordId("VeranstaltungTermin");
                             that.imageName = files[0].name;
                             that.imageLength = files[0].size;
                             if (files && files[0]) {
