@@ -157,8 +157,8 @@
                             if (that.loading) {
                                 that.loading = false;
                             }
-                            if (AppBar.scope && typeof AppBar.scope.resizeGenFragAnswers === "function") {
-                                AppBar.scope.resizeGenFragAnswers();
+                            if (AppBar.scope && typeof AppBar.scope.resizeGenFragEvents === "function") {
+                                AppBar.scope.resizeGenFragEvents();
                             }
                         }
                         that.binding.loadingState = listView.winControl.loadingState;
