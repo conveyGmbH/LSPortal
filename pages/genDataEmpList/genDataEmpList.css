@@ -20,6 +20,10 @@
 .genDataEmpList .content-header .field_line {
     min-height: 32px;
 }
+.pagecontrol:not(.view-size-medium) .genDataEmpList #events {
+    width: calc(100% - 16px);
+    min-width: calc(100% - 16px);
+}
 
 .genDataEmpList .list-header {
     font-weight: bold;
@@ -128,10 +132,11 @@
     display: none !important;
 }
 
-.list-button-left {
+.genDataEmpList .list-button-left {
     min-width: 100px;
     padding: 4px;
     height: 18px;
+    margin-top: 4px;
     margin-bottom: 2px;
 }
 .genDataEmpList .list-div-left {

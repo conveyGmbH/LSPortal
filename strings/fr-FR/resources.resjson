@@ -993,7 +993,8 @@
     "siteEventsList.customerEvents" : "Salons de la clientèle permanente",
     "siteEventsList.siteEvents" : "Salons du site",
     "siteEventsList.eventcombotitle" : "Quels salons afficher ?",
-    "siteEventsList.searchtxt" : "Recherche",
+    "siteEventsList.searchtxt" : "Filtres",
+    "siteEventsList.ordertxt" : "Ordre de tri",
 
     "siteevents.title" : "exposant",
     "siteevents.event" : "exposant",

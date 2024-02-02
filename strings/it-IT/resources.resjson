@@ -992,7 +992,8 @@
     "siteEventsList.customerEvents" : "Fiere permanenti per i clienti",
     "siteEventsList.siteEvents" : "Fiere di posizione",
     "siteEventsList.eventcombotitle" : "Quali fiere esporre?",
-    "siteEventsList.searchtxt" : "Ricerca",
+    "siteEventsList.searchtxt" : "Filtri",
+    "siteEventsList.ordertxt" : "Ordinamento",
 
     "siteevents.title" : "espositore",
     "siteevents.event" : "espositore",

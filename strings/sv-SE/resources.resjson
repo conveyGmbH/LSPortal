@@ -925,6 +925,8 @@
 	"pdfExport.msg" : "Edit/Link",
 	
     "siteEventsList.title" : "Fairs",
+    "siteEventsList.searchtxt" : "Filter",
+    "siteEventsList.ordertxt" : "Sort order",
 
     "siteevents.title" : "Exhibitor",
     "siteevents.event" : "Exhibitor",
