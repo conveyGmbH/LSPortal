@@ -647,6 +647,7 @@
     "label.siteeventsImport" : "Exhibitor Import",
 	"label.genDataEmployee" : "User accounts",
     "label.genDataEmpList" : "User accounts",
+    "label.siteEventsRoleManagement" : "Role Management",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1703,5 +1704,7 @@
     "eventProducts.ProductTitle"			: "Feature Name",
     "eventProducts.ProductInfo"			: "Feature Info",
     "eventProducts.productcombotitle"			: "Feature",
-    "eventProducts.productaddbtntitle"			: "Add"
+    "eventProducts.productaddbtntitle"			: "Add",
+
+    "siteEventsRoleManagement.title"			: "Role Management"
 }

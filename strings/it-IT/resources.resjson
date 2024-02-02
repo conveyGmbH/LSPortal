@@ -648,6 +648,7 @@
 	"label.genDataEmployee" : "Account utente",
     "label.genDataEmpList" : "Account utente",
     "label.eventProducts" : "Prodotti",
+    "label.siteEventsRoleManagement" : "Direzione del ruolo",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1684,5 +1685,7 @@
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",
     "eventProducts.ProductInfo"			: "Caratteristica Info",
     "eventProducts.productcombotitle"			: "Caratteristica",
-    "eventProducts.productaddbtntitle"			: "Aggiungi"
+    "eventProducts.productaddbtntitle"			: "Aggiungi",
+
+    "siteEventsRoleManagement.title"			: "Direzione del ruolo"
 }

@@ -648,6 +648,7 @@
 	"label.genDataEmployee" : "Comptes d'utilisateurs",
     "label.genDataEmpList" : "Comptes d'utilisateurs",
     "label.eventProducts" : "Produits",
+    "label.siteEventsRoleManagement" : "Management des rôles",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1686,5 +1687,7 @@
     "eventProducts.ProductTitle"			: "Nom du Fonctionnalité",
     "eventProducts.ProductInfo"			: "Fonctionnalité Info",
     "eventProducts.productcombotitle"			: "Fonctionnalité",
-    "eventProducts.productaddbtntitle"			: "Ajouter"
+    "eventProducts.productaddbtntitle"			: "Ajouter",
+
+    "siteEventsRoleManagement.title"			: "Management des rôles"
 }
