@@ -651,6 +651,8 @@
     "label.genDataEmployee" : "Benutzerkonten",
     "label.genDataEmpList" : "Benutzerkonten",
     "label.eventProducts" : "Produkte",
+    "label.siteEventsRoleManagement" : "Rollenverwaltung",
+
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1708,5 +1710,8 @@
     "eventProducts.ProductTitle"			: "Feature Name",
     "eventProducts.ProductInfo"			: "Feature Info",
     "eventProducts.productcombotitle"			: "Feature",
-    "eventProducts.productaddbtntitle"			: "Hinzufügen"
+    "eventProducts.productaddbtntitle"			: "Hinzufügen",
+
+    "siteEventsRoleManagement.title"			: "Rollenverwaltung"
+
 }		

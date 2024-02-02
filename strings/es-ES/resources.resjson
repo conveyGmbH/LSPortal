@@ -596,6 +596,7 @@
 	"label.startPremium1": "Premium 1",
 	"label.startPremium2": "Premium 2",
 	"label.eventCopy" : "Veranstaltung kopieren",
+    "label.siteEventsRoleManagement" : "Role Management",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -1354,5 +1355,7 @@
     "eventbaselink.title" : "Basis Link",
     "eventbaselink.starturl" : "URL Pfad",
     "eventbaselink.titlebaselink" : "Titel",
-    "eventbaselink.teamurl" : "Team Link"
+    "eventbaselink.teamurl" : "Team Link",
+
+    "siteEventsRoleManagement.title"			: "Role Management"
 }			
