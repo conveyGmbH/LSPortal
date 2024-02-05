@@ -6,7 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/fragmentController.js" />
 /// <reference path="~/www/lib/hammer/scripts/hammer.js" />
 /// <reference path="~/www/scripts/generalData.js" />
-/// <reference path="~/www/fragments/imgMedia/imgMediaService.js" />
+/// <reference path="~/www/fragments/pdfMedia/pdfMediaService.js" />
 
 (function () {
     "use strict";
@@ -87,10 +87,10 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + docId);
                 if (docId) {
                     AppData.setErrorMsg(that.binding);
-                    ret = ImgMedia.docView.select(function (json) {
+                    ret = PdfMedia.docView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "ImgMedia.docView: success!");
+                        Log.print(Log.l.trace, "PdfMedia.docView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.resultConverter(json.d);
