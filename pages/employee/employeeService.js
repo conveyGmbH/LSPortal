@@ -46,7 +46,7 @@
                 LogInNameBeforeAtSymbol: "",
                 LogInNameAfterAtSymbol: "", 
                 Password: "",
-                VeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                VeranstaltungID: 0, // Auf Server im INSERT Trigger ermittelt für "einfache" Benutzerverwaltung
                 INITAPUserRoleID: 3,
                 Password2: ""
             },

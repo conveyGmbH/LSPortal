@@ -216,26 +216,19 @@
                                     AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                     NavigationBar.enablePage("settings");
                                     NavigationBar.enablePage("info");
-                                    Application.pageframe.savePersistentStates();
                                     AppBar.busy = false;
-                                    AppData._curGetUserDataId = 0;
-                                    AppData.getUserData();
-                                    AppData.getMessagesData();
-                                    return WinJS.Promise.as();
                                 } else {
                                     AppBar.busy = false;
                                     that.binding.messageText = dataLogin.MessageText;
                                     err = { status: 401, statusText: dataLogin.MessageText };
                                     AppData.setErrorMsg(that.binding, err);
                                     error(err);
-                                    return WinJS.Promise.as();
                                 }
                             } else {
                                 AppBar.busy = false;
                                 err = { status: 404, statusText: "no data found" };
                                 AppData.setErrorMsg(that.binding, err);
                                 error(err);
-                                return WinJS.Promise.as();
                             }
                         }, function (errorResponse) {
                             AppBar.busy = false;
@@ -244,8 +237,15 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                             error(errorResponse);
-                            return WinJS.Promise.as();
                         }, dataLogin);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (!err) {
+                        AppData._curGetUserDataId = 0;
+                        AppData.getMessagesData();
+                        return AppData.getUserData();
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -256,6 +256,7 @@
                         AppData._persistentStates.hideSketch = false;
                         AppData._persistentStates.productMailOn = true;
                         AppData._persistentStates.thankMailOn = true;
+                        Application.pageframe.savePersistentStates();
                         return Login.CR_VERANSTOPTION_ODataView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
