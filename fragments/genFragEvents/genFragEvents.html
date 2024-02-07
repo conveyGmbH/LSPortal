@@ -39,7 +39,8 @@
                                     onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
                                 <span data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay; textContent: UserStatus"></span>
                             </div>
-                            <div class="list-field-small-fixed win-type-ellipsis">
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay">
                                 <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
                             </div>
                         </div>
@@ -56,7 +57,8 @@
                                             data-win-res="{textContent: 'genFragEvents.eventsetactive'}" 
                                             onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
                                     <span data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay; textContent: UserStatus"></span>
-                                    <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
+                                    <button data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay"
+                                            data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
                                 </div>
                             </div>
                         </div>

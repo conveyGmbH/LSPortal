@@ -198,6 +198,11 @@
                 } else {
                     item.UserStatusShowFlag = "";
                 }
+                if (item.UserStatusID === 1 || item.UserStatus === "TARGET") {
+                    item.InfoMailButtonShowFlag = 1;
+                } else {
+                    item.InfoMailButtonShowFlag = "";
+                }
             }
             this.resultConverter = resultConverter;
 

@@ -24,6 +24,7 @@
                 Log.call(Log.l.trace, namespaceName + ".BenutzerView.");
                 var ret = GenFragEvents._BenutzerView.select(complete, error, restriction, {
                     ordered: true,
+                    orderAttribute: "Startdatum",
                     desc: true
                 });
                 // this will return a promise to controller
