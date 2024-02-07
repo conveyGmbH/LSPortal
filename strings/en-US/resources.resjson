@@ -1014,7 +1014,7 @@
     "siteevents.standsize" : "Booth size",
     "siteevents.dunsnumber" : "DUNS number",
     "siteevents.auswertungsvariante" : "Evaluation variant",
-    "siteevents.ordernumber" : "OrderNumber",
+    "siteevents.ordernumber" : "Stand ID / OrderNumber",
 		
     "siteevents.exhibitorname" : "Exhibitor name",
     "siteevents.contact" : "Contact",
