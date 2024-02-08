@@ -325,52 +325,6 @@
             }
             this.processAllData = processAllData;
 
-            var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
-                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
-                var lang = AppData.getLanguageId();
-                AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_GetLangText", {
-                    pTextID: resultmessageid,
-                    pLanguageID: lang
-                }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
-                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
-                    AppData.setErrorMsg(that.binding, errorMsg);
-                }, function (error) {
-                    Log.print(Log.l.error, "call error");
-                });
-                Log.ret(Log.l.trace);
-            }
-            this.getLangSpecErrorMsg = getLangSpecErrorMsg;
-
-            var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
-                AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_GetErrorStack", {},
-                    function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        AppBar.modified = false;
-                        if (json.d.results[0].ResultMessageID > 0) {
-                            errorMsg.data.error.code = json.d.results[0].ResultCode;
-                            errorMsg.data.error.message.value =
-                                that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                            Log.print(Log.l.info, "call success! ");
-                        } else {
-                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                            errorMsg.data.error.code = json.d.results[0].ResultCode;
-                            AppData.setErrorMsg(that.binding, errorMsg);
-                            Log.print(Log.l.info, "call success! ");
-                        }
-                    },
-                    function (error) {
-                        Log.print(Log.l.error, "call error");
-                        AppBar.modified = false;
-
-                    });
-                Log.ret(Log.l.trace);
-            }
-            this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
-
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -497,6 +451,7 @@
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "MailingTemplateEvent.Controller.");
                     AppData.setErrorMsg(that.binding);
+                    var err = null;
                     var recordId = that.binding.deleteID;
                     if (recordId) {
                         AppBar.busy = true;
@@ -512,7 +467,15 @@
                             });
                         }, function (errorResponse) {
                             AppBar.busy = false;
-                            that.getErrorMsgFromErrorStack(errorResponse);
+                            err = errorResponse;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            });
                         }, recordId);
                     }
                     Log.ret(Log.l.trace);

@@ -338,6 +338,7 @@
             // save data
             var saveData = function (complete, error) {
                 var errorMessage;
+                var err = null;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
@@ -362,26 +363,31 @@
                     Log.print(Log.l.info, "questionView update: success!");
                 }, function (errorResponse) {
                     AppBar.busy = false;
+                    err = errorResponse;
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
-                    AppData.getErrorMsgFromErrorStack(errorResponse);
-                    //AppData.setErrorMsg(that.binding, errorResponse);
-                    if (typeof error === "function") {
-                        error(errorResponse);
-                    }
+                    AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
                 }, recordId, dataQuestion).then(function () {
-                    AppBar.modified = false;
                     AppBar.busy = false;
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        master.controller.loadData(recordId).then(function () {
+                    if (err) {
+                        //ignore
+                    } else {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller && master.controller.binding) {
+                            master.controller.loadData(recordId).then(function () {
+                                if (typeof complete === "function") {
+                                    complete(dataQuestion);
+                                }
+                            });
+                        } else {
                             if (typeof complete === "function") {
                                 complete(dataQuestion);
                             }
-                        });
-                    } else {
-                        if (typeof complete === "function") {
-                            complete(dataQuestion);
                         }
                     }
                 });

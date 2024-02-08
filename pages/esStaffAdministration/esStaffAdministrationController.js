@@ -133,46 +133,6 @@
             }
             this.sendPdfWalletMail = sendPdfWalletMail;
 
-            var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
-                if (!errorMsg) {
-                    errorMsg = {};
-                }
-                if (!errorMsg.data) {
-                    errorMsg.data = {};
-                }
-                if (!errorMsg.data.error) {
-                    errorMsg.data.error = {
-                        code: 0,
-                        message: {
-                            value: ""
-                        }
-                    };
-                }
-                AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_GetErrorStack", {
-                }, function (json) {
-                    Log.print(Log.l.info, "call PRC_GetErrorStack: success! ");
-                    AppBar.modified = false;
-                    if (json && json.d && json.d.results && json.d.results.length > 0) {
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        Log.print(Log.l.info, "ResultCode=" + errorMsg.data.error.code);
-                        if (json.d.results[0].ResultMessageID > 0) {
-                            errorMsg.data.error.message.value = that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                        } else {
-                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                        }
-                        Log.print(Log.l.info, "ResultMessage=" + errorMsg.data.error.message.value);
-                        AppData.setErrorMsg(that.binding, errorMsg);
-                    }
-                }, function (error) {
-                    Log.print(Log.l.error, "call error");
-                    AppBar.modified = false;
-                });
-                Log.ret(Log.l.trace);
-            }
-            this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
-
             var saveRestriction = function () {
                 if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];

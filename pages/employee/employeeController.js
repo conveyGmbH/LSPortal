@@ -64,56 +64,6 @@
             }
             this.setDataEmployee = setDataEmployee;
 
-            var getLangSpecErrorMsg = function (resultmessageid, errorMsg) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
-                var lang = AppData.getLanguageId();
-                AppData.setErrorMsg(that.binding);
-                Log.print(Log.l.trace, "calling PRC_GetLangText...");
-                AppData.call("PRC_GetLangText", {
-                    pTextID: resultmessageid,
-                    pLanguageID: lang
-                }, function (json) {
-                    Log.print(Log.l.info, "call PRC_GetLangText: success! ");
-                    errorMsg.data.error.message.value = json.d.results[0].ResultText;
-                    AppData.setErrorMsg(that.binding, errorMsg);
-                }, function (error) {
-                    Log.print(Log.l.error, "call PRC_GetLangText: error");
-                });
-                Log.ret(Log.l.trace);
-            }
-            this.getLangSpecErrorMsg = getLangSpecErrorMsg;
-
-            var getErrorMsgFromErrorStack = function (errorMsg) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
-                Log.print(Log.l.trace, "calling PRC_GetErrorStack...");
-                AppData.call("PRC_GetErrorStack", {
-                }, function (json) {
-                    Log.print(Log.l.info, "call PRC_GetErrorStack: success! ");
-                    AppBar.modified = false;
-                    if (json && json.d && json.d.results && json.d.results.length > 0) {
-                        Log.print(Log.l.info, "ResultCode=" + json.d.results[0].ResultCode);
-                        errorMsg.data.error.code = json.d.results[0].ResultCode;
-                        if (json.d.results[0].ResultMessageID > 0) {
-                            Log.print(Log.l.info, "ResultMessageID=" + json.d.results[0].ResultMessageID);
-                            errorMsg.data.error.message.value =
-                                that.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                        } else {
-                            Log.print(Log.l.info, "ResultMessage=" + json.d.results[0].ResultMessage);
-                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
-                        }
-                        AppData.setErrorMsg(that.binding, errorMsg);
-                    } else {
-                        Log.print(Log.l.info, "PRC_GetErrorStack returned no data!");
-                    }
-                }, function (error) {
-                    Log.print(Log.l.error, "call PRC_GetErrorStack: error");
-                    AppBar.modified = false;
-                });
-                Log.ret(Log.l.trace);
-            }
-            this.getErrorMsgFromErrorStack = getErrorMsgFromErrorStack;
-
             var saveRestriction = function () {
                 AppData.setRestriction("Employee", that.binding.restriction);
             }
