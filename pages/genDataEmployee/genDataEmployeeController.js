@@ -846,12 +846,13 @@
             // save data
             var saveData = function (complete, error) {
                 var errorMessage;
+                var err = null;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 var dataEmployee = that.binding.dataEmployee;
                 if (!dataEmployee || !AppBar.modified || !recordId) {
-                    Log.ret(Log.l.error, "not modified");
+                    Log.ret(Log.l.trace, "not modified");
                     return new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete(dataEmployee);
@@ -889,15 +890,19 @@
                     Log.print(Log.l.info, "employeeData update: success!");
                 }, function (errorResponse) {
                     AppBar.busy = false;
+                    err = errorResponse;
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
-                    AppData.getErrorMsgFromErrorStack(errorResponse);
-                    //AppData.setErrorMsg(that.binding, errorResponse);
+                    AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     if (typeof error === "function") {
                         error(errorResponse);
                     }
+                    });
                 }, recordId, dataEmployee).then(function() {
-                    if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                    if (err) {
+                        return WinJS.Promise.as();
+                    } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
                         AppData._persistentStates.privacyPolicyFlag = false;
                         if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                             AppHeader.controller.binding.userData = {
@@ -927,9 +932,7 @@
                         }
                     }
                 }).then(function () {
-                    AppBar.modified = false;
-                    AppBar.busy = false;
-                    if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                    if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
                         // ignore that
                     } else {
                         var master = Application.navigator.masterControl;

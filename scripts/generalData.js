@@ -281,8 +281,6 @@
                                 //AppHeader.controller.loadData();
                             }
                         }
-                        //TEST
-                        /*
                         if (AppData._messagesDataPromise) {
                             Log.print(Log.l.info, "Cancelling previous messagesDataPromise");
                             AppData._messagesDataPromise.cancel();
@@ -293,11 +291,11 @@
                             Log.print(Log.l.info, "getMessagesData: Now, timeout=" + timeout + "s is over!");
                             //AppData._curGetUserRemoteDataId = 0;
                             AppData.getMessagesData();
-                        });*/
+                        });
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        Log.print(Log.l.error,"error in select generalUserMessageVIEW statusText=" + errorResponse.statusText);
+                        Log.print(Log.l.error, "error in select generalUserMessageVIEW statusText=" + errorResponse.statusText);
                         //AppData._curGetUserDataId = 0;
                     });
                 });
@@ -335,7 +333,7 @@
                                     AppBar.scope.binding.generalData.contactId = AppData._contactData.KontaktVIEWID;
                                     if (typeof AppBar.scope.updateActions === "function" &&
                                         (!prevContactData ||
-                                         prevContactData !== AppData._contactData)) {
+                                            prevContactData !== AppData._contactData)) {
                                         AppBar.scope.updateActions(true);
                                     }
                                 }
@@ -418,7 +416,7 @@
                             AppData._persistentStates.colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
                             var colors = new Colors.ColorsClass(AppData._persistentStates.colorSettings);
                             var promise = colors._loadCssPromise || WinJS.Promise.timeout(0);
-                            promise.then(function() {
+                            promise.then(function () {
                                 AppBar.loadIcons();
                                 NavigationBar.groups = Application.navigationBarGroups;
                             });
@@ -661,7 +659,7 @@
                     }
                     break;
                 default:
-                    // defaultvalues
+                // defaultvalues
             }
             if (item.pageProperty) {
                 if (item.LocalValue === "1") {
@@ -678,7 +676,7 @@
             Colors[colorProperty] = color;
             switch (colorProperty) {
                 case "accentColor":
-                    // fall through...
+                // fall through...
                 case "navigationColor":
                     AppBar.loadIcons();
                     NavigationBar.groups = Application.navigationBarGroups;
@@ -686,7 +684,7 @@
             }
             Log.ret(Log.l.u1);
         },
-        getLogo: function() {
+        getLogo: function () {
             switch (AppData._userData.VeranstaltungTyp) {
                 case 0:
                     return "leadsuccess_white";
@@ -698,7 +696,7 @@
                     return "leadsuccess_white";
             }
         },
-        getSupportString : function() {
+        getSupportString: function () {
             if (AppData._userData.VeranstaltungTyp === 1) {
                 return getResourceText("support.urllivebridge");
             } else {
@@ -712,7 +710,7 @@
                 var dashboardColorType = 0;
                 if (AppData._userData.VeranstaltungTyp === 0) {
                     //if(AppData._userData.isSupreme === "1")
-                    switch(AppData._userData.IsSupreme) {
+                    switch (AppData._userData.IsSupreme) {
                         case "1":
                             // type 3 
                             dashboardColorType = 3;
@@ -764,7 +762,7 @@
                 data.getRecordId = AppData.getRecordId;
                 data.setRestriction = AppData.setRestriction;
                 data.getRestriction = AppData.getRestriction;
-                data.contactDateTime = (function() {
+                data.contactDateTime = (function () {
                     return (AppData.getContactDateString() + " " + AppData.getContactTimeString());
                 })();
                 data.eventId = AppData._userData.VeranstaltungID;
@@ -848,46 +846,65 @@
                 return ret;
             }
         },
-        getLangSpecErrorMsg: function (resultmessageid, errorMsg) {
-            Log.call(Log.l.trace, "Employee.Controller.");
+        getLangSpecErrorMsg: function (resultmessageid) {
+            Log.call(Log.l.trace, "AppData.getLangSpecErrorMsg.");
+            var messageValue = "";
             var lang = AppData.getLanguageId();
-            AppData.setErrorMsg(AppBar.scope.binding);
-            AppData.call("PRC_GetLangText", {
+            var ret = AppData.call("PRC_GetLangText", {
                 pTextID: resultmessageid,
                 pLanguageID: lang
             }, function (json) {
                 Log.print(Log.l.info, "call success! ");
-                errorMsg.data.error.message.value = json.d.results[0].ResultText;
-                AppData.setErrorMsg(AppBar.scope.binding, errorMsg);
+                messageValue = json.d.results[0].ResultText;
             }, function (error) {
                 Log.print(Log.l.error, "call error");
 
+            }).then(function () {
+                return messageValue;
             });
             Log.ret(Log.l.trace);
+            return ret;
         },
         getErrorMsgFromErrorStack: function (errorMsg) {
-            Log.call(Log.l.trace, "Employee.Controller.");
-            AppData.setErrorMsg(AppBar.scope.binding);
-            AppData.call("PRC_GetErrorStack", {
-            }, function (json) {
-                Log.print(Log.l.info, "call success! ");
-                AppBar.modified = false;
-                if (json.d.results[0].ResultMessageID > 0) {
-                    errorMsg.data.error.code = json.d.results[0].ResultCode;
-                    errorMsg.data.error.message.value = AppData.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+            Log.call(Log.l.trace, "AppData.getLangSpecErrorMsg.");
+            var ret;
+            if (!errorMsg || !errorMsg.data || !errorMsg.data.error || !errorMsg.data.error.message) {
+                ret = WinJS.Promise.as();
+            } else {
+                var resultMessageId = null;
+                ret = AppData.call("PRC_GetErrorStack", {
+                }, function (json) {
                     Log.print(Log.l.info, "call success! ");
-                } else {
-                    errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                    //AppBar.modified = false;
                     errorMsg.data.error.code = json.d.results[0].ResultCode;
-                    AppData.setErrorMsg(AppBar.scope.binding, errorMsg);
-                    Log.print(Log.l.info, "call success! ");
-                }
-            }, function (error) {
-                Log.print(Log.l.error, "call error");
-                AppBar.modified = false;
-
-            });
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        if (json.d.results[0].ResultMessageID > 0) {
+                            resultMessageId = json.d.results[0].ResultMessageID;
+                            //errorMsg.data.error.message.value = AppData.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
+                            Log.print(Log.l.info, "call success! ");
+                        } else {
+                            errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
+                            AppData.setErrorMsg(AppBar.scope.binding, errorMsg);
+                            Log.print(Log.l.info, "call success! ");
+                        }
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                    //AppBar.modified = false;
+                }).then(function () {
+                    if (resultMessageId) {
+                        return AppData.getLangSpecErrorMsg(resultMessageId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function (messageValue) {
+                    if (messageValue) {
+                        errorMsg.data.error.message.value = messageValue;
+                    }
+                });
+            }
             Log.ret(Log.l.trace);
+            return ret;
         }
     });
 
