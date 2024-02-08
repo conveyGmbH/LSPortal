@@ -608,12 +608,13 @@
             // save data
             var saveData = function (complete, error) {
                 var errorMessage;
+                var err = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 var dataEmployee = that.binding.dataEmployee;
                 if (!dataEmployee || !AppBar.modified || !recordId) {
-                    Log.ret(Log.l.error, "not modified");
+                    Log.ret(Log.l.trace, "not modified");
                     return new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete(dataEmployee);
@@ -635,9 +636,8 @@
                     }
                     return WinJS.Promise.wrapError(errorMessage);
                 }
-                if (dataEmployee.Login &&
-                    (!dataEmployee.Password || !dataEmployee.Password2 ||
-                        dataEmployee.Password2 !== dataEmployee.Password)) {
+                if (dataEmployee.Login && (!dataEmployee.Password || !dataEmployee.Password2 ||
+                    dataEmployee.Password2 !== dataEmployee.Password)) {
                     errorMessage = getResourceText("employee.alertPassword");
                     Log.print(Log.l.error, errorMessage);
                     alert(errorMessage);
@@ -647,22 +647,24 @@
                     return WinJS.Promise.wrapError(errorMessage);
                 }
                 AppBar.busy = true;
-                Log.print(Log.l.trace, "calling update employeeView...");
                 var ret = Employee.employeeView.update(function (response) {
                     // called asynchronously if ok
-                    Log.print(Log.l.info, "update employeeData: success!");
+                    Log.print(Log.l.info, "employeeData update: success!");
                 }, function (errorResponse) {
                     AppBar.busy = false;
+                    err = errorResponse;
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
-                    Log.print(Log.l.error, "update employeeData: error!");
-                    AppData.getErrorMsgFromErrorStack(errorResponse);
-                    //AppData.setErrorMsg(that.binding, errorResponse);
-                    if (typeof error === "function") {
-                        error(errorResponse);
-                    }
+                    AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
                 }, recordId, dataEmployee).then(function () {
-                    if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                    if (err) {
+                        return WinJS.Promise.as();
+                    } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
                         AppData._persistentStates.privacyPolicyFlag = false;
                         if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                             AppHeader.controller.binding.userData = {
@@ -670,17 +672,21 @@
                             };
                         }
                         alert(getResourceText("employee.alertNewLoginPassword"), function (response) {
-                            return Application.navigateById("login");
+                            // always call 
+                            if (typeof complete === "function") {
+                                complete(dataEmployee);
+                            }
+                            Application.navigateById("login");
                         });
+                        return WinJS.Promise.as();
                     } else {
                         var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
                         if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                            Log.print(Log.l.trace, "calling empRolesFragmentControl.controller.saveData...");
                             return empRolesFragmentControl.controller.saveData(function () {
-                                Log.print(Log.l.trace, "empRolesFragmentControl.controller.saveData completed!");
+                                Log.print(Log.l.trace, "saveData completed...");
                             }, function (errorResponse) {
                                 AppBar.busy = false;
-                                Log.print(Log.l.error, "empRolesFragmentControl.controller.saveData error!");
+                                Log.print(Log.l.error, "saveData error...");
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             });
                         } else {
@@ -688,9 +694,8 @@
                         }
                     }
                 }).then(function () {
-                    AppBar.modified = false;
                     AppBar.busy = false;
-                    if (AppData.getRecordId("Mitarbeiter") === recordId) {
+                    if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
                         // ignore that
                     } else {
                         var master = Application.navigator.masterControl;

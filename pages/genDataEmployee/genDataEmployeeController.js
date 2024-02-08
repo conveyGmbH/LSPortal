@@ -932,6 +932,7 @@
                         }
                     }
                 }).then(function () {
+                    AppBar.busy = false;
                     if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
                         // ignore that
                     } else {
