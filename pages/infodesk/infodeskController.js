@@ -494,6 +494,25 @@
                     Log.ret(Log.l.trace);
 
                 },
+                /*changeEventId: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    if (event.target.value) {
+                        that.binding.restriction.VeranstaltungID = event.target.value;
+                        // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                        AppData.setRecordId("Veranstaltung2",
+                            (typeof that.binding.restriction.VeranstaltungID === "string") ?
+                            parseInt(that.binding.restriction.VeranstaltungID) : that.binding.restriction.VeranstaltungID);
+                    } else {
+                        delete that.binding.restriction.VeranstaltungID;
+                        AppData.setRecordId("Veranstaltung2", 0);
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },*/
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
@@ -624,6 +643,21 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                /*clickOrderLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    if (event.target.textContent === getResourceText("employee.licenceAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },*/
                 clickResetRestriction: function() {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var prevNotifyModified = AppBar.notifyModified;
@@ -964,6 +998,23 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }
                         }, that.binding.dataEmployee.Doc1MitarbeiterID);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (that.binding.dataBenutzer.Info2 && that.binding.dataBenutzer.Info2TSRead) {
+                        that.binding.dataBenutzer.Info2 = null;
+                        that.binding.dataBenutzer.Info2TSRead = null;
+                        AppBar.modified = true;
+                        return that.saveData(function (response) {
+                            // called asynchronously if ok
+                            AppBar.modified = false;
+                            AppData.getMessagesData();
+                            complete(response);
+                        }, function (errorResponse) {
+                            AppBar.modified = false;
+                            error(errorResponse);
+                        });
                     } else {
                         return WinJS.Promise.as();
                     }

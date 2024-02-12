@@ -19,6 +19,10 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
+                licenceWarning: false,
+                btnFirstNameText: getResourceText("employee.firstName"),
+                btnNameText: getResourceText("employee.name"),
+                btnEmployeeLicenceText: getResourceText("employee.licence"),
                 mitarbeiterText: getResourceText("infodesk.employee"),
                 employeeId: null,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
@@ -105,13 +109,13 @@
                 if (!recordId) {
                     recordId = that.binding.employeeId;
                 }
-                if (that.binding.loading) {
+                /*if (that.binding.loading) {
                     ret = WinJS.Promise.timeout(250).then(function() {
                         return that.loadNextUrl(recordId);
                     });
                     Log.ret(Log.l.trace, "busy - try later again");
                     return ret;
-                }
+                }*/
                 if (that.employees && that.nextskillentryUrl && listView) { //that.nextskillentryUrl
                     AppBar.busy = true;
                     that.binding.loading = true;
@@ -555,13 +559,13 @@
             var loadData = function () {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                if (that.binding.loading) {
+                /*if (that.binding.loading) {
                     ret = WinJS.Promise.timeout(250).then(function () {
                         return that.loadData();
                     });
                     Log.ret(Log.l.trace, "busy - try later again");
                     return ret;
-                }
+                }*/
                 that.firstDocsIndex = 0;
                 that.firstEmployeesIndex = 0;
                 AppBar.busy = true;
