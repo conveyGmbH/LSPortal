@@ -165,3 +165,53 @@
     line-height: 42px;
     font-weight: bold;
 }
+
+/*.infodeskEmpList .list-div-left {
+    width: 100%;
+}
+
+.infodeskEmpList .contentarea {
+    overflow-y: hidden !important;
+}
+
+#infodeskEmployeeList .win-item {
+    width: calc(100% - 52px);
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#infodeskEmployeeList .win-item,
+#infodeskEmployeeList .list-header,
+#infodeskEmployeeList .list-footer {
+    padding-left: 26px;
+    padding-right: 26px;
+    width: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.view-size-medium #infodeskEmployeeList .win-item,
+.view-size-medium #infodeskEmployeeList .list-header,
+.view-size-medium #infodeskEmployeeList .list-footer {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.view-size-small #infodeskEmployeeList .win-item,
+.view-size-small #infodeskEmployeeList .list-header,
+.view-size-small #infodeskEmployeeList .list-footer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.view-size-smallest .infodeskEmpList .list-div-left {
+    width: 100%;
+    margin: 4px;
+}*/
+.view-size-smallest #infodeskEmployeeList .win-item {
+    width: 100%;
+    padding: 0;
+    height: 54px;
+}
