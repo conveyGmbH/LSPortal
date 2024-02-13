@@ -1003,7 +1003,7 @@
                     }
                 }).then(function () {
                     if (that.binding.dataBenutzer.Info2 && that.binding.dataBenutzer.Info2TSRead) {
-                        that.binding.dataBenutzer.Info2 = null;
+                        //that.binding.dataBenutzer.Info2 = null;
                         that.binding.dataBenutzer.Info2TSRead = null;
                         AppBar.modified = true;
                         return that.saveData(function (response) {
@@ -1020,7 +1020,7 @@
                     }
                 }).then(function () {
                     //restriction speichern
-                    var savedRestriction = AppData.getRestriction("SkillEntry"); //
+                    var savedRestriction = AppData.getRestriction("SkillEntry");
                     if (!savedRestriction) {
                         savedRestriction = {};
                     }

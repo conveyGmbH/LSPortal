@@ -601,6 +601,12 @@
                             btnFirstName.textContent = getResourceText("infodeskEmpList.firstName");
                         }
                     }
+
+                    // Wenn Nachricht vorhanden dann sortiere nach info2 und info2TS
+                    /*if (AppData._userMessagesData.MessagesCounter && AppData._userMessagesData.MessagesCounter > 0) {
+                        restriction.OrderAttribute = "Info1TS";
+                        restriction.OrderDesc = true;
+                    }*/
                     //if (restriction.Names && restriction.Names.length > 0) {
                         //restriction.bUseOr = true;
                         that.binding.dataEmployee.Names = restriction.Names;
