@@ -64,7 +64,7 @@
             var getPhotoData = function () {
                 return that.binding.photoData;
             }
-            var setPhotoData = function(newPhotoData) {
+            var setPhotoData = function (newPhotoData) {
                 if (newPhotoData !== that.binding.photoData) {
                     var prevNotifyModified = AppBar.notifyModified;
                     AppBar.notifyModified = false;
@@ -486,7 +486,7 @@
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
                         if (prevMasterLoadPromise &&
-                            typeof prevMasterLoadPromise.cancel === "function") { 
+                            typeof prevMasterLoadPromise.cancel === "function") {
                             prevMasterLoadPromise.cancel();
                         }
                         prevMasterLoadPromise = master.controller.loadData();
@@ -523,7 +523,7 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                changedSkill: function(event) {
+                changedSkill: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var prevNotifyModified = AppBar.notifyModified;
                     AppBar.notifyModified = false;
@@ -594,6 +594,7 @@
                     var prevNotifyModified = AppBar.notifyModified;
                     AppBar.notifyModified = false;
                     //that.binding.restriction.OrderDesc = !that.binding.restriction.OrderDesc;
+                    that.binding.restriction.OrderAttribute = "SortVorname";
                     AppData.setRestriction("SkillEntry", that.binding.restriction);
 
                     if (event.target.textContent === getResourceText("infodeskEmpList.firstNameDesc")) {
@@ -658,7 +659,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },*/
-                clickResetRestriction: function() {
+                clickResetRestriction: function () {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var prevNotifyModified = AppBar.notifyModified;
                     AppBar.notifyModified = false;
@@ -749,10 +750,10 @@
                         if (item[keyValue]) {
                             Log.print(Log.l.trace, keyTitle + "=" + item[keyValue]);
                             skills.push(
-                            {
-                                value: i,
-                                title: item[keyValue]
-                            });
+                                {
+                                    value: i,
+                                    title: item[keyValue]
+                                });
                         }
                     }
                     Log.print(Log.l.trace, "allSkills[" + index + "].length=" + skills.length);
@@ -958,8 +959,8 @@
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
-                            MitarbeiterID: recordId
-                        });
+                                MitarbeiterID: recordId
+                            });
                     } else {
                         return WinJS.Promise.as();
                     }

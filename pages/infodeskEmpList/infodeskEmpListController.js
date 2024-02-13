@@ -347,6 +347,9 @@
                 (item.Vorname ? (item.Vorname + " ") : "") +
                 (item.Nachname ? item.Nachname : ""); // muss geändert werden
                 //}
+                item.nameInitial = (item.Vorname && item.Nachname)
+                    ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
+                    : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
                 if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null && item.Present !== 1) {
                     var map = InfodeskEmpList.initBenAnwView.getMap();
                     var results = InfodeskEmpList.initBenAnwView.getResults();
@@ -507,6 +510,8 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
+                            var circleElement = pageElement.querySelector('#nameInitialcircle');
+                            circleElement.style.backgroundColor = Colors.accentColor;
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
 

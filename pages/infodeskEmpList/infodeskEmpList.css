@@ -153,3 +153,15 @@
     margin-top: 0;
     margin-left: 0px;
 }
+
+.infodeskEmpList #nameInitialcircle {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: rgba(254,54,0,1);
+    color: black;
+    text-align: center;
+    line-height: 42px;
+    font-weight: bold;
+}
