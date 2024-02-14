@@ -74,21 +74,12 @@
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
                             var width = contentarea.clientWidth;
-                            var height = contentarea.clientHeight - 16;
-                            var contentheader = element.querySelector(".content-header");
-                            if (contentheader) {
-                                height -= contentheader.clientHeight;
-                            }
-                            /*if (width !== that.prevWidth) {
+                            var height = contentarea.clientHeight - 8;
+                            if (width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                empList.style.width = width.toString() + "px";
-                            }*/
+                            }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                empList.style.height = height.toString() + "px";
-                                if (that.controller && that.controller.binding && that.controller.binding.employeeId) {
-                                    that.selectRecordId(that.binding.employeeId);
-                                }
                             }
                         }
                     }
