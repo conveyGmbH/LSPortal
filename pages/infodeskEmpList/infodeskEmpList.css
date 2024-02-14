@@ -144,14 +144,19 @@
     border-radius: 20px;
     z-index: 9901;
 }
-.content-header .input_half_right {
+.infodeskEmpList .content-header .input_half_right {
     min-height: 32px;
     margin-right: 20px; /*-2*/
     float: right;
-    width: 30%;
+    width: 170px;
    /* margin-left: 1em;*/
-    margin-top: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-left: 0px;
+}
+
+.infodeskEmpList .content-header {
+    height: auto;
 }
 
 .infodeskEmpList #nameInitialcircle {
@@ -214,4 +219,21 @@
     width: 100%;
     padding: 0;
     height: 54px;
+}
+
+.view-size-smallest .infodeskEmpList .master-list-header {
+    display: none;
+}
+
+.infodeskEmpList .content-header {
+    height: 100px;
+}
+
+.view-size-small .infodeskEmpList .content-header {
+    height: 135px;
+}
+
+.infodeskEmpList .sortButton {
+    margin-bottom: 5px;
+    margin-top: 5px;
 }

@@ -79,10 +79,10 @@
                             if (contentheader) {
                                 height -= contentheader.clientHeight;
                             }
-                            if (width !== that.prevWidth) {
+                            /*if (width !== that.prevWidth) {
                                 that.prevWidth = width;
                                 empList.style.width = width.toString() + "px";
-                            }
+                            }*/
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 empList.style.height = height.toString() + "px";
