@@ -60,6 +60,10 @@
                         title: "IPAD"
                     },
                     {
+                        value: "API",
+                        title: "API"
+                    },
+                    {
                         value: "FLOW",
                         title: "FLOW"
                     },
