@@ -280,6 +280,21 @@
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         AppBar.scope.setEventId(that.binding.eventId);
                                                         AppBar.scope.loadData();
+                                                    } else if (curPageId === "mandatory" &&
+                                                        typeof AppBar.scope.loadData === "function" &&
+                                                        typeof AppBar.scope.setEventId === "function") {
+                                                        AppBar.scope.setEventId(that.binding.eventId);
+                                                        AppBar.scope.loadData();
+                                                    } else if (curPageId === "questionList" &&
+                                                        typeof AppBar.scope.loadData === "function" &&
+                                                        typeof AppBar.scope.setEventId === "function") {
+                                                        AppBar.scope.setEventId(that.binding.eventId);
+                                                        AppBar.scope.loadData();
+                                                    } else if (curPageId === "optQuestionList" &&
+                                                        typeof AppBar.scope.loadData === "function" &&
+                                                        typeof AppBar.scope.setEventId === "function") {
+                                                        AppBar.scope.setEventId(that.binding.eventId);
+                                                        AppBar.scope.loadData();
                                                     } else if (curPageId === "eventProducts" &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setVeranstaltungId === "function") {
@@ -299,6 +314,9 @@
                                                     }
                                                 }, function (errorResponse) {
                                                     if ((curPageId === "eventCopy" ||
+                                                        curPageId === "mandatory" ||
+                                                        curPageId === "optQuestionList" ||
+                                                        curPageId === "questionList" ||
                                                         curPageId === "event" ||
                                                         curPageId === "contactResultsList") &&
                                                         typeof AppBar.scope.getEventId === "function") {
@@ -308,6 +326,9 @@
                                             } else {
                                                 // current detail view has NO saveData() function - is list
                                                 if ((curPageId === "eventCopy" || 
+                                                     curPageId === "mandatory" ||
+                                                    curPageId === "optQuestionList" ||
+                                                    curPageId === "questionList" ||
                                                     curPageId === "event" ||
                                                     curPageId === "contactResultsList") &&
                                                     typeof AppBar.scope.loadData === "function" &&

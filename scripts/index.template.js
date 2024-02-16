@@ -315,7 +315,15 @@
         { id: "siteeventsImport", master: "siteEventsList" },
         //{ id: "start", master: "eventList" },
         { id: "genDataEmployee", master: "genDataEmpList" },
-        { id: "eventProducts", master: "eventList" }
+        { id: "eventProducts", master: "eventList" }, 
+        { id: "optQuestionList", master: "eventList" },
+        { id: "questionList", master: "eventList" },
+        { id: "mandatory", master: "eventList" },
+        { id: "contactResultsEdit", master: "contactList" },
+        { id: "contactResultsAttach", master: "contactList" },
+        { id: "contactResultsCriteria", master: "contactList" },
+        { id: "contactResultsEvents", master: "contactList" },
+
     ];
 
     // init page for app startup

@@ -10,7 +10,7 @@
     "use strict";
 
     WinJS.Namespace.define("Application.ContactListLayout", {
-        ContactsLayout: WinJS.Class.define(function (options) {
+        ContactListLayout: WinJS.Class.define(function (options) {
             this._site = null;
             this._surface = null;
         },

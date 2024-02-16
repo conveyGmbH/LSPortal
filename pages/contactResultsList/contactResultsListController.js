@@ -167,7 +167,7 @@
                         }
                         AppData.setRecordId("Kontakt", that.curRecId);
                         if (that.getEventId()) {
-                            Application.navigateById("contactResultsEvents");
+                            Application.navigateById("contactResultsEdit");
                         } else {
                             Application.navigateById("contactResultsEdit");
                         }

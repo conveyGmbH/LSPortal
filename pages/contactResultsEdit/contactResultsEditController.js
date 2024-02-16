@@ -115,6 +115,16 @@
                 }
             }
 
+            var contactMaster = function() {
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                   
+                } else {
+                    that.setEventId(AppData.getRecordId("Veranstaltung"));
+                }
+            }
+            this.contactMaster = contactMaster;
+
             var calcImagePosition = function (options) {
                 var newScale, newRotate;
                 if (options) {
@@ -1198,6 +1208,9 @@
             this.saveData = saveData;
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.contactMaster();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

@@ -60,7 +60,7 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".langINKontaktPrioView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = ContactResultsCriteria._langINKontaktPrioView.select(complete, error, restriction, {
-                    ordered: true
+                    
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -92,7 +92,7 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".langINKontaktTypView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = ContactResultsCriteria._langINKontaktTypView.select(complete, error, restriction, {
-                    ordered: true
+                    
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);

@@ -17,31 +17,52 @@
 
     WinJS.Namespace.define("ContactList",
     {
-        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
+        Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this,[pageElement, {
                     count: 0,
                     doccount: 0,
-                    contactId: null,
+                    contactId: 0,
                     noctcount: 0,
                     noeccount: 0,
-                    nouccount: 0
-            }, commandList, isMaster]);
+                    nouccount: 0,
+                    searchString: "",
+                    eventId: 0,
+                    leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+            }, commandList, true]);
             this.nextUrl = null;
             this.nextDocUrl = null;
             this.loading = false;
             this.contacts = null;
             this.docs = null;
+            this.refreshPromise = null;
+            this.refreshWaitTimeMs = 30000;
 
             this.firstDocsIndex = 0;
             this.firstContactsIndex = 0;
 
             var that = this;
 
+            var eventsDropdown = pageElement.querySelector("#events");
+            var searchField = pageElement.querySelector("#searchField");
+
             // ListView control
             var listView = pageElement.querySelector("#contactList.listview");
 
+            var cancelPromises = function () {
+                Log.call(Log.l.trace, "ContactList.Controller.");
+                if (that.refreshPromise) {
+                    Log.print(Log.l.trace, "cancel previous refresh Promise");
+                    that.refreshPromise.cancel();
+                    that.refreshPromise = null;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.cancelPromises = cancelPromises;
+            
             this.dispose = function () {
+                ContactList._prevJson = null;
+                ContactList._collator = null;
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
@@ -63,6 +84,27 @@
 
             var imgSrcDataType = "data:image/jpeg;base64,";
 
+            var setEventId = function (value) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + value);
+                ContactList._eventId = value;
+                that.binding.eventId = value;
+                Log.ret(Log.l.trace);
+            }
+            this.setEventId = setEventId;
+
+            var setSelIndex = function (index) {
+                Log.call(Log.l.trace, "GenDataEmpList.Controller.", "index=" + index);
+                if (that.contacts && that.contacts.length > 0) {
+                    if (index >= that.contacts.length) {
+                        index = that.contacts.length - 1;
+                    }
+                    that.binding.selIdx = index;
+                    listView.winControl.selection.set(index);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setSelIndex = setSelIndex;
+            
             var handlePageEnable = function (contact) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + (contact && contact.KontaktVIEWID));
                 if (AppData._persistentStates.hideQuestionnaire) {
@@ -83,6 +125,9 @@
             var getRestriction = function() {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var restriction = AppData.getRestriction("Kontakt");
+                if (that.binding.searchString) {
+                    restriction = that.binding.searchString;
+                }
                 if (!restriction) {
                     restriction = {};
                 } else {
@@ -140,9 +185,6 @@
                             });
                         }
                         var curPageId = Application.getPageId(nav.location);
-                        if (recordId && curPageId !== "contactList") {
-                            that.selectRecordId(recordId);
-                        }
                         if (that.nextDocUrl) {
                             WinJS.Promise.timeout(250).then(function() {
                                 Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
@@ -223,7 +265,7 @@
                             var contact = that.contacts.getAt(i);
                             if (contact && typeof contact === "object" &&
                                 contact.KontaktVIEWID === recordId) {
-                                listView.winControl.indexOfFirstVisible = i - 1;
+                                listView.winControl.indexOfFirstVisible = contact.index;
                                 break;
                             }
                         }
@@ -243,12 +285,10 @@
                         if (contact &&
                             typeof contact === "object" &&
                             contact.KontaktVIEWID === recordId) {
+                            that.loading = false;
                             AppData.setRecordId("Kontakt", recordId);
-                            listView.winControl.selection.set(i).done(function() {
-                                WinJS.Promise.timeout(50).then(function() {
+                            listView.winControl.selection.set(i);
                                     that.scrollToRecordId(recordId);
-                                });
-                            });
                             recordIdNotFound = false;
                             handlePageEnable(contact);
                             break;
@@ -362,7 +402,6 @@
                             } else {
                                 contact.svgSource = "";
                             }
-                            // preserve scroll position on change of row data!
                             var indexOfFirstVisible = -1;
                             if (listView && listView.winControl) {
                                 indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
@@ -425,6 +464,22 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        that.binding.searchString = event.currentTarget.value;
+                        that.loadData(that.binding.searchString);
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeEventId: function(parameters) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        that.setEventId(event.currentTarget.value);
+                        that.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
@@ -447,7 +502,20 @@
                                                 that.binding.contactId = item.data.KontaktVIEWID;
                                                 AppData.setRecordId("Kontakt", that.binding.contactId);
                                                 handlePageEnable(item.data);
-                                                if (curPageId === "contact" &&
+                                                if (curPageId === "contactResultsEdit" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                }
+                                                else if (curPageId === "contact" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                } else if (curPageId === "contactResultsAttach" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                } else if (curPageId === "contactResultsCriteria" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                } else if (curPageId === "contactResultsEvents" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else {
@@ -463,7 +531,19 @@
                                             that.binding.contactId = item.data.KontaktVIEWID;
                                             AppData.setRecordId("Kontakt", that.binding.contactId);
                                             handlePageEnable(item.data);
-                                            if (curPageId === "contact" &&
+                                            if (curPageId === "contactResultsEdit" &&
+                                                typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData();
+                                            } else if (curPageId === "contact" &&
+                                                typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData();
+                                            } else if (curPageId === "contactResultsAttach" &&
+                                                typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData();
+                                            } else if (curPageId === "contactResultsCriteria" &&
+                                                typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData();
+                                            } else if (curPageId === "contactResultsEvents" &&
                                                 typeof AppBar.scope.loadData === "function") {
                                                 AppBar.scope.loadData();
                                             } else {
@@ -505,7 +585,7 @@
                         }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
-                                layout = Application.ContactListLayout.ContactsLayout;
+                                layout = Application.ContactListLayout.ContactListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
@@ -521,24 +601,31 @@
                                 }
                             }
                         } else if (listView.winControl.loadingState === "complete") {
+                            //set list-order column
+                            var headerListFields = listView.querySelectorAll(".list-header-columns > div");
+                            if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
+                                if (headerListFields[i].id === ContactList._orderAttribute) {
+                                    if (ContactList._orderDesc) {
+                                        WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
+                                        WinJS.Utilities.addClass(headerListFields[i], "order-desc");
+                                    } else {
+                                        WinJS.Utilities.addClass(headerListFields[i], "order-asc");
+                                        WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
+                                    }
+                                } else {
+                                    WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
+                                    WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
+                                }
+                            }
                             //smallest List color change
-                            var circleElement = pageElement.querySelector('#nameInitialcircle');
-                            circleElement.style.backgroundColor = Colors.accentColor;
+                            var circleElements = listView.querySelectorAll('#nameInitialcircle');
+                            if (circleElements) for (i = 0; i < circleElements.length; i++) {
+                                circleElements[i].style.backgroundColor = Colors.navigationColor;
+                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                 "barcode-qr": { useStrokeColor: false }
                             });
-                            if (that.loading) {
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -582,6 +669,12 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
+            if (searchField) {
+                this.addRemovableEventListener(searchField, "change", this.eventHandlers.changeSearchField.bind(this));
+            }
+            if (eventsDropdown) {
+                this.addRemovableEventListener(eventsDropdown, "change", this.eventHandlers.changeEventId.bind(this));
+            }
 
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -600,6 +693,37 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (!that.events) {
+                        return ContactList.eventView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "eventView: success!");
+                                // eventView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results.length > 0) {
+                                    var results = [{
+                                        VeranstaltungVIEWID: "",
+                                        Name: ""
+                                    }].concat(json.d.results);
+                                    that.events = new WinJS.Binding.List(results);
+                                    if (eventsDropdown && eventsDropdown.winControl) {
+                                        eventsDropdown.winControl.data = that.events;
+                                        if (that.binding.eventId) {
+
+                                        } else {
+                                            eventsDropdown.selectedIndex = 0;
+                                        }
+                                    }
+                                }
+                            },
+                            function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandData...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
@@ -622,7 +746,7 @@
                         Log.print(Log.l.trace, "contactView: success!");
                         // startContact returns object already parsed from json file in response
                         if (!recordId) {
-                            if (json && json.d && json.d.results) {
+                            if (json && json.d && json.d.results.length > 0) {
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = ContactList.contactView.getNextUrl(json);
                                 var results = json.d.results;
@@ -630,32 +754,18 @@
                                     that.resultConverter(item, index);
                                 });
                                 that.contacts = new WinJS.Binding.List(results);
-
-                                if (listView && listView.winControl) {
+                                if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.contacts.dataSource;
                                 }
-                                Log.print(Log.l.trace, "Data loaded");
-                                var curPageId = Application.getPageId(nav.location);
-                                if (curPageId !== "contactList") {
-                                    recordId = AppData.getRecordId("Kontakt");
-                                    if (recordId) {
-                                        WinJS.Promise.timeout(0).then(function() {
-                                            that.selectRecordId(recordId);
-                                        });
-                                    } else {
-                                        if (results[0] && results[0].KontaktVIEWID) {
-                                            WinJS.Promise.timeout(0).then(function() {
-                                                that.selectRecordId(results[0].KontaktVIEWID);
-                                            });
-                                        }
-                                    }
+                                if (AppData.getRecordId("Kontakt")) {
+                                    that.binding.contactId = AppData.getRecordId("Kontakt");
                                 }
+
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
                                 that.contacts = null;
-                                if (listView) {
                                     if (listView.winControl) {
                                         // add ListView dataSource
                                         listView.winControl.itemDataSource = null;
@@ -668,15 +778,18 @@
                                     if (counter && counter.style) {
                                         counter.style.display = "inline";
                                     }
-                                }
                                 that.loading = false;
                             }
                         } else {
-                            if (json && json.d && that.contacts) {
-                                var objectrec = scopeFromRecordId(recordId);
+                            if (json && json.d) {
                                 var contact = json.d;
-                                that.resultConverter(contact, objectrec.index);
+                                that.resultConverter(contact);
+                                var objectrec = scopeFromRecordId(recordId);
+                                if (objectrec && objectrec.index >= 0) {
                                 that.contacts.setAt(objectrec.index, contact);
+                                } else {
+                                    that.loadData();
+                                }
                             }
                         }
                     },  function (errorResponse) {
@@ -742,6 +855,10 @@
                           AppData.setErrorMsg(that.binding, errorResponse);
                       },
                       AppData.getRecordId("Mitarbeiter"));
+                    }).then(function () {
+                    if (that.binding.contactId) {
+                        that.selectRecordId(that.binding.contactId);
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -789,12 +906,19 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.setEventId(AppData.getRecordId("Veranstaltung"));
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
+        }, {
+            nextUrl: null,
+            loading: false,
+            contact: null
         })
     });
 })();
