@@ -69,33 +69,33 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header masterhost-background">
                             <div class="list-landscape-only">
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.editedOn'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.company'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.name'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.firstName'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.address'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.zip'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.city'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.country'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.phone'}"></div>
-                                <!--<div  class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <!--<div  class="list-field-small-fixed"
                                    data-win-res="{textContent: 'contactList.mobile'}"></div>
-            <div  class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div  class="list-field-small-fixed"
                                    data-win-res="{textContent: 'contactList.email'}"></div>-->
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.ID'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.captureType'}"></div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable"
+                                <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'contactList.editer'}"></div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="contactList-template"
+                    <div class="list-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
                         <div class="list-compact-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
@@ -206,7 +206,7 @@
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
-                             itemTemplate: select('.contactList-template'),
+                             itemTemplate: select('.list-template'),
                              header: select('.list-header'),
                              footer: select('.list-footer')
                          }">

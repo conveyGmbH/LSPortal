@@ -19,6 +19,9 @@
     {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
+            // ListView control
+            var listView = pageElement.querySelector("#contactList.listview");
+            this.listView = listView;
             Application.Controller.apply(this,[pageElement, {
                     count: 0,
                     doccount: 0,
@@ -44,9 +47,6 @@
 
             var eventsDropdown = pageElement.querySelector("#events");
             var searchField = pageElement.querySelector("#searchField");
-
-            // ListView control
-            var listView = pageElement.querySelector("#contactList.listview");
 
             var cancelPromises = function () {
                 Log.call(Log.l.trace, "ContactList.Controller.");
@@ -157,6 +157,7 @@
             var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.contacts && that.nextUrl && listView) {
+                    AppBar.busy = true;
                     that.binding.loading = true;
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select ContactList.contactView...");
@@ -174,8 +175,10 @@
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.contacts.push(item);
                             });
+                        } else {
+                            that.binding.loading = false;
                         }
-                        var curPageId = Application.getPageId(nav.location);
+                        AppBar.busy = false;
                         if (that.nextDocUrl) {
                             WinJS.Promise.timeout(250).then(function() {
                                 Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
@@ -210,6 +213,7 @@
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "ContactList.contactView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
+                        AppBar.busy = false;
                         that.binding.loading = false;
                     }, null, nextUrl);
                 }
@@ -597,6 +601,7 @@
                                     }
                                 }
                             }
+                            that.fitColumnWidthToContent();
                         } else if (listView.winControl.loadingState === "complete") {
                             //set list-order column
                             var headerListFields = listView.querySelectorAll(".list-header-columns > div");
@@ -623,9 +628,7 @@
                             Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                 "barcode-qr": { useStrokeColor: false }
                             });
-                            WinJS.Promise.timeout(10).then(function () {
-                                that.binding.loading = false;
-                            });
+                            that.checkLoadingFinished();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -671,6 +674,7 @@
                 that.firstDocsIndex = 0;
                 that.firstContactsIndex = 0;
                 if (!recordId) {
+                    AppBar.busy = true;
                     that.binding.loading = true;
                 }
                 AppData.setErrorMsg(that.binding);
@@ -754,6 +758,7 @@
                                 }
                                 that.binding.loading = false;
                             }
+                            AppBar.busy = false;
                         } else {
                             if (json && json.d) {
                                 var contact = json.d;
@@ -770,6 +775,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
+                        AppBar.busy = false;
                         that.binding.loading = false;
                     }, recordId || getRestriction());
                 }).then(function () {

@@ -19,7 +19,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             // ListView control
             var listView = pageElement.querySelector("#contactResultsList.listview");
-
+            this.listView = listView;
             Application.RecordsetController.apply(this, [pageElement, {
                 contactId: null,
                 noctcount: 0,
