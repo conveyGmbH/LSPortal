@@ -306,6 +306,20 @@
                     var scope = that.scopeFromRecordId(recordId);
                     if (scope && scope.index >= 0) {
                         listView && listView.winControl.ensureVisible(scope.index);
+                        WinJS.Promise.timeout(50).then(function () {
+                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                            var elementOfFirstVisible = listView.winControl.elementFromIndex(indexOfFirstVisible);
+                            var element = listView.winControl.elementFromIndex(scope.index);
+                            var height = listView.clientHeight;
+                            if (element && elementOfFirstVisible) {
+                                var offsetDiff = element.offsetTop - elementOfFirstVisible.offsetTop;
+                                if (offsetDiff > height - element.clientHeight) {
+                                    listView.winControl.scrollPosition += offsetDiff - (height - element.clientHeight);
+                                } else if (offsetDiff < 0) {
+                                    listView.winControl.indexOfFirstVisible = scope.index;
+                                }
+                            }
+                        });
                     }
                 }
                 Log.ret(Log.l.trace);
