@@ -691,6 +691,13 @@
                     // always enabled!
                     return false;
                 },
+                clickNew: function () {
+                    if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
                 clickChange: function () {
                     var master = Application.navigator.masterControl;
                     if (master &&
