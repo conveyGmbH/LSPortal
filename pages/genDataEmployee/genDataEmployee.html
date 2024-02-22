@@ -80,23 +80,6 @@
                                 <div id="emproleshost" class="input_field fragmenthost"></div>
                             </div>
                         </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line"
-                             data-win-bind="style.display: addEventFormFlag Binding.Converter.toDisplay">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genDataEmployee.addevent'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'genDataEmployee.addevent'}"></span>
-                            <div class="input_group">
-                                <select id="addEventFormEventData"
-                                        class="input_threequarter_left win-dropdown"
-                                        data-win-control="WinJS.UI.Repeater"
-                                        data-win-bind="value: eventId  Binding.Mode.twoway">
-                                    <option data-win-bind="value: VeranstaltungID ; textContent: Name "></option>
-                                </select>
-                                <button class="input_small_left win-button"
-                                        data-win-res="{textContent: 'genDataEmployee.addeventbtn'}"
-                                        onclick="AppBar.handleEvent('click', 'clickAddEventData', event)"></button>
-                            </div>
-                        </div>
                         <div class="line-separator"
                              data-win-bind="style.display: addEventFormFlag Binding.Converter.toDisplay"></div>
                         <div data-win-bind="style.display: isEmpRolesVisible Binding.Converter.toDisplay">

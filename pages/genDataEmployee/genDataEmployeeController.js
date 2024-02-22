@@ -31,7 +31,7 @@
             }, commandList]);
 
             var that = this;
-            
+
             var prevMasterLoadPromise = null;
             var prevLogin = null;
             var prevPassword;
@@ -76,7 +76,7 @@
                 Log.ret(Log.l.trace);
             }
             this.setDataEmployee = setDataEmployee;
-           
+
             var saveRestriction = function () {
                 /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];
@@ -196,41 +196,6 @@
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickAddEventData: function(event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                    var newEmployeeId = null;
-                    return AppData.call("PRC_CopyAppMitarbeiter", {
-                        pMitarbeiterID: getRecordId(),
-                        pNewVeranstaltungID: parseInt(that.binding.eventId)
-                    }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
-                        if (json && json.d && json.d.results.length > 0) {
-                            newEmployeeId = json.d.results[0] ? json.d.results[0].NewMitarbeiterID : null;
-                            that.binding.addEventFormFlag = "";
-                        } else {
-                       
-                        }
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                    }).then(function () {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding && newEmployeeId) {
-                            master.controller.binding.employeeId = newEmployeeId;
-                            return master.controller.loadData();
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    });
-                },
-                clickAddEvent: function (event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                    if (that.binding.addEventFormFlag === "") {
-                        that.binding.addEventFormFlag = 1;
-                    } else {
-                        that.binding.addEventFormFlag = "";
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -649,9 +614,6 @@
                 },
                 clickChangeLogin: function () {
                     return that.binding.allowEditLogin;
-                },
-                clickAddEvent: function () {
-                    return !that.events || !that.events.length;
                 }
             };
 
@@ -663,7 +625,7 @@
                     genFragEventsFragmentControl.controller) {
                     if (genFragEventsFragmentControl.controller.binding &&
                         genFragEventsFragmentControl.controller.binding.loadingState !== "complete") {
-                        ret = WinJS.Promise.timeout(50).then(function() {
+                        ret = WinJS.Promise.timeout(50).then(function () {
                             return that.resizeGenFragEvents();
                         });
                         Log.ret(Log.l.u1, "listview layout not yet completed");
@@ -711,7 +673,7 @@
                     if (recordId) {
                         that.events = null;
                         return AppData.call("PRC_MAWeitereVeranstaltungen", {
-                            pMitarbeiterID : recordId
+                            pMitarbeiterID: recordId
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             if (json && json.d && json.d.results.length > 0) {
@@ -816,7 +778,7 @@
                 }
                 if (AppBar.busy) {
                     Log.ret(Log.l.error, "busy - try again...");
-                    return  WinJS.Promise.timeout(100).then(function () {
+                    return WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
                 }
@@ -850,11 +812,11 @@
                     // or server returns response with an error status.
                     AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    if (typeof error === "function") {
-                        error(errorResponse);
-                    }
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
                     });
-                }, recordId, dataEmployee).then(function() {
+                }, recordId, dataEmployee).then(function () {
                     if (err) {
                         return WinJS.Promise.as();
                     } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
