@@ -660,8 +660,8 @@
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done();
+                    if (!Application.showMaster() && WinJS.Navigation.canGoBack) {
+                        WinJS.Navigation.back(1);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -880,11 +880,7 @@
 
             this.disableHandlers = {
                 clickBack: function() {
-                    if (WinJS.Navigation.canGoBack === true) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return !WinJS.Navigation.canGoBack;
                 },
                 clickExport: function() {
                     if (pdfExists === true) {
