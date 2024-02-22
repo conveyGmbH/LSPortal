@@ -116,7 +116,7 @@
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
         //MasterData
         { id: "masterDataGrp", group: 23, svg: "stammdaten", disabled: true, popup: true },
-        { id: "genDataEmployee", group: 74, svg: "Stammdaten", disabled: true, predecGroup: 23 },  
+        { id: "genDataEmployee", group: 74, svg: "stammdaten", disabled: true, predecGroup: 23 },  
 		    // { id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         //{ id: "eventStartLang", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         { id: "eventBaseLink", group: 55, svg: "stammdaten", disabled: true, predecGroup: 23, label: "label.eventBaseLink", tooltip: "tooltip.eventBaseLink" },
