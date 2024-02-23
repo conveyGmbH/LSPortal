@@ -722,7 +722,11 @@
                                     if (eventsDropdown && eventsDropdown.winControl) {
                                         eventsDropdown.winControl.data = that.events;
                                         if (that.binding.eventId) {
-
+                                            for (var i = 0; i < results.length; i++) {
+                                                if (that.binding.eventId === results[i].VeranstaltungVIEWID) {
+                                                    eventsDropdown.selectedIndex = i;
+                                                }
+                                            }
                                         } else {
                                             eventsDropdown.selectedIndex = 0;
                                         }
