@@ -338,6 +338,10 @@
     "contactList.numberofeditedcontacts"    : "Editiert",
     "contactList.numberofunprocessedcontacts"    : "Uneditiert",
     "contactList.davon"    : "davon: ",
+    "contactList.btnaztext"    : "AZ/ZA",
+    "contactList.btnaztext2"    : "AZ/ZA ↓",
+    "contactList.btnzatext"    : "ZA/AZ",
+    "contactList.btnzatext2"    : "ZA/AZ ↑",
 
     "camera.title"          : "Kamera",
     "camera.comment"        : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

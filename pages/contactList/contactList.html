@@ -47,6 +47,18 @@
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
+                            <div class="input_group">
+                                <button class="list-button-left win-button"
+                                        id="btnASC"
+                                        data-win-bind="textContent: btnAZText"
+                                        value="ASC"
+                                        onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></button>
+                                <button class="list-button-left win-button"
+                                        id="btnDESC"
+                                        data-win-bind="textContent: btnZAText"
+                                        value="DESC"
+                                        onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></button>
+                            </div>
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <select id="events"

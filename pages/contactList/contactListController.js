@@ -31,7 +31,9 @@
                     nouccount: 0,
                     searchString: "",
                     eventId: 0,
-                    leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                    leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                    btnAZText: getResourceText("contactList.btnaztext2"),
+                    btnZAText: getResourceText("contactList.btnzatext")
             }, commandList, true]);
             this.nextUrl = null;
             this.nextDocUrl = null;
@@ -47,6 +49,11 @@
 
             var eventsDropdown = pageElement.querySelector("#events");
             var searchField = pageElement.querySelector("#searchField");
+            var btnASC = pageElement.querySelector("#btnASC");
+            var btnDESC = pageElement.querySelector("#btnDESC");
+
+            // ListView control
+            var listView = pageElement.querySelector("#contactList.listview");
 
             var cancelPromises = function () {
                 Log.call(Log.l.trace, "ContactList.Controller.");
@@ -480,6 +487,23 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickOrderBy: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        if (event.currentTarget.value === "ASC") {
+                            ContactList._orderDesc = false;
+                            that.binding.btnAZText = getResourceText("contactList.btnaztext2");
+                            that.binding.btnZAText = getResourceText("contactList.btnzatext");
+                            that.loadData();
+                        } else {
+                            ContactList._orderDesc = true;
+                            that.binding.btnAZText = getResourceText("contactList.btnaztext");
+                            that.binding.btnZAText = getResourceText("contactList.btnzatext2");
+                            that.loadData();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
@@ -667,6 +691,10 @@
             }
             if (eventsDropdown) {
                 this.addRemovableEventListener(eventsDropdown, "change", this.eventHandlers.changeEventId.bind(this));
+            }
+            if (btnDESC && btnASC) {
+                this.addRemovableEventListener(btnASC, "click", this.eventHandlers.clickOrderBy.bind(this));
+                this.addRemovableEventListener(btnDESC, "click", this.eventHandlers.clickOrderBy.bind(this));
             }
 
             var loadData = function (recordId) {
