@@ -256,6 +256,7 @@
 
             var loadData = function () {
                 var recordId = getRecordId();
+                tableBody.winControl.data = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -286,6 +287,8 @@
                                 var results = json.d.results;
                                 results.forEach(function(item, index) {
                                     that.addContactTableItem(item, index);
+                                    that.resizableGrid();
+                                    that.loadIcons();
                                 });
                             }
                         },
