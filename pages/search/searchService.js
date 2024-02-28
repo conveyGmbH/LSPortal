@@ -8,12 +8,12 @@
 
     WinJS.Namespace.define("Search", {
         _contactView: {
-            get: function () {
+            get: function() {
                 return AppData.getFormatView("Kontakt", 20432, false);
             }
         },
         contactView: {
-            select: function (complete, error, restrictions) {
+            select: function(complete, error, restrictions) {
                 Log.call(Log.l.trace, "contactView.");
                 var ret = Search._contactView.get(complete, error, restrictions);
                 Log.ret(Log.l.trace);
@@ -29,6 +29,7 @@
                 Branche: "",
                 Vorname: "",
                 Name: "",
+                AbteilungText: "",
                 EMail: "",
                 Strasse: "",
                 PLZ: "",
