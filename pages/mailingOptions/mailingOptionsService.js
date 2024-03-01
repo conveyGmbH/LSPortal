@@ -7,6 +7,7 @@
     "use strict";
 
     WinJS.Namespace.define("MailingOptions", {
-        
+        _eventId: 0,
+        _mailId: 0
     });
 })();

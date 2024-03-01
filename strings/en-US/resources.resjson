@@ -898,6 +898,8 @@
 
     "mailingListLS.count" : "Count",
 	"mailingvslist.count" : "Count",
+    "mailingListLS.description" : "Designation",
+    "mailingListLS.subject" : "Subject",
 
 	"mailingTypes.title"	: "Mailtypes",
 	"mailingTypes.type"     : "Mailtype",

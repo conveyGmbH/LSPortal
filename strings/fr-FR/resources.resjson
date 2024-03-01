@@ -900,6 +900,8 @@
 
     "mailingListLS.count" : "Nombre",
     "mailingvslist.count" : "Nombre",
+    "mailingListLS.description" : "Désignation",
+    "mailingListLS.subject" : "Sujet",
 
 	"mailingTypes.title"	: "Types de courrier",
 	"mailingTypes.type"     : "Type de courrier",

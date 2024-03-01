@@ -899,6 +899,8 @@
 	
     "mailingListLS.count" : "Numero",
     "mailingvslist.count" : "Numero",
+    "mailingListLS.description" : "Designazione",
+    "mailingListLS.subject" : "Oggetto",
 	
 	"mailingTypes.title"	: "Tipo di posta",
 	"mailingTypes.type"     : "Tipo di posta",

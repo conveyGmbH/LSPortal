@@ -10,6 +10,8 @@
 
 (function () {
     "use strict";
+    var namespaceName = "MailingOptions";
+
     WinJS.Namespace.define("MailingOptions", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "MailingOptions.Controller.");
@@ -24,6 +26,32 @@
             }, commandList]);
 
             var that = this;
+
+            var setEventId = function (value) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + value);
+                MailingOptions._eventId = value;
+                Log.ret(Log.l.trace);
+            }
+            this.setEventId = setEventId;
+
+            var getEventId = function () {
+                Log.print(Log.l.trace, "getEventId Event._eventId=" + MailingOptions._eventId);
+                return MailingOptions._eventId;
+            }
+            this.getEventId = getEventId;
+
+            var setMailId = function (value) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "mailId=" + value);
+                MailingOptions._mailId = value;
+                Log.ret(Log.l.trace);
+            }
+            this.setMailId = setMailId;
+
+            var getMailId = function () {
+                Log.print(Log.l.trace, "MailIdId Event._mailId=" + MailingOptions._mailId);
+                return MailingOptions._mailId;
+            }
+            this.getMailId = getMailId;
 
             var changeAppSetting = function (toggleId, checked) {
                 Log.call(Log.l.trace, "MailingOptions.Controller.", "toggleId=" + toggleId + " checked=" + checked);
@@ -66,7 +94,7 @@
                         }
                     }
                     AppData.call("PRC_SETVERANSTOPTION", {
-                        pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                        pVeranstaltungID: that.getEventId(),
                         pOptionTypeID: pOptionTypeId,
                         pValue: pValue
                     }, function (json) {

@@ -12,15 +12,19 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "MailingListLS";
 
     WinJS.Namespace.define("MailingListLS", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "MailingList.Controller.");
+            var listView = pageElement.querySelector("#mailingListLS.listview");
+            this.listView = listView;
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 mailingId: 0,
                 selIdx: 0,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                eventId: 0
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -28,8 +32,8 @@
 
             var that = this;
 
-            // ListView control
-            var listView = pageElement.querySelector("#mailingList.listview");
+            var eventsDropdown = pageElement.querySelector("#events");
+
             var progress = null;
             var counter = null;
             var layout = null;
@@ -56,40 +60,37 @@
             };
             this.background = background;
 
+            var setEventId = function (value) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + value);
+                MailingListLS._eventId = value;
+                that.binding.eventId = value;
+                Log.ret(Log.l.trace);
+            }
+            this.setEventId = setEventId;
+
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "MailingList.Controller.");
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
                 if (that.maildocuments && that.nextUrl && listView) {
                     that.loading = true;
                     if (progress && progress.style) {
                         progress.style.display = "inline";
                     }
-                    if (counter && counter.style) {
-                        counter.style.display = "none";
-                    }
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select MailingList.MaildokumentView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    MailingList.MaildokumentView.selectNext(function (json) { //json is undefined
+                    MailingListLS.MaildokumentView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "MailingList.MaildokumentView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && that.maildocuments) {
-                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
+                            that.nextUrl = MailingListLS.MaildokumentView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.maildocuments.push(item);
                             });
-                        }
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
                         }
                         that.loading = false;
                     }, function (errorResponse) {
@@ -97,23 +98,11 @@
                         // or server returns response with an error status.
                         //Log.print(Log.l.error, "ContactList.contactView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
                         that.loading = false;
                     },
                         null,
                         nextUrl);
                 } else {
-                    if (progress && progress.style) {
-                        progress.style.display = "none";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "inline";
-                    }
                     that.loading = false;
                 }
                 Log.ret(Log.l.trace);
@@ -138,6 +127,9 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (item.Beschreibung && item.Subject) {
+                    item.nameInitial = item.Beschreibung.substr(0, 1) + item.Subject.substr(0, 1);
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -147,6 +139,14 @@
                     Log.call(Log.l.trace, "MailingList.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeEventId: function (parameters) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        that.setEventId(event.currentTarget.value);
+                        that.loadData();
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -180,6 +180,11 @@
                                                     that.selectRecordId(that.binding.mailingId);
                                                 });
                                             }
+                                        }
+                                        if (AppBar.scope._element &&
+                                            AppBar.scope._element.id === "mailingOptionsController") {
+                                            AppBar.scope.setEventId(that.binding.eventId);
+                                            AppBar.scope.setMailId(that.binding.mailingId);
                                         }
                                     } else {
                                         if (typeof AppBar.scope.loadData === "function") {
@@ -282,30 +287,63 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
+            if (eventsDropdown) {
+                this.addRemovableEventListener(eventsDropdown, "change", this.eventHandlers.changeEventId.bind(this));
+            }
+
 
             var loadData = function () {
                 Log.call(Log.l.trace, "MailingList.Controller.");
                 that.loading = true;
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
-                if (progress && progress.style) {
-                    progress.style.display = "inline";
-                }
-                if (counter && counter.style) {
-                    counter.style.display = "none";
-                }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return MailingList.MaildokumentView.select(function (json) {
+                    if (!that.events) {
+                        return MailingListLS.eventView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "eventView: success!");
+                            // eventView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = [{
+                                    VeranstaltungVIEWID: "",
+                                    Name: ""
+                                }].concat(json.d.results);
+                                that.events = new WinJS.Binding.List(results);
+                                if (eventsDropdown && eventsDropdown.winControl) {
+                                    eventsDropdown.winControl.data = that.events;
+                                    if (that.binding.eventId) {
+                                        for (var i = 0; i < results.length; i++) {
+                                            if (that.binding.eventId === results[i].VeranstaltungVIEWID) {
+                                                eventsDropdown.selectedIndex = i;
+                                            }
+                                        }
+                                    } else {
+                                        eventsDropdown.selectedIndex = 0;
+                                    }
+                                }
+                }
+                        },
+                            function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                    } else {
+                        return WinJS.Promise.as();
+                }
+                }).then(function () {
+                    return MailingListLS.MaildokumentView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "MailingList: success!");
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.nextUrl = MailingList.MaildokumentView.getNextUrl(json);
+                            that.nextUrl = MailingListLS.MaildokumentView.getNextUrl(json);
                             var results = json.d.results;
-
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
                             that.binding.count = results.length;
 
                             that.maildocuments = new WinJS.Binding.List(results);
@@ -337,28 +375,12 @@
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = null;
                             }
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
                             that.loading = false;
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
                         that.loading = false;
                     }, {
                             SpecType: ["NULL", 1]
@@ -377,6 +399,9 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.setEventId(AppData.getRecordId("Veranstaltung"));
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {

@@ -306,6 +306,7 @@
         { id: "genDataAnswers", master: "genDataQuestions" },
         { id: "startTileAdministration", master: "startTileAdministrationList" },
         { id: "mailing", master: "mailingListLS" },
+        { id: "mailingOptions", master: "mailingListLS" },
         { id: "mailingList", master: "mailingVSList" },
         { id: "ticketLimits", master: "ticketLimitsList" },
         { id: "contactResultsList", master: "eventList" },
