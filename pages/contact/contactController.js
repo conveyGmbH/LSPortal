@@ -682,8 +682,12 @@
                 },
                 clickDelete: function(event){
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    var confirmTitle = getResourceText("contact.questionDelete");
-                    confirm(confirmTitle, function (result) {
+                    var confirmText = getResourceText("contact.questionDelete");
+                    var confirmTitle = getResourceText("tooltip.delete");
+                    var confirmFirst = getResourceText("flyout.ok");
+                    var confirmSecond = getResourceText("flyout.cancel");
+                    //confirm(confirmTitle, function (result) {
+                    confirmModal(confirmTitle, confirmText, confirmFirst, confirmSecond, function (result) {
                         if (result) {
                             Log.print(Log.l.trace,"clickDelete: user choice OK");
                             deleteData(function(response) {
