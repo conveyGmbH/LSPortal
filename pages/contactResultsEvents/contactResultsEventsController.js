@@ -287,9 +287,9 @@
                                 var results = json.d.results;
                                 results.forEach(function(item, index) {
                                     that.addContactTableItem(item, index);
-                                    that.resizableGrid();
-                                    that.loadIcons();
                                 });
+                                that.resizableGrid();
+                                that.loadIcons();
                             }
                         },
                         function(errorResponse) {
