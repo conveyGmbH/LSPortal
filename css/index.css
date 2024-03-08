@@ -590,9 +590,9 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     width: 100%;
 }
 
-.appHeader .win-button {
+/*.appHeader .win-button {
     z-index: 9900;
-}
+}*/
 .publish-button {
     display: block;
     background-color: #f2f2f2;

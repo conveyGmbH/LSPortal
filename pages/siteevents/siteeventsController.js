@@ -566,7 +566,8 @@
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
                 if (recordId) {
                     ret = AppData.call("PRC_GetQRPdf", {
-                        pVeranstaltungTerminID: recordId
+                        pRecID: recordId,
+                        pExportType: "QRPDF"
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (json && json.d && json.d.results.length > 0) {
@@ -577,9 +578,11 @@
                             var pdfData = that.base64ToBlob(pdfDataBase64, "pdf");
                             var pdfName = results.szOriFileNameDOC1;
                             saveAs(pdfData, pdfName);
-                            AppBar.busy = false;
-                            AppBar.triggerDisableHandlers();
+                            //AppBar.busy = false;
+                            //AppBar.triggerDisableHandlers();
                         }
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;

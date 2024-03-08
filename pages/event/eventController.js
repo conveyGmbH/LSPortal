@@ -179,9 +179,11 @@
                     item.DatenschutzText = "";
                 }
                 // convert Startdatum 
-                item.dateBegin = getDateObject(item.Startdatum);
+                var beginDate = getDateObject(item.Startdatum);
+                item.dateBegin = new Date(beginDate.getTime() + beginDate.getTimezoneOffset() * 60000);
                 // convert Enddatum 
-                item.dateEnd = getDateObject(item.Enddatum);
+                var endDateLocal = getDateObject(item.Enddatum);
+                item.dateEnd = new Date(endDateLocal.getTime() + endDateLocal.getTimezoneOffset() * 60000);
             }
             this.resultConverter = resultConverter;
 
@@ -683,6 +685,15 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickExportQrcode: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    AppBar.busy = true;
+                    //AppBar.triggerDisableHandlers();
+                    WinJS.Promise.timeout(0).then(function () {
+                        return that.exportPwdQrCodeEmployeePdf();
+                    });
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -709,6 +720,17 @@
                             return false;
                         } else {
                             return true;
+                        }
+                    } else {
+                        return true;
+                    }
+                },
+                clickExportQrcode: function () {
+                    if (that.getEventId()) {
+                        if (AppBar.busy) {
+                            return true;
+                        } else {
+                            return false;
                         }
                     } else {
                         return true;
@@ -1146,6 +1168,71 @@
                 NavigationBar.groups = Application.navigationBarGroups;
             }
             this.changeMenuLabel = changeMenuLabel;
+
+            var base64ToBlob = function (base64Data, contentType) {
+                contentType = contentType || '';
+                var sliceSize = 1024;
+                var byteCharacters = atob(base64Data);
+                var bytesLength = byteCharacters.length;
+                var slicesCount = Math.ceil(bytesLength / sliceSize);
+                var byteArrays = new Array(slicesCount);
+
+                for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+                    var begin = sliceIndex * sliceSize;
+                    var end = Math.min(begin + sliceSize, bytesLength);
+
+                    var bytes = new Array(end - begin);
+                    for (var offset = begin, i = 0; offset < end; ++i, ++offset) {
+                        bytes[i] = byteCharacters[offset].charCodeAt(0);
+                    }
+                    byteArrays[sliceIndex] = new Uint8Array(bytes);
+                }
+                return new Blob(byteArrays, { type: contentType });
+            }
+            this.base64ToBlob = base64ToBlob;
+
+            var exportPwdQrCodeEmployeePdf = function () {
+                Log.call(Log.l.trace, "SiteEvents.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var recordId = that.getEventId();
+                if (recordId) {
+                    ret = AppData.call("PRC_GetQRPdf", {
+                        pRecID: recordId,
+                        pExportType: "QRPDFVA"
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var results = json.d.results[0];
+                            var pdfDataraw = results.DocContentDOCCNT1;
+                            var sub = pdfDataraw.search("\r\n\r\n");
+                            var pdfDataBase64 = pdfDataraw.substr(sub + 4);
+                            var pdfData = that.base64ToBlob(pdfDataBase64, "pdf");
+                            var pdfName = results.szOriFileNameDOC1;
+                            saveAs(pdfData, pdfName);
+                            //AppBar.busy = false;
+                            //AppBar.triggerDisableHandlers();
+                        }
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                        AppBar.busy = false;
+                        AppBar.triggerDisableHandlers();
+                        AppData.setErrorMsg(that.binding, error);
+                        if (typeof error === "function") {
+                            error(error);
+                        }
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
             that.processAll().then(function () {
                 that.creatingVisitorFlowCategory();
