@@ -275,22 +275,11 @@
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
                                                     if ((curPageId === "eventCopy" ||
-                                                        curPageId === "contactResultsList" ) &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(that.binding.eventId);
-                                                        AppBar.scope.loadData();
-                                                    } else if (curPageId === "mandatory" &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(that.binding.eventId);
-                                                        AppBar.scope.loadData();
-                                                    } else if (curPageId === "questionList" &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(that.binding.eventId);
-                                                        AppBar.scope.loadData();
-                                                    } else if (curPageId === "optQuestionList" &&
+                                                        curPageId === "contactResultsList" ||
+                                                        curPageId === "mandatory" ||
+                                                        curPageId === "questionList" ||
+                                                        curPageId === "optQuestionList" ||
+                                                        curPageId === "event") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
                                                         AppBar.scope.setEventId(that.binding.eventId);
@@ -299,11 +288,6 @@
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setVeranstaltungId === "function") {
                                                         AppBar.scope.setVeranstaltungId(that.binding.eventId);
-                                                        AppBar.scope.loadData();
-                                                    } else if (curPageId === "event" &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(that.binding.eventId);
                                                         AppBar.scope.loadData();
                                                     } else {
                                                         var newPageId = Application.getPageId(Application.navigator._nextPage);
@@ -335,12 +319,6 @@
                                                     typeof AppBar.scope.setEventId === "function") {
                                                     AppBar.scope.setEventId(that.binding.eventId);
                                                     AppBar.scope.loadData();
-                                                } else {
-                                                    var newPageId = Application.getPageId(Application.navigator._nextPage);
-                                                    if (newPageId !== "event" &&
-                                                        newPageId !== "contactResultsList") {
-                                                        Application.navigateById("event");
-                                                    }
                                                 }
                                             }
                                             AppBar.triggerDisableHandlers();

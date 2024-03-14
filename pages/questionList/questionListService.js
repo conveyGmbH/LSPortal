@@ -10,7 +10,8 @@
         _initFragengruppeView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITFragengruppe");
-            }
+            },
+            _eventId: 0
         },
         initFragengruppeView: {
             select: function (complete, error, recordId) {

@@ -57,6 +57,20 @@
                 }
             }
 
+            var getRecordId = function () {
+                Log.call(Log.l.trace, "Contact.Controller.");
+                var recordId = QuestionList._eventId;
+                Log.ret(Log.l.trace, recordId);
+                return recordId;
+            }
+            this.getRecordId = getRecordId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
+                QuestionList._eventId = value;
+            }
+            this.setEventId = setEventId;
+
             var setTooltips = function () {
                 //ToolTips Single
                 var single = pageElement.querySelectorAll("#single");
