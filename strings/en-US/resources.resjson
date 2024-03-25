@@ -1023,6 +1023,7 @@
     "siteevents.dunsnumber" : "DUNS number",
     "siteevents.auswertungsvariante" : "Evaluation variant",
     "siteevents.ordernumber" : "Stand ID / OrderNumber",
+    "siteevents.servername" : "Servername",
 		
     "siteevents.exhibitorname" : "Exhibitor name",
     "siteevents.contact" : "Contact",

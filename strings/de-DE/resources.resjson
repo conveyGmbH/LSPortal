@@ -1046,6 +1046,7 @@
     "siteevents.dunsnumber" : "DUNS Nummer",
     "siteevents.auswertungsvariante" : "Auswertungsvariante",
     "siteevents.ordernumber" : "StandID / Bestellnummer",
+    "siteevents.servername" : "Server Name",
 
 
     "siteeventsneuaus.title" : "Neuer Aussteller",

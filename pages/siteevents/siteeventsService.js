@@ -78,7 +78,8 @@
             StandSize: "",
             DUNSNumber: "",
             Auswertungsvariante: "",
-            OrderNumber: ""
+            OrderNumber: "",
+            Servername: ""
         },
         defaultHeaderLabelRestriction: {
             FairMandant_NameLabel: "",
@@ -102,7 +103,8 @@
             StandSize: "",
             DUNSNumber: "",
             Auswertungsvariante: "",
-            OrderNumber: ""
+            OrderNumber: "",
+            Servername:""
         },
         _registrationView: {
             get: function () {

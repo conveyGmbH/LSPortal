@@ -1042,6 +1042,7 @@
     "siteevents.dunsnumber" : "DUNS Numero",
     "siteevents.auswertungsvariante" : "Variante di valutazione",
     "siteevents.ordernumber" : "ID stand / Numero ordine",
+    "siteevents.servername" : "Nome del server",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",
