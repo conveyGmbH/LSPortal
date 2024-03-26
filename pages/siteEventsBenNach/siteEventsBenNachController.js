@@ -197,7 +197,11 @@
                         }
                     },
                     clickChange: function () {
-                        return AppData.generalData.eventId !== getRecordId();
+                        if (AppData.generalData.eventId !== that.getRecordId()) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     }
                 };
 
@@ -205,7 +209,7 @@
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_ChangeSiteVeranstaltung", {
-                        pNewVeranstaltungID: getRecordId(),
+                        pNewVeranstaltungID: that.getRecordId(),
                         pLoginName: AppData._persistentStates.odata.login
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
