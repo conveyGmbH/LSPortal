@@ -363,6 +363,8 @@
                         delete that.binding.restriction.bUseOr;
                     }
                     that.saveRestriction();
+                    /*explizit AppBar.modified auf false setzen -> twoway binding */
+                    AppBar.modified = false;
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
                         master.controller.loadData();

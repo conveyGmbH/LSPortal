@@ -48,14 +48,14 @@
             // TODO: Initialize the fragment here.
             inResize = 0;
 
-            var commandList;
-            if (!AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic) {
+            var commandList = [];
+            /*if (!AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic) {
                 commandList = [];
             } else {
                 commandList = [
                     { id: "clickSendMessage", label: getResourceText("command.sendMessage"), tooltip: getResourceText("tooltip.sendMessage"), section: "primary", svg: "paper_jet2" }
                 ];
-            }
+            }*/
             this.controller = new UserMessages.Controller(element, commandList, options);
 
             Log.ret(Log.l.trace);

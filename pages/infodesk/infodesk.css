@@ -1,16 +1,94 @@
-﻿#employeePhoto.photoview {
+﻿#infodeskController .label.win-type-caption {
+    font-size: 16px !important;
+    letter-spacing: normal !important;
+}
+#infodeskController .doc-container {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    min-height: 280px;
+    height: 480px;
+    display: inline;
+}
+
+#infodeskController .fields-container {
+    float: left;
+}
+#infodeskController .onsite-offsiteInfodeskList {
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: white;
+    display: block;
+    position: relative;
+    left: 290px;
+    top: -22px;
+    z-index: 10000;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#infodeskController .onsite-offsite-symbol {
+    font-family: "Symbols";
+    padding: 21px;
+    display: block;
+    position: relative;
+    left: -10px;
+    top: -12px;
+}
+
+#infodeskController .field_line_odd_half {
+    float: left;
+    width: calc(50% - 54px);
+    margin-left: 26px;
+    margin-right: 26px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    overflow-y: hidden
+}
+
+#infodeskController .field_line_even_half {
+    float: right;
+    width: calc(50% - 54px);
+    overflow-y: hidden
+}
+
+.view-size-medium .field_line_odd_half,
+.view-size-medium .field_line_even_half {
+    float: left;
+    width: calc(100% - 38px);
+    /*min-height: 40px;*/
+}
+
+.view-size-small .field_line_odd_half,
+.view-size-small .field_line_even_half {
+    float: left;
+    width: calc(100% - 22px);
+    /*min-height: 60px;*/
+}
+#infodeskController #employeePhoto.photoview {
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-textarea::-webkit-input-placeholder {
+#infodeskController textarea::-webkit-input-placeholder {
     font-style: italic;
 }
-textarea::-moz-placeholder { font-style:italic; } /* firefox 19+ */
-textarea:-ms-input-placeholder { font-style:italic; } /* ie */
+#infodeskController textarea::-moz-placeholder {
+    font-style: italic;
+} /* firefox 19+ */
+#infodeskController textarea:-ms-input-placeholder {
+    font-style: italic;
+} /* ie */
 
-textarea {
+#infodeskController textarea {
     resize: none;
 }
 /*
@@ -190,4 +268,11 @@ textarea {
     width: 90%;
     margin-left: 13px;
     min-height: 12px;
+}
+.button-send {
+    display: block;
+    height: 25px;
+    width: 100px;
+    background-color: #6969ef;
+    color: white;
 }

@@ -27,8 +27,8 @@
     width: calc(100% - 52px);
     padding-left: 26px;
     padding-right: 26px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
  
 
@@ -84,8 +84,8 @@
     width: calc(100% - 20px);
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .onsite-offsiteInfodeskList{
@@ -138,7 +138,7 @@
     display: inline;
     position: absolute;
     left:25px;
-    top: 12px;
+    top: 20px; /*12*/
     width: 40px;
     height: 40px;
     border-radius: 20px;
@@ -146,10 +146,9 @@
 }
 .infodeskEmpList .content-header .input_half_right {
     min-height: 32px;
-    margin-right: 20px; /*-2*/
+    margin-right: 60px; 
     float: right;
-    width: 170px;
-   /* margin-left: 1em;*/
+    width: 200px;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 0px;

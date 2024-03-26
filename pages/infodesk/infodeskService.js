@@ -98,6 +98,34 @@
                 fifthskill: ""
             }
         },
+        _benutzerNachrichtView: {
+            get: function() {
+                return AppData.getFormatView("BenutzerNachricht", 0);
+            }
+        },
+        benutzerNachrichtView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "benutzerNachrichtView.");
+                var ret = Infodesk._benutzerNachrichtView.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "benutzerNachrichtView.");
+                var ret = Infodesk._benutzerNachrichtView.update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            insert: function (complete, error, viewResponse) {
+                Log.call(Log.l.trace, "benutzerNachrichtView.");
+                var ret = Infodesk._benutzerNachrichtView.insertWithId(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+
+            }
+        },
         _benutzerView: {
             get: function () {
                 return AppData.getFormatView("Benutzer", 0);
@@ -134,6 +162,7 @@
                 TelefonMobil: "",
                 Titel: "",
                 Position: "",
+                Present: 0,
                 EMail: ""
             }
         },

@@ -63,11 +63,11 @@
             var listView = fragmentElement.querySelector("#userMessageList.listview");
 
             var eventHandlers = {
-                clickSendMessage: function(event) {
+                /*clickSendMessage: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.insertData();
                     Log.ret(Log.l.trace);
-                },
+                },*/
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
@@ -107,11 +107,19 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (item.Info1 && !item.Info1TSRead) {
+                if (item.index === 0 &&
+                    item.EmpfaengerID === null && 
+                    AppBar.scope.binding.dataBenutzer.Info1 &&
+                    !AppBar.scope.binding.dataBenutzer.Info1TSRead) {
                     item.newInfo1Flag = 1;
                 } else {
                     item.newInfo1Flag = 0;
                 }
+                /*if (item.Info1 && !item.Info1TSRead) {
+                    item.newInfo1Flag = 1;
+                } else {
+                    item.newInfo1Flag = 0;
+                }*/
             }
             this.resultConverter = resultConverter;
 
@@ -119,6 +127,9 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.getMessagesData();
                 AppData.setErrorMsg(that.binding);
+                var restriction = {
+                    BenutzerID: AppBar.scope.binding.dataBenutzer.BenutzerVIEWID
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select userMessageView...");
                     return UserMessages.userMessageView.select(function (json) {
@@ -145,7 +156,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                    }, restriction);
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     that.cancelPromises();
@@ -215,7 +226,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-        })
+            })
     });
 })();
 

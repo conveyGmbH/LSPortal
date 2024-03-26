@@ -465,6 +465,7 @@
     "infodesk.messages"     : "Infotext",
     "infodesk.receiver"     : "Empfänger",
     "infodesk.message"      : "Info an ",
+    "infodesk.sendButton"	: "Senden",
 	  "infodesk.message1time" : "Gesendet",
 	  "infodesk.newsOverview" : "Nachrichtenübersicht",
     "infodesk.search"       : "Suche",

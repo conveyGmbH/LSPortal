@@ -29,7 +29,7 @@
             }, commandList, true]);
 
             this.refreshPromise = null;
-            this.refreshWaitTimeMs = 30000;
+            this.refreshWaitTimeMs = 1 * 30000;
 
             this.nextUrl = null;
             this.nextskillentryUrl = null;

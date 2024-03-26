@@ -102,7 +102,7 @@
                             }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
-                                docContainer.style.height = Math.min(heightDoc, 360).toString() + "px";
+                                docContainer.style.height = Math.min(heightDoc, 320).toString() + "px";
                             }
                             if (fieldWidth > Application.maxViewSize.small) {
                                 // remove class: view-size-small  

@@ -29,8 +29,10 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
-                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
-            }, commandList]);
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
+                sendMessage: "",
+                clickOkbool: false
+        }, commandList]);
 
             var prevMasterLoadPromise = null;
 
@@ -60,6 +62,7 @@
             var imgScale = 1;
 
             var photoView = pageElement.querySelector("#employeePhoto.photoview");
+            var onOffSign = pageElement.querySelector("#infodeskController .onsite-offsiteInfodeskList");
 
             var getPhotoData = function () {
                 return that.binding.photoData;
@@ -123,11 +126,16 @@
                         photoItemBox.style.height = imgHeight + "px";
                     }
                     imgLeft = (imgWidth - containerWidth) / 2;
-                    imgTop = (imgHeight - containerHeight) / 2;
+                    //imgTop = (imgHeight - containerHeight) / 2;
+                    imgTop = 0;
 
+                    if (onOffSign && onOffSign.style) {
+                        onOffSign.style.marginLeft = - imgLeft - 50 + "px";
+                        onOffSign.style.marginTop =  imgTop  + "px";
+                    }
                     if (that.img.style) {
                         that.img.style.marginLeft = -imgLeft + "px";
-                        that.img.style.marginTop = -imgTop + "px";
+                        //that.img.style.marginTop = -imgTop + "px";
                         that.img.style.width = imgWidth + "px";
                         that.img.style.height = imgHeight + "px";
                     }
@@ -238,7 +246,16 @@
                 if (newDataBenutzer.Info2 === null) {
                     newDataBenutzer.Info2 = "";
                 }
-                that.binding.dataBenutzer = newDataBenutzer;
+                for (var prop in newDataBenutzer) {
+                    if (newDataBenutzer.hasOwnProperty(prop)) {
+                        if (AppBar.modified && prop === "Info2") {
+                            //ignore Info2 
+                        } else {
+                            that.binding.dataBenutzer[prop] = newDataBenutzer[prop];
+                        }
+                    }
+                }
+                //that.binding.dataBenutzer = newDataBenutzer;
                 AppBar.notifyModified = prevNotifyModified;
             };
             this.setDataBenutzer = setDataBenutzer;
@@ -477,6 +494,7 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.binding.clickOkbool = true;
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
@@ -719,6 +737,14 @@
                     return false;
                 },
                 clickOk: function () {
+                    var sendMessageButton = pageElement.querySelector("#sendMessageButton");
+                    if (sendMessageButton) {
+                        if (getRecordId() && !AppBar.busy && AppBar.modified && that.binding.sendMessage && that.binding.sendMessage.length > 0) {
+                            sendMessageButton.disabled =  false;
+                        } else {
+                            sendMessageButton.disabled = true;
+                        }
+                    }
                     if (getRecordId() && !AppBar.busy && AppBar.modified) {
                         return false;
                     } else {
@@ -820,6 +846,48 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }
                         }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    /*if (recordId) {
+                        //load of format relation record data
+                        var restriction = {
+                            BenutzerID: recordId
+                        }
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "calling select benutzerNachrichtView...");
+                        return Infodesk.benutzerNachrichtView.select(function (json) {
+                            Log.print(Log.l.trace, "benutzerNachrichtView: success!");
+                            if (json && json.d) {
+                                //that.setDataBenutzer(json.d);
+                            }
+                        }, function (errorResponse) {
+                            if (errorResponse.status === 404) {
+                                Log.print(Log.l.trace, "benutzerView: ignore NOT_FOUND error here!");
+                                //that.setDataBenutzer(getEmptyDefaultValue(Infodesk.benutzerView.defaultValue));
+                            } else {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }
+                        }, restriction);
+                    } else {
+                        return WinJS.Promise.as();
+                    }*/
+                    if (recordId) {
+                        var userMessagesControl =
+                            Application.navigator.getFragmentControlFromLocation(
+                                Application.getFragmentPath("userMessages"));
+                        if (userMessagesControl && userMessagesControl.controller) {
+                            return userMessagesControl.controller.loadData();
+                        } else {
+                            var parentElement = pageElement.querySelector("#messageshost");
+                            if (parentElement) {
+                                return Application.loadFragmentById(parentElement,
+                                    "userMessages", null);
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -1003,9 +1071,9 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (that.binding.dataBenutzer.Info2 && that.binding.dataBenutzer.Info2TSRead) {
+                    if (that.binding.dataBenutzer.Info1 && !that.binding.dataBenutzer.Info1TSRead) {
                         //that.binding.dataBenutzer.Info2 = null;
-                        that.binding.dataBenutzer.Info2TSRead = null;
+                        //that.binding.dataBenutzer.Info2TSRead = null;
                         AppBar.modified = true;
                         return that.saveData(function (response) {
                             // called asynchronously if ok
@@ -1052,12 +1120,18 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var dataBenutzer = that.binding.dataBenutzer;
+                if (that.binding.clickOkbool && that.binding.sendMessage && that.binding.sendMessage.length > 0) {
+                    that.binding.dataBenutzer.Info2 = that.binding.sendMessage;
+                }
+
                 if (dataBenutzer && dataBenutzer.BenutzerVIEWID && AppBar.modified && !AppBar.busy) {
                     AppBar.busy = true;
                     ret = Infodesk.benutzerView.update(function (response) {
                         // called asynchronously if ok
                         // force reload of userData for Present flag
                         Log.print(Log.l.trace, "benutzerView: update success!");
+                        that.binding.sendMessage = '';
+                        that.binding.clickOkbool = false;
                         AppBar.modified = false;
                         AppBar.busy = false;
                     }, function (errorResponse) {
@@ -1069,7 +1143,33 @@
                         } else {
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }
-                    }, dataBenutzer.BenutzerVIEWID, dataBenutzer).then(function () {
+                    }, dataBenutzer.BenutzerVIEWID, dataBenutzer)/*.then(function() {
+                        //Insert in benutzerNachrichtView
+                        var benutzerNachricht = {
+                            BenutzerID: that.binding.dataBenutzer.BenutzerVIEWID, /*that.binding.dataBenutzer.BenutzerVIEWID
+                            AbsenderID: AppData.getRecordId("Mitarbeiter"),
+                            EmpfaengerID: that.binding.dataBenutzer.BenutzerVIEWID,
+                            InfoID: null,
+                            InfoText: that.binding.sendMessage,
+                            SendMAID: null,
+                            SendTS: null,
+                            ReadMAID: null,
+                            ReadTS: null
+                        }
+                        ret = Infodesk.benutzerNachrichtView.insert(function(json) {
+                            Log.print(Log.l.trace, "benutzerNachrichtView: insert success!");
+                            that.binding.sendMessage = '';
+                        }, function(errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppBar.busy = false;
+                            if (typeof complete === "function") {
+                                error(errorResponse);
+                            } else {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }
+                            }, benutzerNachricht);
+                    })*/.then(function () {
                         if (typeof complete === "function") {
                             complete(dataBenutzer);
                             return WinJS.Promise.as();
