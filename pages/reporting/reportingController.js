@@ -99,6 +99,20 @@
                 }
             }
 
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
+
             var langSet = function () {
                 Log.call(Log.l.trace, "DiaIndustries.Controller.");
                 var lang = AppData.getLanguageId();
@@ -597,12 +611,13 @@
                 that.binding.progress.showOther = false;
                 var reportingRestriction = that.setRestriction();
                 // ExportXlsx.restriction = that.getRestriction();
+                var evId = that.getEventId();
                 var exportselectionId = exportselection;
                 if (exportselectionId) {
                     AppData.setErrorMsg(that.binding);
                     that.showDashboardLoadingText(true);
                     return AppData.call("PRC_ExcelRequest", {
-                        pRecordID: AppData.getRecordId("Veranstaltung"),
+                        pRecordID: parseInt(that.getEventId()),
                         pLanguageSpecID: that.langSet(),
                         pExportType: exportselectionId,
                         pFilterCreateDate: that.restrictionDate(reportingRestriction.Erfassungsdatum), // YYYY - MM - DD
@@ -1017,6 +1032,24 @@
             }
             this.addPdfToZip = addPdfToZip;
 
+            var resetFilters = function() {
+                Log.call(Log.l.trace, "PDFExport.Controller.");
+                if (erfassungsdatum) {
+                    erfassungsdatum.current = null;
+                }
+                if (modifiedTs) {
+                    modifiedTs.current = null;
+                }
+                if (initLand) {
+                    initLand.dataSource = [];
+                }
+                if (erfasserID) {
+                    erfasserID.dataSource = [];
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.resetFilters = resetFilters;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -1224,14 +1257,15 @@
             }
             this.getNextData = getNextData;
 
-            var loadData = function () {
+            var loadData = function (eventId) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
-                //that.templatecall();
+                that.resetFilters();
+                var recordId = eventId;
                 var ret = new WinJS.Promise.as().then(function () {
                     var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
                     if (reportingListFragmentControl && reportingListFragmentControl.controller) {
-                        return reportingListFragmentControl.controller.loadData();
+                        return reportingListFragmentControl.controller.loadData(recordId);
                     } else {
                         var parentElement = pageElement.querySelector("#reportingListhost");
                         if (parentElement) {

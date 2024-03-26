@@ -15,11 +15,10 @@
             }
         },
         analysisListView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".analysisListView.");
-                var ret = ReportingList._analysisListView.select(complete, error, {
-                    LanguageSpecID: AppData.getLanguageId()
-                }, {
+                var ret = ReportingList._analysisListView.select(complete, error, restriction,
+                {
                     ordered: true,
                         orderAttribute: "Title"
                 });

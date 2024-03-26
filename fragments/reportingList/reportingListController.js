@@ -127,11 +127,13 @@
             }
             this.resultConverter = resultConverter;
 
-            var loadData = function () {
+            var loadData = function (eventId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                var recordId = eventId;
                 that.reportingItem = new WinJS.Binding.List();
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (recordId) {
                     return ReportingList.analysisListView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -188,11 +190,11 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-
-                        }).then(function () {
-
-                            Log.print(Log.l.trace, "Data loaded");
-                        });
+                                VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId()
+                            })
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;

@@ -289,6 +289,9 @@
                                                         typeof AppBar.scope.setVeranstaltungId === "function") {
                                                         AppBar.scope.setVeranstaltungId(that.binding.eventId);
                                                         AppBar.scope.loadData();
+                                                    } else if (curPageId === "reporting" &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                     } else {
                                                         var newPageId = Application.getPageId(Application.navigator._nextPage);
                                                         if (newPageId !== "event" &&
@@ -319,6 +322,10 @@
                                                     typeof AppBar.scope.setEventId === "function") {
                                                     AppBar.scope.setEventId(that.binding.eventId);
                                                     AppBar.scope.loadData();
+                                                }
+                                                if ((curPageId === "reporting" ) &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                 }
                                             }
                                             AppBar.triggerDisableHandlers();
