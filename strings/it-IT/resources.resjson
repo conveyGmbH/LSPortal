@@ -502,6 +502,7 @@
     "infodesk.messages"     : "Notizie",
     "infodesk.receiver"     : "Ricevitore",
     "infodesk.message"      : "Messaggio ai ",
+    "infodesk.sendButton"	: "Senden",
 	"infodesk.message1time" : "Inviato",
 	"infodesk.newsOverview" : "News Sommario",
     "infodesk.search"       : "Ricerca",
