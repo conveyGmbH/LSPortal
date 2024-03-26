@@ -744,6 +744,7 @@
                             that.addBodyRowHandlers();
                             that.addHeaderRowHandlers();
                             that.setCellTitle();
+                            that.setTableCellRed();
                             that.binding.count = results.length;
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
