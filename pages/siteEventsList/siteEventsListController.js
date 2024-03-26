@@ -22,7 +22,8 @@
                 selIdx: AppData.getRecordId("VeranstaltungTermin") - 1,
                 eventText: getResourceText("siteEventsList.event"),
                 eventTypID: 0,
-                searchString: ""
+                searchString: "",
+                prevEventTerminId: AppData.getRecordId("VeranstaltungTerminID")
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -294,6 +295,7 @@
                                     that.binding.selIdx = item.index;
                                     if (item.data && item.data.VeranstaltungTerminVIEWID) {
                                         // called asynchronously if ok
+                                        AppData.setRecordId("VeranstaltungTerminID", item.data.VeranstaltungTerminVIEWID);
                                         var curPageId = Application.getPageId(nav.location);
                                         if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes" || curPageId === "siteeventsImport") {
                                             AppBar.scope.binding.saveFlag = true;
@@ -458,7 +460,13 @@
                             if (that.binding.selIdx >= json.d.results.length) {
                                 that.binding.selIdx = json.d.results.length - 1;
                             }
-                            var recordId = AppData.getRecordId("VeranstaltungTermin");
+                            var recordId;
+                            if (that.binding.prevEventTerminId) {
+                                recordId = that.binding.prevEventTerminId;
+                            } else {
+                                recordId = AppData.getRecordId("VeranstaltungTermin");
+                                AppData.setRecordId("VeranstaltungTerminID", recordId);
+                            }
                             if (recordId) {
                                 WinJS.Promise.timeout(0).then(function () {
                                     that.selectRecordId(recordId);
