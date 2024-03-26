@@ -600,6 +600,7 @@
 	"label.startPremium2": "Premium 2",
 	"label.eventCopy" : "Veranstaltung kopieren",
     "label.siteEventsRoleManagement" : "Role Management",
+	"label.genDataUserInfo" : "Información del usuario",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

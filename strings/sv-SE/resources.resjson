@@ -599,6 +599,7 @@
 	"label.startPremium2": "Premium 2",
 	"label.eventCopy" : "Copy Event",
     "label.siteEventsRoleManagement" : "Role Management",
+	"label.genDataUserInfo" : "User Info",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

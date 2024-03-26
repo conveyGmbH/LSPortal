@@ -628,6 +628,7 @@
     "label.genDataModList" : "Speaker",
     "label.genDataModDetails" : "Speaker",
     "label.genDataModHisto" : "History",
+	"label.genDataUserInfo" : "User Info",
     "label.seriesResourceAdministration": "Texts",
     "label.seriesMediaAdministration": "Media",
     "label.eventStarts": "Overview page",

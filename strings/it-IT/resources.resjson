@@ -627,6 +627,7 @@
     "label.genDataModList" : "Moderatore",
     "label.genDataModDetails" : "Moderatore",
     "label.genDataModHisto" : "Storia",
+	"label.genDataUserInfo" : "Info utente",
     "label.seriesResourceAdministration": "Testi",
     "label.seriesMediaAdministration": "Media",
     "label.eventStarts": "Pagina panoramica",
