@@ -310,6 +310,7 @@
         { id: "mailingList", master: "mailingVSList" },
         { id: "ticketLimits", master: "ticketLimitsList" },
         { id: "contactResultsList", master: "eventList" },
+        { id: "reporting", master: "eventList" },
         { id: "eventStatus", master: "eventStatusList" },
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },

@@ -1032,7 +1032,7 @@
             }
             this.addPdfToZip = addPdfToZip;
 
-            var resetFilters = function() {
+            var resetFilters = function () {
                 Log.call(Log.l.trace, "PDFExport.Controller.");
                 if (erfassungsdatum) {
                     erfassungsdatum.current = null;
@@ -1292,9 +1292,10 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            }, {
-                            VeranstaltungID: recordId
-                        });
+                        }, {
+                                VeranstaltungID: recordId,
+                                LanguageSpecID: AppData.getLanguageId()
+                            });
                     }
                 }).then(function () {
                     if (recordId) {
@@ -1324,7 +1325,7 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
-                            VeranstaltungID: recordId
+                                VeranstaltungID: recordId
                             });
                     }
                 }).then(function () {

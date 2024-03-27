@@ -9,7 +9,7 @@
     WinJS.Namespace.define("Reporting", {
         _initLandView: {
             get: function () {
-                return AppData.getLgntInit("LGNTINITLand", false, false, 20671);
+                return AppData.getFormatView("LGNTINITLand", 20671);
             }
         },
         initLandView: {
