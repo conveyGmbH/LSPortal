@@ -1275,7 +1275,7 @@
                         }
                     }
                 }).then(function () {
-                    if (!Reporting.initLandView.getResults().length) {
+                    if (recordId) {
                         Log.print(Log.l.trace, "calling select initLandData...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
                         return Reporting.initLandView.select(function (json) {
@@ -1292,16 +1292,12 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            }, {
+                            VeranstaltungID: recordId
                         });
-                    } else {
-                        if (initLand && initLand.winControl &&
-                            (!initLand.winControl.data || !initLand.winControl.data.length)) {
-                            initLand.winControl.data = new WinJS.Binding.List(Reporting.initLandView.getResults());
-                        }
-                        return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (!that.employees || !that.employees.length) {
+                    if (recordId) {
                         that.employees = new WinJS.Binding.List([Reporting.employeeView.defaultValue]);
                         return Reporting.employeeView.select(function (json) {
                             // this callback will be called asynchronously
@@ -1328,15 +1324,8 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
-                                VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                            VeranstaltungID: recordId
                             });
-                    } else {
-                        if (erfasserID && erfasserID.winControl) {
-                            erfasserID.winControl.data = that.employees;
-                        }
-                        erfasserID.selectedIndex = 0;
-                        //that.binding.mitarbeiterId = Reporting.employeeView.defaultValue.MitarbeiterVIEWID;
-                        return WinJS.Promise.as();
                     }
                 }).then(function () {
                     if (that.nextUrl !== null) {
