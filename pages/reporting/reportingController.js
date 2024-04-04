@@ -1262,6 +1262,9 @@
                 AppData.setErrorMsg(that.binding);
                 that.resetFilters();
                 var recordId = eventId;
+                if (!recordId) {
+                    recordId = AppData.getRecordId("Veranstaltung");
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
                     if (reportingListFragmentControl && reportingListFragmentControl.controller) {
