@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="uploadUserPhoto.css" rel="stylesheet" />
+    <script type="text/javascript" src="uploadUserPhotoService.js"></script>
+    <script type="text/javascript" src="uploadUserPhotoController.js"></script>
+    <script type="text/javascript" src="uploadUserPhoto.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="uploadUserPhoto fragment">
+        <div id="uploadUserPhotoController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="field_line">
+                        <span class="label win-type-caption" data-win-res="{textContent: 'genDataUserInfo.File'}"></span>
+                        <div id="dropzone" class="dropzone-container input_field win-textbox use-border-radius bkgcolor-activatable bkgcolor-hoverable">
+                            <div class="action-label" data-win-res="{textContent: 'genDataUserInfo.info1'}"></div>
+                        </div>
+                        <input class="zero-sized" type="file" />
+                        <span class="input_field" data-win-bind="textContent: fileInfo"></span>
+                    </div>
+                    <div class="loader" data-win-bind="style.display: showLoadingCircle Binding.Converter.toDisplay"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

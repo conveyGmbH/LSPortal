@@ -23,13 +23,25 @@
                         </div>
                     </div>
                     <div class="line-separator"></div>
-                    <div class="field_line field_line_odd photo-container"
-                         data-win-bind="style.display: photoData Binding.Converter.toDisplay"></div>
                     <div class="media-container">
-                        <div id="uploadMediahost" class="docfragmenthost" data-win-bind="style.display: showUpload Binding.Converter.toDisplay"></div>
+                        <div id="uploadMediahost" class="docfragmenthost"
+                             data-win-bind="style.display: showUpload Binding.Converter.toDisplay">
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption" data-win-res="{textContent: 'genDataModDetails.picture'}"></span><br />
+                            <div id="dropzone" class="dropzone-container input_field win-textbox use-border-radius bkgcolor-activatable bkgcolor-hoverable">
+                                <div class="action-label" data-win-res="{textContent: 'genDataModDetails.info1'}"></div>
+                            </div>
+                           
+                                <img id="userpicture" alt="Picture"/>
+                            
+                            <button id="picdelete" data-win-res="{textContent: 'genDataModDetails.picchanghebutton'}" onclick="AppBar.handleEvent('click', 'clickUpload', event)"></button>
+                            <input class="zero-sized" type="file" />
+                            <span class="input_field" data-win-bind="textContent: fileInfo"></span>
+                        </div>
                     </div>
-
                     <div class="line-separator"></div>
+                    <div class="fields-container">
                     <div class="field_line field_line_odd">
                         <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contact.academicTitle'}"></span>
                         <span class="label landscape_only" data-win-res="{textContent: 'contact.academicTitle'}"></span>
@@ -119,16 +131,6 @@
                         </select>
                         <span class="input_field" data-win-bind="textContent: InitLandItem.TITLE; style.display: dataBenutzer.Flag_NoEdit Binding.Converter.toDisplay"></span>
                     </div>
-                    
-                    <div class="field_line field_line_even">
-                        <span class="label win-type-caption" data-win-res="{textContent: 'genDataModDetails.picture'}"></span><br />
-                        <div id="dropzone" class="dropzone-container input_field win-textbox use-border-radius bkgcolor-activatable bkgcolor-hoverable">
-                            <div class="action-label" data-win-res="{textContent: 'genDataModDetails.info1'}"></div>
-                        </div>
-                        <img id="modpicture" alt="Picture" />
-                        <button id="picchange" data-win-res="{textContent: 'genDataModDetails.picchanghebutton'}" onclick="AppBar.handleEvent('click', 'clickUpload', event)"></button>
-                        <input class="zero-sized" type="file" />
-                        <span class="input_field" data-win-bind="textContent: fileInfo"></span>
                     </div>
                 </div>
                 <div class="error-message"

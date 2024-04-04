@@ -1700,5 +1700,7 @@
     "eventProducts.productcombotitle"			: "Fonctionnalité",
     "eventProducts.productaddbtntitle"			: "Ajouter",
 
-    "siteEventsRoleManagement.title"			: "Management des rôles"
+    "siteEventsRoleManagement.title"			: "Management des rôles",
+
+    "genDataUserInfo.title"             : "Infos utilisateur"
 }

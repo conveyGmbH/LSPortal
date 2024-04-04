@@ -1,2 +1,29 @@
-﻿body {
+﻿.view-size-biggest .genDataUserInfo .fields-container {
+    width: 100% !important;
+}
+.view-size-medium .genDataUserInfo .fields-container {
+    width: 100% !important;
+}
+
+.genDataUserInfo .dropzone-container {
+    z-index: 4;
+    height: 200px;
+    width: 98%;
+    min-width: 100px;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.genDataUserInfo .zero-sized {
+    width: 0;
+    height: 0;
+}
+
+#userpicture {
+    height: 250px;
+    width: auto;
+}
+
+#picdelete {
+    margin-top: 5px;
 }

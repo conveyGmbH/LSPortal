@@ -1363,5 +1363,7 @@
     "eventbaselink.titlebaselink" : "Titel",
     "eventbaselink.teamurl" : "Team Link",
 
-    "siteEventsRoleManagement.title"			: "Role Management"
+    "siteEventsRoleManagement.title"			: "Role Management",
+
+	"genDataUserInfo.title"        : "Información del usuario"
 }			

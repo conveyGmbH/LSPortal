@@ -1698,5 +1698,7 @@
     "eventProducts.productcombotitle"			: "Caratteristica",
     "eventProducts.productaddbtntitle"			: "Aggiungi",
 
-    "siteEventsRoleManagement.title"			: "Direzione del ruolo"
+    "siteEventsRoleManagement.title"			: "Direzione del ruolo",
+
+    "genDataUserInfo.title"             : "Info utente"
 }

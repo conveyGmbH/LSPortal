@@ -1724,6 +1724,8 @@
     "eventProducts.productcombotitle"			: "Feature",
     "eventProducts.productaddbtntitle"			: "Hinzufügen",
 
-    "siteEventsRoleManagement.title"			: "Rollenverwaltung"
+    "siteEventsRoleManagement.title"			: "Rollenverwaltung",
+
+	"genDataUserInfo.title"             : "Benutzerinfo"
 
 }		

@@ -22,6 +22,7 @@
                 InitLandItem: { InitLandID: 0, TITLE: "" },
                 showUpload: false, //new
                 showPhoto: false, //new
+                photoData: false,
                 newInfo2Flag: 0,
                 visitorFlowFeature: AppData._persistentStates.showvisitorFlow === 1 ||
                     AppData._persistentStates.showvisitorFlow === 2
@@ -41,19 +42,23 @@
             var initBenAnw = pageElement.querySelector("#InitBenAnw");
             var initAnrede = pageElement.querySelector("#InitAnrede");
             var initLand = pageElement.querySelector("#InitLand");
+            var dropZone = pageElement.querySelector("#dropzone");
+            var fileOpener = pageElement.querySelector("input[type=file]");
+            var userPicture = pageElement.querySelector("#userpicture");
+            var picDeleteButton = pageElement.querySelector("#picdelete");
 
             // upload photo
             var loadUpload = function (docId) {
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "docId=" + docId);
                 var ret = null;
-                var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadMedia"));
+                var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadUserPhoto"));
                 if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller &&
                     typeof uploadMediaFragmentControl.controller.setDocId === "function") {
                     uploadMediaFragmentControl.controller.setDocId(docId);
                 } else {
                     var parentElement = pageElement.querySelector("#uploadMediahost");
                     if (parentElement) {
-                        ret = Application.loadFragmentById(parentElement, "uploadMedia", {
+                        ret = Application.loadFragmentById(parentElement, "uploadUserPhoto", {
                             docId: docId
                         });
                     }
@@ -277,6 +282,17 @@
                     } else {
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    if (userPicture.src === "") {
+                        userPicture.style.display = "none";
+                        picDeleteButton.style.display = "none";
+                        loadUpload();
+                    } else {
+                        dropZone.style.display = "none";
+                        userPicture.style.display = "block";
+                        picDeleteButton.style.display = "block";
+                    }
+
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -742,7 +758,7 @@
                 }
             };
 
-            this.disableHandlers = {
+           this.disableHandlers = {
                 clickOk: function () {
                     // always enabled!
                     return false;
