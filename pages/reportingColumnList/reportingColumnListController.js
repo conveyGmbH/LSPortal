@@ -42,6 +42,20 @@
             // now do anything...
             var listView = pageElement.querySelector("#reportingColumnList.listview");
 
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
+
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "ReportingColumnList.Controller.");
@@ -392,7 +406,8 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        
+                            VeranstaltungID: that.getEventId(),
+                            LanguageSpecID: AppData.getLanguageId()
                         });
                 }).then(function () {
                     return ReportingColumnList.pdfExportView.select(function (json) {
@@ -427,6 +442,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
+                        VeranstaltungID: that.getEventId(),
                         LanguageSpecID: AppData.getLanguageId()
                     });
                 }).then(function() {
@@ -454,7 +470,8 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-
+                        VeranstaltungID: that.getEventId(),
+                        LanguageSpecID: AppData.getLanguageId()
                     });
                 }).then(function () {
                     return ReportingColumnList.pdfExportParamView.select(function (json) {
@@ -472,7 +489,8 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-
+                        VeranstaltungID: that.getEventId(),
+                        LanguageSpecID: AppData.getLanguageId()
                     });
                 });
                 Log.ret(Log.l.trace);

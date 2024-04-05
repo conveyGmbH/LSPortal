@@ -14,13 +14,9 @@
                 }
             },
             ExportReportColumn: {
-                select: function(complete, error) {
+                select: function(complete, error, restriction) {
                     Log.call(Log.l.trace, "Reporting.");
-                    var ret = ReportingColumnList._ExportReportColumn.select(complete,
-                        error,
-                        {
-                            LanguageSpecID: AppData.getLanguageId()
-                        },
+                    var ret = ReportingColumnList._ExportReportColumn.select(complete, error, restriction,
                         {
                             ordered: true
                         });

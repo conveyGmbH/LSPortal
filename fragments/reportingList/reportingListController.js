@@ -131,6 +131,9 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = eventId;
+                if (!recordId) {
+                    recordId = options.eventId;
+                }
                 that.reportingItem = new WinJS.Binding.List();
                 var ret = new WinJS.Promise.as().then(function () {
                     if (recordId) {

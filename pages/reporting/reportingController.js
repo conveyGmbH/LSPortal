@@ -1263,7 +1263,7 @@
                 that.resetFilters();
                 var recordId = eventId;
                 if (!recordId) {
-                    recordId = AppData.getRecordId("Veranstaltung");
+                    recordId = that.getEventId();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
                     var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
@@ -1272,7 +1272,7 @@
                     } else {
                         var parentElement = pageElement.querySelector("#reportingListhost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "ReportingList", {});
+                            return Application.loadFragmentById(parentElement, "ReportingList", {eventId: recordId});
                         } else {
                             return WinJS.Promise.as();
                         }

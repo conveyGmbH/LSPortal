@@ -18,7 +18,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
             Log.call(Log.l.trace, "EventList.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                eventId: 0,
+                eventId: AppData.getRecordId("Veranstaltung"),
                 count: 0,
                 active: null,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
@@ -305,7 +305,9 @@
                                                         curPageId === "optQuestionList" ||
                                                         curPageId === "questionList" ||
                                                         curPageId === "event" ||
-                                                        curPageId === "contactResultsList") &&
+                                                        curPageId === "contactResultsList" ||
+                                                        curPageId === "reporting" ||
+                                                        curPageId === "reportingColumnList") &&
                                                         typeof AppBar.scope.getEventId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventId());
                                                     }
@@ -323,7 +325,8 @@
                                                     AppBar.scope.setEventId(that.binding.eventId);
                                                     AppBar.scope.loadData();
                                                 }
-                                                if ((curPageId === "reporting" ) &&
+                                                if ((curPageId === "reporting" ||
+                                                     curPageId === "reportingColumnList") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                 }
