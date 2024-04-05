@@ -39,13 +39,12 @@
             // toggle
             
             // select element
-            var initBenAnw = pageElement.querySelector("#InitBenAnw");
             var initAnrede = pageElement.querySelector("#InitAnrede");
             var initLand = pageElement.querySelector("#InitLand");
             var dropZone = pageElement.querySelector("#dropzone");
             var fileOpener = pageElement.querySelector("input[type=file]");
             var userPicture = pageElement.querySelector("#userpicture");
-            var picDeleteButton = pageElement.querySelector("#picdelete");
+            var picChangeButton = pageElement.querySelector("#picchange");
 
             // upload photo
             var loadUpload = function (docId) {
@@ -134,29 +133,6 @@
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!GenDataUserInfo.initBenAnwView.getResults().length) {
-                        Log.print(Log.l.trace, "calling select initBenAnw...");
-                        //@nedra:04.03.2016: load the list of INITBenAnw for Combobox
-                        return GenDataUserInfo.initBenAnwView.select(function (json) {
-                            Log.print(Log.l.trace, "initBenAnwView: success!");
-                            if (json && json.d && json.d.results) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initBenAnw && initBenAnw.winControl) {
-                                    initBenAnw.winControl.data = new WinJS.Binding.List(json.d.results);
-                                }
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
-                        if (initBenAnw && initBenAnw.winControl) {
-                            initBenAnw.winControl.data = new WinJS.Binding.List(GenDataUserInfo.initBenAnwView.getResults());
-                        }
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
@@ -283,14 +259,14 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (userPicture.src === "") {
+                    if (!photoData) {
                         userPicture.style.display = "none";
-                        picDeleteButton.style.display = "none";
+                        picChangeButton.style.display = "none";
                         loadUpload();
                     } else {
                         dropZone.style.display = "none";
                         userPicture.style.display = "block";
-                        picDeleteButton.style.display = "block";
+                        picChangeButton.style.display = "block";
                     }
 
                 });
@@ -474,6 +450,42 @@
                         Log.print(Log.l.error, "error saving employee");
                     });
                     Log.ret(Log.l.trace);
+                },
+                handleFileChoose: function (event) {
+                    if (event && event.target) {
+                        // FileList-Objekt des input-Elements auslesen, auf dem 
+                        // das change-Event ausgelöst wurde (event.target)
+                        var files = event.target.files;
+                        for (var i = 0; i < files.length; i++) {
+                            getFileData(files[i], files[i].name, files[i].type, files[i].size);
+                        }
+                    }
+                },
+                onDragOver: function (event) {
+                    if (event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        if (event.dataTransfer) {
+                            event.dataTransfer.dropEffect = "copy";
+                        }
+                    }
+                },
+                onDrop: function (event) {
+                    if (event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        if (event.dataTransfer) {
+                            var files = event.dataTransfer.files; // FileList Objekt
+                            for (var i = 0; i < files.length; i++) {
+                                getFileData(files[i], files[i].name, files[i].type, files[i].size);
+                            }
+                        }
+                    }
+                },
+                clickUpload: function (event) {
+                    if (fileOpener) {
+                        fileOpener.click();
+                    }
                 },
                 clickExport: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
@@ -757,6 +769,32 @@
                     Log.ret(Log.l.trace);
                 }
             };
+
+            // Initialisiere Drag&Drop EventListener
+            if (dropZone) {
+                this.addRemovableEventListener(dropZone, "dragover", this.eventHandlers.onDragOver.bind(this));
+                this.addRemovableEventListener(dropZone, "drop", this.eventHandlers.onDrop.bind(this));
+                this.addRemovableEventListener(dropZone, "click", this.eventHandlers.clickUpload.bind(this));
+            }
+
+            //Initialisiere fileOpener           
+            if (fileOpener) {
+                var accept = "";
+                var mimeTypes = GenDataUserInfo.docFormatList.map(function (item) {
+                    return item.mimeType;
+                });
+                var uniqueMimeTypes = mimeTypes.filter(function (item, index) {
+                    return mimeTypes.indexOf(item) === index;
+                });
+                for (var i = 0; i < uniqueMimeTypes.length; i++) {
+                    if (accept) {
+                        accept += ",";
+                    }
+                    accept += uniqueMimeTypes[i];
+                }
+                fileOpener.setAttribute("accept", accept);
+                this.addRemovableEventListener(fileOpener, "change", this.eventHandlers.handleFileChoose.bind(this));
+            }
 
            this.disableHandlers = {
                 clickOk: function () {
