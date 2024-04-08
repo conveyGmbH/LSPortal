@@ -46,7 +46,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            delete: function (complete, error, recordId) {
+            deleteRecord: function (complete, error, recordId) {
                 Log.call(Log.l.trace, namespaceName + ".docView.", "recordId=" + recordId);
                 var ret = UploadUserPhoto.getDocView().deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
