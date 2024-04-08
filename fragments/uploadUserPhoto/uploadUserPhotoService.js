@@ -30,7 +30,7 @@
                 return UploadUserPhoto._docFormatList;
             }
         },
-        getDocView: function (docGroup) {
+        getDocView: function () {
             var tableName = "DOC1Mitarbeiter";
             return AppData.getFormatView(tableName, 0);
         },
@@ -39,10 +39,16 @@
             insert: function (complete, error, viewResponse, docId, docGroup) {
                 Log.call(Log.l.trace, namespaceName + ".docView.", "docId=" + docId + " docGroup=" + docGroup);
                 if (viewResponse) {
-                    var pkName = "DOC1Mitarbeiter";
+                    var pkName = getDocView().oDataPkName;
                     viewResponse[pkName] = docId;
                 }
-                var ret = UploadUserPhoto.getDocView(docGroup).insertWithId(complete, error, viewResponse);
+                var ret = UploadUserPhoto.getDocView().insertWithId(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            delete: function (complete, error, recordId) {
+                Log.call(Log.l.trace, namespaceName + ".docView.", "recordId=" + recordId);
+                var ret = UploadUserPhoto.getDocView().deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }
