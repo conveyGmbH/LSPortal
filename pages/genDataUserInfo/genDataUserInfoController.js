@@ -27,8 +27,7 @@
                     ? true
                     : false
             }, commandList]);
-            this.img = null;
-
+            
             var that = this;
 
             // show business card photo
@@ -40,10 +39,7 @@
             var initAnrede = pageElement.querySelector("#InitAnrede");
             var initLand = pageElement.querySelector("#InitLand");
             var dropZone = pageElement.querySelector("#dropzone");
-            var fileOpener = pageElement.querySelector("input[type=file]");
-            var userPicture = pageElement.querySelector("#userpicture");
-            var picChangeButton = pageElement.querySelector("#picchange");
-
+            
             // upload photo
             var loadUpload = function (docId) {
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "docId=" + docId);
@@ -183,29 +179,6 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select CR_V_Bereich_ODataVIEW...");
-                    return UserInfo.CR_V_Bereich_ODataVIEW.select(function (json) {
-                        Log.print(Log.l.trace, "CR_V_Bereich_ODataVIEW: success!");
-                        if (json && json.d && json.d.results) {
-                            var results = [
-                                { CR_V_BereichVIEWID: 0, TITLE: "" }
-                            ];
-                            json.d.results.forEach(function (item, index) {
-                                that.resultCrVBereichConverter(item, index);
-                                results.push(item);
-                            });
-                            /*var results = json.d.results;
-                            results.forEach(function(item, index) {
-                                that.resultCrVBereichConverter(item, index);
-                            });*/
-                            if (cr_V_bereich && cr_V_bereich.winControl) {
-                                cr_V_bereich.winControl.data = new WinJS.Binding.List(results);
-                            }
-                        }
-                    }, function (errorResponse) {
-                        // ignore that
-                    });
-                }).then(function () {
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select benutzerView...");
@@ -225,7 +198,7 @@
                             }
                         }, recordId);
                     } else {
-                        that.setDataBenutzer(getEmptyDefaultValue(UserInfo.benutzerView.defaultValue));
+                        that.setDataBenutzer(getEmptyDefaultValue(genDataUserInfo.benutzerView.defaultValue));
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -267,15 +240,8 @@
                     }
                 }).then(function () {
                     if (!photoData) {
-                        userPicture.style.display = "none";
-                        picChangeButton.style.display = "none";
                         loadUpload();
-                    } else {
-                        dropZone.style.display = "none";
-                        userPicture.style.display = "block";
-                        picChangeButton.style.display = "block";
                     }
-
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -286,26 +252,10 @@
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                if (typeof that.binding.dataBenutzer.CR_V_BereichID === "string") {
-                    that.binding.dataBenutzer.CR_V_BereichID = parseInt(that.binding.dataBenutzer.CR_V_BereichID);
-                    if (that.binding.dataBenutzer.CR_V_BereichID === 0) {
-                        that.binding.dataBenutzer.CR_V_BereichID = null;
-                    }
-                }
-                if (typeof that.binding.dataBenutzer.Eingang === "boolean") {
-                    that.binding.dataBenutzer.Eingang = that.binding.dataBenutzer.Eingang ? 1 : null;
-                }
-                if (typeof that.binding.dataBenutzer.Ausgang === "boolean") {
-                    that.binding.dataBenutzer.Ausgang = that.binding.dataBenutzer.Ausgang ? 1 : null;
-                }
-                if (that.binding.dataBenutzer.CR_V_BereichID && !that.binding.dataBenutzer.Eingang && !that.binding.dataBenutzer.Ausgang) {
-                    that.binding.dataBenutzer.Eingang = 1;
-                }
+                var recordId = getRecordId();
                 var dataBenutzer = that.binding.dataBenutzer;
-                if (dataBenutzer && AppBar.modified) {
-                    var recordId = getRecordId();
-                    if (recordId) {
-                        ret = GenDataUserInfo.benutzerView.update(function (response) {
+                if (dataBenutzer && AppBar.modified && recordId) {
+                    ret = GenDataUserInfo.benutzerView.update(function (response) {
                             // called asynchronously if ok
                             // force reload of userData for Present flag
                             AppBar.modified = false;
@@ -317,27 +267,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             error(errorResponse);
                         }, recordId, dataBenutzer);
-                    } else {
-                        dataBenutzer.BenutzerVIEWID = AppData.getRecordId("Mitarbeiter");
-                        ret = GenDataUserInfo.benutzerView.insert(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "dataBenutzer: success!");
-                            // dataBenutzer returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.setDataBenutzer(json.d);
-                                setRecordId(that.binding.dataBenutzer.BenutzerVIEWID);
-                                // force reload of userData for Present flag
-                                AppData.getUserData();
-                            }
-                            complete(json);
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, dataBenutzer);
-                    }
+                    
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
                         complete(dataBenutzer);
@@ -466,32 +396,6 @@
                         for (var i = 0; i < files.length; i++) {
                             getFileData(files[i], files[i].name, files[i].type, files[i].size);
                         }
-                    }
-                },
-                onDragOver: function (event) {
-                    if (event) {
-                        event.stopPropagation();
-                        event.preventDefault();
-                        if (event.dataTransfer) {
-                            event.dataTransfer.dropEffect = "copy";
-                        }
-                    }
-                },
-                onDrop: function (event) {
-                    if (event) {
-                        event.stopPropagation();
-                        event.preventDefault();
-                        if (event.dataTransfer) {
-                            var files = event.dataTransfer.files; // FileList Objekt
-                            for (var i = 0; i < files.length; i++) {
-                                getFileData(files[i], files[i].name, files[i].type, files[i].size);
-                            }
-                        }
-                    }
-                },
-                clickUpload: function (event) {
-                    if (fileOpener) {
-                        fileOpener.click();
                     }
                 },
                 clickExport: function (event) {
@@ -776,33 +680,7 @@
                     Log.ret(Log.l.trace);
                 }
             };
-
-            // Initialisiere Drag&Drop EventListener
-            if (dropZone) {
-                this.addRemovableEventListener(dropZone, "dragover", this.eventHandlers.onDragOver.bind(this));
-                this.addRemovableEventListener(dropZone, "drop", this.eventHandlers.onDrop.bind(this));
-                this.addRemovableEventListener(dropZone, "click", this.eventHandlers.clickUpload.bind(this));
-            }
-
-            //Initialisiere fileOpener           
-            if (fileOpener) {
-                var accept = "";
-                var mimeTypes = GenDataUserInfo.docFormatList.map(function (item) {
-                    return item.mimeType;
-                });
-                var uniqueMimeTypes = mimeTypes.filter(function (item, index) {
-                    return mimeTypes.indexOf(item) === index;
-                });
-                for (var i = 0; i < uniqueMimeTypes.length; i++) {
-                    if (accept) {
-                        accept += ",";
-                    }
-                    accept += uniqueMimeTypes[i];
-                }
-                fileOpener.setAttribute("accept", accept);
-                this.addRemovableEventListener(fileOpener, "change", this.eventHandlers.handleFileChoose.bind(this));
-            }
-
+            
            this.disableHandlers = {
                 clickOk: function () {
                     // always enabled!
@@ -820,6 +698,25 @@
                     }
                 }
             };
+
+           var deletePhotoData = function (complete, error) {
+               Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
+               var ret = GenDataUserInfo.deleteRecord(function (json) {
+                   Log.print(Log.l.trace, "GenDataUserInfo: delete success!");
+                   if (typeof complete === "function") {
+                       complete(json);
+                   }
+               }, function (errorResponse) {
+                   Log.print(Log.l.error, "GenDataUserInfo: delete error!");
+                   AppData.setErrorMsg(that.binding, errorResponse);
+                   if (typeof error === "function") {
+                       error(errorResponse);
+                   }
+               }, that.binding.docId);
+               Log.ret(Log.l.trace);
+               return ret;
+           }
+           that.deletePhotoData = deletePhotoData;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
