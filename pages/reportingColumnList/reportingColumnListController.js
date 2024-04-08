@@ -203,7 +203,7 @@
                                     // or server returns response with an error status.
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                 }, {
-
+                                    PDFExportParamVIEWID: recordId
                                 });
                             });
                     } else {
