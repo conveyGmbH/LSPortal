@@ -93,6 +93,12 @@
                 var ret = GenDataUserInfo._userPhotoView.insertWithId(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            deleteRecord: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "userPhotoView.");
+                var ret = GenDataUserInfo._userPhotoView.deleteRecord(complete, error, recordId);
+                Log.ret(Log.l.trace);
+                return ret;
             }
         }
     });

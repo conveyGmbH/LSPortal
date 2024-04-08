@@ -429,25 +429,6 @@
             }
             this.setDocId = setDocId;
 
-            var deleteData = function(complete, error) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
-                var ret = UploadUserPhoto.deleteRecord(function (json) {
-                    Log.print(Log.l.trace, "UploadUserPhoto: delete success!");
-                    if (typeof complete === "function") {
-                        complete(json);
-                    }
-                }, function(errorResponse) {
-                    Log.print(Log.l.error, "UploadUserPhoto: delete error!");
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                    if (typeof error === "function") {
-                        error(errorResponse);
-                    }
-                }, that.binding.docId);
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-            that.deleteData = deleteData;
-
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 that.updateCommands();
