@@ -169,14 +169,8 @@
                     },
                         dataDoc, that.binding.docId, 1);
                 }).then(function () {
-                    if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
-                        return AppBar.scope.loadList(that.binding.docId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
-                        return AppBar.scope.loadDoc(that.binding.docId, 1, wFormat);
+                    if (AppBar.scope && typeof AppBar.scope.loadData === "function") {
+                        return AppBar.scope.loadData();
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -269,14 +263,8 @@
                     },
                         dataDoc, that.binding.docId, wGroupDoc);
                 }).then(function () {
-                    if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
-                        return AppBar.scope.loadList(that.binding.docId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (AppBar.scope && typeof AppBar.scope.loadDoc === "function") {
-                        return AppBar.scope.loadDoc(that.binding.docId, wGroupDoc, wFormat); // 1
+                    if (AppBar.scope && typeof AppBar.scope.loadData === "function") {
+                        return AppBar.scope.loadData(); // 1
                     } else {
                         return WinJS.Promise.as();
                     }

@@ -106,24 +106,15 @@
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
                 var master = Application.navigator.masterControl;
                 if (master && master.controller && master.controller.binding) {
-                    recordId = master.controller.binding.userInfoId; //?
+                    recordId = master.controller.binding.employeeId; 
                 }
                 Log.ret(Log.l.trace, recordId);
                 return recordId;
             }
             this.getRecordId = getRecordId;
 
-            var setRecordId = function (recordId) {
-                Log.call(Log.l.trace, "GenDataUserInfo.Controller.", recordId);
-                AppData.setRecordId("Benutzer", recordId);
-                Log.ret(Log.l.trace);
-            };
-            this.setRecordId = setRecordId;
-
-            
-
             var loadData = function () {
-                var recordId = AppData.getRecordId("Mitarbeiter");
+                var recordId = getRecordId();
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -151,7 +142,7 @@
                         }
                         return WinJS.Promise.as();
                     }
-                    }).then(function () {
+                }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandView...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
@@ -187,7 +178,6 @@
                             Log.print(Log.l.trace, "benutzerView: success!");
                             if (json && json.d) {
                                 that.setDataBenutzer(json.d);
-                                setRecordId(that.binding.dataBenutzer.BenutzerVIEWID);
                             }
                         }, function (errorResponse) {
                             if (errorResponse.status === 404) {
@@ -249,10 +239,10 @@
             this.loadData = loadData;
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
+                var recordId = getRecordId();
+                Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var recordId = getRecordId();
                 var dataBenutzer = that.binding.dataBenutzer;
                 if (dataBenutzer && AppBar.modified && recordId) {
                     ret = GenDataUserInfo.benutzerView.update(function (response) {
@@ -699,22 +689,23 @@
                 }
             };
 
-           var deletePhotoData = function (complete, error) {
-               Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
-               var ret = GenDataUserInfo.deleteRecord(function (json) {
-                   Log.print(Log.l.trace, "GenDataUserInfo: delete success!");
-                   if (typeof complete === "function") {
-                       complete(json);
-                   }
-               }, function (errorResponse) {
-                   Log.print(Log.l.error, "GenDataUserInfo: delete error!");
-                   AppData.setErrorMsg(that.binding, errorResponse);
-                   if (typeof error === "function") {
-                       error(errorResponse);
-                   }
-               }, that.binding.docId);
-               Log.ret(Log.l.trace);
-               return ret;
+            var deletePhotoData = function (complete, error) {
+                var recordId = getRecordId();
+                Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
+                var ret = GenDataUserInfo.deleteRecord(function (json) {
+                    Log.print(Log.l.trace, "GenDataUserInfo: delete success!");
+                    if (typeof complete === "function") {
+                        complete(json);
+                    }
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "GenDataUserInfo: delete error!");
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                }, that.binding.docId);
+                Log.ret(Log.l.trace);
+                return ret;
            }
            that.deletePhotoData = deletePhotoData;
 
@@ -724,16 +715,6 @@
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
-                if (that.binding.dataBenutzer.Present === 1) {
-                    // leave present state 1 
-                } else {
-                    // undefined present state becomes 0
-                    that.binding.dataBenutzer.Present = 0;
-                }
-                if (!AppBar.modified) {
-                    // always set modified for timestamp!
-                    AppBar.modified = true;
-                }
                 return WinJS.Promise.as();
             });
             Log.ret(Log.l.trace);
