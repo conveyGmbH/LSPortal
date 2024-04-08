@@ -41,18 +41,19 @@
             var dropZone = pageElement.querySelector("#dropzone");
             
             // upload photo
-            var loadUpload = function (docId) {
-                Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "docId=" + docId);
+            var loadUpload = function () {
+                var recordId = that.getRecordId();
+                Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "recordId=" + recordId);
                 var ret = null;
                 var uploadMediaFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("uploadUserPhoto"));
                 if (uploadMediaFragmentControl && uploadMediaFragmentControl.controller &&
                     typeof uploadMediaFragmentControl.controller.setDocId === "function") {
-                    uploadMediaFragmentControl.controller.setDocId(docId);
+                    uploadMediaFragmentControl.controller.setDocId(recordId);
                 } else {
                     var parentElement = pageElement.querySelector("#uploadMediahost");
                     if (parentElement) {
                         ret = Application.loadFragmentById(parentElement, "uploadUserPhoto", {
-                            docId: docId
+                            docId: recordId
                         });
                     }
                 }
@@ -223,13 +224,14 @@
                             }
                         }, function (errorResponse) {
                             // ignore that
+                            that.binding.photoData = "";
                         }, recordId);
                     } else {
                         that.binding.photoData = "";
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (!photoData) {
+                    if (!that.binding.photoData) {
                         loadUpload();
                     }
                 });
