@@ -29,8 +29,7 @@
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newEmployee"), section: "primary", svg: "user_plus" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteUser"), section: "primary", svg: "garbage_can" },
-                { id: "clickDeletePhoto", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteUserPhoto"), section: "primary", svg: "delete_userphoto_2" }];
+                { id: "clickDeletePhoto", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteUserPhoto"), section: "primary", svg: "delete_userphoto" }];
 
             this.controller = new GenDataUserInfo.Controller(element, commandList);
             if (this.controller.eventHandlers) {
