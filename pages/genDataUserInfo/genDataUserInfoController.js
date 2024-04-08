@@ -20,9 +20,7 @@
                 dataBenutzer: GenDataUserInfo.benutzerView && getEmptyDefaultValue(GenDataUserInfo.benutzerView.defaultValue),
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
-                showUpload: false, //new
-                showPhoto: false, //new
-                photoData: false,
+                photoData: "",
                 newInfo2Flag: 0,
                 visitorFlowFeature: AppData._persistentStates.showvisitorFlow === 1 ||
                     AppData._persistentStates.showvisitorFlow === 2
@@ -244,18 +242,27 @@
                                     var sub = docContent.search("\r\n\r\n");
                                     if (sub >= 0) {
                                         var newContent = docContent.substr(sub + 4);
-                                        if (newContent && newContent !== "null" &&
-                                            (!that.binding.photoData || that.binding.photoData !== newContent)) {
-                                            that.binding.photoData = newContent;
-                                            showPhoto();
+                                        if (newContent && newContent !== "null") {
+                                            if (!that.binding.photoData || that.binding.photoData !== newContent) {
+                                                that.binding.photoData = newContent;
+                                            }
+                                        } else {
+                                            that.binding.photoData = "";
                                         }
+                                    } else {
+                                        that.binding.photoData = "";
                                     }
+                                } else {
+                                    that.binding.photoData = "";
                                 }
+                            } else {
+                                that.binding.photoData = "";
                             }
                         }, function (errorResponse) {
                             // ignore that
                         }, recordId);
                     } else {
+                        that.binding.photoData = "";
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
