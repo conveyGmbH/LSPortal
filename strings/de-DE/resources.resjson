@@ -173,6 +173,7 @@
     "tooltip.addProduct" : "Produkt hinzufügen",
     "tooltip.removeProduct"    : "Produkt löschen",
     "tooltip.addEvent"    : "Zu Veranstaltung hinzufügen",
+	"tooltip.deleteUserPhoto"  :  "Bild entfernen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1726,6 +1727,8 @@
 
     "siteEventsRoleManagement.title"			: "Rollenverwaltung",
 
-	"genDataUserInfo.title"             : "Benutzerinfo"
+	"genDataUserInfo.title"             : "Benutzerinfo",
+	"genDataUserInfo.info1" : "Benutzerbild hier herein ziehen",
+    "genDataUserInfo.picture" : "Bild"
 
 }		

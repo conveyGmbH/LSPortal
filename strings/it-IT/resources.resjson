@@ -170,6 +170,7 @@
     "tooltip.addProduct" : "Aggiungi prodotto",
     "tooltip.removeProduct"    : "Cancellare il prodotto",
     "tooltip.addEvent" : "Aggiungi all'evento",
+    "tooltip.deleteUserPhoto"  :  "Cancellare immagine",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -1700,5 +1701,7 @@
 
     "siteEventsRoleManagement.title"			: "Direzione del ruolo",
 
-    "genDataUserInfo.title"             : "Info utente"
+    "genDataUserInfo.title"             : "Info utente",
+    "genDataUserInfo.info1" : "Trascinare la foto dell'utente qui",
+    "genDataUserInfo.picture" : "Immagine"
 }

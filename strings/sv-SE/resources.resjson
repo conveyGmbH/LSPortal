@@ -139,6 +139,7 @@
 	"tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.changeLogin": "Change employee login",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
+    "tooltip.deleteUserPhoto"  :  "Delete image",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1364,5 +1365,7 @@
 
     "siteEventsRoleManagement.title"			: "Role Management",
 
-    "genDataUserInfo.title"             : "User Info"
+    "genDataUserInfo.title"             : "User Info",
+    "genDataUserInfo.info1" : "Drag and drop user picture here",
+    "genDataUserInfo.picture" : "Image"
 }
