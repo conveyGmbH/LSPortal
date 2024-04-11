@@ -1729,6 +1729,19 @@
 
 	"genDataUserInfo.title"             : "Benutzerinfo",
 	"genDataUserInfo.info1" : "Benutzerbild hier herein ziehen",
-    "genDataUserInfo.picture" : "Bild"
-
+    "genDataUserInfo.questionDelete": "Möchten Sie das aktuelle Bild löschen?",
+	"genDataUserInfo.formOf" : "Anrede",
+    "genDataUserInfo.academicTitle" : "Titel",
+    "genDataUserInfo.firstName" : "Vorname",
+    "genDataUserInfo.name" : "Nachname",
+    "genDataUserInfo.position" : "Position",
+    "genDataUserInfo.company" : "Firmenname",
+    "genDataUserInfo.email" : "E-Mail",
+    "genDataUserInfo.phone" : "Telefon",
+    "genDataUserInfo.mobile" : "Mobil",
+    "genDataUserInfo.address" : "Adresse",
+    "genDataUserInfo.zip" : "PLZ",
+    "genDataUserInfo.city" : "Ort",
+    "genDataUserInfo.country" : "Land",
+    "genDataUserInfo.notice" : "Bemerkung"
 }		

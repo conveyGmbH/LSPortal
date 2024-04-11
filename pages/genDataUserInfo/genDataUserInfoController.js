@@ -38,7 +38,6 @@
             // select element
             var initAnrede = pageElement.querySelector("#InitAnrede");
             var initLand = pageElement.querySelector("#InitLand");
-            var dropZone = pageElement.querySelector("#dropzone");
             
             // upload photo
             var loadUpload = function () {
@@ -208,7 +207,7 @@
                                         var newContent = docContent.substr(sub + 4);
                                         if (newContent && newContent !== "null") {
                                             if (!that.binding.photoData || that.binding.photoData !== newContent) {
-                                                that.binding.photoData = newContent;
+                                                that.binding.photoData = "data:image/jpeg;base64," + newContent;
                                             }
                                         } else {
                                             that.binding.photoData = "";
@@ -332,22 +331,15 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickDelete: function (event) {
+                clickDeletePhoto: function (event) {
                     Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
-                    var confirmTitle = getResourceText("employee.questionDelete");
+                    var confirmTitle = getResourceText("genDataUserInfo.questionDelete");
                     confirm(confirmTitle, function (result) {
                         if (result) {
                             Log.print(Log.l.trace, "clickDelete: user choice OK");
-                            deleteData(function (response) {
-                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
-                                    //var prevSelIdx = master.controller.binding.selIdx;
-                                    master.controller.loadData()/*.then(function () {
-                                        Log.print(Log.l.info, "master.controller.loadData: success!");
-                                        master.controller.setSelIndex(prevSelIdx);
-                                    })*/;
-                                }
+                            that.deletePhotoData(function (response) {
+
+                                that.loadData();
                             }, function (errorResponse) {
                                 // delete ERROR
                                 var message = null;
@@ -694,7 +686,7 @@
             var deletePhotoData = function (complete, error) {
                 var recordId = getRecordId();
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
-                var ret = GenDataUserInfo.deleteRecord(function (json) {
+                var ret = GenDataUserInfo.userPhotoView.deleteRecord(function (json) {
                     Log.print(Log.l.trace, "GenDataUserInfo: delete success!");
                     if (typeof complete === "function") {
                         complete(json);
@@ -705,7 +697,7 @@
                     if (typeof error === "function") {
                         error(errorResponse);
                     }
-                }, that.binding.docId);
+                }, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
            }

@@ -39,7 +39,7 @@
                 INITAnredeID: 0,
                 INITLandID: 0,
                 Position: "",
-                Firmenname: "",
+                Firma: "",
                 Strasse: "",
                 PLZ: "",
                 Stadt: "",
