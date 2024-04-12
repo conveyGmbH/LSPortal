@@ -67,9 +67,23 @@
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
-                QuestionList._eventId = value;
+                QuestionList._initFragengruppeView._eventId = value;
             }
             this.setEventId = setEventId;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             var setTooltips = function () {
                 //ToolTips Single
@@ -141,7 +155,6 @@
 
             var resultConverter = function (item, index) {
                 var prevQuestion = null;
-
                 if (!index) {
                     index = 0;
                 }
@@ -664,20 +677,24 @@
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "question saved");
                         AppBar.triggerDisableHandlers();
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "error saving question");
-                    });
-                    QuestionList.questionListView.insert(function (json) {
-                        AppBar.busy = false;
-                        // called asynchronously if ok
-                        var recordId = (json && json.d && json.d.FragenVIEWID);
-                        Log.print(Log.l.info, "questionListView insert: success! recordId=" + recordId);
+                        AppData.call("PRC_InsertFragen", {
+                            pVeranstaltungID: that.getEventId()
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            var recordId = (json && json.d && json.d.FragenID);
+                            Log.print(Log.l.info, "PRC_InsertFragen insert: success! recordId=" + recordId);
                         that.binding.questionId = recordId;
                         that.loadData().then(function () {
                             that.selectRecordId(that.binding.questionId);
                         });
+                            AppData.setErrorMsg(that.binding, errorMsg);
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
                     }, function (errorResponse) {
-                        AppBar.busy = false;
+                        Log.print(Log.l.error, "error saving question");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
@@ -1272,8 +1289,8 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId(that.getEventId());
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!QuestionList.initFragengruppeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initFragengruppeView...");
                         //@nedra:25.09.2015: load the list of InitFragengruppe for Combobox
                         return QuestionList.initFragengruppeView.select(function (json) {
@@ -1288,16 +1305,10 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             QuestionList.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                            
+                           
                         });
-                    } else {
-                        that.initFragengruppe = new WinJS.Binding.List(QuestionList.initFragengruppeView.getResults());
-                        if (QuestionList.initFragengruppeView.getResults().length > 1) {
-                            that.binding.questiongroupflag = true;
-                        } else {
-                            that.binding.questiongroupflag = false;
-                        }
-                        return WinJS.Promise.as();
-                    }
                 }).then(function () {
                     that.loading = true;
                     return QuestionList.questionListView.select(function (json) {

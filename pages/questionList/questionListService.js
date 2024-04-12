@@ -16,7 +16,8 @@
         initFragengruppeView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "QuestionList.initFragengruppeView.");
-                var ret = QuestionList._initFragengruppeView.select(complete, error, recordId, { ordered: true });
+                QuestionList._initFragengruppeView.restriction = { VeranstaltungID: QuestionList._initFragengruppeView._eventId };
+                var ret = QuestionList._initFragengruppeView.select(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
@@ -40,7 +41,7 @@
         },
         _questionListView: {
             get: function () {
-                var ret = AppData.getFormatView("FragenAntworten", 0);
+                var ret = AppData.getFormatView("NCHRFragenAntworten", 20680);
                 ret.maxPageSize = 50;
                 return ret;
             }
