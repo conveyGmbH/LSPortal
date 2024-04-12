@@ -36,12 +36,12 @@
         },
         _questionView: {
             get: function () {
-                return AppData.getFormatView("Fragen", 0);
+                return AppData.getFormatView("FragenAntworten", 0);
             }
         },
         _questionListView: {
             get: function () {
-                var ret = AppData.getFormatView("NCHRFragenAntworten", 20680);
+                var ret = AppData.getFormatView("FragenAntworten", 20682);
                 ret.maxPageSize = 50;
                 return ret;
             }
@@ -77,7 +77,7 @@
             },
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "QuestionList.");
-                var ret = QuestionList._questionListView.update(complete, error, recordId, viewResponse);
+                var ret = QuestionList._questionView.update(complete, error, recordId, viewResponse);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

@@ -23,7 +23,7 @@
             Log.call(Log.l.trace, "QuestionList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                questionId: AppData.getRecordId("FragenAntworten"),
+                questionId: AppData.getRecordId("FragenAntwortenVIEWID"),
                 questiongroupflag: false,
                 dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue),
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
@@ -891,7 +891,7 @@
                                         if (item.data && item.data.FragenAntwortenVIEWID) {
                                             var newRecId = item.data.FragenAntwortenVIEWID;
                                             Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
-                                            AppData.setRecordId('FragenAntworten', newRecId);
+                                            AppData.setRecordId('FragenAntwortenVIEWID', newRecId);
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
                                             }
@@ -974,7 +974,7 @@
                                         var newRecId = item.data.FragenAntwortenVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
-                                            AppData.setRecordId('FragenAntworten', newRecId);
+                                            AppData.setRecordId('FragenAntwortenVIEWID', newRecId);
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
                                             }
