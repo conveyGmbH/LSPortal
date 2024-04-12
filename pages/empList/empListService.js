@@ -10,7 +10,8 @@
         _employeeView: {
             get: function () {
                 var ret = AppData.getFormatView("Mitarbeiter", 20471);
-                ret.maxPageSize = 25;
+                // hung 12.04.24: problem that sometimes does not reload any more - set to higher maxPageSize
+                ret.maxPageSize = 200;
                 return ret;
             }
         },
