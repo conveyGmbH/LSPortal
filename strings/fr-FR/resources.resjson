@@ -170,6 +170,7 @@
     "tooltip.addProduct" : "Ajouter un produit",
     "tooltip.removeProduct"    : "Supprimer un produit",
     "tooltip.addEvent" : "Ajouter à l'événement",
+    "tooltip.deleteUserPhoto"  :  "Supprimer l'image",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -1702,5 +1703,21 @@
 
     "siteEventsRoleManagement.title"			: "Management des rôles",
 
-    "genDataUserInfo.title"             : "Infos utilisateur"
+    "genDataUserInfo.title"             : "Infos utilisateur",
+    "genDataUserInfo.info1" : "Glisser l'image de l'utilisateur ici",
+	"genDataUserInfo.questionDelete"  :  "Souhaitez-vous supprimer l'image actuelle?",
+    "genDataUserInfo.formOf" : "Civilité",
+    "genDataUserInfo.academicTitle" : "Titre",
+    "genDataUserInfo.firstName" : "Prénom",
+    "genDataUserInfo.name" : "Nom",
+    "genDataUserInfo.position" : "Position",
+    "genDataUserInfo.company" : "Nom de l'entreprise",
+    "genDataUserInfo.email" : "E-mail",
+    "genDataUserInfo.phone" : "Téléphone",
+    "genDataUserInfo.mobile" : "Mobile",
+    "genDataUserInfo.address" : "Adresse",
+    "genDataUserInfo.zip" : "Code postal",
+    "genDataUserInfo.city" : "Ville",
+    "genDataUserInfo.country" : "Pays",
+    "genDataUserInfo.notice" : "Préavis"
 }

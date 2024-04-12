@@ -173,6 +173,7 @@
     "tooltip.addProduct" : "Produkt hinzufügen",
     "tooltip.removeProduct"    : "Produkt löschen",
     "tooltip.addEvent"    : "Zu Veranstaltung hinzufügen",
+	"tooltip.deleteUserPhoto"  :  "Bild entfernen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1726,6 +1727,21 @@
 
     "siteEventsRoleManagement.title"			: "Rollenverwaltung",
 
-	"genDataUserInfo.title"             : "Benutzerinfo"
-
+	"genDataUserInfo.title"             : "Benutzerinfo",
+	"genDataUserInfo.info1" : "Benutzerbild hier herein ziehen",
+    "genDataUserInfo.questionDelete": "Möchten Sie das aktuelle Bild löschen?",
+	"genDataUserInfo.formOf" : "Anrede",
+    "genDataUserInfo.academicTitle" : "Titel",
+    "genDataUserInfo.firstName" : "Vorname",
+    "genDataUserInfo.name" : "Nachname",
+    "genDataUserInfo.position" : "Position",
+    "genDataUserInfo.company" : "Firmenname",
+    "genDataUserInfo.email" : "E-Mail",
+    "genDataUserInfo.phone" : "Telefon",
+    "genDataUserInfo.mobile" : "Mobil",
+    "genDataUserInfo.address" : "Adresse",
+    "genDataUserInfo.zip" : "PLZ",
+    "genDataUserInfo.city" : "Ort",
+    "genDataUserInfo.country" : "Land",
+    "genDataUserInfo.notice" : "Bemerkung"
 }		

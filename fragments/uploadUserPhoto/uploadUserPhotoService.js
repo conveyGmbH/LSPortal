@@ -10,7 +10,7 @@
 
     WinJS.Namespace.define("UploadUserPhoto", {
         docExtList: [
-            "jpg", "jpeg", "jpe", "gif", "png"
+            "jpg", "jpeg", "jpe"
         ],
         _docFormatList: [],
         docFormatList: {
@@ -39,7 +39,7 @@
             insert: function (complete, error, viewResponse, docId, docGroup) {
                 Log.call(Log.l.trace, namespaceName + ".docView.", "docId=" + docId + " docGroup=" + docGroup);
                 if (viewResponse) {
-                    var pkName = getDocView().oDataPkName;
+                    var pkName = UploadUserPhoto.getDocView().oDataPkName;
                     viewResponse[pkName] = docId;
                 }
                 var ret = UploadUserPhoto.getDocView().insertWithId(complete, error, viewResponse);

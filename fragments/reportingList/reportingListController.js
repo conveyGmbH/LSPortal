@@ -27,6 +27,12 @@
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
+            this.dispose = function () {
+                if (listView && listView.winControl) {
+                    listView.winControl.itemDataSource = null;
+                }
+            }
+
             var eventHandlers = {
             }
             this.eventHandlers = eventHandlers;
@@ -134,67 +140,68 @@
                 if (!recordId) {
                     recordId = options.eventId;
                 }
-                that.reportingItem = new WinJS.Binding.List();
                 var ret = new WinJS.Promise.as().then(function () {
                     if (recordId) {
-                    return ReportingList.analysisListView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "analysisListView: success!");
-                        // startContact returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            if (listView && listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.reportingItem.dataSource;
-                            }
-                            var blup = {
-                                id: "clickZoomIn",
-                                label: getResourceText("command.zoomin"),
-                                tooltip: getResourceText("tooltip.zoomin"),
-                                section: "primary",
-                                svg: "zoom_in"
-                            }
-                            var commandList = [];
-                            for (var i = 0; i < results.length; i++) {
-                                var item = results[i];
-                                /*if (!AppHeader.controller.binding.userData.SiteAdmin &&
-                                    AppData._persistentStates.leadsuccessBasic) {
-                                    if (item.SortIdx === 3 ||
-                                        item.SortIdx === 4 ||
-                                        item.SortIdx === 5 ||
-                                        item.SortIdx === 7) {
-                                        // ignore handler
-                                    }
-                                } else {*/
-                                var id = results[i].TypeName;
-                                commandList.push({
-                                    id: "clickOLELetterID" + id,
-                                    label: results[i].Title,
-                                    section: "secondary"
+                        return ReportingList.analysisListView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "analysisListView: success!");
+                            that.reportingItem = new WinJS.Binding.List();
+                            // startContact returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
                                 });
-                                createEventHandler(id);
-                                //}
+                                if (listView && listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.reportingItem.dataSource;
+                                }
+                                var blup = {
+                                    id: "clickZoomIn",
+                                    label: getResourceText("command.zoomin"),
+                                    tooltip: getResourceText("tooltip.zoomin"),
+                                    section: "primary",
+                                    svg: "zoom_in"
+                                }
+                                var commandList = [];
+                                for (var i = 0; i < results.length; i++) {
+                                    var item = results[i];
+                                    /*if (!AppHeader.controller.binding.userData.SiteAdmin &&
+                                        AppData._persistentStates.leadsuccessBasic) {
+                                        if (item.SortIdx === 3 ||
+                                            item.SortIdx === 4 ||
+                                            item.SortIdx === 5 ||
+                                            item.SortIdx === 7) {
+                                            // ignore handler
+                                        }
+                                    } else {*/
+                                    var id = results[i].TypeName;
+                                    commandList.push({
+                                        id: "clickOLELetterID" + id,
+                                        label: results[i].Title,
+                                        section: "secondary"
+                                    });
+                                    createEventHandler(id);
+                                    //}
+                                }
+                                that.eventHandlers = eventHandlers;
+                                that.commandList = commandList;
+                            } else {
+                                that.reportingItem = null;
+                                if (listView && listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
                             }
-                            that.eventHandlers = eventHandlers;
-                            that.commandList = commandList;
-                        } else {
-                            that.reportingItem = null;
-                            if (listView && listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
-                            }
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                                VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId()
-                            })
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                                VeranstaltungID: recordId,
+                                LanguageSpecID: AppData.getLanguageId()
+                            });
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -230,10 +237,10 @@
                         Colors.loadSVGImageElements(listView, "action-image", null, "#ffffff", "name");
                         that.disableButton();
                         if (listView.winControl.loadingState === "itemsLoading") {
-                           /* if (!layout) {
-                                layout = Application.EmpListLayout.EmployeesLayout;
-                                listView.winControl.layout = { type: layout };
-                            }*/
+                            /* if (!layout) {
+                                 layout = Application.EmpListLayout.EmployeesLayout;
+                                 listView.winControl.layout = { type: layout };
+                             }*/
                             // load SVG images
                             //Colors.loadSVGImageElements(listView, "action-image", null, "#ffffff", "name");
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
@@ -261,8 +268,8 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            reportingItem: null,
-            disableFlag: 0
-        })
+                reportingItem: null,
+                disableFlag: 0
+            })
     });
 })();

@@ -139,6 +139,7 @@
 	"tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.changeLogin": "Change employee login",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
+    "tooltip.deleteUserPhoto"  :  "Delete image",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1364,5 +1365,21 @@
 
     "siteEventsRoleManagement.title"			: "Role Management",
 
-    "genDataUserInfo.title"             : "User Info"
+    "genDataUserInfo.title"             : "User Info",
+    "genDataUserInfo.info1" : "Drag and drop user picture here",
+    "genDataUserInfo.questionDelete": "Would you like to delete the current image?",
+    "genDataUserInfo.formOf" : "Mr/Ms",
+    "genDataUserInfo.academicTitle" : "Title",
+    "genDataUserInfo.firstName" : "First name",
+    "genDataUserInfo.name" : "Last name",
+    "genDataUserInfo.position" : "Position",
+    "genDataUserInfo.company" : "Company name",
+    "genDataUserInfo.email" : "Email",
+    "genDataUserInfo.phone" : "Phone",
+    "genDataUserInfo.mobile" : "Mobile",
+    "genDataUserInfo.address" : "Address",
+    "genDataUserInfo.zip" : "ZIP",
+    "genDataUserInfo.city" : "City",
+    "genDataUserInfo.country" : "Country",
+    "genDataUserInfo.notice" : "Comment"
 }
