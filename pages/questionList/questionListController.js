@@ -1305,9 +1305,6 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             QuestionList.setErrorMsg(that.binding, errorResponse);
-                        }, {
-                            
-                           
                         });
                 }).then(function () {
                     that.loading = true;
