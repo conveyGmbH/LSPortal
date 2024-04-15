@@ -1,6 +1,7 @@
-﻿.view-size-biggest .genDataUserInfo .fields-container {
+﻿.genDataUserInfo .fields-container {
     width: 100% !important;
 }
+
 .view-size-medium .genDataUserInfo .fields-container {
     width: 100% !important;
 }
