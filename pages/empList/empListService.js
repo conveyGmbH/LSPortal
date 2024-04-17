@@ -10,7 +10,7 @@
         _employeeView: {
             get: function () {
                 var ret = AppData.getFormatView("Mitarbeiter", 20471);
-                ret.maxPageSize = 25;
+                ret.maxPageSize = 200;
                 return ret;
             }
         },
