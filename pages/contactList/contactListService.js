@@ -264,7 +264,7 @@
         },
         eventView: {
             fetchNext: function(results, url, complete, error) {
-                Log.call(Log.l.trace, "GenDataEmpList.eventView.", "nextUrl=" + nextUrl);
+                Log.call(Log.l.trace, namespaceName + ".eventView.");
                 var nextJson = null;
                 var ret = ContactList._eventView.selectNext(function(json) {
                         nextJson = json;
