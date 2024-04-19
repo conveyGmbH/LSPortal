@@ -135,41 +135,6 @@
                 return Reporting._xLReportView;
             }
         },
-        _KontaktPDF: {
-            get: function () {
-                var ret =  AppData.getFormatView("Kontakt", 20572);
-				ret.maxPageSize = 50;
-				return ret;
-            }
-        },
-        KontaktPDF: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Reporting.");
-                var ret = Reporting._KontaktPDF.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "KontaktVIEWID"
-                });
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Reporting.");
-                var ret = Reporting._KontaktPDF.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Reporting._KontaktVIEW.");
-                var ret = Reporting._KontaktPDF.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getDbView: function () {
-                return Reporting._KontaktPDF;
-            }
-        },
         _KontaktReport: {
             get: function () {
                 return AppData.getFormatView("KontaktReport");

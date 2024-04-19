@@ -124,39 +124,6 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        },
-        _KontaktPDF: {
-            get: function () {
-                return AppData.getFormatView("Kontakt", 20572);
-            }
-        },
-        KontaktPDF: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Reporting.");
-                var ret = PDFExport._KontaktPDF.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "KontaktVIEWID"
-                });
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Reporting.");
-                var ret = PDFExport._KontaktPDF.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, "Reporting._KontaktVIEW.");
-                var ret = PDFExport._KontaktPDF.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getDbView: function () {
-                return PDFExport._KontaktPDF;
-            }
         }
     });
 })();
