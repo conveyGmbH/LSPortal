@@ -39,8 +39,15 @@
                             if (json && json.d && json.d.results) {
                                 that.binding.startcontactdata = json.d.results[0];
                                 if (typeof AppBar === "object" && AppBar.scope) {
-                                    if (AppBar.scope.binding && typeof AppBar.scope.binding.countContacts !== "undefined") {
+                                    /*if (AppBar.scope.binding && typeof AppBar.scope.binding.countContacts !== "undefined") {
                                         AppBar.scope.binding.countContacts = that.binding.startcontactdata.AnzKontakte;
+                                    }*/
+                                    if (that.binding.startcontactdata &&
+                                        that.binding.startcontactdata.AnzKontakte &&
+                                        that.binding.startcontactdata.AnzKontakte > 0) {
+                                        AppBar.scope.binding.countContacts = true;
+                                    } else {
+                                        AppBar.scope.binding.countContacts = false;
                                     }
                                 }
                             }
