@@ -242,18 +242,21 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     that.employeedata = [];
                     that.employeedataID = [];
+                    that.emplyeevalues = [];
+                    that.employeeticks = [];
                     return StartTop10Users.reportMitarbeiter.select(function (json) {
                         Log.print(Log.l.trace, "reportMitarbeiter: success!");
-                        if (json && json.d && json.d.results) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             // store result for next use
                             var results = json.d.results;
                             employeeResult = json.d.results;
                             var resultlength = employeeResult.length;
-                            that.setMarginChart(resultlength);
+                            //that.setMarginChart(resultlength);
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
@@ -266,12 +269,16 @@
                             }
                             that.barChartWidth = 0;
                             that.showemployeeChart("employeeChart", true);
+                        } else {
+                            if (that.employeeChart) {
+                                that.employeeChart.destroy();
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                        }, { VeranstaltungID: eventId});
                 });
                 Log.ret(Log.l.trace);
                 return ret;

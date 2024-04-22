@@ -209,6 +209,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartContactspD.kontaktanzahlView.select(function (json) {
@@ -216,12 +217,16 @@
                         // when the response is available
                         Log.print(Log.l.trace, "kontaktanzahlView: success!");
                         // kontaktanzahlView returns object already parsed from json file in response
-                        if (json && json.d) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.kontaktanzahldata = json.d.results;
                             var chartlength = that.kontaktanzahldata.length;
                             //that.setMarginChart(chartlength);
                             that.barChartWidth = 0;
                             that.showBarChart("visitorsPerDayChart", true);
+                        } else {
+                            if (that.barChart) {
+                                that.barChart.destroy();
+                            }
                         }
                         return WinJS.Promise.as();
                     }, function (errorResponse) {
@@ -230,7 +235,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         return WinJS.Promise.as();
-                    });
+                        }, { VeranstaltungID: eventId});
                 });
                 Log.ret(Log.l.trace);
                 return ret;

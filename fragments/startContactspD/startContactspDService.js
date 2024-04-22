@@ -11,15 +11,15 @@
     WinJS.Namespace.define("StartContactspD", {
         _kontaktanzahlView: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20455);
+                var ret = AppData.getFormatView("Veranstaltung", 20684);
                 ret.maxPageSize = 5;
                 return ret;
             }
         },
         kontaktanzahlView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".kontaktanzahlView.");
-                var ret = StartContactspD._kontaktanzahlView.select(complete, error, null, {
+                var ret = StartContactspD._kontaktanzahlView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Datum",
                     asc: true

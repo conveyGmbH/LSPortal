@@ -314,7 +314,7 @@
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
-        //{ id: "start", master: "eventList" },
+        { id: "start", master: "eventList" },
         { id: "genDataEmployee", master: "genDataEmpList" },
         { id: "eventProducts", master: "eventList" }, 
         { id: "optQuestionList", master: "eventList" },

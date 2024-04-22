@@ -9,15 +9,15 @@
     var namespaceName = "StartContacts";
 
     WinJS.Namespace.define("StartContacts", {
-        _mitarbeiterView: {
+        _veranstaltungView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
-        mitarbeiterView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, namespaceName + ".mitarbeiterView.", "recordId=" + recordId);
-                var ret = StartContacts._mitarbeiterView.selectById(complete, error, recordId);
+        veranstaltungView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".veranstaltungView.");
+                var ret = StartContacts._veranstaltungView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

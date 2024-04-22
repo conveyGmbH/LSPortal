@@ -16,15 +16,10 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
-                startcontactdata: getEmptyDefaultValue(StartContacts.mitarbeiterView.defaultValue)
+                startcontactdata: getEmptyDefaultValue(StartContacts.veranstaltungView.defaultValue)
             }]);
 
             var that = this;
-
-            var getRecordId = function () {
-                return AppData.getRecordId("Mitarbeiter");
-            };
-            this.getRecordId = getRecordId;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -33,20 +28,16 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    var recordId = getRecordId();
-                    if (!recordId) {
-                        ret = WinJS.Promise.as();
-                    } else {
-                        Log.print(Log.l.trace, "calling select mitarbeiterView...");
-                        ret = StartContacts.mitarbeiterView.select(function (json) {
+                    return StartContacts.veranstaltungView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "mitarbeiterView: success!");
                             // mitarbeiterView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.binding.startcontactdata = json.d;
+                            if (json && json.d && json.d.results) {
+                                that.binding.startcontactdata = json.d.results[0];
                                 if (typeof AppBar === "object" && AppBar.scope) {
                                     if (AppBar.scope.binding && typeof AppBar.scope.binding.countContacts !== "undefined") {
                                         AppBar.scope.binding.countContacts = that.binding.startcontactdata.AnzKontakte;
@@ -59,8 +50,8 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                             return WinJS.Promise.as();
-                        }, recordId);
-                    }
+                        },
+                        { VeranstaltungVIEWID: eventId });
                 });
                 Log.ret(Log.l.trace);
                 return ret;

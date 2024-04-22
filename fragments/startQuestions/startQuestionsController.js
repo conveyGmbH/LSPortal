@@ -41,7 +41,7 @@
                             var field = that.fields.getAt(i);
                             if (field &&
                                 typeof field === "object" &&
-                                field.FragebogenVIEWID === recordId) {
+                                field.VeranstaltungVIEWID === recordId) {
                                 questionList.winControl.selection.set(i);
                                 break;
                             }
@@ -59,7 +59,7 @@
                 for (i = 0; i < that.fields.length; i++) {
                     var field = that.fields.getAt(i);
                     if (field && typeof field === "object" &&
-                        field.FragebogenVIEWID === recordId) {
+                        field.VeranstaltungVIEWID === recordId) {
                         item = field;
                         break;
                     }
@@ -259,6 +259,9 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var eventId = AppBar.scope.getEventId();
+                that.questions = null;
+                that.binding.qbez = 0;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartQuestions.questionView.select(function (json) {
@@ -301,8 +304,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         return WinJS.Promise.as();
-                    }, {
-                    });
+                        }, { VeranstaltungVIEWID: eventId });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -320,16 +322,17 @@
                             if (selectionCount === 1) {
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
-                                    if (item.data && item.data.FragebogenVIEWID) {
+                                    if (item.data && item.data.VeranstaltungVIEWID) {
                                         AppData.setErrorMsg(that.binding);
                                         that.answerdata = [];
                                         that.answerticks = [];
                                         that.answerdataID = [];
                                         AppData.call("PRC_SumAntwort", {
-                                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                                pFragenNr: parseInt(item.data.FragebogenVIEWID)
+                                            pVeranstaltungID: AppBar.scope.getEventId(),
+                                            pFragenNr: parseInt(item.data.FragenNr)
                                         }, function (json) {
                                             Log.print(Log.l.info, "call success! ");
+                                            if (json.d.results.length > 0) {
                                             AppBar.busy = false;
                                             that.anwsersquestiontext = [];
                                             that.anwserssumantwort = [];
@@ -342,6 +345,11 @@
                                             that.answerdata = results;
                                             that.barChartWidth = 0;
                                             that.showanswerChart("answerChart", true);
+                                            } else {
+                                                if (that.answerChart) {
+                                                    that.answerChart.destroy();
+                                                }
+                                            }
                                         }, function (errorResponse) {
                                             Log.print(Log.l.error, "call error");
                                             AppBar.busy = false;

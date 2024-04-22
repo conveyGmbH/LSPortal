@@ -160,6 +160,7 @@
 
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartTop10Countrys.startTop10CountrysmitarbeiterView.select(function (json) {
@@ -167,8 +168,8 @@
                         // when the response is available
                         Log.print(Log.l.trace, "startTop10CountrysmitarbeiterView: success!");
                         // mitarbeiterView returns object already parsed from json file in response
-                        if (json && json.d) {
-                            var results = json.d;
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results;
                             that.dataCountryTop10Data = results;
                         }
                     }, function (errorResponse) {
@@ -176,7 +177,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, recordId);
+                        }, { VeranstaltungVIEWID: eventId});
                 }).then(function () {
                     return StartTop10Countrys.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
@@ -190,7 +191,7 @@
                                     countryresult[ci].Land = getResourceText("reporting.nocountry");
                                 }
                                 if (countryresult[ci].Land) {
-                                    var percent = 100 * countryresult[ci].Anzahl / that.dataCountryTop10Data.AnzKontakte;
+                                    var percent = 100 * countryresult[ci].Anzahl / that.dataCountryTop10Data[0].AnzKontakte;
                                     that.countryPercent[ci] = formatFloat(percent, 1) + "%";
                                     var label = countryresult[ci].Land + " (" + that.countryPercent[ci] + ")";
                                     that.countrydata[ci] = [label, percent, countryresult[ci].LandID];
@@ -205,12 +206,16 @@
                             }
                             that.countryChartWidth = 0;
                             that.showDonutChart("countryPie", true);
+                        } else {
+                            if (that.countryChart) {
+                                that.countryChart.destroy();
+                            }
                         }
                     },  function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                        }, { VeranstaltungID: eventId});
                 });
                 Log.ret(Log.l.trace);
                 return ret;

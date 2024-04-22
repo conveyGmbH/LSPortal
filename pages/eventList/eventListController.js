@@ -307,7 +307,8 @@
                                                         curPageId === "event" ||
                                                         curPageId === "contactResultsList" ||
                                                         curPageId === "reporting" ||
-                                                        curPageId === "reportingColumnList") &&
+                                                        curPageId === "reportingColumnList" ||
+                                                        curPageId === "start") &&
                                                         typeof AppBar.scope.getEventId === "function") {
                                                         that.selectRecordId(AppBar.scope.getEventId());
                                                     }
@@ -326,7 +327,8 @@
                                                     AppBar.scope.loadData();
                                                 }
                                                 if ((curPageId === "reporting" ||
-                                                     curPageId === "reportingColumnList") &&
+                                                    curPageId === "reportingColumnList" ||
+                                                    curPageId === "start") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                 }

@@ -61,10 +61,19 @@
                 }
             }
 
-            var setRestriction = function (restriction) {
-                AppData.setRestriction("Kontakt", restriction);
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
             }
-            this.setRestriction = setRestriction;
+            this.getEventId = getEventId;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -72,12 +81,6 @@
                 item.buttonTitle = Colors.tileTextColor;
             }
             this.resultConverter = resultConverter;
-
-            // define data handling standard methods
-            var getRecordId = function () {
-                return AppData.getRecordId("Mitarbeiter");
-            };
-            this.getRecordId = getRecordId;
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Start.Controller.");
@@ -486,7 +489,7 @@
             // finally, load the data
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                //return that.loadData();
             }).then(function () {
                 WinJS.Promise.timeout(50).then(function () {
                     if (AppHeader.controller.binding.userData.IsNoAdminUser) {

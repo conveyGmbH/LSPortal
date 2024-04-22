@@ -9,13 +9,19 @@
     WinJS.Namespace.define("Start", {
         _mitarbeiterView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
         mitarbeiterView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "mitarbeiterView.", "recordId=" + recordId);
-                var ret = Start._mitarbeiterView.selectById(complete, error, recordId);
+            select: function (complete, error, restriction) {
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    restriction.VeranstaltungVIEWID = master.controller.binding.eventId;
+                } else {
+                    restriction.VeranstaltungVIEWID = AppData.getRecordId("Veranstaltung");
+                }
+                Log.call(Log.l.trace, "mitarbeiterView.");
+                var ret = Start._mitarbeiterView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
@@ -23,15 +29,21 @@
         },
         _kontaktanzahlView: {
             get: function() {
-                var ret = AppData.getFormatView("Kontakt", 20455);
+                var ret = AppData.getFormatView("Veranstaltung", 20684);
                 ret.maxPageSize = 10;
                 return ret;
             }
         },
         kontaktanzahlView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    restriction.VeranstaltungVIEWID = master.controller.binding.eventId;
+                } else {
+                    restriction.VeranstaltungVIEWID = AppData.getRecordId("Veranstaltung");
+                }
                 Log.call(Log.l.trace, "kontaktanzahlView.");
-                var ret = Start._kontaktanzahlView.select(complete, error, null, {
+                var ret = Start._kontaktanzahlView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Datum",
                     asc: true
@@ -44,7 +56,7 @@
         },
         _reportLand: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Veranstaltung", 20685);
                 ret.maxPageSize = 10;
                 return ret;
             }
@@ -54,6 +66,12 @@
                 Log.call(Log.l.trace, "Start.");
                 if (!restriction) {
                     restriction = {};
+                }
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    restriction.VeranstaltungVIEWID = master.controller.binding.eventId;
+                } else {
+                    restriction.VeranstaltungVIEWID = AppData.getRecordId("Veranstaltung");
                 }
                 restriction.LanguageSpecID = AppData.getLanguageId();
                 var ret = Start._reportLand.select(complete, error, restriction, {

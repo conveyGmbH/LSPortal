@@ -244,6 +244,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initLandView.getResults().length) {
@@ -291,6 +292,8 @@
                             }
                             that.worldMapHeight = 0;
                             that.worldChart(true);
+                        } else {
+                            that.worldMap.svg.remove();
                         }
 
                     }, function (errorResponse) {
@@ -298,7 +301,7 @@
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         return WinJS.Promise.as();
-                    });
+                    }, { VeranstaltungID: eventId });
                 });
                 Log.ret(Log.l.trace);
                 return ret;

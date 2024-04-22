@@ -11,7 +11,9 @@
     WinJS.Namespace.define("StartTop10Users", {
         _reportMitarbeiter: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20474);
+                var ret = AppData.getFormatView("Veranstaltung", 20688);
+                ret.maxPageSize = 10;
+                return ret;
             }
         },
         reportMitarbeiter: {
@@ -45,7 +47,7 @@
         },
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20495);
+                return AppData.getFormatView("Veranstaltung", 20688);
             }
         },
         employeeView: {

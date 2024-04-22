@@ -11,13 +11,13 @@
     WinJS.Namespace.define("StartTop10Countrys", {
         _startTop10CountrysmitarbeiterView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
         startTop10CountrysmitarbeiterView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, namespaceName + ".startTop10CountrysmitarbeiterView.", "recordId=" + recordId);
-                var ret = StartTop10Countrys._startTop10CountrysmitarbeiterView.selectById(complete, error, recordId);
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".startTop10CountrysmitarbeiterView.");
+                var ret = StartTop10Countrys._startTop10CountrysmitarbeiterView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
@@ -25,7 +25,7 @@
         },
         _reportLand: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Veranstaltung", 20687);
                 ret.maxPageSize = 10;
                 return ret;
             }

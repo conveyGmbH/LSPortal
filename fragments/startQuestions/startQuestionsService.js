@@ -11,15 +11,15 @@
     WinJS.Namespace.define("StartQuestions", {
         _questionView: {
             get: function () {
-                var ret = AppData.getFormatView("Fragebogen", 20597);
+                var ret = AppData.getFormatView("Veranstaltung", 20686);
                 return ret;
             }
         },
         questionView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".questionView.");
-                var ret = StartQuestions._questionView.select(complete, error, restriction, { ordered: true, orderAttribute: "FragebogenVIEWID" });
-                // this will return a promise to controller
+                var ret = StartQuestions._questionView.select(complete, error, restriction, { ordered: true, orderAttribute: "VeranstaltungVIEWID" });
+                // this will return a promise to controller FragebogenVIEWID
                 Log.ret(Log.l.trace);
                 return ret;
             },
