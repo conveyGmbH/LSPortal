@@ -25,6 +25,12 @@
             var that = this;
             this.countrydata = null;
 
+            this.dispose = function () {
+                if (that.countrydata) {
+                    that.countrydata = null;
+                }
+            }
+
             this.isClicked = false;
             var clickDonutSlice = function (event, index) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
@@ -181,11 +187,24 @@
                 }).then(function () {
                     return StartTop10Countrys.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        if (json && json.d && json.d.results) {
                             var color = Colors.dashboardColor;
                             that.countryKeyData = {};
                             // store result for next use
                             var countryresult = json.d.results;
+                            if (json.d.results.length === 0) {
+                                 if (that.countryChart) {
+                                     that.countryKeyData = {};
+                                     that.countryPercent = {};
+                                     that.countryColors = {},
+                                     that.dataCountryTop10Data = {};
+                                     that.countryChartWidth = 0;
+                                     that.countryChartArray = [];
+                                     that.countryPercent = [];
+                                     that.countrydata = [];
+                                     that.countryChart.destroy();
+                                 }
+                            } else {
                             for (var ci = 0; ci < countryresult.length; ci++) {
                                 if (countryresult[ci].Land === null) {
                                     countryresult[ci].Land = getResourceText("reporting.nocountry");
@@ -206,9 +225,6 @@
                             }
                             that.countryChartWidth = 0;
                             that.showDonutChart("countryPie", true);
-                        } else {
-                            if (that.countryChart) {
-                                that.countryChart.destroy();
                             }
                         }
                     },  function (errorResponse) {

@@ -225,6 +225,7 @@
                             that.showBarChart("visitorsPerDayChart", true);
                         } else {
                             if (that.barChart) {
+                                that.kontaktanzahldata = {};
                                 that.barChart.destroy();
                             }
                         }
