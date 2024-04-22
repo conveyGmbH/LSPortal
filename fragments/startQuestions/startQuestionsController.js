@@ -296,6 +296,12 @@
                             if (questionList.winControl) {
                                 // add ListView dataSource
                                 questionList.winControl.itemDataSource = null;
+                                that.anwsersquestiontext = [];
+                                that.anwserssumantwort = [];
+                                that.answerdata = [];
+                                that.answerticks = [];
+                                that.answerdataID = [];
+                                that.answerChart.destroy();
                             }
                         }
                         return WinJS.Promise.as();
