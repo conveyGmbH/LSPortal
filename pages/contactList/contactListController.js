@@ -946,7 +946,12 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                var restriction = AppData.getRestriction("Kontakt");
+                if (restriction && restriction.VeranstaltungID) {
+                    return that.setEventId(restriction.VeranstaltungID);
+                } else {
+                    return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
