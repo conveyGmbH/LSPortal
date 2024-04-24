@@ -601,6 +601,7 @@
 	"label.startPremium2": "Premium 2",
 	"label.eventCopy" : "Veranstaltung kopieren",
     "label.siteEventsRoleManagement" : "Role Management",
+    "label.eventProducts" : "Produkte",
 	"label.genDataUserInfo" : "Información del usuario",
 
     "flyout.ok"             : "OK",
