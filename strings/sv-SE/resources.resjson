@@ -601,6 +601,7 @@
 	"label.eventCopy" : "Copy Event",
     "label.siteEventsRoleManagement" : "Role Management",
 	"label.genDataUserInfo" : "User Info",
+    "label.eventProducts" : "Products",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
