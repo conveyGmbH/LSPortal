@@ -60,6 +60,10 @@
                     that.applist = null;
                 }
             }
+            var setRestriction = function (restriction) {
+                AppData.setRestriction("Kontakt", restriction);
+            };
+            this.setRestriction = setRestriction;
 
             var getEventId = function () {
                 var eventId = null;
@@ -408,6 +412,7 @@
                 clickListAllContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     that.setRestriction({
+                        VeranstaltungID: that.getEventId(),
                         SHOW_Barcode: null,
                         SHOW_Visitenkarte: null,
                         Nachbearbeitet: null
@@ -421,6 +426,7 @@
                 clickListBusinessCardContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     that.setRestriction({
+                        VeranstaltungID: that.getEventId(),
                         SHOW_Barcode: null,
                         SHOW_Visitenkarte: 1
                     });
@@ -433,6 +439,7 @@
                 clickListBusinessCardNotEditedContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     that.setRestriction({
+                        VeranstaltungID: that.getEventId(),
                         SHOW_Barcode: null,
                         SHOW_Visitenkarte: 1,
                         Nachbearbeitet: 1
@@ -446,6 +453,7 @@
                 clickListBarcodeContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     that.setRestriction({
+                        VeranstaltungID: that.getEventId(),
                         SHOW_Barcode: 1,
                         SHOW_Visitenkarte: null
                     });
@@ -458,6 +466,7 @@
                 clickListManuellContacts: function (event) {
                     Log.call(Log.l.trace, "Start.Controller.");
                     that.setRestriction({
+                        VeranstaltungID: that.getEventId(),
                         SHOW_Barcode: "NULL",
                         SHOW_Visitenkarte: "NULL"
                     });

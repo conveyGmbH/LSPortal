@@ -16,6 +16,7 @@
         _orderDesc: true,
         _prevRestriction: "",
         _prevJson: null,
+        _prevEventId: 0,
         _collator: null,
         _contactView: {
             get: function () {
@@ -42,7 +43,8 @@
                         });
                     }
                     if (ContactList._prevJson &&
-                        ContactList._prevRestriction === restriction) {
+                        ContactList._prevRestriction === restriction &&
+                        ContactList._prevEventId === ContactList._eventId) {
                         Log.print(Log.l.info, "re-use previous PRC_SearchKontaktListe results!");
                         var json = ContactList._prevJson;
                         ret = new WinJS.Promise.as().then(function () {
@@ -59,13 +61,14 @@
                         Log.print(Log.l.info, "calling PRC_SearchKontaktListe...");
                         ret = AppData.call("PRC_SearchKontaktListe", {
                             pAttributeIdx: 0,
-                            pVeranstaltungId: ContactList._eventId, // Für Alle suchen 0 eintragen!
+                            pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
                             pSuchText: restriction
                         }, function (json) {
                             Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
                             // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
                             ContactList._prevRestriction = restriction;
                             ContactList._prevJson = json;
+                            ContactList._prevEventId = ContactList._eventId;
                             if (json && json.d && json.d.results && json.d.results.length > 0 &&
                                 ContactList._orderAttribute) {
                                 Log.print(Log.l.info, "call sort orderAttribute=" + ContactList._orderAttribute);
@@ -86,6 +89,9 @@
                     if (!restriction) {
                         restriction = {};
                     }
+                    /*if (restriction && !restriction.VeranstaltungID) {
+                        restriction.VeranstaltungID = parseInt(ContactList._eventId);
+                    }*/
                     restriction.VeranstaltungID = ContactList._eventId;
                     if (ContactList._orderAttribute) {
                         options = {
