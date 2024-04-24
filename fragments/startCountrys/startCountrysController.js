@@ -184,6 +184,7 @@
                                             allSubunits.on('click', function (geography) {
                                                 var landId = that.isotoInitlandId(geography.id);
                                                 that.setRestriction({
+                                                    VeranstaltungID: AppBar.scope.getEventId(),
                                                     INITLandID: landId
                                                 });
                                                 AppData.setRecordId("Kontakt", null);

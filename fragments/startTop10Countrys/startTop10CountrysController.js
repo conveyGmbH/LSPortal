@@ -42,6 +42,7 @@
                 that.isClicked = true;
 
                 that.setRestriction({
+                    VeranstaltungID: AppBar.scope.getEventId(),
                     INITLandID: data,
                     bExact: true
                 });

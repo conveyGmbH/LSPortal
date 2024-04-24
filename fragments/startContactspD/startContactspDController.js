@@ -42,6 +42,7 @@
                     var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                     var date = new Date(milliseconds);
                     that.setRestriction({
+                        VeranstaltungID: AppBar.scope.getEventId(),
                         useErfassungsdatum: true,
                         Erfassungsdatum: date
                     });

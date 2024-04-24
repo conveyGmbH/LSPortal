@@ -44,6 +44,7 @@
                             Log.print(Log.l.trace, "initLandView: success!");
                             if (json && json.d && json.d.results) {
                                 that.setRestriction({
+                                    VeranstaltungID: AppBar.scope.getEventId(),
                                     MitarbeiterID: that.employee
                                 });
                                 WinJS.Promise.timeout(0).then(function () {
