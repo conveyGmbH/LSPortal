@@ -307,6 +307,8 @@
     "contactList.numberofeditedcontacts"    : "processed",
     "contactList.numberofunprocessedcontacts"    : "not processed",
     "contactList.davon"    : "Of which: ",
+    "contactList.btnDateAsc" : "Edited on ↑",
+    "contactList.btnDateDesc": "Edited on ↓",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "On this page, use the Back button to go back!",

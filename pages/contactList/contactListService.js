@@ -15,8 +15,11 @@
         _orderAttribute: "Erfassungsdatum",
         _orderDesc: true,
         _prevRestriction: "",
+        _prevDocRestriction: "",
         _prevJson: null,
+        _prevDocJson: null,
         _prevEventId: 0,
+        _prevDocEventId: 0,
         _collator: null,
         _contactView: {
             get: function () {
@@ -35,6 +38,8 @@
                             complete({});
                         }
                     });
+                } else if (restriction && typeof restriction === "number") {
+                    ret = ContactList._contactView.selectById(complete, error, restriction);
                 } else if (restriction && typeof restriction === "string") {
                     var mainLanguage = Application.language.split("-")[0];
                     if (!ContactList._collator) {
@@ -69,6 +74,8 @@
                             ContactList._prevRestriction = restriction;
                             ContactList._prevJson = json;
                             ContactList._prevEventId = ContactList._eventId;
+                            // invalidate prev. doc result!
+                            ContactList._prevDocJson = null;
                             if (json && json.d && json.d.results && json.d.results.length > 0 &&
                                 ContactList._orderAttribute) {
                                 Log.print(Log.l.info, "call sort orderAttribute=" + ContactList._orderAttribute);
@@ -218,19 +225,90 @@
         },
         _contactDocView: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20498, false);
+                var ret = AppData.getFormatView("Kontakt", 20690, false);
                 ret.maxPageSize = 20;
                 return ret;
             }
         },
         contactDocView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, restriction, options) {
+                var ret;
                 Log.call(Log.l.trace, namespaceName + ".contactDocView.");
-                var ret = ContactList._contactDocView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Erfassungsdatum",
-                    desc: true
-                });
+                if (!ContactList._eventId) {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
+                    });
+                } else if (restriction && typeof restriction === "string") {
+                    var mainLanguage = Application.language.split("-")[0];
+                    if (!ContactList._collator) {
+                        ContactList._collator = new Intl.Collator(mainLanguage, {
+                            sensitivity: "base"
+                        });
+                    }
+                    if (ContactList._prevDocJson &&
+                        ContactList._prevDocRestriction === restriction &&
+                        ContactList._prevDocEventId === ContactList._eventId) {
+                        Log.print(Log.l.info, "re-use previous PRC_SearchKontaktListDocs results!");
+                        var json = ContactList._prevDocJson;
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                ContactList._orderAttribute) {
+                                Log.print(Log.l.info, "call sort orderAttribute=" + ContactList._orderAttribute);
+                                json.d.results.sort(ContactList.contactView.compare);
+                            }
+                            if (typeof complete === "function") {
+                                complete(json);
+                            }
+                        });
+                    } else {
+                        Log.print(Log.l.info, "calling PRC_SearchKontaktListDocs...");
+                        ret = AppData.call("PRC_SearchKontaktListDocs", {
+                            pAttributeIdx: 0,
+                            pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
+                            pSuchText: restriction
+                        }, function (json) {
+                            Log.print(Log.l.info, "call PRC_SearchKontaktListDocs: success!");
+                            // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
+                            ContactList._prevDocRestriction = restriction;
+                            ContactList._prevDocJson = json;
+                            ContactList._prevDocEventId = ContactList._eventId;
+                            if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                ContactList._orderAttribute) {
+                                Log.print(Log.l.info, "call sort orderAttribute=" + ContactList._orderAttribute);
+                                json.d.results.sort(ContactList.contactView.compare);
+                            }
+                            if (typeof complete === "function") {
+                                complete(json);
+                            }
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "call PRC_SearchKontaktListDocs: error");
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                    }
+                } else {
+                    ContactList._prevRestriction = "";
+                    if (!restriction) {
+                        restriction = {};
+                    }
+                    /*if (restriction && !restriction.VeranstaltungID) {
+                        restriction.VeranstaltungID = parseInt(ContactList._eventId);
+                    }*/
+                    restriction.VeranstaltungID = ContactList._eventId;
+                    if (ContactList._orderAttribute) {
+                        options = {
+                            ordered: true,
+                            orderAttribute: ContactList._orderAttribute,
+                            desc: ContactList._orderDesc
+                        }
+                    }
+                    Log.print(Log.l.info, "calling select _contactResultsView... restriction=" +
+                        (restriction ? JSON.stringify(restriction) : ""));
+                    ret = ContactList._contactDocView.select(complete, error, restriction, options);
+                }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

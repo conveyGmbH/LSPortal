@@ -338,10 +338,8 @@
     "contactList.numberofeditedcontacts"    : "édité",
     "contactList.numberofunprocessedcontacts"    : "non édité",
     "contactList.davon"    : "de celui-ci: ",
-    "contactList.btnaztext"    : "AZ/ZA",
-    "contactList.btnaztext2"    : "AZ/ZA ↓",
-    "contactList.btnzatext"    : "ZA/AZ",
-    "contactList.btnzatext2"    : "ZA/AZ ↑",
+    "contactList.btnDateAsc" : "Créer en ↑",
+    "contactList.btnDateDesc": "Créer en ↓",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",
