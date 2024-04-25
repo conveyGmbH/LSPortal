@@ -234,11 +234,11 @@
                 var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    return StartTop10Users.reportMitarbeiter.select(function (json) {
                     that.employeedata = [];
                     that.employeedataID = [];
                     that.emplyeevalues = [];
                     that.employeeticks = [];
-                    return StartTop10Users.reportMitarbeiter.select(function (json) {
                         Log.print(Log.l.trace, "reportMitarbeiter: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             // store result for next use
