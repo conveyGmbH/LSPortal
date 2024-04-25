@@ -55,7 +55,7 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                            }, { VeranstaltungID: AppBar.scope.getEventId()});
                     }
                 }
                 Log.ret(Log.l.trace);
