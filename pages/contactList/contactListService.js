@@ -39,6 +39,7 @@
                         }
                     });
                 } else if (restriction && typeof restriction === "number") {
+                    Log.print(Log.l.info, "calling select _contactView... recordId=" + restriction);
                     ret = ContactList._contactView.selectById(complete, error, restriction);
                 } else if (restriction && typeof restriction === "string") {
                     var mainLanguage = Application.language.split("-")[0];
@@ -63,7 +64,7 @@
                             }
                         });
                     } else {
-                        Log.print(Log.l.info, "calling PRC_SearchKontaktListe...");
+                        Log.print(Log.l.info, "calling PRC_SearchKontaktListe...restriction=" + restriction);
                         ret = AppData.call("PRC_SearchKontaktListe", {
                             pAttributeIdx: 0,
                             pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
@@ -107,7 +108,7 @@
                             desc: ContactList._orderDesc
                         }
                     }
-                    Log.print(Log.l.info, "calling select _contactResultsView... restriction=" +
+                    Log.print(Log.l.info, "calling select _contactView... restriction=" +
                         (restriction ? JSON.stringify(restriction) : ""));
                     ret = ContactList._contactView.select(complete, error, restriction, options);
                 }

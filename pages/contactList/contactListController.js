@@ -327,7 +327,7 @@
             }
             this.selectRecordId = selectRecordId;
 
-            var resultConverter = function (item, index) {
+            var resultConverter = function (item, index, prevOvwContentDOCCNT3) {
                 var map = AppData.initLandView.getMap();
                 var results = AppData.initLandView.getResults();
 
@@ -362,30 +362,34 @@
                 item.globalContactId = item.CreatorSiteID + "/" + item.CreatorRecID;
                 item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") +
                     (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
-                item.OvwContentDOCCNT3 = "";
-                if (that.docs && index >= that.firstContactsIndex) {
-                    for (var i = that.firstDocsIndex; i < that.docs.length; i++) {
-                        var doc = that.docs[i];
-                        if (doc.KontaktVIEWID === item.KontaktVIEWID) {
-                            var docContent = doc.OvwContentDOCCNT3;
-                            if (docContent) {
-                                var sub = docContent.search("\r\n\r\n");
-                                if (sub >= 0) {
-                                    var data = docContent.substr(sub + 4);
-                                    if (data && data !== "null") {
-                                        item.OvwContentDOCCNT3 = imgSrcDataType + data;
+                if (prevOvwContentDOCCNT3) {
+                    item.OvwContentDOCCNT3 = prevOvwContentDOCCNT3;
+                } else {
+                    item.OvwContentDOCCNT3 = "";
+                    if (that.docs && index >= that.firstContactsIndex) {
+                        for (var i = that.firstDocsIndex; i < that.binding.doccount; i++) {
+                            var doc = that.docs[i];
+                            if (doc.KontaktVIEWID === item.KontaktVIEWID) {
+                                var docContent = doc.OvwContentDOCCNT3;
+                                if (docContent) {
+                                    var sub = docContent.search("\r\n\r\n");
+                                    if (sub >= 0) {
+                                        var data = docContent.substr(sub + 4);
+                                        if (data && data !== "null") {
+                                            item.OvwContentDOCCNT3 = imgSrcDataType + data;
+                                        } else {
+                                            item.OvwContentDOCCNT3 = "";
+                                        }
                                     } else {
                                         item.OvwContentDOCCNT3 = "";
                                     }
                                 } else {
                                     item.OvwContentDOCCNT3 = "";
                                 }
-                            } else {
-                                item.OvwContentDOCCNT3 = "";
+                                that.firstDocsIndex = i + 1;
+                                that.firstContactsIndex = index + 1;
+                                break;
                             }
-                            that.firstDocsIndex = i + 1;
-                            that.firstContactsIndex = index + 1;
-                            break;
                         }
                     }
                 }
@@ -719,15 +723,12 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                Log.call(Log.l.info, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (!recordId) {
                     if (that.events && AppData.initLandView.getResults().length) {
                         that.cancelPromises();
                         that.firstDocsIndex = 0;
                         that.firstContactsIndex = 0;
-                        if (that.docs) {
-                            that.docs.length = 0;
-                        }
                         that.binding.doccount = 0;
                         that.nextDocUrl = null;
                     }
@@ -790,14 +791,11 @@
                     return ContactList.contactView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "contactView: success!");
+                        Log.print(Log.l.info, "contactView: success!");
                         // startContact returns object already parsed from json file in response
                         if (!recordId) {
                             that.firstDocsIndex = 0;
                             that.firstContactsIndex = 0;
-                            if (that.docs) {
-                                that.docs.length = 0;
-                            }
                             that.binding.doccount = 0;
                             that.nextDocUrl = null;
                             if (json && json.d && json.d.results.length > 0) {
@@ -830,10 +828,13 @@
                         } else {
                             if (json && json.d) {
                                 var contact = json.d;
-                                that.resultConverter(contact);
                                 var objectrec = scopeFromRecordId(recordId);
                                 if (objectrec && objectrec.index >= 0) {
-                                that.contacts.setAt(objectrec.index, contact);
+                                    var firstContactsIndex = that.firstContactsIndex;
+                                    that.firstContactsIndex = that.contacts.length;
+                                    that.resultConverter(contact, objectrec.index, objectrec.item && objectrec.item.OvwContentDOCCNT3);
+                                    that.firstContactsIndex = firstContactsIndex;
+                                    that.contacts.setAt(objectrec.index, contact);
                                 } else {
                                     that.loadData();
                                 }
@@ -901,7 +902,7 @@
                 if (!recordId) {
                     that.refreshPromise = ret;
                 }
-                Log.ret(Log.l.trace);
+                Log.ret(Log.l.info);
                 return ret;
             };
             this.loadData = loadData;
