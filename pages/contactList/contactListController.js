@@ -847,51 +847,52 @@
                         that.binding.loading = false;
                     }, recordId || getRestriction());
                 }).then(function () {
-                    that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
-                        return ContactList.contactDocView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "contactDocView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length) {
-                                that.binding.doccount = json.d.results.length;
-                                that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function(item, index) {
-                                    that.resultDocConverter(item, index);
-                                });
-                                that.docs = results;
-                            } else {
-                                Log.print(Log.l.trace, "contactDocView: no data found!");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactList.contactDocView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        getRestriction());
-                    });
-                    return ContactList.mitarbeiterView.select(function(json) {
+                    if (!recordId) {
+                        that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
+                            return ContactList.contactDocView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "contactDocView: success!");
+                                // startContact returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length) {
+                                    that.binding.doccount = json.d.results.length;
+                                    that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultDocConverter(item, index);
+                                    });
+                                    that.docs = results;
+                                } else {
+                                    Log.print(Log.l.trace, "contactDocView: no data found!");
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },  getRestriction());
+                        });
+                    }
+                    return ContactList.mitarbeiterView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "mitarbeiterView: success!");
                         // startContact returns object already parsed from json file in response
-                          if (json && json.d) {
-                              var results = json.d;
-                              that.binding.noctcount = results.AnzKontakte;
-                              that.binding.noeccount = results.AnzEditierteKontakte;
-                              that.binding.nouccount = results.AnzNichtEditierteKontakte;
-                          } else {
-                              Log.print(Log.l.trace, "mitarbeiterView: no data found!");
-                          }
-                      }, function(errorResponse) {
-                          // called asynchronously if an error occurs
-                          // or server returns response with an error status.
-                          Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
-                          AppData.setErrorMsg(that.binding, errorResponse);
-                      },
-                      AppData.getRecordId("Mitarbeiter"));
+                        if (json && json.d) {
+                            var results = json.d;
+                            that.binding.noctcount = results.AnzKontakte;
+                            that.binding.noeccount = results.AnzEditierteKontakte;
+                            that.binding.nouccount = results.AnzNichtEditierteKontakte;
+                        } else {
+                            Log.print(Log.l.trace, "mitarbeiterView: no data found!");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    },
+                    AppData.getRecordId("Mitarbeiter"));
                 }).then(function () {
                     if (that.binding.contactId) {
                         that.selectRecordId(that.binding.contactId);
