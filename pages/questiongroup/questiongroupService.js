@@ -7,6 +7,7 @@
     "use strict";
 
     WinJS.Namespace.define("Questiongroup", {
+        _eventId: 0,
         _initFragengruppeView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITFragengruppe");
@@ -23,7 +24,8 @@
             }
         },
         CR_V_FragengruppeView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error) {
+                var restriction = { VeranstaltungID: Questiongroup._eventId };
                 Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
                 var ret = Questiongroup._CR_V_FragengruppeView.select(complete, error, restriction, {
                     ordered: true,
@@ -62,7 +64,8 @@
                         complete();
                     }
                 }, error, {
-                    FragengruppeID: 0
+                        FragengruppeID: 0,
+                        VeranstaltungID: Questiongroup._eventId
                 });
                 Log.ret(Log.l.trace);
                 return ret;

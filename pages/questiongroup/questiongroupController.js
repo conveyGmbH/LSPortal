@@ -28,6 +28,26 @@
 
             var layout = null;
 
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
+                Questiongroup._eventId = value;
+            }
+            this.setEventId = setEventId;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
+
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, "Questiongroup.Controller.");
@@ -216,6 +236,9 @@
             }
 
             that.processAll().then(function() {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.setEventId(that.getEventId());
+            }).then(function() {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
