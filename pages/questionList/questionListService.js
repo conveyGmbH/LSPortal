@@ -39,22 +39,6 @@
                 return AppData.getFormatView("FragenAntworten", 0);
             }
         },
-        questionView: {
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "QuestionList.");
-                var ret = QuestionList._questionView.update(complete, error, recordId, viewResponse);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-
-            },
-            deleteRecord: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = QuestionList._questionView.deleteRecord(complete, error, recordId);
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
         _questionListView: {
             get: function () {
                 var ret = AppData.getFormatView("FragenAntworten", 20682);
@@ -88,6 +72,28 @@
                 Log.call(Log.l.trace, "QuestionList.");
                 var ret = QuestionList._questionListView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "QuestionList.");
+                var ret = QuestionList._questionView.update(complete, error, recordId, viewResponse);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+
+            },
+            insert: function (complete, error) {
+                Log.call(Log.l.trace, "questionView.");
+                var ret = QuestionList._questionView.insert(complete, error, {
+                    FragengruppeID: 0
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            deleteRecord: function (complete, error, recordId) {
+                Log.call(Log.l.trace, "questionView.");
+                var ret = QuestionList._questionView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             }

@@ -441,7 +441,7 @@
                 var recordId = that.curRecId;
                 if (recordId) {
                     AppBar.busy = true;
-                    QuestionList.questionView.deleteRecord(function (response) {
+                    QuestionList.questionListView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
                         that.loadData().then(function () {
@@ -1352,7 +1352,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        VeranstaltungID: that.getEventId()
+
                         }, recordId);
                 }).then(function () {
                     AppBar.notifyModified = true;
