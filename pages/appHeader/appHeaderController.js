@@ -23,6 +23,7 @@
             if (this.element) {
                 this.element.winControl = this;
             }
+            this.pageData.publishFlag = false;
             this.pageData.userData = AppData._userData;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
@@ -32,9 +33,25 @@
             AppHeader.controller = this;
 
             var that = this;
-
+          
             // First, we call WinJS.Binding.as to get the bindable proxy object
             this.binding = WinJS.Binding.as(this.pageData);
+
+            var getPublishFlag = function () {
+                var publishFlag = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    publishFlag = master.controller.binding.publishFlag;
+                } else {
+                    publishFlag = that.binding.generalData.publishFlag;
+                }
+                Log.ret(Log.l.trace, publishFlag);
+                return publishFlag;
+            }
+            this.getPublishFlag = getPublishFlag;
+
+            that.binding.publishFlag = that.getPublishFlag();
 
             // show business card photo
             var userImageContainer = pageElement.querySelector(".user-image-container");
@@ -149,6 +166,7 @@
                     }
                 }).then(function () {
                     that.setLogo();
+                    that.binding.publishFlag = that.getPublishFlag();
                 });
                 Log.ret(Log.l.trace);
                 return ret;

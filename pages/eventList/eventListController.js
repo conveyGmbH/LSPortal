@@ -19,6 +19,7 @@
             Log.call(Log.l.trace, "EventList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 eventId: AppData.getRecordId("Veranstaltung"),
+                publishFlag: null,
                 count: 0,
                 active: null,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
@@ -255,6 +256,11 @@
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
+                                        that.binding.publishFlag = item.data.PublishFlag;
+                                        if (typeof AppHeader === "object" &&
+                                            AppHeader.controller && AppHeader.controller.binding) {
+                                            AppHeader.controller.binding.publishFlag = that.binding.publishFlag;
+                                        }
                                         if (item.data.Aktiv) {
                                             that.binding.active = 1;
                                         }
@@ -268,27 +274,32 @@
                                             that.binding.eventId = newRecId;
                                             // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
                                             AppData.setRecordId("Veranstaltung2", that.binding.eventId);
-
-                                            if (AppBar.modified && AppBar.scope && typeof AppBar.scope.saveData === "function") {
+                                            var lastPageId = Application.getPageId(Application.navigator._lastPage);
+                                            if (lastPageId !== curPageId) {
+                                                Log.print(Log.l.trace, "Page navigation not completed");
+                                            } else if (AppBar.modified && AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
+
                                                     if ((curPageId === "eventCopy" ||
                                                         curPageId === "contactResultsList" ||
                                                         curPageId === "mandatory" ||
-                                                        curPageId === "questionList" ||
                                                         curPageId === "questiongroup" ||
+                                                        curPageId === "questionList" ||
                                                         curPageId === "optQuestionList" ||
                                                         curPageId === "event") &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(that.binding.eventId);
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        if (typeof AppBar.scope.setEventId === "function") {
+                                                            AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
+                                                        }
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "eventProducts" &&
-                                                        typeof AppBar.scope.loadData === "function" &&
-                                                        typeof AppBar.scope.setVeranstaltungId === "function") {
-                                                        AppBar.scope.setVeranstaltungId(that.binding.eventId);
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        if (typeof AppBar.scope.setEventId === "function") {
+                                                            AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
+                                                        }
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "reporting" &&
                                                         typeof AppBar.scope.loadData === "function") {
@@ -316,16 +327,17 @@
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
-                                                if ((curPageId === "eventCopy" || 
-                                                     curPageId === "mandatory" ||
+                                                if ((curPageId === "eventCopy" ||
+                                                    curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
                                                     curPageId === "questionList" ||
                                                     curPageId === "questiongroup" ||
                                                     curPageId === "event" ||
                                                     curPageId === "contactResultsList") &&
-                                                    typeof AppBar.scope.loadData === "function" &&
-                                                    typeof AppBar.scope.setEventId === "function") {
-                                                    AppBar.scope.setEventId(that.binding.eventId);
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    if (typeof AppBar.scope.setEventId === "function") {
+                                                        AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
+                                                    }
                                                     AppBar.scope.loadData();
                                                 }
                                                 if ((curPageId === "reporting" ||
@@ -334,6 +346,7 @@
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                 }
+
                                             }
                                             AppBar.triggerDisableHandlers();
                                         }
@@ -521,7 +534,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.loadData();
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

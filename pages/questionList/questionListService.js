@@ -7,7 +7,6 @@
     "use strict";
 
     WinJS.Namespace.define("QuestionList", {
-        _eventId: 0,
         _initFragengruppeView: {
             get: function () {
                 return AppData.getLgntInit("LGNTINITFragengruppe");
@@ -16,7 +15,7 @@
         initFragengruppeView: {
             select: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "QuestionList.initFragengruppeView.");
-                QuestionList._initFragengruppeView.restriction = { VeranstaltungID: QuestionList._eventId };
+                QuestionList._initFragengruppeView.restriction = { VeranstaltungID: AppBar.scope.getEventId() };
                 var ret = QuestionList._initFragengruppeView.select(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -63,16 +62,20 @@
             }
         },
         questionListView: {
-            select: function (complete, error, restriction, recordId) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "QuestionList.");
                 var ret;
+                var recordId = null;
+                if (typeof restriction === "number") {
+                    recordId = restriction;
+                }
                 if (recordId) {
                     ret = QuestionList._questionListView.selectById(complete, error, recordId);
                 } else {
                     ret = QuestionList._questionListView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Sortierung"
-                });
+                        ordered: true,
+                        orderAttribute: "Sortierung"
+                    });
                 }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -91,7 +94,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        },
+        }/*,
         _barcodeExportPdfView: {
             get: function () {
                 return AppData.getFormatView("DOC3Fragebogen", 20557, false);
@@ -100,35 +103,13 @@
         barcodeExportPdfView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "eventView.");
-                restriction.VeranstaltungVIEWID = QuestionList._eventId;
+                restriction.VeranstaltungVIEWID = AppBar.scope.getEventId();
                 var ret = QuestionList._barcodeExportPdfView.select(complete, error, restriction, {
 
                 });
                 Log.ret(Log.l.trace);
                 return ret;
             }
-        },
-        _questioPublishView: {
-            get: function () {
-                return AppData.getFormatView("Fragen", 0);
-            }
-        },
-        questionPublishView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = QuestionList._questioPublishView.select(complete, error, restriction);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, "questionView.");
-                var ret = QuestionList._questioPublishView.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            defaultValue: {
-                Aktionflag: ""
-            }
-        }
+        }*/
     });
 })();

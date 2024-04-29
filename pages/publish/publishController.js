@@ -14,10 +14,38 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Publish.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataPublish: getEmptyDefaultValue(Publish.questionView.defaultValue)
+                
             }, commandList]);
 
             var that = this;
+
+            var getPublishFlag = function () {
+                var publishFlag = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    publishFlag = master.controller.binding.publishFlag;
+                } else {
+                    publishFlag = that.binding.generalData.publishFlag;
+                }
+                Log.ret(Log.l.trace, publishFlag);
+                return publishFlag;
+            }
+            this.getPublishFlag = getPublishFlag;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -37,24 +65,23 @@
                         } else {
                             Navigator.navigateById(Application.startPageId);
                         }
-                    },
-                        function (errorResponse) {
-                            // delete ERROR
-                            var message = null;
-                            Log.print(Log.l.error,
-                                "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
-                            if (errorResponse.data && errorResponse.data.error) {
-                                Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
-                                if (errorResponse.data.error.message) {
-                                    Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
-                                    message = errorResponse.data.error.message.value;
-                                }
+                    }, function (errorResponse) {
+                        // delete ERROR
+                        var message = null;
+                        Log.print(Log.l.error,
+                            "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                        if (errorResponse.data && errorResponse.data.error) {
+                            Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                            if (errorResponse.data.error.message) {
+                                Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                message = errorResponse.data.error.message.value;
                             }
-                            if (!message) {
-                                message = getResourceText("error.delete");
-                            }
-                            alert(message);
-                        });
+                        }
+                        if (!message) {
+                            message = getResourceText("error.delete");
+                        }
+                        alert(message);
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -80,10 +107,10 @@
                 clickPublish: function () {
                     var publishButton = pageElement.querySelector("#publishButton");
                     if (publishButton) {
-                        publishButton.disabled = !that.binding.generalData.publishFlag;
+                        publishButton.disabled = !that.getPublishFlag();
                     }
                     // disabled if not to publish!
-                    return !that.binding.generalData.publishFlag;
+                    return !that.getPublishFlag();
                 },
                 clickGotoPublish: function () {
                     return false;
@@ -95,15 +122,19 @@
                 Log.call(Log.l.trace, "Publish.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                if (!AppBar.busy && that.binding.generalData.publishFlag) {
+                if (!AppBar.busy) {
                     AppBar.busy = true;
                     ret = AppData.call("PRC_FragebogenPublizieren", {
-                        pVeranstaltungID: AppData.getRecordId("Veranstaltung")
+                        pVeranstaltungID: that.getEventId()
                     }, function (json) {
                         AppBar.busy = false;
                         // called asynchronously if ok
                         Log.print(Log.l.info, "questionView update: success!");
                         AppBar.modified = false;
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
+                            master.controller.loadData();
+                        }
                         complete(json);
                     }, function (errorResponse) {
                         AppBar.busy = false;
@@ -126,39 +157,8 @@
             };
             this.saveData = saveData;
 
-            /*var loadData = function () {
-                Log.call(Log.l.trace, "Publish.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select questionView...");
-                    return Publish.questionView.select(function (json) {
-                        Log.print(Log.l.trace, "questionView: success!");
-                        if (json && json.d && json.d.results) {
-                            // store result for next use
-                            that.binding.dataPublish = json.d.results[0];
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-
-                        });
-                }).then(function () {
-                    AppBar.notifyModified = true;
-                    AppBar.triggerDisableHandlers();
-                    return WinJS.Promise.as();
-                });
-                Log.ret(Log.l.trace);
-                return ret;
-            };
-            this.loadData = loadData;*/
-
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                //return that.loadData();
-            }).then(function () {
-                Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
