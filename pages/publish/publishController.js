@@ -30,14 +30,14 @@
                 clickPublish: function (event) {
                     Log.call(Log.l.trace, "Publish.Controller.");
                     that.saveData(function (response) {
-                            AppData.getUserData();
-                            //that.loadData();
-                            if (WinJS.Navigation.canGoBack === true) {
-                                WinJS.Navigation.back(1).done();
-                            } else {
-                                Navigator.navigateById(Application.startPageId);
-                            }
-                        },
+                        AppData.getUserData();
+                        //that.loadData();
+                        if (WinJS.Navigation.canGoBack === true) {
+                            WinJS.Navigation.back(1).done();
+                        } else {
+                            Navigator.navigateById(Application.startPageId);
+                        }
+                    },
                         function (errorResponse) {
                             // delete ERROR
                             var message = null;
@@ -95,36 +95,30 @@
                 Log.call(Log.l.trace, "Publish.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var dataPublish = that.binding.dataPublish;
-                if (dataPublish && !AppBar.busy && that.binding.generalData.publishFlag) {
-                    dataPublish.Aktionflag = 1;
-                    var recordId = dataPublish.FragenVIEWID;
-                    if (recordId) {
-                        AppBar.busy = true;
-                        ret = Publish.questionView.update(function (response) {
-                            AppBar.busy = false;
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "questionView update: success!");
-                            AppBar.modified = false;
-                            complete(response);
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataPublish);
-                    } else {
-                        Log.print(Log.l.info, "not supported");
-                        ret = WinJS.Promise.as();
-                    }
+                if (!AppBar.busy && that.binding.generalData.publishFlag) {
+                    AppBar.busy = true;
+                    ret = AppData.call("PRC_FragebogenPublizieren", {
+                        pVeranstaltungID: AppData.getRecordId("Veranstaltung")
+                    }, function (json) {
+                        AppBar.busy = false;
+                        // called asynchronously if ok
+                        Log.print(Log.l.info, "questionView update: success!");
+                        AppBar.modified = false;
+                        complete(json);
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        error(errorResponse);
+                    });
                 } else if (AppBar.busy) {
                     ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(dataPublish);
+                        complete({});
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -132,7 +126,7 @@
             };
             this.saveData = saveData;
 
-            var loadData = function () {
+            /*var loadData = function () {
                 Log.call(Log.l.trace, "Publish.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -149,7 +143,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
 
-                    });
+                        });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
@@ -158,11 +152,11 @@
                 Log.ret(Log.l.trace);
                 return ret;
             };
-            this.loadData = loadData;
+            this.loadData = loadData;*/
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                //return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;

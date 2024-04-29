@@ -81,6 +81,7 @@
                 var that = this;
                 ret = this.controller.saveData(function (saveResponse) {
                     // called asynchronously if ok
+                    // anstatt AppData.generalData.publishFlag den master..publishFlag prüfen
                     if (AppData.generalData.publishFlag === 1) {
                         var confirmTitle = getResourceText("publish.publishText");
                         confirm(confirmTitle).then(function (result) {

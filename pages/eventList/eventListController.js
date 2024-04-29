@@ -278,6 +278,7 @@
                                                         curPageId === "contactResultsList" ||
                                                         curPageId === "mandatory" ||
                                                         curPageId === "questionList" ||
+                                                        curPageId === "questiongroup" ||
                                                         curPageId === "optQuestionList" ||
                                                         curPageId === "event") &&
                                                         typeof AppBar.scope.loadData === "function" &&
@@ -319,6 +320,7 @@
                                                      curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
                                                     curPageId === "questionList" ||
+                                                    curPageId === "questiongroup" ||
                                                     curPageId === "event" ||
                                                     curPageId === "contactResultsList") &&
                                                     typeof AppBar.scope.loadData === "function" &&
