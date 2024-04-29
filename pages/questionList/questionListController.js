@@ -67,7 +67,7 @@
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
-                QuestionList._initFragengruppeView._eventId = value;
+                QuestionList._eventId = value;
             }
             this.setEventId = setEventId;
 
@@ -441,7 +441,7 @@
                 var recordId = that.curRecId;
                 if (recordId) {
                     AppBar.busy = true;
-                    QuestionList.questionListView.deleteRecord(function (response) {
+                    QuestionList.questionView.deleteRecord(function (response) {
                         AppBar.busy = false;
                         // called asynchronously if ok
                         that.loadData().then(function () {
@@ -474,7 +474,7 @@
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             var saveResponse = null;
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = QuestionList.questionListView.update(function (response) {
+                            ret = QuestionList.questionView.update(function (response) {
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "questionListView update: success!");
                                 saveResponse = response;
@@ -496,7 +496,7 @@
                                 }
                             }).then(function () {
                                 if (saveResponse) {
-                                    that.checkingQuestionnaireBarcodePdf();
+                                    //that.checkingQuestionnaireBarcodePdf();
                                     if (typeof complete === "function") {
                                         complete(saveResponse);
                                     }
@@ -1352,7 +1352,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-
+                        VeranstaltungID: that.getEventId()
                         }, recordId);
                 }).then(function () {
                     AppBar.notifyModified = true;
