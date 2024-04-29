@@ -211,6 +211,7 @@
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
+                            Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
                             that.loadNextUrl();
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
                             if (that.disabledindexes && that.disabledindexes.length > 0) {
@@ -523,7 +524,13 @@
                     }, {
 
                         });
-                });
+                }).then(function () {
+                    if (that.binding.count === 1) {
+                        Application.navigator._hideMaster();
+                    }
+                })/*.then(function () {
+                    Application.navigator._resized();
+                })*/;
                 Log.ret(Log.l.trace);
                 return ret;
             };

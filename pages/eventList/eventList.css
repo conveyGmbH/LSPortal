@@ -126,3 +126,7 @@ view-size-smallest #eventList .win-container {
 #eventList .list-field-small-fixed {
     width: 110px;
 }
+
+.eventList .list-symbol-IDw {
+    float: right;
+}
