@@ -23,7 +23,7 @@
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
-            }, commandList, false, OptQuestionList.CR_OptFragenAntwortenVIEW, null, listView]); // VIEW ändern
+            }, commandList, false, OptQuestionList.CR_OptFragenAntwortenOdataVIEW, OptQuestionList.CR_OptFragenAntwortenVIEW, listView]); // VIEW ändern
 
             this.optQuestions = null; // selektierte Frage
             this.initoptionQuestion = null; //optionale Frage
@@ -32,6 +32,20 @@
             var that = this;
 
             var layout = null;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             var resultAnswerConverter = function (item, index, value) {
                 Log.call(Log.l.trace, "OptQuestionList.Controller." + value);
@@ -149,7 +163,6 @@
                     Log.print(Log.l.trace, "questionListView: success!");
 
                     if (json && json.d) {
-                        that.binding.count = json.d.results.length;
                         that.nextUrl = OptQuestionList.questionListView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {

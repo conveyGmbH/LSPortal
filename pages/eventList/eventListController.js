@@ -279,7 +279,6 @@
                                                         curPageId === "mandatory" ||
                                                         curPageId === "questionList" ||
                                                         curPageId === "questiongroup" ||
-                                                        curPageId === "optQuestionList" ||
                                                         curPageId === "event") &&
                                                         typeof AppBar.scope.loadData === "function" &&
                                                         typeof AppBar.scope.setEventId === "function") {
@@ -293,6 +292,17 @@
                                                     } else if (curPageId === "reporting" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
+                                                    } else if (curPageId === "optMandatoryFieldList" &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.setEventId(that.binding.eventId);
+                                                        AppBar.scope.loadData();
+                                                        AppBar.scope.loadQuestion();
+                                                        AppBar.scope.loadPflichtFeld();
+                                                        
+                                                    } else if (curPageId === "optQuestionList" &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.loadData();
+                                                        AppBar.scope.loadQuestion();
                                                     } else {
                                                         var newPageId = Application.getPageId(Application.navigator._nextPage);
                                                         if (newPageId !== "event" &&
@@ -319,8 +329,8 @@
                                                 if ((curPageId === "eventCopy" || 
                                                      curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
-                                                    curPageId === "questionList" ||
                                                     curPageId === "questiongroup" ||
+                                                    curPageId === "optMandatoryFieldList" ||
                                                     curPageId === "event" ||
                                                     curPageId === "contactResultsList") &&
                                                     typeof AppBar.scope.loadData === "function" &&
@@ -333,6 +343,18 @@
                                                     curPageId === "start") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
+                                                }
+                                                if ((curPageId === "optMandatoryFieldList") &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.setEventId(that.binding.eventId);
+                                                    AppBar.scope.loadData();
+                                                    AppBar.scope.loadQuestion();
+                                                    AppBar.scope.loadPflichtFeld();
+                                                }
+                                                if (curPageId === "optQuestionList" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                    AppBar.scope.loadQuestion();
                                                 }
                                             }
                                             AppBar.triggerDisableHandlers();
