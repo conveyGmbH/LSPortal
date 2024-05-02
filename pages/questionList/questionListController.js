@@ -1208,7 +1208,7 @@
                     }
                 },
                 clickPdf: function () {
-                    if (that.checkingQuestionareBarcodePDFFlag === false || that.binding.generalData.publishFlag === 1) {
+                    if (that.checkingQuestionareBarcodePDFFlag === false || that.getPublishFlag() === 1) {
                         return true;
                     } else {
                         return false;

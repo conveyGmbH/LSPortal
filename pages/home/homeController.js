@@ -282,6 +282,21 @@
                 AppBar.loadIcons();
                 // workaround fix loading menu icon color
                 NavigationBar.groups = Application.navigationBarGroups;              
+            }).then(function () {
+                WinJS.Promise.timeout(50).then(function () {
+                    // prüfen ob auf mandantfähigkeit dieses Flag 
+                    if (that.binding.generalData.publishFlag) {
+                        var confirmTitle = getResourceText("start.confirmTextPublish");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
+                                Application.navigateById("publish");
+                            } else {
+                                Log.print(Log.l.trace, "publishflag: user choice CANCEL");
+                            }
+                        });
+                    }
+                });
+                Log.print(Log.l.trace, "Splash screen vanished");
             });
             Log.ret(Log.l.trace);
         })

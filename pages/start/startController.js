@@ -67,7 +67,7 @@
 
             var getEventId = function () {
                 var eventId = null;
-                Log.call(Log.l.trace, "Reporting.Controller.");
+                Log.call(Log.l.trace, "Start.Controller.");
                 var master = Application.navigator.masterControl;
                 if (master && master.controller) {
                     eventId = master.controller.binding.eventId;
