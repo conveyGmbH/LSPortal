@@ -15,8 +15,9 @@
             }
         },
         mandatoryView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error) {
                 Log.call(Log.l.trace, namespaceName + ".mandatoryView.");
+                var restriction = { VeranstaltungID: AppBar.scope.getEventId(), LanguageSpecID: AppData.getLanguageId() };
                 var ret = MandatoryList._mandatoryView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "PflichtFelderVIEWID"
@@ -32,8 +33,9 @@
             }
         },
         mandatoryUpdate: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error) {
                 Log.call(Log.l.trace, namespaceName + ".mandatoryUpdate.");
+                var restriction = { VeranstaltungID: AppBar.scope.getEventId(), LanguageSpecID: AppData.getLanguageId() };
                 var ret = MandatoryList._mandatoryUpdate.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "PflichtFelderVIEWID"

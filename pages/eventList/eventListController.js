@@ -276,7 +276,6 @@
                                                     // called asynchronously if ok
                                                     if ((curPageId === "eventCopy" ||
                                                         curPageId === "contactResultsList" ||
-                                                        curPageId === "mandatory" ||
                                                         curPageId === "questionList" ||
                                                         curPageId === "questiongroup" ||
                                                         curPageId === "event") &&
@@ -303,6 +302,10 @@
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
                                                         AppBar.scope.loadQuestion();
+                                                    } else if (curPageId === "mandatory" &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.loadData();
+                                                        AppBar.scope.validateCb();
                                                     } else {
                                                         var newPageId = Application.getPageId(Application.navigator._nextPage);
                                                         if (newPageId !== "event" &&
@@ -327,7 +330,6 @@
                                             } else {
                                                 // current detail view has NO saveData() function - is list
                                                 if ((curPageId === "eventCopy" || 
-                                                     curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
                                                     curPageId === "questiongroup" ||
                                                     curPageId === "optMandatoryFieldList" ||
@@ -355,6 +357,11 @@
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                     AppBar.scope.loadQuestion();
+                                                }
+                                                if (curPageId === "mandatory" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                    AppBar.scope.validateCb();
                                                 }
                                             }
                                             AppBar.triggerDisableHandlers();
