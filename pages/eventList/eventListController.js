@@ -364,7 +364,7 @@
                                                 if ((curPageId === "eventCopy" ||
                                                     //curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
-                                                    //curPageId === "questionList" ||
+                                                    curPageId === "questionList" ||
                                                     curPageId === "questiongroup" ||
                                                     curPageId === "event" ||
                                                     curPageId === "contactResultsList") &&
