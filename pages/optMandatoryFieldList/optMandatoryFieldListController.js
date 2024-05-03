@@ -533,6 +533,10 @@
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 var ret = that.baseSaveData(function (result) {
                     AppData.getUserData();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     if (typeof complete === "function") {
                         complete(result);
                     }
