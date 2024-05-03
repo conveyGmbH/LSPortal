@@ -344,6 +344,7 @@
                                 }
                                 that.loading = false;
                             }
+                            that.validateCb();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -516,6 +517,7 @@
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 AppData.setErrorMsg(that.binding);
                 that.questions = null;
+                that.loading = true;
                 var ret = new WinJS.Promise.as().then(function () {
                     that.loadFragment();
                 }).then(function () {
@@ -627,10 +629,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.validateCb();
-            }).then(function () {
+            })*/.then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });

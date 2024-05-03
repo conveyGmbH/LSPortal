@@ -330,10 +330,10 @@
                                                         WinJS.Promise.as().then(function () {
                                                             Log.print(Log.l.trace, "Load Question");
                                                             return AppBar.scope.loadData();
-                                                        }).then(function () {
+                                                        })/*.then(function () {
                                                             Log.print(Log.l.trace, "Binding wireup page complete");
                                                             return AppBar.scope.validateCb();
-                                                        });
+                                                        })*/;
                                                     }
                                                     if (curPageId === "optQuestionList" &&
                                                         typeof AppBar.scope.loadData === "function") {
@@ -385,7 +385,10 @@
                                                     WinJS.Promise.as().then(function() {
                                                         Log.print(Log.l.trace, "Load Question");
                                                         return AppBar.scope.loadData();
-                                                    });
+                                                    })/*.then(function () {
+                                                        Log.print(Log.l.trace, "Binding wireup page complete");
+                                                        return AppBar.scope.validateCb();
+                                                    })*/;
                                                 }
                                                 if (curPageId === "optQuestionList" &&
                                                     typeof AppBar.scope.loadData === "function") {
