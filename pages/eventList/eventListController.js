@@ -319,10 +319,10 @@
                                                              return AppBar.scope.loadQuestion();
                                                          }).then(function () {
                                                              Log.print(Log.l.trace, "Binding wireup page complete");
-                                                             return AppBar.scope.loadData();
+                                                             return AppBar.scope.loadPflichtFeld();
                                                          }).then(function () {
                                                              Log.print(Log.l.trace, "Binding wireup page complete");
-                                                             return AppBar.scope.loadPflichtFeld();
+                                                             return AppBar.scope.loadData(); 
                                                          });
                                                     }
                                                     if (curPageId === "mandatory" &&
@@ -407,10 +407,10 @@
                                                         return AppBar.scope.loadQuestion();
                                                     }).then(function () {
                                                         Log.print(Log.l.trace, "Binding wireup page complete");
-                                                        return AppBar.scope.loadData();
+                                                        return AppBar.scope.loadPflichtFeld();
                                                     }).then(function () {
                                                         Log.print(Log.l.trace, "Binding wireup page complete");
-                                                        return AppBar.scope.loadPflichtFeld();
+                                                        return AppBar.scope.loadData();
                                                     });
                                                 }
                                             }
