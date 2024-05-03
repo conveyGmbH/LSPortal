@@ -307,6 +307,8 @@
     "contactList.numberofeditedcontacts"    : "Editiert",
     "contactList.numberofunprocessedcontacts"    : "Uneditiert",
     "contactList.davon"    : "davon: ",
+    "contactList.btnDateAsc" : "Edited on ↑",
+    "contactList.btnDateDesc": "Edited on ↓",
 
     "camera.title"          : "Kamera",
     "camera.comment"        : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

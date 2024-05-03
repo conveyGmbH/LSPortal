@@ -349,7 +349,34 @@
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    
+                    /*Log.call(Log.l.trace, "Mandatory.Controller.");
+                    if (eventInfo && eventInfo.detail) {
+                        var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
+                        var visible = eventInfo.detail.visible;
+                        if (visible) {
+                            if (!that.fragmentVisible) {
+                                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                                    mandatoryListFragmentControl.controller.loadData();
+                                } else if (listView) {
+                                    var parentElement = listView.querySelector("#mandatorylisthost");
+                                    if (parentElement) {
+                                        Application.loadFragmentById(parentElement, "mandatoryList");
+                                    }
+                                }
+                                that.fragmentVisible = true;
+                            }
+                        } else if (that.fragmentVisible) {
+                            if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                                mandatoryListFragmentControl.controller.saveData(function (response) {
+                                    Log.print(Log.l.info, "mandatoryList.Controller. update: success!");
+                                }, function (errorResponse) {
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                });
+                            }
+                            that.fragmentVisible = false;
+                        }
+                    }
+                    Log.ret(Log.l.trace);*/
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
@@ -516,7 +543,6 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, null);
-
                 }).then(function () {
                     AppData._persistentStates.showConfirmQuestion = true;
                     return Mandatory.CR_VERANSTOPTION_ODataView.select(function (json) {

@@ -1139,6 +1139,10 @@
                         }
                     }).then(function () {
                         if (!err) {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller) {
+                                master.controller.loadData();
+                            }
                             AppData.getUserData();
                             if (AppHeader && AppHeader.controller) {
                                 return AppHeader.controller.loadData();

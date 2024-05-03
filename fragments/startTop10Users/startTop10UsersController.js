@@ -36,26 +36,15 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (event && index >= 0) {
                     that.employee = event[index];
-                    //that.employee = that.employee[0];
-                    if (that.employee > "") {
-                        return StartTop10Users.employeeView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "initLandView: success!");
-                            if (json && json.d && json.d.results) {
+                    if (that.employee) {
                                 that.setRestriction({
+                            VeranstaltungID: AppBar.scope.getEventId(),
                                     MitarbeiterID: that.employee
                                 });
                                 WinJS.Promise.timeout(0).then(function () {
                                     Application.navigateById("contact", event);
                                 });
                             }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    }
                 }
                 Log.ret(Log.l.trace);
             }
@@ -245,11 +234,11 @@
                 var eventId = AppBar.scope.getEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    return StartTop10Users.reportMitarbeiter.select(function (json) {
                     that.employeedata = [];
                     that.employeedataID = [];
                     that.emplyeevalues = [];
                     that.employeeticks = [];
-                    return StartTop10Users.reportMitarbeiter.select(function (json) {
                         Log.print(Log.l.trace, "reportMitarbeiter: success!");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             // store result for next use

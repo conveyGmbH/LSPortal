@@ -67,7 +67,7 @@
 
             var getEventId = function () {
                 var eventId = null;
-                Log.call(Log.l.trace, "Reporting.Controller.");
+                Log.call(Log.l.trace, "Start.Controller.");
                 var master = Application.navigator.masterControl;
                 if (master && master.controller) {
                     eventId = master.controller.binding.eventId;
@@ -515,6 +515,7 @@
                 return Application.pageframe.hideSplashScreen();
             }).then(function () {
                 WinJS.Promise.timeout(50).then(function () {
+                    // prüfen ob auf mandantfähigkeit dieses Flag 
                     if (that.binding.generalData.publishFlag) {
                         var confirmTitle = getResourceText("start.confirmTextPublish");
                         confirm(confirmTitle, function (result) {

@@ -23,23 +23,25 @@
             var listView = pageElement.querySelector("#contactList.listview");
             this.listView = listView;
             Application.Controller.apply(this,[pageElement, {
-                    count: 0,
-                    doccount: 0,
-                    contactId: 0,
-                    noctcount: 0,
-                    noeccount: 0,
-                    nouccount: 0,
-                    searchString: "",
-                    eventId: 0,
-                    leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
-                    btnAZText: getResourceText("contactList.btnaztext2"),
-                    btnZAText: getResourceText("contactList.btnzatext")
+                count: 0,
+                doccount: 0,
+                contactId: 0,
+                noctcount: 0,
+                noeccount: 0,
+                nouccount: 0,
+                searchString: "",
+                eventId: 0,
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                btnDateSort: getResourceText("contactList.btnDateDesc")
             }, commandList, true]);
             this.nextUrl = null;
             this.nextDocUrl = null;
             this.contacts = null;
             this.docs = null;
             this.refreshPromise = null;
+            this.refreshDocPromise = null;
+            this.refreshNextPromise = null;
+            this.refreshNextDocPromise = null;
             this.refreshWaitTimeMs = 30000;
 
             this.firstDocsIndex = 0;
@@ -49,8 +51,7 @@
 
             var eventsDropdown = pageElement.querySelector("#events");
             var searchField = pageElement.querySelector("#searchField");
-            var btnASC = pageElement.querySelector("#btnASC");
-            var btnDESC = pageElement.querySelector("#btnDESC");
+            var btnDateSort = pageElement.querySelector("#btnDateSort");
 
             // ListView control
             var listView = pageElement.querySelector("#contactList.listview");
@@ -62,11 +63,27 @@
                     that.refreshPromise.cancel();
                     that.refreshPromise = null;
                 }
+                if (that.refreshDocPromise) {
+                    Log.print(Log.l.trace, "cancel previous doc refresh Promise");
+                    that.refreshDocPromise.cancel();
+                    that.refreshDocPromise = null;
+                }
+                if (that.refreshNextPromise) {
+                    Log.print(Log.l.trace, "cancel previous next refresh Promise");
+                    that.refreshNextPromise.cancel();
+                    that.refreshNextPromise = null;
+                }
+                if (that.refreshNextDocPromise) {
+                    Log.print(Log.l.trace, "cancel previous next doc refresh Promise");
+                    that.refreshNextDocPromise.cancel();
+                    that.refreshNextDocPromise = null;
+                }
                 Log.ret(Log.l.trace);
             }
             this.cancelPromises = cancelPromises;
             
             this.dispose = function () {
+                that.cancelPromises();
                 ContactList._prevJson = null;
                 ContactList._collator = null;
                 if (listView && listView.winControl) {
@@ -170,7 +187,7 @@
                     Log.print(Log.l.trace, "calling select ContactList.contactView...");
                     var nextUrl = that.nextUrl;
                     that.nextUrl = null;
-                    ContactList.contactView.selectNext(function (json) { //json is undefined
+                    that.refreshNextPromise = ContactList.contactView.selectNext(function (json) { //json is undefined
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "ContactList.contactView: success!");
@@ -187,7 +204,7 @@
                         }
                         AppBar.busy = false;
                         if (that.nextDocUrl) {
-                            WinJS.Promise.timeout(250).then(function() {
+                            that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function() {
                                 Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
                                 var nextDocUrl = that.nextDocUrl;
                                 that.nextDocUrl = null;
@@ -225,6 +242,7 @@
                     }, null, nextUrl);
                 }
                 Log.ret(Log.l.trace);
+                return that.refreshNextPromise;
             }
             this.loadNextUrl = loadNextUrl;
 
@@ -309,7 +327,7 @@
             }
             this.selectRecordId = selectRecordId;
 
-            var resultConverter = function (item, index) {
+            var resultConverter = function (item, index, prevOvwContentDOCCNT3) {
                 var map = AppData.initLandView.getMap();
                 var results = AppData.initLandView.getResults();
 
@@ -344,30 +362,34 @@
                 item.globalContactId = item.CreatorSiteID + "/" + item.CreatorRecID;
                 item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") +
                     (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
-                item.OvwContentDOCCNT3 = "";
-                if (that.docs && index >= that.firstContactsIndex) {
-                    for (var i = that.firstDocsIndex; i < that.docs.length; i++) {
-                        var doc = that.docs[i];
-                        if (doc.KontaktVIEWID === item.KontaktVIEWID) {
-                            var docContent = doc.OvwContentDOCCNT3;
-                            if (docContent) {
-                                var sub = docContent.search("\r\n\r\n");
-                                if (sub >= 0) {
-                                    var data = docContent.substr(sub + 4);
-                                    if (data && data !== "null") {
-                                        item.OvwContentDOCCNT3 = imgSrcDataType + data;
+                if (prevOvwContentDOCCNT3) {
+                    item.OvwContentDOCCNT3 = prevOvwContentDOCCNT3;
+                } else {
+                    item.OvwContentDOCCNT3 = "";
+                    if (that.docs && index >= that.firstContactsIndex) {
+                        for (var i = that.firstDocsIndex; i < that.binding.doccount; i++) {
+                            var doc = that.docs[i];
+                            if (doc.KontaktVIEWID === item.KontaktVIEWID) {
+                                var docContent = doc.OvwContentDOCCNT3;
+                                if (docContent) {
+                                    var sub = docContent.search("\r\n\r\n");
+                                    if (sub >= 0) {
+                                        var data = docContent.substr(sub + 4);
+                                        if (data && data !== "null") {
+                                            item.OvwContentDOCCNT3 = imgSrcDataType + data;
+                                        } else {
+                                            item.OvwContentDOCCNT3 = "";
+                                        }
                                     } else {
                                         item.OvwContentDOCCNT3 = "";
                                     }
                                 } else {
                                     item.OvwContentDOCCNT3 = "";
                                 }
-                            } else {
-                                item.OvwContentDOCCNT3 = "";
+                                that.firstDocsIndex = i + 1;
+                                that.firstContactsIndex = index + 1;
+                                break;
                             }
-                            that.firstDocsIndex = i + 1;
-                            that.firstContactsIndex = index + 1;
-                            break;
                         }
                     }
                 }
@@ -490,17 +512,21 @@
                 clickOrderBy: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
-                        if (event.currentTarget.value === "ASC") {
-                            ContactList._orderDesc = false;
-                            that.binding.btnAZText = getResourceText("contactList.btnaztext2");
-                            that.binding.btnZAText = getResourceText("contactList.btnzatext");
-                            that.loadData();
-                        } else {
-                            ContactList._orderDesc = true;
-                            that.binding.btnAZText = getResourceText("contactList.btnaztext");
-                            that.binding.btnZAText = getResourceText("contactList.btnzatext2");
-                            that.loadData();
+                        var newOrderAttribute = null;
+                        if (event.currentTarget.id === "btnDateSort") {
+                            newOrderAttribute = "Erfassungsdatum";
                         }
+                        if (newOrderAttribute !== ContactList._orderAttribute) {
+                            // bei mehreren Button müsste hier der vorher ausgewählte auf "Default-Text gesetzt werden!
+                            ContactList._orderAttribute = newOrderAttribute;
+                            ContactList._orderDesc = true;
+                        } else {
+                            ContactList._orderDesc = !ContactList._orderDesc;
+                        }
+                        var newRscText = "contactList." +
+                            event.currentTarget.id.replace("Sort", ContactList._orderDesc ? "Desc" : "Asc");
+                        that.binding[event.currentTarget.id] = getResourceText(newRscText);
+                        that.loadData();
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -687,21 +713,25 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
             if (searchField) {
-                this.addRemovableEventListener(searchField, "change", this.eventHandlers.changeSearchField.bind(this));
+                this.addRemovableEventListener(searchField, "input", this.eventHandlers.changeSearchField.bind(this));
             }
             if (eventsDropdown) {
                 this.addRemovableEventListener(eventsDropdown, "change", this.eventHandlers.changeEventId.bind(this));
             }
-            if (btnDESC && btnASC) {
-                this.addRemovableEventListener(btnASC, "click", this.eventHandlers.clickOrderBy.bind(this));
-                this.addRemovableEventListener(btnDESC, "click", this.eventHandlers.clickOrderBy.bind(this));
+            if (btnDateSort) {
+                this.addRemovableEventListener(btnDateSort, "click", this.eventHandlers.clickOrderBy.bind(this));
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
-                that.firstDocsIndex = 0;
-                that.firstContactsIndex = 0;
+                Log.call(Log.l.info, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (!recordId) {
+                    if (that.events && AppData.initLandView.getResults().length) {
+                        that.cancelPromises();
+                        that.firstDocsIndex = 0;
+                        that.firstContactsIndex = 0;
+                        that.binding.doccount = 0;
+                        that.nextDocUrl = null;
+                    }
                     AppBar.busy = true;
                     that.binding.loading = true;
                 }
@@ -761,9 +791,13 @@
                     return ContactList.contactView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
-                        Log.print(Log.l.trace, "contactView: success!");
+                        Log.print(Log.l.info, "contactView: success!");
                         // startContact returns object already parsed from json file in response
                         if (!recordId) {
+                            that.firstDocsIndex = 0;
+                            that.firstContactsIndex = 0;
+                            that.binding.doccount = 0;
+                            that.nextDocUrl = null;
                             if (json && json.d && json.d.results.length > 0) {
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = ContactList.contactView.getNextUrl(json);
@@ -794,10 +828,13 @@
                         } else {
                             if (json && json.d) {
                                 var contact = json.d;
-                                that.resultConverter(contact);
                                 var objectrec = scopeFromRecordId(recordId);
                                 if (objectrec && objectrec.index >= 0) {
-                                that.contacts.setAt(objectrec.index, contact);
+                                    var firstContactsIndex = that.firstContactsIndex;
+                                    that.firstContactsIndex = that.contacts.length;
+                                    that.resultConverter(contact, objectrec.index, objectrec.item && objectrec.item.OvwContentDOCCNT3);
+                                    that.firstContactsIndex = firstContactsIndex;
+                                    that.contacts.setAt(objectrec.index, contact);
                                 } else {
                                     that.loadData();
                                 }
@@ -811,58 +848,61 @@
                         that.binding.loading = false;
                     }, recordId || getRestriction());
                 }).then(function () {
-                    return WinJS.Promise.timeout(250).then(function () {
-                        return ContactList.contactDocView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "contactDocView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length) {
-                                that.binding.doccount = json.d.results.length;
-                                that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function(item, index) {
-                                    that.resultDocConverter(item, index);
-                                });
-                                that.docs = results;
-                            } else {
-                                Log.print(Log.l.trace, "contactDocView: no data found!");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactList.contactDocView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        getRestriction());
-                    });
-                }).then(function () {
-                    return ContactList.mitarbeiterView.select(function(json) {
+                    if (!recordId) {
+                        that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
+                            return ContactList.contactDocView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "contactDocView: success!");
+                                // startContact returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length) {
+                                    that.binding.doccount = json.d.results.length;
+                                    that.nextDocUrl = ContactList.contactDocView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultDocConverter(item, index);
+                                    });
+                                    that.docs = results;
+                                } else {
+                                    Log.print(Log.l.trace, "contactDocView: no data found!");
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            },  getRestriction());
+                        });
+                    }
+                    return ContactList.mitarbeiterView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "mitarbeiterView: success!");
                         // startContact returns object already parsed from json file in response
-                          if (json && json.d) {
-                              var results = json.d;
-                              that.binding.noctcount = results.AnzKontakte;
-                              that.binding.noeccount = results.AnzEditierteKontakte;
-                              that.binding.nouccount = results.AnzNichtEditierteKontakte;
-                          } else {
-                              Log.print(Log.l.trace, "mitarbeiterView: no data found!");
-                          }
-                      }, function(errorResponse) {
-                          // called asynchronously if an error occurs
-                          // or server returns response with an error status.
-                          Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
-                          AppData.setErrorMsg(that.binding, errorResponse);
-                      },
-                      AppData.getRecordId("Mitarbeiter"));
+                        if (json && json.d) {
+                            var results = json.d;
+                            that.binding.noctcount = results.AnzKontakte;
+                            that.binding.noeccount = results.AnzEditierteKontakte;
+                            that.binding.nouccount = results.AnzNichtEditierteKontakte;
+                        } else {
+                            Log.print(Log.l.trace, "mitarbeiterView: no data found!");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    },
+                    AppData.getRecordId("Mitarbeiter"));
                 }).then(function () {
                     if (that.binding.contactId) {
                         that.selectRecordId(that.binding.contactId);
                     }
                 });
-                Log.ret(Log.l.trace);
+                if (!recordId) {
+                    that.refreshPromise = ret;
+                }
+                Log.ret(Log.l.info);
                 return ret;
             };
             this.loadData = loadData;
@@ -908,7 +948,12 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                var restriction = AppData.getRestriction("Kontakt");
+                if (restriction && restriction.VeranstaltungID) {
+                    return that.setEventId(restriction.VeranstaltungID);
+                } else {
+                    return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

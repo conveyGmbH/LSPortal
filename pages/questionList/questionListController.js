@@ -25,7 +25,7 @@
                 count: 0,
                 questionId: AppData.getRecordId("FragenAntwortenVIEWID"),
                 questiongroupflag: false,
-                dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue),
+                //dataPublish: getEmptyDefaultValue(QuestionList.questionPublishView.defaultValue),
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
@@ -57,7 +57,7 @@
                 }
             }
 
-            var getRecordId = function () {
+            /*var getRecordId = function () {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 var recordId = QuestionList._eventId;
                 Log.ret(Log.l.trace, recordId);
@@ -69,7 +69,21 @@
                 Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
                 QuestionList._eventId = value;
             }
-            this.setEventId = setEventId;
+            this.setEventId = setEventId;*/
+
+            var getPublishFlag = function() {
+                var publishFlag = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    publishFlag = master.controller.binding.publishFlag;
+                } else {
+                    publishFlag = that.binding.generalData.publishFlag;
+                }
+                Log.ret(Log.l.trace, publishFlag);
+                return publishFlag;
+            }
+            this.getPublishFlag = getPublishFlag;
 
             var getEventId = function () {
                 var eventId = null;
@@ -474,21 +488,26 @@
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
                             var saveResponse = null;
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
+                            AppBar.busy = true;
                             ret = QuestionList.questionView.update(function (response) {
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "questionListView update: success!");
                                 saveResponse = response;
-                                if (that.questions) {
-                                    that.resultConverter(curScope.item, curScope.index);
-                                    that.questions.setAt(curScope.index, curScope.item);
-                                }
+                                AppBar.busy = false;
                                 AppBar.modified = false;
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
+                                AppBar.busy = false;
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
                             }, recordId, curScope.item).then(function () {
+                                if (saveResponse) {
+                                    return that.loadData(recordId);
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            }).then(function () {
                                 if (saveResponse) {
                                     return AppData.getUserData();
                                 } else {
@@ -496,6 +515,10 @@
                                 }
                             }).then(function () {
                                 if (saveResponse) {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
+                                        master.controller.loadData();
+                                    }
                                     //that.checkingQuestionnaireBarcodePdf();
                                     if (typeof complete === "function") {
                                         complete(saveResponse);
@@ -568,7 +591,7 @@
             }
             this.exportQuestionnaireBarcodePdf = exportQuestionnaireBarcodePdf;
 
-            var checkingQuestionnaireBarcodePdf = function () {
+            /*var checkingQuestionnaireBarcodePdf = function () {
                 Log.call(Log.l.trace, "Contact.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
@@ -594,62 +617,40 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
-            this.checkingQuestionnaireBarcodePdf = checkingQuestionnaireBarcodePdf;
+            this.checkingQuestionnaireBarcodePdf = checkingQuestionnaireBarcodePdf;*/
 
             var publish = function (complete, error) {
                 Log.call(Log.l.trace, "QuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                if (!AppBar.busy && that.binding.generalData.publishFlag) {
+                if (!AppBar.busy) {
                     AppBar.busy = true;
-                    ret = QuestionList.questionPublishView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "QuestionList.questionPublishView: success!");
-                        // select returns object already parsed from json file in response
-                        if (json && json.d && json.d.results) {
-                            var result = json.d.results[0];
-                            that.binding.dataPublish = result;
-                            Log.print(Log.l.trace, "QuestionList.questionPublishView: that.binding.dataPublish set!");
+                    ret = AppData.call("PRC_FragebogenPublizieren", {
+                        pVeranstaltungID: that.getEventId()
+                    }, function (json) {
+                        AppBar.busy = false;
+                        // called asynchronously if ok
+                        Log.print(Log.l.info, "questionView update: success!");
+                        AppBar.modified = false;
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
+                            master.controller.loadData();
                         }
+                        complete(json);
                     }, function (errorResponse) {
+                        AppBar.busy = false;
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {}).then(function () {
-                        var dataPublish = that.binding.dataPublish;
-                        if (dataPublish) {
-                            var recordId = dataPublish.FragenVIEWID;
-                            if (recordId) {
-                                dataPublish.Aktionflag = 1;
-                                return QuestionList.questionPublishView.update(function (response) {
-                                    AppBar.busy = false;
-                                    // called asynchronously if ok
-                                    Log.print(Log.l.info, "questionView update: success!");
-                                    AppBar.modified = false;
-                                    complete(response);
-                                }, function (errorResponse) {
-                                    AppBar.busy = false;
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    error(errorResponse);
-                                }, recordId, dataPublish);
-                            } else {
-                                Log.print(Log.l.info, "not supported");
-                                return WinJS.Promise.as().then(function () {
-                                    complete(that.binding.dataPublish);
-                                });
-                            }
-                        } else {
-                            return WinJS.Promise.as().then(function () {
-                                complete(that.binding.dataPublish);
-                            });
-                        }
+                        error(errorResponse);
+                    });
+                } else if (AppBar.busy) {
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.publish(complete, error);
                     });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(that.binding.dataPublish);
+                        complete({});
                     });
                 }
                 Log.ret(Log.l.trace);
@@ -673,20 +674,21 @@
                 },
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "QuestionList.Controller.");
-                    AppBar.busy = true;
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "question saved");
                         AppBar.triggerDisableHandlers();
+                        AppBar.busy = true;
                         AppData.call("PRC_InsertFragen", {
                             pVeranstaltungID: that.getEventId()
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
+                            AppBar.busy = false;
                             var recordId = (json && json.d && json.d.FragenID);
                             Log.print(Log.l.info, "PRC_InsertFragen insert: success! recordId=" + recordId);
-                        that.binding.questionId = recordId;
-                        that.loadData().then(function () {
-                            that.selectRecordId(that.binding.questionId);
-                        });
+                            that.binding.questionId = recordId;
+                            that.loadData().then(function () {
+                                that.selectRecordId(that.binding.questionId);
+                            });
                             AppData.setErrorMsg(that.binding, errorMsg);
                         }, function (error) {
                             Log.print(Log.l.error, "call error");
@@ -1206,7 +1208,7 @@
                     }
                 },
                 clickPdf: function () {
-                    if (that.checkingQuestionareBarcodePDFFlag === false || that.binding.generalData.publishFlag === 1) {
+                    if (that.checkingQuestionareBarcodePDFFlag === false || that.getPublishFlag() === 1) {
                         return true;
                     } else {
                         return false;
@@ -1289,23 +1291,23 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "QuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.setEventId(that.getEventId());
+                //that.setEventId(that.getEventId());
                 var ret = new WinJS.Promise.as().then(function () {
-                        Log.print(Log.l.trace, "calling select initFragengruppeView...");
-                        //@nedra:25.09.2015: load the list of InitFragengruppe for Combobox
-                        return QuestionList.initFragengruppeView.select(function (json) {
-                            Log.print(Log.l.trace, "initFragengruppeView: success!");
-                            if (json && json.d && json.d.results && json.d.results.length > 1) {
-                                that.initFragengruppe = new WinJS.Binding.List(json.d.results);
-                                that.binding.questiongroupflag = true;
-                            } else {
-                                that.binding.questiongroupflag = false;
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            QuestionList.setErrorMsg(that.binding, errorResponse);
-                        });
+                    Log.print(Log.l.trace, "calling select initFragengruppeView...");
+                    //@nedra:25.09.2015: load the list of InitFragengruppe for Combobox
+                    return QuestionList.initFragengruppeView.select(function (json) {
+                        Log.print(Log.l.trace, "initFragengruppeView: success!");
+                        if (json && json.d && json.d.results && json.d.results.length > 1) {
+                            that.initFragengruppe = new WinJS.Binding.List(json.d.results);
+                            that.binding.questiongroupflag = true;
+                        } else {
+                            that.binding.questiongroupflag = false;
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        QuestionList.setErrorMsg(that.binding, errorResponse);
+                    });
                 }).then(function () {
                     that.loading = true;
                     return QuestionList.questionListView.select(function (json) {
@@ -1351,9 +1353,9 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-                        VeranstaltungID: that.getEventId()
-                        }, recordId);
+                        }, recordId || {
+                            VeranstaltungID: that.getEventId()
+                        });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
@@ -1372,10 +1374,10 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.selectRecordId(that.binding.questionId);
-            }).then(function () {
+            })/*.then(function () {
                 that.checkingQuestionnaireBarcodePdf();
                 Log.print(Log.l.trace, "Binding wireup page complete");
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Record selected");
             });
             Log.ret(Log.l.trace);

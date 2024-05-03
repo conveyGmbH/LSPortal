@@ -155,9 +155,9 @@
             var loadQuestion = function () {
                 Log.call(Log.l.trace, "optQuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
+                var ret = OptQuestionList.questionListView.select(function (json) {
                 that.initoptionQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                 that.optQuestions = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
-                var ret = OptQuestionList.questionListView.select(function (json) {
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");

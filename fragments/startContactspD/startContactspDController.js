@@ -42,6 +42,7 @@
                     var milliseconds = parseInt(msString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
                     var date = new Date(milliseconds);
                     that.setRestriction({
+                        VeranstaltungID: AppBar.scope.getEventId(),
                         useErfassungsdatum: true,
                         Erfassungsdatum: date
                     });
@@ -188,14 +189,18 @@
                 if (dchart) {
                     switch (chartlength) {
                         case 1:
-                            //dchart.style.width = "200px";
-                            dchart.style.marginLeft = "30%";
+                            dchart.style.width = "200px";
+                            dchart.style.marginLeft = "auto";
+                            dchart.style.marginRight = "auto";
                             break;
                         /*case 2:
                             dchart.style.width = "400px";
                                 dchart.style.marginLeft = "5%";
                                 break;*/
                         default:
+                            dchart.style.marginLeft = "";
+                            dchart.style.marginRight = "";
+                            dchart.style.width = "";
                     }
                 }
                 Log.ret(Log.l.trace);

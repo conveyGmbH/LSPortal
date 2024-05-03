@@ -54,8 +54,7 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".employeeView.");
                 var ret = StartTop10Users._employeeView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Nachname"
+                    ordered: true /*Nachname*/
                 });
                 Log.ret(Log.l.trace);
                 return ret;

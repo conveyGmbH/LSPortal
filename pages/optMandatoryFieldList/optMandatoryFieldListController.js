@@ -144,8 +144,8 @@
             var loadPflichtFeld = function () {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.initPflichtfeld = new WinJS.Binding.List([{ PflichtfeldTypID: 0, PflichtFeldTITLE: "" }]);
                 var ret = OptMandatoryFieldList.mandatoryView.select(function (json) {
+                that.initPflichtfeld = new WinJS.Binding.List([{ PflichtfeldTypID: 0, PflichtFeldTITLE: "" }]);
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
@@ -175,8 +175,8 @@
             var loadQuestion = function () {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.initQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                 var ret = OptMandatoryFieldList.questionListView.select(function (json) {
+                that.initQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");

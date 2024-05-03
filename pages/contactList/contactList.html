@@ -48,34 +48,22 @@
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
                             <div class="input_group">
-                                <button class="list-button-left win-button"
-                                        id="btnASC"
-                                        data-win-bind="textContent: btnAZText"
-                                        value="ASC"
-                                        onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></button>
-                                <button class="list-button-left win-button"
-                                        id="btnDESC"
-                                        data-win-bind="textContent: btnZAText"
-                                        value="DESC"
-                                        onclick="AppBar.handleEvent('click', 'clickOrderBy', event)"></button>
+                                <button class="list-button-left win-button" id="btnDateSort"
+                                        data-win-bind="textContent: btnDateSort"></button>
                             </div>
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <select id="events"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: eventId"
-                                    onchange="AppBar.handleEvent('change', 'changeEventId', event)">
+                                    data-win-bind="value: eventId">
                                 <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
                             </select>
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
-                            <input class="input_field win-textbox" type="text"
-                                   id="searchField"
-                                   data-win-bind="value: searchString Binding.Mode.twoway"
-                                   oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
+                            <input class="input_field win-textbox" type="text" id="searchField" />
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
