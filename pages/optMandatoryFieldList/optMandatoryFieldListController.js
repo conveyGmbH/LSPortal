@@ -15,14 +15,13 @@
             Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
             // ListView control
             var listView = pageElement.querySelector("#optMandatoryFieldList.listview");
-
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
-            }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]);
+            }, commandList, false, OptMandatoryFieldList._CR_OptFragenAntwortenOdataVIEW, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, listView]);
 
             this.initQuestion = null; //selektierte Frage
             this.optAnswer = []; // Antwort
@@ -31,6 +30,26 @@
             var that = this;
 
             var layout = null;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
+                OptMandatoryFieldList._eventId = value;
+            }
+            this.setEventId = setEventId;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             var resultAnswerConverter = function (item, index, value) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller." + value);
@@ -68,15 +87,18 @@
                 if (listView && listView.winControl) {
                     var element = listView.winControl.elementFromIndex(index);
                     if (element) {
-                        var optQuestion = element.querySelector('#InitPFeldTyp');
+                        var optQuestion = pageElement.querySelector('#InitPFeldTyp');
                         var fragenId = parseInt(optQuestion.value);
                         ret["INITPFeldTypID"] = fragenId;
 
-                        var selektedQuestion = element.querySelector('#SelektFragenopt');
-                        var selektiertefragenId = parseInt(selektedQuestion.value);
+                        var selektedQuestion = pageElement.querySelector('#SelektFragenopt');
+                        var selektiertefragenId = parseInt(selektedQuestion.value );
                         ret["SelektierteFragenID"] = selektiertefragenId;
 
-                        var selektedAnswer = element.querySelector('#SelektAntwortopt');
+                        var selektedAnswer = pageElement.querySelector('#SelektAntwortopt');
+                        if (selektedAnswer.value === "") {
+                            selektedAnswer.value = 0;
+                        }
                         var sortindex = parseInt(selektedAnswer.value);
                         ret["SortIndex"] = sortindex;
                     }
@@ -91,7 +113,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var optFrage = {
-                        SelektierteFragenID: null,
+                        SelektierteFragenID: 0,
                         INITPFeldTypID: 0,
                         SortIndex: 0
                     };
@@ -132,7 +154,7 @@
             var insertDefaultQuestion = function () {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 if (that.records) {
-                    var defaultQuestion = { CR_PFFragenAntwortenVIEWID: null, INITPFeldTypID: 0, SelektierteFragenID: 0, SortIndex: 0, insertStatus: true };
+                    var defaultQuestion = { CR_PFFragenAntwortenVIEWID: null, INITPFeldTypID: 0, SelektierteFragenID: 0, SortIndex: 0 }; //, insertStatus: true
                     that.binding.count = that.records.push(defaultQuestion);
                     that.listView.winControl.selection.set(that.records.length - 1);
                     AppBar.triggerDisableHandlers();
@@ -149,14 +171,12 @@
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
-
                     if (json && json.d) {
-                        that.binding.count = json.d.results.length;
                         that.nextUrl = OptMandatoryFieldList.mandatoryView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
                             item.pflichtfeld = item.Sortierung + ". " + item.PflichtFeldTITLE;
-                            that.initPflichtfeld.push(item);
+                            //that.initPflichtfeld.push(item);
                         });
                         Log.print(Log.l.trace, "Data loaded initPflichtfeld.count=" + that.initPflichtfeld.length);
                     }
@@ -181,12 +201,11 @@
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
                     if (json && json.d) {
-                        that.binding.count = json.d.results.length;
                         that.nextUrl = OptMandatoryFieldList.questionListView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
                             item.frage = item.Sortierung + ". " + item.Fragestellung;
-                            that.initQuestion.push(item);
+                            //that.initQuestion.push(item);
                         });
                         Log.print(Log.l.trace, "Data loaded initQuestion.count=" + that.initQuestion.length);
                     }
@@ -224,7 +243,7 @@
                         if (crossItem) {
                             //Cross Tabelle heisst sie SelektierteFragenID
                             if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
-                                event.currentTarget.value = crossItem.FragenID;
+                                event.currentTarget.value = crossItem.SelektierteFragenID;
                             }
                         }
                         if (event.currentTarget.value) {
@@ -246,7 +265,7 @@
                         Log.print(Log.l.trace, "event changeSelectedQuestion: value=" + event.currentTarget.value + "Fragestellung=" + event.currentTarget.textContent);
                         var crossItem = that.records.getAt(that.currentlistIndex);
                         if (crossItem) {
-                            if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
+                            if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
                                 event.currentTarget.value = crossItem.SelektierteFragenID;
                             }
                             if (event.currentTarget.value !== crossItem.SelektierteFragenID) {
@@ -375,7 +394,8 @@
                                                     if (!comboSelektFragenopt.winControl.data ||
                                                         comboSelektFragenopt.winControl.data && !comboSelektFragenopt.winControl.data.length) {
                                                         comboSelektFragenopt.winControl.data = that.initQuestion;
-                                                        comboSelektFragenopt.value = item.SelektierteFragenID;
+                                                        comboSelektFragenopt.value = parseInt(item.SelektierteFragenID);
+                                                        comboSelektFragenopt.selectedIndex = item.SortIndex;
                                                     }
                                                     var comboSelektAntwortopt = element.querySelector("#SelektAntwortopt.win-dropdown");
                                                     if (comboSelektAntwortopt && comboSelektAntwortopt.winControl) {
@@ -527,13 +547,13 @@
             that.processAll().then(function () {
             }).then(function () {
                 Log.print(Log.l.trace, "Load Question");
-                return that.loadQuestion();
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Load PflichtFeld");
-                return that.loadPflichtFeld();
+                return that.loadQuestion();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
+                return that.loadPflichtFeld();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
