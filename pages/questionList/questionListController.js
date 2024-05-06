@@ -74,12 +74,12 @@
             var getPublishFlag = function() {
                 var publishFlag = null;
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                var master = Application.navigator.masterControl;
+                /*var master = Application.navigator.masterControl;
                 if (master && master.controller) {
                     publishFlag = master.controller.binding.publishFlag;
-                } else {
+                } else {*/
                     publishFlag = that.binding.generalData.publishFlag;
-                }
+                //}
                 Log.ret(Log.l.trace, publishFlag);
                 return publishFlag;
             }

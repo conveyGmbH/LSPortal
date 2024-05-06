@@ -9,14 +9,21 @@
     WinJS.Namespace.define("Mandatory", {
         _manquestView: {
             get: function () {
-                var ret = AppData.getFormatView("FragenAntworten", 0, false);
+                var ret = AppData.getFormatView("FragenAntworten", 20682);
                 ret.maxPageSize = 20;
                 return ret;
             }
         },
+        _manquestOdataView: {
+            get: function () {
+                var ret = AppData.getFormatView("FragenAntworten", 0, false);
+                return ret;
+            }
+        },
         manquestView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error) {
                 Log.call(Log.l.trace, "Mandatory.");
+                var restriction = { VeranstaltungID: AppBar.scope.getEventId() };
                 var ret = Mandatory._manquestView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung"
@@ -27,7 +34,7 @@
             },
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "manquestView.");
-                var ret = Mandatory._manquestView.update(complete, error, recordId, viewResponse);
+                var ret = Mandatory._manquestOdataView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
@@ -53,8 +60,8 @@
         CR_VERANSTOPTION_ODataView: {
             select: function (complete, error) {
                 Log.call(Log.l.trace, "employeeView.");
-                var ret = Mandatory._CR_VERANSTOPTION_View.select(complete,
-                    error,
+                var restriction = { VeranstaltungID: AppBar.scope.getEventId() };
+                var ret = Mandatory._CR_VERANSTOPTION_View.select(complete, error, restriction,
                     {
                         ordered: true,
                         orderAttribute: "INITOptionTypeID"

@@ -105,7 +105,7 @@
 }
 */
 #mailingListLS .win-item,
-#mailingListLS .list-header,
+/*#mailingListLS .list-header,*/
 #mailingListLS .list-footer {
     width: 100%;
     padding-left: 26px;
@@ -274,4 +274,7 @@
     text-align: center;
     line-height: 45px;
     font-weight: bold;
+}
+.mailingListLS .list-compressed-title {
+    margin-top: 2px;
 }

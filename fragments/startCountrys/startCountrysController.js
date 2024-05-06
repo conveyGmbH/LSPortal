@@ -100,22 +100,23 @@
             this.goToNorthAmerica = goToNorthAmerica;
 
             var goToSouthAmerica = function () {
-                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(2.0)translate(-50,-150)");
+                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(2.0)translate(-50,0)");
             };
             this.goToSouthAmerica = goToSouthAmerica;
 
             var goToEurope = function () {
-                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(3.0)translate(-180,-60)");
+                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(3.7)translate(-140,-68)");
             };
             this.goToEurope = goToEurope;
 
             var goToAfrica = function () {
-                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(2.5)translate(-160,-140)");
+                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(3.25)translate(-140,-133)");
             };
             this.goToAfrica = goToAfrica;
 
             var goToAsia = function () {
-                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(2.0)translate(-240,-65)");
+                //that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(1.0)translate(-240,-65)");
+                that.worldMap.svg.selectAll(".datamaps-subunits").transition().duration(750).attr("transform", "scale(1.6)translate(-205,-35)");
             };
             this.goToAsia = goToAsia;
 
@@ -168,13 +169,13 @@
                                     that.worldMap = new Datamap({
                                         element: worldContainer,
                                         projection: 'mercator',
-                                        height: height - 20,
-                                        width: width - 20,
+                                        height: 250,
+                                        width: 350,
                                         fills: fills,
                                         // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
                                         data: that.countryKeyData,
                                         geographyConfig: {
-                                            popupOnHover: true, /*false*/
+                                            popupOnHover: true, 
                                             highlightOnHover: true,
                                             highlightFillColor: Colors.dashboardColor,
                                             highlightBorderColor: hiliBorderColor

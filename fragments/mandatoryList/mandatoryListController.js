@@ -28,6 +28,20 @@
             // now do anything...
             var listView = fragmentElement.querySelector("#mandatoryList.listview");
 
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
+
             // get field entries
             var getFieldEntries = function (index) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
@@ -255,7 +269,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        LanguageSpecID: AppData.getLanguageId()
+                        
                     });
                 }).then(function () {
                     AppBar.notifyModified = true;

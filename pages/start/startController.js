@@ -515,6 +515,7 @@
                 return Application.pageframe.hideSplashScreen();
             }).then(function () {
                 WinJS.Promise.timeout(50).then(function () {
+                    // prüfen ob auf mandantfähigkeit dieses Flag 
                     if (that.binding.generalData.publishFlag) {
                         var confirmTitle = getResourceText("start.confirmTextPublish");
                         confirm(confirmTitle, function (result) {

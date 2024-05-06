@@ -28,7 +28,7 @@
             this.nextUrl = null;
             this.loading = false;
             this.questions = null;
-            this.fragmentVisible = false;
+            this.fragmentVisible = true;
 
             var that = this;
             this.curRecId = 0;
@@ -63,6 +63,20 @@
             if (AppData._persistentStates.showConfirmQuestion) {
                 confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
             }
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             // get field entries
             var getFieldEntries = function (index) {
@@ -161,7 +175,7 @@
                 if (pOptionTypeId) {
                     AppData.call("PRC_SETVERANSTOPTION",
                         {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pVeranstaltungID: that.getEventId(),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
                         },
@@ -188,6 +202,29 @@
             }
             this.validateCb = validateCb;
 
+            var loadFragment = function() {
+                var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
+                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                    return mandatoryListFragmentControl.controller.loadData();
+                } else {
+                    var parentElement = pageElement.querySelector("#mandatorylisthost");
+                    if (parentElement) {
+                        return Application.loadFragmentById(parentElement, "mandatoryList", {});
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }
+            }
+            this.loadFragment = loadFragment;
+
+            var saveFragment = function() {
+                var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
+                if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
+                    return mandatoryListFragmentControl.controller.saveData();
+                }
+            }
+            that.saveFragment = saveFragment;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -201,6 +238,7 @@
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.error, "success" + response);
+                        that.saveFragment();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee" + errorResponse);
                     });
@@ -208,7 +246,6 @@
                 },
                 clickDoMandatory: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    Log.call(Log.l.trace, "Event.Controller.");
                     var toggle = event.currentTarget.winControl;
                     if (toggle) {
                         // that.binding.isQuestionnaireVisible = toggle.checked;
@@ -307,12 +344,13 @@
                                 }
                                 that.loading = false;
                             }
+                            that.validateCb();
                         }
                     }
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "Mandatory.Controller.");
+                    /*Log.call(Log.l.trace, "Mandatory.Controller.");
                     if (eventInfo && eventInfo.detail) {
                         var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                         var visible = eventInfo.detail.visible;
@@ -339,7 +377,7 @@
                             that.fragmentVisible = false;
                         }
                     }
-                    Log.ret(Log.l.trace);
+                    Log.ret(Log.l.trace);*/
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
@@ -478,8 +516,11 @@
             var loadData = function () {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 AppData.setErrorMsg(that.binding);
-
+                that.questions = null;
+                that.loading = true;
                 var ret = new WinJS.Promise.as().then(function () {
+                    that.loadFragment();
+                }).then(function () {
                     return Mandatory.manquestView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -504,7 +545,6 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, null);
-
                 }).then(function () {
                     AppData._persistentStates.showConfirmQuestion = true;
                     return Mandatory.CR_VERANSTOPTION_ODataView.select(function (json) {
@@ -589,10 +629,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
+            })/*.then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.validateCb();
-            }).then(function () {
+            })*/.then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });

@@ -29,11 +29,10 @@
                             <select id="InitFragenopt"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="style.display: FragenID Binding.Converter.toDisplayNone"
+                                    data-win-bind="style.display: FragenAntwortenVIEWID Binding.Converter.toDisplayNone"
                                     onchange="AppBar.handleEvent('change', 'changeOptionQuestion', event)">
                                 <option data-win-bind="value: FragenAntwortenVIEWID; textContent: frage"></option>
                             </select>
-                            <span class="input_field win-type-subtitle" data-win-bind="textContent: frage; style.display: FragenID Binding.Converter.toDisplay"></span>
                         </div>
                         <div class="field_line selectedquestiontext" data-win-bind="style.display: FragenID Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'optQuestionList.selectedQuestionText'}"></span>

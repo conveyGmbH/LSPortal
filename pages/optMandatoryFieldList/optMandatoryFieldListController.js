@@ -15,14 +15,13 @@
             Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
             // ListView control
             var listView = pageElement.querySelector("#optMandatoryFieldList.listview");
-
             Application.RecordsetController.apply(this, [pageElement, {
                 dataOptQuestionAnswer: getEmptyDefaultValue(OptMandatoryFieldList.CR_OptFragenAntwortenVIEW.defaultValue),
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
-            }, commandList, false, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, null, listView]);
+            }, commandList, false, OptMandatoryFieldList._CR_OptFragenAntwortenOdataVIEW, OptMandatoryFieldList.CR_OptFragenAntwortenVIEW, listView]);
 
             this.initQuestion = null; //selektierte Frage
             this.optAnswer = []; // Antwort
@@ -31,6 +30,26 @@
             var that = this;
 
             var layout = null;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId EventGenSettings._eventId=" + value);
+                OptMandatoryFieldList._eventId = value;
+            }
+            this.setEventId = setEventId;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             var resultAnswerConverter = function (item, index, value) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller." + value);
@@ -144,14 +163,13 @@
             var loadPflichtFeld = function () {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.initPflichtfeld = new WinJS.Binding.List([{ PflichtfeldTypID: 0, PflichtFeldTITLE: "" }]);
                 var ret = OptMandatoryFieldList.mandatoryView.select(function (json) {
+                that.initPflichtfeld = new WinJS.Binding.List([{ PflichtfeldTypID: 0, PflichtFeldTITLE: "" }]);
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
-
                     if (json && json.d) {
-                        that.binding.count = json.d.results.length;
+                        //that.binding.count = json.d.results.length;
                         that.nextUrl = OptMandatoryFieldList.mandatoryView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
@@ -175,13 +193,13 @@
             var loadQuestion = function () {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.initQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                 var ret = OptMandatoryFieldList.questionListView.select(function (json) {
+                that.initQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
                     if (json && json.d) {
-                        that.binding.count = json.d.results.length;
+                        //that.binding.count = json.d.results.length;
                         that.nextUrl = OptMandatoryFieldList.questionListView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
@@ -224,7 +242,7 @@
                         if (crossItem) {
                             //Cross Tabelle heisst sie SelektierteFragenID
                             if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
-                                event.currentTarget.value = crossItem.FragenID;
+                                event.currentTarget.value = crossItem.SelektierteFragenID;
                             }
                         }
                         if (event.currentTarget.value) {
@@ -246,7 +264,7 @@
                         Log.print(Log.l.trace, "event changeSelectedQuestion: value=" + event.currentTarget.value + "Fragestellung=" + event.currentTarget.textContent);
                         var crossItem = that.records.getAt(that.currentlistIndex);
                         if (crossItem) {
-                            if (crossItem.FragenID === parseInt(event.currentTarget.value)) {
+                            if (crossItem.SelektierteFragenID === parseInt(event.currentTarget.value)) {
                                 event.currentTarget.value = crossItem.SelektierteFragenID;
                             }
                             if (event.currentTarget.value !== crossItem.SelektierteFragenID) {
@@ -515,6 +533,10 @@
                 Log.call(Log.l.trace, "OptMandatoryFieldList.Controller.");
                 var ret = that.baseSaveData(function (result) {
                     AppData.getUserData();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     if (typeof complete === "function") {
                         complete(result);
                     }

@@ -23,7 +23,7 @@
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
-            }, commandList, false, OptQuestionList.CR_OptFragenAntwortenVIEW, null, listView]); // VIEW ändern
+            }, commandList, false, OptQuestionList.CR_OptFragenAntwortenOdataVIEW, OptQuestionList.CR_OptFragenAntwortenVIEW, listView]); // VIEW ändern
 
             this.optQuestions = null; // selektierte Frage
             this.initoptionQuestion = null; //optionale Frage
@@ -32,6 +32,20 @@
             var that = this;
 
             var layout = null;
+
+            var getEventId = function () {
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
+            }
+            this.getEventId = getEventId;
 
             var resultAnswerConverter = function (item, index, value) {
                 Log.call(Log.l.trace, "OptQuestionList.Controller." + value);
@@ -141,15 +155,14 @@
             var loadQuestion = function () {
                 Log.call(Log.l.trace, "optQuestionList.Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.initoptionQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
-                that.optQuestions = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                 var ret = OptQuestionList.questionListView.select(function (json) {
+                    that.initoptionQuestion = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
+                    that.optQuestions = new WinJS.Binding.List([{ FragenAntwortenVIEWID: 0, frage: "" }]);
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.print(Log.l.trace, "questionListView: success!");
 
                     if (json && json.d) {
-                        that.binding.count = json.d.results.length;
                         that.nextUrl = OptQuestionList.questionListView.getNextUrl(json);
                         var results = json.d.results;
                         results.forEach(function (item, index) {
@@ -433,11 +446,11 @@
                 clickNew: function () {
                     // never disabled!
                     var bHasNew = false;
-                        if (that.records && that.records.length > 0) {
-                            var item = that.records.getAt(that.records.length - 1);
-						if (item && !item.CR_OptFragenAntwortenVIEWID) {
-                                bHasNew = true;
-                            }
+                    if (that.records && that.records.length > 0) {
+                        var item = that.records.getAt(that.records.length - 1);
+                        if (item && !item.CR_OptFragenAntwortenVIEWID) {
+                            bHasNew = true;
+                        }
                         return bHasNew || AppBar.busy;
                     } else {
                         return false;
@@ -486,6 +499,10 @@
                 Log.call(Log.l.trace, "OptQuestionList.Controller.");
                 var ret = that.baseSaveData(function (result) {
                     AppData.getUserData();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
                     if (typeof complete === "function") {
                         complete(result);
                     }
