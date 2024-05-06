@@ -257,10 +257,10 @@
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
-                                        that.binding.publishFlag = item.data.PublishFlag;
+                                        //that.binding.publishFlag = item.data.PublishFlag;
                                         if (typeof AppHeader === "object" &&
                                             AppHeader.controller && AppHeader.controller.binding) {
-                                            AppHeader.controller.binding.publishFlag = that.binding.publishFlag;
+                                            AppHeader.controller.binding.publishFlag = that.binding.generalData.publishFlag; /* that.binding.publishFlag*/
                                         }
                                         if (item.data.Aktiv) {
                                             that.binding.active = 1;
