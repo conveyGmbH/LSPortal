@@ -70,7 +70,27 @@
                 return ret;
 
             }
+        },
+        Mandatory1: {
+            get: function () {
+                return this.Erfassungsart === 0;
+            },
+            set: function (checked) {
+                if (checked) {
+                    this.Erfassungsart = 0;
+                }
+            }
+        },
+        Mandatory2: {
+            get: function () {
+                return this.Erfassungsart === 1;
+            },
+            set: function (checked) {
+                if (checked) {
+                    this.Erfassungsart = 1;
         }
+            }
+        },
     });
 })();
 

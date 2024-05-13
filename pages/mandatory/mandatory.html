@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="line-separator"></div>
-                            <div class="field_line field_line_odd" data-win-bind="style.display: doMandatoryShowFlag Binding.Converter.toDisplay">
+                            <!--<div class="field_line field_line_odd" data-win-bind="style.display: doMandatoryShowFlag Binding.Converter.toDisplay">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
                                 <div class="input_field toggle-switch-parent">
@@ -66,6 +66,25 @@
                                          data-win-bind="winControl.checked: doMandatory; winControl.labelOn: noticeOn; winControl.labelOff: noticeOff"
                                          onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
                                     </div>
+                                </div>
+                            </div>-->
+                            <div class="field_line" data-win-bind="style.display: doMandatoryShowFlag Binding.Converter.toDisplay">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
+                                <div class="input_group">
+                                    <label class="radio">
+                                        <input type="radio" name="Erfassungsart" value="0" class="win-checkbox"
+                                               data-win-bind="checked: Mandatory1"
+                                               data-win-control="WinJS.UI.ToggleSwitch"
+                                               onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
+                                        <span data-win-res="{textContent: 'mandatory.noticeOff'}"></span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="Erfassungsart" value="1" class="win-checkbox"
+                                               data-win-bind="checked: Mandatory2"
+                                               data-win-control="WinJS.UI.ToggleSwitch"
+                                               onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
+                                        <span data-win-res="{textContent: 'mandatory.noticeOn'}"></span>
+                                    </label>
                                 </div>
                             </div>
                         </div>

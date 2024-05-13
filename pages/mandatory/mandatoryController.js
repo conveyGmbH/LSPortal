@@ -23,7 +23,9 @@
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 doMandatoryShowFlag: null,
                 noticeOn: getResourceText("mandatory.noticeOn"),
-                noticeOff: getResourceText("mandatory.noticeOff")
+                noticeOff: getResourceText("mandatory.noticeOff"),
+                Mandatory1: Mandatory.Mandatory1,
+                Mandatory2: Mandatory.Mandatory2
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -36,7 +38,9 @@
 
             // ListView control
             var listView = pageElement.querySelector("#mandatoryquestion.listview");
-            var confirmMandatoryQuestionnaire = pageElement.querySelector("#confirmMandatoryQuestionnaire");
+            //var confirmMandatoryQuestionnaire = pageElement.querySelector("#confirmMandatoryQuestionnaire");
+            var radio1 = pageElement.querySelector("#option1");
+            var radio2 = pageElement.querySelector("#option2");
             /*
             // prevent some keyboard actions from listview to navigate within controls!
             listView.addEventListener("keydown", function (e) {
@@ -61,7 +65,7 @@
             var mouseDown = false;
 
             if (AppData._persistentStates.showConfirmQuestion) {
-                confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
+                //confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
             }
 
             var getEventId = function () {
@@ -153,23 +157,15 @@
             };
             this.scopeFromRecordId = scopeFromRecordId;
 
-            var changeMandatorySetting = function (pageProperty, status) {
-                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
-                var pOptionTypeId = null;
+            var changeMandatorySetting = function (status) {
+                Log.call(Log.l.trace, "Mandatory.Controller.");
+                var pOptionTypeId = 22;
                 var pValue = null;
 
-                switch (pageProperty) {
-                    case "showHideQuestionnaire":
-                        pOptionTypeId = 20;
-                        break;
-                    case "confirmMandatoryQuestionnaire":
-                        pOptionTypeId = 22;
-                        break;
-                }
-                if (typeof status === "boolean" && status) {
-                    pValue = "1";
-                } else {
+                if (status === 0) {
                     pValue = "0";
+                } else {
+                    pValue = "1";
                 }
 
                 if (pOptionTypeId) {
@@ -246,12 +242,8 @@
                 },
                 clickDoMandatory: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (toggle) {
-                        // that.binding.isQuestionnaireVisible = toggle.checked;
-                        AppData._persistentStates.showConfirmQuestion = toggle.checked;
-                    }
-                    that.changeMandatorySetting(event.target.id, toggle.checked);
+                    var val = parseInt(event.target.value);
+                    that.changeMandatorySetting(val);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
@@ -502,6 +494,11 @@
                     case 22:
                         if (item.LocalValue === "0") {
                             AppData._persistentStates.showConfirmQuestion = false;
+                            that.binding.Mandatory1 = true;
+                            that.binding.Mandatory2 = false;
+                        } else {
+                            that.binding.Mandatory1 = false;
+                            that.binding.Mandatory2 = true;
                         }
                         break;
                     default:
@@ -559,7 +556,7 @@
                                 that.resultConverter(item, index);
                             });
                         }
-                        confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
+                        //confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -629,10 +626,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.validateCb();
-            })*/.then(function () {
+                //return that.setRadioButtons();
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
