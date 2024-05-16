@@ -848,6 +848,36 @@
                             that.binding.loading = false;
                         }, recordId || getRestriction());
                     }).then(function () {
+                        if (!ContactList._eventId) {
+                            that.binding.noctcount = 0;
+                            that.binding.noeccount = 0;
+                            that.binding.nouccount = 0;
+                            return WinJS.Promise.as();
+                        } else {
+                            return ContactList.veranstaltungView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "veranstaltungView: success!");
+                                // startContact returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                    var results = json.d.results[0];
+                                    that.binding.noctcount = results.AnzKontakte;
+                                    that.binding.noeccount = results.AnzEditierteKontakte;
+                                    that.binding.nouccount = results.AnzNichtEditierteKontakte;
+                                } else {
+                                    that.binding.noctcount = 0;
+                                    that.binding.noeccount = 0;
+                                    that.binding.nouccount = 0;
+                                    Log.print(Log.l.trace, "veranstaltungView: no data found!");
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "ContactList.veranstaltungView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                        }
+                    }).then(function () {
                         if (!recordId) {
                             that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
                                 return ContactList.contactDocView.select(function (json) {
@@ -874,28 +904,6 @@
                                 }, getRestriction());
                             });
                         }
-                        return ContactList.veranstaltungView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "veranstaltungView: success!");
-                            // startContact returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                var results = json.d.results[0];
-                                that.binding.noctcount = results.AnzKontakte;
-                                that.binding.noeccount = results.AnzEditierteKontakte;
-                                that.binding.nouccount = results.AnzNichtEditierteKontakte;
-                            } else {
-                                that.binding.noctcount = 0;
-                                that.binding.noeccount = 0;
-                                that.binding.nouccount = 0;
-                                Log.print(Log.l.trace, "veranstaltungView: no data found!");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "ContactList.veranstaltungView: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
                     }).then(function () {
                         if (that.binding.contactId) {
                             that.selectRecordId(that.binding.contactId);
