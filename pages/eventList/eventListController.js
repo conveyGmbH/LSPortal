@@ -589,11 +589,12 @@
                     }, {
 
                         });
-                }).then(function () {
+                })/*.then(function () {
+                 // Bug show empty space if hide master list
                     if (that.binding.count === 1) {
                         Application.navigator._hideMaster();
                     }
-                })/*.then(function () {
+                }).then(function () {
                     Application.navigator._resized();
                 })*/;
                 Log.ret(Log.l.trace);
