@@ -879,8 +879,8 @@
                         // when the response is available
                         Log.print(Log.l.trace, "mitarbeiterView: success!");
                         // startContact returns object already parsed from json file in response
-                        if (json && json.d) {
-                            var results = json.d;
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results[0];
                             that.binding.noctcount = results.AnzKontakte;
                             that.binding.noeccount = results.AnzEditierteKontakte;
                             that.binding.nouccount = results.AnzNichtEditierteKontakte;
@@ -892,8 +892,7 @@
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "ContactList.mitarbeiterView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    },
-                    AppData.getRecordId("Mitarbeiter"));
+                    });
                 }).then(function () {
                     if (that.binding.contactId) {
                         that.selectRecordId(that.binding.contactId);
