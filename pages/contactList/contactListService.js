@@ -328,16 +328,16 @@
                 return ret;
             }
         },
-        _mitarbeiterView: {
+        _veranstaltungView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
-        mitarbeiterView: {
+        veranstaltungView: {
             select: function (complete, error) {
                 var restriction = { VeranstaltungVIEWID: ContactList._eventId };
-                Log.call(Log.l.trace, namespaceName + ".mitarbeiterView.", "restriction=" + restriction);
-                var ret = ContactList._mitarbeiterView.select(complete, error, restriction);
+                Log.call(Log.l.trace, namespaceName + ".veranstaltungView.", "restriction=" + restriction);
+                var ret = ContactList._veranstaltungView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
