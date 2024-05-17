@@ -945,7 +945,7 @@
     "mandatory.title"       : "Campo obbligatorio",
     "mandatory.contact"     : "Campo obbligatorio di contatto",
     "mandatory.doMandatory" : "Mostra campo obbligatorio di questionario",
-    "mandatory.doQuestionnaireMandatory"  : "Show message for mandatory fields in questionnaire",
+    "mandatory.doQuestionnaireMandatory"  : "Quale funzione deve avere il testo di suggerimento per le domande obbligatorie selezionate?",
     "mandatory.doContactMandatory"  : "Show message for mandatory fields in contact",
     "mandatory.count"  : "Totale",
     "mandatory.noticeOn" : "Mostra gli avvisi ma è possibile modificarli ulteriormente",

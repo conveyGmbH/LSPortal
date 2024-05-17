@@ -23,7 +23,9 @@
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 doMandatoryShowFlag: null,
                 noticeOn: getResourceText("mandatory.noticeOn"),
-                noticeOff: getResourceText("mandatory.noticeOff")
+                noticeOff: getResourceText("mandatory.noticeOff"),
+                Mandatory1: Mandatory.Mandatory1,
+                Mandatory2: Mandatory.Mandatory2
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -36,7 +38,9 @@
 
             // ListView control
             var listView = pageElement.querySelector("#mandatoryquestion.listview");
-            var confirmMandatoryQuestionnaire = pageElement.querySelector("#confirmMandatoryQuestionnaire");
+            //var confirmMandatoryQuestionnaire = pageElement.querySelector("#confirmMandatoryQuestionnaire");
+            var radio1 = pageElement.querySelector("#option1");
+            var radio2 = pageElement.querySelector("#option2");
             /*
             // prevent some keyboard actions from listview to navigate within controls!
             listView.addEventListener("keydown", function (e) {
@@ -60,9 +64,9 @@
 
             var mouseDown = false;
 
-            if (AppData._persistentStates.showConfirmQuestion) {
+            /*if (AppData._persistentStates.showConfirmQuestion) {
                 confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
-            }
+            }*/
 
             var getEventId = function () {
                 var eventId = null;
@@ -153,43 +157,22 @@
             };
             this.scopeFromRecordId = scopeFromRecordId;
 
-            var changeMandatorySetting = function (pageProperty, status) {
-                Log.call(Log.l.trace, "Settings.Controller.", "pageProperty=" + pageProperty + " color=" + status);
-                var pOptionTypeId = null;
-                var pValue = null;
-
-                switch (pageProperty) {
-                    case "showHideQuestionnaire":
-                        pOptionTypeId = 20;
-                        break;
-                    case "confirmMandatoryQuestionnaire":
-                        pOptionTypeId = 22;
-                        break;
-                }
-                if (typeof status === "boolean" && status) {
-                    pValue = "1";
-                } else {
-                    pValue = "0";
-                }
-
-                if (pOptionTypeId) {
-                    AppData.call("PRC_SETVERANSTOPTION",
-                        {
-                            pVeranstaltungID: that.getEventId(),
-                            pOptionTypeID: pOptionTypeId,
-                            pValue: pValue
-                        },
-                        function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                        },
-                        function (error) {
-                            Log.print(Log.l.error, "call error");
-                        });
-                }
+            var changeMandatorySetting = function (status) {
+                Log.call(Log.l.trace, "Mandatory.Controller.");
+                AppData.call("PRC_SETVERANSTOPTION", {
+                    pVeranstaltungID: that.getEventId(),
+                    pOptionTypeID: 22,
+                    pValue: status
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
+                Log.ret(Log.l.trace);
             };
             this.changeMandatorySetting = changeMandatorySetting;
 
-            var validateCb = function() {
+            var validateCb = function () {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 that.binding.doMandatoryShowFlag = null;
                 var combBox = pageElement.querySelectorAll(".reqCB");
@@ -202,7 +185,7 @@
             }
             this.validateCb = validateCb;
 
-            var loadFragment = function() {
+            var loadFragment = function () {
                 var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                 if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                     return mandatoryListFragmentControl.controller.loadData();
@@ -217,7 +200,7 @@
             }
             this.loadFragment = loadFragment;
 
-            var saveFragment = function() {
+            var saveFragment = function () {
                 var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                 if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                     return mandatoryListFragmentControl.controller.saveData();
@@ -246,12 +229,9 @@
                 },
                 clickDoMandatory: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (toggle) {
-                        // that.binding.isQuestionnaireVisible = toggle.checked;
-                        AppData._persistentStates.showConfirmQuestion = toggle.checked;
-                    }
-                    that.changeMandatorySetting(event.target.id, toggle.checked);
+                    // value = "1" => show alert box and force user fill out question
+                    // value = "0" => show confirm box and not force user fill out question
+                    that.changeMandatorySetting(event.target.value);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
@@ -264,7 +244,7 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                clickReqManCb: function(event) {
+                clickReqManCb: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     that.validateCb();
                     Log.ret(Log.l.trace);
@@ -501,11 +481,16 @@
                 switch (item.INITOptionTypeID) {
                     case 22:
                         if (item.LocalValue === "0") {
-                            AppData._persistentStates.showConfirmQuestion = false;
+                            //AppData._persistentStates.showConfirmQuestion = false;
+                            that.binding.Mandatory1 = false;
+                            that.binding.Mandatory2 = true;
+                        } else {
+                            that.binding.Mandatory1 = true;
+                            that.binding.Mandatory2 = false;
                         }
                         break;
                     default:
-                        // defaultvalues
+                    // defaultvalues
                 }
                 if (item.Sortierung && item.Fragestellung) {
                     item.QuestionWithNumber = item.Sortierung + ". " + item.Fragestellung;
@@ -546,7 +531,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, null);
                 }).then(function () {
-                    AppData._persistentStates.showConfirmQuestion = true;
+                    //AppData._persistentStates.showConfirmQuestion = true;
                     return Mandatory.CR_VERANSTOPTION_ODataView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -559,7 +544,7 @@
                                 that.resultConverter(item, index);
                             });
                         }
-                        confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
+                        //confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -629,10 +614,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.validateCb();
-            })*/.then(function () {
+                //return that.setRadioButtons();
+            }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Data loaded");
             });
