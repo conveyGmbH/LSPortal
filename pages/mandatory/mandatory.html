@@ -69,17 +69,17 @@
                                 </div>
                             </div>-->
                             <div class="field_line" data-win-bind="style.display: doMandatoryShowFlag Binding.Converter.toDisplay">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
-                                <div class="input_group">
+                                <span class="label win-type-caption mandatory-label" data-win-res="{textContent: 'mandatory.doQuestionnaireMandatory'}"></span>
+                                <div class="questionnaire-mandatory-container">
                                     <label class="radio">
-                                        <input type="radio" name="Erfassungsart" value="0" class="win-checkbox"
+                                        <input type="radio" name="Erfassungsart" value="1" class="win-checkbox"
                                                data-win-bind="checked: Mandatory1"
                                                data-win-control="WinJS.UI.ToggleSwitch"
                                                onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">
                                         <span data-win-res="{textContent: 'mandatory.noticeOff'}"></span>
                                     </label>
                                     <label class="radio">
-                                        <input type="radio" name="Erfassungsart" value="1" class="win-checkbox"
+                                        <input type="radio" name="Erfassungsart" value="0" class="win-checkbox"
                                                data-win-bind="checked: Mandatory2"
                                                data-win-control="WinJS.UI.ToggleSwitch"
                                                onchange="AppBar.handleEvent('change', 'clickDoMandatory', event)">

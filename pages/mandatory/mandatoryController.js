@@ -64,9 +64,9 @@
 
             var mouseDown = false;
 
-            if (AppData._persistentStates.showConfirmQuestion) {
-                //confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
-            }
+            /*if (AppData._persistentStates.showConfirmQuestion) {
+                confirmMandatoryQuestionnaire.winControl.checked = AppData._persistentStates.showConfirmQuestion;
+            }*/
 
             var getEventId = function () {
                 var eventId = null;
@@ -159,33 +159,20 @@
 
             var changeMandatorySetting = function (status) {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
-                var pOptionTypeId = 22;
-                var pValue = null;
-
-                if (status === 0) {
-                    pValue = "0";
-                } else {
-                    pValue = "1";
-                }
-
-                if (pOptionTypeId) {
-                    AppData.call("PRC_SETVERANSTOPTION",
-                        {
-                            pVeranstaltungID: that.getEventId(),
-                            pOptionTypeID: pOptionTypeId,
-                            pValue: pValue
-                        },
-                        function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                        },
-                        function (error) {
-                            Log.print(Log.l.error, "call error");
-                        });
-                }
+                AppData.call("PRC_SETVERANSTOPTION", {
+                    pVeranstaltungID: that.getEventId(),
+                    pOptionTypeID: 22,
+                    pValue: status
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
+                Log.ret(Log.l.trace);
             };
             this.changeMandatorySetting = changeMandatorySetting;
 
-            var validateCb = function() {
+            var validateCb = function () {
                 Log.call(Log.l.trace, "Mandatory.Controller.");
                 that.binding.doMandatoryShowFlag = null;
                 var combBox = pageElement.querySelectorAll(".reqCB");
@@ -198,7 +185,7 @@
             }
             this.validateCb = validateCb;
 
-            var loadFragment = function() {
+            var loadFragment = function () {
                 var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                 if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                     return mandatoryListFragmentControl.controller.loadData();
@@ -213,7 +200,7 @@
             }
             this.loadFragment = loadFragment;
 
-            var saveFragment = function() {
+            var saveFragment = function () {
                 var mandatoryListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("mandatoryList"));
                 if (mandatoryListFragmentControl && mandatoryListFragmentControl.controller) {
                     return mandatoryListFragmentControl.controller.saveData();
@@ -242,8 +229,9 @@
                 },
                 clickDoMandatory: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
-                    var val = parseInt(event.target.value);
-                    that.changeMandatorySetting(val);
+                    // value = "1" => show alert box and force user fill out question
+                    // value = "0" => show confirm box and not force user fill out question
+                    that.changeMandatorySetting(event.target.value);
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
@@ -256,7 +244,7 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                clickReqManCb: function(event) {
+                clickReqManCb: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
                     that.validateCb();
                     Log.ret(Log.l.trace);
@@ -493,16 +481,16 @@
                 switch (item.INITOptionTypeID) {
                     case 22:
                         if (item.LocalValue === "0") {
-                            AppData._persistentStates.showConfirmQuestion = false;
-                            that.binding.Mandatory1 = true;
-                            that.binding.Mandatory2 = false;
-                        } else {
+                            //AppData._persistentStates.showConfirmQuestion = false;
                             that.binding.Mandatory1 = false;
                             that.binding.Mandatory2 = true;
+                        } else {
+                            that.binding.Mandatory1 = true;
+                            that.binding.Mandatory2 = false;
                         }
                         break;
                     default:
-                        // defaultvalues
+                    // defaultvalues
                 }
                 if (item.Sortierung && item.Fragestellung) {
                     item.QuestionWithNumber = item.Sortierung + ". " + item.Fragestellung;
@@ -543,7 +531,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, null);
                 }).then(function () {
-                    AppData._persistentStates.showConfirmQuestion = true;
+                    //AppData._persistentStates.showConfirmQuestion = true;
                     return Mandatory.CR_VERANSTOPTION_ODataView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available

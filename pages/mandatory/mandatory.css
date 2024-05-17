@@ -49,3 +49,18 @@
 #mandatoryquestion .win-toggleswitch-value-off {
     width: 500px !important;
 }
+
+#mandatoryquestion .radio {
+    display: inline-block;
+}
+#mandatoryquestion .list-footer {
+    padding-bottom: 10px;
+    min-height: 145px;
+}
+#mandatoryquestion .mandatory-label {
+    font-size: 18px;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    letter-spacing: 0.1px;
+}
