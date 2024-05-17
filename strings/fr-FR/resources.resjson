@@ -946,7 +946,7 @@
     "mandatory.title"       : "Champs obligatoires",
     "mandatory.contact"     : "Champs obligatoires du contact",
     "mandatory.questionnaire" : "Champs obligatoires du Questionnaire",
-    "mandatory.doQuestionnaireMandatory"  : "afficher message",
+    "mandatory.doQuestionnaireMandatory"  : "Quelle doit être la fonction du texte d'avertissement pour les questions obligatoires sélectionnées ?",
     "mandatory.doContactMandatory"  : "afficher message",
     "mandatory.count"  : "Nombre",
     "mandatory.noticeOn" : "Afficher les remarques mais permettre la poursuite de l'édition",

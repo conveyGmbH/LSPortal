@@ -945,7 +945,7 @@
 	"mandatory.title"       : "Mandatory fields",
     "mandatory.contact"     : "Mandatory fields in Contact",
     "mandatory.questionnaire" : "Mandatory fields in Questionnaire",
-    "mandatory.doQuestionnaireMandatory"  : "Show message",
+    "mandatory.doQuestionnaireMandatory"  : "What function should the hint text have for the selected mandatory questions?",
     "mandatory.doContactMandatory"  : "Show message",
     "mandatory.count"  : "Count",
 	"mandatory.noticeOn" : "Show notices but further editing possible",

@@ -949,7 +949,7 @@
     "mandatory.title"       : "Pflichtfelder",
     "mandatory.contact"     : "Pflichtfelder im Kontakt",
     "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
-    "mandatory.doQuestionnaireMandatory"  : "Hinweis anzeigen",
+    "mandatory.doQuestionnaireMandatory"  : "Welche Funktion soll der Hinweis-Text für die ausgewählten Pflichtfragen haben?",
     "mandatory.doContactMandatory"  : "Hinweis anzeigen",
     "mandatory.count"       : "Anzahl",
     "mandatory.noticeOn"       : "Hinweise anzeigen aber weitere Bearbeitung möglich",

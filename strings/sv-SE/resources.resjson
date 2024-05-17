@@ -881,7 +881,7 @@
 
 	"mandatory.title"       : "Mandatory fields",
     "mandatory.contact"     : "Mandatory fields in Contact",
-    "mandatory.questionnaire" : "Mandatory fields in Questionnaire",
+    "mandatory.questionnaire" : "Vilken funktion ska ledtexten ha för de utvalda obligatoriska frågorna?",
     "mandatory.doQuestionnaireMandatory"  : "Show message",
     "mandatory.doContactMandatory"  : "Show message",
     "mandatory.count"  : "Count",

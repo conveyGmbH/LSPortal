@@ -884,7 +884,7 @@
     "mandatory.title"       : "Pflichtfelder",
     "mandatory.contact"     : "Pflichtfelder im Kontakt",
     "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
-    "mandatory.doQuestionnaireMandatory"  : "Hinweis anzeigen",
+    "mandatory.doQuestionnaireMandatory"  : "¿Qué función debe tener el texto de sugerencia para las preguntas obligatorias seleccionadas?",
     "mandatory.doContactMandatory"  : "Hinweis anzeigen",
     "mandatory.count"       : "Anzahl",
 
