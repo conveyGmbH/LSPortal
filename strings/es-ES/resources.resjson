@@ -884,9 +884,11 @@
     "mandatory.title"       : "Pflichtfelder",
     "mandatory.contact"     : "Pflichtfelder im Kontakt",
     "mandatory.questionnaire" : "Pflichtfelder im Fragebogen",
-    "mandatory.doQuestionnaireMandatory"  : "¿Qué función debe tener el texto de sugerencia para las preguntas obligatorias seleccionadas?",
+    "mandatory.doQuestionnaireMandatory"  : "Welche Funktion soll der Hinweis-Text für die ausgewählten Pflichtfragen haben?",
     "mandatory.doContactMandatory"  : "Hinweis anzeigen",
     "mandatory.count"       : "Anzahl",
+    "mandatory.noticeOn"       : "Hinweise anzeigen aber weitere Bearbeitung möglich",
+    "mandatory.noticeOff"       : "Weitere Bearbeitung NICHT zulassen",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Anzahl",
