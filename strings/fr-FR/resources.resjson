@@ -946,7 +946,7 @@
     "mandatory.title"       : "Champs obligatoires",
     "mandatory.contact"     : "Champs obligatoires du contact",
     "mandatory.questionnaire" : "Champs obligatoires du Questionnaire",
-    "mandatory.doQuestionnaireMandatory"  : " Quelle fonction doit avoir la boîte d'alerte pour les questions obligatoires sélectionnées ?",
+    "mandatory.doQuestionnaireMandatory"  : " Quelle fonction doit avoir la boîte d'alerte pour les questions obligatoires sélectionnées?",
     "mandatory.doContactMandatory"  : "afficher message",
     "mandatory.count"  : "Nombre",
     "mandatory.noticeOn" : "Afficher un message et un indice, mais autoriser la poursuite de l'édition même sans répondre aux questions obligatoires.",
