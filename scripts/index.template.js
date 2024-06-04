@@ -204,6 +204,7 @@
         { id: "startResourceAdministration", group: 55, disabled: false },
         { id: "startMediaAdministration", group: 55, disabled: false },
         { id: "genDataEmployee", group: 74, disabled: false },
+        { id: "genDataUserInfo", group: 74, disabled: false },
 		    { id: "genDataModDetails", group: 54, disabled: false },
 		    //{ id: "genDataModAnswers", group: 56, disabled: false },
 	      { id: "genDataModHisto", group: 54, disabled: false },
