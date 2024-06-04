@@ -238,7 +238,7 @@
         { id: "reporting", group: 8, disabled: false },
         { id: "reportingColumnList", group: 8, disabled: false },
         //{ id: "pdfExport", group: 8, disabled: false },
-        { id: "infodesk", group: -9, disabled: false },
+        { id: "infodesk", group: 9, disabled: false },
         { id: "info", group: 36, disabled: false }, /*10*/
         { id: "settings", group: 36, disabled: false }, /*10*/
         { id: "account", group: 36, disabled: false }, /*39*/
