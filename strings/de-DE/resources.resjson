@@ -545,6 +545,7 @@
     "userinfo.presence"     : "Anwesenheit",
 
     "label.home"            : "Start",
+    "label.start"           : "Dashboard",
     "label.contact"         : "Kontakt",
     "label.questionnaire"   : "Fragebogen",
     "label.sketch"          : "Anhänge",

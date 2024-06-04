@@ -542,6 +542,7 @@
     "userinfo.presence"     : "Présence",
 
     "label.home"            : "Accueil",
+    "label.start"           : "Dashboard",
     "label.contact"         : "Contact",
     "label.questionnaire"   : "Quoitionnaire",
     "label.sketch"          : "Annexes",

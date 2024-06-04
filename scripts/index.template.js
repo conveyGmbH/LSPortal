@@ -166,7 +166,7 @@
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //Dashboards
-        { id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
+        { id: "dashBoard", group: 15, svg: "dashboard", disabled: true },
         //Mailing
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 32, svg: "productmail", disabled: true, predecGroup: 31 },
@@ -192,7 +192,7 @@
     // static array of pages for the navigation bar
     Application.navigationBarPages = [
         { id: "home", group: -1, disabled: false },
-        { id: "start", group: -1, disabled: false },
+        { id: "start", group: 15, disabled: false },
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "eventSeries", group: 52, disabled: false },

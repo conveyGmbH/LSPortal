@@ -508,6 +508,7 @@
     "userinfo.presence"     : "Presence",
 
     "label.home"            : "Start",
+    "label.start"           : "Dashboard",
     "label.contact"         : "Contact",
     "label.questionnaire"   : "Questionnaire",
     "label.sketch"          : "Attachments",

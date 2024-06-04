@@ -542,6 +542,7 @@
     "userinfo.presence"     : "Presenza",
 
     "label.home"            : "Inizio",
+    "label.start"           : "Dashboard",
     "label.contact"         : "Contatto",
     "label.questionnaire"   : "Questionario",
     "label.sketch"          : "Allegati",
