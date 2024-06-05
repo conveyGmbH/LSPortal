@@ -104,11 +104,6 @@
     Application.navigationBarGroups = [
         //Home-Startseite
         { id: "home", group: 1, svg: "home", disabled: true },
-        //Administration Sideadmin ONLY
-        { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
-        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
-        { id: "clientManagement", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
-        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
         //EventSuccess
         { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
         { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
@@ -187,6 +182,12 @@
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true },
+        //Administration Sideadmin ONLY
+        { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
+        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
+        { id: "clientManagementSearchList", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
+        { id: "siteEventsRoleManagement", group: 81, svg: "standpersonal", disabled: true, predecGroup: 41 }
+        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
     ];
 
     // static array of pages for the navigation bar
@@ -247,8 +248,9 @@
         { id: "siteevents", group: 13, disbaled: false },
         { id: "mailingTypes", group: 13, disabled: false },
         { id: "mailingTemplate", group: 13, disabled: false },
-        { id: "clientManagement", group: 14, disabled: false },
-        { id: "clientManagementLicenses", group: 14, disabled: false },
+        { id: "clientManagementSearchList", group: 14, disabled: false },
+        { id: "clientManagement", group: 75, disabled: false },
+        { id: "clientManagementLicenses", group: 75, disabled: false },
         { id: "mailingTracking", group: 13, disabled: false },
         { id: "voucherAdministration", group: -16, disabled: false },
         { id: "resourcesAdministration", group: -17, disabled: false },
@@ -287,8 +289,8 @@
         { id: "mailingTypes", master: "siteEventsList" },
         { id: "mailingTemplate", master: "siteEventsList" },
         { id: "siteevents", master: "siteEventsList" },
-        { id: "clientManagement", master: "clientManagementList" },
-        { id: "clientManagementLicenses", master: "clientManagementList" },
+        //{ id: "clientManagement", master: "clientManagementList" },
+        //{ id: "clientManagementLicenses", master: "clientManagement" },
         { id: "mailingTracking", master: "mailingTrackingList" },
         { id: "esStaffAdministration", master: "esStaffAdministrationList" },
         { id: "esVoucherUsers", master: "esVoucherUsersList" },
