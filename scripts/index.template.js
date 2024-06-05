@@ -178,7 +178,7 @@
         { id: "settings", group: 38, svg: "design", disabled: true, predecGroup: 36 },
         { id: "account", group: 39, svg: "konto", disabled: false, predecGroup: 36 },
         //Support
-        { id: "support", group: -11, svg: "user_headset", disabled: true } /*40*/
+        { id: "support", group: -11, svg: "user_headset", disabled: true }, /*40*/
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true },
