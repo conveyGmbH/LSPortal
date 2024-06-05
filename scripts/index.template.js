@@ -161,7 +161,7 @@
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //Dashboards
-        { id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
+        { id: "dashBoard", group: 15, svg: "dashboard", disabled: true },
         //Mailing
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 32, svg: "productmail", disabled: true, predecGroup: 31 },
@@ -193,7 +193,7 @@
     // static array of pages for the navigation bar
     Application.navigationBarPages = [
         { id: "home", group: -1, disabled: false },
-        { id: "start", group: -1, disabled: false },
+        { id: "start", group: 15, disabled: false },
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "eventSeries", group: 52, disabled: false },
@@ -205,6 +205,7 @@
         { id: "startResourceAdministration", group: 55, disabled: false },
         { id: "startMediaAdministration", group: 55, disabled: false },
         { id: "genDataEmployee", group: 74, disabled: false },
+        { id: "genDataUserInfo", group: 74, disabled: false },
 		    { id: "genDataModDetails", group: 54, disabled: false },
 		    //{ id: "genDataModAnswers", group: 56, disabled: false },
 	      { id: "genDataModHisto", group: 54, disabled: false },
@@ -218,7 +219,7 @@
         { id: "eventSpeakerAdministration", group: 44, disabled: false },
         { id: "questionList", group: 3, disabled: false },
         { id: "questiongroup", group: 3, disabled: false },
-        { id: "optQuestionList", group: 82, disabled: false },
+        { id: "optQuestionList", group: 3, disabled: false },
 		    { id: "optMandatoryFieldList", group: 3, disabled: false},
         { id: "mandatory", group: -30, disabled: false },
         //{ id: "visitorFlowEntExt", group: 3, disabled: false },
@@ -238,7 +239,7 @@
         { id: "reporting", group: 8, disabled: false },
         { id: "reportingColumnList", group: 8, disabled: false },
         //{ id: "pdfExport", group: 8, disabled: false },
-        { id: "infodesk", group: -9, disabled: false },
+        { id: "infodesk", group: 9, disabled: false },
         { id: "info", group: 36, disabled: false }, /*10*/
         { id: "settings", group: 36, disabled: false }, /*10*/
         { id: "account", group: 36, disabled: false }, /*39*/
