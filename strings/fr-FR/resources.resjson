@@ -591,6 +591,7 @@
 	"label.mailingTracking"	: "MailTracking",
     "label.mailingOptions"	: "Paramètres de diffusion",
     "label.clientManagementSearchList"	: "La gestion des clients",
+    "label.clientManagement"	: "La gestion des clients",
     "label.clientManagementLicenses"	: "Licences",
     "label.infodeskMessages": "Divertissement",
     "label.esStaffAdministration" : "Personnel de stand",

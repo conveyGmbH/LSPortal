@@ -558,6 +558,7 @@
 	"label.mailingTracking"	: "E-Mail Verfolgung",
     "label.mailingOptions"	: "Mailingeinstellungen",
     "label.clientManagementSearchList"	: "Mandantenverwaltung",
+    "label.clientManagement"	: "Mandantenverwaltung",
     "label.clientManagementLicenses"	: "Lizenzen",
 	"label.infodeskMessages" : "Unterhaltung",
     "label.esStaffAdministration" : "Standpersonal",

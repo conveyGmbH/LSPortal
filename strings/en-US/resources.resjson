@@ -591,6 +591,7 @@
 	"label.mailingTracking"	: "MailTracking",
     "label.mailingOptions"	: "Mailingoptions",
     "label.clientManagementSearchList"	: "Client management",
+    "label.clientManagement"	: "Client management",
     "label.clientManagementLicenses"	: "Licenses",
 	"label.infodeskMessages" : "Unterhaltung",
     "label.esStaffAdministration" : "Stand personnel",
