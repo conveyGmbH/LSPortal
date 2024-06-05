@@ -62,7 +62,7 @@
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                that.binding.recordID = AppData.getRecordId("FairMandantVIEW_20582");
+                that.binding.recordID = AppData.getRecordId("MandantID");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
             }
@@ -494,7 +494,7 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 that.loading = true;
-                AppData.setRecordId("FairMandantVIEW_20582", recordId);
+                AppData.setRecordId("MandantID", recordId);
                 that.binding.newLicensesShowFlag = false;
                 that.binding.editLicensesShowFlag = false;
                 //progress = listView.querySelector(".list-footer .progress");
