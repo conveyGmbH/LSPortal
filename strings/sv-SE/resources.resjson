@@ -255,6 +255,7 @@
 
     "search.title"          : "Enter search criteria",
     "search.comment"        : "On this page, use the Back button to go back!",
+    "search.event"          : "Event",
     "search.ID"             : "ID",
     "search.deviceID"       : "Device",
     "search.company"        : "Company",

@@ -286,6 +286,7 @@
 
     "search.title"          : "Immettere i criteri di ricerca",
     "search.comment"        : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
+    "search.event"          : "Evento",
     "search.ID"             : "ID",
     "search.deviceID"       : "Dispositivo",
     "search.company"        : "Azienda",

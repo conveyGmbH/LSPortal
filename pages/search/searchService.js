@@ -35,6 +35,7 @@
                 PLZ: "",
                 Stadt: "",
                 INITLandID: "",
+                VeranstaltungID: null, //Suche nach VeranstaltungID
                 useErfassungsdatum: false,
                 usemodifiedTS: false,
                 Erfassungsart: 0,
@@ -154,6 +155,91 @@
                 Nachname: "",
                 Login: "",
                 fullName: ""
+            }
+        },
+        _eventView: {
+            get: function () {
+                return AppData.getFormatView("Veranstaltung2", 0);
+            }
+        },
+        eventView: {
+            fetchNext: function (results, url, complete, error) {
+                Log.call(Log.l.trace, "Search.eventView.");
+                var nextJson = null;
+                var ret = Search._eventView.selectNext(function (json) {
+                    nextJson = json;
+                },
+                    function (errorResponse) {
+                        Log.print(Log.l.error, "error=" + AppData.getErrorMsgFromResponse(errorResponse));
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    },
+                    null,
+                    url).then(function () {
+                        if (nextJson && nextJson.d) {
+                            results = results.concat(nextJson.d.results);
+                            var nextUrl = Search._eventView.getNextUrl(nextJson);
+                            if (nextUrl) {
+                                return Search.eventView.fetchNext(results, nextUrl, complete, error);
+                            } else {
+                                nextJson.d.results = results;
+                                if (typeof complete === "function") {
+                                    complete(nextJson);
+                                }
+                                return WinJS.Promise.as();
+                            }
+                        } else {
+                            if (typeof complete === "function") {
+                                complete(nextJson || {});
+                            }
+                            return WinJS.Promise.as();
+                        }
+                    });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            fetchAll: function (json, complete, error) {
+                Log.call(Log.l.trace, "GenDataEmpList.eventView.", "");
+                var ret;
+                var nextUrl = Search._eventView.getNextUrl(json);
+                if (nextUrl) {
+                    ret = Search.eventView.fetchNext(json.d.results, nextUrl, complete, error);
+                } else {
+                    if (typeof complete === "function") {
+                        complete(json);
+                    }
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            select: function (complete, error) {
+                Log.call(Log.l.trace, "Search.eventView.");
+                var nextJson = null;
+                var ret = Search._eventView.select(function (json) {
+                    nextJson = json;
+                },
+                    error,
+                    null,
+                    {
+                        ordered: true,
+                        orderAttribute: "Name"
+                    }).then(function () {
+                        if (nextJson) {
+                            return Search.eventView.fetchAll(nextJson, complete, error);
+                        } else {
+                            if (typeof complete === "function") {
+                                complete({});
+                            }
+                            return WinJS.Promise.as();
+                        }
+                    });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Name: ""
             }
         }
     });

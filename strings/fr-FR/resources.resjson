@@ -286,6 +286,7 @@
 
     "search.title"          : "Entrez les critères de recherche",
     "search.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",
+    "search.event"          : "Événement",
     "search.ID"             : "ID",
     "search.deviceID"       : "Appareil",
     "search.company"        : "Société",
