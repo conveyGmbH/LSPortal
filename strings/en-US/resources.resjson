@@ -1703,7 +1703,7 @@
     "siteeventsimport.numberoflineswithouterror"			: "Number of lines without errors",
 	
     "genFragEvents.event"			: "Event",
-    "genFragEvents.eventstart"			: "Start",
+    "genFragEvents.eventstart"			: "Start/End",
     "genFragEvents.eventend"			: "End",
     "genFragEvents.eventaktiv"			: "Aktive",
     "genFragEvents.eventinfomail"			: "Info Mail",

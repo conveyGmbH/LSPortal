@@ -297,7 +297,7 @@
     "search.industry"		: "Branche",
     "search.firstName"      : "Vorname",
     "search.name"           : "Name",
-	  "search.department"		: "Abteilung",
+	"search.department"		: "Abteilung",
     "search.email"          : "E-Mail",
     "search.address"        : "Adresse",
     "search.city"           : "Stadt",
@@ -1709,7 +1709,7 @@
     "siteeventsimport.numberoflineswithouterror"			: "Anzahl Zeilen ohne Fehler",
 	
     "genFragEvents.event"			: "Veranstaltung",
-    "genFragEvents.eventstart"			: "Beginn",
+    "genFragEvents.eventstart"			: "Beginn/Ende",
     "genFragEvents.eventend"			: "Ende",
     "genFragEvents.eventaktiv"			: "Aktiv",
     "genFragEvents.eventinfomail"			: "Info Mail",

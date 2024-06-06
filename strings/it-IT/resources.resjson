@@ -1683,7 +1683,7 @@
     "siteeventsimport.numberoflineswithouterror"			: "Numero di righe senza errori",
 
     "genFragEvents.event" : "Event",
-    "genFragEvents.eventstart" : "Start",
+    "genFragEvents.eventstart" : "Start/End",
     "genFragEvents.eventend" : "End",
     "genFragEvents.eventactive" : "Active",
     "genFragEvents.eventinfomail" : "Info Mail",
