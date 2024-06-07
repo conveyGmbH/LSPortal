@@ -474,9 +474,6 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
-            }).then(function () {
                 var savedRestriction = AppData.getRestriction("Kontakt");
                 if (typeof savedRestriction === "object") {
                     that.binding.restriction = savedRestriction;
@@ -487,6 +484,9 @@
                 }
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showDateRestrictions();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Date restrictions shown");
