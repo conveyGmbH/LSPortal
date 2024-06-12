@@ -215,6 +215,7 @@
     "contact.count"         : "Count",
     "contact.barcode"       : "Barcode",
     "contact.incomplete"    : "Editing incomplete",
+    "contact.complete"		  : "Manually editied/reviewed after acquisition",
     "contact.notice"        : "Comment",
     "contact.url"           : "Website",
     "contact.barcodeState"  : "Barcode State",
@@ -275,9 +276,11 @@
     "search.filter"         : "Filter",
     "search.barcode"        : "Barcode",
     "search.businesscard"   : "Business Card",
-    "search.default"        : "Default",
-    "search.edited"         : "Edited",
+    "search.default"        : "All",
+    "search.edited"         : "Manually editied/reviewed after acquisition",
     "search.notEdited"      : "Not Edited",
+    "search.editedComplete" : "Ja",
+    "search.notEditedComplete" : "Nein",
 
     "listLocal.title"       : "List of local contacts",
     "listLocal.comment"     : "On this page, use the Back button to go back!",
@@ -914,6 +917,9 @@
 	"localevents.confirmCopyQuestionnaire2" : "will be irrevocably replaced by questionnaire ",
     "localevents.labelDelete"   : "Should the event ",
     "localevents.eventDelete"   : "really be deleted?",
+
+	  "eventList.btnFilterNotPublished" : "Questionnaire not released for APP/s", 
+    "eventList.btnFilterAll" : "All", 
 
     "eventslist.title" : "Events",
     "eventslist.count"       : "Count",
