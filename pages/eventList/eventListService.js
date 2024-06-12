@@ -7,6 +7,7 @@
     "use strict";
 
     WinJS.Namespace.define("EventList", {
+        _restriction: null,
         _VeranstaltungView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung", 20542);
@@ -15,6 +16,9 @@
         VeranstaltungView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "EventList.");
+                if (EventList._restriction) {
+                    restriction = EventList._restriction;
+                }
                 var ret = EventList._VeranstaltungView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Startdatum",

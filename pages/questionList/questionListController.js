@@ -71,15 +71,15 @@
             }
             this.setEventId = setEventId;*/
 
-            var getPublishFlag = function() {
+            var getPublishFlag = function () {
                 var publishFlag = null;
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                /*var master = Application.navigator.masterControl;
+                var master = Application.navigator.masterControl;
                 if (master && master.controller) {
                     publishFlag = master.controller.binding.publishFlag;
-                } else {*/
+                } else {
                     publishFlag = that.binding.generalData.publishFlag;
-                //}
+                }
                 Log.ret(Log.l.trace, publishFlag);
                 return publishFlag;
             }
@@ -1353,9 +1353,9 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId || {
-                            VeranstaltungID: that.getEventId()
-                        });
+                    }, recordId || {
+                        VeranstaltungID: that.getEventId()
+                    });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();
@@ -1378,8 +1378,8 @@
                 that.checkingQuestionnaireBarcodePdf();
                 Log.print(Log.l.trace, "Binding wireup page complete");
             })*/.then(function () {
-                Log.print(Log.l.trace, "Record selected");
-            });
+                    Log.print(Log.l.trace, "Record selected");
+                });
             Log.ret(Log.l.trace);
         }, {
                 prevRecId: 0,

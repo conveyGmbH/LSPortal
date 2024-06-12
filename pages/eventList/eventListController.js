@@ -13,6 +13,7 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "EventList";
 
     WinJS.Namespace.define("EventList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList, isMaster) {
@@ -22,7 +23,8 @@
                 publishFlag: null,
                 count: 0,
                 active: null,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished")
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;
@@ -32,6 +34,7 @@
 
             // ListView control
             var listView = pageElement.querySelector("#eventList.listview");
+            var btnFilterNotPublished = pageElement.querySelector("#btnFilterNotPublished");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -257,10 +260,10 @@
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
-                                        //that.binding.publishFlag = item.data.PublishFlag;
+                                        that.binding.publishFlag = item.data.PublishFlag;
                                         if (typeof AppHeader === "object" &&
                                             AppHeader.controller && AppHeader.controller.binding) {
-                                            AppHeader.controller.binding.publishFlag = that.binding.generalData.publishFlag; /* that.binding.publishFlag*/
+                                            AppHeader.controller.binding.publishFlag = AppHeader.controller.getPublishFlag(); /* that.binding.publishFlag that.binding.generalData.publishFlag*/
                                         }
                                         if (item.data.Aktiv) {
                                             that.binding.active = 1;
@@ -314,16 +317,16 @@
                                                     if (curPageId === "optMandatoryFieldList" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         //AppBar.scope.setEventId(that.binding.eventId);
-                                                         WinJS.Promise.as().then(function () {
-                                                             Log.print(Log.l.trace, "Load Question");
-                                                             return AppBar.scope.loadQuestion();
-                                                         }).then(function () {
-                                                             Log.print(Log.l.trace, "Binding wireup page complete");
-                                                             return AppBar.scope.loadPflichtFeld();
-                                                         }).then(function () {
-                                                             Log.print(Log.l.trace, "Binding wireup page complete");
-                                                             return AppBar.scope.loadData(); 
-                                                         });
+                                                        WinJS.Promise.as().then(function () {
+                                                            Log.print(Log.l.trace, "Load Question");
+                                                            return AppBar.scope.loadQuestion();
+                                                        }).then(function () {
+                                                            Log.print(Log.l.trace, "Binding wireup page complete");
+                                                            return AppBar.scope.loadPflichtFeld();
+                                                        }).then(function () {
+                                                            Log.print(Log.l.trace, "Binding wireup page complete");
+                                                            return AppBar.scope.loadData();
+                                                        });
                                                     }
                                                     if (curPageId === "mandatory" &&
                                                         typeof AppBar.scope.loadData === "function") {
@@ -382,7 +385,7 @@
                                                 }
                                                 if (curPageId === "mandatory" &&
                                                     typeof AppBar.scope.loadData === "function") {
-                                                    WinJS.Promise.as().then(function() {
+                                                    WinJS.Promise.as().then(function () {
                                                         Log.print(Log.l.trace, "Load Question");
                                                         return AppBar.scope.loadData();
                                                     })/*.then(function () {
@@ -392,10 +395,10 @@
                                                 }
                                                 if (curPageId === "optQuestionList" &&
                                                     typeof AppBar.scope.loadData === "function") {
-                                                    WinJS.Promise.as().then(function() {
+                                                    WinJS.Promise.as().then(function () {
                                                         Log.print(Log.l.trace, "Load Question");
                                                         return AppBar.scope.loadQuestion();
-                                                    }).then(function() {
+                                                    }).then(function () {
                                                         Log.print(Log.l.trace, "Binding wireup page complete");
                                                         return AppBar.scope.loadData();
                                                     });
@@ -482,6 +485,24 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickOrderBy: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {     
+                        if (event.currentTarget.id === "btnFilterNotPublished") {
+                            if (EventList._restriction == null) {
+                                EventList._restriction = {
+                                    PublishFlag: 1
+                                }
+                            } else {
+                                EventList._restriction = null;
+                            }
+                        }
+                        var newRscText = EventList._restriction &&  EventList._restriction["PublishFlag"] ? getResourceText("eventList.btnFilterAll") : getResourceText("eventList.btnFilterNotPublished");
+                        that.binding[event.currentTarget.id] = getResourceText(newRscText);
+                        that.loadData();
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {
@@ -501,7 +522,9 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
-
+            if (btnFilterNotPublished) {
+                this.addRemovableEventListener(btnFilterNotPublished, "click", this.eventHandlers.clickOrderBy.bind(this));
+            }
             var loadData = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
                 that.loading = true;

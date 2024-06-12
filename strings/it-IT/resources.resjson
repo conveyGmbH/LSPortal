@@ -983,6 +983,9 @@
     "eventslist.title" : "Eventi",
     "eventslist.count"       : "Totale",
 
+	  "eventList.btnFilterNotPublished" : "Questionario non rilasciato per APP/s", 
+    "eventList.btnFilterAll" : "Tutti",
+ 
     "employeegenpwlist.title" : "Password dei dipendenti pre-generate",
     "employeegenpwlist.login" : "nome di accesso",
     "employeegenpwlist.password" : "password",
