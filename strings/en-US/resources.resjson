@@ -310,8 +310,8 @@
     "search.default"        : "All",
     "search.edited"         : "Manually editied/reviewed after acquisition",
     "search.notEdited"      : "Not Edited",
-    "search.editedComplete" : "Ja",
-    "search.notEditedComplete" : "Nein",
+    "search.editedComplete" : "Yes",
+    "search.notEditedComplete" : "No",
 
     "listLocal.title"       : "List of local contacts",
     "listLocal.comment"     : "On this page, use the Back button to go back!",
