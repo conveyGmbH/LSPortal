@@ -104,6 +104,12 @@
     Application.navigationBarGroups = [
         //Home-Startseite
         { id: "home", group: 1, svg: "home", disabled: true },
+        //Administration Sideadmin ONLY
+        { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
+        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
+        { id: "clientManagementSearchList", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
+        { id: "siteEventsRoleManagement", group: 81, svg: "standpersonal", disabled: true, predecGroup: 41 },
+        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
         //EventSuccess
         { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
         { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
@@ -178,16 +184,10 @@
         { id: "settings", group: 38, svg: "design", disabled: true, predecGroup: 36 },
         { id: "account", group: 39, svg: "konto", disabled: false, predecGroup: 36 },
         //Support
-        { id: "support", group: -11, svg: "user_headset", disabled: true }, /*40*/
+        { id: "support", group: -11, svg: "user_headset", disabled: true } /*40*/
         //{ id: "resourcesAdministration", group: 17, svg: "user_headset", disabled: true },
         //{ id: "search", group: 7, svg: "magnifying_glass", disabled: true },
         //{ id: "info", group: 10, svg: "gearwheel", disabled: true },
-        //Administration Sideadmin ONLY
-        { id: "administrationGrp", group: 41, svg: "administration", disabled: true, popup: true },
-        { id: "siteevents", group: 13, svg: "mandant", disabled: true, predecGroup: 41 },
-        { id: "clientManagementSearchList", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
-        { id: "siteEventsRoleManagement", group: 81, svg: "standpersonal", disabled: true, predecGroup: 41 }
-        // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
     ];
 
     // static array of pages for the navigation bar
