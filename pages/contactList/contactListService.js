@@ -129,15 +129,11 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: {
-                get: function () {
-                    return ContactList._contactView.relationName;
-                }
+            get relationName() {
+                return ContactList._contactView.relationName;
             },
-            pkName: {
-                get: function () {
-                    return ContactList._contactView.oDataPkName;
-                }
+            get pkName() {
+                return ContactList._contactView.oDataPkName;
             },
             getRecordId: function (record) {
                 var ret = null;

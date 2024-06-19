@@ -92,15 +92,11 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: {
-                get: function() {
-                    return MediaList._eventDocView.relationName;
-                }
+            get relationName() {
+                return MediaList._eventDocView.relationName;
             },
-            pkName: {
-                get: function() {
-                    return MediaList._eventDocView.oDataPkName;
-                }
+            get pkName() {
+                return MediaList._eventDocView.oDataPkName;
             },
             getRecordId: function (record) {
                 var ret = null;

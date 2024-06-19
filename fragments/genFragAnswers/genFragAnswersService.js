@@ -36,15 +36,11 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: {
-                get: function() {
-                    return GenFragAnswers._answerView.relationName;
-                }
+            get relationName() {
+                return GenFragAnswers._answerView.relationName;
             },
-            pkName: {
-                get: function() {
-                    return GenFragAnswers._answerView.oDataPkName;
-                }
+            get pkName() {
+                return GenFragAnswers._answerView.oDataPkName;
             },
             getRecordId: function (record) {
                 var ret = null;
@@ -71,15 +67,11 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: {
-                get: function() {
-                    return GenFragAnswers._answerTable.relationName;
-                }
+            get relationName() {
+                return GenFragAnswers._answerTable.relationName;
             },
-            pkName: {
-                get: function() {
-                    return GenFragAnswers._answerTable.oDataPkName;
-                }
+            get pkName() {
+                return GenFragAnswers._answerTable.oDataPkName;
             },
             getRecordId: function (record) {
                 var ret = null;
