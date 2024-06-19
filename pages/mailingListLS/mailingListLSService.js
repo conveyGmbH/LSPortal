@@ -115,15 +115,11 @@
                     Log.ret(Log.l.trace);
                     return ret;
                 },
-                relationName: {
-                    get: function () {
+                get relationName() {
                         return MailingListLS._MaildokumentView.relationName;
-                    }
                 },
-                pkName: {
-                    get: function () {
+                get pkName() {
                         return MailingListLS._MaildokumentView.oDataPkName;
-                    }
                 },
                 getRecordId: function (record) {
                     var ret = null;
