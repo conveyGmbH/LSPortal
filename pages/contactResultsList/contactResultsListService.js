@@ -113,15 +113,11 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            relationName: {
-                get: function() {
-                    return ContactResultsList._contactResultsView.relationName;
-                }
+            get relationName() {
+                return ContactResultsList._contactResultsView.relationName;
             },
-            pkName: {
-                get: function() {
-                    return ContactResultsList._contactResultsView.oDataPkName;
-                }
+            get pkName() {
+                return ContactResultsList._contactResultsView.oDataPkName;
             },
             getRecordId: function (record) {
                 var ret = null;
