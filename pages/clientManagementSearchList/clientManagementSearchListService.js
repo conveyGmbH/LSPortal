@@ -57,7 +57,7 @@
         },
         _fairMandantView: {
             get: function () {
-                var ret = AppData.getFormatView("FairMandant", 20582);
+                var ret = AppData.getFormatView("FairMandant", 20692);
                 //ret.maxPageSize = 20;
                 return ret;
             }
@@ -207,7 +207,7 @@
                             value2 = 0;
                         }
                         return (ClientManagementSearchList._orderDesc ? (value2 - value1) : (value1 - value2));
-                    } 
+                    }
                     if (typeof value1 === "string") {
                         value1 = value1.toUpperCase();
                     }

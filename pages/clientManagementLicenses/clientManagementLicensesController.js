@@ -62,7 +62,7 @@
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                that.binding.recordID = AppData.getRecordId("MandantID");
+                that.binding.recordID = AppData.getRecordId("FairMandant");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
             }
@@ -129,7 +129,7 @@
                 Log.print(Log.l.info, "timestamp created and set");
 
                 return str;
-            
+
             }
             this.getTimeStamp = getTimeStamp;
             */
@@ -252,7 +252,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
-                    
+
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -494,7 +494,7 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 that.loading = true;
-                AppData.setRecordId("MandantID", recordId);
+                AppData.setRecordId("FairMandant", recordId);
                 that.binding.newLicensesShowFlag = false;
                 that.binding.editLicensesShowFlag = false;
                 //progress = listView.querySelector(".list-footer .progress");
@@ -550,7 +550,7 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                            } 
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs

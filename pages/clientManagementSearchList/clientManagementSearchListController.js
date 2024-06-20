@@ -33,7 +33,7 @@
             var radios = pageElement.querySelectorAll('input[type="radio"]');
 
             var layout = null;
-            
+
             this.dispose = function () {
                 ClientManagementSearchList._prevJson = null;
                 ClientManagementSearchList._collator = null;
@@ -85,7 +85,7 @@
                                     listView.winControl.indexOfFirstVisible = scope.index;
                                 }
                             }
-                            that.selectRecordId(AppData.getRecordId("MandantID"));
+                            that.selectRecordId(AppData.getRecordId("FairMandant"));
                         });
                     }
                 }
@@ -119,7 +119,7 @@
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_CreateFairMandant success! ");
                     AppBar.busy = false;
-                    AppData.setRecordId("MandantID", json.d.results[0].FairMandantID);
+                    AppData.setRecordId("FairMandant", json.d.results[0].FairMandantID);
                     if (json.d.results[0].FairMandantID) {
                         Application.navigateById("clientManagement");
                     } else {
@@ -181,7 +181,7 @@
                     that.selectionChanged().then(function () {
                         var scope = that.scopeFromRecordId(that.curRecId);
                         if (scope) {
-                            AppData.setRecordId("MandantID", that.curRecId);
+                            AppData.setRecordId("FairMandant", that.curRecId);
                         }
                         if (that.curRecId) {
                             Application.navigateById("clientManagement");
@@ -288,13 +288,13 @@
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
-            
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(that.binding.searchString);
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.scrollToRecordId(AppData.getRecordId("MandantID"));
+                return that.scrollToRecordId(AppData.getRecordId("FairMandant"));
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
@@ -302,4 +302,4 @@
             Log.ret(Log.l.trace);
         })
     });
-})(); 
+})();

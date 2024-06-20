@@ -28,18 +28,18 @@
             var that = this;
 
             var initLand = pageElement.querySelector("#InitLand");
-            var apiToggle = pageElement.querySelector("#createApiUser"); 
+            var apiToggle = pageElement.querySelector("#createApiUser");
 
             var createApiUserValue = 0;
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                that.binding.recordID = AppData.getRecordId("MandantID");
+                that.binding.recordID = AppData.getRecordId("FairMandant");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
             }
             this.getRecordId = getRecordId;
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
             }
@@ -216,7 +216,7 @@
                     }
                 }
             };
-            
+
             var loadData = function (mandantId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);

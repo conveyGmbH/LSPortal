@@ -11,7 +11,7 @@
     WinJS.Namespace.define("ClientManagementList", {
         _fairMandantView: {
             get: function () {
-                return AppData.getFormatView("FairMandant", 20582);
+                return AppData.getFormatView("FairMandant", 20692);
             }
         },
         fairMandantView: {

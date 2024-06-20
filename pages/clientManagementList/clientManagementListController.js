@@ -216,7 +216,7 @@
                                                 if (curPageId === "clientManagement") {
                                                     AppBar.scope.binding.saveFlag = true;
                                                     if (typeof AppBar.scope.loadData === "function") {
-                                                        AppData.setRecordId("MandantID",
+                                                        AppData.setRecordId("FairMandant",
                                                             that.binding.clientId);
                                                         AppBar.scope.loadData(that.binding.clientId);
                                                     } else {
