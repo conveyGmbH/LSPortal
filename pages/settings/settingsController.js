@@ -16,13 +16,17 @@
     WinJS.Namespace.define("Settings", {
         Controller: WinJS.Class.derive(Application.Controller, function controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Settings.Controller.");
+
             Application.Controller.apply(this, [pageElement, {
                 showSettingsFlag: false,
                 themeId: 2,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
-                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
+                backgroundColor: Colors.backgroundColor,
+                navigationColor: Colors.navigationColor,
+                dashboardColor: Colors.dashboardColor
             }, commandList]);
 
             var themeSelect = pageElement.querySelector("#themeSelect");
@@ -43,11 +47,40 @@
                 }
             }
 
+            var checkColorLimit = function (color, isBkg) {
+                if (Colors.isDarkTheme) {
+                    var rgbColor = Colors.hex2rgb(color);
+                    var hsvColor = Colors.rgb2hsv(rgbColor);
+                    if (isBkg && hsvColor.v < 50 ||
+                        !isBkg && hsvColor.v > 50) {
+                        rgbColor = Colors.hsv2rgb(
+                            hsvColor.h,
+                            hsvColor.s,
+                            100 - hsvColor.v
+                        );
+                        color = Colors.rgb2hex(rgbColor.r, rgbColor.g, rgbColor.b);
+                    }
+                }
+                return color;
+            };
             var createColorPicker = function (colorProperty) {
                 Log.call(Log.l.trace, "Settings.Controller.");
+                var color = Colors[colorProperty];
+                switch (colorProperty) {
+                case "backgroundColor":
+                    color = checkColorLimit(color, false);
+                    break;
+                case "navigationColor":
+                    color = checkColorLimit(color, true);
+                    break;
+                case "dashboardColor":
+                    color = checkColorLimit(color, true);
+                    break;
+
+                }
                 if (that.binding && that.binding.generalData &&
                     that.binding.generalData.colorSettings) {
-                    that.binding.generalData.colorSettings[colorProperty] = Colors[colorProperty];
+                    that.binding.generalData.colorSettings[colorProperty] = color;
                 }
                 var id = "#" + colorProperty + "_picker";
                 var element = pageElement.querySelector(id);
@@ -88,9 +121,11 @@
                             break;
                         case "backgroundColor":
                             pOptionTypeId = 12;
+                            color = checkColorLimit(color, true);
                             break;
                         case "navigationColor":
                             pOptionTypeId = 13;
+                            color = checkColorLimit(color, false);
                             break;
                         case "textColor":
                             pOptionTypeId = 14;
@@ -106,6 +141,7 @@
                             break;
                         case "dashboardColor":
                             pOptionTypeId = 46;
+                            color = checkColorLimit(color, false);
                             break;
                         default:
                         // defaultvalues
@@ -115,28 +151,26 @@
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
-                        },
-                            function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                                that.binding.generalData.colorSettings[colorProperty] = color;
-                                Application.pageframe.savePersistentStates();
-                                AppData.applyColorSetting(colorProperty, color);
-                                WinJS.Promise.timeout(0).then(function () {
-                                    if (colorProperty === "accentColor") {
-                                        that.createColorPicker("backgroundColor");
-                                        that.createColorPicker("textColor");
-                                        that.createColorPicker("labelColor");
-                                        that.createColorPicker("tileTextColor");
-                                        that.createColorPicker("tileBackgroundColor");
-                                        that.createColorPicker("navigationColor");
-                                        that.createColorPicker("dashboardColor");
-                                    }
-                                });
-                            },
-                            function (error) {
-                                Log.print(Log.l.error, "call error");
-                                that.loadData();
+                        },  function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            that.binding.generalData.colorSettings[colorProperty] = color;
+                            Application.pageframe.savePersistentStates();
+                            AppData.applyColorSetting(colorProperty, color);
+                            WinJS.Promise.timeout(0).then(function () {
+                                if (colorProperty === "accentColor") {
+                                    that.createColorPicker("backgroundColor");
+                                    that.createColorPicker("textColor");
+                                    that.createColorPicker("labelColor");
+                                    that.createColorPicker("tileTextColor");
+                                    that.createColorPicker("tileBackgroundColor");
+                                    that.createColorPicker("navigationColor");
+                                    that.createColorPicker("dashboardColor");
+                                }
                             });
+                        }, function (error) {
+                            Log.print(Log.l.error, "call error");
+                            that.loadData();
+                        });
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -240,6 +274,7 @@
                         if (toggle) {
                             if (!toggle.checked && AppData._persistentStates.individualColors) {
                                 WinJS.Promise.timeout(0).then(function () {
+                                    var dashboardColorType = 0;
                                     if (AppData._userData.VeranstaltungTyp === 0) {
                                         //if(AppData._userData.isSupreme === "1")
                                         switch (AppData._userData.IsSupreme) {
@@ -253,14 +288,14 @@
                                                 break;
                                             default:
                                         }
-                                        var colorSettings = AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType || AppData._userData.VeranstaltungTyp];
-                                        for (var prop in colorSettings) {
-                                            if (colorSettings.hasOwnProperty(prop)) {
-                                                AppData.persistentStatesDefaults.colorSettings[prop] = colorSettings[prop];
-                                            }
-                                        }
                                     }
-                                    var colorSettings = copyByValue(AppData.persistentStatesDefaults.colorSettings);
+                                    var colorSettings =
+                                        AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType ||
+                                                AppData._userData.VeranstaltungTyp] ||
+                                            AppData.persistentStatesDefaults.colorSettingsDefaults[0];
+                                    if (colorSettings) {
+                                        AppData.persistentStatesDefaults.colorSettings = copyByValue(colorSettings);
+                                    }
                                     var colors = new Colors.ColorsClass(colorSettings);
                                     var promise = colors._loadCssPromise || WinJS.Promise.timeout(0);
                                     promise.then(function () {
