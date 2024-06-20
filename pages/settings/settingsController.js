@@ -23,10 +23,7 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
-                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
-                backgroundColor: Colors.backgroundColor,
-                navigationColor: Colors.navigationColor,
-                dashboardColor: Colors.dashboardColor
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
             }, commandList]);
 
             var themeSelect = pageElement.querySelector("#themeSelect");
@@ -67,16 +64,15 @@
                 Log.call(Log.l.trace, "Settings.Controller.");
                 var color = Colors[colorProperty];
                 switch (colorProperty) {
-                case "backgroundColor":
-                    color = checkColorLimit(color, false);
+                    case "backgroundColor":
+                        color = checkColorLimit(color, true);
                     break;
-                case "navigationColor":
-                    color = checkColorLimit(color, true);
+                    case "navigationColor":
+                        color = checkColorLimit(color, false);
                     break;
-                case "dashboardColor":
-                    color = checkColorLimit(color, true);
+                    case "dashboardColor":
+                        color = checkColorLimit(color, false);
                     break;
-
                 }
                 if (that.binding && that.binding.generalData &&
                     that.binding.generalData.colorSettings) {
@@ -153,7 +149,10 @@
                             pValue: pValue
                         },  function (json) {
                             Log.print(Log.l.info, "call success! ");
-                            that.binding.generalData.colorSettings[colorProperty] = color;
+                            if (that.binding && that.binding.generalData &&
+                                that.binding.generalData.colorSettings) {
+                                that.binding.generalData.colorSettings[colorProperty] = color;
+                            }
                             Application.pageframe.savePersistentStates();
                             AppData.applyColorSetting(colorProperty, color);
                             WinJS.Promise.timeout(0).then(function () {
@@ -174,6 +173,7 @@
                     }
                 }
                 Log.ret(Log.l.trace);
+                return color;
             }
             this.changeColorSetting = changeColorSetting;
 
@@ -438,10 +438,6 @@
                                 that.changeColorSetting(colorProperty, color);
                             } else if (colorPicker && colorPicker.color) {
                                 that.changeColorSetting(colorProperty, colorPicker.color);
-                                if (that.binding && that.binding.generalData &&
-                                    that.binding.generalData.colorSettings) {
-                                    that.binding.generalData.colorSettings[colorProperty] = colorPicker.color;
-                                }
                             }
                         }
                     }
