@@ -49,6 +49,20 @@
             }
             this.setEventId = setEventId;
 
+            var setTooltips = function() {
+                var companyname = pageElement.querySelector("#Firmenname");
+                var lastmodified = pageElement.querySelector("#ModifiedTS");
+                var welcomemail = pageElement.querySelector("#WelcomeMailTS");
+                var mail = pageElement.querySelector("#MailVersandTS");
+                if (companyname && lastmodified) {
+                    companyname.title = getResourceText("tooltip.companyname");
+                    lastmodified.title = getResourceText("tooltip.lastmodified");
+                    welcomemail.title = getResourceText("tooltip.welcomeemailversandtzeit");
+                    mail.title = getResourceText("tooltip.headeremailversandtzeit");
+                }
+            }
+            this.setTooltips = setTooltips;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 if (!item.Name) {
@@ -165,7 +179,7 @@
                         if (scope) {
                             handlePageEnable(scope.item);
                         }
-                        AppData.setRecordId("Kontakt", that.curRecId);
+                            AppData.setRecordId("Kontakt", that.curRecId);
                         if (that.getEventId()) {
                             Application.navigateById("contactResultsEdit");
                         } else {
@@ -262,7 +276,7 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "dblclick", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
@@ -275,7 +289,9 @@
             }
             AppData.setRecordId("Kontakt", null);
 
-            that.processAll().then(function () {
+            that.processAll().then(function() {
+                return that.setTooltips();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(that.binding.searchString);
             }).then(function () {

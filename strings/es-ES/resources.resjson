@@ -140,7 +140,11 @@
     "tooltip.changeLogin" : "Mitarbeiter Login ändern",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
     "tooltip.deleteUserPhoto"  :  "Delete image",
-
+    "tooltip.companyname"       :  "Company name",
+    "tooltip.lastmodified"     :  "Last modified",
+    "tooltip.welcomeemailversandtzeit"  :  "Standard email sent",
+    "tooltip.headeremailversandtzeit"			: "Product email sent",
+    
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
 
@@ -1222,6 +1226,25 @@
 
     "contactResultsList.title"			: "Kontakte",
     "contactResultsList.count"			: "Anzahl der Kontakte",
+    "contactResultsList.headername"			: "Name",
+    "contactResultsList.headervorname"			: "First name",
+    "contactResultsList.headeranrede"           : "Salutation",
+    "contactResultsList.headerfirmenname"			: "Company name",
+    "contactResultsList.headeremail"			: "Email",
+    "contactResultsList.headerstrasse"          : "Street",
+    "contactResultsList.headerplz"              : "ZIP",
+    "contactResultsList.headerstadt"			: "City",
+    "contactResultsList.headerland"			: "Country",
+    "contactResultsList.headertelefon"      : "Telefone",
+    "contactResultsList.headermobil"        : "Mobile",
+    "contactResultsList.headererfassungsdatum"			: "Created time",
+    "contactResultsList.headeraenderungsdatum"			: "Last modified",
+    "contactResultsList.headeremailversandtzeit"			: "Product email sent",
+    "contactResultsList.headerwelcomeemailversandtzeit"  :  "Standard email sent",
+    "contactResultsList.headerkontakttyp"    : "Type",
+    "contactResultsList.headerkontaktprio"    : "Prio",
+    "contactResultsList.headerid"			: "ID",
+    "contactResultsList.headerstatus"			: "Status",
 	    
     "contactResultsEdit.title"         : "Erfasste Kontaktdaten",
     "contactResultsEdit.comment"       : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

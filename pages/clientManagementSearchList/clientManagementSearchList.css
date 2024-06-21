@@ -232,14 +232,21 @@
     overflow-wrap: normal;
 }
 
-#clientManagementSearchList .list-field-small-fixed {
+#clientManagementSearchList .list-field-small-fixed,
+#clientManagementSearchList .list-field-big-fixed {
     line-height: 1;
     padding: 8px;
 }
-#clientManagementSearchList .list-field-small-fixed > span {
+
+#clientManagementSearchList .list-field-small-fixed > span,
+#clientManagementSearchList .list-field-big-fixed > span {
     display: inline-block;
     height: auto;
     width: auto;
+}
+
+#clientManagementSearchList .list-field-big-fixed > span {
+    min-width: 300px;
 }
 
 .clientManagementSearchList #nameInitialcircle {

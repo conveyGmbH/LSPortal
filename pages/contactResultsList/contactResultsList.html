@@ -43,6 +43,10 @@
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headervorname'}"></span>
                                 </div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Anrede"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headeranrede'}"></span>
+                                </div>
                                 <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Firmenname"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerfirmenname'}"></span>
@@ -51,23 +55,43 @@
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headeremail'}"></span>
                                 </div>
+                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Strasse"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerstrasse'}"></span>
+                                </div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="PLZ"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerplz'}"></span>
+                                </div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Stadt"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerstadt'}"></span>
+                                </div>
                                 <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Land"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerland'}"></span>
                                 </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Erfassungsdatum"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="TelefonFestnetz"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headertelefon'}"></span>
+                                </div>
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="TelefonMobil"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headermobil'}"></span>
+                                </div>
+                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Erfassungsdatum"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headererfassungsdatum'}"></span>
                                 </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="ModifiedTS"
+                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="ModifiedTS"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headeraenderungsdatum'}"></span>
                                 </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="MailVersandTS"
+                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="MailVersandTS"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headeremailversandtzeit'}"></span>
                                 </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="WelcomeMailTS"
+                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="WelcomeMailTS"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerwelcomeemailversandtzeit'}"></span>
                                 </div>
@@ -79,7 +103,11 @@
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerkontakttyp'}"></span>
                                 </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Status"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Id"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerid'}"></span>
+                                </div>
+                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Status"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerstatus'}"></span>
                                 </div>
@@ -117,25 +145,43 @@
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: Vorname"></span>
                             </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Anrede"></span>
+                            </div>
                             <div class="list-field-big-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: Firmenname"></span>
                             </div>
                             <div class="list-field-small-fixed">
                                 <span data-win-bind="textContent: EMail"></span>
                             </div>
+                            <div class="list-field-big-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Strasse"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: PLZ"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Stadt"></span>
+                            </div>
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: Land"></span>
                             </div>
                             <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: TelefonFestnetz"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: TelefonMobil"></span>
+                            </div>
+                            <div class="list-field-big-fixed">
                                 <span data-win-bind="textContent: Erfassungsdatum ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
-                            <div class="list-field-small-fixed">
+                            <div class="list-field-big-fixed">
                                 <span data-win-bind="textContent: ModifiedTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
-                            <div class="list-field-small-fixed">
+                            <div class="list-field-big-fixed">
                                 <span data-win-bind="textContent: MailVersandTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
-                            <div class="list-field-small-fixed">
+                            <div class="list-field-big-fixed">
                                 <span data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
                             <div class="list-field-small-fixed">
@@ -144,7 +190,10 @@
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: Typ"></span>
                             </div>
-                            <div class="list-field-small-fixed"
+                            <div class="list-field-small-fixed">
+                                <span data-win-bind="textContent: Id"></span>
+                            </div>
+                            <div class="list-field-big-fixed"
                                  data-win-bind="style.color: Status ContactResultsList.Binding.Converter.toStatusColor">
                                 <span class="wrap-text" data-win-bind="textContent: Status"></span>
                             </div>
