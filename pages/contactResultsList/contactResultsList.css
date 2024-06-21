@@ -54,13 +54,13 @@
     height: auto;
 }
 
-#contactResultsList .list-header-columns > .order-asc::after {
+#contactResultsList .list-header-columns .order-asc > span::after {
     content: " \25b2";
     font-size: 10px;
     vertical-align: super;
     opacity: 0.6;
 }
-#contactResultsList .list-header-columns > .order-desc::after {
+#contactResultsList .list-header-columns .order-desc > span::after {
     content: " \25bc";
     font-size: 10px;
     vertical-align: super;
@@ -232,14 +232,19 @@
     overflow-wrap: normal;
 }
 
-#contactResultsList .list-field-small-fixed {
+#contactResultsList .list-field-small-fixed,
+#contactResultsList .list-field-big-fixed {
     line-height: 1;
     padding: 8px;
 }
-#contactResultsList .list-field-small-fixed > span {
+#contactResultsList .list-field-small-fixed > span,
+#contactResultsList .list-field-big-fixed > span {
     display: inline-block;
     height: auto;
     width: auto;
+}
+#contactResultsList .list-field-big-fixed > span {
+    min-width: 300px;
 }
 
 .contactResultsList #nameInitialcircle {
