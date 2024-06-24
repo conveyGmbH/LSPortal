@@ -103,7 +103,7 @@
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerkontakttyp'}"></span>
                                 </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Id"
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="CreatorSiteID"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerid'}"></span>
                                 </div>
@@ -152,7 +152,7 @@
                                 <span class="wrap-text" data-win-bind="textContent: Firmenname"></span>
                             </div>
                             <div class="list-field-small-fixed">
-                                <span data-win-bind="textContent: EMail"></span>
+                                <span class="wrap-text" data-win-bind="textContent: EMail"></span>
                             </div>
                             <div class="list-field-big-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: Strasse"></span>
@@ -173,16 +173,16 @@
                                 <span class="wrap-text" data-win-bind="textContent: TelefonMobil"></span>
                             </div>
                             <div class="list-field-big-fixed">
-                                <span data-win-bind="textContent: Erfassungsdatum ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                                <span class="wrap-text" data-win-bind="textContent: Erfassungsdatum ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
                             <div class="list-field-big-fixed">
-                                <span data-win-bind="textContent: ModifiedTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                                <span class="wrap-text" data-win-bind="textContent: ModifiedTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
                             <div class="list-field-big-fixed">
-                                <span data-win-bind="textContent: MailVersandTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                                <span class="wrap-text" data-win-bind="textContent: MailVersandTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
                             <div class="list-field-big-fixed">
-                                <span data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
+                                <span class="wrap-text" data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
                             </div>
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: Prio"></span>
@@ -191,7 +191,8 @@
                                 <span class="wrap-text" data-win-bind="textContent: Typ"></span>
                             </div>
                             <div class="list-field-small-fixed">
-                                <span data-win-bind="textContent: Id"></span>
+                                <span class="wrap-text" data-win-bind="textContent: CreatorSiteID">&nbsp;</span><span>/</span>
+                                <span class="wrap-text" data-win-bind="textContent: CreatorRecID">&nbsp;</span>
                             </div>
                             <div class="list-field-big-fixed"
                                  data-win-bind="style.color: Status ContactResultsList.Binding.Converter.toStatusColor">
