@@ -19,7 +19,7 @@
     margin-left: 10px;
     max-height: 230px;
 }
-.win-type-ellipsis {
+#questionsgridanswers .win-type-ellipsis {
     max-height: 30px;
 } 
 #questionsgridanswers .win-viewport .win-horizontal {
