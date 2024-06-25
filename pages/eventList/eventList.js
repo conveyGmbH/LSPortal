@@ -6,6 +6,7 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
+/// <reference path="~/www/pages/eventList/eventListController.js" />
 
 (function () {
     "use strict";
@@ -84,6 +85,9 @@
                     if (eventList && eventList.style) {
                         var contentarea = element.querySelector(".contentarea");
                         if (contentarea) {
+                            var nav = WinJS.Navigation;
+                            var curPageId = Application.getPageId(nav.location);
+                            that.controller.hideBtnFilterNotPublished(curPageId);
                             var width = contentarea.offsetWidth;
                             var height = contentarea.offsetHeight - 8;
                             var contentheader = element.querySelector(".content-header");

@@ -24,7 +24,8 @@
                 count: 0,
                 active: null,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
-                btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished")
+                btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished"),
+                showHideFilterBtn: true
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;
@@ -60,6 +61,25 @@
                 }
             };
             this.background = background;
+
+            var hideBtnFilterNotPublished = function (curPageId) {
+                // Select the element with the ID btnFilterNotPublished
+                var btn = pageElement.querySelector("#btnFilterNotPublishedfieldline");
+                // Check if the element exists to avoid errors
+                if (btn) {
+                    if (curPageId === "start") {
+                        // Set the display property to none
+                        that.binding.showHideFilterBtn = null;
+                        that.binding.publishFlag = null;
+                    } else {
+                        that.binding.showHideFilterBtn = true;
+                        that.binding.publishFlag = true;
+                    }
+                } else {
+                    console.warn("Element with ID btnFilterNotPublished not found.");
+                }
+            }
+            this.hideBtnFilterNotPublished = hideBtnFilterNotPublished;
 
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
