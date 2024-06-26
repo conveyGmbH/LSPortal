@@ -989,8 +989,9 @@
     "localevents.labelDelete"   : "Soll die Veranstaltung ",
     "localevents.eventDelete"   : "wirklich gelöscht werden?",
 
-	  "eventList.btnFilterNotPublished" : "Fragebogen nicht für APP/s freigegeben", 
-    "eventList.btnFilterAll" : "Alle", 
+	"eventList.btnFilterNotPublished" : "Fragebogen nicht für APP/s freigegeben", 
+    "eventList.btnFilterAll" : "Alle",
+    "eventList.dashboardMesago"   : "Dashboard:",
 
     "eventslist.title" : "Veranstaltungen",
     "eventslist.count"       : "Anzahl",

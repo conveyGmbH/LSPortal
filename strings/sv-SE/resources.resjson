@@ -922,8 +922,9 @@
     "localevents.labelDelete"   : "Should the event ",
     "localevents.eventDelete"   : "really be deleted?",
 
-	  "eventList.btnFilterNotPublished" : "Questionnaire not released for APP/s", 
-    "eventList.btnFilterAll" : "All", 
+	"eventList.btnFilterNotPublished" : "Questionnaire not released for APP/s", 
+    "eventList.btnFilterAll" : "All",
+    "eventList.dashboardMesago"   : "Dashboard:",
 
     "eventslist.title" : "Events",
     "eventslist.count"       : "Count",

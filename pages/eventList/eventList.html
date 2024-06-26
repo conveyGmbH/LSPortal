@@ -21,6 +21,19 @@
                             <button class="list-button-left win-button" id="btnFilterNotPublished"
                                     data-win-bind="textContent: btnFilterNotPublished"></button>
                         </div>
+                        
+                        <div class="field_line" id="dashboardFeature" data-win-bind="style.display: showHideDashboardFeature Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventList.dashboardMesago'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'eventList.dashboardMesago'}"></span>
+                            <select id="showdashboardMesagoCombo"
+                                    class="input_field input_half_left win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    <!--data-win-bind="value: veranstOption.showdashboardMesagoCombo"
+                                    onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)"-->>
+                                <option data-win-bind="value: NumberValue; textContent: TypeValueName"></option>
+                            </select>
+                        </div>
+
                     </div>
                     <div class="eventList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">

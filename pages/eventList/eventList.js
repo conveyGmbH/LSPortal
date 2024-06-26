@@ -88,6 +88,7 @@
                             var nav = WinJS.Navigation;
                             var curPageId = Application.getPageId(nav.location);
                             that.controller.hideBtnFilterNotPublished(curPageId);
+                            that.controller.showDashboardFeature(curPageId);
                             var width = contentarea.offsetWidth;
                             var height = contentarea.offsetHeight - 8;
                             var contentheader = element.querySelector(".content-header");

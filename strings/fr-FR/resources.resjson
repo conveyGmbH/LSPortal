@@ -989,7 +989,8 @@
     "localevents.eventDelete"   : "vraiment être supprimé?",
 
   	"eventList.btnFilterNotPublished" : "Questionnaire non validé pour APP/s", 
-    "eventList.btnFilterAll" : "Tous", 
+    "eventList.btnFilterAll" : "Tous",
+    "eventList.dashboardMesago"   : "Dashboard:",
 
     "eventslist.title" : "Événements",
     "eventslist.count"       : "Nombre",

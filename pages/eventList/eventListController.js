@@ -25,7 +25,8 @@
                 active: null,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished"),
-                showHideFilterBtn: true
+                showHideFilterBtn: true,
+                showHideDashboardFeature: true
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;
@@ -36,6 +37,7 @@
             // ListView control
             var listView = pageElement.querySelector("#eventList.listview");
             var btnFilterNotPublished = pageElement.querySelector("#btnFilterNotPublished");
+            var dashboardMesagoCombo = pageElement.querySelector("#showdashboardMesagoCombo");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -49,6 +51,9 @@
                 }
                 if (that.records) {
                     that.records = null;
+                }
+                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                    dashboardMesagoCombo.winControl.data = null;
                 }
                 listView = null;
             }
@@ -80,6 +85,51 @@
                 }
             }
             this.hideBtnFilterNotPublished = hideBtnFilterNotPublished;
+
+            var showDashboardFeature = function (curPageId) {
+                var sel = pageElement.querySelector("#dashboardFeature");
+                if (sel) {
+                    if (curPageId === "start") {
+                        that.binding.showHideDashboardFeature = true;
+                    } else {
+                        that.binding.showHideDashboardFeature = null;
+                    }
+                } else {
+                    console.warn("Element with ID dashboardFeature not found.");
+                }
+            }
+            this.showDashboardFeature = showDashboardFeature;
+
+            var creatingDashboardMesagoComboCategory = function () {
+                Log.call(Log.l.trace, "EventList.Controller.");
+                var dashboardMesagoComboCategory = [
+                    {
+                        value: 0,
+                        TITLE: ""
+                    },
+                    {
+                        value: 1,
+                        TITLE: getResourceText("label.startPremium")/*"Premium"*/
+                    },
+                    {
+                        value: 2,
+                        TITLE: getResourceText("label.startSurpreme")/*"Supreme"*/
+                    },
+                    {
+                        value: 3,
+                        TITLE: getResourceText("label.startPremium1")/*"Premium"*/
+                    },
+                    {
+                        value: 4,
+                        TITLE: getResourceText("label.startPremium2")/*"Premium"*/
+                    }
+                ];
+                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(dashboardMesagoComboCategory);
+                    dashboardMesagoCombo.selectedIndex = AppData._persistentStates.showdashboardMesagoCombo;
+                }
+            };
+            this.creatingDashboardMesagoComboCategory = creatingDashboardMesagoComboCategory;
 
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
@@ -558,6 +608,24 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                        return EventList.iNOptionTypeValueView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "Event: success!");
+                            if (json && json.d && json.d.results) {
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                var results = json.d.results;
+                                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
+                                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(results);
+                                    //dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { LanguageSpecID: AppData.getLanguageId() });
+                    }).then(function () {
                     return EventList.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
