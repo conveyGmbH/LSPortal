@@ -35,8 +35,16 @@
             this.setEventId = setEventId;
 
             var getEventId = function () {
-                Log.print(Log.l.trace, "getEventId Event._eventId=" + MailingOptions._eventId);
-                return MailingOptions._eventId;
+                var eventId = null;
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller) {
+                    eventId = master.controller.binding.eventId;
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
+                Log.ret(Log.l.trace, eventId);
+                return eventId;
             }
             this.getEventId = getEventId;
 
@@ -155,6 +163,47 @@
                     Log.ret(Log.l.trace);
                 }
             };
+            var loadData = function () {
+                Log.call(Log.l.trace, "MailingOptions.Controller.");
+                AppData.setErrorMsg(that.binding);
+                //that.binding.veranstOption = getEmptyDefaultValue(Event.CR_VERANSTOPTION_ODataView.defaultValue);
+                var ret = new WinJS.Promise.as().then(function () {
+                    var recordId = getEventId();
+                    if (recordId) {
+                        return MailingOptions.CR_VERANSTOPTION_ODataView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "MailingOptions: success!");
+                            // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    //that.resultConverterOption(item, index);
+                                    if (item.INITOptionTypeID && item.INITOptionTypeID === 31) {
+                                        if (item.LocalValue === "1") {
+                                            that.binding.isThankMailOn = true;
+                                        } else {
+                                            that.binding.isThankMailOn = false;
+                                        }
+                                    }
+                                });
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { VeranstaltungID: recordId });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    AppBar.notifyModified = true;
+                    return WinJS.Promise.as();
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.loadData = loadData;
 
             that.processAll().then(function () {
                 return that.loadData();

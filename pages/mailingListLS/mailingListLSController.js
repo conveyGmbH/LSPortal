@@ -145,7 +145,12 @@
                 changeEventId: function (parameters) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
-                        that.setEventId(event.currentTarget.value);
+                        var value = 0;
+                        if (typeof event.currentTarget.value === "string") {
+                            value = parseInt(event.currentTarget.value);
+                        }
+                        that.setEventId(value);
+                        AppData.setRecordId("Maildokument", 0);
                         that.loadData();
                     }
                     Log.ret(Log.l.trace);
@@ -185,6 +190,10 @@
                                             AppBar.scope._element.id === "mailingOptionsController") {
                                             AppBar.scope.setEventId(that.binding.eventId);
                                             AppBar.scope.setMailId(that.binding.mailingId);
+                                            if (typeof AppBar.scope.loadData === "function") {
+                                                // set flag called
+                                                AppBar.scope.loadData();
+                                            }
                                         }
                                     } else {
                                         if (typeof AppBar.scope.loadData === "function") {
@@ -304,10 +313,7 @@
                             Log.print(Log.l.trace, "eventView: success!");
                             // eventView returns object already parsed from json file in response
                             if (json && json.d && json.d.results.length > 0) {
-                                var results = [{
-                                    VeranstaltungVIEWID: "",
-                                    Name: ""
-                                }].concat(json.d.results);
+                                var results = json.d.results;
                                 that.events = new WinJS.Binding.List(results);
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
@@ -321,16 +327,15 @@
                                         eventsDropdown.selectedIndex = 0;
                                     }
                                 }
-                }
-                        },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            });
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
                     } else {
                         return WinJS.Promise.as();
-                }
+                    }
                 }).then(function () {
                     return MailingListLS.MaildokumentView.select(function (json) {
                         // this callback will be called asynchronously

@@ -171,10 +171,10 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                if (typeof error === "function") {
-                                    error(errorResponse);
-                                }
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (typeof error === "function") {
+                                        error(errorResponse);
+                                    }
                                 });
                             }, recordId, dataMail);
                         });
@@ -201,7 +201,12 @@
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 var err = null;
                 var dataMail = Mailing.MaildokumentView.defaultValue;
-                dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding && master.controller.binding.eventId) {
+                    dataMail.VeranstaltungID = parseInt(master.controller.binding.eventId);
+                } else {
+                    dataMail.VeranstaltungID = AppData.getRecordId("Veranstaltung");
+                }
                 Mailing.MaildokumentView.insert(function (json) {
                     AppBar.busy = false;
                     // this callback will be called asynchronously
@@ -213,7 +218,7 @@
                         that.binding.dataMail = setDataMail(json.d);
                         AppData.setRecordId("Maildokument", that.binding.dataMail.MaildokumentVIEWID);
                         /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                        var master = Application.navigator.masterControl;
+                        //var master = Application.navigator.masterControl;
                         if (master && master.controller) {
                             master.controller.loadData().then(function () {
                                 master.controller.selectRecordId(getRecordId());

@@ -16,7 +16,7 @@
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'mailingList.title'}"></span>
                         </div>
-                       <!-- <div class="field_line field_line_odd">
+                        <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <select id="events"
@@ -26,66 +26,66 @@
                                     onchange="AppBar.handleEvent('change', 'changeEventId', event)">
                                 <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
                             </select>
-                    </div>-->
                         </div>
-                        <div class="headerFooterPlaceholder">
-                            <div class="list-header masterhost-background">
-                                <div class="list-landscape-only">
-                                    <div class="list-field-small-fixed"
-                                         data-win-res="{textContent: 'mailingListLS.description'}"></div>
-                                    <div class="list-field-small-fixed"
-                                         data-win-res="{textContent: 'mailingListLS.subject'}"></div>
-                                </div>
-                            </div>
-                            <div class="list-footer">
-                                <div class="status">
-                                    <div class="progress"
-                                         data-win-bind="style.display: loading Binding.Converter.toDisplay">
-                                        <progress class="win-ring win-medium wait-circle"></progress>
-                                    </div>
-                                    <div class="counter"
-                                         data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
-                                        <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
-                                        <span data-win-bind="textContent: count"></span>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="headerFooterPlaceholder">
+                        <div class="list-header masterhost-background">
+                            <div class="list-landscape-only">
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'mailingListLS.description'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'mailingListLS.subject'}"></div>
                             </div>
                         </div>
-                        <div class="list-template"
+                        <div class="list-footer">
+                            <div class="status">
+                                <div class="progress"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                    <progress class="win-ring win-medium wait-circle"></progress>
+                                </div>
+                                <div class="counter"
+                                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                    <span data-win-res="{textContent: 'contactList.count'}"></span><span>: </span>
+                                    <span data-win-bind="textContent: count"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">
-                            <div class="list-compact-only" data-win-bind="disabled: disabled">
-                                <div class="row-separator"></div>
-                                <div class="list-div-left">
-                                    <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
-                                          data-win-bind="textContent: nameInitial"></span>
-                                </div>
-                            </div>
-                            <div class="list-landscape-only" data-win-bind="disabled: disabled">
-                            <div class="row-bkg-gray"
-                                     data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
-                                <div class="list-field-small-fixed">
-                                    <span class="wrap-text" data-win-bind="textContent: Beschreibung"></span>
-                        </div>
-                                <div class="list-field-small-fixed">
-                                    <span class="wrap-text" data-win-bind="textContent: Subject"></span>
-                                </div>
-                            </div>
-                            <div class="list-portrait-only" data-win-bind="disabled: disabled">
+                        <div class="list-compact-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
-                                <div class="list-symbol-ID">
-                                    <div id="mail" class="action-image"></div>
-                                </div>
-                                <div class="list-compressed">
-                                    <!--list-mailingList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Beschreibung"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Subject"></span>
-                                </div>
+                            <div class="list-div-left">
+                                <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
+                                      data-win-bind="textContent: nameInitial"></span>
                             </div>
                         </div>
-                        <div id="mailingListLS"
-                             class="listview win-selectionstylefilled cnv-autoresizecolumns"
+                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Beschreibung"></span>
+                            </div>
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: Subject"></span>
+                            </div>
+                        </div>
+                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
+                            <div class="row-separator"></div>
+                            <div class="list-symbol-ID">
+                                <div id="mail" class="action-image"></div>
+                            </div>
+                            <div class="list-compressed">
+                                <!--list-mailingList-->
+                                <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                      data-win-bind="textContent: Beschreibung"></span>
+                                <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                      data-win-bind="textContent: Subject"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mailingListLS"
+                         class="listview win-selectionstylefilled cnv-autoresizecolumns"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
