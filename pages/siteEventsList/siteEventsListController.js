@@ -23,7 +23,7 @@
                 eventText: getResourceText("siteEventsList.event"),
                 eventTypID: 0,
                 searchString: "",
-                prevEventTerminId: AppData.getRecordId("VeranstaltungTerminID")
+                prevEventTerminId: AppData.getRecordId("VeranstaltungTermin")
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -36,7 +36,7 @@
             var progress = null;
             var counter = null;
             var layout = null;
-            
+
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
@@ -178,7 +178,7 @@
                 return ret;
             };
             this.getDateObject = getDateObject;
-            
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "SiteEventsList");
@@ -280,7 +280,7 @@
                         that.loadData();
                     }
                     }
-                    
+
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
@@ -295,7 +295,7 @@
                                     that.binding.selIdx = item.index;
                                     if (item.data && item.data.VeranstaltungTerminVIEWID) {
                                         // called asynchronously if ok
-                                        AppData.setRecordId("VeranstaltungTerminID", item.data.VeranstaltungTerminVIEWID);
+                                        AppData.setRecordId("VeranstaltungTermin", item.data.VeranstaltungTerminVIEWID);
                                         var curPageId = Application.getPageId(nav.location);
                                         if (curPageId === "siteevents" || curPageId === "siteEventsList" || curPageId === "mailingTypes" || curPageId === "siteeventsImport") {
                                             AppBar.scope.binding.saveFlag = true;
@@ -420,7 +420,7 @@
             if (eventTypDropdown) {
                 this.addRemovableEventListener(eventTypDropdown, "change", this.eventHandlers.onSelectionDropDownChanged.bind(this));
             }
-            
+
             var loadData = function () {
                 Log.call(Log.l.trace, "SiteEventsList.Controller.");
                 that.loading = true;
@@ -447,11 +447,11 @@
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
-                           
+
                             that.binding.count = results.length;
                             that.eventdatasets = new WinJS.Binding.List(results);
                             that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
-                            
+
                             if (listView.winControl) {
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.eventdatasets.dataSource;
@@ -465,7 +465,7 @@
                                 recordId = that.binding.prevEventTerminId;
                             } else {
                                 recordId = AppData.getRecordId("VeranstaltungTermin");
-                                AppData.setRecordId("VeranstaltungTerminID", recordId);
+                                AppData.setRecordId("VeranstaltungTermin", recordId);
                             }
                             if (recordId) {
                                 WinJS.Promise.timeout(0).then(function () {
