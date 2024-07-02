@@ -8,24 +8,7 @@
 
     WinJS.Namespace.define("EventList", {
         _restriction: null,
-        _iNOptionTypeValueView: {
-            get: function () {
-                return AppData.getFormatView("INOptionTypeValue", 20666);
-            }
-        },
-        iNOptionTypeValueView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "iNOptionTypeValueView.");
-                var ret = EventList._iNOptionTypeValueView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "Idx"
-                });
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            }
-        },
-        _VeranstaltungView: {
+       _VeranstaltungView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung", 20542);
             }

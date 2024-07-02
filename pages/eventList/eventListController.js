@@ -23,7 +23,9 @@
                 publishFlag: null,
                 count: 0,
                 active: null,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                dashboardIdx: 0,
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin &&
+                    AppData._persistentStates.leadsuccessBasic,
                 btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished"),
                 showHideFilterBtn: true,
                 showHideDashboardFeature: true
@@ -37,7 +39,7 @@
             // ListView control
             var listView = pageElement.querySelector("#eventList.listview");
             var btnFilterNotPublished = pageElement.querySelector("#btnFilterNotPublished");
-            var dashboardMesagoCombo = pageElement.querySelector("#showdashboardMesagoCombo");
+            var dashboardCombo = pageElement.querySelector("#showDashboardCombo");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -52,8 +54,8 @@
                 if (that.records) {
                     that.records = null;
                 }
-                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
-                    dashboardMesagoCombo.winControl.data = null;
+                if (dashboardCombo && dashboardCombo.winControl) {
+                    dashboardCombo.winControl.data = null;
                 }
                 listView = null;
             }
@@ -100,36 +102,36 @@
             }
             this.showDashboardFeature = showDashboardFeature;
 
-            var creatingDashboardMesagoComboCategory = function () {
+            var creatingDashboardComboCategory = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
-                var dashboardMesagoComboCategory = [
+                var dashboardComboCategory = [
                     {
                         value: 0,
-                        TITLE: ""
+                        TITLE: getResourceText("eventList.dashboardStandard")
                     },
                     {
                         value: 1,
-                        TITLE: getResourceText("label.startPremium")/*"Premium"*/
+                        TITLE: getResourceText("eventList.dashboardPremium")/*"Premium"*/
                     },
                     {
                         value: 2,
-                        TITLE: getResourceText("label.startSurpreme")/*"Supreme"*/
+                        TITLE: getResourceText("eventList.dashboardSupreme")/*"Supreme"*/
                     },
                     {
                         value: 3,
-                        TITLE: getResourceText("label.startPremium1")/*"Premium"*/
+                        TITLE: getResourceText("eventList.ambientePremium")/*"Premium"*/
                     },
                     {
                         value: 4,
-                        TITLE: getResourceText("label.startPremium2")/*"Premium"*/
+                        TITLE: getResourceText("eventList.ambienteSupreme")/*"Supreme"*/
                     }
                 ];
-                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
-                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(dashboardMesagoComboCategory);
-                    dashboardMesagoCombo.selectedIndex = AppData._persistentStates.showdashboardMesagoCombo;
+                if (dashboardCombo && dashboardCombo.winControl) {
+                    dashboardCombo.winControl.data = new WinJS.Binding.List(dashboardComboCategory);
+                    dashboardCombo.selectedIndex = 0;
                 }
             };
-            this.creatingDashboardMesagoComboCategory = creatingDashboardMesagoComboCategory;
+            this.creatingDashboardComboCategory = creatingDashboardComboCategory;
 
             var loadNextUrl = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
@@ -245,6 +247,161 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                onSelectionDropDownChanged: function (event) {
+                    Log.call(Log.l.trace, "EventList.Controller.");
+                    var target = event.currentTarget || event.target;
+                    if (target) {
+                        that.binding.dashboardIdx = parseInt(target.value);
+                    }
+                    if (that.binding.dashboardIdx === 0) {
+                        return EventList.VeranstaltungView.select(function(json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "Events: success!");
+                                // employeeView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                    that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function(item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    that.binding.count = results.length;
+
+                                    if (results.length <= 1) {
+                                        NavigationBar.disablePage("eventCopy");
+                                    } else {
+                                        NavigationBar.enablePage("eventCopy");
+                                    }
+
+                                    that.records = new WinJS.Binding.List(results);
+
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.records.dataSource;
+                                    }
+                                    Log.print(Log.l.trace, "Data loaded");
+                                    // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                    var recordId = AppData.getRecordId("Veranstaltung2");
+                                    if (recordId) {
+                                        if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
+                                            AppBar.scope.setEventId(recordId);
+                                        }
+                                        that.selectRecordId(recordId);
+                                    } else {
+                                        if (listView && listView.winControl) {
+                                            listView.winControl.selection.set(0);
+                                        }
+                                    }
+                                } else {
+                                    that.binding.count = 0;
+                                    that.nextUrl = null;
+                                    that.records = null;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = null;
+                                    }
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
+                                }
+                                return WinJS.Promise.as();
+                            },
+                            function(errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            });
+                    } else {
+                        return EventList.VeranstaltungView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "Events: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.binding.count = results.length;
+
+                                if (results.length <= 1) {
+                                    NavigationBar.disablePage("eventCopy");
+                                } else {
+                                    NavigationBar.enablePage("eventCopy");
+                                }
+
+                                that.records = new WinJS.Binding.List(results);
+
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.records.dataSource;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                var recordId = AppData.getRecordId("Veranstaltung2");
+                                if (recordId) {
+                                    if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
+                                        AppBar.scope.setEventId(recordId);
+                                    }
+                                    that.selectRecordId(recordId);
+                                } else {
+                                    if (listView && listView.winControl) {
+                                        listView.winControl.selection.set(0);
+                                    }
+                                }
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.records = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                            return WinJS.Promise.as();
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }, { DashboardIdx: that.binding.dashboardIdx });
+                    }
                 },
                 onItemInvoked: function (eventInfo) {
                     Log.call(Log.l.trace, "EventList.Controller.");
@@ -595,6 +752,11 @@
             if (btnFilterNotPublished) {
                 this.addRemovableEventListener(btnFilterNotPublished, "click", this.eventHandlers.clickOrderBy.bind(this));
             }
+
+            if (dashboardCombo) {
+                this.addRemovableEventListener(dashboardCombo, "click", this.eventHandlers.onSelectionDropDownChanged.bind(this));
+            }
+
             var loadData = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
                 that.loading = true;
@@ -608,24 +770,6 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                        return EventList.iNOptionTypeValueView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "Event: success!");
-                            if (json && json.d && json.d.results) {
-                                // Now, we call WinJS.Binding.List to get the bindable list
-                                var results = json.d.results;
-                                if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
-                                    dashboardMesagoCombo.winControl.data = new WinJS.Binding.List(results);
-                                    //dashboardMesagoCombo.selectedIndex = parseInt(AppData._userData.IsSupreme) - 1;
-                                }
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { LanguageSpecID: AppData.getLanguageId() });
-                    }).then(function () {
                     return EventList.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -721,8 +865,11 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                return that.creatingDashboardComboCategory();
+            }).then(function () {
+                Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-            });
+                }); 
             Log.ret(Log.l.trace);
         }, {
                 nextUrl: null,

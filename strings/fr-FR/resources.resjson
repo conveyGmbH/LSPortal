@@ -990,7 +990,12 @@
 
   	"eventList.btnFilterNotPublished" : "Questionnaire non validé pour APP/s", 
     "eventList.btnFilterAll" : "Tous",
-    "eventList.dashboardMesago"   : "Dashboard:",
+    "eventList.dashboardbox"   : "Sélectionner Dashboard:",
+    "eventList.dashboardStandard"  : "Dashboard Standard",
+    "eventList.dashboardPremium"  : "Dashboard Premium",
+    "eventList.dashboardSupreme"  : "Dashboard Supreme",
+    "eventList.ambientePremium"  : "Ambiente Premium",
+    "eventList.ambienteSupreme"  : "Ambiente Supreme",
 
     "eventslist.title" : "Événements",
     "eventslist.count"       : "Nombre",

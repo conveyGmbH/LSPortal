@@ -928,7 +928,12 @@
 
   	"eventList.btnFilterNotPublished" : "Fragebogen nicht für APP/s freigegeben", 
     "eventList.btnFilterAll" : "Alle",
-    "eventList.dashboardMesago"   : "Dashboard:",
+    "eventList.dashboardbox"   : "Choose Dashboard:",
+    "eventList.dashboardStandard"  : "Dashboard Standard",
+    "eventList.dashboardPremium"  : "Dashboard Premium",
+    "eventList.dashboardSupreme"  : "Dashboard Supreme",
+    "eventList.ambientePremium"  : "Ambiente Premium",
+    "eventList.ambienteSupreme"  : "Ambiente Supreme",
 
     "eventslist.title" : "Veranstaltungen",
     "eventslist.count"       : "Anzahl",

@@ -992,7 +992,12 @@
 
 	"eventList.btnFilterNotPublished" : "Questionario non rilasciato per APP/s", 
     "eventList.btnFilterAll" : "Tutti",
-    "eventList.dashboardMesago"   : "Dashboard:",
+    "eventList.dashboardbox"   : "Selezionare il dashboard:",
+    "eventList.dashboardStandard"  : "Dashboard Standard",
+    "eventList.dashboardPremium"  : "Dashboard Premium",
+    "eventList.dashboardSupreme"  : "Dashboard Supreme",
+    "eventList.ambientePremium"  : "Ambiente Premium",
+    "eventList.ambienteSupreme"  : "Ambiente Supreme",
  
     "employeegenpwlist.title" : "Password dei dipendenti pre-generate",
     "employeegenpwlist.login" : "nome di accesso",
