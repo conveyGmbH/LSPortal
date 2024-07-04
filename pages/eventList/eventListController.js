@@ -254,6 +254,8 @@
                     if (target) {
                         that.binding.dashboardIdx = parseInt(target.value);
                     }
+                    AppData._persistentStates.showdashboardMesagoCombo = that.binding.dashboardIdx;
+
                     if (that.binding.dashboardIdx === 0) {
                         return EventList.VeranstaltungView.select(function(json) {
                                 // this callback will be called asynchronously

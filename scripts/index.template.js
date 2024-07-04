@@ -128,8 +128,8 @@
 		    { id: "genDataAnswers", group: 56, svg: "stammdaten", disabled: true, predecGroup: 23 },
         { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 23 },
         // only visible in deimos and lstest, not in lsmain
-        { id: "startPremium", group: 57, svg: "dashboard", disabled: true },
-        { id: "dashboardFN", group: 57, svg: "dashboard", disabled: true },
+        //{ id: "startPremium", group: 57, svg: "dashboard", disabled: true },
+        //{ id: "dashboardFN", group: 57, svg: "dashboard", disabled: true },
         //VisitorFlow
         { id: "visitorFlowGrp", group: 28, svg: "lsvFlow", disabled: true, popup: true },
         { id: "visitorFlowDashboard", group: 20, svg: "dashboardVisitorFlow", disabled: true, predecGroup: 28 },
@@ -167,7 +167,11 @@
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         //Dashboards
-        { id: "dashBoard", group: 15, svg: "dashboard", disabled: true },
+        { id: "dashBoard", group: 15, svg: "dashboard", disabled: true, popup: true },
+        { id: "start", group: 15, svg: "dashboard", disabled: true, predecGroup: 15 },
+        // only visible in deimos and lstest, not in lsmain
+        { id: "startPremium", group: 57, svg: "dashboard", disabled: true, predecGroup: 15 },
+        //{ id: "dashboardFN", group: 57, svg: "dashboard", disabled: true, predecGroup: 15 },
         //Mailing
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 32, svg: "productmail", disabled: true, predecGroup: 31 },
@@ -264,11 +268,13 @@
         { id: "contactResultsCriteria", group: 68, disabled: false },
         { id: "contactResultsQuestion", group: 68, disabled: false },
         { id: "contactResultsAttach", group: 68, disabled: false },
-        { id: "startPremium", group: -57, disabled: false },
+        //{ id: "startPremium", group: -57, disabled: false },
+        { id: "startPremium", group: 15, disabled: false },
         { id: "startSurpreme", group: -58, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
         { id: "ticketLimits", group: -67, disabled: false },
-        { id: "dashboardFN", group: -70, disabled: false },
+        //{ id: "dashboardFN", group: -70, disabled: false },
+        //{ id: "dashboardFN", group: 15, disabled: false },
         { id: "eventStatus", group: 73, disabled: false },
         { id: "eventCopy", group: 2, disabled: false },
         { id: "eventProducts", group: 2, disabled: false },
@@ -334,6 +340,8 @@
         { id: "contactResultsAttach", master: "contactList" },
         { id: "contactResultsCriteria", master: "contactList" },
         { id: "contactResultsEvents", master: "contactList" },
+        { id: "startPremium", master: "eventList" },
+        //{ id: "dashboardFN", master: "eventList" }
 
     ];
 
