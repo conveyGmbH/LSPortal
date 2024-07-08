@@ -8,6 +8,7 @@
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/eventList/eventListService.js" />
 /// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
+/// <reference path="~/www/pages/home/homeService.js" />
 
 (function () {
     "use strict";
@@ -248,14 +249,13 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSelectionDropDownChanged: function (event) {
+                selectionDropDownChanged: function (event) {
                     Log.call(Log.l.trace, "EventList.Controller.");
                     var target = event.currentTarget || event.target;
                     if (target) {
                         that.binding.dashboardIdx = parseInt(target.value);
                     }
                     AppData._persistentStates.showdashboardMesagoCombo = that.binding.dashboardIdx;
-
                     if (that.binding.dashboardIdx === 0) {
                         return EventList.VeranstaltungView.select(function(json) {
                                 // this callback will be called asynchronously
@@ -497,6 +497,15 @@
                                         if (item.data.Aktiv) {
                                             that.binding.active = 1;
                                         }
+                                        if (item.data.DashboardIdx === "0") {
+                                            NavigationBar.disablePage("startPremium");
+                                        } else {
+                                            if (item.data.DashboardIdx === "1" || item.data.DashboardIdx === "2") {
+                                                NavigationBar.enablePage("startPremium");
+                                            } else {
+                                                NavigationBar.enablePage("dashboardFN");
+                                            }
+                                        }
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
@@ -608,7 +617,8 @@
                                                 }
                                                 if ((curPageId === "reporting" ||
                                                     curPageId === "reportingColumnList" ||
-                                                    curPageId === "start") &&
+                                                    curPageId === "start" ||
+                                                    curPageId === "startPremium") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                 }
@@ -754,9 +764,8 @@
             if (btnFilterNotPublished) {
                 this.addRemovableEventListener(btnFilterNotPublished, "click", this.eventHandlers.clickOrderBy.bind(this));
             }
-
             if (dashboardCombo) {
-                this.addRemovableEventListener(dashboardCombo, "click", this.eventHandlers.onSelectionDropDownChanged.bind(this));
+                this.addRemovableEventListener(dashboardCombo, "change", this.eventHandlers.selectionDropDownChanged.bind(this));
             }
 
             var loadData = function () {

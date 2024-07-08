@@ -150,10 +150,6 @@
         //{ id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //{ id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //{ id: "eventSeriesAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
-        //AutomaticMails
-        { id: "AutomaticMailsGrp", group: 63, svg: "mailing", disabled: true, popup: true },
-        { id: "mailingList", group: -50, svg: "standardmail", disabled: true, predecGroup: 63 },
-        { id: "mailingTemplateEvent", group: -51, svg: "standardmail", disabled: true, predecGroup: 63 },
         //Leadsuccess Settings
         { id: "settingLeadsuccessGrp", group: 27, svg: "handshake", disabled: true, popup: true },
         //{ id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 27 },
@@ -176,6 +172,12 @@
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
         { id: "mailing", group: 32, svg: "productmail", disabled: true, predecGroup: 31 },
         { id: "mailingOptions", group: 33, svg: "mailsettings", disabled: true, predecGroup: 31 },
+        //AutomaticMails
+        { id: "AutomaticMailsGrp", group: 63, svg: "mailing", disabled: true, popup: true },
+        { id: "mailingList", group: -50, svg: "standardmail", disabled: true, predecGroup: 63 },
+        { id: "mailingTemplateEvent", group: -51, svg: "standardmail", disabled: true, predecGroup: 63 },
+        //Dashboards
+        //{ id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
         //Exports
         { id: "exportGrp", group: 34, svg: "export", disabled: true, popup: true },
         { id: "reporting", group: 8, svg: "download", disabled: true, predecGroup: 34 },
@@ -198,6 +200,7 @@
     Application.navigationBarPages = [
         { id: "home", group: -1, disabled: false },
         { id: "start", group: 15, disabled: false },
+        { id: "startPremium", group: 15, disabled: false },
         { id: "event", group: 2, disabled: false },
         //{ id: "products", group: 2, disabled: false },
         { id: "eventSeries", group: 52, disabled: false },
@@ -268,13 +271,8 @@
         { id: "contactResultsCriteria", group: 68, disabled: false },
         { id: "contactResultsQuestion", group: 68, disabled: false },
         { id: "contactResultsAttach", group: 68, disabled: false },
-        //{ id: "startPremium", group: -57, disabled: false },
-        { id: "startPremium", group: 15, disabled: false },
-        { id: "startSurpreme", group: -58, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
         { id: "ticketLimits", group: -67, disabled: false },
-        //{ id: "dashboardFN", group: -70, disabled: false },
-        //{ id: "dashboardFN", group: 15, disabled: false },
         { id: "eventStatus", group: 73, disabled: false },
         { id: "eventCopy", group: 2, disabled: false },
         { id: "eventProducts", group: 2, disabled: false },
@@ -340,8 +338,7 @@
         { id: "contactResultsAttach", master: "contactList" },
         { id: "contactResultsCriteria", master: "contactList" },
         { id: "contactResultsEvents", master: "contactList" },
-        { id: "startPremium", master: "eventList" },
-        //{ id: "dashboardFN", master: "eventList" }
+        { id: "startPremium", master: "eventList" }
 
     ];
 
@@ -357,6 +354,8 @@
         Log.call(Log.l.trace, "Application.", "id=" + id);
         if (id === "dashBoard") {
             id = "start";
+        } else if (id === "startPremium" && (AppData.persistentStates.showdashboardMesagoCombo === 3 || AppData._persistentStates.showdashboardMesagoCombo === 4)) {
+            id = "dashboardFN";
         } else if (id === "events") {
             id = "event";
         } else if (id === "serviceevents") {
