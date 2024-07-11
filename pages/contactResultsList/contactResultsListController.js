@@ -30,6 +30,8 @@
 
             var layout = null;
 
+            that.loadDataDelayedPromise = null;
+
             this.dispose = function () {
                 ContactResultsList._prevJson = null;
                 ContactResultsList._collator = null;
@@ -62,6 +64,18 @@
                 }
             }
             this.setTooltips = setTooltips;
+
+            var loadDataDelayed = function(searchString) {
+               if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    that.loadData(searchString);
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -144,7 +158,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         that.binding.searchString = event.currentTarget.value;
-                        that.loadData(that.binding.searchString);
+                        that.loadDataDelayed(that.binding.searchString);
                     }
                     Log.ret(Log.l.trace);
                 },
