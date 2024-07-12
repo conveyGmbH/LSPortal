@@ -28,7 +28,7 @@
                                    data-win-bind="value: searchString Binding.Mode.twoway"
                                    oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
                         </div>
-                        <div class="field_line field_line_even">
+                        <div class="field_line field_line_even fieldlinecounter">
                             <span id="counter" data-win-res="{textContent: 'contactResultsList.count'}"></span><span>: </span><span data-win-bind="textContent: noctcount"></span>
                         </div>
                     </div>
@@ -94,14 +94,6 @@
                                 <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="WelcomeMailTS"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerwelcomeemailversandtzeit'}"></span>
-                                </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Prio"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerkontaktprio'}"></span>
-                                </div>
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Typ"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'contactResultsList.headerkontakttyp'}"></span>
                                 </div>
                                 <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="CreatorSiteID"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
@@ -183,12 +175,6 @@
                             </div>
                             <div class="list-field-big-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: WelcomeMailTS ContactResultsList.Binding.Converter.toLocalDateTimeString"></span>
-                            </div>
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Prio"></span>
-                            </div>
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Typ"></span>
                             </div>
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: CreatorSiteID">&nbsp;</span><span>/</span>

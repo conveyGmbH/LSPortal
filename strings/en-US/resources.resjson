@@ -1021,7 +1021,7 @@
     "siteEventsList.customerEvents" : "Customer Fairs",
     "siteEventsList.siteEvents" : "Site Fairs",
     "siteEventsList.eventcombotitle" : "Which Trade Fairs to show?",
-    "siteEventsList.searchtxt" : "Filter",
+    "siteEventsList.searchtxt" : "Search",
     "siteEventsList.ordertxt" : "Sort order",
 
     "siteevents.title" : "Exhibitor",

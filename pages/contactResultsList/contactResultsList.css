@@ -258,3 +258,9 @@
     line-height: 45px;
     font-weight: bold;
 }
+#contactResultsList {
+    margin-left: 10px;
+}
+.fieldlinecounter {
+    text-align: right;
+}
