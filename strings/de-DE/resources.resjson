@@ -80,6 +80,7 @@
     "command.addEvent"    : "Veranstaltung wechseln",
     "command.addProduct"    : "Produkt hinzufügen",
     "command.removeProduct"    : "Produkt löschen",
+    "command.join"    : "Zusammenfassen",
 
 
     "tooltip.backward"      : "Zurück blättern",
@@ -176,6 +177,7 @@
 	"tooltip.lastmodified"     :  "Letzte Änderung",
 	"tooltip.welcomeemailversandtzeit"  :  "Standard E-Mail Versand",
 	"tooltip.headeremailversandtzeit"			: "Produkt E-Mail Versand",
+     "tooltip.join"  :  "Zusammenfassen",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -667,6 +669,8 @@
     "label.genDataEmpList" : "Benutzerkonten",
     "label.eventProducts" : "Produkte",
     "label.siteEventsRoleManagement" : "Rollenverwaltung",
+    "label.reportingDownload" : "Download", 
+    "label.clientManagementSummarise" : "Zusammenfassen",
 
 
     "flyout.ok"             : "OK",
@@ -1789,5 +1793,12 @@
     "clientManagementSearchList.headerfairmandantid"			: "ID",
     "clientManagementSearchList.all"			: "Alle",
     "clientManagementSearchList.contactdata"			: "Kontaktdaten",
-    "clientManagementSearchList.fairs"			: "Messen"
+    "clientManagementSearchList.fairs"			: "Messen",
+    "clientManagementSearchList.destination"			: "Zielmandant",
+    "clientManagementSearchList.target"			: "Targetmandant",
+		
+    "reportingdownload.title"			: "Export Download",
+
+    "clientManagementSummarise.join"			: "Zusammenfassen",
+    "clientManagementSummarise.jointxt"			: "Wollen sie diese beiden Mandanten wirklich zusammenfügen?"
 }		

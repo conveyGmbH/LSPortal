@@ -80,6 +80,7 @@
     "command.addEvent" : "Modifica evento",
     "command.addProduct"    : "Aggiungi prodotto",
     "command.removeProduct"    : "Cancellare il prodotto",
+    "command.join"    : "Riassumere",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -175,6 +176,7 @@
     "tooltip.lastmodified"     :  "Ultimo cambiamento",
     "tooltip.welcomeemailversandtzeit"  :  "Invio standard via e-mail",
     "tooltip.headeremailversandtzeit"			: "Email del prodotto inviata",
+    "tooltip.join"  :  "Riassumere",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -1765,5 +1767,8 @@
     "clientManagementSearchList.headerfairmandantid"			: "ID",
     "clientManagementSearchList.all"			: "TTuttiout ",
     "clientManagementSearchList.contactdata"			: "Dati di contatto",
-    "clientManagementSearchList.fairs"			: "Fiere"
+    "clientManagementSearchList.fairs"			: "Fiere",
+
+    "clientManagementSummarise.join"			: "Unisci",
+    "clientManagementSummarise.jointxt"			: "Vuoi davvero unire questi due clienti?"
 }

@@ -80,6 +80,7 @@
     "command.addEvent" : "Changer d'événement",
     "command.addProduct"    : "Ajouter un produit",
     "command.removeProduct"    : "Supprimer un produit",
+    "command.join"    : "Résumer",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -175,6 +176,7 @@
     "tooltip.lastmodified"     :  "Dernière modification",
     "tooltip.welcomeemailversandtzeit"  :  "Envoi d'e-mail standard",
     "tooltip.headeremailversandtzeit"	: "Envoi de l'email du produit",
+    "tooltip.join"  :  "Résumer",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -1767,5 +1769,8 @@
     "clientManagementSearchList.headerfairmandantid"			: "ID",
     "clientManagementSearchList.all"			: "Tout ",
     "clientManagementSearchList.contactdata"			: "Données de contact",
-    "clientManagementSearchList.fairs"			: "Salons"
+    "clientManagementSearchList.fairs"			: "Salons",
+
+    "clientManagementSummarise.join"			: "Fusionner",
+    "clientManagementSummarise.jointxt"			: "Voulez-vous vraiment fusionner ces deux mandants ?"
 }

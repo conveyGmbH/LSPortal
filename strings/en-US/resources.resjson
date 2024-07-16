@@ -80,6 +80,7 @@
     "command.addEvent" : "Change event",
     "command.addProduct"    : "Add Product",
     "command.removeProduct"    : "Delete product",
+    "command.join"    : "Summarise",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -175,6 +176,7 @@
     "tooltip.lastmodified"     :  "Last modified",
     "tooltip.welcomeemailversandtzeit"  :  "Standard email sent",
     "tooltip.headeremailversandtzeit"			: "Product email sent",
+    "tooltip.join"  :  "Summarise",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1785,6 +1787,9 @@
   "clientManagementSearchList.headerfairmandantid" : "ID",
     "clientManagementSearchList.all"			: "All",
     "clientManagementSearchList.contactdata"			: "Contactdata",
-    "clientManagementSearchList.fairs"			: "Fairs"
+    "clientManagementSearchList.fairs"			: "Fairs",
+
+    "clientManagementSummarise.join"			: "Summarise",
+    "clientManagementSummarise.jointxt"			: "Do you really want to join these two clients?"
 
 }
