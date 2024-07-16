@@ -276,7 +276,8 @@
         { id: "eventStatus", group: 73, disabled: false },
         { id: "eventCopy", group: 2, disabled: false },
         { id: "eventProducts", group: 2, disabled: false },
-        { id: "siteeventsImport", group: 13, disabled: false }
+        { id: "siteeventsImport", group: 13, disabled: false },
+        { id: "clientManagementSummarise", group: 75, disabled: false }
     ];
 
 
