@@ -1445,6 +1445,7 @@
     "clientManagementSearchList.headerdbsyncpassword"			: "DBSYNCPassword",
     "clientManagementSearchList.headerwebadresse"			: "Webbadress",
     "clientManagementSearchList.headerfairmandantid"			: "ID",
+    "clientManagementSearchList.headerEventName"			: "Händelse",
     "clientManagementSearchList.all"			: "Alla",
     "clientManagementSearchList.contactdata"			: "Kontaktuppgifter",
     "clientManagementSearchList.fairs"			: "Mässor"

@@ -75,7 +75,7 @@
                     }
                     if (ClientManagementSummarise._prevJson &&
                         ClientManagementSummarise._prevRestriction === restriction) {
-                        Log.print(Log.l.info, "re-use previous PRC_GetMandantList results!");
+                        Log.print(Log.l.info, "re-use previous PRC_GetFMVList results!");
                         var json = ClientManagementSummarise._prevJson;
                         ret = new WinJS.Promise.as().then(function () {
                             if (json && json.d && json.d.results && json.d.results.length > 0 &&
@@ -88,12 +88,12 @@
                             }
                         });
                     } else {
-                        Log.print(Log.l.info, "calling PRC_GetMandantList...");
-                        ret = AppData.call("PRC_GetMandantList", {
+                        Log.print(Log.l.info, "calling PRC_GetFMVList...");
+                        ret = AppData.call("PRC_GetFMVList", {
                             pSearchString: restriction,
                             pSearchOptions: ClientManagementSummarise._FilterOption
                         }, function (json) {
-                            Log.print(Log.l.info, "call PRC_GetMandantList: success!");
+                            Log.print(Log.l.info, "call PRC_GetFMVList: success!");
                             // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
                             ClientManagementSummarise._prevRestriction = restriction;
                             ClientManagementSummarise._prevJson = json;
@@ -106,7 +106,7 @@
                                 complete(json);
                             }
                         }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_GetMandantList: error");
+                            Log.print(Log.l.error, "call PRC_GetFMVList: error");
                             if (typeof error === "function") {
                                 error(errorResponse);
                             }

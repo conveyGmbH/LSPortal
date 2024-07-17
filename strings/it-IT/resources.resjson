@@ -1765,6 +1765,7 @@
     "clientManagementSearchList.headerdbsyncpassword"			: "DBSYNCPassword",
     "clientManagementSearchList.headerwebadresse"			: "Indirizzo web",
     "clientManagementSearchList.headerfairmandantid"			: "ID",
+    "clientManagementSearchList.headereventname"			: "Evento",
     "clientManagementSearchList.all"			: "TTuttiout ",
     "clientManagementSearchList.contactdata"			: "Dati di contatto",
     "clientManagementSearchList.fairs"			: "Fiere",
