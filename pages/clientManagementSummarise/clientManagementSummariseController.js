@@ -103,9 +103,12 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+				/* Ted 20240719: Das sollte umgebaut werden! Hier wird davon ausgegangen dass der
+				   auf der ersten Liste ausgewählte "Master"-Datensatz auch in dieser Liste vorhanden
+				   ist, die aber von einer ganz anderen Tabelle kommt... Mantis#8010 */
                 if (item.FairMandantID === AppData.getRecordId("FairMandant")) {
                     that.binding.Mandantziel = item.Name;
-                    that.binding.MandantzielID = item.FairMandantVeranstID;
+                    that.binding.MandantzielID = item.FairMandantID;
                 }
                 if (!item.Firmenname) { item.Firmenname = ""; }
                 if (!item.EMail) { item.EMail = ""; }
@@ -170,12 +173,19 @@
                             var recordId = that.binding.MandantquelleID;
                             if (recordId) {
                                 ret = AppData.call("PRC_JoinToMandant", {
-                                    pTargetFairMandantID: that.binding.MandantzielID,
+									/* Ted 20240719: pTargetFairMandantID soll gleich der ID des "Master"-Datensatzes sein.
+									   Am besten hier direkt die gespeicherte Datensatz-ID verwenden... */
+                                    pTargetFairMandantID: AppData.getRecordId("FairMandant"),
                                     pFairMandantVeranstID: that.binding.MandantquelleID
                                 }, function (json) {
                                     Log.print(Log.l.info, "call success! ");
                                     if (json && json.d && json.d.results.length > 0) {
                                         var results = json.d.results[0];
+										if (results.ResultCode != 0) {
+											Log.print(Log.l.error, "PRC_JoinToMandant returns error "+
+											          results.ResultCode+" / "+results.ResultMessage);
+											AppData.setErrorMsg(that.binding, results.ResultMessage);
+										}
                                         that.binding.Mandantquelle = "";
                                         that.binding.MandantquelleID = null;
                                         that.loadData();
