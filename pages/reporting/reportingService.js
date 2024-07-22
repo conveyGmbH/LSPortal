@@ -575,7 +575,7 @@
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._employeeView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Nachname"
+                    orderAttribute: "EmployeeName"
                 });
                 Log.ret(Log.l.trace);
                 return ret;

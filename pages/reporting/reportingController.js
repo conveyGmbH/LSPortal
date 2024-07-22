@@ -154,8 +154,8 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                item.fullName = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
-                item.fullNameValue = (item.Nachname ? (item.Nachname + ", ") : "") + (item.Vorname ? item.Vorname : "");
+                item.fullName = item.EmployeeName;
+                item.fullNameValue = item.EmployeeName;
             }
             this.resultConverter = resultConverter;
 
