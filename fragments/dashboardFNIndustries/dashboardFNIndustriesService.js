@@ -66,7 +66,7 @@
         },
         _mitarbeiterView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
         mitarbeiterView: {

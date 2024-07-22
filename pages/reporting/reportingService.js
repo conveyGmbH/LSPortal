@@ -499,7 +499,7 @@
         },
         _reportLand: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20473);
+                return AppData.getFormatView("Veranstaltung", 20687);
             }
         },
         reportLand: {
@@ -533,7 +533,7 @@
         },
         _reportMitarbeiter: {
             get: function () {
-                return AppData.getFormatView("Kontakt", 20474);
+                return AppData.getFormatView("Veranstaltung", 20688);
             }
         },
         reportMitarbeiter: {
@@ -567,7 +567,7 @@
         },
         _employeeView: {
             get: function() {
-                return AppData.getFormatView("Mitarbeiter", 20495);
+                return AppData.getFormatView("Veranstaltung", 20688);
             }
         },
         employeeView: {
