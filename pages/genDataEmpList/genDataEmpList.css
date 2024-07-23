@@ -189,3 +189,9 @@ view-size-smallest #employeeList .win-container {
     width: 118%;
 }
 
+.genDataEmpList .list-symbol-ID {
+    margin-top: 7px !important;
+}
+.genDataEmpList .list-symbol-IDw {
+    margin-top: 7px !important;
+}

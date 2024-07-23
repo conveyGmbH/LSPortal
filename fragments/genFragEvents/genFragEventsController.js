@@ -116,7 +116,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickChangeEvent: function(event) {
+                clickBtnActive: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.call("PRC_CopyAppMitarbeiter", {
                         pMitarbeiterID: that.binding.ecRecordID,
@@ -124,12 +124,56 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_CopyAppMitarbeiter success! ");
                         if (json && json.d && json.d.results.length > 0) {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && typeof master.controller.loadData === "function") {
+                                master.controller.loadData(that.binding.ecRecordID);
+                            };
                             that.loadData();
                         } else {
                             Log.print(Log.l.error, "ERROR: No Data found!");
                         }
                     }, function (error) {
                         Log.print(Log.l.error, "call PRC_CopyAppMitarbeiter error");
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickBtnResetTarget: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.call("PRC_ResetAppUserTarget", {
+                        pMitarbeiterID: that.binding.ecRecordID
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_ResetAppUserTarget success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && typeof master.controller.loadData === "function") {
+                                master.controller.loadData(that.binding.ecRecordID);
+                            };
+                            that.loadData();
+                        } else {
+                            Log.print(Log.l.error, "ERROR: No Data found!");
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call PRC_ResetAppUserTarget error");
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickBtnInactive: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.call("PRC_SetAppUserInactive", {
+                        pMitarbeiterID: that.binding.ecRecordID
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_SetAppUserInactive success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && typeof master.controller.loadData === "function") {
+                                master.controller.loadData(that.binding.ecRecordID);
+                            };
+                            that.loadData();
+                        } else {
+                            Log.print(Log.l.error, "ERROR: No Data found!");
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call PRC_SetAppUserInactive error");
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -184,25 +228,31 @@
                 }
                 item.EndStartDatum = item.Startdatum + " - " + item.Enddatum;
                 if (item.UserStatus === "ACTIVE" || item.UserStatus === "" || item.UserStatus === null) {
-                    item.UserStatusID = 1;
-                } else {
-                    item.UserStatusID = "";
+                    item.activebtndisplay = 0;
+                    item.targetbtndisplay = 0;
+                    item.inactivebtndisplay = 1;
                 }
                 if (item.UserStatus === "INACTIVE") {
-                    item.AktivButtonShowFlag = 1;
-                } else {
-                    item.AktivButtonShowFlag = "";
+                    item.activebtndisplay = 1;
+                    item.targetbtndisplay = 0;
+                    item.inactivebtndisplay = 0;
                 }
                 if (item.UserStatus === "TARGET" || item.UserStatus === "CHANGE") {
-                    item.UserStatusShowFlag = 1;
-                } else {
-                    item.UserStatusShowFlag = "";
+                    item.activebtndisplay = 0;
+                    item.targetbtndisplay = 1;
+                    item.inactivebtndisplay = 0;
                 }
-                if (item.UserStatusID === 1 || item.UserStatus === "TARGET") {
+                if (item.UserStatus === "CHANGE") {
+                    item.activebtndisplay = 0;
+                    item.targetbtndisplay = 0;
+                    item.inactivebtndisplay = 0;
+                }
+                if (item.UserStatus === "ACTIVE" || item.UserStatus === "" || item.UserStatus === null) {
                     item.InfoMailButtonShowFlag = 1;
                 } else {
                     item.InfoMailButtonShowFlag = "";
                 }
+
             }
             this.resultConverter = resultConverter;
 

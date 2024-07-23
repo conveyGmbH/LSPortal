@@ -191,6 +191,16 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
+                if (item.UserStatus === "INACTIVE") {
+                    item.InactiveShowFlag = 1;
+                } else {
+                    item.InactiveShowFlag = 0;
+                }
+                if (item.UserStatus === "CHANGE") {
+                    item.TargetShowFlag = 1;
+                } else {
+                    item.TargetShowFlag = 0;
+                }
                 // convert Startdatum
                 if (item.Startdatum) {
                     item.Startdatum = getDateObject(item.Startdatum);

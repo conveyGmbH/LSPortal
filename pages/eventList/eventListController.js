@@ -497,15 +497,21 @@
                                         if (item.data.Aktiv) {
                                             that.binding.active = 1;
                                         }
+                                        AppData._persistentStates.showdashboardMesagoCombo = item.data.DashboardIdx;
                                         if (item.data.DashboardIdx === "0") {
-                                            NavigationBar.disablePage("startPremium");
-                                        } else {
-                                            if (item.data.DashboardIdx === "1" || item.data.DashboardIdx === "2") {
                                                 NavigationBar.enablePage("startPremium");
-                                            } else {
                                                 NavigationBar.enablePage("dashboardFN");
                                             }
+                                        if (item.data.DashboardIdx === "1" || item.data.DashboardIdx === "2" || item.data.DashboardIdx === "3" || item.data.DashboardIdx === "4") {
+                                            NavigationBar.enablePage("startPremium");
+                                        } else {
+                                            NavigationBar.disablePage("startPremium");
                                         }
+                                        /*if (item.data.DashboardIdx === "3" || item.data.DashboardIdx === "4") {
+                                            NavigationBar.enablePage("dashboardFN");
+                                        } else {
+                                            NavigationBar.disablePage("dashboardFN");
+                                        }*/
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
@@ -617,8 +623,7 @@
                                                 }
                                                 if ((curPageId === "reporting" ||
                                                     curPageId === "reportingColumnList" ||
-                                                    curPageId === "start" ||
-                                                    curPageId === "startPremium") &&
+                                                    curPageId === "start") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
                                                 }
@@ -641,6 +646,10 @@
                                                         Log.print(Log.l.trace, "Binding wireup page complete");
                                                         return AppBar.scope.loadData();
                                                     });
+                                                }
+                                                if (curPageId === "startPremium" && item.data.DashboardIdx !== 0 &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    Application.navigateById("start");
                                                 }
                                                 if (curPageId === "optMandatoryFieldList" &&
                                                     typeof AppBar.scope.loadData === "function") {
