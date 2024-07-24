@@ -1737,6 +1737,9 @@
     "genDataEmployee.event"			: "Events",
     "genDataEmployee.addevent"			: "Event",
     "genDataEmployee.addeventbtn"			: "Add",
+    "genDataEmployee.activebtntxt"			: "Activate",
+    "genDataEmployee.targetbtntxt"			: "Renew target",
+    "genDataEmployee.inactivebtntxt"			: "Deactivate",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",

@@ -1743,6 +1743,9 @@
     "genDataEmployee.event"			: "Veranstaltungen",
     "genDataEmployee.addevent"			: "Veranstaltung",
     "genDataEmployee.addeventbtn"			: "Hinzufügen",
+    "genDataEmployee.activebtntxt"			: "Aktivieren",
+    "genDataEmployee.targetbtntxt"			: "Ziel erneuern",
+    "genDataEmployee.inactivebtntxt"			: "Deaktivieren",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",
