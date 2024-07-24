@@ -417,9 +417,9 @@
                             if (master && master.controller) {
                                 master.controller.curRecId = recordId;
                                 master.controller.loadData().then(function () {
+                                    master.controller.selectRecordId(recordId);
                                     if (typeof complete === "function") {
                                         complete(dataQuestion);
-                                        master.controller.selectRecordId(recordId);
                                     }
                                 });
                             } else {
