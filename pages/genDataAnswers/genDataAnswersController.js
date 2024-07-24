@@ -419,6 +419,7 @@
                                 master.controller.loadData().then(function () {
                                     if (typeof complete === "function") {
                                         complete(dataQuestion);
+                                        master.controller.selectRecordId(recordId);
                                     }
                                 });
                             } else {
