@@ -771,7 +771,7 @@
                         Log.print(Log.l.trace, "Data loaded");
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
-                            master.controller.scrollToRecordId(recordId);
+                            //master.controller.scrollToRecordId(recordId);
                         }
                     }
                 });
