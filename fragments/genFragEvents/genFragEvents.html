@@ -69,6 +69,18 @@
                                     <span data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay; textContent: UserStatus"></span>
                                     <button data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay"
                                             data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
+                                    <button class="list-button-left win-button"
+                                            data-win-res="{textContent: 'genDataEmployee.activebtntxt'}"
+                                            data-win-bind="style.display: activebtndisplay Binding.Converter.toDisplay"
+                                            onclick="AppBar.handleEvent('click', 'clickBtnActive', event)"></button>
+                                    <button class="list-button-left win-button"
+                                            data-win-res="{textContent: 'genDataEmployee.targetbtntxt'}"
+                                            data-win-bind="style.display: targetbtndisplay Binding.Converter.toDisplay"
+                                            onclick="AppBar.handleEvent('click', 'clickBtnResetTarget', event)"></button>
+                                    <button class="list-button-left win-button"
+                                            data-win-res="{textContent: 'genDataEmployee.inactivebtntxt'}"
+                                            data-win-bind=" style.display: inactivebtndisplay Binding.Converter.toDisplay"
+                                            onclick="AppBar.handleEvent('click', 'clickBtnInactive', event)"></button>
                                 </div>
                             </div>
                         </div>
