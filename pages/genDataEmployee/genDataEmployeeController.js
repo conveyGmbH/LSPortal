@@ -42,6 +42,8 @@
 
             var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
 
+            that.loadDataDelayedPromise = null;
+
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
 
@@ -50,6 +52,19 @@
                     that.events = null;
                 }
             }
+
+            var loadDataDelayed = function (searchString) {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
 
             var resultConverter = function (item, index) {
                 if (item.Login && item.Login.indexOf("@") > 0) {
@@ -393,7 +408,7 @@
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
-                        master.controller.loadData();
+                        that.loadDataDelayed(master.controller.loadData());
                     }
                     Log.ret(Log.l.trace);
                 },
