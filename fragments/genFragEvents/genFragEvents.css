@@ -26,7 +26,6 @@
 #genFragEvents.listview {
     width: 100%;
     height: 100%;
-    overflow: auto
 }
 
 /* listview viewport will be resized by page controller! */
@@ -67,8 +66,7 @@
 
 #genFragEvents {
     position: relative;
-    overflow: auto;
-    max-height: 400px; /* Set a maximum height or adjust as needed */
+    /*max-height: 400px;  Set a maximum height or adjust as needed */
 }
 .pagecontrol:not(.view-size-bigger) #genFragEvents .win-headercontainer {
     position: sticky;
