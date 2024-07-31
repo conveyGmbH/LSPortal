@@ -108,7 +108,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.BenutzerVIEWID) {
-                                        that.binding.ecRecordID = item.data.BenutzerID;
+                                        that.binding.ecRecordID = item.data.MitarbeiterID;
                                         that.binding.ecEventID = item.data.VeranstaltungID;
                                         that.binding.ecRecordBVID = item.data.BenutzerVIEWID;
                                     }
