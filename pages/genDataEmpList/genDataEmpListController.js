@@ -566,9 +566,11 @@
                             if (json && json.d) {
                                 var employee = json.d;
                                 that.resultConverter(employee);
-                                var objectrec = scopeFromRecordId(recordId);
+                                var objectrec = scopeFromRecordId(that.binding.employeeId);
                                 if (objectrec && objectrec.index >= 0) {
                                     that.employees.setAt(objectrec.index, employee);
+                                    that.binding.employeeId = recordId;
+                                    that.selectRecordId(recordId);
                                 } else {
                                     licenceWarningSelected = false;
                                     that.loadData();
