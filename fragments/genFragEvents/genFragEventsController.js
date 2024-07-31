@@ -347,7 +347,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.count = 0;
-                    }, { MitarbeiterID: recordId }).then(function () {
+                    }, { MitarbeiterID: recordId })/*.then(function () {
                         if (newRecordId) {
                             Log.print(Log.l.trace, "reload master newRecordId=" + newRecordId);
                             var master = Application.navigator.masterControl;
@@ -365,7 +365,7 @@
                             });
                             return WinJS.Promise.as();
                         }
-                    });
+                    })*/;
                 } else {
                     Log.print(Log.l.trace, "No recordId set!");
                 }
