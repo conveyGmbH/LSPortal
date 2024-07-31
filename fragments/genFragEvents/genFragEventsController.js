@@ -128,7 +128,7 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
-                                master.controller.loadData(that.binding.ecRecordID);
+                                master.controller.loadData(json.d.results[0].NewMitarbeiterID);
                             };
                             that.loadData();
                         } else {
