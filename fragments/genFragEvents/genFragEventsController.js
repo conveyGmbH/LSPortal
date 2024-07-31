@@ -25,6 +25,7 @@
                 eventData: null,
                 ecRecordID: 0,
                 ecEventID: 0,
+                ecRecordBVID: 0,
                 loadingState: null
             }]);
             var that = this;
@@ -107,8 +108,9 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.BenutzerVIEWID) {
-                                        that.binding.ecRecordID = item.data.BenutzerVIEWID;
+                                        that.binding.ecRecordID = item.data.BenutzerID;
                                         that.binding.ecEventID = item.data.VeranstaltungID;
+                                        that.binding.ecRecordBVID = item.data.BenutzerVIEWID;
                                     }
                                 });
                             }
@@ -146,7 +148,7 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
-                                master.controller.loadData(that.binding.ecRecordID);
+                                master.controller.loadData(that.binding.ecRecordBVID);
                             };
                             that.loadData();
                         } else {
@@ -166,7 +168,7 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
-                                master.controller.loadData(that.binding.ecRecordID);
+                                master.controller.loadData(that.binding.ecRecordBVID);
                             };
                             that.loadData();
                         } else {
@@ -245,7 +247,7 @@
                 if (item.UserStatus === "CHANGE") {
                     item.activebtndisplay = 0;
                     item.targetbtndisplay = 0;
-                    item.inactivebtndisplay = 0;
+                    item.inactivebtndisplay = 1;
                 }
                 if (item.UserStatus === "ACTIVE" || item.UserStatus === "" || item.UserStatus === null) {
                     item.InfoMailButtonShowFlag = 1;
