@@ -571,7 +571,15 @@
                                 if (objectrec && objectrec.index >= 0) {
                                     that.employees.setAt(objectrec.index, employee);
                                     that.binding.employeeId = recordId;
+                                    that.binding.hasContacts = employee.HatKontakte;
                                     that.selectRecordId(recordId);
+                                    var curPageId = Application.getPageId(nav.location);
+                                    if ((curPageId === "genDataEmployee") &&
+                                        typeof AppBar.scope.loadData === "function") {
+                                        AppBar.scope.loadData(that.binding.employeeId);
+                                    } else {
+                                        Application.navigateById("genDataEmployee");
+                                    }
                                 } else {
                                     licenceWarningSelected = false;
                                     that.loadData();
