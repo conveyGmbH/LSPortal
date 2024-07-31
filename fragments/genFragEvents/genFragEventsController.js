@@ -142,13 +142,13 @@
                 clickBtnResetTarget: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.call("PRC_ResetAppUserTarget", {
-                        pMitarbeiterID: that.binding.ecRecordID
+                        pMitarbeiterID: that.binding.ecRecordBVID
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_ResetAppUserTarget success! ");
                         if (json && json.d && json.d.results.length > 0) {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
-                                master.controller.loadData(that.binding.ecRecordBVID);
+                                master.controller.loadData(that.binding.ecRecordID);
                             };
                             that.loadData();
                         } else {
@@ -162,13 +162,13 @@
                 clickBtnInactive: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.call("PRC_SetAppUserInactive", {
-                        pMitarbeiterID: that.binding.ecRecordID
+                        pMitarbeiterID: that.binding.ecRecordBVID
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_SetAppUserInactive success! ");
                         if (json && json.d && json.d.results.length > 0) {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
-                                master.controller.loadData(that.binding.ecRecordBVID);
+                                master.controller.loadData(that.binding.ecRecordID);
                             };
                             that.loadData();
                         } else {
