@@ -107,7 +107,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.BenutzerVIEWID) {
-                                        that.binding.ecRecordID = item.data.MitarbeiterID;
+                                        that.binding.ecRecordID = item.data.BenutzerVIEWID;
                                         that.binding.ecEventID = item.data.VeranstaltungID;
                                     }
                                 });
