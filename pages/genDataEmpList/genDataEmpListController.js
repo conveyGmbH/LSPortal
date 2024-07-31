@@ -426,7 +426,8 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, "GenDataEmpList.Controller.", "recordId=" + recordId);
+                var prevEmpId = that.binding.employeeId;
+                Log.call(Log.l.trace, "GenDataEmpList.Controller.", "recordId=" + recordId + "prevID" + prevEmpId);
                 that.loading = true;
                 progress = pageElement.querySelector(".list-footer .progress");
                 counter = pageElement.querySelector(".list-footer .counter");
@@ -566,7 +567,7 @@
                             if (json && json.d) {
                                 var employee = json.d;
                                 that.resultConverter(employee);
-                                var objectrec = scopeFromRecordId(that.binding.employeeId);
+                                var objectrec = scopeFromRecordId(prevEmpId);
                                 if (objectrec && objectrec.index >= 0) {
                                     that.employees.setAt(objectrec.index, employee);
                                     that.binding.employeeId = recordId;
