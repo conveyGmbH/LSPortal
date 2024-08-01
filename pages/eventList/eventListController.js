@@ -49,6 +49,10 @@
             var maxTrailingPages = 0;
 
             this.dispose = function () {
+                var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
+                if (splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
+                    WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
+                }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
@@ -864,14 +868,23 @@
                     }, {
 
                         });
-                })/*.then(function () {
-                 // Bug show empty space if hide master list
+                }).then(function () {
+                    var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                     if (that.binding.count === 1) {
+                        if (splitViewContent && !WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
+                            WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");
+                        }
+                        Application.navigator._masterMaximized = true;
                         Application.navigator._hideMaster();
+                    } else {
+                        if (splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
+                            WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
+                        }
                     }
+                    return WinJS.Promise.timeout(50);
                 }).then(function () {
                     Application.navigator._resized();
-                })*/;
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             };

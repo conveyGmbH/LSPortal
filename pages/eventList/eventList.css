@@ -1,4 +1,8 @@
-﻿#eventList .win-itemcontainer .win-itembox,
+﻿.hide-detail-restored #detailRestored {
+    display: none;
+}
+
+#eventList .win-itemcontainer .win-itembox,
 #eventList .win-listview .win-itembox {
     background-color: transparent;
 }
