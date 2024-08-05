@@ -464,13 +464,17 @@
                 clickOrderLicence: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
                     if (event.target.textContent === getResourceText("employee.licenceAsc")) {
                         that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
                     } else {
                         that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
                     }
                     that.saveRestriction();
-                    var master = Application.navigator.masterControl;
                     if (master && master.controller) {
                         master.controller.loadData();
                     }

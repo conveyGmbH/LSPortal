@@ -69,6 +69,15 @@
             };
             this.background = background;
 
+            var highlightorderLicenceBtn = function(state) {
+                if (state === 1) {
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "red";
+                } else {
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "transparent";
+                }
+            }
+            this.highlightorderLicenceBtn = highlightorderLicenceBtn;
+
             var setSelIndex = function (index) {
                 Log.call(Log.l.trace, "GenDataEmpList.Controller.", "index=" + index);
                 if (that.employees && that.employees.length > 0) {
