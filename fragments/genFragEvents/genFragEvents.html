@@ -51,7 +51,9 @@
                             </div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay">
-                                <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
+                                <button 
+                                    data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"
+                                    onclick="AppBar.handleEvent('click', 'clickBtnSendInfoMail', event)"></button>
                             </div>
                         </div>
                         <div class="list-portrait-only">

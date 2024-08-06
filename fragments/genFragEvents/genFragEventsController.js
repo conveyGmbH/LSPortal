@@ -197,6 +197,23 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                clickBtnSendInfoMail: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.call("PRC_SendStaffInfomail", {
+                        pMitarbeiterID: that.binding.ecRecordID,
+                        pAction: "VACHANGE"
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_SendStaffInfomail success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            that.loadData();
+                        } else {
+                            Log.print(Log.l.error, "ERROR: No Data found!");
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call PRC_SendStaffInfomail error");
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
