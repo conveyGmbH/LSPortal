@@ -285,7 +285,7 @@
                     item.inactivebtndisplay = 1;
                 }
                 if (item.UserStatus === "ACTIVE" || item.UserStatus === "" || item.UserStatus === null) {
-                    item.InfoMailButtonShowFlag = 1;
+                    item.InfoMailButtonShowFlag = "";
                 } else {
                     item.InfoMailButtonShowFlag = "";
                 }
