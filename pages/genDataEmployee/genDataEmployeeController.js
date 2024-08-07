@@ -19,7 +19,7 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue),
                 restriction: copyByValue(GenDataEmployee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin, // || AppHeader.controller.binding.userData.HasLocalEvents,
+                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 noLicence: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
