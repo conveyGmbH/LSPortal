@@ -69,6 +69,11 @@
             };
             this.background = background;
 
+            var getOrderLicenceBtn = function () {
+                return pageElement.querySelector("#orderLicenceBtn");
+            }
+            this.getOrderLicenceBtn = getOrderLicenceBtn;
+
             var highlightorderLicenceBtn = function(state) {
                 if (state === 1) {
                     pageElement.querySelector("#orderLicenceBtn").style.borderColor = "red";
@@ -329,7 +334,9 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             //smallest List color change
                             var circleElement = pageElement.querySelector('#nameInitialcircle');
-                            circleElement.style.backgroundColor = Colors.accentColor;
+                            if (circleElement && circleElement.style) {
+                                circleElement.style.backgroundColor = Colors.accentColor;
+                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                             Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
@@ -471,11 +478,11 @@
                 } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
                     that.binding.btnFirstNameText = getResourceText("employee.firstName");
                     that.binding.btnNameText = getResourceText("employee.name");
-                    if (restriction.OrderDesc) {
+                    /*if (restriction.OrderDesc) {
                         that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceDesc");
                     } else {
                         that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceAsc");
-                    }
+                    }*/
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
@@ -581,7 +588,8 @@
                                     that.employees.setAt(objectrec.index, employee);
                                     that.binding.employeeId = recordId;
                                     that.binding.hasContacts = employee.HatKontakte;
-                                    that.selectRecordId(recordId);
+                                    /*#7573 Kommentar Nr.5 */
+                                    //that.selectRecordId(recordId);
                                     var curPageId = Application.getPageId(nav.location);
                                     if ((curPageId === "genDataEmployee") &&
                                         typeof AppBar.scope.loadData === "function") {

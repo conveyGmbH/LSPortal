@@ -480,6 +480,28 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickFilterLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
+                    var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === "red") {
+                        //that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
+                    } else {
+                        //that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
+                    }
+                    that.saveRestriction();
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+
+
+                },
                 clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     var anchor = document.getElementById("menuButton");
@@ -571,7 +593,7 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             //smallest List color change
                             var circleElement = pageElement.querySelector('#nameInitialcircle');
-                            if (circleElement) {
+                            if (circleElement && circleElement.style) {
                             circleElement.style.backgroundColor = Colors.accentColor;
                             }
                             // load SVG images

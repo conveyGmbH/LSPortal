@@ -65,7 +65,9 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             //smallest List color change
                             var circleElement = pageElement.querySelector('#nameInitialcircle');
+                            if (circleElement && circleElement.style) {
                             circleElement.style.backgroundColor = Colors.accentColor;
+                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
