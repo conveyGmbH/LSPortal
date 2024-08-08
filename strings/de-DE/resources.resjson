@@ -825,6 +825,7 @@
     "employee.userStatus" : "Status",
     "employee.eventTarget"	 : "Veranstaltung Ziel",
 	"employee.eventActual"   : "Aktuelle Veranstaltung",
+    "employee.groups"   : "Gruppen",
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",

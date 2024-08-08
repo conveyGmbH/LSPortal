@@ -73,10 +73,20 @@
                                    data-win-bind="value: dataEmployee.Password2 Binding.Mode.twoway" />
                         </div>
                         <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: isEmpRolesCustomVisible Binding.Converter.toDisplay">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.roles'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'employee.roles'}"></span>
+                            <select id="roles"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataEmployee.INITAPUserRoleID Binding.Mode.twoway">
+                                <option data-win-bind="value: INITAPUserRoleID; textContent: TITLE"></option>
+                            </select>
+                        </div>
                         <div data-win-bind="style.display: isEmpRolesVisible Binding.Converter.toDisplay">
                             <div class="field_line" data-win-bind="style.display: dataEmployee.UserSpecID Binding.Converter.toDisplay">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.roles'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'employee.roles'}"></span>
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.groups'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'employee.groups'}"></span>
                                 <div id="emproleshost" class="input_field fragmenthost"></div>
                             </div>
                         </div>
