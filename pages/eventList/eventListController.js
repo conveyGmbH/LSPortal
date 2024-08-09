@@ -28,7 +28,7 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin &&
                     AppData._persistentStates.leadsuccessBasic,
                 btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished"),
-                showHideFilterBtn: true,
+                showHideFilterBtn: null,
                 showHideDashboardFeature: true
             }, commandList, isMaster]);
             this.nextUrl = null;
@@ -84,8 +84,9 @@
                         that.binding.showHideFilterBtn = null;
                         that.binding.publishFlag = null;
                     } else {
-                        that.binding.showHideFilterBtn = true;
-                        that.binding.publishFlag = true;
+                        // Nur anzeigen wenn es auch einen gibt
+                        /*that.binding.showHideFilterBtn = true;
+                        that.binding.publishFlag = true;*/
                     }
                 } else {
                     console.warn("Element with ID btnFilterNotPublished not found.");
@@ -240,6 +241,10 @@
                     that.disabledindexes.push(index);
                 } else {
                     item.disabled = false;
+                }
+                if (item.PublishFlag) {
+                    that.binding.showHideFilterBtn = true;
+                    that.binding.publishFlag = true;
                 }
             }
             this.resultConverter = resultConverter;
@@ -496,6 +501,7 @@
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         that.binding.publishFlag = item.data.PublishFlag;
+                                        //that.binding.showHideFilterBtn = item.data.PublishFlag;
                                         if (typeof AppHeader === "object" &&
                                             AppHeader.controller && AppHeader.controller.binding) {
                                             AppHeader.controller.binding.publishFlag = AppHeader.controller.getPublishFlag(); /* that.binding.publishFlag that.binding.generalData.publishFlag*/
@@ -871,8 +877,11 @@
 
                         });
                 }).then(function () {
+                    var curPageId = Application.getPageId(nav.location);
+                    that.hideBtnFilterNotPublished(curPageId);
                     var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
-                    if (that.binding.count === 1) {
+                    // Problem wenn gefiltert wird und dabei count = 1 ist von Result
+                    if (that.binding.count === 1 && !EventList._restriction) {
                         if (splitViewContent && !WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                             WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");
                         }
