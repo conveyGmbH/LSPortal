@@ -110,32 +110,20 @@
 
             var creatingDashboardComboCategory = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
-                var dashboardComboCategory = [
-                    {
-                        value: 0,
-                        TITLE: getResourceText("eventList.dashboardStandard")
-                    },
-                    {
-                        value: 1,
-                        TITLE: getResourceText("eventList.dashboardPremium")/*"Premium"*/
-                    },
-                    {
-                        value: 2,
-                        TITLE: getResourceText("eventList.dashboardSupreme")/*"Supreme"*/
-                    },
-                    {
-                        value: 3,
-                        TITLE: getResourceText("eventList.ambientePremium")/*"Premium"*/
-                    },
-                    {
-                        value: 4,
-                        TITLE: getResourceText("eventList.ambienteSupreme")/*"Supreme"*/
-                    }
-                ];
+                AppData.setErrorMsg(that.binding);
+                AppData.call("PRC_GetMandantDashboardTypes", {
+
+                }, function (json) {
+                    if (json && json.d && json.d.results) {
                 if (dashboardCombo && dashboardCombo.winControl) {
-                    dashboardCombo.winControl.data = new WinJS.Binding.List(dashboardComboCategory);
+                            dashboardCombo.winControl.data = new WinJS.Binding.List(json.d.results);
                     dashboardCombo.selectedIndex = 0;
                 }
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
+                Log.ret(Log.l.trace);
             };
             this.creatingDashboardComboCategory = creatingDashboardComboCategory;
 
