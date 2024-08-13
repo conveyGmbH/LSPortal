@@ -15,10 +15,10 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only">
-                                <div class="list-field-big-variable win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.event'}"></div>
+                                <div class="list-field-big-variable win-type-ellipsis" onclick="AppBar.handleEvent('click', 'clickOrderEvent', event)" data-win-res="{textContent: 'genFragEvents.event'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventstart'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventaktiv'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventinfomail'}"></div>
+                                <!--<div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventinfomail'}"></div>-->
                             </div>
                         </div>
                     </div>
@@ -49,10 +49,12 @@
                                         data-win-bind=" style.display: inactivebtndisplay Binding.Converter.toDisplay"
                                         onclick="AppBar.handleEvent('click', 'clickBtnInactive', event)"></button>
                             </div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <!--<div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay">
-                                <button data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
-                            </div>
+                                <button 
+                                    data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"
+                                    onclick="AppBar.handleEvent('click', 'clickBtnSendInfoMail', event)"></button>
+                            </div>-->
                         </div>
                         <div class="list-portrait-only">
                             <div class="row-separator"></div>
@@ -67,8 +69,8 @@
                                             data-win-res="{textContent: 'genFragEvents.eventsetactive'}" 
                                             onclick="AppBar.handleEvent('click', 'clickChangeEvent', event)"></button>
                                     <span data-win-bind="style.display: UserStatusShowFlag Binding.Converter.toDisplay; textContent: UserStatus"></span>
-                                    <button data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay"
-                                            data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>
+                                    <!--<button data-win-bind="style.display: InfoMailButtonShowFlag Binding.Converter.toDisplay"
+                                        data-win-res="{textContent: 'genFragEvents.eventsendinfomail'}"></button>-->
                                     <button class="list-button-left win-button"
                                             data-win-res="{textContent: 'genDataEmployee.activebtntxt'}"
                                             data-win-bind="style.display: activebtndisplay Binding.Converter.toDisplay"

@@ -19,7 +19,8 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue),
                 restriction: copyByValue(GenDataEmployee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin, // || AppHeader.controller.binding.userData.HasLocalEvents,
+                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin,
+                isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
                 noLicence: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
@@ -39,8 +40,10 @@
             var counter = null;
             var layout = null;
             this.events = null;
+            this.roles = null;
 
             var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
+            var roleschombo = pageElement.querySelector("#roles");
 
             that.loadDataDelayedPromise = null;
 
@@ -50,6 +53,9 @@
             this.dispose = function () {
                 if (that.events) {
                     that.events = null;
+                }
+                if (that.roles) {
+                    that.roles = null;
                 }
             }
 
@@ -464,17 +470,43 @@
                 clickOrderLicence: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
                     if (event.target.textContent === getResourceText("employee.licenceAsc")) {
                         that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
                     } else {
                         that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
                     }
                     that.saveRestriction();
-                    var master = Application.navigator.masterControl;
                     if (master && master.controller) {
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickFilterLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
+                    var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === "red") {
+                        //that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
+                    } else {
+                        //that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
+                    }
+                    that.saveRestriction();
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+
+
                 },
                 clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -567,7 +599,9 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             //smallest List color change
                             var circleElement = pageElement.querySelector('#nameInitialcircle');
+                            if (circleElement && circleElement.style) {
                             circleElement.style.backgroundColor = Colors.accentColor;
+                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                             Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
@@ -705,6 +739,24 @@
                     recordId = getRecordId();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "calling select employeeView...");
+                    that.roles = null;
+                    return GenDataEmployee.LGNTINITAPUserRoleView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "employeeView: success!");
+                        if (json && json.d && json.d.results.length > 0) {
+                            that.roles = new WinJS.Binding.List(json.d.results);
+                        }
+                        if (roleschombo && roleschombo.winControl) {
+                            roleschombo.winControl.data = that.roles;
+                        }
+                        /*if (AppHeader.controller.binding.userData.SiteAdmin === 1 && AppHeader.controller.binding.userData.HasLocalEvents === 1) {
+                            that.binding.isEmpRolesCustomVisible = 0;
+                        }*/
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { LanguageSpecID: AppData.getLanguageId()});
+                }).then(function () {
                     if (recordId) {
                         that.events = null;
                         return AppData.call("PRC_MAWeitereVeranstaltungen", {

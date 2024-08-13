@@ -159,9 +159,9 @@
         { id: "mandatory", group: 30, svg: "pflichtFelder", disabled: true, predecGroup: 27 },
         //Contacts
         { id: "contactsEventsGrp", group: 29, svg: "contact_Ereignis", disabled: true, popup: true },
-        { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
-        { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
+        { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
+        { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
         //Dashboards
         { id: "dashBoard", group: 15, svg: "dashboard", disabled: true, popup: true },
         { id: "start", group: 15, svg: "dashboard", disabled: true, predecGroup: 15 },

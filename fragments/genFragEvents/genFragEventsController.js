@@ -22,6 +22,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 recordID: 0,
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
+                restriction: copyByValue(GenFragEvents.BenutzerView.defaultRestriction),
                 eventData: null,
                 ecRecordID: 0,
                 ecEventID: 0,
@@ -97,6 +98,23 @@
             this.getDateObject = getDateObject;
 
             var eventHandlers = {
+                clickOrderEvent: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    switch (that.binding.restriction.OrderDesc) {
+                        case true:
+                            that.binding.restriction.OrderDesc = false;
+                            that.binding.restriction.OrderAttribute = "VeranstaltungName";
+                            that.loadData();
+                            break;
+                        case false:
+                            that.binding.restriction.OrderDesc = true;
+                            that.binding.restriction.OrderAttribute = "VeranstaltungName";
+                            that.loadData();
+                            break;
+                    default:
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
@@ -179,6 +197,23 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                clickBtnSendInfoMail: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.call("PRC_SendStaffInfomail", {
+                        pMitarbeiterID: that.binding.ecRecordID,
+                        pAction: "VACHANGE"
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_SendStaffInfomail success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            that.loadData();
+                        } else {
+                            Log.print(Log.l.error, "ERROR: No Data found!");
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call PRC_SendStaffInfomail error");
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
@@ -250,7 +285,7 @@
                     item.inactivebtndisplay = 1;
                 }
                 if (item.UserStatus === "ACTIVE" || item.UserStatus === "" || item.UserStatus === null) {
-                    item.InfoMailButtonShowFlag = 1;
+                    item.InfoMailButtonShowFlag = "";
                 } else {
                     item.InfoMailButtonShowFlag = "";
                 }
@@ -271,7 +306,10 @@
                     if (master && master.controller && master.controller.binding) {
                         Log.print(Log.l.trace, "employeeId=" + master.controller.binding.employeeId);
                         recordId = master.controller.binding.employeeId;
+                        that.binding.restriction.MitarbeiterID = recordId;
                     }
+                } else {
+                    that.binding.restriction.MitarbeiterID = recordId;
                 }
                 AppData.setErrorMsg(that.binding);
                 if (recordId) {
@@ -286,6 +324,7 @@
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
+                            //that.binding.restriction = copyByValue(GenFragEvents.BenutzerView.defaultRestriction);
                             var selIdx = -1;
                             var bModified = false;
                             if (results.length > 0) {
@@ -347,7 +386,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.count = 0;
-                    }, { MitarbeiterID: recordId })/*.then(function () {
+                        }, that.binding.restriction)/*.then(function () {
                         if (newRecordId) {
                             Log.print(Log.l.trace, "reload master newRecordId=" + newRecordId);
                             var master = Application.navigator.masterControl;

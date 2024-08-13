@@ -24,8 +24,8 @@
                 Log.call(Log.l.trace, namespaceName + ".BenutzerView.");
                 var ret = GenFragEvents._BenutzerView.select(complete, error, restriction, {
                     ordered: true,
-                    orderAttribute: "Startdatum",
-                    desc: true
+                    orderAttribute: restriction.OrderAttribute,
+                    desc: restriction.OrderDesc
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -77,6 +77,11 @@
                 UserStatusShowFlag: "",
                 UserStatus: "",
                 MitarbeiterID: 0
+            },
+            defaultRestriction: {
+                MitarbeiterID: 0,
+                OrderDesc: false,
+                OrderAttribute: "Startdatum"
             }
         }
     });

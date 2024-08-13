@@ -386,6 +386,9 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });
                 }).then(function () {
+                        if (!mailTypeId) {
+                            mailTypeId = AppData.getRecordId("MailType");
+                        }
                     if (eventId && mailTypeId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select MailTypeVIEW_20570...");

@@ -72,6 +72,21 @@
                 return ret;
 
             }
+        },
+        _LGNTINITAPUserRoleView: {
+            get: function () {
+                return AppData.getFormatView("LGNTINITAPUserRole", 20695);
+            }
+        },
+        LGNTINITAPUserRoleView: {
+            select: function (complete, error, restriction) {
+                var ret = GenDataEmployee._LGNTINITAPUserRoleView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "INITAPUserRoleID"
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
     });
 })();

@@ -125,7 +125,7 @@
                                         Application.navigateById("login");
                                     });
                                 }
-                            }).then(function () {
+                            }, { VeranstaltungID: AppData.getRecordId("Veranstaltung") }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
                             });

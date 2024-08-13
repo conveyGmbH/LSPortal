@@ -560,7 +560,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                        }, { VeranstaltungID: AppData.getRecordId("Veranstaltung")});
                 }).then(function () {
                     for (var i = 0; i < Application.navigationBarGroups.length; i++) {
                         if (Application.navigationBarGroups[i].id === "events") {

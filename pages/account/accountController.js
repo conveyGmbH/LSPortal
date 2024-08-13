@@ -565,7 +565,7 @@
                                 // or server returns response with an error status.
                                 error(err);
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }).then(function () {
+                            }, { VeranstaltungID: AppData.getRecordId("Veranstaltung") }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
                             });

@@ -822,6 +822,7 @@
     "employee.userStatus" : "Status",
     "employee.eventTarget" : "Cible Evénement",
     "employee.eventActual" : "Événement en cours",
+    "employee.groups"   : "Groupes",
 
     "empList.title"         : "Comptes utilisateurs",
     "empList.count"         : "Combre",
