@@ -13,9 +13,13 @@
             }
         },
         CR_OptFragenAntwortenVIEW: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "OptMandatoryFieldList.CR_V_FragengruppeView.");
-                var restriction = { VeranstaltungID: AppBar.scope.getEventId() };
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: AppBar.scope.getEventId()
+                    };
+                }
                 var ret = OptMandatoryFieldList._CR_OptFragenAntwortenVIEW.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "CR_PFFragenAntwortenVIEWID"
@@ -144,9 +148,13 @@
             }
         },
         questionListView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "QuestionList.");
-                var restriction = { VeranstaltungID: AppBar.scope.getEventId() };
+                if (!restriction) {
+                    restriction = {
+                         VeranstaltungID: AppBar.scope.getEventId()
+                    };
+                }
                 var ret = OptMandatoryFieldList._questionListView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Sortierung"
@@ -178,9 +186,14 @@
             }
         },
         mandatoryView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "MandatoryView.");
-                var restriction = { VeranstaltungID: AppBar.scope.getEventId(), LanguageSpecID: AppData.getLanguageId() };
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: AppBar.scope.getEventId(),
+                        LanguageSpecID: AppData.getLanguageId()
+                    };
+                }
                 var ret = OptMandatoryFieldList._mandatoryView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "PflichtFelderVIEWID"

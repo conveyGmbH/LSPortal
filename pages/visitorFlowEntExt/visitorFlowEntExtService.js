@@ -13,9 +13,9 @@
             }
         },
         CR_V_BereichView: {
-            select: function (complete, error, recordId) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "VisitorFlowEntExt.CR_V_BereichView.");
-                var ret = VisitorFlowEntExt._CR_V_BereichView.select(complete, error, recordId);
+                var ret = VisitorFlowEntExt._CR_V_BereichView.select(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;
 

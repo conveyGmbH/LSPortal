@@ -55,10 +55,12 @@
             }
         },
         eventSeriesView: {
-            select: function(complete, error) {
-                var restriction = {
-                    LanguageSpecID: SeriesResourceAdministration._languageId
-                };
+            select: function (complete, error, restriction) {
+                if (!restriction) {
+                    restriction = {
+                        LanguageSpecID: SeriesResourceAdministration._languageId
+                    };
+                }
                 Log.call(Log.l.trace, "SeriesResourceAdministration.eventSeriesView.",
                     "LanguageSpecID=" + restriction.LanguageSpecID);
                 var ret = SeriesResourceAdministration._eventSeriesView.select(complete, error, restriction, {

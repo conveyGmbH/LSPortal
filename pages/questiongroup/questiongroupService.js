@@ -24,8 +24,12 @@
             }
         },
         CR_V_FragengruppeView: {
-            select: function (complete, error) {
-                var restriction = { VeranstaltungID: Questiongroup._eventId };
+            select: function (complete, error, restriction) {
+                if (!restriction) {
+                    restriction = {
+                         VeranstaltungID: Questiongroup._eventId
+                    };
+                }
                 Log.call(Log.l.trace, "Questiongroup.CR_V_FragengruppeView.");
                 var ret = Questiongroup._CR_V_FragengruppeView.select(complete, error, restriction, {
                     ordered: true,

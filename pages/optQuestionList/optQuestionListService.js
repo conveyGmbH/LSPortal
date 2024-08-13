@@ -13,9 +13,13 @@
             }
         },
         CR_OptFragenAntwortenVIEW: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "OptQuestionList.CR_V_FragengruppeView.");
-                var restriction = { VeranstaltungID: AppBar.scope.getEventId() };
+                if (!restriction) {
+                    restriction = {
+                         VeranstaltungID: AppBar.scope.getEventId()
+                    };
+                }
                 var ret = OptQuestionList._CR_OptFragenAntwortenVIEW.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "CR_OptFragenAntwortenVIEWID"
@@ -127,9 +131,13 @@
             _eventId: 0
         },
         questionListView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "QuestionList.");
-                var restriction = { VeranstaltungID: AppBar.scope.getEventId() };
+                if (!restriction) {
+                    restriction = {
+                         VeranstaltungID: AppBar.scope.getEventId()
+                    };
+                }
                 //OptQuestionList._questionListView.restriction = { VeranstaltungID: OptQuestionList._questionListView._eventId };
                 var ret = OptQuestionList._questionListView.select(complete, error, restriction, {
                     ordered: true,
