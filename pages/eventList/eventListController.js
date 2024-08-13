@@ -884,6 +884,9 @@
                     return WinJS.Promise.timeout(50);
                 }).then(function () {
                     Application.navigator._resized();
+                    return WinJS.Promise.timeout(50);
+                }).then(function () {
+                    Application.navigator._resized();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
