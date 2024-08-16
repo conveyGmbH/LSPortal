@@ -24,7 +24,7 @@
                 noLicence: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
-                addEventFormFlag: "",
+                addEventFormFlag: (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents),
                 eventId: null,
                 disableLoginName: false,
                 disableLoginFirstPart: false,

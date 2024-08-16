@@ -3,23 +3,23 @@
 */
 
 #emproleshost.fragmenthost {
-    height: 120px;
-}
-
-.view-size-biggest #emproleshost.fragmenthost {
     height: 180px;
 }
 
-.view-size-bigger #emproleshost.fragmenthost {
+.view-size-biggest #emproleshost.fragmenthost {
     height: 240px;
 }
 
+.view-size-bigger #emproleshost.fragmenthost {
+    height: 360px;
+}
+
 .view-size-medium #emproleshost.fragmenthost {
-    height: 420px;
+    height: 480px;
 }
 
 .view-size-medium-small #emproleshost.fragmenthost {
-    height: 840px;
+    height: 960px;
 }
 .text-lightcolorU {
     font-weight: bold;
