@@ -460,6 +460,9 @@
     "account.language"      : "Language",
     "account.unknown"       : "Specified user not found!",
     "account.inactive"      : "The service is currently inactive!",
+    "account.twoFA"         : "Two-factor authentication",
+    "account.twoFAtext"     : "To enable two-factor authentication you are required to enter your password and click the button Enable 2FA",
+    "account.btnTwoFA"      : "Enable 2FA",
     
     "info.title"            : "Information about the app",
     "info.comment"          : "&copy; convey Information Systems GmbH",

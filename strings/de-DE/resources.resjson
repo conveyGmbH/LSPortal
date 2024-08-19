@@ -461,6 +461,9 @@
     "account.language"      : "Sprache",
     "account.unknown"       : "Angegebener Benutzer nicht gefunden!",
     "account.inactive"      : "Der Dienst ist zur Zeit inaktiv!",
+	"account.twoFA"         : "2-Faktor-Authentifizierung",
+	"account.twoFAtext"     : "Zum Aktivieren der 2-Faktor-Authentifizierung geben Sie bitte Ihr Passwort ein und klicken Sie den Button 2FA aktivieren",
+	"account.btnTwoFA"      : "2FA aktivieren",
      
     "info.title"            : "Informationen über die App",
     "info.comment"          : "&copy; convey Information Systems GmbH",
