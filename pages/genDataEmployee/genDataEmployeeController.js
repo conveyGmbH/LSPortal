@@ -19,8 +19,9 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue),
                 restriction: copyByValue(GenDataEmployee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin,
+                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
+                setRoleVisible: 0,
                 noLicence: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
@@ -58,6 +59,19 @@
                     that.roles = null;
                 }
             }
+
+            var setRoleVisible = function(login) {
+                if (login) {
+                    if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents) {
+                        that.binding.setRoleVisible = 1;
+                    } else {
+                        that.binding.setRoleVisible = 0;
+                    }
+                } else {
+                    that.binding.setRoleVisible = 0;
+                }
+            }
+            this.setRoleVisible = setRoleVisible;
 
             var loadDataDelayed = function (searchString) {
                 if (that.loadDataDelayedPromise) {
@@ -786,6 +800,9 @@
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataEmployee(json.d);
+                                if (json.d.Login) {
+                                    that.setRoleVisible(json.d.Login);
+                                }
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
