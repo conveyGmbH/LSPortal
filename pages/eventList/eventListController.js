@@ -880,12 +880,25 @@
                             WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
                         }
                     }
-                    return WinJS.Promise.timeout(50);
+                    if (!NavigationBar._resizedPromise) {
+                        NavigationBar._resizedPromise = WinJS.Promise.timeout(10).then(function () {
+                            // now do complete resize later!
+                            Application.navigator._resized();
+                            NavigationBar._resizedPromise = null;
+                        });
+                    }
+                    return NavigationBar._resizedPromise;
                 }).then(function () {
-                    Application.navigator._resized();
-                    return WinJS.Promise.timeout(50);
+                    return WinJS.Promise.timeout(30);
                 }).then(function () {
-                    Application.navigator._resized();
+                    if (!NavigationBar._resizedPromise) {
+                        NavigationBar._resizedPromise = WinJS.Promise.timeout(10).then(function () {
+                            // now do complete resize later!
+                            Application.navigator._resized();
+                            NavigationBar._resizedPromise = null;
+                        });
+                    }
+                    return NavigationBar._resizedPromise;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
