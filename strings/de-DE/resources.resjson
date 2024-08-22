@@ -722,6 +722,8 @@
 	"event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
 	"event.showHideManually" : "Manuelle Erfassung in der App ermöglichen",
+    "event.exportOption" : "Export Einstellungen",
+    "event.exportKontaktPDF" : "Sprache für Kontakt PDFs",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

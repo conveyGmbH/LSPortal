@@ -718,6 +718,8 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Enable manual entry in the app",
+    "event.exportOption" : "Export settings",
+    "event.exportKontaktPDF" : "Language for contact PDFs",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

@@ -715,6 +715,8 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Abilitare la registrazione manuale nell'app",
+    "event.exportOption" : "Impostazioni di esportazione",
+    "event.exportKontaktPDF" : "Lingua per i PDF di contatto",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",

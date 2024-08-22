@@ -11,6 +11,9 @@
 
 (function () {
     "use strict";
+
+    var namespaceName = "Event";
+
     WinJS.Namespace.define("Event", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Event.Controller.");
@@ -30,7 +33,10 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
-                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
+                LanguageID: 0,
+                updateExpParamData: getEmptyDefaultValue(Event.pdfExportParamView.defaultValue),
+                updateExpParamId: 0
             }, commandList]);
 
             var that = this;
@@ -59,6 +65,7 @@
             var dashboardMesagoCombo = pageElement.querySelector('#showdashboardMesagoCombo');
             var premiumDashboardCombo = pageElement.querySelector('#showPremiumDashboardCombo');
             var textComment = pageElement.querySelector(".input_text_comment");
+            var exportLanguageCombo = pageElement.querySelector("#exportLanguageCombo");
 
             this.dispose = function () {
                 if (initLand && initLand.winControl) {
@@ -72,6 +79,9 @@
                 }
                 if (dashboardMesagoCombo && dashboardMesagoCombo.winControl) {
                     dashboardMesagoCombo.winControl.data = null;
+                }
+                if (exportLanguageCombo && exportLanguageCombo.winControl) {
+                    exportLanguageCombo.winControl.data = null;
                 }
             }
 
@@ -592,6 +602,25 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickChangeExportLanguage: function(event) {
+                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    var target = event.currentTarget || event.target;
+                    var recordId = that.binding.updateExpParamId;
+                    var id = target.value;
+                    that.binding.updateExpParamData.LanguageID = parseInt(id);
+                    if (target) {
+                        return Event.eventView.update(function (response) {
+                            // called asynchronously if ok
+                            Log.print(Log.l.info, "eventData update: success!");
+                            complete(response);
+                        }, function (errorResponse) {
+                           // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                            }, recordId, that.binding.updateExpParamData);
+                    }
+                },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var recordId = that.getEventId();
@@ -938,6 +967,53 @@
                         }
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    if (!Event.initSpracheView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initSpracheView...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return Event.initSpracheView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            if (json && json.d) {
+                                var results = json.d.results;
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (exportLanguageCombo && exportLanguageCombo.winControl) {
+                                    exportLanguageCombo.winControl.data = new WinJS.Binding.List(results);
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (exportLanguageCombo && exportLanguageCombo.winControl) {
+                            var results = Event.initSpracheView.getResults();
+                            exportLanguageCombo.winControl.data = new WinJS.Binding.List(results);
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    return Event.pdfExportParamView.select(function (json) {
+                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d && json.d.results) {
+                            var results = json.d.results[0];
+                            that.binding.updateExpParamData.LanguageID = results.LanguageID;
+                            that.binding.updateExpParamId = results.PDFExportParamVIEWID;
+                            that.binding.LanguageID = results.LanguageID.toString();
+                            Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                            //var savedRestriction = AppData.getRestriction("PdfExportParam");
+                            // Now, we call WinJS.Binding.List to get the bindable list
+
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                        VeranstaltungID: that.getEventId(),
+                        LanguageSpecID: AppData.getLanguageId()
+                    });
                 }).then(function () {
                     return Event.iNOptionTypeValueView.select(function (json) {
                         // this callback will be called asynchronously
