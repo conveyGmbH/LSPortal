@@ -671,6 +671,7 @@
     "label.genDataEmpList" : "User accounts",
     "label.eventProducts" : "Products",
     "label.siteEventsRoleManagement" : "Role Management",
+    "label.liveBridgeGrp" : "Masterdata",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

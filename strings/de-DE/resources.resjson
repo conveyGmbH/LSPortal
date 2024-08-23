@@ -674,6 +674,7 @@
     "label.siteEventsRoleManagement" : "Rollenverwaltung",
     "label.reportingDownload" : "Download", 
     "label.clientManagementSummarise" : "Zusammenfassen",
+	"label.liveBridgeGrp" : "Stammdaten",
 
 
     "flyout.ok"             : "OK",

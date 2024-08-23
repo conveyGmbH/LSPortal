@@ -668,6 +668,7 @@
     "label.genDataEmpList" : "Comptes d'utilisateurs",
     "label.eventProducts" : "Produits",
     "label.siteEventsRoleManagement" : "Management des rôles",
+    "label.liveBridgeGrp" : "Données de base",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",

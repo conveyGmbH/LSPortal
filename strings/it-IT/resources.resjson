@@ -668,6 +668,7 @@
     "label.genDataEmpList" : "Account utente",
     "label.eventProducts" : "Prodotti",
     "label.siteEventsRoleManagement" : "Direzione del ruolo",
+    "label.liveBridgeGrp" : "Dati anagrafici",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
