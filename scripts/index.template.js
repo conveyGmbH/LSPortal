@@ -115,17 +115,19 @@
         { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
         { id: "voucherAdministration", group: 16, svg: "gutschein1.1", disabled: true },
         { id: "esVoucherUsers", group: 19, svg: "voucher_contact", disabled: true },
+        //LiveBridgeGrp
+        { id: "liveBridgeGrp", group: 85, svg: "stammdaten", disabled: true, popup: true },
+        { id: "eventBaseLink", group: 55, svg: "stammdaten", disabled: true, predecGroup: 85, label: "label.eventBaseLink", tooltip: "tooltip.eventBaseLink" },
+        { id: "eventSeries", group: 52, svg: "stammdaten", disabled: true, predecGroup: 85 },
+        { id: "genDataModDetails", group: 54, svg: "stammdaten", disabled: true, predecGroup: 85 },
+        { id: "genDataAnswers", group: 56, svg: "stammdaten", disabled: true, predecGroup: 85 },
         //MasterData
         { id: "masterDataGrp", group: 23, svg: "stammdaten", disabled: true, popup: true },
         { id: "genDataEmployee", group: 74, svg: "stammdaten", disabled: true, predecGroup: 23 },  
 		    // { id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         //{ id: "eventStartLang", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
-        { id: "eventBaseLink", group: 55, svg: "stammdaten", disabled: true, predecGroup: 23, label: "label.eventBaseLink", tooltip: "tooltip.eventBaseLink" },
         //{ id: "startResourceAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23, label: "label.eventStarts", tooltip: "label.eventStarts" },
         //{ id: "startMediaAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
-        { id: "eventSeries", group: 52, svg: "stammdaten", disabled: true, predecGroup: 23 },
-        { id: "genDataModDetails", group: 54, svg: "stammdaten", disabled: true, predecGroup: 23 },
-		    { id: "genDataAnswers", group: 56, svg: "stammdaten", disabled: true, predecGroup: 23 },
         { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 23 },
         // only visible in deimos and lstest, not in lsmain
         //{ id: "startPremium", group: 57, svg: "dashboard", disabled: true },
@@ -268,7 +270,7 @@
         { id: "contactResultsList", group: 29, disabled: true },
         { id: "contactResultsEvents", group: 68, disabled: false },
         { id: "contactResultsEdit", group: 68, disabled: false },
-        { id: "contactResultsCriteria", group: 68, disabled: false },
+        //{ id: "contactResultsCriteria", group: 68, disabled: false },
         { id: "contactResultsQuestion", group: 68, disabled: false },
         { id: "contactResultsAttach", group: 68, disabled: false },
         { id: "startTileAdministration", group: 61, disabled: false },
@@ -337,7 +339,7 @@
         { id: "reportingColumnList", master: "eventList" },
         { id: "contactResultsEdit", master: "contactList" },
         { id: "contactResultsAttach", master: "contactList" },
-        { id: "contactResultsCriteria", master: "contactList" },
+        //{ id: "contactResultsCriteria", master: "contactList" },
         { id: "contactResultsEvents", master: "contactList" },
         { id: "startPremium", master: "eventList" }
 
