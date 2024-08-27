@@ -609,15 +609,13 @@
                     var id = target.value;
                     that.binding.updateExpParamData.LanguageID = parseInt(id);
                     if (target) {
-                        return Event.eventView.update(function (response) {
+                        return Event.pdfExportParamView.update(function (response) {
                             // called asynchronously if ok
                             Log.print(Log.l.info, "eventData update: success!");
-                            complete(response);
                         }, function (errorResponse) {
                            // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
                             }, recordId, that.binding.updateExpParamData);
                     }
                 },
@@ -995,10 +993,11 @@
                 }).then(function () {
                     return Event.pdfExportParamView.select(function (json) {
                         Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        that.binding.LanguageID = 0;
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results[0];
-                            that.binding.updateExpParamData.LanguageID = results.LanguageID;
+                            that.binding.updateExpParamData = results;
                             that.binding.updateExpParamId = results.PDFExportParamVIEWID;
                             that.binding.LanguageID = results.LanguageID.toString();
                             Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
