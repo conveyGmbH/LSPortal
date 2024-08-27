@@ -1,16 +1,48 @@
 ﻿/*
-    styles for page: login
+    styles for page: login, with 2FA token
 */
-.login .centerarea {
+.login .centerarea, .token .centerarea {
     height: 450px;
 }
 
-.view-size-small .login .centerarea {
+/************Form for 2FA token input************/
+.token .centerarea {
+    width: 500px;
+}
+
+.view-size-small .login .centerarea,
+.view-size-small .token .centerarea {
     height: auto;
 }
 
-.login .button_line {
+.login .button_line, .token .button_line {
     margin: 10px 0;
+}
+
+/***********Text for 2FA token input field*********/
+.tokentext .large_field {
+    margin: 0 20px;
+}
+
+/**********Inputfield for 2FA token****************/
+.centerarea .input_field .win-textbox .token_input {
+    width: calc(100% - 4px);
+    min-width: calc(100% - 0px);
+    margin: 0 20px;
+}
+
+/***********Token button***************************/
+.text-lightcolor .titlearea-bkg .win-button .tokenButton {
+    padding: 12px 24px;
+    color: #ffffff;
+    background-color: rgb(216, 97, 65);
+    border-radius: 2px;
+    border-color: rgb(216, 97, 65);
+    font-size: 24px;
+}
+
+.text-lightcolor .titlearea-bkg .win-button .tokenButton:hover {
+    border-color: rgba(0, 0, 0, .4);
 }
 
 #privacyPolicyLink {
