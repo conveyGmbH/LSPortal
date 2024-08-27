@@ -669,6 +669,7 @@
     "label.eventProducts" : "Prodotti",
     "label.siteEventsRoleManagement" : "Direzione del ruolo",
     "label.liveBridgeGrp" : "Dati anagrafici",
+    "label.genDataSkillEntry" : "Inserire le competenze",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

@@ -1,0 +1,206 @@
+﻿#skillsList .win-itemcontainer .win-itembox,
+#skillsList .win-listview .win-itembox {
+    background-color: transparent;
+}
+/*div.row-bkg:hover, div.row-bkg:active {
+    color: red;
+}*/
+#gendataskillentryList .listview {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 8px); 
+}
+
+/* Styles used for the custom layout */
+.listView .gendataskillentryListLayout {
+    position: static;
+}
+.listView .gendataskillentryListLayout .win-surface {
+    margin-left: 0;
+}
+#gendataskillentryList .win-container {
+    margin: 0;
+}
+#gendataskillentryList .win-item {
+    width: calc(100% - 52px);
+    padding-left: 26px;
+    padding-right: 26px;
+    padding-top: 2px;
+    padding-bottom: 16px;
+}
+#gendataskillentryList .row-bkg{
+    display:inline-block;
+}
+/*#gendataskillentryList .answer-block {
+    width: calc(100% - 68px);
+    float: right;
+}*/
+
+/*#gendataskillentryList .line-separator .row-end {
+    height: 48px;
+}*/
+#gendataskillentryList .input_field .win-range {
+    margin-top: -12px;
+}
+.range_output {
+    font-weight: bold;
+}
+
+/*.listView .skillsListLayout */
+#gendataskillentryList .win-selectionbackground {
+  opacity: 0;
+}
+
+.gendataskillentryListLayout label.radio, .skillsListLayout label.checkbox {
+    padding: 4px 4px 4px 0;
+}
+.gendataskillentryListLayout input.radio, .skillsListLayout input.checkbox {
+    float: left;
+    vertical-align: top;
+    /*
+    margin-left: 0;
+    */
+    margin-top: -8px;
+    padding-top: 0;
+    height: 40px;
+}
+/*.checkbox .win-textbox,
+.radio .win-textbox {
+    width: calc(100% - 60px) !important;
+}*/
+
+
+#gendataskillentryList .win-pressed .win-itembox {
+  background-color: transparent;
+}
+
+.list-question-field {
+    padding-bottom: 8px;
+    padding-top: 10px;
+    width: 60%;
+    float: left;
+}
+/*.list-question-content {
+    padding-left: 28px;
+}*/
+.questionnaire-row {
+    /*margin-top: 10px;*/
+    height: auto;
+}
+.field_line_skillentry {
+    height: auto;
+}
+.field_row_odd {
+    float: left;
+    width: 50%;
+}
+.field_row_even {
+    float: right;
+    width: 50%;
+}
+.field_line_left {
+    float: left;
+    width: 50%;
+    padding: 0;
+}
+.field_line_right {
+    float: right;
+    width: 50%;
+    padding: 0;
+}
+
+
+/*
+    margins/paddings for middle sized screens 
+
+
+    is now signalled by additional class: view-size-medium
+
+    @media (max-width:899px) {
+    }
+*/
+
+
+.view-size-medium #listQuestionList .win-item {
+    width: calc(100% - 36px);
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.view-size-medium .field_row_odd {
+    float: left;
+    width: 100%;
+}
+.view-size-medium .field_row_even {
+    float: left;
+    width: 100%;
+}
+.view-size-medium .field-separator {
+        width:calc(100% - 40px);
+        height:0;
+        float:left;
+}
+.view-size-medium .list-question-content {
+    padding-left: 15px;
+}
+    
+/*
+    margins/paddings for medium small sized screens 
+
+
+    is now signalled by additional class: view-size-medium-small
+
+    @media (max-width:699px) {
+    }
+*/
+
+
+.view-size-medium-small .list-question-field {
+    padding-bottom: 8px;
+    width: 100%;
+    float: left;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto; 
+}
+
+ 
+/*
+    margins/paddings for small sized screens 
+
+
+    is now signalled by additional class: view-size-small
+
+    @media (max-width:499px) {
+    }
+*/
+.view-size-small #gendataskillentryList .win-item {
+    width: calc(100% - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.view-size-small .field_line_left {
+    float: left;
+    width: 100%;
+}
+.view-size-small .field_line_right {
+    float: left;
+    width: 100%;
+}
+.view-size-small .field-separator {
+    display: none;
+}
+.view-size-small .rating-question-field {
+    float:left;
+    width: 100%;
+}
+.view-size-small .list-question-content {
+    padding-left: 9px;
+}

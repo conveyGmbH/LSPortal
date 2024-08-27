@@ -257,6 +257,9 @@
                                                 if ((curPageId === "genDataEmployee") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
+                                                } else if ((curPageId === "genDataSkillEntry") &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData(that.binding.employeeId);
                                                 } else {
                                                     Application.navigateById("genDataEmployee");
                                                 }

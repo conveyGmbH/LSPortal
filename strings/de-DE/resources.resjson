@@ -675,6 +675,7 @@
     "label.reportingDownload" : "Download", 
     "label.clientManagementSummarise" : "Zusammenfassen",
 	"label.liveBridgeGrp" : "Stammdaten",
+    "label.genDataSkillEntry" : "Fähigkeiten eintragen",
 
 
     "flyout.ok"             : "OK",
