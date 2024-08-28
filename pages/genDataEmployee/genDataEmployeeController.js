@@ -258,6 +258,7 @@
                             if (json && json.d) {
                                 var employee = json.d;
                                 that.setDataEmployee(employee);
+                                that.setRoleVisible();
                                 if (!AppHeader.controller.binding.userData.SiteAdmin) {
                                     var userName = AppData.generalData.userName;
                                     if (userName && userName.indexOf("@") > 0) {
