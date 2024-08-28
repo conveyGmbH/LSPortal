@@ -60,8 +60,8 @@
                 }
             }
 
-            var setRoleVisible = function(login) {
-                if (login) {
+            var setRoleVisible = function (userspecid) {
+                if (userspecid) {
                     if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents) {
                         that.binding.setRoleVisible = 1;
                     } else {
@@ -801,9 +801,7 @@
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataEmployee(json.d);
-                                if (json.d.Login) {
-                                    that.setRoleVisible(json.d.Login);
-                                }
+                                that.setRoleVisible(json.d.UserSpecID);
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
