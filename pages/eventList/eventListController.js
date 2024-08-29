@@ -536,7 +536,8 @@
                                                         curPageId === "questiongroup" ||
                                                         curPageId === "questionList" ||
                                                         //curPageId === "optQuestionList" ||
-                                                        curPageId === "event") &&
+                                                        curPageId === "event" ||
+                                                        curPageId === "skills") &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         if (typeof AppBar.scope.setEventId === "function") {
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
@@ -614,6 +615,7 @@
                                                     curPageId === "questionList" ||
                                                     curPageId === "questiongroup" ||
                                                     curPageId === "event" ||
+                                                    curPageId === "skills" ||
                                                     curPageId === "contactResultsList") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     if (typeof AppBar.scope.setEventId === "function") {
