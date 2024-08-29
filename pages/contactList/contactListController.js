@@ -768,6 +768,8 @@
                                     }
                                 }
                                     
+                                } else {
+                                    eventsDropdown.style.display = "none";
                                 }
                             },
                                 function (errorResponse) {
