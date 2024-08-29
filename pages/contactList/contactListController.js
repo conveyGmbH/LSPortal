@@ -746,7 +746,7 @@
                                 // eventView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results.length > 0) {
                                     if (json.d.results.length <= 1) {
-                                        that.binding.showEventCombo = 0;
+                                        eventsDropdown.style.display = "none";
                                     } else {
                                     /**var results = [{
                                         VeranstaltungVIEWID: "",
@@ -769,7 +769,7 @@
                                 }
                                     
                                 } else {
-                                    that.binding.showEventCombo = 0;
+                                    eventsDropdown.style.display = "none";
                                 }
                             },
                                 function (errorResponse) {
@@ -778,7 +778,7 @@
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                 });
                         } else {
-                            that.binding.showEventCombo = 0;
+                            eventsDropdown.style.display = "none";
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
