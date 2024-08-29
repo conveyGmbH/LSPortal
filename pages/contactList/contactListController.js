@@ -745,6 +745,9 @@
                                 Log.print(Log.l.trace, "eventView: success!");
                                 // eventView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results.length > 0) {
+                                    if (json.d.results.length <= 1) {
+                                        eventsDropdown.style.display = "none";
+                                    } else {
                                     /**var results = [{
                                         VeranstaltungVIEWID: "",
                                         Name: ""
@@ -763,6 +766,8 @@
                                             eventsDropdown.selectedIndex = 0;
                                         }
                                     }
+                                }
+                                    
                                 }
                             },
                                 function (errorResponse) {
