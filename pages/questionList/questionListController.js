@@ -390,7 +390,9 @@
                         var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                         that.mergeRecord(curScope.item, newRecord);
                         that.resultConverter(curScope.item, curScope.index);
+                        AppBar.notifyModified = false;
                         that.questions.setAt(curScope.index, curScope.item);
+                        AppBar.notifyModified = true;
                         AppBar.modified = true;
                     }
                 }
@@ -408,7 +410,9 @@
                         that.mergeRecord(curScope.item, newRecord);
                         curScope.item.Anzahl = value;
                         that.resultConverter(curScope.item, curScope.index);
+                        AppBar.notifyModified = false;
                         that.questions.setAt(curScope.index, curScope.item);
+                        AppBar.notifyModified = true;
                         AppBar.modified = true;
                     }
                 }
@@ -727,7 +731,9 @@
                             var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                             that.mergeRecord(curScope.item, newRecord);
                             that.resultConverter(curScope.item, curScope.index);
+                            AppBar.notifyModified = false;
                             that.questions.setAt(curScope.index, curScope.item);
+                            AppBar.notifyModified = true;
                             // set modified!
                             AppBar.modified = true;
                             that.binding.questionId = curScope.item.FragenAntwortenVIEWID;
@@ -753,7 +759,9 @@
                             var newRecord = that.getFieldEntries(curScope.index, curScope.item);
                             that.mergeRecord(curScope.item, newRecord);
                             that.resultConverter(curScope.item, curScope.index);
+                            AppBar.notifyModified = false;
                             that.questions.setAt(curScope.index, curScope.item);
+                            AppBar.notifyModified = true;
                             // set modified!
                             AppBar.modified = true;
                             that.binding.questionId = curScope.item.FragenAntwortenVIEWID;
@@ -1320,7 +1328,9 @@
                                 var question = json.d;
                                 var objectrec = scopeFromRecordId(recordId);
                                 that.resultConverter(question, objectrec.index);
+                                AppBar.notifyModified = false;
                                 that.questions.setAt(objectrec.index, question);
+                                AppBar.notifyModified = true;
                             }
                         } else {
                             if (json && json.d && json.d.results) {
