@@ -721,7 +721,7 @@
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Enable manual entry in the app",
     "event.exportOption" : "Export settings",
-    "event.exportKontaktPDF" : "Language for contact PDFs",
+    "event.exportKontaktPDF" : "Please choose here the language of the labels for the PDF-Export \n Please note: this must be selected/decided upon BEFORE the event. Alredy collected data will not be changed, except if you change something in the single contacts after changing the language",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",

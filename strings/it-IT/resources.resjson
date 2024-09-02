@@ -718,7 +718,7 @@
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Abilitare la registrazione manuale nell'app",
     "event.exportOption" : "Impostazioni di esportazione",
-    "event.exportKontaktPDF" : "Lingua per i PDF di contatto",
+    "event.exportKontaktPDF" : "Scegliere qui la lingua delle etichette per l'esportazione in PDF \n Attenzione: questa scelta deve essere fatta prima dell'evento. I dati già raccolti non verranno modificati, a meno che non si modifichi qualcosa nei singoli contatti dopo aver cambiato la lingua.",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
