@@ -46,8 +46,10 @@
 
 .event .label {
     width: auto;
+    min-height: 26px;
+    height: 100%;
     white-space: break-spaces;
 }
 .event #exportLanguageCombo {
-    margin-top: 25px;
+    margin-top: 10px;
 }
