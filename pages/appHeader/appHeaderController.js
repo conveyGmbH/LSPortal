@@ -24,6 +24,7 @@
                 this.element.winControl = this;
             }
             this.pageData.publishFlag = false;
+            this.pageData.errorFlag = false;
             this.pageData.userData = AppData._userData;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
@@ -129,6 +130,9 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
                     var employeeId = AppData.getRecordId("Mitarbeiter");
+                    if (that.binding.errorFlag) {
+                        return WinJS.Promise.aS();
+                    }
                     if (employeeId) {
                         // todo: load image data and set src of img-element
                         Log.print(Log.l.trace, "calling select contactView...");
@@ -158,6 +162,7 @@
                             }
                         }, function (errorResponse) {
                             that.binding.photoData = "";
+                            that.binding.errorFlag = true;
                             showPhoto();
                             // ignore that
                         }, employeeId);

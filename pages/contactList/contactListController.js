@@ -33,7 +33,7 @@
                     eventId: 0,
                     leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                     btnDateSort: getResourceText("contactList.btnDateDesc"),
-                    showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
+                    showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents
                 }, commandList, true]);
                 this.nextUrl = null;
                 this.nextDocUrl = null;
@@ -51,6 +51,7 @@
                 var that = this;
 
                 var eventsDropdown = pageElement.querySelector("#events");
+                var eventsContainer = pageElement.querySelector("#events-container");
                 var searchField = pageElement.querySelector("#searchField");
                 var btnDateSort = pageElement.querySelector("#btnDateSort");
 
@@ -738,48 +739,47 @@
                     }
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
-                        if (!that.events && that.binding.showEventCombo > 0) {
-                            return ContactList.eventView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "eventView: success!");
-                                // eventView returns object already parsed from json file in response
-                                if (json && json.d && json.d.results.length > 0) {
-                                    if (json.d.results.length <= 1) {
-                                        eventsDropdown.style.display = "none";
-                                    } else {
-                                    /**var results = [{
-                                        VeranstaltungVIEWID: "",
-                                        Name: ""
-                                    }].concat(json.d.results); */
-                                    var results = json.d.results;
-                                    that.events = new WinJS.Binding.List(results);
-                                    if (eventsDropdown && eventsDropdown.winControl) {
-                                        eventsDropdown.winControl.data = that.events;
-                                        if (that.binding.eventId) {
-                                            for (var i = 0; i < results.length; i++) {
-                                                if (that.binding.eventId === results[i].VeranstaltungVIEWID) {
-                                                    eventsDropdown.selectedIndex = i;
+                        if (!that.binding.showEventCombo) {
+                            eventsContainer.style.display = "none";
+                            return WinJS.Promise.as();
+                        } else {
+                            if (!that.events) {
+                                return ContactList.eventView.select(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "eventView: success!");
+                                    // eventView returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results.length > 0) {
+                                        if (json.d.results.length <= 1) {
+                                            eventsContainer.style.display = "none";
+                                        } else {
+                                            var results = json.d.results;
+                                            that.events = new WinJS.Binding.List(results);
+                                            if (eventsDropdown && eventsDropdown.winControl) {
+                                                eventsDropdown.winControl.data = that.events;
+                                                if (that.binding.eventId) {
+                                                    for (var i = 0; i < results.length; i++) {
+                                                        if (that.binding.eventId === results[i].VeranstaltungVIEWID) {
+                                                            eventsDropdown.selectedIndex = i;
+                                                        }
+                                                    }
+                                                } else {
+                                                    eventsDropdown.selectedIndex = 0;
                                                 }
                                             }
-                                        } else {
-                                            eventsDropdown.selectedIndex = 0;
+                                            eventsContainer.style.display = "";
                                         }
+                                    } else {
+                                        eventsContainer.style.display = "none";
                                     }
-                                }
-                                    
-                                } else {
-                                    eventsDropdown.style.display = "none";
-                                }
-                            },
-                                function (errorResponse) {
+                                }, function (errorResponse) {
                                     // called asynchronously if an error occurs
                                     // or server returns response with an error status.
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                 });
-                        } else {
-                            eventsDropdown.style.display = "none";
-                            return WinJS.Promise.as();
+                            } else {
+                                return WinJS.Promise.as();
+                            }
                         }
                     }).then(function () {
                         if (!AppData.initLandView.getResults().length) {
