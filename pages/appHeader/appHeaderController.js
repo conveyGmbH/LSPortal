@@ -131,7 +131,7 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     var employeeId = AppData.getRecordId("Mitarbeiter");
                     if (that.binding.errorFlag) {
-                        return WinJS.Promise.aS();
+                        return WinJS.Promise.as();
                     }
                     if (employeeId) {
                         // todo: load image data and set src of img-element
