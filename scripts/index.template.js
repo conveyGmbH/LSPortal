@@ -122,13 +122,13 @@
         { id: "genDataModDetails", group: 54, svg: "stammdaten", disabled: true, predecGroup: 85 },
         { id: "genDataAnswers", group: 56, svg: "stammdaten", disabled: true, predecGroup: 85 },
         //MasterData
-        //{ id: "masterDataGrp", group: 23, svg: "stammdaten", disabled: true, popup: true }, 
-        //{ id: "genDataEmployee", group: 74, svg: "stammdaten", disabled: true, predecGroup: 23 },  
-		    // { id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
+        { id: "masterDataGrp", group: 23, svg: "stammdaten", disabled: true, popup: true }, 
+        { id: "genDataEmployee", group: 74, svg: "stammdaten", disabled: true, predecGroup: 23 },  
+        //{ id: "eventStarts", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         //{ id: "eventStartLang", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
         //{ id: "startResourceAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23, label: "label.eventStarts", tooltip: "label.eventStarts" },
         //{ id: "startMediaAdministration", group: 55, svg: "Stammdaten", disabled: true, predecGroup: 23 },
-        //{ id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 23 },
+        { id: "skills", group: 24, svg: "user_skills", disabled: true, predecGroup: 23 },
         // only visible in deimos and lstest, not in lsmain
         //{ id: "startPremium", group: 57, svg: "dashboard", disabled: true },
         //{ id: "dashboardFN", group: 57, svg: "dashboard", disabled: true },
