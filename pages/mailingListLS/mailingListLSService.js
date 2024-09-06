@@ -214,7 +214,7 @@
             },
             eventView: {
                 fetchNext: function (results, url, complete, error) {
-                    Log.call(Log.l.trace, "GenDataEmpList.eventView.", "nextUrl=" + nextUrl);
+                    Log.call(Log.l.trace, "GenDataEmpList.eventView.", "url=" + url);
                     var nextJson = null;
                     var ret = MailingListLS._eventView.selectNext(function (json) {
                         nextJson = json;
