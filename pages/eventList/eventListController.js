@@ -49,18 +49,16 @@
             var maxTrailingPages = 0;
 
             this.dispose = function () {
+                var splitViewPane = Application.navigator && Application.navigator.splitViewPane;
                 var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
-                if (splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
-                    Application.navigator._masterMaximized = false;
-                    Application.navigator._masterHidden = false;
+                if (splitViewPane && splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                     WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
-                    if (!NavigationBar._resizedPromise) {
-                        NavigationBar._resizedPromise = WinJS.Promise.timeout(10).then(function () {
-                            // now do complete resize later!
-                            Application.navigator._resized();
-                            NavigationBar._resizedPromise = null;
-                        });
+                    if (typeof splitViewPane.resizeHelper.onsizechanged === "function") {
+                        splitViewPane.resizeHelper.onsizechanged(Application.maxViewSize.mediumSmall / 2);
                     }
+                    WinJS.Promise.timeout(10).then(function() {
+                        that.minMaxChanged(false);
+                    });
                 }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
