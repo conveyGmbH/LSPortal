@@ -779,6 +779,24 @@
                 this.addRemovableEventListener(dashboardCombo, "change", this.eventHandlers.selectionDropDownChanged.bind(this));
             }
 
+            var hideMaster = function() {
+                var ret = null;
+                Log.call(Log.l.trace, "EventList.Controller.");
+                if (Application.navigator._nextPage) {
+                    ret = WinJS.Promise.timeout(10).then(function() {
+                        return that.hideMaster();
+                    });
+                } else {
+                    ret = WinJS.Promise.timeout(10).then(function () {
+                        Application.navigator._masterMaximized = true;
+                        Application.showDetail();
+                    });
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.hideMaster = hideMaster;
+
             var loadData = function () {
                 Log.call(Log.l.trace, "EventList.Controller.");
                 that.loading = true;
@@ -875,32 +893,13 @@
                         if (splitViewContent && !WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                             WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");
                         }
-                        Application.navigator._masterMaximized = true;
-                        Application.navigator._hideMaster();
+                        return that.hideMaster();
                     } else {
                         if (splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                             WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
                         }
+                        return WinJS.Promise.timeout(30);
                     }
-                    if (!NavigationBar._resizedPromise) {
-                        NavigationBar._resizedPromise = WinJS.Promise.timeout(10).then(function () {
-                            // now do complete resize later!
-                            Application.navigator._resized();
-                            NavigationBar._resizedPromise = null;
-                        });
-                    }
-                    return NavigationBar._resizedPromise;
-                }).then(function () {
-                    return WinJS.Promise.timeout(30);
-                }).then(function () {
-                    if (!NavigationBar._resizedPromise) {
-                        NavigationBar._resizedPromise = WinJS.Promise.timeout(10).then(function () {
-                            // now do complete resize later!
-                            Application.navigator._resized();
-                            NavigationBar._resizedPromise = null;
-                        });
-                    }
-                    return NavigationBar._resizedPromise;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
