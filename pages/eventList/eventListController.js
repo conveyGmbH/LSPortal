@@ -49,18 +49,11 @@
             var maxTrailingPages = 0;
 
             this.dispose = function () {
-                var splitViewPane = Application.navigator && Application.navigator.splitViewPane;
                 var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
-                if (splitViewPane && splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
+                if (pageElement.resizeHelper && splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                     WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
-                    if (splitViewPane.resizeHelper &&
-                        splitViewPane.resizeHelper._options &&
-                        typeof splitViewPane.resizeHelper._options.onsizechanged === "function") {
-                        splitViewPane.resizeHelper._options.onsizechanged(Application.maxViewSize.mediumSmall / 2);
-                    }
-                    WinJS.Promise.timeout(10).then(function() {
-                        that.minMaxChanged(Application.navigator._masterMaximized);
-                    });
+                    Application.navigator._masterMaximized = false;
+                    pageElement.resizeHelper.minMaxChanged(Application.navigator._masterMaximized);
                 }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
@@ -788,11 +781,11 @@
                 this.addRemovableEventListener(dashboardCombo, "change", this.eventHandlers.selectionDropDownChanged.bind(this));
             }
 
-            var hideMaster = function() {
+            var hideMaster = function () {
                 var ret = null;
                 Log.call(Log.l.trace, "EventList.Controller.");
                 if (Application.navigator._nextPage) {
-                    ret = WinJS.Promise.timeout(10).then(function() {
+                    ret = WinJS.Promise.timeout(10).then(function () {
                         return that.hideMaster();
                     });
                 } else {
