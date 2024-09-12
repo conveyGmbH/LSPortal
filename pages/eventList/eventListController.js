@@ -53,6 +53,7 @@
                 if (pageElement.resizeHelper && splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                     WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
                     Application.navigator._masterMaximized = false;
+                    Application.navigator._masterHidden = false;
                     pageElement.resizeHelper.minMaxChanged(Application.navigator._masterMaximized);
                 }
                 if (listView && listView.winControl) {
