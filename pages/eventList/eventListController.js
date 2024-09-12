@@ -50,11 +50,18 @@
 
             this.dispose = function () {
                 var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
-                if (pageElement.resizeHelper && splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
+                if (splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                     WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
-                    Application.navigator._masterMaximized = false;
-                    Application.navigator._masterHidden = false;
-                    pageElement.resizeHelper.minMaxChanged(Application.navigator._masterMaximized);
+                    Application.navigator._showMaster().then(function() {
+                        var width = Application.navigator.splitViewContent && Application.navigator.splitViewContent.clientWidth;
+                        if (width > Application.maxViewSize.mediumSmall) {
+                            Application.navigator._masterMaximized = false;
+                            if (Application.navigator.masterElement &&
+                                Application.navigator.masterElement.resizeHelper) {
+                                Application.navigator.masterElement.resizeHelper.minMaxChanged(Application.navigator._masterMaximized);
+                            }
+                        }
+                    });
                 }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
