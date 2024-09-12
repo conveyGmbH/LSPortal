@@ -51,7 +51,16 @@
             this.dispose = function () {
                 var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                 if (splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
+                    Application.navigator._masterMaximized = false;
+                    Application.navigator._masterHidden = false;
                     WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
+                    if (!NavigationBar._resizedPromise) {
+                        NavigationBar._resizedPromise = WinJS.Promise.timeout(10).then(function () {
+                            // now do complete resize later!
+                            Application.navigator._resized();
+                            NavigationBar._resizedPromise = null;
+                        });
+                    }
                 }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
