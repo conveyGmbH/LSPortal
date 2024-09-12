@@ -647,6 +647,17 @@
                         that.loadData();
                     }, function (errorResponse) {
                         // error already displayed
+                    }).then(function () {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
+                            master.controller.loadData();
+                        }
+                        AppData.getUserData();
+                        if (AppHeader && AppHeader.controller) {
+                            return AppHeader.controller.loadData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -1213,11 +1224,7 @@
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
-                        if (!err) {
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller) {
-                                master.controller.loadData();
-                            }
+                        if (err) {
                             AppData.getUserData();
                             if (AppHeader && AppHeader.controller) {
                                 return AppHeader.controller.loadData();
