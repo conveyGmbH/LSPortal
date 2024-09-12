@@ -53,11 +53,13 @@
                 var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                 if (splitViewPane && splitViewContent && WinJS.Utilities.hasClass(splitViewContent, "hide-detail-restored")) {
                     WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
-                    if (typeof splitViewPane.resizeHelper.onsizechanged === "function") {
-                        splitViewPane.resizeHelper.onsizechanged(Application.maxViewSize.mediumSmall / 2);
+                    if (splitViewPane.resizeHelper &&
+                        splitViewPane.resizeHelper._options &&
+                        typeof splitViewPane.resizeHelper._options.onsizechanged === "function") {
+                        splitViewPane.resizeHelper._options.onsizechanged(Application.maxViewSize.mediumSmall / 2);
                     }
                     WinJS.Promise.timeout(10).then(function() {
-                        that.minMaxChanged(false);
+                        that.minMaxChanged(Application.navigator._masterMaximized);
                     });
                 }
                 if (listView && listView.winControl) {
