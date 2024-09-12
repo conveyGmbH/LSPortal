@@ -886,14 +886,14 @@
                     var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                     // Problem wenn gefiltert wird und dabei count = 1 ist von Result
                     if (that.binding.count === 1 && !EventList._restriction) {
-                        if (splitViewContent && !splitViewContent._hideDetailRestored) {
-                            splitViewContent._hideDetailRestored = true;
+                        if (splitViewContent && !Application.navigator._hideDetailRestored) {
+                            Application.navigator._hideDetailRestored = true;
                             WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");
                         }
                         return that.hideMaster();
                     } else {
-                        if (splitViewContent && splitViewContent._hideDetailRestored) {
-                            splitViewContent._hideDetailRestored = false;
+                        if (splitViewContent && Application.navigator._hideDetailRestored) {
+                            Application.navigator._hideDetailRestored = false;
                             WinJS.Utilities.removeClass(splitViewContent, "hide-detail-restored");
                         }
                         return WinJS.Promise.timeout(30);
