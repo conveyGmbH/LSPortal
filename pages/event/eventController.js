@@ -647,17 +647,6 @@
                         that.loadData();
                     }, function (errorResponse) {
                         // error already displayed
-                    }).then(function () {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller) {
-                            master.controller.loadData();
-                        }
-                        AppData.getUserData();
-                        if (AppHeader && AppHeader.controller) {
-                            return AppHeader.controller.loadData();
-                        } else {
-                            return WinJS.Promise.as();
-                        }
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -1116,7 +1105,6 @@
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppBar.busy = false;
                 var err = null;
                 var ret;
                 var dataEvent = that.binding.dataEvent;
@@ -1135,18 +1123,98 @@
                             // called asynchronously if ok
                             Log.print(Log.l.info, "eventData update: success!");
                             AppBar.modified = false;
-                            AppData.getUserData();
-                            complete(response);
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
+                            err = errorResponse;
                             AppData.setErrorMsg(that.binding, errorResponse);
                             error(errorResponse);
-                        }, recordId, dataEvent);
+                        }, recordId, dataEvent).then(function () {
+                            if (!err) {
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller) {
+                                    master.controller.loadData(recordId);
+                                }
+                                AppData.getUserData();
+                                Colors.updateColors();
+                                if (recordId === getEventId()) {
+                                    // load color settings
+                                    // beim reload prüfen ob die Veranstaltung in der ich gerade bin oder nicht
+                                    // wenn ja dann nehme funktion von generaldata, sonst diese hier
+
+                                    return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        Log.print(Log.l.trace, "Account: success!");
+                                        // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                                        // Mit neuen VIEW vorher prüfen ob das die VeranstaltungID in der ich gerade angemeldet bin oder irgendeine andere vom Mandant.
+                                        if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                            var results = json.d.results;
+                                            results.forEach(function (item, index) {
+                                                that.resultConverterOption(item, index);
+                                            });
+                                        }
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                    }, { VeranstaltungID: recordId });
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }).then(function () {
+                            if (!err) {
+                                if (recordId === getEventId()) {
+                                    if (typeof Home === "object" && Home._actionsList) {
+                                        Home._actionsList = null;
+                                    }
+                                    return Event.appListSpecView.select(function (json) {
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        Log.print(Log.l.trace, "appListSpecView: success!");
+                                        if (json && json.d && json.d.results) {
+                                            NavigationBar.showGroupsMenu(json.d.results, true);
+                                        } else {
+                                            NavigationBar.showGroupsMenu([]);
+                                        }
+                                        if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
+                                            that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
+                                            that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
+                                            that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNPremium")); //getResourceText()
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
+                                            that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNSupreme")); //getResourceText()
+                                        } else {
+                                            Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
+                                        }
+                                        return WinJS.Promise.as();
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        error(errorResponse);
+                                        return WinJS.Promise.as();
+                                    });
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }).then(function () {
+                            if (!err) {
+                                complete({});
+                            }
+                        });
                     } else {
                         Log.print(Log.l.info, "not supported");
+                        complete({});
                         ret = WinJS.Promise.as();
                     }
                 } else if (AppBar.busy) {
@@ -1154,87 +1222,8 @@
                         return that.saveData(complete, error);
                     });
                 } else {
-                    ret = new WinJS.Promise.as().then(function () {
-                        //complete(dataEvent);
-                    }).then(function () {
-                        if (!err) {
-                            var recordId = getEventId();
-                            // load color settings
-                            // beim reload prüfen ob die Veranstaltung in der ich gerade bin oder nicht
-                            // wenn ja dann nehme funktion von generaldata, sonst diese hier
-
-                            return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "Account: success!");
-                                // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-                                // Mit neuen VIEW vorher prüfen ob das die VeranstaltungID in der ich gerade angemeldet bin oder irgendeine andere vom Mandant.
-                                if (json && json.d && json.d.results && json.d.results.length > 1) {
-                                    var results = json.d.results;
-                                    results.forEach(function (item, index) {
-                                        that.resultConverterOption(item, index);
-                                    });
-                                }
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, { VeranstaltungID: recordId });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        Colors.updateColors();
-                        return WinJS.Promise.as();
-                    }).then(function () {
-                        if (!err) {
-                            if (typeof Home === "object" && Home._actionsList) {
-                                Home._actionsList = null;
-                            }
-                            return Event.appListSpecView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "appListSpecView: success!");
-                                if (json && json.d && json.d.results) {
-                                    NavigationBar.showGroupsMenu(json.d.results, true);
-                                } else {
-                                    NavigationBar.showGroupsMenu([]);
-                                }
-                                if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
-                                    that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
-                                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
-                                    that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
-                                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
-                                    that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNPremium")); //getResourceText()
-                                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
-                                    that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNSupreme")); //getResourceText()
-                                } else {
-                                    Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
-                                }
-                                complete(json);
-                                return WinJS.Promise.as();
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                                return WinJS.Promise.as();
-                            });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        if (err) {
-                            AppData.getUserData();
-                            if (AppHeader && AppHeader.controller) {
-                                return AppHeader.controller.loadData();
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    });
+                    complete({});
+                    ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
                 return ret;
@@ -1324,7 +1313,7 @@
                 that.creatingVisitorFlowCategory();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                    return that.loadData();
+                return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
