@@ -11,7 +11,7 @@
     WinJS.Namespace.define("DiaIndustries", {
         _questionView: {
             get: function () {
-                var ret = AppData.getFormatView("Fragebogen", 20597);
+                var ret = AppData.getFormatView("Veranstaltung", 20686);
                 return ret;
             }
         },

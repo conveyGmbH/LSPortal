@@ -11,7 +11,7 @@
     WinJS.Namespace.define("DashboardFNIndustries", {
         _reportLand: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Veranstaltung", 20685);
                 ret.maxPageSize = 50;
                 return ret;
             }

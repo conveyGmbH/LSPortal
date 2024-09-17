@@ -11,7 +11,7 @@
     WinJS.Namespace.define("DashboardFNHour", {
         _kontaktanzahlView: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20455);
+                var ret = AppData.getFormatView("Veranstaltung", 20684);
                 ret.maxPageSize = 5;
                 return ret;
             }

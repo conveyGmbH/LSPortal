@@ -11,7 +11,7 @@
     WinJS.Namespace.define("DiaYearRange", {
         _questionView: {
             get: function () {
-                var ret = AppData.getFormatView("Fragebogen", 20597);
+                var ret = AppData.getFormatView("Veranstaltung", 20685);
                 return ret;
             }
         },

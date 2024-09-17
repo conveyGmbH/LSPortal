@@ -11,7 +11,7 @@
     WinJS.Namespace.define("DiaCountrys", {
         _reportLand: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Veranstaltung", 20685);
                 return ret;
             }
         },
@@ -50,7 +50,7 @@
         },
         _mitarbeiterView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
         mitarbeiterView: {

@@ -11,7 +11,7 @@
     WinJS.Namespace.define("DashboardFNTop10", {
         _reportLand: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Veranstaltung", 20685);
                 ret.maxPageSize = 10;
                 return ret;
             }
