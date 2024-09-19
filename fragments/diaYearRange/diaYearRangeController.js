@@ -26,6 +26,17 @@
             var icons = fragmentElement.querySelector(".yearrange-chart-top-container");
             var yearrangeTooltip = fragmentElement.querySelector("#mydiaYearRangeElement2");
 
+            var getEventId = function () {
+                return DiaYearRange._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DiaYearRange._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var loadIcon = function () {
                 var icon = fragmentElement.querySelector(".action-image");
                 icon.name = "information";
@@ -889,9 +900,10 @@
 
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: AppData.getLanguageId()
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetCriterionList success! ");
@@ -912,7 +924,7 @@
                 that.getGetCriterionListData();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: that.binding.criteriaMain,
                     pCriterion2ID: 0,
                     pLandID: 0,
@@ -939,7 +951,7 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: that.binding.criteriaMain,
                     pCriterion2ID: 0,
                     pLandID: 0,

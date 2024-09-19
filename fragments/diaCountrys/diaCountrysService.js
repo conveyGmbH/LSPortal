@@ -9,6 +9,7 @@
     var namespaceName = "DiaCountrys";
 
     WinJS.Namespace.define("DiaCountrys", {
+        _eventId: 0,
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20685);
@@ -19,7 +20,9 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
-                    restriction = {};
+                    restriction = {
+                        VeranstaltungID: DiaCountrys._eventId
+                    };
                 }
                 restriction.LanguageSpecID = AppData.getLanguageId();
                 var ret = DiaCountrys._reportLand.select(complete, error, restriction, {

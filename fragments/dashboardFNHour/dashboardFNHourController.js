@@ -44,6 +44,17 @@
 
             var surpremebarcolor = "#092052";
 
+            var getEventId = function () {
+                return DashboardFNHour._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DashboardFNHour._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var titlecategorys = [{ TITLE: getResourceText("diaVisitors.day"), VALUE: 1 }, { TITLE: getResourceText("diaVisitors.hour"), VALUE: 0 }];
 
             if (dayhourcombo && dayhourcombo.winControl) {
@@ -381,12 +392,13 @@
 
             var getGetDashboardVisitorData = function (interval, startday, endday) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 visitorChartDataLabels = [];
                 visitorChartDataRaw = [];
                 visitorChartDataRawSurpreme = [];
                 var ret = AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pIntervalHours: 24
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -436,8 +448,9 @@
 
             var getVisitorDateAll = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pIntervalHours: 24,
                     pStartTS: 0,
                     pEndTS: 0
@@ -562,10 +575,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadIcon();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return dropdowncolor();
-            })*/.then(function () {
+                return that.setEventId();
+            }).then(function () {
                 return that.getVisitorDateAll();
             }).then(function () {
                 return that.setTooltipText();

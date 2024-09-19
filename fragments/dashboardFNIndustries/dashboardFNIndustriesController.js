@@ -71,6 +71,17 @@
             }
             this.loadIcon = loadIcon;
 
+            var getEventId = function () {
+                return DashboardFNIndustries._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DashboardFNIndustries._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var setTooltipText = function () {
                 if (that.isSupreme === 3) {
                     countryIndustriestooltip.innerHTML = getResourceText("dashboardFNIndustries.tooltipPremium");
@@ -608,8 +619,9 @@
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -651,8 +663,9 @@
             var getGetDashboardDataPremium = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: parseInt(that.binding.criteriaMain), //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: parseInt(that.binding.criteriaDays), //parseInt(that.binding.criteriaDays)
                     pLandID: parseInt(that.binding.criteriaCountry), //parseInt(that.binding.criteriaCountry)
@@ -689,8 +702,9 @@
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
+                    pVeranstaltungID: that.getEventId(), //
                     pCriterion1ID: parseInt(that.binding.criteriaMain), //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: parseInt(that.binding.criteriaDays), //parseInt(that.binding.criteriaDays)
                     pLandID: 0,
@@ -773,6 +787,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = new WinJS.Promise.as().then(function () {
                     return DashboardFNIndustries.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
@@ -909,10 +924,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadIcon();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return dropdowncolor();
-            })*/.then(function () {
+                return that.setEventId();
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.setTooltipText();
             }).then(function () {

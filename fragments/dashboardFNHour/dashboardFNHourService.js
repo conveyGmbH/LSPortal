@@ -9,6 +9,7 @@
     var namespaceName = "DashboardFNHour";
 
     WinJS.Namespace.define("DashboardFNHour", {
+        _eventId: 0,
         _kontaktanzahlView: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20684);
@@ -17,9 +18,14 @@
             }
         },
         kontaktanzahlView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: DashboardFNHour._eventId
+                    };
+                }
                 Log.call(Log.l.trace, namespaceName + ".kontaktanzahlView.");
-                var ret = DashboardFNHour._kontaktanzahlView.select(complete, error, null, {
+                var ret = DashboardFNHour._kontaktanzahlView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Datum",
                     asc: true

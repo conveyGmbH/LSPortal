@@ -9,9 +9,10 @@
     var namespaceName = "DiaCountrysIndustries";
 
     WinJS.Namespace.define("DiaCountrysIndustries", {
+        _eventId: 0,
         _reportLand: {
             get: function () {
-                var ret = AppData.getFormatView("Kontakt", 20473);
+                var ret = AppData.getFormatView("Veranstaltung", 20685);
                 ret.maxPageSize = 10;
                 return ret;
             }
@@ -20,9 +21,10 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
-                    restriction = {};
+                    restriction = {
+                        VeranstaltungID: DiaCountrysIndustries._eventId
+                    };
                 }
-                restriction.LanguageSpecID = AppData.getLanguageId();
                 var ret = DiaCountrysIndustries._reportLand.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Anzahl",
@@ -66,11 +68,16 @@
         },
         _mitarbeiterView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
         mitarbeiterView: {
             select: function (complete, error, restriction) {
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: DiaCountrysIndustries._eventId
+                    };
+                }
                 Log.call(Log.l.trace, namespaceName + ".mitarbeiterView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = DiaCountrysIndustries._mitarbeiterView.select(complete, error, restriction);
                 // this will return a promise to controller

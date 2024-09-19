@@ -9,6 +9,7 @@
     var namespaceName = "DashboardFNIndustries";
 
     WinJS.Namespace.define("DashboardFNIndustries", {
+        _eventId: 0,
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20685);
@@ -20,7 +21,9 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
-                    restriction = {};
+                    restriction = {
+                        VeranstaltungID: DashboardFNIndustries._eventId
+                    };
                 }
                 restriction.LanguageSpecID = AppData.getLanguageId();
                 var ret = DashboardFNIndustries._reportLand.select(complete, error, restriction, {

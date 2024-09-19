@@ -9,6 +9,7 @@
     var namespaceName = "DashboardFNTop10";
 
     WinJS.Namespace.define("DashboardFNTop10", {
+        _eventId: 0,
         _reportLand: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20685);
@@ -20,7 +21,9 @@
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".reportLand.");
                 if (!restriction) {
-                    restriction = {};
+                    restriction = {
+                        VeranstaltungID: DashboardFNTop10._eventId
+                    };
                 }
                 restriction.LanguageSpecID = AppData.getLanguageId();
                 var ret = DashboardFNTop10._reportLand.select(complete, error, restriction, {
@@ -66,7 +69,7 @@
         },
         _mitarbeiterView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20453);
+                return AppData.getFormatView("Veranstaltung", 20683);
             }
         },
         mitarbeiterView: {

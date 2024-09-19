@@ -7,6 +7,7 @@
     "use strict";
 
     WinJS.Namespace.define("StartPremium", {
+        _eventId: 0,
         _DOC3ExportPDF: {
             get: function () {
                 return AppData.getFormatView("DOC3ExportPDF", 20661);

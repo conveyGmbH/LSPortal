@@ -37,8 +37,6 @@
 
             this.isSupreme = parseInt(AppData._userData.IsSupreme);
 
-
-
             var dayCombobox = fragmentElement.querySelector("#dayCombobox");
             var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
             var daycombo = fragmentElement.querySelector("#daydropdown");
@@ -48,6 +46,17 @@
             var surpremebarcolor = "#092052";
 
             var titlecategorys = [{ TITLE: getResourceText("diaVisitors.day"), VALUE: 1 }, { TITLE: getResourceText("diaVisitors.hour"), VALUE: 0 }];
+
+            var getEventId = function () {
+                return DashboardFNDay._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DashboardFNDay._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
 
             if (dayhourcombo && dayhourcombo.winControl) {
                 dayhourcombo.winControl.data = new WinJS.Binding.List(titlecategorys);
@@ -385,12 +394,13 @@
 
             var getGetDashboardVisitorData = function (interval, startday, endday) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 visitorChartDataLabels = [];
                 visitorChartDataRaw = [];
                 visitorChartDataRawSurpreme = [];
                 var ret =AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pIntervalHours: interval,
                     pStartTS: startday,
                     pEndTS: endday
@@ -428,8 +438,9 @@
 
             var getVisitorDateAll = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pIntervalHours: 24,
                     pStartTS: 0,
                     pEndTS: 0
@@ -555,10 +566,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadIcon();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return dropdowncolor();
-            })*/.then(function () {
+                return that.setEventId();
+            }).then(function () {
                 return that.setTooltipText();
             }).then(function () {
                 return that.getVisitorDateAll();

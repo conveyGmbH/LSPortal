@@ -42,6 +42,17 @@
 
             var varID = AppData.getRecordId("Veranstaltung");
 
+            var getEventId = function () {
+                return DiaCountrysIndustries._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DiaCountrysIndustries._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var langSet = function () {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -590,9 +601,10 @@
 
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetCriterionList success! ");
@@ -634,8 +646,9 @@
             var getGetDashboardDataPremium = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: parseInt(that.binding.criteriaMain),
                     pCriterion2ID: parseInt(that.binding.criteriaDays),
                     pLandID: parseInt(that.binding.criteriaCountry),
@@ -672,8 +685,9 @@
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
+                    pVeranstaltungID: that.getEventId(), //
                     pCriterion1ID: parseInt(that.binding.criteriaMain),
                     pCriterion2ID: parseInt(that.binding.criteriaDays),
                     pLandID: parseInt(that.binding.criteriaCountry),
@@ -757,6 +771,7 @@
             }
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return DiaCountrysIndustries.reportLand.select(function (json) {
@@ -839,7 +854,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { VeranstaltungID: AppData.getRecordId("Veranstaltung")});
+                    }, { VeranstaltungID: that.getRecordId()});
                 });
                 Log.ret(Log.l.trace);
                 return ret;

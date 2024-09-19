@@ -25,6 +25,17 @@
 
             var icons = fragmentElement.querySelector(".industries-chart-top-container");
 
+            var getEventId = function () {
+                return DiaIndustries._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DiaIndustries._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var loadIcon = function () {
                 var icon = fragmentElement.querySelector(".action-image");
                 icon.name = "information";
@@ -1494,9 +1505,10 @@
 
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetCriterionList success! ");
@@ -1525,9 +1537,10 @@
 
             var getGetYearRangePremium = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -100,
                     pCriterion2ID: 0,
                     pLandID: 0,
@@ -1549,9 +1562,10 @@
 
             var getGetDashboardData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -100,
                     pCriterion2ID: parseInt(that.binding.criteriaMain),
                     pDay: 0,
@@ -1580,9 +1594,10 @@
 
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.setEventId();
                 AppData.setErrorMsg(that.binding);
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -100, /*parseInt(that.binding.criteriaMain)*/
                     pCriterion2ID: parseInt(that.binding.criteriaMain), /*0*/
                     pLandID: 0,

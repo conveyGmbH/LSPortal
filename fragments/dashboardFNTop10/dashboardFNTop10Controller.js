@@ -42,6 +42,17 @@
 
             var varID = AppData.getRecordId("Veranstaltung");
 
+            var getEventId = function () {
+                return DashboardFNTop10._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DashboardFNTop10._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var langSet = function () {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -608,8 +619,9 @@
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -651,8 +663,9 @@
             var getGetDashboardDataPremium = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -3, //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: 0, //parseInt(that.binding.criteriaDays)
                     pLandID: 0, //parseInt(that.binding.criteriaCountry)
@@ -689,8 +702,9 @@
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"), //
+                    pVeranstaltungID: that.getEventId(), //
                     pCriterion1ID: -3, //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: 0, //parseInt(that.binding.criteriaDays)
                     pLandID: 0,
@@ -775,6 +789,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = new WinJS.Promise.as().then(function () {
                     return DashboardFNTop10.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
@@ -912,10 +927,10 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadIcon();
-            })/*.then(function () {
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return dropdowncolor();
-            })*/.then(function () {
+                return that.setEventId();
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return that.setTooltipText();
             }).then(function () {

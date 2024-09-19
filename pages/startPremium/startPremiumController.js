@@ -45,6 +45,17 @@
             }
             this.loadIcon = loadIcon;
 
+            var getEventId = function () {
+                return StartPremium._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                StartPremium._eventId = value;
+            }
+            that.setEventId = setEventId;
+
             var base64ToBlob = function (base64Data, contentType) {
                 contentType = contentType || '';
                 var sliceSize = 1024;
@@ -105,6 +116,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Start.Controller.");
+                that.setEventId(AppData.getRecordId("Veranstaltung2"));
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var diaCountrysFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("diaCountrys"));

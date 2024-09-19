@@ -9,6 +9,7 @@
     var namespaceName = "DiaIndustries";
 
     WinJS.Namespace.define("DiaIndustries", {
+        _eventId: 0,
         _questionView: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20686);

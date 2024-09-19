@@ -32,6 +32,17 @@
             var anzKontakte = 0;
             var anzKontaktePremium = 0;
 
+            var getEventId = function () {
+                return DiaCountrys._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DiaCountrys._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var setTooltipText = function () {
                 if (that.isSupreme === 1) {
                     countrytooltip.innerHTML = getResourceText("diaCountrys.tooltipPremium");
@@ -446,8 +457,9 @@
             var getGetCountryHitlistData = function () {
                 Log.call(Log.l.trace, "DiaCountrys.Controller.");
                 AppData.setErrorMsg(that.binding);
+                that.setEventId();
                 var ret = AppData.call("PRC_GetCountryHitlist", {
-                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                    pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetCountryHitlist success! ");

@@ -9,6 +9,7 @@
     var namespaceName = "DiaVisitors";
 
     WinJS.Namespace.define("DiaVisitors", {
+        _eventId: 0,
         _kontaktanzahlView: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20684);
@@ -17,9 +18,14 @@
             }
         },
         kontaktanzahlView: {
-            select: function (complete, error) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".kontaktanzahlView.");
-                var ret = DiaVisitors._kontaktanzahlView.select(complete, error, null, {
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: DiaVisitors._eventId
+                    };
+                }
+                var ret = DiaVisitors._kontaktanzahlView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Datum",
                     asc: true

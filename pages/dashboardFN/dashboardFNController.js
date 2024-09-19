@@ -42,6 +42,17 @@
             }
             this.loadIcon = loadIcon;
 
+            var getEventId = function () {
+                return DashboardFN._eventId;
+            }
+            that.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "eventId=" + value);
+                DashboardFN._eventId = AppBar.scope.getEventId();
+            }
+            that.setEventId = setEventId;
+
             var base64ToBlob = function (base64Data, contentType) {
                 contentType = contentType || '';
                 var sliceSize = 1024;

@@ -9,6 +9,7 @@
     var namespaceName = "DiaYearRange";
 
     WinJS.Namespace.define("DiaYearRange", {
+        _eventId: 0,
         _questionView: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20685);
@@ -18,6 +19,11 @@
         questionView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".questionView.");
+                if (!restriction) {
+                    restriction = {
+                        VeranstaltungID: DiaYearRange._eventId
+                    };
+                }
                 var ret = DiaYearRange._questionView.select(complete, error, restriction, { ordered: true, orderAttribute: "FragebogenVIEWID" });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
