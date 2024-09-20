@@ -3,7 +3,7 @@
     height: 100%;
     float: left;
 }
-.doc-container {
+.contactResultsEdit .doc-container {
     max-height: 200px !important;
     max-width: 380px !important;
     width: auto !important;
@@ -12,10 +12,10 @@
     margin-bottom: 50px;
     margin-top: 30px;
 }
-#right .field_line {
+.contactResultsEdit #right .field_line {
     min-height: 20px !important;
 }
-.active {
+.contactResultsEdit .active {
     height: 200px !important;
     width: 360px !important;
 }

@@ -1,22 +1,22 @@
-﻿.topcontainer {
+﻿.contactResultsCriteria .topcontainer {
     width: 100%;
     border-bottom: 2px solid grey;
 }
-#InitPrio {
+.contactResultsCriteria #InitPrio {
     width: 250px !important;
 }
-#InitTyp {
+.contactResultsCriteria #InitTyp {
     width: 250px !important;
 }
-#InitPrioLine {
+.contactResultsCriteria #InitPrioLine {
     width: 250px !important;
     margin-left: 50px;
 }
 
-#InitTypLine {
+.contactResultsCriteria #InitTypLine {
     width: 250px !important;
     margin-left: 50px;
 }
-#fullname {
+.contactResultsCriteria #fullname {
     font-size: 20px;
 }
