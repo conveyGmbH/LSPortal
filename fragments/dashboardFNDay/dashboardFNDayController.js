@@ -35,7 +35,7 @@
             }
             this.loadIcon = loadIcon;
 
-            this.isSupreme = parseInt(AppData._userData.IsSupreme);
+            this.isSupreme = parseInt(AppData._userData.IsSupreme) || parseInt(AppData._persistentStates.showdashboardMesagoCombo);
 
             var dayCombobox = fragmentElement.querySelector("#dayCombobox");
             var dayhourcombo = fragmentElement.querySelector("#dayhourdropdown");
