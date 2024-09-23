@@ -1495,6 +1495,34 @@
             }
             this.resultConverterYearRange = resultConverterYearRange;
 
+            var destroyCharts = function() {
+                if (industriesyearchart1) {
+                    industriesyearchart1.destroy();
+                }
+                if (industriesyearchart2) {
+                    industriesyearchart2.destroy();
+                }
+                if (industriesyearchart3) {
+                    industriesyearchart3.destroy();
+                }
+                if (industriesyearchart4) {
+                    industriesyearchart4.destroy();
+                }
+                if (industriesyearchart5) {
+                    industriesyearchart5.destroy();
+                }
+                if (industriesyearchart6) {
+                    industriesyearchart6.destroy();
+                }
+                if (industriesyearchart7) {
+                    industriesyearchart7.destroy();
+                }
+                if (industriesyearchart8) {
+                    industriesyearchart8.destroy();
+                }
+            }
+            this.destroyCharts = destroyCharts;
+
             var resultConverterCriteria = function (item, index) {
                 item.index = index;
                 if (item.CriterionID === 61) {
@@ -1512,17 +1540,19 @@
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetCriterionList success! ");
-                    var results = json.d.results.filter(function (item) {
-                        return item && item.ExternalID !== "-100";
-                    });
-                    results.forEach(function (item, index) {
+                    for (var i = 0; i < json.d.results.length; i++) {
+                        if (json.d.results[i].ExternalID === "-100") {
+                            delete json.d.results[i];
+                        }
+                    }
+                    json.d.results.forEach(function (item, index) {
                         that.resultConverterCriteria(item, index);
                     });
                     if (criteriadrop && criteriadrop.winControl) {
-                        criteriadrop.winControl.data = new WinJS.Binding.List(results);
+                        criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
                         criteriadrop.selectedIndex = 0;
-                        that.binding.criteriaMain = results[0].CriterionID;
-                        that.binding.criteriaSecond = results[0].ExternalID;
+                        that.binding.criteriaMain = json.d.results[1].CriterionID;
+                        that.binding.criteriaSecond = json.d.results[1].ExternalID;
                         that.loadData();
                     }
                 }, function (error) {
@@ -1573,6 +1603,9 @@
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetDashboardData success! ");
                     var results = json.d.results;
+                    if (json.d.results.length === 1) {
+                        that.destroyCharts();
+                    } else {
                     results.sort(function (a, b) {
                         return b.NumHits - a.NumHits;
                     });
@@ -1581,7 +1614,8 @@
                     });
                     that.redrawCharts();
                     that.drawPremiumCharts();
-                    AppData.setErrorMsg(that.binding);
+                        AppData.setErrorMsg(that.binding);
+                    }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashboardData error");
                 });
@@ -1605,6 +1639,9 @@
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetDashboardData success! ");
                     var results = json.d.results;
+                    if (json.d.results.length === 1) {
+                        that.destroyCharts();
+                    } else {
                     results.sort(function (a, b) {
                         return b.PercentGlobal - a.PercentGlobal; /*b.NumHits - a.NumHits*/
                     });
@@ -1615,6 +1652,7 @@
                     that.redrawCharts();
                     that.drawSupremeCharts();
                     AppData.setErrorMsg(that.binding);
+                    }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashboardData error");
                 });
