@@ -85,7 +85,7 @@
                         that.binding.publishFlag = true;*/
                     }
                 } else {
-                    console.warn("Element with ID btnFilterNotPublished not found.");
+                    Log.print(Log.l.trace, "Element with ID btnFilterNotPublished not found.");
                 }
             }
             this.hideBtnFilterNotPublished = hideBtnFilterNotPublished;
@@ -99,7 +99,7 @@
                         that.binding.showHideDashboardFeature = null;
                     }
                 } else {
-                    console.warn("Element with ID dashboardFeature not found.");
+                    Log.print(Log.l.trace, "Element with ID btnFilterNotPublished not found.");
                 }
             }
             this.showDashboardFeature = showDashboardFeature;
@@ -272,8 +272,15 @@
                     var target = event.currentTarget || event.target;
                     if (target) {
                         that.binding.dashboardIdx = parseInt(target.value);
-                    }
+                    } else {
+                        // dashboard combobox not visible 
+                        if (typeof that.binding.dashboardIdx === "string") {
+                            AppData._persistentStates.showdashboardMesagoCombo = parseInt(that.binding.dashboardIdx);
+                        } else {
                     AppData._persistentStates.showdashboardMesagoCombo = that.binding.dashboardIdx;
+                        }
+                    }
+
                     if (that.binding.dashboardIdx === 0) {
                         return EventList.VeranstaltungView.select(function(json) {
                                 // this callback will be called asynchronously

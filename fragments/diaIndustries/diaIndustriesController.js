@@ -1540,19 +1540,17 @@
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_GetCriterionList success! ");
-                    for (var i = 0; i < json.d.results.length; i++) {
-                        if (json.d.results[i].ExternalID === "-100") {
-                            delete json.d.results[i];
-                        }
-                    }
-                    json.d.results.forEach(function (item, index) {
+                    var results = json.d.results.filter(function (item) {
+                        return item && item.ExternalID !== "-100";
+                    });
+                    results.forEach(function (item, index) {
                         that.resultConverterCriteria(item, index);
                     });
                     if (criteriadrop && criteriadrop.winControl) {
-                        criteriadrop.winControl.data = new WinJS.Binding.List(json.d.results);
+                        criteriadrop.winControl.data = new WinJS.Binding.List(results);
                         criteriadrop.selectedIndex = 0;
-                        that.binding.criteriaMain = json.d.results[1].CriterionID;
-                        that.binding.criteriaSecond = json.d.results[1].ExternalID;
+                        that.binding.criteriaMain = results[0].CriterionID;
+                        that.binding.criteriaSecond = results[0].ExternalID;
                         that.loadData();
                     }
                 }, function (error) {
