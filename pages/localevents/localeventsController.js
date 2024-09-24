@@ -7,15 +7,19 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/localevents/localeventsService.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.js" />
 
 (function () {
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "LocalEvents";
 
     WinJS.Namespace.define("LocalEvents", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "LocalEvents.Controller.");
+            var listView = pageElement.querySelector("#localevents.listview");
+            this.listView = listView;
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 veranstaltungId: 0,
@@ -29,7 +33,7 @@
             var that = this;
 
             // ListView control
-            var listView = pageElement.querySelector("#localevents.listview");
+            
             var progress = null;
             var counter = null;
             var layout = null;
@@ -128,18 +132,25 @@
             }
             this.addZero = addZero;
 
-            var getDateObject = function (date) {
-                Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
-                if (date === null) {
-                    Log.call(Log.l.trace, "No Date!");
-                } else {
-                    var dateString = date.replace("\/Date(", "").replace(")\/", "");
+            //Date convertion
+            var getDateObject = function (dateData) {
+                var ret;
+                if (dateData) {
+                    var interval = parseInt(that.binding.dayhourflag);
+                    var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    var time = new Date(milliseconds);
-                    var formdate = ("0" + time.getDate()).slice(-2) + "." + ("0" + (time.getMonth() + 1)).slice(-2) + "." + time.getFullYear() + " " + that.addZero(time.getUTCHours()) + ":" + that.addZero(time.getMinutes());
-                    Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
-                    return formdate;
+                    if (interval === 1) {
+                        ret = new Date(milliseconds).toLocaleDateString();
+                    } else {
+                        moment().locale("de");
+                        ret = moment(milliseconds).format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
+
+                    }
+                    //.toLocaleString('de-DE').substr(0, 10);
+                } else {
+                    ret = "";
                 }
+                return ret;
             };
             this.getDateObject = getDateObject;
 
@@ -226,8 +237,28 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (!item.Name) {
+                    item.Name = "";
+                }
+                if (!item.Startdatum) {
+                    item.Startdatum = "";
+                }
+                if (!item.Enddatum) {
+                    item.Enddatum = "";
+                }
+                if (!item.UsedLicences) {
+                    item.UsedLicences = 0;
+                }
+                if (!item.AnzKontakte) {
+                    item.AnzKontakte = 0;
+                }
+                item.nameInitial = item.Name.substr(0, 2);
+                if (item.Startdatum) {
                 item.Startdatum = that.getDateObject(item.Startdatum);
+                }
+                if (item.Enddatum) {
                 item.Enddatum = that.getDateObject(item.Enddatum);
+            }
             }
             this.resultConverter = resultConverter;
 
@@ -251,6 +282,19 @@
                 clickNew: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     Application.navigateById("localeventsCreate", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderBy: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        if (event.currentTarget.id === LocalEvents._orderAttribute) {
+                            LocalEvents._orderDesc = !LocalEvents._orderDesc;
+                        } else {
+                            LocalEvents._orderAttribute = event.currentTarget.id;
+                            LocalEvents._orderDesc = false;
+                        }
+                        that.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickChange: function (event) {
@@ -487,14 +531,6 @@
             var loadData = function () {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 that.loading = true;
-                progress = listView.querySelector(".list-footer .progress");
-                counter = listView.querySelector(".list-footer .counter");
-                if (progress && progress.style) {
-                    progress.style.display = "inline";
-                }
-                if (counter && counter.style) {
-                    counter.style.display = "none";
-                }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return LocalEvents.VeranstaltungView.select(function (json) {

@@ -7,15 +7,22 @@
     "use strict";
 
     WinJS.Namespace.define("LocalEvents", {
+        _orderAttribute: "Name",
+        _orderDesc: true,
         _VeranstaltungView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung", 20542);
             }
         },
         VeranstaltungView: {
-            select: function (complete, error, restriction) {
+            select: function (complete, error, restriction, options) {
+                options = {
+                    ordered: true,
+                    orderAttribute: LocalEvents._orderAttribute,
+                    desc: LocalEvents._orderDesc
+                }
                 Log.call(Log.l.trace, "LocalEvents.");
-                var ret = LocalEvents._VeranstaltungView.select(complete, error, restriction);
+                var ret = LocalEvents._VeranstaltungView.select(complete, error, restriction, options);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

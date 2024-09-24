@@ -94,10 +94,10 @@
                             if (contentheader) {
                                 height -= contentheader.clientHeight;
                             }
-                            /*if (width !== that.prevWidth) {
+                            if (width !== that.prevWidth) {
                                 that.prevWidth = width;
-                                contactList.style.width = width.toString() + "px";
-                            }*/
+                                eventList.style.width = width.toString() + "px";
+                            }
                             if (height !== that.prevHeight) {
                                 that.prevHeight = height;
                                 eventList.style.height = height.toString() + "px";
