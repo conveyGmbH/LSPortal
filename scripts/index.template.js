@@ -359,7 +359,7 @@
         Log.call(Log.l.trace, "Application.", "id=" + id);
         if (id === "dashBoard") {
             id = "start";
-        } else if (id === "startPremium" && (AppData._persistentStates.showdashboardMesagoCombo === 3 || AppData._persistentStates.showdashboardMesagoCombo === 4)) {
+        } else if (id === "startPremium" && (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3 || parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4)) {
             id = "dashboardFN";
         } else if (id === "events") {
             id = "event";
