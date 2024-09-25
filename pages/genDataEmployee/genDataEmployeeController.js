@@ -22,6 +22,7 @@
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
                 setRoleVisible: 0,
+                setRoleCheckVisible: 0,
                 noLicence: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
@@ -62,13 +63,19 @@
 
             var setRoleVisible = function (userspecid) {
                 if (userspecid) {
-                    if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents) {
+                    if (!AppHeader.controller.binding.userData.SiteAdmin && AppHeader.controller.binding.userData.HasLocalEvents) {
                         that.binding.setRoleVisible = 1;
+                        that.binding.setRoleCheckVisible = 0;
+                    } else if (AppHeader.controller.binding.userData.SiteAdmin) {
+                        that.binding.setRoleVisible = 1;
+                        that.binding.setRoleCheckVisible = 1;
                     } else {
                         that.binding.setRoleVisible = 0;
+                        that.binding.setRoleCheckVisible = 0;
                     }
                 } else {
                     that.binding.setRoleVisible = 0;
+                    that.binding.setRoleCheckVisible = 0;
                 }
             }
             this.setRoleVisible = setRoleVisible;
