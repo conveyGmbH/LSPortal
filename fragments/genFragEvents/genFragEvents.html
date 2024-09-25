@@ -15,9 +15,9 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
                             <div class="list-landscape-only">
-                                <div class="list-field-big-variable win-type-ellipsis" onclick="AppBar.handleEvent('click', 'clickOrderEvent', event)" data-win-res="{textContent: 'genFragEvents.event'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventstart'}"></div>
-                                <div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventaktiv'}"></div>
+                                <div class="list-field-big-variable win-type-ellipsis" id="event" onclick="AppBar.handleEvent('click', 'clickOrderEvent', event)" data-win-res="{textContent: 'genFragEvents.event'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" id="eventstart" onclick="AppBar.handleEvent('click', 'clickOrderStart', event)" data-win-res="{textContent: 'genFragEvents.eventstart'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis" id="eventaktiv" onclick="AppBar.handleEvent('click', 'clickOrderStatus', event)" data-win-res="{textContent: 'genFragEvents.eventaktiv'}"></div>
                                 <!--<div class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'genFragEvents.eventinfomail'}"></div>-->
                             </div>
                         </div>

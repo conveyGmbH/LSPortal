@@ -100,15 +100,61 @@
             var eventHandlers = {
                 clickOrderEvent: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    fragmentElement.querySelector("#eventstart").textContent = getResourceText("genFragEvents.eventstart");
+                    fragmentElement.querySelector("#eventaktiv").textContent = getResourceText("genFragEvents.eventaktiv");
                     switch (that.binding.restriction.OrderDesc) {
                         case true:
                             that.binding.restriction.OrderDesc = false;
                             that.binding.restriction.OrderAttribute = "VeranstaltungName";
+                            event.currentTarget.textContent = getResourceText("genFragEvents.eventUp");
                             that.loadData();
                             break;
                         case false:
                             that.binding.restriction.OrderDesc = true;
                             that.binding.restriction.OrderAttribute = "VeranstaltungName";
+                            event.currentTarget.textContent = getResourceText("genFragEvents.eventDown");
+                            that.loadData();
+                            break;
+                    default:
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderStart: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    fragmentElement.querySelector("#event").textContent = getResourceText("genFragEvents.event");
+                    fragmentElement.querySelector("#eventaktiv").textContent = getResourceText("genFragEvents.eventaktiv");
+                    switch (that.binding.restriction.OrderDesc) {
+                    case true:
+                        that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.OrderAttribute = "Startdatum";
+                        event.currentTarget.textContent = getResourceText("genFragEvents.eventstartUp");
+                        that.loadData();
+                        break;
+                    case false:
+                        that.binding.restriction.OrderDesc = true;
+                        that.binding.restriction.OrderAttribute = "Startdatum";
+                        event.currentTarget.textContent = getResourceText("genFragEvents.eventstartDown");
+                        that.loadData();
+                        break;
+                    default:
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderStatus: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    fragmentElement.querySelector("#eventstart").textContent = getResourceText("genFragEvents.eventstart");
+                    fragmentElement.querySelector("#event").textContent = getResourceText("genFragEvents.event");
+                    switch (that.binding.restriction.OrderDesc) {
+                    case true:
+                        that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.OrderAttribute = "UserStatus";
+                        event.currentTarget.textContent = getResourceText("genFragEvents.eventaktivUp");
+                        that.loadData();
+                        break;
+                    case false:
+                        that.binding.restriction.OrderDesc = true;
+                        that.binding.restriction.OrderAttribute = "UserStatus";
+                        event.currentTarget.textContent = getResourceText("genFragEvents.eventaktivDown");
                             that.loadData();
                             break;
                     default:
