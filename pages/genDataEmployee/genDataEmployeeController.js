@@ -61,8 +61,7 @@
                 }
             }
 
-            var setRoleVisible = function (userspecid) {
-                if (userspecid) {
+            var setRoleVisible = function () {
                     if (!AppHeader.controller.binding.userData.SiteAdmin && AppHeader.controller.binding.userData.HasLocalEvents) {
                         that.binding.setRoleVisible = 1;
                         that.binding.setRoleCheckVisible = 0;
@@ -73,10 +72,6 @@
                         that.binding.setRoleVisible = 0;
                         that.binding.setRoleCheckVisible = 0;
                     }
-                } else {
-                    that.binding.setRoleVisible = 0;
-                    that.binding.setRoleCheckVisible = 0;
-                }
             }
             this.setRoleVisible = setRoleVisible;
 
@@ -269,7 +264,7 @@
                                 if (!AppHeader.controller.binding.userData.SiteAdmin) {
                                     var userName = AppData.generalData.userName;
                                     if (userName && userName.indexOf("@") > 0) {
-                                        item.LogInNameAfterAtSymbol = userName.substr(item.Login.lastIndexOf("@"));
+                                        that.binding.dataEmployee.LogInNameAfterAtSymbol = userName.substr(userName.lastIndexOf("@"));
                                     }
                                     that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
                                 }
@@ -808,7 +803,7 @@
                             if (json && json.d) {
                                 // now always edit!
                                 that.setDataEmployee(json.d);
-                                that.setRoleVisible(json.d.UserSpecID);
+                                that.setRoleVisible();
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
