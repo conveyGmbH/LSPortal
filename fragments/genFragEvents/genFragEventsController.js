@@ -190,6 +190,10 @@
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_CopyAppMitarbeiter success! ");
                         if (json && json.d && json.d.results.length > 0) {
+                            var result = json.d.results[0];
+                            if (result && result.ResultCode && result.ResultCode) {
+
+                            }
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
                                 master.controller.loadData(json.d.results[0].NewMitarbeiterID);
@@ -432,9 +436,15 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.count = 0;
-                        }, that.binding.restriction)/*.then(function () {
+                    }, that.binding.restriction).then(function () {
                         if (newRecordId) {
                             Log.print(Log.l.trace, "reload master newRecordId=" + newRecordId);
+                            if (AppBar.modified) {
+                                refreshDataPromise.cancel();
+                                refreshDataPromise = WinJS.Promise.timeout(10000).then(function() {
+                                    that.loadData();
+                                });
+                            } else {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && master.controller.binding) {
                                 master.controller.binding.employeeId = newRecordId;
@@ -442,7 +452,7 @@
                             } else {
                                 return WinJS.Promise.as();
                             }
-                            
+                            }
                         } else {
                             Log.print(Log.l.trace, "schedule refreshDataPromise");
                             refreshDataPromise = WinJS.Promise.timeout(10000).then(function () {
@@ -450,7 +460,7 @@
                             });
                             return WinJS.Promise.as();
                         }
-                    })*/;
+                    });
                 } else {
                     Log.print(Log.l.trace, "No recordId set!");
                 }

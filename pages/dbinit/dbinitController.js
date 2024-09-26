@@ -239,7 +239,8 @@
                         LoginName: that.binding.appSettings.odata.login
                     });
                 }).then(function () {
-                    if (!err && prevOnlinePath !== that.binding.appSettings.odata.onlinePath) {
+                    // #7573 Check Mitarbeiter_Anmeldung && prevOnlinePath !== that.binding.appSettings.odata.onlinePath
+                    if (!err) {
                         var dataLogin = {
                             Login: that.binding.dataLogin.Login,
                             Password: that.binding.dataLogin.Password,
