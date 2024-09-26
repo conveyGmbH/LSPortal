@@ -334,6 +334,22 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "complete") {
+                            //set list-order column
+                            var headerListFields = listView.querySelectorAll(".list-header-columns > div");
+                            if (headerListFields) for (var i = 0; i < headerListFields.length; i++) {
+                                if (headerListFields[i].id === LocalEvents._orderAttribute) {
+                                    if (LocalEvents._orderDesc) {
+                                        WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
+                                        WinJS.Utilities.addClass(headerListFields[i], "order-desc");
+                                    } else {
+                                        WinJS.Utilities.addClass(headerListFields[i], "order-asc");
+                                        WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
+                                    }
+                                } else {
+                                    WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
+                                    WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
+                                }
+                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
