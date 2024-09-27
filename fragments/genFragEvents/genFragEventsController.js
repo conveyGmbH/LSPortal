@@ -29,6 +29,7 @@
                 ecRecordBVID: 0,
                 loadingState: null
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var layout = null;
@@ -191,14 +192,17 @@
                         Log.print(Log.l.info, "call PRC_CopyAppMitarbeiter success! ");
                         if (json && json.d && json.d.results.length > 0) {
                             var result = json.d.results[0];
-                            if (result && result.ResultCode && result.ResultCode) {
-
-                            }
+                            if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
+                                //Fehlermeldung
+                                //alert anstatt error box
+                                alert("ResultCode: " + result.ResultCode + " " + result.ResultMessage);
+                            } else {
                             var master = Application.navigator.masterControl;
                             if (master && master.controller && typeof master.controller.loadData === "function") {
                                 master.controller.loadData(json.d.results[0].NewMitarbeiterID);
                             };
                             that.loadData();
+                            }
                         } else {
                             Log.print(Log.l.error, "ERROR: No Data found!");
                         }
@@ -361,7 +365,7 @@
                 } else {
                     that.binding.restriction.MitarbeiterID = recordId;
                 }
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 if (recordId) {
                     that.binding.loadingState = null;
                     ret = GenFragEvents.BenutzerView.select(function (json) {
@@ -434,7 +438,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         that.binding.count = 0;
                     }, that.binding.restriction).then(function () {
                         if (newRecordId) {
