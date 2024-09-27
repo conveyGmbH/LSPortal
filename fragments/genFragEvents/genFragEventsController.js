@@ -192,6 +192,20 @@
                         Log.print(Log.l.info, "call PRC_CopyAppMitarbeiter success! ");
                         if (json && json.d && json.d.results.length > 0) {
                             var result = json.d.results[0];
+                            if (result &&
+                                result.ResultCode &&
+                                result.ResultCode &&
+                                result.ResultCode === 5 &&
+                                result.ResultMessage) {
+                                alert("ResultCode: " +
+                                    result.ResultCode +
+                                    " " +
+                                    result.ResultMessage +
+                                    "\npMitarbeiterID: " +
+                                    that.binding.ecRecordID +
+                                    " pnewVeranstaltungID: " +
+                                    that.binding.ecEventID);
+                            }
                             if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
                                 //Fehlermeldung
                                 //alert anstatt error box
