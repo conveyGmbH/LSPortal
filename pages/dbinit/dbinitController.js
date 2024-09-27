@@ -242,8 +242,8 @@
                     // #7573 Check Mitarbeiter_Anmeldung && prevOnlinePath !== that.binding.appSettings.odata.onlinePath
                     if (!err) {
                         var dataLogin = {
-                            Login: that.binding.dataLogin.Login,
-                            Password: that.binding.dataLogin.Password,
+                            Login: that.binding.appSettings.odata.login, // || that.binding.dataLogin.Login
+                            Password: that.binding.appSettings.odata.password, //|| that.binding.dataLogin.Password
                             LanguageID: AppData.getLanguageId(),
                             Aktion: "Portal"
                         };
