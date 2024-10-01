@@ -25,6 +25,7 @@
 
             this.refreshWaitTimeMs = 30000;
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var layout = null;

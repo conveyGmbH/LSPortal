@@ -33,7 +33,7 @@
             }, commandList, MediaText.eventTextTable, MediaText.eventTextView, listView]);
             
             var initEventTextSprache = fragmentElement.querySelector("#InitEventTextSprache");
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var layout = null;
@@ -177,6 +177,7 @@
                 },
                 changedLanguage: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.setErrorMsg(pageBinding);
                     if (event.currentTarget && AppBar.notifyModified) {
                         var combobox = event.currentTarget;
                         MediaText._languageId = parseInt(combobox.value);
@@ -189,6 +190,7 @@
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             Log.print(Log.l.error, "error saving event text");
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         });
                     }
                     Log.ret(Log.l.trace);
@@ -276,7 +278,7 @@
             }
             var loadInitLanguageData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     var results = MediaText.initSpracheView.getResults();
                     if (results || !results.length) {
@@ -291,7 +293,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         });
                     } else {
                         setLanguageComboResults(results);

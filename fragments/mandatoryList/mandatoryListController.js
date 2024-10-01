@@ -17,6 +17,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.curRecId = 0;
             this.prevRecId = 0;
@@ -118,7 +119,7 @@
             var saveData = function (complete, error) {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 // standard call via modify
                 var recordId = that.prevRecId;
                 if (!recordId) {
@@ -140,7 +141,7 @@
                                     complete(response);
                                 }
                             }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                                AppData.setErrorMsg(pageBinding, errorResponse);
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
@@ -165,6 +166,7 @@
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.setErrorMsg(pageBinding);
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -188,6 +190,7 @@
                                                     AppBar.triggerDisableHandlers();
                                                 }, function (errorResponse) {
                                                     Log.print(Log.l.error, "error saving mandatory field");
+                                                    AppData.setErrorMsg(pageBinding, errorResponse);
                                                 });
                                             } else {
                                                 AppBar.triggerDisableHandlers();

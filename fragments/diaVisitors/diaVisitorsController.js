@@ -23,7 +23,7 @@
                     dayhourflag: "0"
                 }
             ]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             var icons = fragmentElement.querySelector(".visitor-chart-top-container");
 
@@ -398,7 +398,7 @@
             var getGetDashboardVisitorData = function (interval, startday, endday) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 visitorChartDataLabels = [];
                 visitorChartDataRaw = [];
                 visitorChartDataRawSurpreme = [];
@@ -433,6 +433,7 @@
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashTimeline error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -441,6 +442,7 @@
 
             var getVisitorDateAll = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashTimeline", {
                     pVeranstaltungID: that.getEventId(),
@@ -469,6 +471,7 @@
 
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashTimeline error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

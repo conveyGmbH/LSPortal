@@ -19,6 +19,7 @@
                     mailingLine: options.mailingLine,
                     count: 0
                 }]);
+                var pageBinding = AppBar.scope && AppBar.scope.binding;
                 var that = this;
                 this.curRecId = 0;
                 this.prevRecId = 0;
@@ -87,7 +88,7 @@
                 var saveData = function (complete, error) {
                     var ret = null;
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(pageBinding);
                     // standard call via modify
                     var recordId = that.prevRecId;
                     if (!recordId) {
@@ -109,7 +110,7 @@
                                         complete(response);
                                     }
                                 }, function (errorResponse) {
-                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    AppData.setErrorMsg(pageBinding, errorResponse);
                                     if (typeof error === "function") {
                                         error(errorResponse);
                                     }
@@ -134,6 +135,7 @@
                 var eventHandlers = {
                     onSelectionChanged: function (eventInfo) {
                         Log.call(Log.l.trace, namespaceName + ".Controller.");
+                        AppData.setErrorMsg(pageBinding);
                         if (listView && listView.winControl) {
                             var listControl = listView.winControl;
                             if (listControl.selection) {
@@ -157,6 +159,7 @@
                                                         AppBar.triggerDisableHandlers();
                                                     }, function (errorResponse) {
                                                         Log.print(Log.l.error, "error saving question");
+                                                        AppData.setErrorMsg(pageBinding, errorResponse);
                                                     });
                                                 } else {
                                                     AppBar.triggerDisableHandlers();
@@ -209,7 +212,7 @@
                                     if (counter && counter.style) {
                                         counter.style.display = "none";
                                     }
-                                    AppData.setErrorMsg(that.binding);
+                                    AppData.setErrorMsg(pageBinding);
                                     Log.print(Log.l.trace, "calling select ListLocal.contactView...");
                                     var nextUrl = that.nextUrl;
                                     that.nextUrl = null;
@@ -229,7 +232,7 @@
                                     }, function (errorResponse) {
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
-                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        AppData.setErrorMsg(pageBinding, errorResponse);
                                         if (progress && progress.style) {
                                             progress.style.display = "none";
                                         }
@@ -338,7 +341,7 @@
 
                 var loadData = function (curMailingLine) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.", "curMailingLine=" + curMailingLine);
-                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(pageBinding);
                     var ret = new WinJS.Promise.as().then(function () {
                         return MailingProductLine.MAILERZEILENView.select(function(json) {
                             that.binding.mailingLine = curMailingLine;
@@ -492,7 +495,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         }, {
                             MaildokumentID: curMailingLine
                         });

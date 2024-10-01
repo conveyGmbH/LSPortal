@@ -31,7 +31,7 @@
                 dataDoc: {}
             }, commandList]);
             this.img = null;
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var getDocData = function () {
@@ -495,7 +495,7 @@
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "docId=" + docId);
                 if (docId) {
-                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(pageBinding);
                     ret = ImgMedia.docView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -513,7 +513,7 @@
                     function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     },
                     docId);
                 }

@@ -23,7 +23,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.employeeticks = [];
             this.emplyeevalues = [];
@@ -66,6 +66,7 @@
             var employeeResult = null, ei = 0, el = 0;
             var showemployeeChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 if (employeeResult && typeof employeeResult !== "undefined") {
                 var employeeWithMostContacts = Math.max.apply(Math, employeeResult.map(function (employee) { return employee.Anzahl; }));
                 }
@@ -175,6 +176,7 @@
                                     );
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                    AppData.setErrorMsg(pageBinding, ex.message);
                                 }
                             }
                         }
@@ -232,7 +234,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var eventId = AppBar.scope.getEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartTop10Users.reportMitarbeiter.select(function (json) {
                     that.employeedata = [];
@@ -266,7 +268,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         }, { VeranstaltungID: eventId});
                 });
                 Log.ret(Log.l.trace);

@@ -22,6 +22,7 @@
                 vtitle : null
             }, [], VisitorFlowLevelIndicator.visitorFlowLevelView, null, listView]);
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var layout = null;

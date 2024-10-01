@@ -36,7 +36,7 @@
                 styleWidth: "1px",
                 styleMargin: "9px"
             }, commandList]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var getDocData = function () {
@@ -130,7 +130,7 @@
             var loadData = function (noteId) {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var docContainer = fragmentElement.querySelector(".doc-container");
                 if (docContainer) {
                     var sketchElement = docContainer.lastElementChild || docContainer.lastChild;
@@ -164,7 +164,7 @@
                     },  function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     },
                     noteId,
                     that.binding.isLocal);
@@ -180,7 +180,7 @@
                         AppBar.busy = false;
                     },
                     function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         AppBar.busy = false;
                     });
                 } else {
@@ -194,7 +194,7 @@
             var saveData = function (complete, error) {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var dataSketch = that.binding.dataSketch;
                 if (dataSketch && that.binding.isLocal && isModified()) {
                     ret = new WinJS.Promise.as().then(function () {
@@ -226,7 +226,7 @@
                                         function(errorResponse) {
                                             // called asynchronously if an error occurs
                                             // or server returns response with an error status.
-                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                            AppData.setErrorMsg(pageBinding, errorResponse);
                                             if (typeof error === "function") {
                                                 error(errorResponse);
                                             }
@@ -259,7 +259,7 @@
                                                 status: -1,
                                                 statusText: "missing recordId for table Kontakt"
                                             }
-                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                            AppData.setErrorMsg(pageBinding, errorResponse);
                                             if (typeof error === "function") {
                                                 error(errorResponse);
                                             }
@@ -298,7 +298,7 @@
                                             function(errorResponse) {
                                                 // called asynchronously if an error occurs
                                                 // or server returns response with an error status.
-                                                AppData.setErrorMsg(that.binding, errorResponse);
+                                                AppData.setErrorMsg(pageBinding, errorResponse);
                                                 if (typeof error === "function") {
                                                     error(errorResponse);
                                                 }
@@ -329,6 +329,7 @@
 
             var deleteData = function() {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 var ret = WinJS.Promise.as().then(function () {
                     if (options && options.isLocal) {
                         if (that.svgEditor) {
@@ -346,7 +347,7 @@
                         function(errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         },
                         that.binding.noteId,
                         that.binding.isLocal);

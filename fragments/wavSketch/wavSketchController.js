@@ -25,6 +25,7 @@
                 }
             }, commandList]);
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var getDocData = function () {
@@ -103,7 +104,7 @@
                 var ovwEdge = 256;
                 var err = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "fileExt=" + fileExt);
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var dataSketch = that.binding.dataSketch;
 
                 var ret = new WinJS.Promise.as().then(function () {
@@ -113,7 +114,7 @@
                             status: -1,
                             statusText: "missing recordId for table Kontakt"
                         }
-                        AppData.setErrorMsg(that.binding, err);
+                        AppData.setErrorMsg(pageBinding, err);
                         return WinJS.Promise.as();
                     } else {
                         // audio note
@@ -164,7 +165,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         },
                         dataSketch,
                         that.binding.isLocal);
@@ -180,6 +181,7 @@
                 var fileExt;
                 var filePath;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "dataDirectory=" + dataDirectory + " fileName=" + fileName + " bUseRootDir=" + bUseRootDir);
+                AppData.setErrorMsg(pageBinding);
                 var readFileFromDirEntry = function (dirEntry) {
                     if (dirEntry) {
                         Log.print(Log.l.info, "resolveLocalFileSystemURL: dirEntry open!");
@@ -196,6 +198,7 @@
                                     },
                                     function(errorResponse) {
                                         Log.print(Log.l.error, "file delete: Failed remove file " + filePath + " error: " + JSON.stringify(errorResponse));
+                                        AppData.setErrorMsg(pageBinding, errorResponse);
                                     },
                                     function() {
                                         Log.print(Log.l.trace, "file delete: extra ignored!");
@@ -205,7 +208,7 @@
                                         var reader = new FileReader();
                                         reader.onerror = function(errorResponse) {
                                             Log.print(Log.l.error, "Failed read file " + filePath + " error: " + JSON.stringify(errorResponse));
-                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                            AppData.setErrorMsg(pageBinding, errorResponse);
                                             deleteFile();
                                             AppBar.busy = false;
                                         };
@@ -221,6 +224,7 @@
                                                     fileExt = "wav";
                                                 } catch (exception) {
                                                     Log.print(Log.l.error, "ARM exception " + (exception && exception.message));
+                                                    AppData.setErrorMsg(pageBinding, exception.message);
                                                 }
                                                 break;
                                             }
@@ -230,7 +234,7 @@
                                             } else {
                                                 var err = "file read error NO data!";
                                                 Log.print(Log.l.error, err);
-                                                AppData.setErrorMsg(that.binding, err);
+                                                AppData.setErrorMsg(pageBinding, err);
                                             }
                                             deleteFile();
                                             AppBar.busy = false;
@@ -239,25 +243,25 @@
                                     },
                                     function(errorResponse) {
                                         Log.print(Log.l.error, "file read error: " + JSON.stringify(errorResponse));
-                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        AppData.setErrorMsg(pageBinding, errorResponse);
                                         deleteFile();
                                         AppBar.busy = false;
                                     });
                             } else {
                                 var err = "file read error NO fileEntry!";
                                 Log.print(Log.l.error, err);
-                                AppData.setErrorMsg(that.binding, err);
+                                AppData.setErrorMsg(pageBinding, err);
                                 AppBar.busy = false;
                             }
                         }, function(errorResponse) {
                             Log.print(Log.l.error, "getFile(" + filePath + ") error: " + JSON.stringify(errorResponse));
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                             AppBar.busy = false;
                         });
                     } else {
                         var err = "file read error NO dirEntry!";
                         Log.print(Log.l.error, err);
-                        AppData.setErrorMsg(that.binding, err);
+                        AppData.setErrorMsg(pageBinding, err);
                         AppBar.busy = false;
                     }
                     Log.ret(Log.l.trace);
@@ -274,7 +278,7 @@
                             readFileFromDirEntry(fs.root);
                         }, function(errorResponse) {
                             Log.print(Log.l.error, "requestFileSystem error: " + JSON.stringify(errorResponse));
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                             AppBar.busy = false;
                         });
                     } else {
@@ -286,7 +290,7 @@
                     if (typeof window.resolveLocalFileSystemURL === "function") {
                         window.resolveLocalFileSystemURL(dataDirectory, readFileFromDirEntry, function(errorResponse) {
                             Log.print(Log.l.error, "resolveLocalFileSystemURL error: " + JSON.stringify(errorResponse));
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                             AppBar.busy = false;
                         });
                     } else {
@@ -300,6 +304,7 @@
 
             var bindAudio = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 if (fragmentElement) {
                     var docContainer = fragmentElement.querySelector(".doc-container");
                     if (docContainer) {
@@ -318,6 +323,7 @@
                                 }
                             } catch (e) {
                                 Log.print(Log.l.error, "audio returned error:" + e);
+                                AppData.setErrorMsg(pageBinding, e);
                             }
                         } else {
                             that.removeAudio();
@@ -390,7 +396,7 @@
                 var err = JSON.stringify(errorMessage);
                 //message: The message is provided by the device's native code
                 Log.print(Log.l.error, "errorMessage=" + err);
-                AppData.setErrorMsg(that.binding, err);
+                AppData.setErrorMsg(pageBinding, err);
                 AppBar.busy = false;
                 WinJS.Promise.timeout(0).then(function () {
                     if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
@@ -427,7 +433,7 @@
                     }, audioOptions);
                 } else {
                     Log.print(Log.l.error, "capture.captureAudio not supported...");
-                    AppData.setErrorMsg(that.binding, { errorMessage: "Audio capture plugin not supported" });
+                    AppData.setErrorMsg(pageBinding, { errorMessage: "Audio capture plugin not supported" });
                 }
                 Log.ret(Log.l.trace);
             }
@@ -437,7 +443,7 @@
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
                 if (noteId) {
-                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(pageBinding);
                     ret = WavSketch.sketchDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -456,7 +462,7 @@
                     function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         that.removeAudio();
                     },
                     noteId,
@@ -508,7 +514,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                             var message = null;
                             Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
                             if (errorResponse.data && errorResponse.data.error) {

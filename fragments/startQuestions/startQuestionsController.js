@@ -24,7 +24,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 qbez: 0
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.answerdata = null;
             this.anwsersquestiontext = [];
@@ -92,6 +92,7 @@
             var answerResult = null, ei = 0, el = 0;
             var showanswerChart = function (barChartId, bAnimated) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 var questionWithMostAnswser = Math.max.apply(Math, answerResult.map(function (answer) { return answer.SumAntwort; }));
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.answerdata || !that.answerdata.length) {
@@ -205,6 +206,7 @@
                                     });
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                    AppData.setErrorMsg(pageBinding, ex.message);
                                 }
                             }
                         }
@@ -262,7 +264,7 @@
                 var eventId = AppBar.scope.getEventId();
                 that.questions = null;
                 that.binding.qbez = 0;
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartQuestions.questionView.select(function (json) {
                         // this callback will be called asynchronously
@@ -308,7 +310,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         return WinJS.Promise.as();
                         }, { VeranstaltungVIEWID: eventId });
                 });
@@ -329,7 +331,7 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.VeranstaltungVIEWID) {
-                                        AppData.setErrorMsg(that.binding);
+                                        AppData.setErrorMsg(pageBinding);
                                         that.answerdata = [];
                                         that.answerticks = [];
                                         that.answerdataID = [];
@@ -359,7 +361,7 @@
                                         }, function (errorResponse) {
                                             Log.print(Log.l.error, "call error");
                                             AppBar.busy = false;
-                                            AppData.setErrorMsg(that.binding, errorResponse);
+                                            AppData.setErrorMsg(pageBinding, errorResponse);
                                         });
                                     }
                                 });

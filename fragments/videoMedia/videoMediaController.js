@@ -34,6 +34,7 @@
                 showFrame: false
             }, commandList]);
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var getVideoId = function (url) {
@@ -125,6 +126,7 @@
 
             var bindMedia = function (url) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "url=" + url);
+                AppData.setErrorMsg(pageBinding);
                 if (typeof url === "string" || that.binding.dataSketch) {
                     var isVideo = false;
                     var isAudio = false;
@@ -173,6 +175,7 @@
                                 }
                             } catch (e) {
                                 Log.print(Log.l.error, "video returned error:" + e);
+                                AppData.setErrorMsg(pageBinding, e);
                             }
                             audio = fragmentElement.querySelector("#noteAudio");
                             if (audio) {
@@ -204,6 +207,7 @@
                                 }
                             } catch (e) {
                                 Log.print(Log.l.error, "audio returned error:" + e);
+                                AppData.setErrorMsg(pageBinding, e);
                             }
                             video = fragmentElement.querySelector("#noteVideo");
                             if (video) {
@@ -229,6 +233,7 @@
                                 frame.src = url;
                             } catch (e) {
                                 Log.print(Log.l.error, "frame returned error:" + e);
+                                AppData.setErrorMsg(pageBinding, e);
                             }
                             audio = fragmentElement.querySelector("#noteAudio");
                             if (audio) {
@@ -262,7 +267,7 @@
                     that.bindMedia(url);
                     ret = WinJS.Promise.as();
                 } else if (noteId) {
-                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(pageBinding);
                     ret = VideoMedia.sketchDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -284,7 +289,7 @@
                     function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         that.removeMedia();
                     },
                     noteId);

@@ -23,6 +23,8 @@
                 DocGroup: null,
                 DocFormat: null
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
+
             var that = this;
             var layout = null;
 
@@ -447,7 +449,7 @@
                 if (contactId) {
                     that.binding.contactId = contactId;
                 }
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 // find index of noteId
                 if (noteId && that.records) {
                     for (i = 0; i < that.records.length; i++) {
@@ -471,7 +473,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     }, noteId, that.binding.isLocal);
                 } else {
                     if (that.records) {
@@ -521,7 +523,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     }, {
                         KontaktID: that.binding.contactId
                     }, that.binding.isLocal);

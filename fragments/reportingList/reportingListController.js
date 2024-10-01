@@ -20,6 +20,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             // now do anything...
@@ -135,7 +136,7 @@
 
             var loadData = function (eventId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var recordId = eventId;
                 if (!recordId) {
                     recordId = options.eventId;
@@ -197,7 +198,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         }, {
                                 VeranstaltungID: recordId,
                                 LanguageSpecID: AppData.getLanguageId()

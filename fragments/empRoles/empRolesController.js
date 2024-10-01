@@ -17,6 +17,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.curRecId = 0;
             this.prevRecId = 0;
@@ -84,7 +85,7 @@
             var saveData = function (complete, error) {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 // standard call via modify
                 var recordId = that.prevRecId;
                 if (!recordId) {
@@ -106,7 +107,7 @@
                                     complete(response);
                                 }
                             }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                                AppData.setErrorMsg(pageBinding, errorResponse);
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
@@ -131,6 +132,7 @@
             var eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.setErrorMsg(pageBinding);
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -154,6 +156,7 @@
                                                     AppBar.triggerDisableHandlers();
                                                 }, function (errorResponse) {
                                                     Log.print(Log.l.error, "error saving question");
+                                                    AppData.setErrorMsg(pageBinding, errorResponse);
                                                 });
                                             } else {
                                                 AppBar.triggerDisableHandlers();
@@ -228,7 +231,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!EmpRoles.initAPUserRoleView.getResults().length) {
                         Log.print(Log.l.trace, "calling select LGNTINITAPUserRoleData...");
@@ -240,7 +243,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         });
                     } else {
                         return WinJS.Promise.as();
@@ -250,7 +253,7 @@
                         Log.print(Log.l.trace, "saveData completed...");
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "saveData error...");
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     });
                 }).then(function () {
                     return EmpRoles.CR_MA_APUSERRoleView.select(function (json) {
@@ -280,7 +283,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     });
                 });
                 Log.ret(Log.l.trace);

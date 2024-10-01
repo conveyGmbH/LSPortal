@@ -17,7 +17,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             
             var resultConverter = function (item, index) {
@@ -27,7 +27,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 Log.ret(Log.l.trace);
                 return WinJS.Promise.as();
             };

@@ -28,7 +28,7 @@
                     anzKontakteWData: 0
                 }
             ]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.worldMapMaxWidth = 600;
             this.worldMap = null;
@@ -230,6 +230,7 @@
                                     });
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                    AppData.setErrorMsg(pageBinding, errorResponse);
                                 }
                             }
                         }
@@ -618,7 +619,7 @@
 
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetCriterionList", {
                     pVeranstaltungID: that.getEventId(),
@@ -642,6 +643,7 @@
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -662,7 +664,7 @@
 
             var getGetDashboardDataPremium = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(),
@@ -693,6 +695,7 @@
                     //complete({});
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -701,7 +704,7 @@
 
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(), //
@@ -723,6 +726,7 @@
                     that.createCountryIndustriesSupremeChart();
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace)
                 return ret;
@@ -731,7 +735,7 @@
 
             var drawChart = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return that.clearArrays();
                 }).then(function () {
@@ -788,7 +792,7 @@
             }
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = new WinJS.Promise.as().then(function () {
                     return DashboardFNTop10.reportLand.select(function (json) {

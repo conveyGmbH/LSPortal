@@ -20,7 +20,7 @@
             Fragments.RecordsetController.apply(this, [fragmentElement, {
                 loadingState: null
             }, [], GenFragAnswers.answerTable, GenFragAnswers.answerView, listView]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var layout = null;

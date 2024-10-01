@@ -21,7 +21,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Fragments.Controller.apply(this, [fragmentElement, {
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.countrydata = null;
 
@@ -63,6 +63,7 @@
             this.countryColors = [];
             var showDonutChart = function (countryChartId, bAnimated) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "countryChartId=" + countryChartId);
+                AppData.setErrorMsg(pageBinding);
                 WinJS.Promise.timeout(0).then(function () {
                     if (!that.countrydata || !that.countrydata.length) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -141,6 +142,7 @@
                                     }
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                    AppData.setErrorMsg(pageBinding, ex.message);
                                 }
                             }
                         }
@@ -168,7 +170,7 @@
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var eventId = AppBar.scope.getEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartTop10Countrys.startTop10CountrysmitarbeiterView.select(function (json) {
                         // this callback will be called asynchronously
@@ -183,7 +185,7 @@
                         that.dataCountryTop10Data = {};
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         }, { VeranstaltungVIEWID: eventId});
                 }).then(function () {
                     return StartTop10Countrys.reportLand.select(function (json) {
@@ -231,7 +233,7 @@
                     },  function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         }, { VeranstaltungID: eventId});
                 });
                 Log.ret(Log.l.trace);

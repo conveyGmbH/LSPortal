@@ -20,7 +20,7 @@
                 criteriaSecond: "",
                 isSupreme: false
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var icons = fragmentElement.querySelector(".industries-chart-top-container");
@@ -1534,7 +1534,7 @@
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = AppData.call("PRC_GetCriterionList", {
                     pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
@@ -1555,6 +1555,7 @@
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetCriterionList error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -1564,7 +1565,7 @@
             var getGetYearRangePremium = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -100,
@@ -1580,6 +1581,7 @@
                     });
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashboardData error");
+                    AppData.setErrorMsg(pageBinding, errorResponse);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -1589,7 +1591,7 @@
             var getGetDashboardData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -100,
@@ -1612,10 +1614,11 @@
                     });
                     that.redrawCharts();
                     that.drawPremiumCharts();
-                        AppData.setErrorMsg(that.binding);
+                        AppData.setErrorMsg(pageBinding);
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashboardData error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -1625,7 +1628,7 @@
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(),
                     pCriterion1ID: -100, /*parseInt(that.binding.criteriaMain)*/
@@ -1649,10 +1652,11 @@
                     });
                     that.redrawCharts();
                     that.drawSupremeCharts();
-                    AppData.setErrorMsg(that.binding);
+                        AppData.setErrorMsg(pageBinding);
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetDashboardData error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -1661,7 +1665,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return that.clearArrays();
                 }).then(function () {

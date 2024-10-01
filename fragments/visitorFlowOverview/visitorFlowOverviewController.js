@@ -22,6 +22,7 @@
 
             this.refreshWaitTimeMs = 5000;
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             
             var entextcategory = fragmentElement.querySelector("#entextSelect");
@@ -58,7 +59,7 @@
             
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!that.binding.visitordata.CR_V_BereichVIEWID) {
                         Log.print(Log.l.trace, "CR_V_BereichVIEWID=" + that.binding.visitordata.CR_V_BereichVIEWID);
@@ -78,7 +79,7 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             Log.print(Log.l.error, "select VisitorFlowOverview: error!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         });
                     } else {
                         return WinJS.Promise.as();
@@ -98,7 +99,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "select VisitorFlowOverview: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     }, { CR_V_BereichVIEWID: that.binding.visitordata.CR_V_BereichVIEWID });
                 });
                 Log.ret(Log.l.trace);

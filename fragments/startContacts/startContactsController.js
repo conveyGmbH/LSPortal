@@ -18,7 +18,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 startcontactdata: getEmptyDefaultValue(StartContacts.veranstaltungView.defaultValue)
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var resultConverter = function (item, index) {
@@ -29,7 +29,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var eventId = AppBar.scope.getEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return StartContacts.veranstaltungView.select(function (json) {
                             // this callback will be called asynchronously
@@ -55,7 +55,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                             return WinJS.Promise.as();
                         },
                         { VeranstaltungVIEWID: eventId });

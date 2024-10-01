@@ -37,6 +37,7 @@
             }, commandList]);
             this.messages = null;
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             this.refreshPromise = null;
@@ -126,7 +127,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.getMessagesData();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var restriction = {
                     BenutzerID: AppBar.scope.binding.dataBenutzer.BenutzerVIEWID
                 }
@@ -155,7 +156,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     }, restriction);
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
@@ -171,7 +172,7 @@
 
             var insertData = function (complete, error) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret;
                 if (that.binding.message && AppBar.modified && !AppBar.busy) {
                     /**
@@ -200,7 +201,7 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         if (typeof error === "function") {
                             error(errorResponse);
                         }

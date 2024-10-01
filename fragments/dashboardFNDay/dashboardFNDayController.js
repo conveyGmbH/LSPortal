@@ -24,7 +24,7 @@
                         dayhourflag: "0"
                     }
                 ]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             var icons = fragmentElement.querySelector(".visitor-chart-top-container");
 
@@ -428,8 +428,9 @@
                             that.createvisitorChart();
                         }
                     }
-                }, function (error) {
+                    }, function (errorResponse) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, errorResponse);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -463,8 +464,9 @@
                     }
                     //that.binding.dayhourflag = "0";
 
-                }, function (error) {
+                    }, function (errorResponse) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, errorResponse);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

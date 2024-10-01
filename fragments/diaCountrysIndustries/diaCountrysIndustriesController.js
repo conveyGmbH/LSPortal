@@ -28,7 +28,7 @@
                     anzKontakteWData: 0
                 }
             ]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.worldMapMaxWidth = 600;
             this.worldMap = null;
@@ -147,6 +147,7 @@
 
             var createWorldChart = function (bAnimated) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!that.countryKeyData) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -230,6 +231,7 @@
                                     });
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                    AppData.setErrorMsg(pageBinding, ex);
                                 }
                             }
                         }
@@ -602,7 +604,7 @@
             var getGetCriterionListData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = AppData.call("PRC_GetCriterionList", {
                     pVeranstaltungID: that.getEventId(),
                     pLanguageSpecID: that.langSet()
@@ -625,6 +627,7 @@
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -645,7 +648,7 @@
 
             var getGetDashboardDataPremium = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(),
@@ -676,6 +679,7 @@
                     //complete({});
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -684,7 +688,7 @@
 
             var getGetDashboardDataSurpreme = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
                     pVeranstaltungID: that.getEventId(), //
@@ -706,6 +710,7 @@
                     that.createCountryIndustriesSupremeChart();
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -714,7 +719,7 @@
 
             var drawChart = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return that.clearArrays();
                 }).then(function () {
@@ -772,7 +777,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return DiaCountrysIndustries.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");

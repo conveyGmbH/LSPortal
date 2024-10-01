@@ -32,6 +32,7 @@
                 sessiondownloadData: [],
                 oldPlayback: false
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var layout = null;
@@ -152,6 +153,7 @@
 
             var getModeratorData = function (veranstId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 var ret = AppData.call("PRC_GetLBModerator", {
                     pVeranstaltungID: veranstId
                 }, function (json) {
@@ -159,6 +161,7 @@
                     that.binding.moderatorData = json.d.results[0];
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetLBModerator error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -203,6 +206,7 @@
             var getSessionDownloadFiles = function (rawurl) {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "rawurl=" + rawurl);
+                AppData.setErrorMsg(pageBinding);
                 if (rawurl) {
                     if (rawurl.search("/recording/") > 0) {
                         var urlsuffix = rawurl.substring(rawurl.indexOf("/recording/") + 11, rawurl.length);
@@ -220,11 +224,11 @@
                                 that.createButtonFromArray(url2);
                             } catch (exception) {
                                 Log.print(Log.l.error, "resource parse error " + (exception && exception.message));
-                                AppData.setErrorMsg(AppBar.scope.binding, (exception && exception.message));
+                                AppData.setErrorMsg(pageBinding, (exception && exception.message));
                             }
                         }, function xhrError(errorResponse) {
                             Log.print(Log.l.error, "error=" + AppData.getErrorMsgFromResponse(errorResponse));
-                            AppData.setErrorMsg(AppBar.scope.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         });
                     } else if (rawurl.search("/playback/") > 0) {
                         that.binding.oldPlayback = true;
@@ -365,7 +369,7 @@
                 that.statuscounter = 0;
                 that.binding.sessiondownloadData = [];
                 that.binding.eventName = AppBar.scope.binding.eventName;
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return EventSession.BBBSessionView.select(function (json) {
                         // this callback will be called asynchronously
@@ -393,7 +397,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "BBBSessionView: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     }, { VeranstaltungID: eventId });
                 });
                 Log.ret(Log.l.trace);

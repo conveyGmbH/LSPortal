@@ -32,6 +32,7 @@
                 flagInsert: null,
                 addIndex: null
             }]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             this.nextUrl = null;
@@ -498,7 +499,7 @@
                     MediaList._eventTextUsageId = curOptions.eventTextUsageId;
                     MediaList._eventId = curOptions.eventId;
                 }
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = MediaList.eventDocView.select(function (json) {
                     // this callback will be called asynchronously
                     // when the response is available
@@ -559,7 +560,7 @@
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
                     inLoadData = false;
-                    AppData.setErrorMsg(that.binding, errorResponse);
+                    AppData.setErrorMsg(pageBinding, errorResponse);
                 }).then(function() {
                     if (reloadDocView) {
                         // show/hide this fragment, so use timeout!

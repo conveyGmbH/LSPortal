@@ -44,6 +44,7 @@
             this.worldMapHeight = 0;
             this.countryKeyData = null;
 
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
             this.countryColors = [];
             
@@ -132,6 +133,7 @@
 
             var worldChart = function (bAnimated) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!that.countryKeyData) {
                         Log.print(Log.l.trace, "extra ignored");
@@ -219,6 +221,7 @@
                                     });
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
+                                    AppData.setErrorMsg(pageBinding, ex.message);
                                 }
                             }
                         }
@@ -247,7 +250,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var eventId = AppBar.scope.getEventId();
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandData...");
@@ -259,7 +262,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         });
                     } else {
                         return WinJS.Promise.as();
@@ -301,7 +304,7 @@
                     }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                         return WinJS.Promise.as();
                     }, { VeranstaltungID: eventId });
                 });

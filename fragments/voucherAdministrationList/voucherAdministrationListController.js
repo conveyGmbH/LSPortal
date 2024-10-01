@@ -23,6 +23,8 @@
                 btnLabel: getResourceText("voucheradministrationlist.btnlabelO"),
                 OpenVoucherSecondary: 'block'
             }]);
+
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             this.voucherEvent = [];
@@ -212,7 +214,7 @@
                 that.voucherEvent = [];
                 that.voucherSubItem = [];
                 that.voucherMainItem = [];
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     return VoucherAdministrationList.voucherOrderView.select(function (json) {
                         // this callback will be called asynchronously
@@ -243,7 +245,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "voucherOrderView: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     });
                 });
                 Log.ret(Log.l.trace);

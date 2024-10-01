@@ -35,7 +35,7 @@
                 dataSketch: {}
             }, commandList]);
             this.img = null;
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             var getDocData = function () {
@@ -487,7 +487,7 @@
                 var ovwEdge = 256;
                 var err = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var dataSketch = that.binding.dataSketch;
                 var ret = new WinJS.Promise.as().then(function () {
                     if (imageData.length < 500000) {
@@ -508,7 +508,7 @@
                             status: -1,
                             statusText: "missing recordId for table Kontakt"
                         }
-                        AppData.setErrorMsg(that.binding, err);
+                        AppData.setErrorMsg(pageBinding, err);
                         return WinJS.Promise.as();
                         AppBar.busy = false;
                     } else {
@@ -569,7 +569,7 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                         },
                         dataSketch,
                         that.binding.isLocal);
@@ -605,7 +605,7 @@
                 var err = JSON.stringify(errorMessage);
                 //message: The message is provided by the device's native code
                 Log.print(Log.l.error, "errorMessage=" + err);
-                AppData.setErrorMsg(that.binding, errorMessage);
+                AppData.setErrorMsg(pageBinding, errorMessage);
                 AppBar.busy = false;
                 WinJS.Promise.timeout(0).then(function () {
                     if (AppBar.scope && typeof AppBar.scope.loadList === "function") {
@@ -619,6 +619,7 @@
             AppData.setErrorMsg(that.binding);
             var takePhoto = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 if (navigator.camera &&
                     typeof navigator.camera.getPicture === "function") {
                     // shortcuts for camera definitions
@@ -641,7 +642,7 @@
                     });
                 } else {
                     Log.print(Log.l.error, "camera.getPicture not supported...");
-                    AppData.setErrorMsg(that.binding, { errorMessage: "Camera plugin not supported" });
+                    AppData.setErrorMsg(pageBinding, { errorMessage: "Camera plugin not supported" });
                 }
                 Log.ret(Log.l.trace);
             }
@@ -651,7 +652,7 @@
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "noteId=" + noteId);
                 if (noteId) {
-                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(pageBinding);
                     ret = ImgSketch.sketchDocView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -670,7 +671,7 @@
                     function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     },
                     noteId,
                     that.binding.isLocal);
@@ -709,6 +710,7 @@
 
             var deleteData = function() {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(pageBinding);
                 var ret= WinJS.Promise.as().then(function () {
                     if (options && options.isLocal) {
                         return ImgSketch.sketchView.deleteRecord(function (response) {
@@ -721,7 +723,7 @@
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
+                            AppData.setErrorMsg(pageBinding, errorResponse);
                             var message = null;
                             Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
                             if (errorResponse.data && errorResponse.data.error) {

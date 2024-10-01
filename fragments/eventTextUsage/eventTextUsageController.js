@@ -19,6 +19,7 @@
             }]);
 
             this.textUsage = new WinJS.Binding.List([]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             // now do anything...
@@ -240,7 +241,7 @@
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (that.textUsage.length === 0) {
                         var results = EventTextUsage.eventTextUsageView.getResults();
@@ -273,7 +274,7 @@
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                                AppData.setErrorMsg(pageBinding, errorResponse);
                             });
                         }
                     } else {

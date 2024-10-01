@@ -19,7 +19,7 @@
             Fragments.Controller.apply(this, [fragmentElement, {
                 Top5Country: 5
             }]);
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             that.isSupreme = parseInt(AppData._userData.IsSupreme) || parseInt(AppData._persistentStates.showdashboardMesagoCombo);
@@ -456,7 +456,7 @@
 
             var getGetCountryHitlistData = function () {
                 Log.call(Log.l.trace, "DiaCountrys.Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetCountryHitlist", {
                     pVeranstaltungID: that.getEventId(),
@@ -500,6 +500,7 @@
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call PRC_GetCountryHitlist error");
+                    AppData.setErrorMsg(pageBinding, error);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

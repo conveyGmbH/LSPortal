@@ -26,7 +26,7 @@
 
             var dropZone = fragmentElement.querySelector("#dropzone");
             var fileOpener = fragmentElement.querySelector("input[type=file]");
-
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             /*var base64ToBlob = function (base64Data, contentType) {
@@ -59,7 +59,7 @@
                 var prevLength = 0;
                 var err = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
 
                 var img = new Image();
                 img.src = result;
@@ -165,7 +165,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     },
                         dataDoc, that.binding.docId, 1);
                 }).then(function () {
@@ -190,7 +190,7 @@
                 var prevLength = 0;
                 var err = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
+                AppData.setErrorMsg(pageBinding);
                 var doc = {};
                 doc['src'] = result;
                 /*Content-Type: application/pdf;charset=UTF-8
@@ -259,7 +259,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, errorResponse);
+                        AppData.setErrorMsg(pageBinding, errorResponse);
                     },
                         dataDoc, that.binding.docId, wGroupDoc);
                 }).then(function () {
@@ -319,11 +319,11 @@
                     // setze input-feld value auf leer
                     fileOpener.value = "";
                     reader.onerror = function (error) {
-                        AppData.setErrorMsg(that.binding, error);
+                        AppData.setErrorMsg(pageBinding, error);
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    AppData.setErrorMsg(that.binding, "unknown file type: " + type);
+                    AppData.setErrorMsg(pageBinding, "unknown file type: " + type);
                 }
                 Log.ret(Log.l.trace);
             }
