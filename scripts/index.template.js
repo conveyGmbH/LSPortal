@@ -164,11 +164,11 @@
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
-        //Dashboards
-        { id: "dashBoard", group: 15, svg: "dashboard", disabled: true, popup: true },
-        { id: "start", group: 15, svg: "dashboard", disabled: true, predecGroup: 15 },
+        //Dashboards #8177
+        //{ id: "dashBoard", group: 15, svg: "dashboard", disabled: true, popup: true },
+        { id: "start", group: 15, svg: "dashboard", disabled: true},
         // only visible in deimos and lstest, not in lsmain
-        { id: "startPremium", group: 57, svg: "dashboard", disabled: true, predecGroup: 15 },
+        //{ id: "startPremium", group: 57, svg: "dashboard", disabled: true, predecGroup: 15 },
         //{ id: "dashboardFN", group: 57, svg: "dashboard", disabled: true, predecGroup: 15 },
         //Mailing
         { id: "mailingGrp", group: 31, svg: "mailing", disabled: true, popup: true },
