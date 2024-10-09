@@ -66,10 +66,20 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.navigationbar-container {
+.help-pane-container {
+    border-color: #e6e6e6;
+}
+
+.cnv-ui-dark .help-pane-container {
+    border-color: #525252;
+}
+
+.navigationbar-container,
+.help-pane-container {
     background-color: #fcfcfc;
 }
-.cnv-ui-dark .navigationbar-container {
+.cnv-ui-dark .navigationbar-container,
+.cnv-ui-dark .help-pane-container {
     background-color: #101010;
 }
 

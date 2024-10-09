@@ -673,6 +673,7 @@
     "label.siteEventsRoleManagement" : "Role Management",
     "label.liveBridgeGrp" : "Masterdata",
     "label.genDataSkillEntry" : "Enter skills",
+    "label.showMore" : "Show more >",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

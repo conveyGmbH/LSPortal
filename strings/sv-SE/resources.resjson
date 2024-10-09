@@ -614,6 +614,7 @@
     "label.siteEventsRoleManagement" : "Role Management",
 	"label.genDataUserInfo" : "User Info",
     "label.eventProducts" : "Products",
+    "label.showMore" : "Show more >",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

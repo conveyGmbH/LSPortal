@@ -249,9 +249,43 @@
                 placement: 'bottom',
                 closedDisplayMode: 'compact'
              }">
-        <button id="dummyButton"
-                data-win-control="WinJS.UI.AppBarCommand"
-                style="display: none"></button>
+	    <button id="dummyButton"
+	            data-win-control="WinJS.UI.AppBarCommand"
+	            style="display: none"></button>
+    </div>
+    <!-- Context help pane -->
+    <div id="root-split-view-help" class="help-pane-container label-color use-border-radius">
+        <div id="help-pane-opener" class="help-pane help-opener">
+	        <button class="close-button">
+		        <span class="label-color"></span>
+	        </button>
+	        <div class="help-content">
+		        <div class="help-title">
+			        <span></span>
+		        </div>
+		        <div class="help-subtitle win-type-caption">
+			        <span></span>
+		        </div>
+		        <div class="help-expand">
+			        <a id="expandHelp" class="win-splitviewcommand-label"></a>
+		        </div>
+	        </div>
+        </div>
+        <div id="help-pane-details" class="help-pane help-details use-border-radius">
+	        <button class="close-button">
+		        <span class="label-color"></span>
+	        </button>
+	        <div class="help-content">
+		        <div class="help-title">
+			        <span></span>
+		        </div>
+		        <div class="help-subtitle win-type-caption">
+			        <span></span>
+		        </div>
+		        <div class="help-media-container"></div>
+		        <div class="help-text-container"></div>
+	        </div>
+        </div>
     </div>
     <!-- Flyout for sub menu -->
     <div id="root-split-view-submenu">

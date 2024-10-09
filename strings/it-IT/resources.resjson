@@ -670,6 +670,7 @@
     "label.siteEventsRoleManagement" : "Direzione del ruolo",
     "label.liveBridgeGrp" : "Dati anagrafici",
     "label.genDataSkillEntry" : "Inserire le competenze",
+    "label.showMore" : "Mostra di più >",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",

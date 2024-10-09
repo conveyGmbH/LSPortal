@@ -152,6 +152,104 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     width: 280px;
 }
 
+.help-pane-container {
+    display: none;
+    position: absolute;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    right: 18px;
+    top: 108px;
+    width: 280px;
+    height: 120px;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
+}
+.help-pane-container.expanded {
+    top: 48px;
+    right: 0;
+    width: 380px;
+    height: calc(100% - 48px);
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0 !important;
+    box-shadow: none
+}
+
+.help-pane {
+    overflow: hidden;
+}
+.help-pane.help-opener,
+.expanded .help-pane.help-details {
+    display: inline-block;
+    position: relative;
+}
+.expanded .help-pane.help-opener,
+.help-pane.help-details {
+    display: none;
+}
+
+.help-opener {
+    height: 100%;
+    width: 100%;
+}
+
+.help-details {
+    width: 100%;
+    height: 100%;
+}
+
+.help-pane .close-button {
+    display: inline-block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    border-color: transparent;
+    background: none;
+}
+
+.help-pane .close-button > span:before {
+    font-weight: bold;
+    font-family: "Segoe MDL2 Assets", "Symbols";
+    content: "\e711";
+}
+
+.help-pane .close-button > span:hover,
+.help-pane .close-button > span:active {
+    color: WindowText;
+}
+
+.help-content {
+    display: inline-block;
+    position: absolute;
+    margin: 18px 36px 0 0;
+    line-height: 1em;
+}
+
+.help-pane .help-title {
+    color: WindowText;
+    width: 100%;
+    padding: 4px 8px;
+}
+.help-pane .help-subtitle {
+    width: 100%;
+    padding: 4px 8px;
+}
+.help-pane .help-expand {
+    width: 100%;
+    text-align: center;
+    padding: 4px 8px;
+}
+.help-pane .help-expand > a {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+.help-pane .help-expand > a:hover,
+.help-pane .help-expand > a:active {
+    opacity: 1;
+}
+
 #root-split-view-submenu {
     margin: 0;
     padding: 0;
