@@ -616,6 +616,7 @@
     "label.eventProducts" : "Produkte",
 	"label.genDataUserInfo" : "Información del usuario",
     "label.showMore" : "Ver más >",
+    "label.close" : "Cerrar",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",

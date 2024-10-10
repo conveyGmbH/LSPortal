@@ -674,6 +674,7 @@
     "label.liveBridgeGrp" : "Masterdata",
     "label.genDataSkillEntry" : "Enter skills",
     "label.showMore" : "Show more >",
+    "label.close" : "Close",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

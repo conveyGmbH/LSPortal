@@ -826,18 +826,38 @@
                 return ret;
             }
         },
-        getLangSpecErrorMsg: function (resultmessageid) {
+        getHelpText: function (pageId) {
+            Log.call(Log.l.trace, "AppData.getHelpText.");
+            var result = null;
+            var lang = AppData.getLanguageId();
+            var ret = AppData.call("PRC_GetAppHelpText", {
+                pAppProjectTitle: "Portal",
+                pAppPageTitle: pageId,
+                pVersion: 0,
+                pLanguageSpecID: lang
+            }, function (json) {
+                Log.print(Log.l.info, "call PRC_GetAppHelpText: success! ");
+                result = json && json.d && json.d.results && json.d.results[0];
+            }, function (error) {
+                Log.print(Log.l.error, "call PRC_GetAppHelpText: error");
+            }).then(function () {
+                return result;
+            });
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+        getLangSpecErrorMsg: function (resultMessageId) {
             Log.call(Log.l.trace, "AppData.getLangSpecErrorMsg.");
             var messageValue = "";
             var lang = AppData.getLanguageId();
             var ret = AppData.call("PRC_GetLangText", {
-                pTextID: resultmessageid,
+                pTextID: resultMessageId,
                 pLanguageID: lang
             }, function (json) {
-                Log.print(Log.l.info, "call success! ");
-                messageValue = json.d.results[0].ResultText;
+                Log.print(Log.l.info, "call PRC_GetLangText: success! ");
+                messageValue = json && json.d && json.d.results && json.d.results[0] && json.d.results[0].ResultText;
             }, function (error) {
-                Log.print(Log.l.error, "call error");
+                Log.print(Log.l.error, "call PRC_GetLangText: error");
 
             }).then(function () {
                 return messageValue;
@@ -854,22 +874,20 @@
                 var resultMessageId = null;
                 ret = AppData.call("PRC_GetErrorStack", {
                 }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
+                    Log.print(Log.l.info, "call PRC_GetErrorStack: success! ");
                     //AppBar.modified = false;
-                    errorMsg.data.error.code = json.d.results[0].ResultCode;
                     if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        errorMsg.data.error.code = json.d.results[0].ResultCode;
                         if (json.d.results[0].ResultMessageID > 0) {
                             resultMessageId = json.d.results[0].ResultMessageID;
                             //errorMsg.data.error.message.value = AppData.getLangSpecErrorMsg(json.d.results[0].ResultMessageID, errorMsg);
-                            Log.print(Log.l.info, "call success! ");
                         } else {
                             errorMsg.data.error.message.value = json.d.results[0].ResultMessage;
                             AppData.setErrorMsg(AppBar.scope.binding, errorMsg);
-                            Log.print(Log.l.info, "call success! ");
                         }
                     }
                 }, function (error) {
-                    Log.print(Log.l.error, "call error");
+                    Log.print(Log.l.error, "call PRC_GetErrorStack: error");
                     //AppBar.modified = false;
                 }).then(function () {
                     if (resultMessageId) {

@@ -173,11 +173,14 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     border-right-width: 0;
     border-bottom-width: 0;
     border-radius: 0 !important;
-    box-shadow: none
+    box-shadow: none;
 }
 
 .help-pane {
     overflow: hidden;
+}
+.help-details {
+    overflow-y: auto;
 }
 .help-pane.help-opener,
 .expanded .help-pane.help-details {
@@ -201,7 +204,7 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 
 .help-pane .close-button {
     display: inline-block;
-    position: absolute;
+    position: fixed;
     top: 4px;
     right: 4px;
     border-color: transparent;
@@ -223,7 +226,10 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     display: inline-block;
     position: absolute;
     margin: 18px 36px 0 0;
-    line-height: 1em;
+    line-height: 1.25em;
+}
+.expanded .help-content {
+    margin: 0;
 }
 
 .help-pane .help-title {
@@ -231,22 +237,32 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     width: 100%;
     padding: 4px 8px;
 }
-.help-pane .help-subtitle {
+.help-pane .help-subtitle,
+.help-pane .help-media-container,
+.help-pane .help-text-container {
     width: 100%;
     padding: 4px 8px;
 }
-.help-pane .help-expand {
+.help-pane .help-text-container {
+}
+.help-pane .help-text {
+}
+.help-pane .help-expand,
+.help-pane .help-close {
     width: 100%;
     text-align: center;
     padding: 4px 8px;
 }
-.help-pane .help-expand > a {
+.help-pane .help-expand > a,
+.help-pane .help-close > a {
     margin: 0;
     font-size: 16px;
     opacity: 0.9;
 }
 .help-pane .help-expand > a:hover,
-.help-pane .help-expand > a:active {
+.help-pane .help-expand > a:active,
+.help-pane .help-close > a:hover,
+.help-pane .help-close > a:active {
     opacity: 1;
 }
 

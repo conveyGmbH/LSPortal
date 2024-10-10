@@ -671,6 +671,7 @@
     "label.liveBridgeGrp" : "Données de base",
     "label.genDataSkillEntry" : "Inscrire des compétences",
     "label.showMore" : "Voir plus >",
+    "label.close" : "Fermer",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
