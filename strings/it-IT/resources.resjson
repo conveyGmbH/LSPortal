@@ -671,6 +671,7 @@
     "label.liveBridgeGrp" : "Dati anagrafici",
     "label.genDataSkillEntry" : "Inserire le competenze",
     "label.showMore" : "Mostra di più >",
+    "label.showNoMore" : "Non mostrare più",
     "label.close" : "Chiudi",
 
     "flyout.ok"             : "OK",

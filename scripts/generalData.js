@@ -833,13 +833,30 @@
             var ret = AppData.call("PRC_GetAppHelpText", {
                 pAppProjectTitle: "Portal",
                 pAppPageTitle: pageId,
-                pVersion: 0,
                 pLanguageSpecID: lang
             }, function (json) {
                 Log.print(Log.l.info, "call PRC_GetAppHelpText: success! ");
                 result = json && json.d && json.d.results && json.d.results[0];
             }, function (error) {
                 Log.print(Log.l.error, "call PRC_GetAppHelpText: error");
+            }).then(function () {
+                return result;
+            });
+            Log.ret(Log.l.trace);
+            return ret;
+        },
+        setHelpTextUserStatus: function (helpTextId, hidden) {
+            Log.call(Log.l.trace, "AppData.setHelpTextUserStatus.");
+            var result = null;
+            var lang = AppData.getLanguageId();
+            var ret = AppData.call("PRC_SetAppHelpTextUserStatus", {
+                pAppHelpTextID: helpTextId,
+                pHidden: hidden
+            }, function (json) {
+                Log.print(Log.l.info, "call PRC_SetAppHelpTextUserStatus: success! ");
+                result = json && json.d && json.d.results && json.d.results[0];
+            }, function (error) {
+                Log.print(Log.l.error, "call PRC_SetAppHelpTextUserStatus: error");
             }).then(function () {
                 return result;
             });

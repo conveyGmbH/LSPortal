@@ -615,6 +615,7 @@
 	"label.genDataUserInfo" : "User Info",
     "label.eventProducts" : "Products",
     "label.showMore" : "Show more >",
+    "label.showNoMore" : "Don't show anymore",
     "label.close" : "Close",
     
     "flyout.ok"             : "OK",

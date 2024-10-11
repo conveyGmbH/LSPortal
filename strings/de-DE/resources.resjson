@@ -677,6 +677,7 @@
 	"label.liveBridgeGrp" : "Stammdaten",
     "label.genDataSkillEntry" : "Fähigkeiten eintragen",
     "label.showMore" : "Mehr anzeigen >",
+    "label.showNoMore" : "Nicht mehr anzeigen",
     "label.close" : "Schließen",
 
     "flyout.ok"             : "OK",
