@@ -169,13 +169,42 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 .help-pane-container.expanded {
     top: 48px;
     right: 0;
-    width: 380px;
+    max-width: 420px;
+    width: 36%;
     height: calc(100% - 48px);
     border-right-width: 0;
     border-bottom-width: 0;
     border-radius: 0 !important;
     box-shadow: none;
 }
+/*
+    margins/paddings for medium screens 
+*/
+@media (max-width:899px) {
+    .help-pane-container.expanded {
+        width: calc(50% - 50px);
+    }
+}
+/*
+    margins/paddings for mediumSmall screens 
+*/
+@media (max-width:699px) {
+    .help-pane-container.expanded {
+        width: calc(64% - 50px);
+    }
+}
+/*
+    margins/paddings for small screens
+*/
+@media (max-width:499px) {
+    .help-pane-container.expanded {
+        max-width: 100%;
+        width: 100%;
+        border: none;
+    }
+}
+
+
 
 .help-pane {
     overflow: hidden;
