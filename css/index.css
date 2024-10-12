@@ -215,7 +215,7 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 .help-pane .close-button > span:before {
     font-weight: bold;
     font-family: "Segoe MDL2 Assets", "Symbols";
-    content: "\e711";
+    content: "\e10a";
 }
 
 .help-pane .close-button > span:hover,
