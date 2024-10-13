@@ -273,6 +273,10 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     width: 100%;
     padding: 4px 8px;
 }
+.help-pane #videoFrame.player {
+    width: 100%;
+    min-height: 240px;
+}
 .help-pane .help-text-container {
 }
 .help-pane .help-text {
