@@ -22,46 +22,6 @@
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                            <div class="list-landscape-only">
-                                <div id="event" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></div>
-                                <div id="startdate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.startdate'}"></div>
-                                <div id="enddate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.enddate'}"></div>
-                                <div id="licenses" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.licenses'}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clientmanagementlicenseslist-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div id="event" contentEditable="true" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: VeranstaltungName"></div>
-                            <div id="startdate" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: VeranstaltungBeginn"></div>
-                            <div id="enddate" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: VeranstaltungEnde"></div>
-                            <div id="licenses" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: NumLicenses"></div>
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-compressed">
-                                    <!--list-localeventsList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: VeranstaltungName"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: VeranstaltungBeginn"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: VeranstaltungEnde"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: NumLicenses"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
                         <div class="edit">
                             <div class="field_line" data-win-bind="style.display: editLicensesShowFlag Binding.Converter.toDisplay">
                                 <div class="field_line field_line_odd" id="licenseseditdialog">
@@ -112,6 +72,13 @@
                                 </div>
                             </div>
                         </div>
+                            <div class="list-landscape-only">
+                                <div id="event" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></div>
+                                <div id="startdate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.startdate'}"></div>
+                                <div id="enddate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.enddate'}"></div>
+                                <div id="licenses" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.licenses'}"></div>
+                            </div>
+                        </div>
                         <div class="list-footer">
                             <div class="status">
                                 <progress class="win-progress-bar progress"></progress>
@@ -120,6 +87,39 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="clientmanagementlicenseslist-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="list-landscape-only">
+                            <div class="row-bkg-gray"
+                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                            <div id="event" contentEditable="true" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungName"></div>
+                            <div id="startdate" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungBeginn"></div>
+                            <div id="enddate" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: VeranstaltungEnde"></div>
+                            <div id="licenses" class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: NumLicenses"></div>
+                        </div>
+                        <div class="list-portrait-only">
+                            <div class="row-separator"></div>
+                            <div class="list-div-left">
+                                <div class="list-compressed">
+                                    <!--list-localeventsList-->
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungName"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungBeginn"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: VeranstaltungEnde"></span>
+                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                          data-win-bind="textContent: NumLicenses"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
                     </div>
                     <div id="clientmanagementlicenseslist"
                          class="listview win-selectionstylefilled"

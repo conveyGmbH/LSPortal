@@ -1182,14 +1182,14 @@
                                         } else {
                                             NavigationBar.showGroupsMenu([]);
                                         }
-                                        if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
-                                            that.changeMenuLabel("startPremium", getResourceText("label.startSurpreme")); //
-                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
-                                            that.changeMenuLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                                        if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startSurpreme")); //
                                         } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
-                                            that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNPremium")); //getResourceText()
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNPremium")); //getResourceText()
                                         } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
-                                            that.changeMenuLabel("dashboardFN", getResourceText("label.dashboardFNSupreme")); //getResourceText()
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNSupreme")); //getResourceText()
                                         } else {
                                             Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
                                         }
@@ -1232,17 +1232,6 @@
 
             that.binding.dataEvent.dateBegin = getDateObject();
             that.binding.dataEvent.dateEnd = getDateObject();
-
-            var changeMenuLabel = function (myEntry, myLabel) {
-                for (var i = 0; i < Application.navigationBarGroups.length; i++) {
-                    if (Application.navigationBarGroups[i].id === myEntry) {
-                        Application.navigationBarGroups[i].label = myLabel;
-                        break;
-                    }
-                }
-                NavigationBar.groups = Application.navigationBarGroups;
-            }
-            this.changeMenuLabel = changeMenuLabel;
 
             var base64ToBlob = function (base64Data, contentType) {
                 contentType = contentType || '';

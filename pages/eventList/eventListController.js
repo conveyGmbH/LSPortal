@@ -111,10 +111,10 @@
 
                 }, function (json) {
                     if (json && json.d && json.d.results) {
-                if (dashboardCombo && dashboardCombo.winControl) {
+                        if (dashboardCombo && dashboardCombo.winControl) {
                             dashboardCombo.winControl.data = new WinJS.Binding.List(json.d.results);
-                    dashboardCombo.selectedIndex = 0;
-                }
+                            dashboardCombo.selectedIndex = 0;
+                        }
                     }
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
@@ -277,71 +277,71 @@
                         if (typeof that.binding.dashboardIdx === "string") {
                             AppData._persistentStates.showdashboardMesagoCombo = parseInt(that.binding.dashboardIdx);
                         } else {
-                    AppData._persistentStates.showdashboardMesagoCombo = that.binding.dashboardIdx;
+                            AppData._persistentStates.showdashboardMesagoCombo = that.binding.dashboardIdx;
                         }
                     }
 
                     if (that.binding.dashboardIdx === 0) {
-                        return EventList.VeranstaltungView.select(function(json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "Events: success!");
-                                // employeeView returns object already parsed from json file in response
-                                if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                    that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
-                                    var results = json.d.results;
-                                    results.forEach(function(item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                    that.binding.count = results.length;
+                        return EventList.VeranstaltungView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "Events: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.binding.count = results.length;
 
-                                    if (results.length <= 1) {
-                                        NavigationBar.disablePage("eventCopy");
-                                    } else {
-                                        NavigationBar.enablePage("eventCopy");
-                                    }
-
-                                    that.records = new WinJS.Binding.List(results);
-
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = that.records.dataSource;
-                                    }
-                                    Log.print(Log.l.trace, "Data loaded");
-                                    // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
-                                    var recordId = AppData.getRecordId("Veranstaltung2");
-                                    if (recordId) {
-                                        if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
-                                            AppBar.scope.setEventId(recordId);
-                                        }
-                                        that.selectRecordId(recordId);
-                                    } else {
-                                        if (listView && listView.winControl) {
-                                            listView.winControl.selection.set(0);
-                                        }
-                                    }
+                                if (results.length <= 1) {
+                                    NavigationBar.disablePage("eventCopy");
                                 } else {
-                                    that.binding.count = 0;
-                                    that.nextUrl = null;
-                                    that.records = null;
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = null;
-                                    }
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
+                                    NavigationBar.enablePage("eventCopy");
                                 }
-                                return WinJS.Promise.as();
-                            },
-                            function(errorResponse) {
+
+                                that.records = new WinJS.Binding.List(results);
+
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.records.dataSource;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                var recordId = AppData.getRecordId("Veranstaltung2");
+                                if (recordId) {
+                                    if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
+                                        AppBar.scope.setEventId(recordId);
+                                    }
+                                    that.selectRecordId(recordId);
+                                } else {
+                                    if (listView && listView.winControl) {
+                                        listView.winControl.selection.set(0);
+                                    }
+                                }
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.records = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                            return WinJS.Promise.as();
+                        },
+                            function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
@@ -527,9 +527,9 @@
                                         }
                                         AppData._persistentStates.showdashboardMesagoCombo = item.data.DashboardIdx;
                                         if (item.data.DashboardIdx === "0") {
-                                                NavigationBar.enablePage("startPremium");
-                                                NavigationBar.enablePage("dashboardFN");
-                                            }
+                                            NavigationBar.enablePage("startPremium");
+                                            NavigationBar.enablePage("dashboardFN");
+                                        }
                                         if (item.data.DashboardIdx === "1" || item.data.DashboardIdx === "2" || item.data.DashboardIdx === "3" || item.data.DashboardIdx === "4") {
                                             NavigationBar.enablePage("startPremium");
                                         } else {
@@ -540,6 +540,17 @@
                                         } else {
                                             NavigationBar.disablePage("dashboardFN");
                                         }*/
+                                        if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startSurpreme")); //
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNPremium")); //getResourceText()
+                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
+                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNSupreme")); //getResourceText()
+                                        } else {
+                                            Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
+                                        }
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
@@ -766,7 +777,7 @@
                 },
                 clickOrderBy: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    if (event && event.currentTarget) {     
+                    if (event && event.currentTarget) {
                         if (event.currentTarget.id === "btnFilterNotPublished") {
                             if (EventList._restriction == null) {
                                 EventList._restriction = {
@@ -776,7 +787,7 @@
                                 EventList._restriction = null;
                             }
                         }
-                        var newRscText = EventList._restriction &&  EventList._restriction["PublishFlag"] ? getResourceText("eventList.btnFilterAll") : getResourceText("eventList.btnFilterNotPublished");
+                        var newRscText = EventList._restriction && EventList._restriction["PublishFlag"] ? getResourceText("eventList.btnFilterAll") : getResourceText("eventList.btnFilterNotPublished");
                         that.binding[event.currentTarget.id] = getResourceText(newRscText);
                         that.loadData();
                     }
@@ -838,16 +849,16 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = EventList.VeranstaltungView.select(function (json) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    AppData.setErrorMsg(that.binding);
-                    Log.print(Log.l.trace, "Events: success!");
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "Events: success!");
                     if (!recordId) {
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
-                            results.forEach(function(item, index) {
+                            results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
                             that.binding.count = results.length;
@@ -908,19 +919,19 @@
                             }
                         }
                     }
-                }, function (errorResponse) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                    progress = listView.querySelector(".list-footer .progress");
-                    counter = listView.querySelector(".list-footer .counter");
-                    if (progress && progress.style) {
-                        progress.style.display = "none";
-                    }
-                    if (counter && counter.style) {
-                        counter.style.display = "inline";
-                    }
-                    that.loading = false;
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        if (counter && counter.style) {
+                            counter.style.display = "inline";
+                        }
+                        that.loading = false;
                 }, recordId).then(function () {
                     var curPageId = Application.getPageId(nav.location);
                     that.hideBtnFilterNotPublished(curPageId);
@@ -957,11 +968,11 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
-            }); 
+            });
             Log.ret(Log.l.trace);
         }, {
-            nextUrl: null,
-            loading: false
-        })
+                nextUrl: null,
+                loading: false
+            })
     });
 })();
