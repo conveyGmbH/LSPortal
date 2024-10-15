@@ -839,7 +839,7 @@
                 result = json && json.d && json.d.results && json.d.results[0];
             }, function (error) {
                 Log.print(Log.l.error, "call PRC_GetAppHelpText: error");
-            }).then(function () {
+            }, !AppData.getOnlineLogin(false) || !AppData.getOnlinePassword(false)).then(function () {
                 return result;
             });
             Log.ret(Log.l.trace);
