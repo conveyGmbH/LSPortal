@@ -960,6 +960,18 @@
             AppData.setRecordId("Veranstaltung2", AppData.getRecordId("Veranstaltung"));
 
             that.processAll().then(function () {
+                if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
+                    NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
+                    NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startSurpreme")); //
+                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
+                    NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNPremium")); //getResourceText()
+                } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
+                    NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNSupreme")); //getResourceText()
+                } else {
+                    Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
+                }
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
