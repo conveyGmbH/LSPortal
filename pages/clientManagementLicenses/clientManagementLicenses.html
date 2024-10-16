@@ -20,58 +20,58 @@
                             <span class="caption-field" data-win-res="{textContent: 'clientmanagementlicenses.title'}"></span>
                         </div>
                     </div>
+                    <div class="edit">
+                        <div class="field_line" data-win-bind="style.display: editLicensesShowFlag Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd" id="licenseseditdialog">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
+                                <select id="editveranstaltungLicenses"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: dataLicense.VeranstaltungID Binding.Mode.twoway">
+                                    <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+                                </select>
+                                <br />
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
+                                <input class="input_small_left win-textbox" type="number" data-win-bind="value: dataLicense.NumLicenses Binding.Mode.twoway" min="1" max="100" /><br /><br />
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                <textarea class="input_field win-textarea input_text_comment" id="editinfoText" data-win-bind="value: dataLicense.InfoText Binding.Mode.twoway"></textarea><br /><br />
+                                <br />
+                                <button class="order-button win-button"
+                                        data-win-bind="textContent: editlicensebtnLabel;"
+                                        onclick="AppBar.handleEvent('click', 'clickEditVeranstaltungLicenses', event)"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="field_line" data-win-bind="style.display: newLicensesShowFlag Binding.Converter.toDisplay">
+                            <div class="field_line field_line_odd" id="licensesupdatedialog">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></span>
+                                <select id="veranstaltungLicenses"
+                                        class="input_field win-dropdown"
+                                        data-win-control="WinJS.UI.Repeater"
+                                        data-win-bind="value: newLicensesdata.VeranstaltungVIEWID Binding.Mode.twoway">
+                                    <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+                                </select>
+                                <br />
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
+                                <input class="input_small_left win-textbox" type="number" data-win-bind="value: newLicensesdata.NumLicenses Binding.Mode.twoway" min="1" max="100" /><br /><br />
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
+                                <textarea class="input_field win-textarea input_text_comment" id="infoText" data-win-bind="value: newLicensesdata.InfoText Binding.Mode.twoway"></textarea><br /><br />
+                                <br />
+                                <button class="order-button win-button"
+                                        data-win-bind="textContent: licensebtnLabel;"
+                                        onclick="AppBar.handleEvent('click', 'clickVeranstaltungLicenses', event)"></button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header">
-                        <div class="edit">
-                            <div class="field_line" data-win-bind="style.display: editLicensesShowFlag Binding.Converter.toDisplay">
-                                <div class="field_line field_line_odd" id="licenseseditdialog">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
-                                    <select id="editveranstaltungLicenses"
-                                            class="input_field win-dropdown"
-                                            data-win-control="WinJS.UI.Repeater"
-                                            data-win-bind="value: dataLicense.VeranstaltungID Binding.Mode.twoway">
-                                        <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
-                                    </select>
-                                    <br />
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
-                                    <input class="input_small_left win-textbox" type="number" data-win-bind="value: dataLicense.NumLicenses Binding.Mode.twoway" min="1" max="100" /><br /><br />
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
-                                    <textarea class="input_field win-textarea input_text_comment" id="editinfoText" data-win-bind="value: dataLicense.InfoText Binding.Mode.twoway"></textarea><br /><br />
-                                    <br />
-                                    <button class="order-button win-button"
-                                            data-win-bind="textContent: editlicensebtnLabel;"
-                                            onclick="AppBar.handleEvent('click', 'clickEditVeranstaltungLicenses', event)"></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input">
-                            <div class="field_line" data-win-bind="style.display: newLicensesShowFlag Binding.Converter.toDisplay">
-                                <div class="field_line field_line_odd" id="licensesupdatedialog">
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></span>
-                                    <select id="veranstaltungLicenses"
-                                            class="input_field win-dropdown"
-                                            data-win-control="WinJS.UI.Repeater"
-                                            data-win-bind="value: newLicensesdata.VeranstaltungVIEWID Binding.Mode.twoway">
-                                        <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
-                                    </select>
-                                    <br />
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.newlicenses'}"></span><br />
-                                    <input class="input_small_left win-textbox" type="number" data-win-bind="value: newLicensesdata.NumLicenses Binding.Mode.twoway" min="1" max="100" /><br /><br />
-                                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
-                                    <span class="label landscape_only" data-win-res="{textContent: 'clientmanagementlicenses.licensetext'}"></span>
-                                    <textarea class="input_field win-textarea input_text_comment" id="infoText" data-win-bind="value: newLicensesdata.InfoText Binding.Mode.twoway"></textarea><br /><br />
-                                    <br />
-                                    <button class="order-button win-button"
-                                            data-win-bind="textContent: licensebtnLabel;"
-                                            onclick="AppBar.handleEvent('click', 'clickVeranstaltungLicenses', event)"></button>
-                                </div>
-                            </div>
-                        </div>
                             <div class="list-landscape-only">
                                 <div id="event" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.event'}"></div>
                                 <div id="startdate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientmanagementlicenses.startdate'}"></div>
