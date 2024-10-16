@@ -83,7 +83,7 @@
                     // called asynchronously if ok
                     // anstatt AppData.generalData.publishFlag den master..publishFlag prüfen
                     if (that.controller.getPublishFlag() === 1) {
-                        var confirmTitle = getResourceText("publish.publishText");
+                        /*var confirmTitle = getResourceText("publish.publishText");
                         confirm(confirmTitle, function (result) {
                             if (result && that.controller) {
                                 that.controller.publish(function (response) {
@@ -96,7 +96,9 @@
                             } else {
                                 complete(saveResponse);
                             }
-                        });
+                        });*/
+                        Application.navigateById("publish", event);
+                        complete(saveResponse);
                     } else {
                         complete(saveResponse);
                     }

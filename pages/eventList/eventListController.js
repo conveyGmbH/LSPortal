@@ -705,6 +705,11 @@
                                                         return AppBar.scope.loadData();
                                                     });
                                                 }
+                                                if (curPageId === "publish") {
+                                                    if (WinJS.Navigation.canGoBack === true) {
+                                                        WinJS.Navigation.back(1).done();
+                                                    }
+                                                }   
                                             }
                                             AppBar.triggerDisableHandlers();
                                         }
