@@ -1739,6 +1739,8 @@
     "genDataEmployee.activebtntxt"			: "Attiva",
     "genDataEmployee.targetbtntxt"			: "Rinnova obiettivo",
     "genDataEmployee.inactivebtntxt"			: "Disattiva",
+    "genDataEmployee.title"        : "Utente", 
+    "genDataEmployee.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
 
     "eventProducts.title"			: "Caratteristiche",
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",

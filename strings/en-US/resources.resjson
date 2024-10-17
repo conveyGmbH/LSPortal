@@ -1762,6 +1762,8 @@
     "genDataEmployee.activebtntxt"			: "Activate",
     "genDataEmployee.targetbtntxt"			: "Renew target",
     "genDataEmployee.inactivebtntxt"			: "Deactivate",
+    "genDataEmployee.title"        : "User accounts", 
+    "genDataEmployee.comment"      : "Manage your employee access data here.",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",

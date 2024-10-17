@@ -1741,6 +1741,8 @@
     "genDataEmployee.activebtntxt"			: "Activer",
     "genDataEmployee.targetbtntxt"			: "Renouveler la cible",
     "genDataEmployee.inactivebtntxt"			: "Désactiver",
+    "genDataEmployee.title"        : "Utilisateurs", 
+    "genDataEmployee.comment"      : "Gérez vos données d'accès des employés ici.",
 
     "eventProducts.title"			: "Fonctionnalités",
     "eventProducts.ProductTitle"			: "Nom du Fonctionnalité",
