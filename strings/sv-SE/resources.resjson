@@ -65,6 +65,8 @@
 	"command.showevents"    : "Ereignisse anzeigen",
     "command.changeLogin": "Change Login",
     "command.copyMitarbeiter" : "Veranstaltung wechseln",
+    "command.loadListBig" : "Große Austellerliste",
+    "command.loadListSmall" : "Kleine Austellerliste",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -144,6 +146,8 @@
     "tooltip.lastmodified"     :  "Last modified",
     "tooltip.welcomeemailversandtzeit"  :  "Standard email sent",
     "tooltip.headeremailversandtzeit"			: "Product email sent",
+    "tooltip.loadListBig" : "Große Austellerliste",
+    "tooltip.loadListSmall" : "Kleine Austellerliste",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -285,6 +289,7 @@
     "search.notEdited"      : "Not Edited",
     "search.editedComplete" : "Ja",
     "search.notEditedComplete" : "Nein",
+    "search.manuell"        : "Manually",
 
     "listLocal.title"       : "List of local contacts",
     "listLocal.comment"     : "On this page, use the Back button to go back!",
@@ -972,6 +977,8 @@
     "siteevents.uploadbtn"   : "Upload",
     "siteevents.csvupload"   : "Csv file upload",
     "siteevents.eventpermuser"   : "Do you want to convert this exhibitor to a regular customer?",
+    "siteevents.loadListBig" : "Large exhibitor list",
+    "siteevents.loadListSmall": "Small list of exhibitors",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",

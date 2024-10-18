@@ -33,7 +33,8 @@
                 firstentry: 0,
                 eventText: getResourceText("siteevents.placeholder"),
                 active: null,
-                searchString: ""
+                searchString: "",
+                isPortal: 1 // means load small list
             }, commandList]);
 
             var that = this;
@@ -727,7 +728,8 @@
                 if (recordId) {
                     ret = AppData.call("PRC_GetExhibitorList", {
                         pVeranstaltungTerminID: recordId,
-                        pSearchString: cleanSearchString
+                        pSearchString: cleanSearchString,
+                        pIsPortal: that.binding.isPortal
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         if (json && json.d) {
@@ -993,7 +995,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     /* that.binding.restriction.Firmenname = [];
                     if (event.target.value) {
                         that.binding.restriction.Firmenname = event.target.value;
@@ -1024,7 +1026,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onquerysubmitted: function (eventInfo) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     that.binding.restriction.Firmenname = "";
                     if (eventInfo.detail.queryText) {
                         that.binding.restriction.Firmenname = eventInfo.detail.queryText;
@@ -1041,17 +1043,17 @@
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     Application.showDetail();
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     Application.navigateById("siteEventsNeuAus", event);
                     Log.ret(Log.l.trace);
                 },
                 clickNewTermin: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     //AppData.setRecordId("VeranstaltungTermin", that.reorderId);
                     AppData.setRecordId("VeranstaltungTermin", 0);
                     Application.navigateById("siteEventsTermin", event);
@@ -1064,12 +1066,12 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickReorder: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     Application.navigateById("siteEventsBenNach", event);
                     Log.ret(Log.l.trace);
                 },
@@ -1186,7 +1188,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "ContactList.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     var element = eventInfo.target;
                     if (that.siteeventsdataraw && that.nextUrl && Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
                         that.loadNextUrl();
@@ -1194,8 +1196,25 @@
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
-                    Log.call(Log.l.trace, "Settings.Controller.");
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
                     Application.navigateById("publish", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickLoadListBig: function(event) {
+                    // LoadListBig
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    if (that.binding.isPortal) {
+                        that.binding.isPortal = 0;
+                        AppBar.replaceCommands([
+                            { id: 'clickLoadListBig', label: getResourceText('command.loadListBig'), tooltip: getResourceText('tooltip.loadListBig'), section: 'primary', svg: 'lsvFlow' }
+                        ]);
+                    } else {
+                        that.binding.isPortal = 1;
+                        AppBar.replaceCommands([
+                            { id: 'clickLoadListBig', label: getResourceText('command.loadListSmall'), tooltip: getResourceText('tooltip.loadListSmall'), section: 'primary', svg: 'hourglass' }
+                        ]);
+                    }
+                    that.loadData(AppData.getRecordId("VeranstaltungTermin"));
                     Log.ret(Log.l.trace);
                 }
             }
@@ -1288,6 +1307,9 @@
                     } else {
                         return false;
                     }
+                },
+                clickLoadListBig: function() {
+                    return false;
                 }
             }
 
@@ -1336,8 +1358,8 @@
                         pVeranstaltungTerminID: recordId,
                         pSearchString: that.searchStringData,
                         pSortField: sortIdx,
-                        pSortType: sortType
-
+                        pSortType: sortType,
+                        pIsPortal: that.binding.isPortal
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
                         AppData.setErrorMsg(that.binding);

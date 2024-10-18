@@ -81,6 +81,8 @@
     "command.addProduct"    : "Aggiungi prodotto",
     "command.removeProduct"    : "Cancellare il prodotto",
     "command.join"    : "Riassumere",
+    "command.loadListBig" : "Elenco espositori grande",
+    "command.loadListSmall" : "Elenco espositori piccolo",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -177,6 +179,8 @@
     "tooltip.welcomeemailversandtzeit"  :  "Invio standard via e-mail",
     "tooltip.headeremailversandtzeit"			: "Email del prodotto inviata",
     "tooltip.join"  :  "Riassumere",
+    "tooltip.loadListBig" : "Elenco espositori grande",
+    "tooltip.loadListSmall" : "Elenco espositori piccolo",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -318,6 +322,7 @@
     "search.notEdited"      : "Incompiuto",
     "search.editedComplete" : "Si",
     "search.notEditedComplete" : "No",
+    "search.manuell"        : "Manuale",
 
     "listLocal.title"       : "Lista dei contatti locali",
     "listLocal.comment"     : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
@@ -1054,6 +1059,8 @@
     "siteevents.eventpermuser"   : "Vuoi convertire questo espositore in un cliente abituale?",
     "siteevents.search"   : "Cerca",
     "siteevents.searchplaceholder"   : "Cosa stai cercando?",
+    "siteevents.loadListBig" : "Elenco espositori grande",
+    "siteevents.loadListSmall": "Elenco espositori piccolo",
 
     "siteevents.exhibitorname" : "Nome dell'espositore",
     "siteevents.contact" : "Contatto",

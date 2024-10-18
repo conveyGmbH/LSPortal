@@ -81,6 +81,16 @@
                 }
             }
         },
+        Erfassungsart3: {
+            get: function () {
+                return this.Erfassungsart === 3;
+            },
+            set: function (checked) {
+                if (checked) {
+                    this.Erfassungsart = 3;
+                }
+            }
+        },
         _Bearbeitet: 0,
         Bearbeitet: {
             get: function () {

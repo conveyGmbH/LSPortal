@@ -19,6 +19,7 @@
                 Erfassungsart0: Search.Erfassungsart0,
                 Erfassungsart1: Search.Erfassungsart1,
                 Erfassungsart2: Search.Erfassungsart2,
+                Erfassungsart3: Search.Erfassungsart3,
                 Bearbeitet0: Search.Bearbeitet0,
                 Bearbeitet1: Search.Bearbeitet1,
                 Bearbeitet2: Search.Bearbeitet2
@@ -206,13 +207,16 @@
                         }
                     }
                     // Hier erweitern mit manuelle Erfassung
-                    if (Search.Erfassungsart === "1") {
+                    if (Search.Erfassungsart === "1") { // Barcode
                         that.binding.restriction.SHOW_Barcode = 1;
                         that.binding.restriction.SHOW_Visitenkarte = null;
-                    } else if (Search.Erfassungsart === "2") {
+                    } else if (Search.Erfassungsart === "2") { // Visitenkarte
                         that.binding.restriction.SHOW_Barcode = null;
                         that.binding.restriction.SHOW_Visitenkarte = 1;
-                    } else {
+                    } else if (Search.Erfassungsart === "3") { // Manuelle Erfassung
+                        that.binding.restriction.SHOW_Barcode = "NULL";
+                        that.binding.restriction.SHOW_Visitenkarte = "NULL";
+                    } else { // Alle Kontakte
                         that.binding.restriction.SHOW_Barcode = null;
                         that.binding.restriction.SHOW_Visitenkarte = null;
                     }
@@ -431,20 +435,21 @@
                     if (!savedRestriction) {
                         savedRestriction = {};
                     } else {
-                        // Hier erweitern mit manuelle Erfassung
-                        if (savedRestriction.SHOW_Barcode && !that.binding.restriction.SHOW_Visitenkarte) {
+                        if (savedRestriction.SHOW_Barcode && !that.binding.restriction.SHOW_Visitenkarte) { // Barcode
                             radios[0].checked = true;
-                        } else if (savedRestriction.SHOW_Visitenkarte && !savedRestriction.SHOW_Barcode) {
+                        } else if (savedRestriction.SHOW_Visitenkarte && !savedRestriction.SHOW_Barcode) { // Visitenkarte
                             radios[1].checked = true;
-                        } else {
+                        } else if (savedRestriction.SHOW_Visitenkarte === "NULL" && savedRestriction.SHOW_Barcode === "NULL") { // Manuelle Erfassng
                             radios[2].checked = true;
+                        }else { // Alle Kontakte
+                            radios[3].checked = true;
                         }
                         if (savedRestriction.Nachbearbeitet === "NULL") {
-                            radios[3].checked = true;
-                        } else if (savedRestriction.Nachbearbeitet === 1) {
                             radios[4].checked = true;
-                        } else {
+                        } else if (savedRestriction.Nachbearbeitet === 1) {
                             radios[5].checked = true;
+                        } else {
+                            radios[6].checked = true;
                         }
                         that.binding.restriction.MitarbeiterID = savedRestriction.MitarbeiterID;
 

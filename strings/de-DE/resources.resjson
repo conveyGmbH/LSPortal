@@ -81,7 +81,8 @@
     "command.addProduct"    : "Produkt hinzufügen",
     "command.removeProduct"    : "Produkt löschen",
     "command.join"    : "Zusammenfassen",
-
+    "command.loadListBig" : "Große Austellerliste",
+    "command.loadListSmall" : "Kleine Austellerliste",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -177,7 +178,9 @@
 	"tooltip.lastmodified"     :  "Letzte Änderung",
 	"tooltip.welcomeemailversandtzeit"  :  "Standard E-Mail Versand",
 	"tooltip.headeremailversandtzeit"			: "Produkt E-Mail Versand",
-     "tooltip.join"  :  "Zusammenfassen",
+    "tooltip.join"  :  "Zusammenfassen",
+    "tooltip.loadListBig" : "Große Austellerliste",
+    "tooltip.loadListSmall" : "Kleine Austellerliste",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -319,6 +322,7 @@
     "search.notEdited"      : "Unbearbeitet",
 	  "search.editedComplete" : "Ja",
 	  "search.notEditedComplete" : "Nein",
+	  "search.manuell"     : "Manuell",
 
     "listLocal.title"       : "Liste lokaler Kontakte",
     "listLocal.comment"     : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
@@ -1060,6 +1064,8 @@
     "siteevents.eventpermuser"   : "Wollen Sie diesen Austeller zu einem Dauerkunden konvertieren?",
     "siteevents.search"   : "Suche",
     "siteevents.searchplaceholder"   : "Was suchen Sie?",
+	"siteevents.loadListBig"   : "Große Austellerliste",
+	"siteevents.loadListSmall": "Kleine Austellerliste",
 
     "siteevents.exhibitorname" : "Ausstellername",
     "siteevents.contact" : "Ansprechpartner",

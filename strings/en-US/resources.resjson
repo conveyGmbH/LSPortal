@@ -81,6 +81,8 @@
     "command.addProduct"    : "Add Product",
     "command.removeProduct"    : "Delete product",
     "command.join"    : "Summarise",
+    "command.loadListBig" : "Large exhibitor list",
+    "command.loadListSmall" : "Small exhibitor list",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -177,6 +179,8 @@
     "tooltip.welcomeemailversandtzeit"  :  "Standard email sent",
     "tooltip.headeremailversandtzeit"			: "Product email sent",
     "tooltip.join"  :  "Summarise",
+    "tooltip.loadListBig" : "Large exhibitor list",
+    "tooltip.loadListSmall" : "Small exhibitor list",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -318,6 +322,7 @@
     "search.notEdited"      : "Not Edited",
     "search.editedComplete" : "Yes",
     "search.notEditedComplete" : "No",
+    "search.manuell"     : "Manually",
 
     "listLocal.title"       : "List of local contacts",
     "listLocal.comment"     : "On this page, use the Back button to go back!",
@@ -1063,6 +1068,8 @@
     "siteevents.auswertungsvariante" : "Evaluation variant",
     "siteevents.ordernumber" : "Stand ID / OrderNumber",
     "siteevents.servername" : "Servername",
+    "siteevents.loadListBig" : "Large exhibitor list",
+    "siteevents.loadListSmall": "Small exhibitor list",
 		
     "siteevents.exhibitorname" : "Exhibitor name",
     "siteevents.contact" : "Contact",

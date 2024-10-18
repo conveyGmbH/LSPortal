@@ -48,6 +48,7 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickLoadListBig", label: getResourceText("command.loadListBig"), tooltip: getResourceText("tooltip.loadListBig"), section: "primary", svg: "hourglass"},
                 { id: "clickCreatePermanentUser", label: getResourceText("command.permuser"), tooltip: getResourceText("tooltip.permuser"), section: "primary", svg: "magic_wand" },
                 { id: "clickEventTerminEdit", label: getResourceText("command.terminedit"), tooltip: getResourceText("tooltip.terminedit"), section: "primary", svg: "terminoptions" },
                 { id: "clickMailTracking", label: getResourceText("command.mailTracking"), tooltip: getResourceText("tooltip.mailTracking"), section: "primary", svg: "mails" },
