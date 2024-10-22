@@ -1305,7 +1305,7 @@
                     //@nedra:25.09.2015: load the list of InitFragengruppe for Combobox
                     return QuestionList.initFragengruppeView.select(function (json) {
                         Log.print(Log.l.trace, "initFragengruppeView: success!");
-                        if (json && json.d && json.d.results && json.d.results.length > 1) {
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.initFragengruppe = new WinJS.Binding.List(json.d.results);
                             that.binding.questiongroupflag = true;
                         } else {
