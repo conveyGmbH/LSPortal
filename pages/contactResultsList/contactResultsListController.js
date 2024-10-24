@@ -23,7 +23,8 @@
             Application.RecordsetController.apply(this, [pageElement, {
                 contactId: null,
                 noctcount: 0,
-                searchString: ""
+                searchString: "",
+                btnFlag: false
             }, commandList, isMaster, null, ContactResultsList.contactResultsView, listView]);
 
             var that = this;
@@ -76,6 +77,35 @@
                 that.addDisposablePromise(that.loadDataDelayedPromise);
             }
             this.loadDataDelayed = loadDataDelayed;
+
+            var deleteData = function (complete, error) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(that.binding);
+                var recordId = that.curRecId;
+                if (recordId) {
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_DeleteKontakt", {
+                        pKontaktID: recordId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_DeleteKontakt success! ");
+                        if (typeof complete === "function") {
+                            complete(json);
+                        }
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_DeleteKontakt error");
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    if (typeof error === "function") {
+                        error(err);
+                    }
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.deleteData = deleteData;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -153,6 +183,66 @@
                         WinJS.Navigation.back(1).done();
                     }
                     Log.ret(Log.l.trace);
+                },
+                onsetContactId: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.selectionChanged().then(function () {
+                        AppData.setRecordId("Kontakt", that.curRecId);
+                        that.binding.btnFlag = true;
+                        AppBar.modified = true;
+                    });
+                },
+                clickDelete: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var confirmText = getResourceText("contact.questionDelete");
+                    var confirmTitle = getResourceText("tooltip.delete");
+                    var confirmFirst = getResourceText("flyout.ok");
+                    var confirmSecond = getResourceText("flyout.cancel");
+                    //confirm(confirmTitle, function (result) {
+                    confirmModal(confirmTitle, confirmText, confirmFirst, confirmSecond, function (result) {
+                        if (result) {
+                            Log.print(Log.l.trace, "clickDelete: user choice OK");
+                            deleteData(function (response) {
+                                // delete OK
+                                that.loadData(that.binding.searchString);
+                                AppBar.modified = false;
+                            }, function (errorResponse) {
+                                // delete ERROR
+                                var message = null;
+                                Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
+                                if (errorResponse.data && errorResponse.data.error) {
+                                    Log.print(Log.l.error, "error code=" + errorResponse.data.error.code);
+                                    if (errorResponse.data.error.message) {
+                                        Log.print(Log.l.error, "error message=" + errorResponse.data.error.message.value);
+                                        message = errorResponse.data.error.message.value;
+                                    }
+                                }
+                                if (!message) {
+                                    message = getResourceText("error.delete");
+                                }
+                                alert(message);
+                            });
+                        } else {
+                            Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
+                        }
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickEdit: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.selectionChanged().then(function () {
+                        AppBar.triggerDisableHandlers();
+                        var scope = that.scopeFromRecordId(that.curRecId);
+                        if (scope) {
+                            handlePageEnable(scope.item);
+                        }
+                        AppData.setRecordId("Kontakt", that.curRecId);
+                        if (that.getEventId()) {
+                            Application.navigateById("contact"); 
+                        } else {
+                            Application.navigateById("contact");
+                        }
+                    });
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -283,6 +373,20 @@
                         return true;
                     }
                 },
+                clickEdit: function () {
+                    if (that.binding.btnFlag === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickDelete: function () {
+                    if (that.binding.btnFlag === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
                 clickGotoPublish: function () {
                     return true;
                 }
@@ -290,6 +394,7 @@
 
             // register ListView event handler
             if (listView) {
+                this.addRemovableEventListener(listView, "click", this.eventHandlers.onsetContactId.bind(this));
                 this.addRemovableEventListener(listView, "dblclick", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
