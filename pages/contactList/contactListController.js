@@ -33,6 +33,8 @@
                     eventId: 0,
                     leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                     btnDateSort: getResourceText("contactList.btnDateDesc"),
+                    btnCompanySort: getResourceText("contactList.btnCompanyDesc"),
+                    btnNameSort: getResourceText("contactList.btnNameDesc"),
                     showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents
                 }, commandList, true]);
                 this.nextUrl = null;
@@ -54,6 +56,8 @@
                 var eventsContainer = pageElement.querySelector("#events-container");
                 var searchField = pageElement.querySelector("#searchField");
                 var btnDateSort = pageElement.querySelector("#btnDateSort");
+                var btnCompanySort = pageElement.querySelector("#btnCompanySort");
+                var btnNameSort = pageElement.querySelector("#btnNameSort");
 
                 // ListView control
                 var listView = pageElement.querySelector("#contactList.listview");
@@ -518,6 +522,12 @@
                             if (event.currentTarget.id === "btnDateSort") {
                                 newOrderAttribute = "Erfassungsdatum";
                             }
+                            if (event.currentTarget.id === "btnCompanySort") {
+                                newOrderAttribute = "Firmenname";
+                            }
+                            if (event.currentTarget.id === "btnNameSort") {
+                                newOrderAttribute = "Name";
+                            }
                             if (newOrderAttribute !== ContactList._orderAttribute) {
                                 // bei mehreren Button müsste hier der vorher ausgewählte auf "Default-Text gesetzt werden!
                                 ContactList._orderAttribute = newOrderAttribute;
@@ -722,6 +732,12 @@
                 }
                 if (btnDateSort) {
                     this.addRemovableEventListener(btnDateSort, "click", this.eventHandlers.clickOrderBy.bind(this));
+                }
+                if (btnCompanySort) {
+                    this.addRemovableEventListener(btnCompanySort, "click", this.eventHandlers.clickOrderBy.bind(this));
+                }
+                if (btnNameSort) {
+                    this.addRemovableEventListener(btnNameSort, "click", this.eventHandlers.clickOrderBy.bind(this));
                 }
 
                 var loadData = function (recordId) {

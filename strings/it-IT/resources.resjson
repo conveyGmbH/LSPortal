@@ -355,6 +355,10 @@
     "contactList.davon"    : "Di cui: ",
     "contactList.btnDateAsc" : "Registrato il ↑",
     "contactList.btnDateDesc": "Registrato il ↓",
+    "contactList.btnCompanyAsc" : "Nome della società ↑",
+    "contactList.btnCompanyDesc": "Nome della società ↓",
+    "contactList.btnNameAsc" : "Cognome ↑",
+    "contactList.btnNameDesc": "Cognome ↓",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
@@ -1041,7 +1045,7 @@
     "siteEventsList.customerEvents" : "Fiere permanenti per i clienti",
     "siteEventsList.siteEvents" : "Fiere di posizione",
     "siteEventsList.eventcombotitle" : "Quali fiere esporre?",
-    "siteEventsList.searchtxt" : "Ricerca",
+    "siteEventsList.searchtxt" : "Filtro",
     "siteEventsList.ordertxt" : "Ordinamento",
 
     "siteevents.title" : "espositore",

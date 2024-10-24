@@ -355,6 +355,10 @@
     "contactList.davon"    : "de celui-ci: ",
     "contactList.btnDateAsc" : "Créer en ↑",
     "contactList.btnDateDesc": "Créer en ↓",
+    "contactList.btnCompanyAsc" : "Nom de l'entreprise ↑",
+    "contactList.btnCompanyDesc": "Nom de l'entreprise ↓",
+    "contactList.btnNameAsc" : "Nom de famille ↑",
+    "contactList.btnNameDesc": "Nom de famille ↓",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilisez le bouton Retour sur cette page pour y retourner!",
@@ -1042,7 +1046,7 @@
     "siteEventsList.customerEvents" : "Salons de la clientèle permanente",
     "siteEventsList.siteEvents" : "Salons du site",
     "siteEventsList.eventcombotitle" : "Quels salons afficher ?",
-    "siteEventsList.searchtxt" : "Recherche",
+    "siteEventsList.searchtxt" : "Filtre",
     "siteEventsList.ordertxt" : "Ordre de tri",
 
     "siteevents.title" : "exposant",

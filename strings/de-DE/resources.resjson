@@ -355,6 +355,10 @@
     "contactList.davon"    : "davon: ",
     "contactList.btnDateAsc" : "Erfasst am ↑",
     "contactList.btnDateDesc": "Erfasst am ↓",
+    "contactList.btnCompanyAsc" : "Firmenname ↑",
+    "contactList.btnCompanyDesc": "Firmenname ↓",
+    "contactList.btnNameAsc" : "Nachname ↑",
+    "contactList.btnNameDesc": "Nachname ↓",
 
     "camera.title"          : "Kamera",
     "camera.comment"        : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
@@ -1046,7 +1050,7 @@
     "siteEventsList.customerEvents" : "Dauerkunden-Messen",
     "siteEventsList.siteEvents" : "Standort-Messen",
     "siteEventsList.eventcombotitle" : "Welche Messen anzeigen?",
-    "siteEventsList.searchtxt" : "Suche",
+    "siteEventsList.searchtxt" : "Filter",
     "siteEventsList.ordertxt" : "Sortierung",
 
     "siteevents.title" : "Aussteller",
