@@ -11,20 +11,27 @@
             
         ],
         _actionsdefault: [
-            { page: "voucherAdministration", imageName: "Gutschein1.1" },
-            { page: "esStaffAdministration", imageName: "id_card" },
-            { page: "esVoucherUsers", imageName: "voucher_contact" },
-            //{ page: "resourcesAdministration", imageName: "user_headset" },
-            { page: "start", imageName: "Dashboard" },
-            { page: "event", imageName: "calendar_1" },
             { page: "questionList", imageName: "question_and_answer" },
-            { page: "mailing", imageName: "mail" },
             { page: "employee", imageName: "keys" },
-            { page: "contacts", imageName: "businesspeople2" },
-            { page: "search", imageName: "magnifying_glass" },
+            { page: "localevents", imageName: "keys" },
+            { page: "start", imageName: "Dashboard" },
             { page: "reporting", imageName: "download" },
-            { page: "visitorFlowDashboard", imageName: "lsvFlow" },
-            { page: "visitorFlowEntExt", imageName: "window_gear" }
+            { page: "contacts", imageName: "businesspeople2" }
+
+        //{ page: "voucherAdministration", imageName: "Gutschein1.1" },
+        //{ page: "esStaffAdministration", imageName: "id_card" },
+        //{ page: "esVoucherUsers", imageName: "voucher_contact" },
+            //{ page: "resourcesAdministration", imageName: "user_headset" },
+            
+        //{ page: "event", imageName: "calendar_1" },
+           
+        // { page: "mailing", imageName: "mail" },
+            
+        //{ page: "contacts", imageName: "businesspeople2" },
+        //{ page: "search", imageName: "magnifying_glass" },
+            
+        //{ page: "visitorFlowDashboard", imageName: "lsvFlow" },
+        //{ page: "visitorFlowEntExt", imageName: "window_gear" }
             //{ page: "infodesk", imageName: "magnifying_glass" }
         ],
 
@@ -48,6 +55,7 @@
                 return Home._actionsList;
             }
         },
+        
         _StartPageTileView: {
             get: function () {
                 return AppData.getFormatView("StartPageTile", 20657);

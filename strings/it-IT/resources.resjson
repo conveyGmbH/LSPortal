@@ -184,6 +184,18 @@
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
+    "home.howtosection"     : "LeadSuccess Videos",
+    "home.lsmobilelink"     : "www.youtube.com/watch?v=RkHJNgFOCXQ",
+    "home.lsservicepluslink": "www.youtube.com/watch?v=b3Bg7rZplhA",
+    "home.lskiosklink"      : "www.youtube.com/watch?v=af1MVykdmpg&t=1s",
+    "home.lsvideodelink"    : "www.livebridge.eu/livebridge?pageId=event&eventId=433&UserToken=9a112018-87cc-40f9-9623-2e757d6ce995",
+    "home.lsvideoenlink"    : "www.livebridge.eu/livebridge?lang=en&pageId=event&eventId=432&UserToken=1235b5a7-8eb1-49a7-9205-98f1918a0e45",
+    "home.lsmobiletext"     : "LS Mobile",
+    "home.lsserviceplustext": "LS Service Plus",
+    "home.lskiosktext"      : "LS Kiosk",
+    "home.lsvideodetext"    : "LS Video DE",
+    "home.lsvideoentext"    : "LS Video EN",
+    "home.howtoorder"       : "Ordinare prodotti supplementari",
 
     "start.title"           : "Dashboard",
     "start.comment"         : "Panoramica e statistiche.",
@@ -1000,6 +1012,7 @@
 	"localeventscreate.mobilerbarcodescanner"   : "Numero di utenti di barcode scanner",
 
     "localevents.title" : "Eventi",
+    "localevents.comment" : "Panoramica degli eventi",
     "localevents.event" : "Evento",
     "localevents.begin" : "Inizio",
     "localevents.end"   : "Fine",

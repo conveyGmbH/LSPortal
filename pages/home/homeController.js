@@ -26,6 +26,11 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 comment: getResourceText("info.comment"),
+                lsmobileUrl: "https://" + getResourceText("home.lsmobilelink"),
+                lsserviceplusUrl: "https://" + getResourceText("home.lsservicepluslink"),
+                lskioskUrl: "https://" + getResourceText("home.lskiosklink"),
+                lsvideodeUrl: "https://" + getResourceText("home.lsvideodelink"),
+                lsvideoenUrl: "https://" + getResourceText("home.lsvideoenlink")
             }, commandList]);
 
             var that = this;
@@ -158,17 +163,41 @@
             }
             this.resizeTileContainer = resizeTileContainer;
 
-            var resultConverter = function (item, index) {
+            /*var resultConverter = function (item, index) {
                 item.index = index;
                 Home._actions.push({ page: item.Page, imageName: item.ImageName});
             }
-            this.resultConverter = resultConverter;
+            this.resultConverter = resultConverter;*/
+
+            var setImg = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var orderImgContainer = pageElement.querySelector(".order-img-container");
+                if (orderImgContainer) {
+                    NavigationBar._logoLoaded = true;
+                    var rgb = Colors.hex2rgb(Colors.navigationColor);
+                    var rgbStr = (rgb.r + rgb.g + rgb.b) / 3 >= 128 ? "#000000" : "#ffffff";
+                    // load the image file
+                    var svgObject = orderImgContainer.querySelector(".order-logo");
+                    if (svgObject) {
+                        Colors.loadSVGImage({
+                            fileName: AppData._persistentStates.logo,
+                            element: svgObject,
+                            size: { width: 182, height: 44 },
+                            useStrokeColor: false,
+                            strokeWidth: 100
+                        });
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setImg = setImg;
 
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 if (Home._actions) {
-                    Home._actions = [];
+                    //Home._actions = [];
+                    Home._actions = Home._actionsdefault;
                 }
                 var ret = new WinJS.Promise.as().then(function () {
                     return Home.StartPageTileView.select(function (json) {
@@ -180,20 +209,22 @@
                         if (json && json.d && json.d.results && json.d.results.length) {
                             var results = json.d.results;
                             var tileCount = results.length;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
+                            //results.forEach(function (item, index) {
+                            //that.resultConverter(item, index);
+                            //});
                             that.resizeTileContainer(tileCount);
                             Log.print(Log.l.trace, "StartPageTileView: success!");
-                        } else {
-                            Home._actions = Home._actionsdefault;
-                            Log.print(Log.l.trace, "StartPageTileView: success!");
-                        }
+                        } //else {
+                        //Home._actions = Home._actionsdefault;
+                        //Log.print(Log.l.trace, "StartPageTileView: success!");
+                       //}
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
+                }).then(function () {
+                    that.setImg();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
