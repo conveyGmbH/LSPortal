@@ -21,7 +21,14 @@
                             <button class="list-button-left win-button" id="btnFilterNotPublished"
                                     data-win-bind="textContent: btnFilterNotPublished"></button>
                         </div>
-                        
+                        <div class="field_line field_line_odd">
+                            <div class="input_group">
+                                <button class="list-button-left win-button" id="btnEventSort"
+                                        data-win-bind="textContent: btnEventSort"></button>
+                                <button class="list-button-left win-button" id="btnDateSort"
+                                        data-win-bind="textContent: btnDateSort"></button>
+                            </div>
+                        </div>
                         <div class="field_line" id="dashboardFeature" data-win-bind="style.display: showHideDashboardFeature Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventList.dashboardbox'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventList.dashboardbox'}"></span>
@@ -66,6 +73,10 @@
                                  data-win-bind="textContent: Startdatum"></div>
                             <div class="list-field-small-fixed"
                                  data-win-bind="textContent: Enddatum"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: UsedLicences"></div>
+                            <div class="list-field-small-fixed"
+                                 data-win-bind="textContent: AnzKontakte"></div>
                             <div class="list-symbol-IDw" data-win-bind="style.display: PublishFlag Binding.Converter.toDisplay">
                                 <div id="about" class="warning-image"></div>
                             </div>
@@ -80,6 +91,10 @@
                                      data-win-res="{textContent: 'event.begin'}"></div>
                                 <div class="list-field-small-fixed"
                                      data-win-res="{textContent: 'event.end'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'event.usedlicences'}"></div>
+                                <div class="list-field-small-fixed"
+                                     data-win-res="{textContent: 'event.anzkontakte'}"></div>
                             </div>
                         </div>
                         <div class="list-footer">

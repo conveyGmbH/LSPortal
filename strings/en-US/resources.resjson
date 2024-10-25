@@ -734,6 +734,8 @@
     "event.showHideManually" : "Enable manual entry in the app",
     "event.exportOption" : "Export settings",
     "event.exportKontaktPDF" : "Please choose here the language of the labels for the PDF-Export\nPlease note: this must be selected/decided upon BEFORE the event. Alredy collected data will not be changed, except if you change something in the single contacts after changing the language",
+	"event.usedlicences" : "Users",
+    "event.anzkontakte" : "Contacts",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
@@ -1022,6 +1024,10 @@
     "eventList.dashboardSupreme"  : "Dashboard Supreme",
     "eventList.ambientePremium"  : "Ambiente Premium",
     "eventList.ambienteSupreme"  : "Ambiente Supreme",
+    "eventList.btnEventDesc"  : "Name ↓",
+    "eventList.btnEventAsc"  : "Name ↑",
+    "eventList.btnDateDesc"     : "Date ↓",
+    "eventList.btnDateAsc"      : "Date ↑",
 
     "eventslist.title" : "Events",
     "eventslist.count"       : "Count",

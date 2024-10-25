@@ -28,6 +28,8 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin &&
                     AppData._persistentStates.leadsuccessBasic,
                 btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished"),
+                btnEventSort: getResourceText("eventList.btnEventDesc"),
+                btnDateSort: getResourceText("eventList.btnDateDesc"),
                 showHideFilterBtn: null,
                 showHideDashboardFeature: true
             }, commandList, isMaster]);
@@ -780,6 +782,30 @@
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 },
+                clickOrderByNameDate: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        var newOrderAttribute = null;
+                        if (event.currentTarget.id === "btnEventSort") {
+                            newOrderAttribute = "Name";
+                        }
+                        if (event.currentTarget.id === "btnDateSort") {
+                            newOrderAttribute = "Startdatum";
+                        }
+                        if (newOrderAttribute !== EventList._orderAttribute) {
+                            // bei mehreren Button müsste hier der vorher ausgewählte auf "Default-Text gesetzt werden!
+                            EventList._orderAttribute = newOrderAttribute;
+                            EventList._orderDesc = true;
+                        } else {
+                            EventList._orderDesc = !EventList._orderDesc;
+                        }
+                        var newRscText = "eventList." +
+                            event.currentTarget.id.replace("Sort", EventList._orderDesc ? "Desc" : "Asc");
+                        that.binding[event.currentTarget.id] = getResourceText(newRscText);
+                        that.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 clickOrderBy: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
@@ -821,6 +847,12 @@
             }
             if (dashboardCombo) {
                 this.addRemovableEventListener(dashboardCombo, "change", this.eventHandlers.selectionDropDownChanged.bind(this));
+            }
+            if (btnEventSort) {
+                this.addRemovableEventListener(btnEventSort, "click", this.eventHandlers.clickOrderByNameDate.bind(this));
+            }
+            if (btnDateSort) {
+                this.addRemovableEventListener(btnDateSort, "click", this.eventHandlers.clickOrderByNameDate.bind(this));
             }
 
             var hideMaster = function () {

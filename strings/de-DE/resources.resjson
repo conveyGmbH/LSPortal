@@ -736,6 +736,8 @@
 	"event.showHideManually" : "Manuelle Erfassung in der App ermöglichen",
     "event.exportOption" : "Export Einstellungen",
     "event.exportKontaktPDF" : "Bitte wählen Sie hier die Sprache der Bezeichner für den PDF-Export\nBitte beachten Sie: dies muss VOR der Veranstaltung ausgewählt/entschieden werden. Bereits erfasste Daten werden nicht verändert, es sei denn, Sie ändern etwas in den einzelnen Kontakten, nachdem Sie die Sprache geändert haben",
+    "event.usedlicences" : "Benutzer",
+    "event.anzkontakte" : "Kontakte",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -1024,6 +1026,10 @@
 	"eventList.dashboardSupreme"  : "Dashboard Supreme",
     "eventList.ambientePremium"  : "Ambiente Premium",
     "eventList.ambienteSupreme"  : "Ambiente Supreme",
+    "eventList.btnEventDesc"  : "Name ↓",
+    "eventList.btnEventAsc"  : "Name ↑",
+    "eventList.btnDateDesc"     : "Datum ↓",
+    "eventList.btnDateAsc"      : "Datum ↑",
 
     "eventslist.title" : "Veranstaltungen",
     "eventslist.count"       : "Anzahl",

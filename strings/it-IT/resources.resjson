@@ -731,6 +731,8 @@
     "event.showHideManually" : "Abilitare la registrazione manuale nell'app",
     "event.exportOption" : "Impostazioni di esportazione",
     "event.exportKontaktPDF" : "Scegliere qui la lingua delle etichette per l'esportazione in PDF\nAttenzione: questa scelta deve essere fatta prima dell'evento. I dati già raccolti non verranno modificati, a meno che non si modifichi qualcosa nei singoli contatti dopo aver cambiato la lingua.",
+    "event.usedlicences" : "Utenti",
+    "event.anzkontakte" : "Contatti",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",
@@ -1022,6 +1024,10 @@
     "eventList.dashboardSupreme"  : "Dashboard Supreme",
     "eventList.ambientePremium"  : "Ambiente Premium",
     "eventList.ambienteSupreme"  : "Ambiente Supreme",
+    "eventList.btnEventDesc"  : "Nome ↓",
+    "eventList.btnEventAsc"  : "Nome ↑",
+    "eventList.btnDateDesc"     : "Data ↓",
+    "eventList.btnDateAsc"      : "Data ↑",
  
     "employeegenpwlist.title" : "Password dei dipendenti pre-generate",
     "employeegenpwlist.login" : "nome di accesso",

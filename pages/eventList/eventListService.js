@@ -8,6 +8,8 @@
 
     WinJS.Namespace.define("EventList", {
         _restriction: null,
+        _orderAttribute: "Startdatum",
+        _orderDesc: true,
        _VeranstaltungView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung", 20542);
@@ -27,8 +29,8 @@
                 } else {
                     ret = EventList._VeranstaltungView.select(complete, error, restriction, {
                         ordered: true,
-                        orderAttribute: "Startdatum",
-                        desc: true
+                        orderAttribute: EventList._orderAttribute,
+                        desc: EventList._orderDesc
                     });
                 }
                 // this will return a promise to controller
