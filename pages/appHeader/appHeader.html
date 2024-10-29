@@ -20,13 +20,15 @@
                                   data-win-res="{textContent: 'appheader.portal'}"></span>
                         </div>
                         <div class="event-field win-type-ellipsis">
-                            <span class="win-type-subtitle event-name"
-                                  data-win-bind="textContent: userData.VeranstaltungName"></span>
-                            <button class="win-button publish-button"
-                                    data-win-res="{textContent: 'appheader.notpublished'}"
-                                    data-win-bind="style.display: publishFlag Binding.Converter.toDisplay"
-                                    onclick="AppBar.handleEvent('click', 'clickGotoPublish', event)">
-                            </button>
+	                        <div class="win-type-subtitle event-name"
+	                             data-win-bind="style.display: genDataFlag Binding.Converter.toDisplayNone">
+		                        <span data-win-bind="textContent: userData.VeranstaltungName"></span>
+	                        </div>
+	                        <button class="win-button publish-button"
+	                                data-win-res="{textContent: 'appheader.notpublished'}"
+	                                data-win-bind="style.display: publishFlag Binding.Converter.toDisplay"
+	                                onclick="AppBar.handleEvent('click', 'clickGotoPublish', event)">
+	                        </button>
                         </div>
                     </div>
                     

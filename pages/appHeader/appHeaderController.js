@@ -26,6 +26,7 @@
             this.pageData.publishFlag = false;
             this.pageData.errorFlag = false;
             this.pageData.userData = AppData._userData;
+            this.pageData.genDataFlag = AppData._userData && (AppData._userData.SiteAdmin || AppData._userData.HasLocalEvents);
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
             this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
@@ -39,20 +40,25 @@
             this.binding = WinJS.Binding.as(this.pageData);
 
             var getPublishFlag = function () {
-                var publishFlag = null;
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                var master = Application.navigator.masterControl;
-                if (master && master.controller) {
-                    publishFlag = master.controller.binding.publishFlag;
+                if (that.binding.genDataFlag) {
+                    var master = Application.navigator.masterControl;
+                    if (master &&
+                        master.controller &&
+                        master.controller.binding &&
+                        typeof master.controller.binding.publishFlag !== "undefined") {
+                        that.binding.publishFlag = master.controller.binding.publishFlag;
+                    }
                 } else {
-                    publishFlag = that.binding.generalData.publishFlag;
+                    if (AppData.generalData) {
+                        that.binding.publishFlag = AppData.generalData.publishFlag;
+                    }
                 }
+                var publishFlag = that.binding.generalData.publishFlag;
                 Log.ret(Log.l.trace, publishFlag);
                 return publishFlag;
             }
             this.getPublishFlag = getPublishFlag;
-
-            that.binding.publishFlag = that.getPublishFlag();
 
             // show business card photo
             var userImageContainer = pageElement.querySelector(".user-image-container");
@@ -172,6 +178,7 @@
                 }).then(function () {
                     that.setLogo();
                     that.binding.publishFlag = that.getPublishFlag();
+                    that.binding.genDataFlag = that.binding.userData && (that.binding.userData.SiteAdmin || that.binding.userData.HasLocalEvents);
                 });
                 Log.ret(Log.l.trace);
                 return ret;
