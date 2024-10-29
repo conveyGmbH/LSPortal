@@ -82,7 +82,10 @@
                 }
                 that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
                     var master = Application.navigator.masterControl;
-                    master.controller.loadData();
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        master.controller.loadData();
+                    }
                 });
                 that.addDisposablePromise(that.loadDataDelayedPromise);
             }
@@ -244,6 +247,8 @@
                         Log.print(Log.l.trace, "eployee saved");
                         //var newEmployee = getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue);
                         var newEmployee = copyByValue(GenDataEmployee.employeeView.defaultValue);
+                        // could be changed since load of service
+                        newEmployee.VeranstaltungID = AppData.getRecordId("Veranstaltung2");
                         /* var restriction = {
                              OrderAttribute: ["Nachname"],
                              OrderDesc: false
@@ -277,7 +282,9 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, newEmployee).then(function () {
                             var master = Application.navigator.masterControl;
-                            if (master && master.controller && master.controller.binding) {
+                            if (master && master.controller &&
+                                master.controller.binding &&
+                                typeof master.controller.loadData === "function") {
                                 master.controller.binding.employeeId = newEmployeeId;
                                 return master.controller.loadData();
                             } else {
@@ -298,7 +305,9 @@
                             deleteData(function (response) {
                                 /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
                                 var master = Application.navigator.masterControl;
-                                if (master && master.controller && master.controller.binding) {
+                                if (master && master.controller &&
+                                    typeof master.controller.loadData === "function" &&
+                                    master.controller.binding) {
                                     //var prevSelIdx = master.controller.binding.selIdx;
                                     master.controller.loadData()/*.then(function () {
                                         Log.print(Log.l.info, "master.controller.loadData: success!");
@@ -430,7 +439,8 @@
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
-                    if (master && master.controller) {
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
                         that.loadDataDelayed(master.controller.loadData());
                     }
                     Log.ret(Log.l.trace);
@@ -464,7 +474,8 @@
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
-                    if (master && master.controller) {
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
@@ -479,7 +490,8 @@
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
-                    if (master && master.controller) {
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
@@ -491,14 +503,21 @@
                     if (event.target.textContent === getResourceText("employee.licenceAsc")) {
                         that.binding.restriction.OrderDesc = true;
                         delete that.binding.restriction.NichtLizenzierteApp;
-                        master.controller.highlightorderLicenceBtn(0);
+                        if (master && master.controller &&
+                            typeof master.controller.highlightorderLicenceBtn === "function") {
+                            master.controller.highlightorderLicenceBtn(0);
+                        }
                     } else {
                         that.binding.restriction.OrderDesc = false;
                         that.binding.restriction.NichtLizenzierteApp = 1;
-                        master.controller.highlightorderLicenceBtn(1);
+                        if (master && master.controller &&
+                            typeof master.controller.highlightorderLicenceBtn === "function") {
+                            master.controller.highlightorderLicenceBtn(1);
+                        }
                     }
                     that.saveRestriction();
-                    if (master && master.controller) {
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
@@ -855,7 +874,8 @@
                     if (recordId) {
                         Log.print(Log.l.trace, "Data loaded");
                         var master = Application.navigator.masterControl;
-                        if (master && master.controller) {
+                        if (master && master.controller &&
+                            typeof master.controller.scrollToRecordId === "function") {
                             //master.controller.scrollToRecordId(recordId);
                         }
                     }
@@ -959,7 +979,8 @@
                         // ignore that
                     } else {
                         var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding) {
+                        if (master && master.controller &&
+                            typeof master.controller.loadData === "function") {
                             master.controller.loadData(recordId).then(function () {
                                 if (typeof complete === "function") {
                                     complete(dataEmployee);
