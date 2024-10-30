@@ -113,14 +113,17 @@
                 //[3, 4, 5, 7]
                 if (!AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic) {
                     if (item.SortIdx === 2 ||
-                        item.SortIdx === 3 ||
-                        item.SortIdx === 4 ||
                         item.SortIdx === 5) {
                         item.disabled = true;
                     }
                 }
                 if (item.TypeName) {
+                    if (item.SortIdx === 3 ||
+                        item.SortIdx === 4) {
+                        // disabled
+                    } else {
                     that.reportingItem.push(item);
+                    }
                 } else {
                     Log.print(Log.l.trace, "TypeName ++ blocked!");
                 }
