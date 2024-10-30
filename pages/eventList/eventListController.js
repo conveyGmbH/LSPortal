@@ -31,7 +31,12 @@
                 btnEventSort: getResourceText("eventList.btnEventDesc"),
                 btnDateSort: getResourceText("eventList.btnDateDesc"),
                 showHideFilterBtn: null,
-                showHideDashboardFeature: true
+                showHideDashboardFeature: true,
+                searchString: "",
+                minDate: "",
+                maxDate: "",
+                sortField: "VeranstaltungName",
+                sortType: "A"
             }, commandList, isMaster]);
             this.nextUrl = null;
             this.records = null;
@@ -43,6 +48,7 @@
             var listView = pageElement.querySelector("#eventList.listview");
             var btnFilterNotPublished = pageElement.querySelector("#btnFilterNotPublished");
             var dashboardCombo = pageElement.querySelector("#showDashboardCombo");
+            var searchField = pageElement.querySelector("#searchField");
             var progress = null;
             var counter = null;
             var layout = null;
@@ -71,6 +77,16 @@
                 }
             };
             this.background = background;
+
+            var resetFilters = function() {
+                that.binding.searchString = "";
+                that.binding.minDate = "";
+                that.binding.maxDate = "";
+                that.binding.sortField = "VeranstaltungName";
+                that.binding.sortType = "A";
+                that.binding.dashboardIdx = 0;
+            }
+            this.resetFilters = resetFilters;
 
             var hideBtnFilterNotPublished = function (curPageId) {
                 // Select the element with the ID btnFilterNotPublished
@@ -233,20 +249,20 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 // convert Startdatum
-                if (item.Startdatum) {
-                    item.Startdatum = getDateObject(item.Startdatum);
-                    var startMoment = moment(item.Startdatum);
+                if (item.StartDatum) {
+                    item.StartDatum = getDateObject(item.StartDatum);
+                    var startMoment = moment(item.StartDatum);
                     startMoment.locale(Application.language);
-                    item.Startdatum = startMoment.format("ll");
+                    item.StartDatum = startMoment.format("ll");
                 }
                 //convert Enddatum
-                if (item.Enddatum) {
-                    item.Enddatum = getDateObject(item.Enddatum);
-                    var endMoment = moment(item.Enddatum);
+                if (item.EndDatum) {
+                    item.EndDatum = getDateObject(item.EndDatum);
+                    var endMoment = moment(item.EndDatum);
                     endMoment.locale(Application.language);
-                    item.Enddatum = endMoment.format("ll");
+                    item.EndDatum = endMoment.format("ll");
                 }
-                item.nameInitial = item.Name ? item.Name.substr(0, 2) : "";
+                item.nameInitial = item.VeranstaltungName ? item.VeranstaltungName.substr(0, 2) : "";
                 if (item.Disabled) {
                     item.disabled = true;
                     that.disabledindexes.push(index);
@@ -269,167 +285,20 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        that.binding.searchString = event.currentTarget.value;
+                        that.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 selectionDropDownChanged: function (event) {
                     Log.call(Log.l.trace, "EventList.Controller.");
                     var target = event.currentTarget || event.target;
                     if (target) {
                         that.binding.dashboardIdx = parseInt(target.value);
-                    } else {
-                        // dashboard combobox not visible 
-                        if (typeof that.binding.dashboardIdx === "string") {
-                            AppData._persistentStates.showdashboardMesagoCombo = parseInt(that.binding.dashboardIdx);
-                        } else {
-                            AppData._persistentStates.showdashboardMesagoCombo = that.binding.dashboardIdx;
-                        }
-                    }
-
-                    if (that.binding.dashboardIdx === 0) {
-                        return EventList.VeranstaltungView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "Events: success!");
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.binding.count = results.length;
-
-                                if (results.length <= 1) {
-                                    NavigationBar.disablePage("eventCopy");
-                                } else {
-                                    NavigationBar.enablePage("eventCopy");
-                                }
-
-                                that.records = new WinJS.Binding.List(results);
-
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.records.dataSource;
-                                }
-                                Log.print(Log.l.trace, "Data loaded");
-                                // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
-                                var recordId = AppData.getRecordId("Veranstaltung2");
-                                if (recordId) {
-                                    if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
-                                        AppBar.scope.setEventId(recordId);
-                                    }
-                                    that.selectRecordId(recordId);
-                                } else {
-                                    if (listView && listView.winControl) {
-                                        listView.winControl.selection.set(0);
-                                    }
-                                }
-                            } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.records = null;
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                            return WinJS.Promise.as();
-                        },
-                            function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            });
-                    } else {
-                        return EventList.VeranstaltungView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "Events: success!");
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.binding.count = results.length;
-
-                                if (results.length <= 1) {
-                                    NavigationBar.disablePage("eventCopy");
-                                } else {
-                                    NavigationBar.enablePage("eventCopy");
-                                }
-
-                                that.records = new WinJS.Binding.List(results);
-
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.records.dataSource;
-                                }
-                                Log.print(Log.l.trace, "Data loaded");
-                                // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
-                                var recordId = AppData.getRecordId("Veranstaltung2");
-                                if (recordId) {
-                                    if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
-                                        AppBar.scope.setEventId(recordId);
-                                    }
-                                    that.selectRecordId(recordId);
-                                } else {
-                                    if (listView && listView.winControl) {
-                                        listView.winControl.selection.set(0);
-                                    }
-                                }
-                            } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.records = null;
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                            return WinJS.Promise.as();
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                        }, { DashboardIdx: that.binding.dashboardIdx });
+                        that.loadData();
                     }
                 },
                 onItemInvoked: function (eventInfo) {
@@ -528,11 +397,11 @@
                                             that.binding.active = 1;
                                         }
                                         AppData._persistentStates.showdashboardMesagoCombo = item.data.DashboardIdx;
-                                        if (item.data.DashboardIdx === "0") {
+                                        if (item.data.DashboardIdx === 0) {
                                             NavigationBar.enablePage("startPremium");
                                             NavigationBar.enablePage("dashboardFN");
                                         }
-                                        if (item.data.DashboardIdx === "1" || item.data.DashboardIdx === "2" || item.data.DashboardIdx === "3" || item.data.DashboardIdx === "4") {
+                                        if (item.data.DashboardIdx === 1 || item.data.DashboardIdx === 2 || item.data.DashboardIdx === 3 || item.data.DashboardIdx === 4) {
                                             NavigationBar.enablePage("startPremium");
                                         } else {
                                             NavigationBar.disablePage("startPremium");
@@ -787,17 +656,21 @@
                     if (event && event.currentTarget) {
                         var newOrderAttribute = null;
                         if (event.currentTarget.id === "btnEventSort") {
-                            newOrderAttribute = "Name";
+                            that.binding.sortField = "VeranstaltungName";
+                            newOrderAttribute = "VeranstaltungName";
                         }
                         if (event.currentTarget.id === "btnDateSort") {
-                            newOrderAttribute = "Startdatum";
+                            that.binding.sortField = "StartDatum";
+                            newOrderAttribute = "StartDatum";
                         }
                         if (newOrderAttribute !== EventList._orderAttribute) {
                             // bei mehreren Button müsste hier der vorher ausgewählte auf "Default-Text gesetzt werden!
                             EventList._orderAttribute = newOrderAttribute;
+                            that.binding.sortType = "D";
                             EventList._orderDesc = true;
                         } else {
-                            EventList._orderDesc = !EventList._orderDesc;
+                            that.binding.sortType = "A";
+                            EventList._orderDesc = false;
                         }
                         var newRscText = "eventList." +
                             event.currentTarget.id.replace("Sort", EventList._orderDesc ? "Desc" : "Asc");
@@ -842,6 +715,9 @@
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
                 this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
             }
+            if (searchField) {
+                this.addRemovableEventListener(searchField, "input", this.eventHandlers.changeSearchField.bind(this));
+            }
             if (btnFilterNotPublished) {
                 this.addRemovableEventListener(btnFilterNotPublished, "click", this.eventHandlers.clickOrderBy.bind(this));
             }
@@ -875,6 +751,7 @@
 
             var loadData = function (recordId) {
                 Log.call(Log.l.trace, "EventList.Controller.", "recordId=" + recordId);
+                that.binding.count = 0;
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -885,15 +762,21 @@
                     counter.style.display = "none";
                 }
                 AppData.setErrorMsg(that.binding);
-                var ret = EventList.VeranstaltungView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
+                var ret = new WinJS.Promise.as().then(function () {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                         AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "Events: success!");
                     if (!recordId) {
-                        // employeeView returns object already parsed from json file in response
+                        AppData.setErrorMsg(that.binding);
+                        AppData.call("PRC_GetPortalEvents", {
+                            pSearchString: that.binding.searchString,
+                            pMinDate: that.binding.minDate,
+                            pMaxDate: that.binding.maxDate,
+                            pSortField: that.binding.sortField,
+                            pSortType: that.binding.sortType,
+                            pDachboardType: that.binding.dashboardIdx
+                        }, function (json) {
+                            Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.nextUrl = EventList.VeranstaltungView.getNextUrl(json);
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
@@ -943,38 +826,27 @@
                             }
                             that.loading = false;
                         }
+                            
+                            Log.ret(Log.l.trace);
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "call PRC_GetPortalEvents error");
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
                     } else {
-                        if (json && json.d && that.records) {
-                            var scope = that.scopeFromRecordId(recordId);
-                            if (scope) {
-                                var prevNotifyModified = AppBar.notifyModified;
-                                AppBar.notifyModified = false;
-                                var item = json.d;
-                                that.resultConverter(item, scope.index);
-                                that.records.setAt(scope.index, item);
-                                AppBar.notifyModified = prevNotifyModified;
+                        var err = { status: 0, statusText: "no record selected" };
+                        if (typeof error === "function") {
+                            error(err);
                             }
                         }
-                    }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                }, recordId).then(function () {
+                    Log.ret(Log.l.trace);
+                }).then(function () {
                     var curPageId = Application.getPageId(nav.location);
                     that.hideBtnFilterNotPublished(curPageId);
                     var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                     // Problem wenn gefiltert wird und dabei count = 1 ist von Result
-                    if (that.binding.count === 1 && !EventList._restriction) {
+                    if (that.binding.count === 1 && !that.binding.searchString) {
                         if (splitViewContent && !Application.navigator._hideDetailRestored) {
                             Application.navigator._hideDetailRestored = true;
                             WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");

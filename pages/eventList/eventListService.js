@@ -8,7 +8,7 @@
 
     WinJS.Namespace.define("EventList", {
         _restriction: null,
-        _orderAttribute: "Startdatum",
+        _orderAttribute: "StartDatum",
         _orderDesc: true,
        _VeranstaltungView: {
             get: function () {
