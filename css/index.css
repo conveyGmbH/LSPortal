@@ -751,33 +751,38 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }*/
 .publish-button {
     display: block;
-    background-color: #f2f2f2;
-    color: red;
     width: 300px;
     padding: 2px 6px;
-    position: relative;
-    margin-left: calc(100% - 300px);
-    margin-top: -27px;
+    position: absolute;
+    right: 250px;
+    top: 8px;
 }
-
+.publish-button .win-button:not(:hover) {
+    color: rgba(255,0,0,0.8);
+    background-color: #e6e6e6;
+}
+.publish-button .win-button:hover,
+.publish-button .win-button:active {
+    color: red;
+    background-color: #f2f2f2;
+}
 /*
     user name and on-site / off-site button
 */
-
-.status-on-off {
-    margin: 0;
-    padding-top: 2px;
-    padding-right: 4px;
-    padding-bottom: 2px;
-    padding-left: 2px;
-    min-width: 60px;
-    max-width: 236px;
-    height: 48px;
-    visibility: hidden;
-    display: block;
-    position: absolute;
-    right: 0;
-}
+    .status-on-off {
+        margin: 0;
+        padding-top: 2px;
+        padding-right: 4px;
+        padding-bottom: 2px;
+        padding-left: 2px;
+        min-width: 60px;
+        max-width: 236px;
+        height: 48px;
+        visibility: hidden;
+        display: block;
+        position: absolute;
+        right: 0;
+    }
 
 .user-name-container {
     float: left;
@@ -928,6 +933,9 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     .user-name-field {
         font-size: 12px;
     }
+    .publish-button {
+        right: 150px;
+    }
 }
 
 @media (max-width:499px) {
@@ -956,6 +964,12 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     .user-name-field {
         font-size: 12px;
         line-height: 1.167;
+    }
+    .publish-button {
+        width: 200px;
+    }
+    .publish-button .win-button {
+        font-size: 10px;
     }
 }
 

@@ -24,11 +24,13 @@
 	                             data-win-bind="style.display: genDataFlag Binding.Converter.toDisplayNone">
 		                        <span data-win-bind="textContent: userData.VeranstaltungName"></span>
 	                        </div>
-	                        <button class="win-button publish-button"
-	                                data-win-res="{textContent: 'appheader.notpublished'}"
-	                                data-win-bind="style.display: publishFlag Binding.Converter.toDisplay"
-	                                onclick="AppBar.handleEvent('click', 'clickGotoPublish', event)">
-	                        </button>
+	                        <div class="publish-button"
+	                             data-win-bind="style.display: publishFlag Binding.Converter.toDisplay">
+		                        <button class="win-button"
+		                                data-win-res="{textContent: 'appheader.notpublished'}"
+		                                onclick="AppBar.handleEvent('click', 'clickGotoPublish', event)">
+		                        </button>
+	                        </div>
                         </div>
                     </div>
                     
