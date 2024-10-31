@@ -48,6 +48,18 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+            ,
+            defaultValueRes: {
+                Vorname: "",
+                Nachname: "",
+                Login: "",
+                LogInNameBeforeAtSymbol: "",
+                LogInNameAfterAtSymbol: "",
+                Password: "",
+                VeranstaltungID: AppData.getRecordId("Veranstaltung2"),
+                INITAPUserRoleID: 3,
+                Password2: ""
+            },
         }
     });
 })();

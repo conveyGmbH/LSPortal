@@ -18,6 +18,7 @@
             Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataBenutzer: GenDataUserInfo.benutzerView && getEmptyDefaultValue(GenDataUserInfo.benutzerView.defaultValue),
+                restriction: copyByValue(GenDataUserInfo.benutzerView.defaultValueRes),
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
                 photoData: "",
@@ -112,6 +113,32 @@
                 return recordId;
             }
             this.getRecordId = getRecordId;
+
+            var loadDataDelayed = function (searchString) {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
+
+            var saveRestriction = function () {
+                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                } else {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                }
+                that.binding.restriction.bAndInEachRow = true;
+                that.binding.restriction.bUseOr = false;
+                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
+                AppData.setRestriction("Employee", that.binding.restriction);
+            }
+            this.saveRestriction = saveRestriction;
 
             var loadData = function () {
                 var recordId = getRecordId();
@@ -476,7 +503,7 @@
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
-                        master.controller.loadData();
+                        that.loadDataDelayed(master.controller.loadData());
                     }
                     Log.ret(Log.l.trace);
                 },

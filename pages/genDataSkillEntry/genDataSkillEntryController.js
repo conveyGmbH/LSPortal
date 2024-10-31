@@ -16,6 +16,7 @@
             Log.call(Log.l.trace, "GenDataSkillEntry.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 countSkills: 0,
+                restriction: copyByValue(GenDataSkillEntry.skilltypeskillsView.defaultValueRes),
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
@@ -93,6 +94,32 @@
                 Log.ret(Log.l.trace);
             }
             this.selectRecordId = selectRecordId;
+
+            var loadDataDelayed = function (searchString) {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    var master = Application.navigator.masterControl;
+                    master.controller.loadData();
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
+
+            var saveRestriction = function () {
+                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                } else {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                }
+                that.binding.restriction.bAndInEachRow = true;
+                that.binding.restriction.bUseOr = false;
+                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
+                AppData.setRestriction("Employee", that.binding.restriction);
+            }
+            this.saveRestriction = saveRestriction;
 
             // get field entries
             var getFieldEntries = function (index, type) {
@@ -251,6 +278,32 @@
                                 Log.print(Log.l.error, "error saving question");
                             });
                         }
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    that.binding.restriction.Vorname = [];
+                    that.binding.restriction.Nachname = [];
+                    that.binding.restriction.Login = [];
+                    if (event.target.value) {
+                        that.binding.restriction.Names = event.target.value;
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
+                        that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
+                    } else {
+                        that.binding.restriction.Names = event.target.value;
+                        that.binding.restriction.Login = event.target.value;
+                        that.binding.restriction.Vorname = event.target.value;
+                        that.binding.restriction.Nachname = event.target.value;
+                        delete that.binding.restriction.bUseOr;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        that.loadDataDelayed(master.controller.loadData());
                     }
                     Log.ret(Log.l.trace);
                 },

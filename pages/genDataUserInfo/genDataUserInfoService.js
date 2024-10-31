@@ -47,7 +47,18 @@
                 TelefonMobil: "",
                 EMail: "",
                 Bemerkungen: ""
-            }
+            },
+            defaultValueRes: {
+                Vorname: "",
+                Nachname: "",
+                Login: "",
+                LogInNameBeforeAtSymbol: "",
+                LogInNameAfterAtSymbol: "",
+                Password: "",
+                VeranstaltungID: AppData.getRecordId("Veranstaltung2"),
+                INITAPUserRoleID: 3,
+                Password2: ""
+            },
         },
         docExtList: [
             "jpg", "jpeg", "jpe", "gif", "png"
