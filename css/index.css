@@ -260,6 +260,7 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 }
 .expanded .help-content {
     margin: 0;
+    padding-right: 8px;
 }
 
 .help-pane .help-title {
