@@ -49,6 +49,8 @@
             var btnFilterNotPublished = pageElement.querySelector("#btnFilterNotPublished");
             var dashboardCombo = pageElement.querySelector("#showDashboardCombo");
             var searchField = pageElement.querySelector("#searchField");
+            var btnEventSort = pageElement.querySelector("#btnEventSort");
+            var btnDateSort = pageElement.querySelector("#btnDateSort");
             var progress = null;
             var counter = null;
             var layout = null;
