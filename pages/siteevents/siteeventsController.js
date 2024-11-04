@@ -67,6 +67,7 @@
             var maxTrailingPages = 0;
 
             var timer = null;
+            this._selectPromise = null;
 
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
@@ -1354,6 +1355,10 @@
                 var ret;
                 var recordId = that.binding.restriction.VeranstaltungTerminID;
                 if (recordId) {
+                    if (that._selectPromise) {
+                        that._selectPromise.cancel();
+                        that._selectPromise = null;
+                    }
                     ret = AppData.call("PRC_GetExhibitorList", {
                         pVeranstaltungTerminID: recordId,
                         pSearchString: that.searchStringData,
@@ -1410,6 +1415,7 @@
                             error(error);
                         }
                     });
+                    that._selectPromise = ret;
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
                     error(err);
