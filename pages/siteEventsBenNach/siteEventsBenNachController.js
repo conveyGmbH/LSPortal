@@ -52,6 +52,10 @@
                         {
                             value: "FLOW",
                             title: "FLOW"
+                        },
+                        {
+                            value: "API",
+                            title: "API"
                         }
                     ];
                     if (exibitorcategory && exibitorcategory.winControl) {
