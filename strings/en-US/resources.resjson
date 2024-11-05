@@ -591,7 +591,7 @@
     "label.register"        : "Register",
     "label.recover"         : "Password",
     "label.listContact"     : "PDF-Contacts",
-    "label.contacts"        : "Business card correction",
+    "label.contacts"        : "Edit contacts",
     "label.questionList"    : "Questionnaire",
     "label.events"          : "Plan event",
 	"label.serviceevents"	: "Plan event",
