@@ -378,6 +378,7 @@
                 },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "EventList.Controller.");
+                    AppData.setRecordId("VeranstaltungEdit", "");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         if (listControl.selection) {
@@ -799,7 +800,11 @@
                             }
                             Log.print(Log.l.trace, "Data loaded");
                             // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                if (AppData.getRecordId("VeranstaltungEdit")) {
+                                    recordId = AppData.getRecordId("VeranstaltungEdit");
+                                } else {
                             recordId = AppData.getRecordId("Veranstaltung2");
+                                }
                             if (recordId) {
                                 if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
                                     AppBar.scope.setEventId(recordId);

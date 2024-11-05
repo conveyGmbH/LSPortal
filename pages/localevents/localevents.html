@@ -16,6 +16,14 @@
                         <div class="win-type-subtitle master-list-header">
                             <span data-win-res="{textContent: 'localevents.title'}"></span>
                         </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                        <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
+                        <input id="searchInput" class="input_field win-textbox" type="text"
+                               data-win-bind="value: searchString Binding.Mode.twoway"
+                               oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
+                        </div>
                     </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header contenthost-background">
@@ -69,13 +77,13 @@
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
                             <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Name"></span>
+                                <span class="wrap-text" data-win-bind="textContent: VeranstaltungName"></span>
                                 </div>
                             <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Startdatum"></span>
+                                <span class="wrap-text" data-win-bind="textContent: StartDatum"></span>
                             </div>
                             <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Enddatum"></span>
+                                <span class="wrap-text" data-win-bind="textContent: EndDatum"></span>
                         </div>
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: UsedLicences"></span>
@@ -91,7 +99,7 @@
                                     <span data-win-bind="textContent: VeranstaltungVIEWID"></span>
                         </div>
                                 <div class="list-item-label-right win-type-caption">
-                                    <span data-win-bind="textContent: Name"></span>
+                                    <span data-win-bind="textContent: VeranstaltungName"></span>
                                 </div>
                             </div>
                         </div>

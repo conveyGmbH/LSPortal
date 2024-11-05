@@ -26,7 +26,10 @@
                 fairmandantId: 0,
                 firstentry: 0,
                 active: null,
-                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
+                leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                searchString: "",
+                sortField: "VeranstaltungName",
+                sortType: "A"
             }, commandList]);
             this.nextUrl = null;
 
@@ -235,16 +238,28 @@
             }
             this.getDeleteEventData = getDeleteEventData;
 
+            var loadDataDelayed = function (searchString) {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    that.loadData(searchString);
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
+
             var resultConverter = function (item, index) {
                 item.index = index;
-                if (!item.Name) {
+                if (!item.VeranstaltungName) {
                     item.Name = "";
                 }
-                if (!item.Startdatum) {
-                    item.Startdatum = "";
+                if (!item.StartDatum) {
+                    item.StartDatum = "";
                 }
-                if (!item.Enddatum) {
-                    item.Enddatum = "";
+                if (!item.EndDatum) {
+                    item.EndDatum = "";
                 }
                 if (!item.UsedLicences) {
                     item.UsedLicences = 0;
@@ -252,12 +267,12 @@
                 if (!item.AnzKontakte) {
                     item.AnzKontakte = 0;
                 }
-                item.nameInitial = item.Name.substr(0, 2);
-                if (item.Startdatum) {
-                item.Startdatum = that.getDateObject(item.Startdatum);
+                item.nameInitial = item.VeranstaltungName.substr(0, 2);
+                if (item.StartDatum) {
+                item.StartDatum = that.getDateObject(item.StartDatum);
                 }
-                if (item.Enddatum) {
-                item.Enddatum = that.getDateObject(item.Enddatum);
+                if (item.EndDatum) {
+                item.EndDatum = that.getDateObject(item.EndDatum);
             }
             }
             this.resultConverter = resultConverter;
@@ -268,6 +283,14 @@
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        that.binding.searchString = event.currentTarget.value;
+                        that.loadDataDelayed(that.binding.searchString);
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -289,9 +312,11 @@
                     if (event && event.currentTarget) {
                         if (event.currentTarget.id === LocalEvents._orderAttribute) {
                             LocalEvents._orderDesc = !LocalEvents._orderDesc;
+                            that.binding.sortType = "D";
                         } else {
                             LocalEvents._orderAttribute = event.currentTarget.id;
                             LocalEvents._orderDesc = false;
+                            that.binding.sortType = "A";
                         }
                         that.loadData();
                     }
@@ -388,6 +413,14 @@
                             }
                         }
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickEdit: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (that.curRecId) {
+                        AppData.setRecordId("VeranstaltungEdit", that.curRecId);
+                    }
+                    Application.navigateById("event");
                     Log.ret(Log.l.trace);
                 },
                 onHeaderVisibilityChanged: function (eventInfo) {
@@ -533,6 +566,13 @@
                     } else {
                         return true;
                     }
+                },
+                clickEdit: function () {
+                    if (that.curRecId) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             };
 
@@ -549,14 +589,16 @@
                 that.loading = true;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return LocalEvents.VeranstaltungView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.setErrorMsg(that.binding);
                         AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "LocalEvent: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length) {
-                            that.nextUrl = LocalEvents.VeranstaltungView.getNextUrl(json);
+                        AppData.call("PRC_GetPortalEvents", {
+                            pSearchString: that.binding.searchString,
+                            pSortField: that.binding.sortField,
+                            pSortType: that.binding.sortType
+                        }, function (json) {
+                            Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
@@ -572,7 +614,6 @@
                                 listView.winControl.itemDataSource = that.localeventsdata.dataSource;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-
                         } else {
                             that.binding.count = 0;
                             that.nextUrl = null;
@@ -591,23 +632,15 @@
                             }
                             that.loading = false;
                         }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    }, {
 
+                            Log.ret(Log.l.trace);
+                    }, function (errorResponse) {
+                            Log.print(Log.l.error, "call PRC_GetPortalEvents error");
+                            if (typeof error === "function") {
+                                error(errorResponse);
                         }
-                    );
+                        });
+                    Log.ret(Log.l.trace);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

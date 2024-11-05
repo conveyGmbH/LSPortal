@@ -170,6 +170,9 @@
 
             var setEventId = function (value) {
                 Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
+                if (AppData.getRecordId("VeranstaltungEdit")) {
+                    value = AppData.getRecordId("VeranstaltungEdit");
+                }
                 Event._eventId = value;
             }
             this.setEventId = setEventId;
