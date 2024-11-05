@@ -600,6 +600,7 @@
                             Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
+                                if (results[0].ResultCode === 0) {
                             results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                             });
@@ -613,6 +614,24 @@
                                 // add ListView dataSource
                                 listView.winControl.itemDataSource = that.localeventsdata.dataSource;
                             }
+                                } else {
+                                    that.binding.count = 0;
+                                    that.nextUrl = null;
+                                    that.localeventsdata = null;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = null;
+                                    }
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
+                                }
                             Log.print(Log.l.trace, "Data loaded");
                         } else {
                             that.binding.count = 0;
