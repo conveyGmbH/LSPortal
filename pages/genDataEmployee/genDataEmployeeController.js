@@ -61,6 +61,27 @@
                 }
             }
 
+            var handleVisibleList = function(hasLocal, siteadmin) {
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                if (that.binding.addEventFormFlag) {
+                    if (hasLocal === 1 || siteadmin === 1) {
+                        that.binding.addEventFormFlag = null;
+                    } else {
+                        that.binding.addEventFormFlag = 1;
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            that.handleVisibleList = handleVisibleList;
+
+            var resetVisibleList = function() {
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                that.binding.addEventFormFlag = (AppHeader.controller.binding.userData.SiteAdmin ||
+                    AppHeader.controller.binding.userData.HasLocalEvents);
+                Log.ret(Log.l.trace);
+            }
+            this.resetVisibleList = resetVisibleList;
+
             var setRoleVisible = function () {
                     if (!AppHeader.controller.binding.userData.SiteAdmin && AppHeader.controller.binding.userData.HasLocalEvents) {
                         that.binding.setRoleVisible = 1;

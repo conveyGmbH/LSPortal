@@ -256,7 +256,10 @@
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "genDataEmployee") &&
                                                     typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.resetVisibleList();
                                                     AppBar.scope.loadData(that.binding.employeeId);
+                                                        AppBar.scope.handleVisibleList(item.data.HasLocalEvents, item.data.SiteAdmin);
+                                                    
                                                 } else if ((curPageId === "genDataSkillEntry") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
