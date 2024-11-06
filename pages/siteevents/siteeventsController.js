@@ -1,4 +1,4 @@
-﻿// controller for page: info
+﻿﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -1201,18 +1201,18 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                clickLoadListBig: function(event) {
+                clickLoadList: function (event) {
                     // LoadListBig
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     if (that.binding.isPortal) {
                         that.binding.isPortal = 0;
                         AppBar.replaceCommands([
-                            { id: 'clickLoadListBig', label: getResourceText('command.loadListBig'), tooltip: getResourceText('tooltip.loadListBig'), section: 'primary', svg: 'lsvFlow' }
+                            { id: 'clickLoadList', label: getResourceText('command.loadListSmall'), tooltip: getResourceText('tooltip.loadListSmall'), section: 'primary', svg: 'lsvFlow' }
                         ]);
                     } else {
                         that.binding.isPortal = 1;
                         AppBar.replaceCommands([
-                            { id: 'clickLoadListBig', label: getResourceText('command.loadListSmall'), tooltip: getResourceText('tooltip.loadListSmall'), section: 'primary', svg: 'hourglass' }
+                            { id: 'clickLoadList', label: getResourceText('command.loadListBig'), tooltip: getResourceText('tooltip.loadListBig'), section: 'primary', svg: 'hourglass' }
                         ]);
                     }
                     that.loadData(AppData.getRecordId("VeranstaltungTermin"));
@@ -1309,7 +1309,7 @@
                         return false;
                     }
                 },
-                clickLoadListBig: function() {
+                clickLoadList: function () {
                     return false;
                 }
             }
