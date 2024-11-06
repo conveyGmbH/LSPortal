@@ -311,9 +311,49 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         if (event.currentTarget.id === LocalEvents._orderAttribute) {
+                            if (event.currentTarget.id === "1") {
+                                that.binding.sortField = "VeranstaltungName";
+                                LocalEvents._orderAttribute = "VeranstaltungName";
+                            }
+                            if (event.currentTarget.id === "2") {
+                                that.binding.sortField = "StartDatum";
+                                LocalEvents._orderAttribute = "StartDatum";
+                            }
+                            if (event.currentTarget.id === "3") {
+                                that.binding.sortField = "EndDatum";
+                                LocalEvents._orderAttribute = "EndDatum";
+                            }
+                            if (event.currentTarget.id === "4") {
+                                that.binding.sortField = "UsedLicences";
+                                LocalEvents._orderAttribute = "UsedLicences";
+                            }
+                            if (event.currentTarget.id === "5") {
+                                that.binding.sortField = "AnzKontakte";
+                                LocalEvents._orderAttribute = "AnzKontakte";
+                            }
                             LocalEvents._orderDesc = !LocalEvents._orderDesc;
                             that.binding.sortType = "D";
                         } else {
+                            if (event.currentTarget.id === "1") {
+                                that.binding.sortField = "VeranstaltungName";
+                                LocalEvents._orderAttribute = "VeranstaltungName";
+                            }
+                            if (event.currentTarget.id === "2") {
+                                that.binding.sortField = "StartDatum";
+                                LocalEvents._orderAttribute = "StartDatum";
+                            }
+                            if (event.currentTarget.id === "3") {
+                                that.binding.sortField = "EndDatum";
+                                LocalEvents._orderAttribute = "EndDatum";
+                            }
+                            if (event.currentTarget.id === "4") {
+                                that.binding.sortField = "UsedLicences";
+                                LocalEvents._orderAttribute = "UsedLicences";
+                            }
+                            if (event.currentTarget.id === "5") {
+                                that.binding.sortField = "AnzKontakte";
+                                LocalEvents._orderAttribute = "AnzKontakte";
+                            }
                             LocalEvents._orderAttribute = event.currentTarget.id;
                             LocalEvents._orderDesc = false;
                             that.binding.sortType = "A";
