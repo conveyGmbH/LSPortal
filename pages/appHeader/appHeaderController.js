@@ -26,7 +26,7 @@
             this.pageData.publishFlag = false;
             this.pageData.errorFlag = false;
             this.pageData.userData = AppData._userData;
-            this.pageData.genDataFlag = AppData._userData && AppData._userData.HasLocalEvents;
+            this.pageData.genDataFlag = AppData._userData && AppData._userData.IsCustomerAdmin;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
             this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
@@ -178,7 +178,7 @@
                 }).then(function () {
                     that.setLogo();
                     that.binding.publishFlag = that.getPublishFlag();
-                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.HasLocalEvents;
+                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.IsCustomerAdmin;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
