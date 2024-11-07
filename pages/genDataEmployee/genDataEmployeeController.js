@@ -1,4 +1,4 @@
-﻿// controller for page: info
+﻿﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -275,43 +275,52 @@
                              OrderDesc: false
                          };
                          AppData.setRestriction("Employee", restriction);*/
-                        return GenDataEmployee.employeeView.insert(function (json) {
-                            AppBar.busy = false;
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.info, "employeeView insert: success!");
-                            // employeeView returns object already parsed from json file in response
-                            that.binding.noLicence = null;
-                            that.binding.allowEditLogin = null;
-                            if (json && json.d) {
-                                var employee = json.d;
-                                that.setDataEmployee(employee);
-                                that.setRoleVisible();
-                                if (!AppHeader.controller.binding.userData.SiteAdmin) {
-                                    var userName = AppData.generalData.userName;
-                                    if (userName && userName.indexOf("@") > 0) {
-                                        that.binding.dataEmployee.LogInNameAfterAtSymbol = userName.substr(userName.lastIndexOf("@"));
-                                    }
-                                    that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
+                        if (!newEmployee.VeranstaltungID) {
+                            return confirmModal(null, getResourceText("genDataEmployee.chooseEvent"), getResourceText("genDataEmployee.chooseEventOk"), null, function (result) {
+                                if (result) {
+                                    Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                    AppBar.busy = false;
                                 }
-                                newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
-                            }
-                            //AppBar.modified = true;
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "error inserting employee");
-                            AppBar.busy = false;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, newEmployee).then(function () {
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller &&
-                                master.controller.binding &&
-                                typeof master.controller.loadData === "function") {
-                                master.controller.binding.employeeId = newEmployeeId;
-                                return master.controller.loadData();
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        });
+                            });
+                        } else {
+                            return GenDataEmployee.employeeView.insert(function (json) {
+                                AppBar.busy = false;
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.info, "employeeView insert: success!");
+                                // employeeView returns object already parsed from json file in response
+                                that.binding.noLicence = null;
+                                that.binding.allowEditLogin = null;
+                                if (json && json.d) {
+                                    var employee = json.d;
+                                    that.setDataEmployee(employee);
+                                    that.setRoleVisible();
+                                    if (!AppHeader.controller.binding.userData.SiteAdmin) {
+                                        var userName = AppData.generalData.userName;
+                                        if (userName && userName.indexOf("@") > 0) {
+                                            that.binding.dataEmployee.LogInNameAfterAtSymbol = userName.substr(userName.lastIndexOf("@"));
+                                        }
+                                        that.binding.dataEmployee.LogInNameBeforeAtSymbol = "";
+                                    }
+                                    newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
+                                }
+                                //AppBar.modified = true;
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "error inserting employee");
+                                AppBar.busy = false;
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, newEmployee).then(function () {
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller &&
+                                    master.controller.binding &&
+                                    typeof master.controller.loadData === "function") {
+                                    master.controller.binding.employeeId = newEmployeeId;
+                                    return master.controller.loadData();
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            });
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });

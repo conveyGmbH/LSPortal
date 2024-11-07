@@ -1794,6 +1794,8 @@
     "genDataEmployee.inactivebtntxt"			: "Deactivate",
     "genDataEmployee.title"        : "User accounts", 
     "genDataEmployee.comment"      : "Manage your employee access data here.",
+    "genDataEmployee.chooseEvent" : "Event is empty, please select an event from the combo box.",
+    "genDataEmployee.chooseEventOk" : "Ok",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",
@@ -1837,7 +1839,6 @@
   "clientManagementSearchList.headerduns" : "DUNS",
   "clientManagementSearchList.headerbestellnummer" : "Order number2",
   "clientManagementSearchList.headerregnumber" : "Reginumber",
-  "clientManagementSearchList.headereventname" : "Event name",
   "clientManagementSearchList.headerdbsyncanregistrationidentifier" : "DBSYNC registration identifier",
   "clientManagementSearchList.headerdbsyncpassword" : "DBSYNCPassword",
   "clientManagementSearchList.headerwebaddress" : "Web address",

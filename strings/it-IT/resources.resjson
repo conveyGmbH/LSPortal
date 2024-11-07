@@ -1771,6 +1771,8 @@
     "genDataEmployee.inactivebtntxt"			: "Disattiva",
     "genDataEmployee.title"        : "Utente", 
     "genDataEmployee.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
+    "genDataEmployee.chooseEvent" : "L'evento è vuoto, selezionare un evento dalla casella combinata",
+    "genDataEmployee.chooseEventOk" : "Ok",
 
     "eventProducts.title"			: "Caratteristiche",
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",

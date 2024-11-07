@@ -1798,7 +1798,8 @@
     "genDataEmployee.inactivebtntxt"			: "Deaktivieren",
     "genDataEmployee.title"        : "Benutzerkonten", 
     "genDataEmployee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
-
+	"genDataEmployee.chooseEvent"  : "Veranstaltung ist leer, bitte wählen Sie eine Veranstaltung aus der Combobox aus.",
+    "genDataEmployee.chooseEventOk"  : "Ok",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",

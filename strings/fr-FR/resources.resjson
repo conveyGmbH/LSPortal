@@ -1773,6 +1773,8 @@
     "genDataEmployee.inactivebtntxt"			: "Désactiver",
     "genDataEmployee.title"        : "Utilisateurs", 
     "genDataEmployee.comment"      : "Gérez vos données d'accès des employés ici.",
+    "genDataEmployee.chooseEvent" : "L'événement est vide, veuillez sélectionner un événement dans la combobox",
+    "genDataEmployee.chooseEventOk" : "Ok",
 
     "eventProducts.title"			: "Fonctionnalités",
     "eventProducts.ProductTitle"			: "Nom du Fonctionnalité",
