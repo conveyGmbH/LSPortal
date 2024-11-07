@@ -1,4 +1,4 @@
-﻿// controller for page: contact
+﻿﻿// controller for page: contact
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -26,7 +26,7 @@
             this.pageData.publishFlag = false;
             this.pageData.errorFlag = false;
             this.pageData.userData = AppData._userData;
-            this.pageData.genDataFlag = AppData._userData && (AppData._userData.SiteAdmin || AppData._userData.HasLocalEvents);
+            this.pageData.genDataFlag = AppData._userData && AppData._userData.HasLocalEvents;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
             this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
@@ -178,7 +178,7 @@
                 }).then(function () {
                     that.setLogo();
                     that.binding.publishFlag = that.getPublishFlag();
-                    that.binding.genDataFlag = that.binding.userData && (that.binding.userData.SiteAdmin || that.binding.userData.HasLocalEvents);
+                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.HasLocalEvents;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
