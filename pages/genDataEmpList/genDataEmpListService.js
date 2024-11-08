@@ -53,7 +53,7 @@
                 Vorname: "",
                 Nachname: "",
                 Login: "",
-                Names: "",
+                Name: "",
                 OrderAttribute: "Nachname",
                 OrderDesc: false
             }

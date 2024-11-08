@@ -182,7 +182,6 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
-                item.Names = "";
                 item.fullName = (item.Vorname && item.Nachname)
                     ? (item.Vorname + " " + item.Nachname)
                     : (item.Vorname ? item.Vorname
