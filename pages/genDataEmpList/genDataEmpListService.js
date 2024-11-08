@@ -1,4 +1,4 @@
-﻿// service for page: event
+// service for page: event
 /// <reference path="~/www/lib/convey/scripts/strings.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
@@ -60,7 +60,7 @@
         },
         eventView: {
             fetchNext: function (results, url, complete, error) {
-                Log.call(Log.l.trace, "GenDataEmpList.eventView.", "nextUrl=" + nextUrl);
+                Log.call(Log.l.trace, "GenDataEmpList.eventView.");
                 var nextJson = null;
                 var ret = GenDataEmpList._eventView.selectNext(function (json) {
                     nextJson = json;
