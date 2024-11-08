@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="helpTextList.css" rel="stylesheet" />
+    <script type="text/javascript" src="helpTextListService.js"></script>
+    <script type="text/javascript" src="helpTextListController.js"></script>
+    <script type="text/javascript" src="helpTextList.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="helpTextList fragment">
+        <div id="helpTextListController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="data-template" data-win-control="WinJS.Binding.Template">
+                        <div class="row-bkg-gray"
+                             data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+                        <div class="list-field-big-variable win-type-ellipsis"
+                             data-win-bind="textContent: Title"></div>
+                        <div class="list-field-small-fixed">
+	                        <button class="list-button-left win-button"
+	                                data-win-bind="helpTextId: AppHelpTextID"
+	                                data-win-res="{textContent: 'label.showAgain'}"
+	                                onclick="AppBar.handleEvent('click', 'clickShowHelpText', event)"></button>
+                        </div>
+                    </div>
+                    <div id="helpTextList"
+                         class="listview win-selectionstylefilled"
+                         data-win-control="WinJS.UI.ListView"
+                         data-win-options="{
+                            itemTemplate: select('.data-template')
+                         }">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

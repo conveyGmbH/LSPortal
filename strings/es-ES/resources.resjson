@@ -632,8 +632,10 @@
     "label.siteEventsRoleManagement" : "Role Management",
     "label.eventProducts" : "Produkte",
 	"label.genDataUserInfo" : "Información del usuario",
+    "label.helpTextList" : "Textos de ayuda",
     "label.showMore" : "Ver más >",
     "label.showNoMore" : "No mostrar más",
+    "label.showAgain" : "Mostrar otra vez",
     "label.close" : "Cerrar",
 
     "flyout.ok"             : "OK",

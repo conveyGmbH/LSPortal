@@ -694,8 +694,10 @@
     "label.siteEventsRoleManagement" : "Role Management",
     "label.liveBridgeGrp" : "Masterdata",
     "label.genDataSkillEntry" : "Enter skills",
+    "label.helpTextList" : "Help texts",
     "label.showMore" : "Show more >",
     "label.showNoMore" : "Don't show anymore",
+    "label.showAgain" : "Show again",
     "label.close" : "Close",
 
     "flyout.ok"             : "OK",

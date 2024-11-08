@@ -691,8 +691,10 @@
     "label.siteEventsRoleManagement" : "Management des rôles",
     "label.liveBridgeGrp" : "Données de base",
     "label.genDataSkillEntry" : "Inscrire des compétences",
+    "label.helpTextList" : "Textes d'aide",
     "label.showMore" : "Voir plus >",
     "label.showNoMore" : "Ne plus montrer",
+    "label.showAgain" : "Montrer à nouveau",
     "label.close" : "Fermer",
 
     "flyout.ok"             : "OK",

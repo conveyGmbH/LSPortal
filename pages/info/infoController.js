@@ -87,6 +87,13 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.loading = false;
                     });
+                }).then(function () {
+                    var parentElement = pageElement.querySelector("#helpTextListHost");
+                    if (parentElement) {
+                        return Application.loadFragmentById(parentElement, "helpTextList");
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 });
                 Log.ret(Log.l.trace);
 

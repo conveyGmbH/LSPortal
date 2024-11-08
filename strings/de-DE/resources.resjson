@@ -696,8 +696,10 @@
     "label.clientManagementSummarise" : "Zusammenfassen",
 	"label.liveBridgeGrp" : "Stammdaten",
     "label.genDataSkillEntry" : "Fähigkeiten eintragen",
+    "label.helpTextList" : "Hilfetexte",
     "label.showMore" : "Mehr anzeigen >",
     "label.showNoMore" : "Nicht mehr anzeigen",
+    "label.showAgain" : "Wieder anzeigen",
     "label.close" : "Schließen",
 
     "flyout.ok"             : "OK",

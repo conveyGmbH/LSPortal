@@ -7,3 +7,23 @@
 #showBackButton .win-toggleswitch-header {
     display: none;
 }
+
+#helpTextListHost.fragmenthost {
+    height: 180px;
+}
+
+.view-size-biggest #helpTextListHost.fragmenthost {
+    height: 240px;
+}
+
+.view-size-bigger #helpTextListHost.fragmenthost {
+    height: 360px;
+}
+
+.view-size-medium #helpTextListHost.fragmenthost {
+    height: 480px;
+}
+
+.view-size-medium-small #helpTextListHost.fragmenthost {
+    height: 960px;
+}
