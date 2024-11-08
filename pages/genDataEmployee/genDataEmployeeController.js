@@ -450,18 +450,18 @@
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
+                    // attention: use restriction arrays due to "AND VeranstaltungID=" restriction!
+                    that.binding.restriction.Name = [];
+                    that.binding.restriction.Vorname = [];
+                    that.binding.restriction.Login = [];
+                    that.binding.restriction.Nachname = [];
                     if (event.target.value) {
-                        that.binding.restriction.Name = event.target.value;
-                        that.binding.restriction.Vorname = event.target.value;
-                        that.binding.restriction.Login = event.target.value;
-                        that.binding.restriction.Nachname = event.target.value;
-                        that.binding.restriction.bUseOr = true;
-                    } else {
-                        that.binding.restriction.Name = "";
-                        that.binding.restriction.Vorname = "";
-                        that.binding.restriction.Login = "";
-                        that.binding.restriction.Nachname = "";
+                        that.binding.restriction.Name = [event.target.value, null, null, null];
+                        that.binding.restriction.Vorname = [null, event.target.value, null, null];
+                        that.binding.restriction.Login = [null, null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
