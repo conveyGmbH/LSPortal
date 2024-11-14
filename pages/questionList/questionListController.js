@@ -687,7 +687,7 @@
                         }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             AppBar.busy = false;
-                            var recordId = (json && json.d && json.d.FragenID);
+                            var recordId = (json && json.d && json.d.results && json.d.results.length > 0 && json.d.results[0].FragenID);
                             Log.print(Log.l.info, "PRC_InsertFragen insert: success! recordId=" + recordId);
                             that.binding.questionId = recordId;
                             that.loadData().then(function () {
