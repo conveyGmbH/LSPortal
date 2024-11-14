@@ -40,13 +40,6 @@
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
-                            <input class="input_field win-textbox" type="text" id="searchField" />
-                            </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-	                        <div id="events-container">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <select id="events"
@@ -56,6 +49,16 @@
                                 <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
                             </select>
                         </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <div id="events-container">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
+                                <input class="input_field win-textbox" type="text" id="searchField" />
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
                             <div class="input_group">
                                 <button class="list-button-left win-button" id="btnDateSort"
                                         data-win-bind="textContent: btnDateSort"></button>
