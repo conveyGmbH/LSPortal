@@ -48,13 +48,17 @@
                         master.controller.binding &&
                         typeof master.controller.binding.publishFlag !== "undefined") {
                         that.binding.publishFlag = master.controller.binding.publishFlag;
+                    } else {
+                        if (AppData.generalData) {
+                            that.binding.publishFlag = AppData.generalData.publishFlag;
+                        }
                     }
                 } else {
                     if (AppData.generalData) {
                         that.binding.publishFlag = AppData.generalData.publishFlag;
                     }
                 }
-                var publishFlag = that.binding.generalData.publishFlag;
+                var publishFlag = that.binding.publishFlag;
                 Log.ret(Log.l.trace, publishFlag);
                 return publishFlag;
             }

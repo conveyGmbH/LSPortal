@@ -580,9 +580,7 @@
                                                     });
                                                 }
                                                 if (curPageId === "publish") {
-                                                    if (WinJS.Navigation.canGoBack === true) {
-                                                        WinJS.Navigation.back(1).done();
-                                                    }
+                                                    Application.navigateById("questionList");
                                                 }   
                                             }
                                             AppBar.triggerDisableHandlers();
