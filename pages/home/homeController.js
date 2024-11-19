@@ -305,7 +305,7 @@
             }).then(function () {
                 WinJS.Promise.timeout(50).then(function () {
                     // prüfen ob auf mandantfähigkeit dieses Flag 
-                    if (that.binding.generalData.publishFlag) {
+                    if (that.binding.generalData.publishFlag && AppData._userData && !AppData._userData.IsCustomerAdmin && !AppData._userData.SiteAdmin) {
                         var confirmTitle = getResourceText("start.confirmTextPublish");
                         confirm(confirmTitle, function (result) {
                             if (result) {

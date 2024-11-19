@@ -58,13 +58,13 @@
                 clickPublish: function (event) {
                     Log.call(Log.l.trace, "Publish.Controller.");
                     that.saveData(function (response) {
-                        AppData.getUserData();
-                        //that.loadData();
-                        if (WinJS.Navigation.canGoBack === true) {
-                            WinJS.Navigation.back(1).done();
-                        } else {
-                            Navigator.navigateById(Application.startPageId);
-                        }
+                        AppData.getUserData().then(function() {
+                            if (WinJS.Navigation.canGoBack === true) {
+                                WinJS.Navigation.back(1).done();
+                            } else {
+                                Navigator.navigateById(Application.startPageId);
+                            }
+                        }) ;
                     }, function (errorResponse) {
                         // delete ERROR
                         var message = null;
@@ -123,9 +123,10 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 if (!AppBar.busy) {
+                    var eventId = that.getEventId();
                     AppBar.busy = true;
                     ret = AppData.call("PRC_FragebogenPublizieren", {
-                        pVeranstaltungID: that.getEventId()
+                        pVeranstaltungID: eventId
                     }, function (json) {
                         AppBar.busy = false;
                         // called asynchronously if ok
@@ -133,7 +134,7 @@
                         AppBar.modified = false;
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
-                            master.controller.loadData();
+                            master.controller.loadData(eventId);
                         }
                         complete(json);
                     }, function (errorResponse) {

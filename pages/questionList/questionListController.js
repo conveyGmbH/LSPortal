@@ -29,7 +29,8 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
-                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
+                publishFlag: false
             }, commandList]);
             this.nextUrl = null;
             this.loading = false;
@@ -72,14 +73,25 @@
             this.setEventId = setEventId;*/
 
             var getPublishFlag = function () {
-                var publishFlag = null;
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                var master = Application.navigator.masterControl;
-                if (master && master.controller) {
-                    publishFlag = master.controller.binding.publishFlag;
+                if (AppData._userData && (AppData._userData.IsCustomerAdmin || AppData._userData.SiteAdmin)) {
+                    var master = Application.navigator.masterControl;
+                    if (master &&
+                        master.controller &&
+                        master.controller.binding &&
+                        typeof master.controller.binding.publishFlag !== "undefined") {
+                        that.binding.publishFlag = master.controller.binding.publishFlag;
+                    } else {
+                        if (AppData.generalData) {
+                            that.binding.publishFlag = AppData.generalData.publishFlag;
+                        }
+                    }
                 } else {
-                    publishFlag = that.binding.generalData.publishFlag;
+                    if (AppData.generalData) {
+                        that.binding.publishFlag = AppData.generalData.publishFlag;
+                    }
                 }
+                var publishFlag = that.binding.publishFlag;
                 Log.ret(Log.l.trace, publishFlag);
                 return publishFlag;
             }
@@ -1377,6 +1389,8 @@
                 return ret;
             };
             this.loadData = loadData;
+
+            that.getPublishFlag();
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

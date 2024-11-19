@@ -43,6 +43,8 @@
             this.disabledindexes = [];
 
             var that = this;
+            that.prevRecId = 0;
+            that.curRecId = 0;
 
             // ListView control
             var listView = pageElement.querySelector("#eventList.listview");
@@ -80,7 +82,7 @@
             };
             this.background = background;
 
-            var resetFilters = function() {
+            var resetFilters = function () {
                 that.binding.searchString = "";
                 that.binding.minDate = "";
                 that.binding.maxDate = "";
@@ -231,7 +233,7 @@
                     for (i = 0; i < that.records.length; i++) {
                         var record = that.records.getAt(i);
                         if (record && typeof record === "object" &&
-                            EventList.VeranstaltungView.getRecordId(record) === recordId) {
+                            record.VeranstaltungVIEWID === recordId) {
                             item = record;
                             break;
                         }
@@ -425,8 +427,9 @@
                                         } else {
                                             Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
                                         }
+                                        var prevRecId = that.curRecId;
                                         var newRecId = item.data.VeranstaltungVIEWID;
-                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
+                                        Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId + " prevRecId:" + prevRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
                                             if (that.curRecId) {
                                                 that.prevRecId = that.curRecId;
@@ -580,8 +583,10 @@
                                                     });
                                                 }
                                                 if (curPageId === "publish") {
-                                                    Application.navigateById("questionList");
-                                                }   
+                                                    if (prevRecId && nav.canGoBack === true) {
+                                                        nav.back(1).done();
+                                                    }
+                                                }
                                             }
                                             AppBar.triggerDisableHandlers();
                                         }
@@ -765,86 +770,95 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                        AppData.setErrorMsg(that.binding);
-                    if (!recordId) {
-                        AppData.setErrorMsg(that.binding);
-                        AppData.call("PRC_GetPortalEvents", {
-                            pSearchString: that.binding.searchString,
-                            pMinDate: that.binding.minDate,
-                            pMaxDate: that.binding.maxDate,
-                            pSortField: that.binding.sortField,
-                            pSortType: that.binding.sortType,
-                            pDachboardType: that.binding.dashboardIdx
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.binding.count = results.length;
+                    AppData.setErrorMsg(that.binding);
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_GetPortalEvents", {
+                        pVeranstaltungID: recordId || 0,
+                        pSearchString: that.binding.searchString,
+                        pMinDate: that.binding.minDate,
+                        pMaxDate: that.binding.maxDate,
+                        pSortField: that.binding.sortField,
+                        pSortType: that.binding.sortType,
+                        pDachboardType: that.binding.dashboardIdx
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
+                        if (!recordId) {
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.binding.count = results.length;
 
-                            if (results.length <= 1) {
-                                NavigationBar.disablePage("eventCopy");
-                            } else {
-                                NavigationBar.enablePage("eventCopy");
-                            }
+                                if (results.length <= 1) {
+                                    NavigationBar.disablePage("eventCopy");
+                                } else {
+                                    NavigationBar.enablePage("eventCopy");
+                                }
 
-                            that.records = new WinJS.Binding.List(results);
+                                that.records = new WinJS.Binding.List(results);
 
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.records.dataSource;
-                            }
-                            Log.print(Log.l.trace, "Data loaded");
-                            // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.records.dataSource;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
                                 if (AppData.getRecordId("VeranstaltungEdit")) {
                                     recordId = AppData.getRecordId("VeranstaltungEdit");
                                 } else {
-                            recordId = AppData.getRecordId("Veranstaltung2");
+                                    recordId = AppData.getRecordId("Veranstaltung2");
                                 }
-                            if (recordId) {
-                                if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
-                                    AppBar.scope.setEventId(recordId);
+                                if (recordId) {
+                                    if (AppBar.scope && typeof AppBar.scope.setEventId === "function") {
+                                        AppBar.scope.setEventId(recordId);
+                                    }
+                                    that.selectRecordId(recordId);
+                                } else {
+                                    if (listView && listView.winControl) {
+                                        listView.winControl.selection.set(0);
+                                    }
                                 }
-                                that.selectRecordId(recordId);
                             } else {
-                                if (listView && listView.winControl) {
-                                    listView.winControl.selection.set(0);
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.records = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+
+                        } else {
+                            if (json && json.d && json.d.results && json.d.results[0] && that.records) {
+                                var scope = that.scopeFromRecordId(recordId);
+                                if (scope) {
+                                    var prevNotifyModified = AppBar.notifyModified;
+                                    AppBar.notifyModified = false;
+                                    var item = json.d.results[0];
+                                    that.resultConverter(item, scope.index);
+                                    that.records.setAt(scope.index, item);
+                                    AppBar.notifyModified = prevNotifyModified;
                                 }
                             }
-                        } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-                            that.records = null;
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
-                            }
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
                         }
-                            
-                            Log.ret(Log.l.trace);
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_GetPortalEvents error");
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        });
-                    } else {
-                        var err = { status: 0, statusText: "no record selected" };
+
+                        Log.ret(Log.l.trace);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_GetPortalEvents error");
                         if (typeof error === "function") {
-                            error(err);
-                            }
+                            error(errorResponse);
                         }
+                    });
                     Log.ret(Log.l.trace);
                 }).then(function () {
                     var curPageId = Application.getPageId(nav.location);

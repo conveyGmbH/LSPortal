@@ -41,7 +41,7 @@
 
             var getPublishFlag = function () {
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                if (that.binding.genDataFlag) {
+                if (AppData._userData && (AppData._userData.IsCustomerAdmin || AppData._userData.SiteAdmin)) {
                     var master = Application.navigator.masterControl;
                     if (master &&
                         master.controller &&
