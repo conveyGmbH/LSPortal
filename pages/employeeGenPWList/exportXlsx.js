@@ -367,7 +367,9 @@
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
-                    }, { GenPassword: ["NOT NULL"] });
+                        }, {
+                        GenPassword: ["NOT NULL"],
+                        VeranstaltungID: AppData.getRecordId("Veranstaltung2") });
                 }
                 Log.ret(Log.l.trace);
             },

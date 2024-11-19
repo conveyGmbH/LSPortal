@@ -332,6 +332,7 @@
         { id: "genDataEmployee", master: "genDataEmpList" },
         { id: "genDataUserInfo", master: "genDataEmpList" },
         { id: "genDataSkillEntry", master: "genDataEmpList" },
+        { id: "employeeGenPWList", master: "genDataEmpList" },
         { id: "eventProducts", master: "eventList" }, 
         { id: "optQuestionList", master: "eventList" },
         { id: "questionList", master: "eventList" },

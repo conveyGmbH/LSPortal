@@ -21,6 +21,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
+                restriction: copyByValue(EmployeeGenPWList.employeePWView.defaultRestriction),
                 veranstaltungId: 0,
                 fairmandantId: 0,
                 firstentry: 0,
@@ -52,6 +53,19 @@
                     that.employeePWListdata = null;
                 }
             }
+
+            var saveRestriction = function () {
+                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                } else {
+                    that.binding.restriction.Aktiv = ["X", "X", "X"];
+                }
+                that.binding.restriction.bAndInEachRow = true;
+                that.binding.restriction.bUseOr = false;
+                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
+                AppData.setRestriction("Employee", that.binding.restriction);
+            }
+            this.saveRestriction = saveRestriction;
 
             var setInitialHeaderTextValue = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -99,7 +113,7 @@
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
                                 return function () {
-                                    var restriction = EmployeeGenPWList.defaultRestriction;
+                                    var restriction = EmployeeGenPWList.employeePWView.defaultRestriction;
                                     var sortId = myrow.value;
                                     var sorttext = myrow.textContent;
                                 };
@@ -273,6 +287,129 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
+                },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    // attention: use restriction arrays due to "AND VeranstaltungID=" restriction!
+                    that.binding.restriction.Name = [];
+                    that.binding.restriction.Vorname = [];
+                    that.binding.restriction.Login = [];
+                    that.binding.restriction.Nachname = [];
+                    if (event.target.value) {
+                        that.binding.restriction.Name = [event.target.value, null, null, null];
+                        that.binding.restriction.Vorname = [null, event.target.value, null, null];
+                        that.binding.restriction.Login = [null, null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, null, event.target.value];
+                        that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        that.loadDataDelayed(master.controller.loadData());
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                changeEventId: function (event) {
+                    Log.call(Log.l.trace, "Event.Controller.");
+                    if (event.target.value) {
+                        that.binding.restriction.VeranstaltungID = event.target.value;
+                        // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                        AppData.setRecordId("Veranstaltung2",
+                            (typeof that.binding.restriction.VeranstaltungID === "string") ?
+                            parseInt(that.binding.restriction.VeranstaltungID) : that.binding.restriction.VeranstaltungID);
+                    } else {
+                        delete that.binding.restriction.VeranstaltungID;
+                        AppData.setRecordId("Veranstaltung2", 0);
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    that.loadData();
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderFirstname: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "Vorname";
+                    if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderLastname: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "Nachname";
+                    if (event.target.textContent === getResourceText("employee.nameAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
+                    if (event.target.textContent === getResourceText("employee.licenceAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        if (master && master.controller &&
+                            typeof master.controller.highlightorderLicenceBtn === "function") {
+                            master.controller.highlightorderLicenceBtn(0);
+                        }
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        if (master && master.controller &&
+                            typeof master.controller.highlightorderLicenceBtn === "function") {
+                            master.controller.highlightorderLicenceBtn(1);
+                        }
+                    }
+                    that.saveRestriction();
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickFilterLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
+                    var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === "red") {
+                        //that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
+                    } else {
+                        //that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
+                    }
+                    that.saveRestriction();
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+
+
                 }
             };
             this.disableHandlers = {
@@ -342,7 +479,7 @@
                     },
                     {
                         GenPassword: ['NOT NULL'],
-                        VeranstaltungID: AppData.getRecordId("Veranstaltung")
+                        VeranstaltungID: AppData.getRecordId("Veranstaltung2")
                     });
                 });
                 Log.ret(Log.l.trace);

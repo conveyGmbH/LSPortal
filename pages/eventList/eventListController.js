@@ -772,7 +772,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppData.setErrorMsg(that.binding);
-                    AppData.call("PRC_GetPortalEvents", {
+                    return AppData.call("PRC_GetPortalEvents", {
                         pVeranstaltungID: recordId || 0,
                         pSearchString: that.binding.searchString,
                         pMinDate: that.binding.minDate,
@@ -859,7 +859,6 @@
                             error(errorResponse);
                         }
                     });
-                    Log.ret(Log.l.trace);
                 }).then(function () {
                     var curPageId = Application.getPageId(nav.location);
                     that.hideBtnFilterNotPublished(curPageId);

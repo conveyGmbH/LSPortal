@@ -37,6 +37,14 @@
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
+            },
+            defaultRestriction: {
+                Vorname: "",
+                Nachname: "",
+                Login: "",
+                Names: "",
+                OrderAttribute: "Nachname",
+                OrderDesc: false
             }
         },
         _employeePWExportView: {
