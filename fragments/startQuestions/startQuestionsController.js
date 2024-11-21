@@ -303,7 +303,9 @@
                                 that.answerdata = [];
                                 that.answerticks = [];
                                 that.answerdataID = [];
-                                that.answerChart.destroy();
+                                if (that.answerChart) {
+                                    that.answerChart.destroy();
+                                }
                             }
                         }
                         return WinJS.Promise.as();
