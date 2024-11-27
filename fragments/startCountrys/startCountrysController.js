@@ -298,7 +298,9 @@
                             that.worldMapHeight = 0;
                             that.worldChart(true);
                         } else {
-                            that.worldMap.svg.remove();
+                            if (that.worldMap && that.worldMap.svg) {
+                                that.worldMap.svg.remove();
+                            }
                         }
 
                     }, function (errorResponse) {
