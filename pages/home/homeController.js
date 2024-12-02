@@ -163,11 +163,11 @@
             }
             this.resizeTileContainer = resizeTileContainer;
 
-            /*var resultConverter = function (item, index) {
+            var resultConverter = function (item, index) {
                 item.index = index;
                 Home._actions.push({ page: item.Page, imageName: item.ImageName});
             }
-            this.resultConverter = resultConverter;*/
+            this.resultConverter = resultConverter;
 
             var setImg = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -196,7 +196,7 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 if (Home._actions) {
-                    //Home._actions = [];
+                    Home._actions = [];
                     Home._actions = Home._actionsdefault;
                 }
                 var ret = new WinJS.Promise.as().then(function () {
@@ -209,15 +209,15 @@
                         if (json && json.d && json.d.results && json.d.results.length) {
                             var results = json.d.results;
                             var tileCount = results.length;
-                            //results.forEach(function (item, index) {
-                            //that.resultConverter(item, index);
-                            //});
+                            results.forEach(function (item, index) {
+                            that.resultConverter(item, index);
+                            });
                             that.resizeTileContainer(tileCount);
                             Log.print(Log.l.trace, "StartPageTileView: success!");
-                        } //else {
-                        //Home._actions = Home._actionsdefault;
-                        //Log.print(Log.l.trace, "StartPageTileView: success!");
-                       //}
+                        } else {
+                        Home._actions = Home._actionsdefault;
+                        Log.print(Log.l.trace, "StartPageTileView: success!");
+                       }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
