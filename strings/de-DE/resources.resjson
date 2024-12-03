@@ -1115,6 +1115,8 @@
     "siteevents.auswertungsvariante" : "Auswertungsvariante",
     "siteevents.ordernumber" : "StandID / Bestellnummer",
     "siteevents.servername" : "Server Name",
+    "siteevents.mailtype" : "Mail-Typ",
+    "siteevents.productlist" : "Produkte",
 
 
     "siteeventsneuaus.title" : "Neuer Aussteller",

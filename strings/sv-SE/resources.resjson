@@ -992,6 +992,8 @@
     "siteevents.eventpermuser"   : "Do you want to convert this exhibitor to a regular customer?",
     "siteevents.loadListBig" : "Large exhibitor list",
     "siteevents.loadListSmall": "Small list of exhibitors",
+    "siteevents.mailtype" : "Mailtyp",
+    "siteevents.productlist" : "Produktlista",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",

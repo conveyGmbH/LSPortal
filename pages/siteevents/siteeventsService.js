@@ -79,7 +79,9 @@
             DUNSNumber: "",
             Auswertungsvariante: "",
             OrderNumber: "",
-            Servername: ""
+            Servername: "",
+			ProductList: "",
+			MailCategory: ""
         },
         defaultHeaderLabelRestriction: {
             FairMandant_NameLabel: "",
@@ -104,7 +106,9 @@
             DUNSNumber: "",
             Auswertungsvariante: "",
             OrderNumber: "",
-            Servername:""
+            Servername:"",
+			ProductList: "",
+			MailCategory: ""
         },
         _registrationView: {
             get: function () {

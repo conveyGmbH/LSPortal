@@ -1110,6 +1110,8 @@
     "siteevents.auswertungsvariante" : "Variante di valutazione",
     "siteevents.ordernumber" : "ID stand / Numero ordine",
     "siteevents.servername" : "Nome del server",
+    "siteevents.mailtype" : "Tipo di posta",
+    "siteevents.productlist" : "Elenco prodotti",
 
     "siteeventsneuaus.title" : "Nuovo espositore",
     "siteeventsneuaus.veranstaltungsname" : "nome dell'evento",

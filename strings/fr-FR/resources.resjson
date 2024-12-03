@@ -1111,6 +1111,8 @@
     "siteevents.lastlogintotheportal" : "Dernière connexion au portail",
     "siteevents.ordernumber" : "ID du stand / Numéro de commande",
     "siteevents.servername" : "Nom du serveur",
+    "siteevents.mailtype" : "Type de courrier",
+    "siteevents.productlist" : "Liste des produits",
 
     "siteeventsneuaus.title" : "Nouvel exposant",
     "siteeventsneuaus.veranstaltungsname" : "nom de l'événement",

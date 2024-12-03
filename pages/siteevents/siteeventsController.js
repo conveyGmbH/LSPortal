@@ -122,6 +122,8 @@
                 that.binding.dataSiteeventsHeaderText.Auswertungsvariante = getResourceText("siteevents.auswertungsvariante");
                 that.binding.dataSiteeventsHeaderText.OrderNumber = getResourceText("siteevents.ordernumber");
                 that.binding.dataSiteeventsHeaderText.Servername = getResourceText("siteevents.servername");
+                that.binding.dataSiteeventsHeaderText.MailCategory = getResourceText("siteevents.mailtype");
+                that.binding.dataSiteeventsHeaderText.ProductList = getResourceText("siteevents.productlist");
                //value part
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Name = 1;
                 that.binding.dataSiteeventsHeaderValue.FairMandant_Ansprechpartner = 2;
@@ -146,6 +148,8 @@
                 that.binding.dataSiteeventsHeaderValue.Auswertungsvariante = 21;
                 that.binding.dataSiteeventsHeaderValue.OrderNumber = 22;
                 that.binding.dataSiteeventsHeaderValue.Servername = 23;
+                that.binding.dataSiteeventsHeaderValue.MailCategory = 24;
+                that.binding.dataSiteeventsHeaderValue.ProductList = 25;
             }
             this.setInitialHeaderTextValue = setInitialHeaderTextValue;
 
@@ -198,6 +202,10 @@
                         return "OrderNumber";
                     case getResourceText("siteevents.servername"):
                         return "Servername";
+                    case getResourceText("siteevents.mailType"):
+                        return "MailCategory";
+                    case getResourceText("siteevents.productList"):
+                        return "ProductList";
                 default:
                 }
             }
@@ -211,7 +219,7 @@
                 // Check if the table exists
                 if (table) {
                     for (var i = 0; i < table.rows.length; i++) {
-                        // Get the 5th cell 
+                        // Get the 5th cell
                         var cell7 = table.rows[i].cells[6];
 
                         // Get the cell value as a number
@@ -304,6 +312,12 @@
                     }
                     if (cells[i].title === "23") {
                         cells[i].title = getResourceText("siteevents.servername");
+                    }
+                    if (cells[i].title === "24") {
+                        cells[i].title = getResourceText("siteevents.mailtype");
+                    }
+                    if (cells[i].title === "25") {
+                        cells[i].title = getResourceText("siteevents.productlist");
                     }
                 }
             }
@@ -1433,7 +1447,7 @@
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-                
+
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);

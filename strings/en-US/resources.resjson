@@ -1095,6 +1095,8 @@
     "siteevents.servername" : "Servername",
     "siteevents.loadListBig" : "Large exhibitor list",
     "siteevents.loadListSmall": "Small exhibitor list",
+    "siteevents.mailtype" : "Mail type",
+    "siteevents.productlist" : "Product List",
 		
     "siteevents.exhibitorname" : "Exhibitor name",
     "siteevents.contact" : "Contact",
