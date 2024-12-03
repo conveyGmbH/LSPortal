@@ -393,8 +393,8 @@
                             that.changeSetting("showCamera", 1);
                             that.changeSetting("showSketch", 1);
                             that.changeSetting("showManually", 1);
-                            that.changeSetting("showQRCode", 0);
-                            that.changeSetting("showPrivacyPolicySVG", 1);
+                            //that.changeSetting("showQRCode", 0);
+                            //that.changeSetting("showPrivacyPolicySVG", 1);
                         }
                         break;
                     case "showManually":
