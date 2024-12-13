@@ -832,7 +832,7 @@
             var lang = AppData.getLanguageId();
             var ret = AppData.call("PRC_GetAppHelpText", {
                 pAppProjectTitle: "Portal",
-                pAppPageTitle: pageId,
+                pStartPageTitle: pageId,
                 pLanguageSpecID: lang
             }, function (json) {
                 Log.print(Log.l.info, "call PRC_GetAppHelpText: success! ");
