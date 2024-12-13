@@ -1,4 +1,4 @@
-﻿﻿// controller for page: info
+﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -61,7 +61,7 @@
                 }
             }
 
-            var handleVisibleList = function(hasLocal, siteadmin) {
+            var handleVisibleList = function (hasLocal, siteadmin) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 if (that.binding.addEventFormFlag) {
                     if (hasLocal === 1 || siteadmin === 1) {
@@ -74,7 +74,7 @@
             }
             that.handleVisibleList = handleVisibleList;
 
-            var resetVisibleList = function() {
+            var resetVisibleList = function () {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 that.binding.addEventFormFlag = (AppHeader.controller.binding.userData.SiteAdmin ||
                     AppHeader.controller.binding.userData.HasLocalEvents);
@@ -83,16 +83,16 @@
             this.resetVisibleList = resetVisibleList;
 
             var setRoleVisible = function () {
-                    if (!AppHeader.controller.binding.userData.SiteAdmin && AppHeader.controller.binding.userData.HasLocalEvents) {
-                        that.binding.setRoleVisible = 1;
-                        that.binding.setRoleCheckVisible = 0;
-                    } else if (AppHeader.controller.binding.userData.SiteAdmin) {
-                        that.binding.setRoleVisible = 1;
-                        that.binding.setRoleCheckVisible = 1;
-                    } else {
-                        that.binding.setRoleVisible = 0;
-                        that.binding.setRoleCheckVisible = 0;
-                    }
+                if (!AppHeader.controller.binding.userData.SiteAdmin && AppHeader.controller.binding.userData.HasLocalEvents) {
+                    that.binding.setRoleVisible = 1;
+                    that.binding.setRoleCheckVisible = 0;
+                } else if (AppHeader.controller.binding.userData.SiteAdmin) {
+                    that.binding.setRoleVisible = 1;
+                    that.binding.setRoleCheckVisible = 1;
+                } else {
+                    that.binding.setRoleVisible = 0;
+                    that.binding.setRoleCheckVisible = 0;
+                }
             }
             this.setRoleVisible = setRoleVisible;
 
@@ -662,7 +662,7 @@
                             //smallest List color change
                             var circleElement = pageElement.querySelector('#nameInitialcircle');
                             if (circleElement && circleElement.style) {
-                            circleElement.style.backgroundColor = Colors.accentColor;
+                                circleElement.style.backgroundColor = Colors.accentColor;
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
@@ -817,7 +817,7 @@
                         }*/
                     }, function (errorResponse) {
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { LanguageSpecID: AppData.getLanguageId()});
+                    }, { LanguageSpecID: AppData.getLanguageId() });
                 }).then(function () {
                     if (recordId) {
                         that.events = null;
@@ -915,6 +915,7 @@
             var saveData = function (complete, error) {
                 var errorMessage;
                 var err = null;
+                var errorLicenseExceeded = false;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
@@ -953,21 +954,49 @@
                     return WinJS.Promise.wrapError(errorMessage);
                 }
                 AppBar.busy = true;
-                var ret = GenDataEmployee.employeeView.update(function (response) {
-                    // called asynchronously if ok
-                    Log.print(Log.l.info, "employeeData update: success!");
-                }, function (errorResponse) {
-                    AppBar.busy = false;
-                    err = errorResponse;
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        if (typeof error === "function") {
-                            error(errorResponse);
+                // TODO Vor dem Update neue procedure Aufrufen die prüft ob noch lizenz frei sind. 
+                var ret = new WinJS.Promise.as().then(function () {
+                    return AppData.call("PRC_CheckMAChange", {
+                        pMAID: dataEmployee.MitarbeiterVIEWID,
+                        pNewAPUserRoleID: dataEmployee.INITAPUserRoleID,
+                        pNewLoginName: dataEmployee.Login
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var result = json.d.results[0];
+                            if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
+                                errorLicenseExceeded = true;
+                                alert("ResultCode: " + result.ResultCode + " " + result.ResultMessage);
+                            }
                         }
-                    });
-                }, recordId, dataEmployee).then(function () {
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                        AppData.setErrorMsg(that.binding, error);
+                        if (typeof error === "function") {
+                            error(error);
+                        }
+                    })
+
+                }).then(function () {
+                    if (errorLicenseExceeded) {
+                        return WinJS.Promise.as();
+                    }
+                    return GenDataEmployee.employeeView.update(function (response) {
+                        // called asynchronously if ok
+                        Log.print(Log.l.info, "employeeData update: success!");
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        err = errorResponse;
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                    }, recordId, dataEmployee)
+                }).then(function () {
                     if (err) {
                         return WinJS.Promise.as();
                     } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
