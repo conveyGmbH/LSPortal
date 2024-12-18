@@ -953,6 +953,9 @@
                     }
                     return WinJS.Promise.wrapError(errorMessage);
                 }
+                if (dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string") {
+                    dataEmployee.INITAPUserRoleID = parseInt(dataEmployee.INITAPUserRoleID);
+                }
                 AppBar.busy = true;
                 // TODO Vor dem Update neue procedure Aufrufen die prüft ob noch lizenz frei sind. 
                 var ret = new WinJS.Promise.as().then(function () {
