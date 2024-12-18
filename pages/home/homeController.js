@@ -95,7 +95,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (eventInfo && eventInfo.detail) {
                         Log.print(Log.l.trace, "itemIndex=" + eventInfo.detail.itemIndex);
-                        var item = Home.actionsView.getAt(eventInfo.detail.itemIndex);
+                        var item = Home._actionsList.getAt(eventInfo.detail.itemIndex);
                         if (item && item.page) {
                             Application.navigateById(item.page, event);
                         }
@@ -165,7 +165,7 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                Home._actions.push({ page: item.Page, imageName: item.ImageName});
+                Home._actions.push({ page: item.Page, imageName: item.ImageName, PageTitle: item.PageTitle, PageSubTitle: item.PageSubTitle});
             }
             this.resultConverter = resultConverter;
 
@@ -197,7 +197,6 @@
                 AppData.setErrorMsg(that.binding);
                 if (Home._actions) {
                     Home._actions = [];
-                    Home._actions = Home._actionsdefault;
                 }
                 var ret = new WinJS.Promise.as().then(function () {
                     return Home.StartPageTileView.select(function (json) {
@@ -215,7 +214,7 @@
                             that.resizeTileContainer(tileCount);
                             Log.print(Log.l.trace, "StartPageTileView: success!");
                         } else {
-                        Home._actions = Home._actionsdefault;
+                        Home._actions = [];
                         Log.print(Log.l.trace, "StartPageTileView: success!");
                        }
                     }, function (errorResponse) {
@@ -264,8 +263,9 @@
                         listView.winControl._layout.orientation = WinJS.UI.Orientation.vertical;
                     }
                     // add ListView dataSource
-                    that.binding.count = Home.actionsView.length;
-                    listView.winControl.itemDataSource = Home.actionsView.dataSource;
+                    that.binding.count = Home._actions.length;
+                    Home._actionsList = new WinJS.Binding.List(Home._actions);
+                    listView.winControl.itemDataSource = Home._actionsList.dataSource;
                 }
                 return WinJS.Promise.as();
             }).then(function () {
