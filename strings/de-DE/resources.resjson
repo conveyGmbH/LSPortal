@@ -1185,7 +1185,7 @@
     "clientmanagement.city" : "Stadt",
     "clientmanagement.country" : "Land",
     "clientmanagement.telefon" : "Telefon",
-    "clientmanagement.createapiuser" : "Erstelle Api-User",
+    "clientmanagement.createapiuser" : "Erstelle Api-User für LiveBridge",
     "clientmanagement.apidata" : "Api-User Daten",
 
 

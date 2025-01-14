@@ -1073,6 +1073,8 @@
     "clientmanagement.city" : "Stadt",
     "clientmanagement.country" : "Land",
     "clientmanagement.telefon" : "Telefon",
+    "clientmanagement.createapiuser" : "Crear un usuario API para LiveBridge",
+    "clientmanagement.apidata" : "Api-User Daten",
 
     "clientmanagementlist.title" : "Mandant",
     "clientmanagementlist.count" : "Anzahl",
