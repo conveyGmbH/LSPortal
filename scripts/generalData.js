@@ -984,7 +984,7 @@
                 icon = "midi_admin";
             } else if (value === 10) {
                 //Temp-Admin
-                icon = "cust_admin2";
+                icon = "tmp_admin";
             } else if (value === 11) {
                 //Reporting
                 icon = "reporting";
