@@ -801,6 +801,11 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     font-size: 15px;
 }
 
+.user-role-field {
+    float: right;
+    font-size: 12px;
+}
+
 .user-overlay-container {
     display: block;
     position: absolute;
@@ -928,18 +933,18 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     }
 
     .status-on-off {
-        max-width: 178px;
+        max-width: 233px;
     }
 
     .user-name-field {
         font-size: 12px;
     }
-    .publish-button {
-        right: 150px;
+    .user-role-field {
+        font-size: 12px;
     }
 }
 
-@media (max-width:499px) {
+@media (max-width:605px) {
 
     .user-name-container {
         padding-top: 4px;
@@ -966,8 +971,13 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
         font-size: 12px;
         line-height: 1.167;
     }
+    .user-role-field {
+        font-size: 12px;
+        line-height: 1.167;
+    }
     .publish-button {
         width: 200px;
+        right: 235px;
     }
     .publish-button .win-button {
         font-size: 10px;

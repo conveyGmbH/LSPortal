@@ -499,7 +499,7 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
-            }).then(function () {
+            })/*.then(function () {
                 WinJS.Promise.timeout(50).then(function () {
                     if (AppHeader.controller.binding.userData.IsNoAdminUser) {
                         var confirmTitle = getResourceText("start.confirmIsAppUser");
@@ -507,7 +507,7 @@
                     }
                 });
                 Log.print(Log.l.trace, "IsAppUser: alertbox");
-            }).then(function () {
+            })*/.then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 return WinJS.Promise.timeout(Application.pageframe.splashScreenDone ? 0 : 1000);
             }).then(function () {
@@ -516,7 +516,7 @@
             }).then(function () {
                 WinJS.Promise.timeout(50).then(function () {
                     // prüfen ob auf mandantfähigkeit dieses Flag 
-                    if (that.binding.generalData.publishFlag) {
+                    if (!AppHeader.controller.binding.userData.IsNoAdminUser && that.binding.generalData.publishFlag) {
                         var confirmTitle = getResourceText("start.confirmTextPublish");
                         confirm(confirmTitle, function (result) {
                             if (result) {

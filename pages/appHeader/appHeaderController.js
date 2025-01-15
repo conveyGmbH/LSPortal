@@ -55,7 +55,7 @@
                     }
                 } else {
                     if (AppData.generalData) {
-                        that.binding.publishFlag = AppData.generalData.publishFlag;
+                        that.binding.publishFlag = !AppHeader.controller.binding.userData.IsNoAdminUser && AppData.generalData.publishFlag;
                     }
                 }
                 var publishFlag = that.binding.publishFlag;
