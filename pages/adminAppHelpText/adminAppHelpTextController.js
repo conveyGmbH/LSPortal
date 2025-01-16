@@ -144,7 +144,7 @@
                         };
 
                         reader.readAsText(file); // Datei als Text lesen
-
+                        fileInput.value = "";
                         AppBar.modified = true;
                     } else {
                         alert("Keine Datei ausgewählt!");
