@@ -283,7 +283,7 @@
         { id: "eventProducts", group: 2, disabled: false },
         { id: "siteeventsImport", group: 13, disabled: false },
         { id: "clientManagementSummarise", group: 75, disabled: false },
-        { id: "adminAppHelpText", group: 76, disabled: false }
+        { id: "adminAppHelpText", group: 76, disabled: false },
     ];
 
 
