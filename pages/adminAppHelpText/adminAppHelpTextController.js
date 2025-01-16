@@ -78,18 +78,16 @@
                                 // called asynchronously if ok
                                 Log.print(Log.l.info, "dataPage update: success!");
                                 AppBar.modified = false;
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller) {
-                                    master.controller.loadData()/*.then(function () {
-                                        master.controller.selectRecordId(getRecordId());
-                                    })*/;
-                                }
                                 if (typeof complete === "function") {
                                     complete(dataPage);
+                                } else {
+                                        var master = Application.navigator.masterControl;
+                                        if (master && master.controller) {
+                                            master.controller.loadData();
+                                        }
                                 }
                             }, function (errorResponse) {
                                 AppBar.busy = false;
-                                err = errorResponse;
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
@@ -155,12 +153,7 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.saveData(function (response) {
-                        // called asynchronously if ok
-                        that.loadData();
-                    }, function (errorResponse) {
-                        // error already displayed
-                    });
+                    that.saveData();
                     Log.ret(Log.l.trace);
                 },
                 blockEnterKey: function (event) {

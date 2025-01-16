@@ -26,12 +26,12 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.titledata'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.titledata'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.Title Binding.Mode.twoway" />
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.Title Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
                         </div>
                         <div class="field_line">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.subTitle'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.subTitle'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.SubTitle Binding.Mode.twoway" />
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.SubTitle Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
                         </div>
                         <div class="line-separator"></div>
                         <div class="doc-container-helptext" data-win-bind="style.display: showVideo Binding.Converter.toDisplay">
@@ -41,13 +41,13 @@
                             <div class="field_line field_line_odd">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.mediaURL'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.mediaURL'}"></span>
-                                <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.MediaURL Binding.Mode.twoway" />
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.MediaURL Binding.Mode.twoway" data-win-bind-onevent="oninput"/>
                             </div>
                             <div class="line-separator"></div>
                             <div class="field_line">
                                 <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.bodyText'}"></span>
                                 <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.bodyText'}"></span>
-                                <textarea id="textField" class="input_field win-textarea input_text_comment_big" data-win-bind="value: pageData.BodyText Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                                <textarea id="textField" class="input_field win-textarea input_text_comment_big" data-win-bind="value: pageData.BodyText Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)" data-win-bind-onevent="oninput"></textarea>
                                 <span class="input_field" data-win-bind="textContent: dataContact.Bemerkungen"></span>
                             </div>
                             <div class="line-separator"></div>
