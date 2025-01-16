@@ -138,7 +138,7 @@
 
                         // Datei wird gelesen
                         reader.onload = (e) => {
-                            textField.value = e.target.result; // Inhalt in das Textarea einfügen
+                            that.binding.pageData.BodyText = e.target.result; // Inhalt in das Textarea einfügen
                         };
 
                         reader.onerror = (e) => {
@@ -162,6 +162,19 @@
                         // error already displayed
                     });
                     Log.ret(Log.l.trace);
+                },
+                blockEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickOk")
+                            AppBar.commandList[i].key = null;
+                    }
+
+                },
+                releaseEnterKey: function (event) {
+                    for (var i = 0; i < AppBar.commandList.length; i++) {
+                        if (AppBar.commandList[i].id === "clickOk")
+                            AppBar.commandList[i].key = WinJS.Utilities.Key.enter;
+                    }
                 },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
