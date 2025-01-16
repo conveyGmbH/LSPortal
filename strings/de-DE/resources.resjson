@@ -1862,5 +1862,14 @@
     "reportingdownload.title"			: "Export Download",
 
     "clientManagementSummarise.join"			: "Zusammenfassen",
-    "clientManagementSummarise.jointxt"			: "Wollen sie diese beiden Mandanten wirklich zusammenfügen?"
+    "clientManagementSummarise.jointxt"			: "Wollen sie diese beiden Mandanten wirklich zusammenfügen?",
+
+    "adminAppHelpTextList.title"			: "Seiten",
+
+    "adminAppHelpText.title"			: "Seitenhilfstext",
+    "adminAppHelpText.titledata"			: "Titel",
+    "adminAppHelpText.subTitle"			: "Titelbeschreibungstext",
+    "adminAppHelpText.mediaURL"			: "Medien-Url",
+    "adminAppHelpText.bodyText"			: "Hilfstext",
+    "adminAppHelpText.htmlupload"			: "Html Datei upload"
 }		

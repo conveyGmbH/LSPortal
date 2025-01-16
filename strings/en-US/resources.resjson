@@ -1853,6 +1853,14 @@
     "clientManagementSearchList.fairs"			: "Fairs",
 
     "clientManagementSummarise.join"			: "Summarise",
-    "clientManagementSummarise.jointxt"			: "Do you really want to join these two clients?"
+    "clientManagementSummarise.jointxt"			: "Do you really want to join these two clients?",
 
+    "adminAppHelpTextList.title"			: "Pages",
+
+    "adminAppHelpText.title"			: "Page help text",
+    "adminAppHelpText.titledata"			: "Title",
+    "adminAppHelpText.subTitle"			: "Title description text",
+    "adminAppHelpText.mediaURL"			: "Media url",
+    "adminAppHelpText.bodyText"			: "Help text",
+    "adminAppHelpText.htmlupload"			: "Html file upload"
 }

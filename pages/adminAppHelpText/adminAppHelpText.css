@@ -1,0 +1,14 @@
+﻿#noteFrame.player,
+#noteVideo.player,
+#noteAudio.player 
+{ 
+    width: 30%;
+    margin-left: 2%;
+}
+doc-container-helptext {
+    width: 30%;
+    margin-left: 2%;
+}
+.fileinputbox {
+    margin-left: 2%;
+}

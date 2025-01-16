@@ -346,7 +346,7 @@
         //{ id: "contactResultsCriteria", master: "contactList" },
         { id: "contactResultsEvents", master: "contactList" },
         { id: "startPremium", master: "eventList" }
-
+        { id: "adminAppHelpText", master: "adminAppHelpTextList" }
     ];
 
     // init page for app startup

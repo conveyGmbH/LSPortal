@@ -1833,5 +1833,14 @@
     "clientManagementSearchList.fairs"			: "Salons",
 
     "clientManagementSummarise.join"			: "Fusionner",
-    "clientManagementSummarise.jointxt"			: "Voulez-vous vraiment fusionner ces deux mandants ?"
+    "clientManagementSummarise.jointxt"			: "Voulez-vous vraiment fusionner ces deux mandants ?",
+	
+    "adminAppHelpTextList.title"			: "Pages",
+
+    "adminAppHelpText.title"			: "Texte auxiliaire de la page",
+    "adminAppHelpText.titledata"			: "Titre",
+    "adminAppHelpText.subTitle"			: "Texte de description du titre",
+    "adminAppHelpText.mediaURL"			: "URL du média",
+    "adminAppHelpText.bodyText"			: "Texte d'aide",
+    "adminAppHelpText.htmlupload"			: "Télécharger le fichier html"
 }

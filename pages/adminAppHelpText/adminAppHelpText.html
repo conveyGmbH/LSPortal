@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="adminAppHelpText.css" rel="stylesheet"/>
+    <script type="text/javascript" src="adminAppHelpTextService.js"></script>
+    <script type="text/javascript" src="adminAppHelpTextController.js"></script>
+    <script type="text/javascript" src="adminAppHelpText.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="adminAppHelpText fragment">
+        <div id="adminAppHelpTextController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="header-separator"></div>
+                    <div class="content-header">
+                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
+                        <div class="content-header-line win-type-caption">
+                            <span class="id-field"></span>
+                            <span class="caption-field" data-win-res="{textContent: 'adminAppHelpText.title'}"></span>
+                            <span class="date-field"></span>
+                        </div>
+                    </div>
+                    <div class="content-record"
+                         data-win-bind="style.display: pageData.LangAppHelpTextVIEWID Binding.Converter.toDisplay">
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.titledata'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.titledata'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.Title Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.subTitle'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.subTitle'}"></span>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.SubTitle Binding.Mode.twoway" />
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="doc-container-helptext" data-win-bind="style.display: showVideo Binding.Converter.toDisplay">
+                            <iframe id="noteFrame" class="player" src=""></iframe>
+                        </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line field_line_odd">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.mediaURL'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.mediaURL'}"></span>
+                                <input class="input_field win-textbox" type="text" data-win-bind="value: pageData.MediaURL Binding.Mode.twoway" />
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="field_line">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.bodyText'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.bodyText'}"></span>
+                                <textarea id="textField" class="input_field win-textarea input_text_comment_big" data-win-bind="value: pageData.BodyText Binding.Mode.twoway" onfocusin="AppBar.handleEvent('focusin', 'blockEnterKey', event)" onfocusout="AppBar.handleEvent('focusout', 'releaseEnterKey', event)"></textarea>
+                                <span class="input_field" data-win-bind="textContent: dataContact.Bemerkungen"></span>
+                            </div>
+                            <div class="line-separator"></div>
+                            <div class="fileinputbox">
+                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'adminAppHelpText.htmlupload'}"></span>
+                                <span class="label landscape_only" data-win-res="{textContent: 'adminAppHelpText.htmlupload'}"></span><br />
+                                <input type="file" id="myFile">
+                                <button onclick="AppBar.handleEvent('click', 'onFileInput', event)" data-win-res="{textContent: 'siteevents.uploadbtn'}"></button><br />
+                                <span id="inputmsg"></span>
+                            </div>
+                    </div>
+                    </div>
+                <div class="error-message"
+                     data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+            </section>
+        </div>
+    </div>
+ </body>
+</html>

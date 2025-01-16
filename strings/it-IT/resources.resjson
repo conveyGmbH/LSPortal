@@ -1831,5 +1831,14 @@
     "clientManagementSearchList.fairs"			: "Fiere",
 
     "clientManagementSummarise.join"			: "Unisci",
-    "clientManagementSummarise.jointxt"			: "Vuoi davvero unire questi due clienti?"
+    "clientManagementSummarise.jointxt"			: "Vuoi davvero unire questi due clienti?",
+	
+    "adminAppHelpTextList.title"			: "Pagine",
+
+    "adminAppHelpText.title"			: "Testo di aiuto della pagina",
+    "adminAppHelpText.titledata"			: "Titolo",
+    "adminAppHelpText.subTitle"			: "Testo di descrizione del titolo",
+    "adminAppHelpText.mediaURL"			: "Media url",
+    "adminAppHelpText.bodyText"			: "Testo della guida",
+    "adminAppHelpText.htmlupload"			: "Caricamento file Html"
 }
