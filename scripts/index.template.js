@@ -345,7 +345,7 @@
         { id: "contactResultsAttach", master: "contactList" },
         //{ id: "contactResultsCriteria", master: "contactList" },
         { id: "contactResultsEvents", master: "contactList" },
-        { id: "startPremium", master: "eventList" }
+        { id: "startPremium", master: "eventList" },
         { id: "adminAppHelpText", master: "adminAppHelpTextList" }
     ];
 
