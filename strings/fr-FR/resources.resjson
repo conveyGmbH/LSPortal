@@ -696,6 +696,7 @@
     "label.showNoMore" : "Ne plus montrer",
     "label.showAgain" : "Montrer à nouveau",
     "label.close" : "Fermer",
+    "label.adminAppHelpText" : "Gestion des textes d'aide",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",

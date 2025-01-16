@@ -110,6 +110,7 @@
         { id: "clientManagementSearchList", group: 14, svg: "standpersonal", disabled: true, predecGroup: 41 },
         { id: "siteEventsRoleManagement", group: 81, svg: "standpersonal", disabled: true, predecGroup: 41 },
         // { id: "startTileAdministration", group: 61, svg: "home", disabled: true, predecGroup: 41 },
+        { id: "adminAppHelpText", group: 81, svg: "standpersonal", disabled: true, predecGroup: 41 },
         //EventSuccess
         { id: "esStaffAdministration", group: 18, svg: "id_card", disabled: true },
         { id: "ticketLimits", group: 16, svg: "id_card", disabled: true },
@@ -281,7 +282,8 @@
         { id: "eventCopy", group: 2, disabled: false },
         { id: "eventProducts", group: 2, disabled: false },
         { id: "siteeventsImport", group: 13, disabled: false },
-        { id: "clientManagementSummarise", group: 75, disabled: false }
+        { id: "clientManagementSummarise", group: 75, disabled: false },
+        { id: "adminAppHelpText", group: 76, disabled: false }
     ];
 
 
@@ -345,7 +347,7 @@
         { id: "contactResultsAttach", master: "contactList" },
         //{ id: "contactResultsCriteria", master: "contactList" },
         { id: "contactResultsEvents", master: "contactList" },
-        { id: "startPremium", master: "eventList" }
+        { id: "startPremium", master: "eventList" },
         { id: "adminAppHelpText", master: "adminAppHelpTextList" }
     ];
 

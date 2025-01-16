@@ -701,6 +701,7 @@
     "label.showNoMore" : "Nicht mehr anzeigen",
     "label.showAgain" : "Wieder anzeigen",
     "label.close" : "Schließen",
+    "label.adminAppHelpText" : "Hilfetextverwaltung",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
