@@ -39,12 +39,14 @@
             }
 
             var getVideoId = function (url) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
                 var match = url ? url.match(regExp) : null;
                 return (match && match[2] && match[2].length === 11) ? match[2] : null;
             }
             
             var resultConverter = function (item, index) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 item.index = index;
                 if (item.MediaURL) {
                     that.binding.showVideo = true;
@@ -64,7 +66,7 @@
             this.resultConverter = resultConverter;
 
             var saveData = function (complete, error) {
-                Log.call(Log.l.trace, "Mailing.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var err = null;
@@ -194,7 +196,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
