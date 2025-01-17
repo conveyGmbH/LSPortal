@@ -484,11 +484,16 @@
                                 that.loading = false;
                             }
                         } else {
-                            if (json && json.d) {
-                                var client = json.d;
-                                that.resultConverter(client);
-                                var objectrec = scopeFromRecordId(recordId);
-                                that.pages.setAt(objectrec.index, client);
+                            if (json && json.d && that.pages) {
+                                var scope = that.scopeFromRecordId(recordId);
+                                if (scope) {
+                                    var prevNotifyModified = AppBar.notifyModified;
+                                    AppBar.notifyModified = false;
+                                    var item = json.d;
+                                    that.resultConverter(item, scope.index);
+                                    that.pages.setAt(scope.index, item);
+                                    AppBar.notifyModified = prevNotifyModified;
+                                }
                             }
                         }
                     }, function (errorResponse) {
@@ -505,7 +510,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                        }, { LanguageSpecID: parseInt(that.binding.LanguageID) });
+                        }, { LanguageSpecID: parseInt(that.binding.LanguageID) }, recordId);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

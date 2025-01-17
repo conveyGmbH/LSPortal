@@ -67,6 +67,7 @@
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
+                var err = null;
                 var dataPage = that.binding.pageData;
                 if (dataPage && AppBar.modified && !AppBar.busy) {
                     AppBar.busy = true;
@@ -90,13 +91,23 @@
                                 AppBar.busy = false;
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
+                                err = errorResponse;
                                 AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                     if (typeof error === "function") {
                                         error(errorResponse);
                                     }
                                 });
-                                }, recordId, dataPage);
+                            }, recordId, dataPage).then(function () {
+                                if (!err) {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
+                                        master.controller.loadData(recordId);
+                                    }
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            });
                         });
                     } else {
                         ret = WinJS.Promise.as();
