@@ -84,7 +84,7 @@
                                 } else {
                                         var master = Application.navigator.masterControl;
                                         if (master && master.controller) {
-                                            master.controller.loadData();
+                                        master.controller.loadData(recordId);
                                         }
                                 }
                             }, function (errorResponse) {
