@@ -798,6 +798,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .user-name-field {
+    display: block;
     font-size: 15px;
 }
 
