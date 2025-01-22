@@ -36,7 +36,9 @@
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 LanguageID: 0,
                 updateExpParamData: getEmptyDefaultValue(Event.pdfExportParamView.defaultValue),
-                updateExpParamId: 0
+                updateExpParamId: 0,
+                prevUser: 0,
+                actUser: AppData.generalData.odata.login
             }, commandList]);
 
             var that = this;
@@ -177,6 +179,12 @@
             }
             this.setEventId = setEventId;
 
+            var setPrevUser = function(prevUser) {
+                Log.call(Log.l.trace, "Event.Controller.");
+                that.binding.prevUser = prevUser;
+                Log.ret(Log.l.trace);
+            }
+            this.setPrevUser = setPrevUser;
 
             var master = Application.navigator.masterControl;
             if (master &&
@@ -623,10 +631,21 @@
                     }
                 },
                 clickDelete: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "Event.Controller.");
                     var recordId = that.getEventId();
                     if (recordId) {
+                        if (that.binding.prevUser !== that.binding.actUser) {
+                            var confirmTitle = getResourceText("event.labelDeleteMsg1") + that.binding.prevUser + getResourceText("event.labelDeleteMsg2");
+                            confirm(confirmTitle, function (result) {
+                                if (result) {
+                                    that.getDeleteEventData(recordId);
+                                } else {
+                                    Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
+                                }
+                            });
+                        } else {
                         that.getDeleteEventData(recordId);
+                    }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -636,21 +655,48 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChange: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, "Event.Controller.");
                     var recordId = that.getEventId();
                     if (recordId) {
+                        if (that.binding.prevUser !== that.binding.actUser) {
+                            var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
+                            confirm(confirmTitle, function (result) {
+                                if (result) {
+                                    that.changeEvent(recordId);
+                                } else {
+                                    Log.print(Log.l.trace, "clickChange: event choice CANCEL");
+                                }
+                            });
+                        } else {
                         that.changeEvent(recordId);
+                    }
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
+                    if (that.binding.prevUser !== that.binding.actUser) {
+                        var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
+                        confirm(confirmTitle, function (result) {
+                            if (result) {
                     that.saveData(function (response) {
                         // called asynchronously if ok
                         that.loadData();
                     }, function (errorResponse) {
                         // error already displayed
                     });
+                            } else {
+                                Log.print(Log.l.trace, "clickOk: event choice CANCEL");
+                            }
+                        });
+                    } else {
+                        that.saveData(function (response) {
+                            // called asynchronously if ok
+                            that.loadData();
+                        }, function (errorResponse) {
+                            // error already displayed
+                        });
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {

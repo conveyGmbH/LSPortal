@@ -458,6 +458,9 @@
                                                         if (typeof AppBar.scope.setEventId === "function") {
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                         }
+                                                        if (typeof AppBar.scope.setPrevUser === "function") {
+                                                            AppBar.scope.setPrevUser(item.data.PrevModifierUser);
+                                                        }
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "eventProducts" &&
                                                         typeof AppBar.scope.loadData === "function") {
@@ -530,12 +533,21 @@
                                                     curPageId === "optQuestionList" ||
                                                     curPageId === "questionList" ||
                                                     curPageId === "questiongroup" ||
-                                                    curPageId === "event" ||
                                                     curPageId === "skills" ||
                                                     curPageId === "contactResultsList") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     if (typeof AppBar.scope.setEventId === "function") {
                                                         AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
+                                                    }
+                                                    AppBar.scope.loadData();
+                                                }
+                                                if ((curPageId === "event") &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    if (typeof AppBar.scope.setEventId === "function") {
+                                                        AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
+                                                    }
+                                                    if (typeof AppBar.scope.setPrevUser === "function") {
+                                                        AppBar.scope.setPrevUser(item.data.PrevModifierUser);
                                                     }
                                                     AppBar.scope.loadData();
                                                 }
