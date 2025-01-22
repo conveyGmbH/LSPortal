@@ -748,6 +748,10 @@
     "event.exportKontaktPDF" : "Scegliere qui la lingua delle etichette per l'esportazione in PDF\nAttenzione: questa scelta deve essere fatta prima dell'evento. I dati già raccolti non verranno modificati, a meno che non si modifichi qualcosa nei singoli contatti dopo aver cambiato la lingua.",
     "event.usedlicences" : "Utenti",
     "event.anzkontakte" : "Contatti",
+    "event.labelChangeMsg1" : "Vuoi cambiare la versione di ",
+    "event.labelChangeMsg2" : " ? ",
+    "event.labelDeleteMsg1" : "Si desidera cancellare la versione di ",
+    "event.labelDeleteMsg2" : " ? ",
 
     "optQuestionList.title"   : "opzionale Domande/Risposte",
     "optQuestionList.count"   : "Numero",

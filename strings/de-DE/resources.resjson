@@ -753,6 +753,10 @@
     "event.exportKontaktPDF" : "Bitte wählen Sie hier die Sprache der Bezeichner für den PDF-Export\nBitte beachten Sie: dies muss VOR der Veranstaltung ausgewählt/entschieden werden. Bereits erfasste Daten werden nicht verändert, es sei denn, Sie ändern etwas in den einzelnen Kontakten, nachdem Sie die Sprache geändert haben",
     "event.usedlicences" : "Benutzer",
     "event.anzkontakte" : "Kontakte",
+    "event.labelChangeMsg1" : "Wollen Sie den Stand von ",
+    "event.labelChangeMsg2" : " ändern? ",
+    "event.labelDeleteMsg1" : "Wollen Sie den Stand von ",
+    "event.labelDeleteMsg2" : " löschen? ",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
