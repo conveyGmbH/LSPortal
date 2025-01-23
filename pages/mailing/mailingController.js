@@ -28,7 +28,8 @@
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
-                mailUrl: "mailto:multimedia-shop@messefrankfurt.com"
+                mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
+                langMsgHelpText: ""
             }, commandList]);
 
             var that = this;
@@ -39,6 +40,7 @@
             var textComment = pageElement.querySelector(".input_text_comment");
             var initAnrede = pageElement.querySelector("#InitMailingAnrede");
             var sendbtn = pageElement.querySelector(".sendtestmail-button.win-button");
+            var langCombo = pageElement.querySelector("#InitSprache");
 
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
@@ -51,6 +53,61 @@
                 return recordId;
             };
             this.getRecordId = getRecordId;
+
+            var langMsgSetter = function(langId) {
+                Log.call(Log.l.trace, "Employee.Controller.");
+                switch (langId) {
+                case "1": //deutsch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextde");
+                    break;
+                case "2": //englisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptexten");
+                    break;
+                case "3": //französisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextfr");
+                    break;
+                case "4": //italienisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextit");
+                    break;
+                case "5": //spanisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextes");
+                     break;
+                case "16": //portogisisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextpo");
+                     break;
+                case "17": //polnisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextpl");
+                     break;
+                case "18": //russisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextru");
+                     break;
+                case "19": //ungarisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextun");
+                     break;
+                case "20": //schwedisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextsv");
+                     break;
+                case "21": //finnisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextfi");
+                     break;
+                case "22": //norwegisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextno");
+                     break;
+                case "23": //chinesisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextch");
+                     break;
+                case "24": //japanisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextjp");
+                     break;
+                case "25": //koreanisch
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextko");
+                    break;
+                default: //Alle Sprachen
+                        that.binding.langMsgHelpText = getResourceText("mailing.langhelptextdefault");
+                }
+                Log.ret(Log.l.trace, langId);
+            }
+            this.langMsgSetter = langMsgSetter;
 
             var deleteData = function () {
                 Log.call(Log.l.trace, "Mailing.Controller.");
@@ -256,6 +313,11 @@
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                changeLang: function(event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    that.langMsgSetter(event.currentTarget.value);
                     Log.ret(Log.l.trace);
                 },
                 clickNew: function (event) {
@@ -496,6 +558,9 @@
                 }
             };
 
+            if (langCombo) {
+                this.addRemovableEventListener(langCombo, "change", this.eventHandlers.changeLang.bind(this));
+            }
 
             var loadData = function () {
                 Log.call(Log.l.trace, "Mailing.");
@@ -589,6 +654,7 @@
                             Log.print(Log.l.trace, "Mailing: success!");
                             if (json && json.d) {
                                 that.binding.dataMail = setDataMail(json.d);
+                                that.langMsgSetter(json.d.INITSpracheID);
                                 Log.print(Log.l.trace, "Mailing: success!");
                             }
                             // startContact returns object already parsed from json file in response

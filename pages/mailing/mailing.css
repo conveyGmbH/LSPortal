@@ -21,3 +21,6 @@
 #sendMailPrivacypolicySignature .win-toggleswitch-header {
     display: none;
 }
+.mailing #langMsgHelpText {
+    font-size: 11px;
+}
