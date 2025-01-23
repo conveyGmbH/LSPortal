@@ -1182,6 +1182,7 @@
     "siteeventsTermin.mailReplyTo" : "Reply To",
     "siteeventsTermin.eventclosed" : "Close event",
     "siteeventsTermin.titleUpdate" : "Change event date",
+    "siteeventsTermin.eventURL": "Event address",
 
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",
