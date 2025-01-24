@@ -87,6 +87,31 @@
                 }
             }
 
+            var disableFields = function(tempAdmin) {
+                Log.call(Log.l.trace, "Event.Controller.");
+                var startDate = pageElement.querySelector("#startDatum").winControl;
+                var endDate = pageElement.querySelector("#endDatum").winControl;
+                if (tempAdmin === true) {
+                    startDate.disabled = true;
+                    endDate.disabled = true;
+
+                } else {
+                    startDate.disabled = false;
+                    endDate.disabled = false;
+
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.disableFields = disableFields;
+
+            var checkForTempMidiAdmin = function() {
+                Log.call(Log.l.trace, "Event.Controller.");
+                var tempAdmin = !AppHeader.controller.binding.userData.IsNoAdminUser && !AppHeader.controller.binding.userData.SiteAdmin && !AppHeader.controller.binding.userData.IsCustomerAdmin;
+                that.disableFields(tempAdmin);
+                Log.ret(Log.l.trace);
+            }
+            this.checkForTempMidiAdmin = checkForTempMidiAdmin;
+
             var creatingVisitorFlowCategory = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
                 var exhibitorCategory = [
@@ -1355,6 +1380,7 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
+                return that.checkForTempMidiAdmin();
             });
             Log.ret(Log.l.trace);
         })
