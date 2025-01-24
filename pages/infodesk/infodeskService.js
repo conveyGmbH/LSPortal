@@ -168,7 +168,7 @@
         },
         _employeeView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20471, false);
+                return AppData.getFormatView("Mitarbeiter", 20699, false);
             }
         },
         employeeView: {

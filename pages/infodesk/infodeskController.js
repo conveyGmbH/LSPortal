@@ -32,7 +32,7 @@
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 sendMessage: "",
                 clickOkbool: false
-        }, commandList]);
+            }, commandList]);
 
             var prevMasterLoadPromise = null;
 
@@ -63,6 +63,8 @@
 
             var photoView = pageElement.querySelector("#employeePhoto.photoview");
             var onOffSign = pageElement.querySelector("#infodeskController .onsite-offsiteInfodeskList");
+
+            that.loadDataDelayedPromise = null;
 
             var getPhotoData = function () {
                 return that.binding.photoData;
@@ -131,7 +133,7 @@
 
                     if (onOffSign && onOffSign.style) {
                         onOffSign.style.marginLeft = - imgLeft - 50 + "px";
-                        onOffSign.style.marginTop =  imgTop  + "px";
+                        onOffSign.style.marginTop = imgTop + "px";
                     }
                     if (that.img.style) {
                         that.img.style.marginLeft = -imgLeft + "px";
@@ -340,7 +342,7 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
-                if (typeof firstskill.skilltypesortierung === "undefined")
+                /*if (typeof firstskill.skilltypesortierung === "undefined")
                     firstskill.skilltypesortierung = null;
                 if (typeof secondskill.skilltypesortierung === "undefined")
                     secondskill.skilltypesortierung = null;
@@ -350,7 +352,7 @@
                     fourthskill.skilltypesortierung = null;
                 if (typeof fifthskill.skilltypesortierung === "undefined")
                     fifthskill.skilltypesortierung = null;
-
+                    */
                 that.binding.restriction.countRestriction = 0;
                 if (that.binding.restriction.Login.length > 0) {
                     that.binding.restriction.countRestriction++;
@@ -367,7 +369,7 @@
                 //SkillEntryView_20472
                 // Abfrage wenn beide comboboxen nicht ausgewählt
                 // spannende Stelle // letzen Wert der Comboboxen
-                if (comboboxSkills1.value === "") {
+                /*if (comboboxSkills1.value === "") {
                     comboboxSkills1.value = "0";
                 }
                 if (comboboxSkills2.value === "") {
@@ -381,7 +383,7 @@
                 }
                 if (comboboxSkills5.value === "") {
                     comboboxSkills5.value = "0";
-                }
+                }*/
                 if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];
                 } else {
@@ -474,8 +476,8 @@
                         that.binding.restriction.countCombobox++;
                     }
                 }
-                that.binding.restriction.bAndInEachRow = true;
-                that.binding.restriction.bUseOr = false;
+               // that.binding.restriction.bAndInEachRow = true;
+               // that.binding.restriction.bUseOr = false;
                 Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);
                 AppData.setRestriction("SkillEntry", that.binding.restriction);
                 AppBar.notifyModified = prevNotifyModified;
@@ -512,25 +514,21 @@
                     Log.ret(Log.l.trace);
 
                 },
-                /*changeEventId: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
-                    if (event.target.value) {
-                        that.binding.restriction.VeranstaltungID = event.target.value;
-                        // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
-                        AppData.setRecordId("Veranstaltung2",
-                            (typeof that.binding.restriction.VeranstaltungID === "string") ?
-                            parseInt(that.binding.restriction.VeranstaltungID) : that.binding.restriction.VeranstaltungID);
+                changeEventId: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var value = null;
+                    if (event.target.value && typeof event.target.value === "string") {
+                        value = parseInt(event.target.value);
                     } else {
-                        delete that.binding.restriction.VeranstaltungID;
-                        AppData.setRecordId("Veranstaltung2", 0);
+                        value = null;
                     }
-                    that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
+                        master.controller.setEventId(value);
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
-                },*/
+                },
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
@@ -575,7 +573,7 @@
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    /*Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var prevNotifyModified = AppBar.notifyModified;
                     AppBar.notifyModified = false;
                     that.binding.restriction.Vorname = [];
@@ -604,6 +602,27 @@
                             prevMasterLoadPromise.cancel();
                         }
                         prevMasterLoadPromise = master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);*/
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    // attention: use restriction arrays due to "AND VeranstaltungID=" restriction!
+                    //that.binding.restriction.Name = [];
+                    that.binding.restriction.Vorname = [];
+                    that.binding.restriction.Login = [];
+                    that.binding.restriction.Nachname = [];
+                    if (event.target.value) {
+                        //that.binding.restriction.Name = [event.target.value, null, null, null];
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
+                        that.binding.restriction.bUseOr = false;
+                        that.binding.restriction.bAndInEachRow = true;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        that.loadDataDelayed(master.controller.loadData());
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -662,21 +681,28 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                /*clickOrderLicence: function (event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                clickFilterLicence: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
-                    if (event.target.textContent === getResourceText("employee.licenceAsc")) {
-                        that.binding.restriction.OrderDesc = true;
+                    var master = Application.navigator.masterControl;
+                    var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === "red") {
+                        //that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
                     } else {
-                        that.binding.restriction.OrderDesc = false;
+                        //that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
                     }
                     that.saveRestriction();
-                    var master = Application.navigator.masterControl;
                     if (master && master.controller) {
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
-                },*/
+
+
+                },
                 clickResetRestriction: function () {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var prevNotifyModified = AppBar.notifyModified;
@@ -696,6 +722,7 @@
                     AppBar.notifyModified = prevNotifyModified;
                     var master = Application.navigator.masterControl;
                     if (master && master.controller && master.controller.binding) {
+                        master.controller.binding.searchString = "";
                         if (prevMasterLoadPromise &&
                             typeof prevMasterLoadPromise.cancel === "function") {
                             prevMasterLoadPromise.cancel();
@@ -740,7 +767,7 @@
                     var sendMessageButton = pageElement.querySelector("#sendMessageButton");
                     if (sendMessageButton) {
                         if (getRecordId() && !AppBar.busy && AppBar.modified && that.binding.sendMessage && that.binding.sendMessage.length > 0) {
-                            sendMessageButton.disabled =  false;
+                            sendMessageButton.disabled = false;
                         } else {
                             sendMessageButton.disabled = true;
                         }
@@ -752,6 +779,22 @@
                     }
                 }
             };
+
+            var loadDataDelayed = function (searchString) {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.loadData === "function") {
+                        master.controller.loadData();
+                    }
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
 
             var resultConverter = function (item, index) {
                 if (index >= 0 && index < 5) {
@@ -787,8 +830,8 @@
                     var initskills = pageElement.querySelector(elementId);
                     if (initskills && initskills.winControl) {
                         initskills.winControl.data = new WinJS.Binding.List(skills);
+                        initskills.selectedIndex = 0;
                     }
-                    initskills.selectedIndex = 0;
                     if (item.Sortierung === 1) {
                         firstskill = skills;
                         if (item.SkillTypeSkillsVIEWID)
@@ -1170,13 +1213,13 @@
                             }
                             }, benutzerNachricht);
                     })*/.then(function () {
-                        if (typeof complete === "function") {
-                            complete(dataBenutzer);
-                            return WinJS.Promise.as();
-                        } else {
-                            return that.loadData(getRecordId());
-                        }
-                    });
+                            if (typeof complete === "function") {
+                                complete(dataBenutzer);
+                                return WinJS.Promise.as();
+                            } else {
+                                return that.loadData(getRecordId());
+                            }
+                        });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {

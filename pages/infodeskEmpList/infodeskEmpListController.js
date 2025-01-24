@@ -19,12 +19,12 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
-                licenceWarning: false,
                 btnFirstNameText: getResourceText("employee.firstName"),
                 btnNameText: getResourceText("employee.name"),
                 btnEmployeeLicenceText: getResourceText("employee.licence"),
                 mitarbeiterText: getResourceText("infodesk.employee"),
                 employeeId: null,
+                searchString: "",
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, true]);
 
@@ -36,11 +36,14 @@
             this.nextDocUrl = null;
             this.employees = null;
             this.docs = null;
+            this.events = null;
 
             this.firstDocsIndex = 0;
             this.firstEmployeesIndex = 0;
 
             var that = this;
+
+            var eventsDropdown = pageElement.querySelector("#events");
 
             // ListView control
             var listView = pageElement.querySelector("#infodeskEmployeeList.listview");
@@ -54,6 +57,33 @@
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
+
+            var getOrderLicenceBtn = function () {
+                return pageElement.querySelector("#orderLicenceBtn");
+            }
+            this.getOrderLicenceBtn = getOrderLicenceBtn;
+
+            var highlightorderLicenceBtn = function (state) {
+                if (state === 1) {
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "red";
+                } else {
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "transparent";
+                }
+            }
+            this.highlightorderLicenceBtn = highlightorderLicenceBtn;
+
+            var getEventId = function () {
+                Log.print(Log.l.trace, "getEventId Event._eventId=" + InfodeskEmpList._eventId);
+                return InfodeskEmpList._eventId;
+            }
+            this.getEventId = getEventId;
+
+            var setEventId = function (value) {
+                Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
+                that.binding.eventId = value;
+                InfodeskEmpList._eventId = value;
+            }
+            this.setEventId = setEventId;
 
             var cancelPromises = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -74,6 +104,10 @@
                 if (that.employees) {
                     that.employees = null;
                 }
+                if (that.events) {
+                    that.events = null;
+                }
+                AppData.setRestriction("SkillEntry", {});
                 listView = null;
             }
 
@@ -109,14 +143,7 @@
                 if (!recordId) {
                     recordId = that.binding.employeeId;
                 }
-                /*if (that.binding.loading) {
-                    ret = WinJS.Promise.timeout(250).then(function() {
-                        return that.loadNextUrl(recordId);
-                    });
-                    Log.ret(Log.l.trace, "busy - try later again");
-                    return ret;
-                }*/
-                if (that.employees && that.nextskillentryUrl && listView) { //that.nextskillentryUrl
+                if (that.employees && that.nextskillentryUrl && listView) {
                     AppBar.busy = true;
                     that.binding.loading = true;
                     AppData.setErrorMsg(that.binding);
@@ -137,7 +164,7 @@
                             var resultsUnique = [];
                             if (that.binding.restriction.countCombobox >= 1) {
                                 var zähler = 0;
-                                results.forEach(function(item) {
+                                results.forEach(function (item) {
                                     if (!actualItem) {
                                         actualItem = item;
                                     }
@@ -155,7 +182,7 @@
                                 });
                             } else {
                                 //Die Mitarbeiterliste muss zu Beginn unique Mitarbeiter sein
-                                results.forEach(function(item, index) {
+                                results.forEach(function (item, index) {
                                     if (!actualItem) {
                                         actualItem = item;
                                         if (lastPrevLogin.MitarbeiterID !== actualItem.MitarbeiterID ||
@@ -174,7 +201,7 @@
                             }
                             Log.print(lastPrevLogin);
                             results = resultsUnique;
-                            results.forEach(function(item, index) {
+                            results.forEach(function (item, index) {
                                 that.resultConverter(item, that.binding.count);
                                 that.binding.count = that.employees.push(item);
                             });
@@ -191,19 +218,19 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                         AppBar.busy = false;
                         that.binding.loading = false;
-                        }, null, that.nextskillentryUrl);
+                    }, null, that.nextskillentryUrl);
                 } else if (that.employees && that.nextUrl && listView) {
                     AppBar.busy = true;
                     that.binding.loading = true;
                     AppData.setErrorMsg(that.binding);
                     Log.print(Log.l.trace, "calling select InfodeskEmpList.employeeView...");
-                    ret = InfodeskEmpList.employeeView.selectNext(function(json) {
+                    ret = InfodeskEmpList.employeeView.selectNext(function (json) {
                         Log.print(Log.l.trace, "InfodeskEmpList.employeeView: success!");
                         // startContact returns object already parsed from json file in response
                         if (json && json.d && json.d.results && json.d.results.length > 0 && that.employees) {
                             that.nextUrl = InfodeskEmpList.employeeView.getNextUrl(json); //that.nextskillentryview
                             var results = json.d.results;
-                            results.forEach(function(item, index) {
+                            results.forEach(function (item, index) {
                                 that.resultConverter(item, index);
                                 that.binding.count = that.employees.push(item);
                             });
@@ -213,14 +240,14 @@
                         if (recordId) {
                             that.selectRecordId(recordId);
                         }
-                    }, function(errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         that.nextUrl = 0;
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.loading = false;
-                        }, null, that.nextUrl);
+                    }, null, that.nextUrl);
                 } else {
                     ret = WinJS.Promise.as();
                 }
@@ -241,7 +268,7 @@
                             if (jsonDoc && jsonDoc.d) {
                                 that.nextDocUrl = InfodeskEmpList.userPhotoView.getNextUrl(jsonDoc);
                                 var resultsDoc = jsonDoc.d.results;
-                                resultsDoc.forEach(function(item, index) {
+                                resultsDoc.forEach(function (item, index) {
                                     that.resultDocConverter(item, that.binding.doccount);
                                     that.binding.doccount = that.docs.push(item);
                                 });
@@ -358,8 +385,8 @@
                 //if (restriction.Aktiv.length === 2) {
                 item.index = index;
                 item.fullName =
-                (item.Vorname ? (item.Vorname + " ") : "") +
-                (item.Nachname ? item.Nachname : ""); // muss geändert werden
+                    (item.Vorname ? (item.Vorname + " ") : "") +
+                    (item.Nachname ? item.Nachname : ""); // muss geändert werden
                 //}
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
@@ -408,8 +435,8 @@
                         var employee = that.employees.getAt(i);
                         if ((employee.MitarbeiterID || employee.MitarbeiterVIEWID) === item.DOC1MitarbeiterVIEWID) {
                             var docContent = item.OvwContentDOCCNT3
-                                   ? item.OvwContentDOCCNT3
-                                   : item.DocContentDOCCNT1;
+                                ? item.OvwContentDOCCNT3
+                                : item.DocContentDOCCNT1;
                             if (docContent) {
                                 var sub = docContent.search("\r\n\r\n");
                                 if (sub >= 0) {
@@ -526,7 +553,7 @@
                         } else if (listView.winControl.loadingState === "complete") {
                             var circleElement = pageElement.querySelector('#nameInitialcircle');
                             if (circleElement && circleElement.style) {
-                            circleElement.style.backgroundColor = Colors.accentColor;
+                                circleElement.style.backgroundColor = Colors.accentColor;
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
@@ -580,19 +607,34 @@
             var loadData = function () {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                /*if (that.binding.loading) {
-                    ret = WinJS.Promise.timeout(250).then(function () {
-                        return that.loadData();
-                    });
-                    Log.ret(Log.l.trace, "busy - try later again");
-                    return ret;
-                }*/
                 that.firstDocsIndex = 0;
                 that.firstEmployeesIndex = 0;
                 AppBar.busy = true;
                 that.binding.loading = true;
                 AppData.setErrorMsg(that.binding);
                 ret = new WinJS.Promise.as().then(function () {
+                    if (!that.events) {
+                        return InfodeskEmpList.eventView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "eventView: success!");
+                            // eventView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                that.events = new WinJS.Binding.List(results);
+                                if (eventsDropdown && eventsDropdown.winControl) {
+                                    eventsDropdown.winControl.data = that.events;
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     if (!InfodeskEmpList.initBenAnwView.getResults().length) {
                         return InfodeskEmpList.initBenAnwView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
@@ -603,10 +645,13 @@
                     }
                 }).then(function () {
                     var restriction = AppData.getRestriction("SkillEntry");
+
                     var defaultrestriction = InfodeskEmpList.defaultRestriction;
                     if (!restriction) {
                         restriction = defaultrestriction;
                     }
+                    restriction.VeranstaltungID = that.getEventId();
+
                     if (restriction.OrderAttribute === "SortVorname") {
                         if (btnName) {
                             if (restriction.btn_textContent) {
@@ -629,8 +674,8 @@
                         restriction.OrderDesc = true;
                     }*/
                     //if (restriction.Names && restriction.Names.length > 0) {
-                        //restriction.bUseOr = true;
-                        that.binding.dataEmployee.Names = restriction.Names;
+                    //restriction.bUseOr = true;
+                    //that.binding.dataEmployee.Names = restriction.Names;
                     //}
                     that.nextUrl = null;
                     that.nextskillentryUrl = null;
@@ -732,6 +777,10 @@
                                 that.nextUrl = null;
                                 that.employees = null;
                                 AppBar.busy = false;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
                                 that.binding.loading = false;
                             }
                         }, function (errorResponse) {
@@ -771,8 +820,8 @@
                         that.binding.photoData = "";
                         AppBar.busy = false;
                     }, restriction, {
-                        orderAttribute: restriction.OrderAttribute, desc: restriction.OrderDesc
-                    });
+                            orderAttribute: restriction.OrderAttribute, desc: restriction.OrderDesc
+                        });
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     if (that.binding.employeeId) {
@@ -792,6 +841,16 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
+                
+                var restriction = AppData.getRestriction("SkillEntry");
+                if (restriction && restriction.VeranstaltungID) {
+                    that.setEventId(restriction.VeranstaltungID);
+                } else {
+                    that.setEventId(AppData.getRecordId("Veranstaltung"));
+                }
+
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
@@ -802,9 +861,9 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            nextUrl: null,
-            loading: false,
-            employees: null
-        })
+                nextUrl: null,
+                loading: false,
+                employees: null
+            })
     });
 })();

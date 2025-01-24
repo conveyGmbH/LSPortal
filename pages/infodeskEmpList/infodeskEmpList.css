@@ -236,3 +236,11 @@
     margin-bottom: 5px;
     margin-top: 5px;
 }
+
+.infodeskEmpList .list-button-left {
+    min-width: 100px;
+    padding: 4px;
+    height: 18px;
+    margin-top: 4px;
+    margin-bottom: 2px;
+}
