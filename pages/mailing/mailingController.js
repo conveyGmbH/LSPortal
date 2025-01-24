@@ -45,6 +45,9 @@
             // select combo
             var initSprache = pageElement.querySelector("#InitSprache");
 
+            this.mandatoryErrorCount = 0;
+            this.mandatoryErrorMsg = "";
+
             // get the id of the Maildokument
             var getRecordId = function () {
                 Log.call(Log.l.trace, "Employee.Controller.");
@@ -306,6 +309,72 @@
             }
             this.getTestMailData = getTestMailData;
 
+            var setMandetoryFields = function () {
+                var inputfieldDescription = pageElement.querySelector("#description");
+                var inputfieldSender = pageElement.querySelector("#sender");
+                var inputfieldSubject = pageElement.querySelector("#subject");
+                var inputfieldMailtext = pageElement.querySelector("#mailtext");
+
+                if (Colors.isDarkTheme) {
+                    WinJS.Utilities.removeClass(inputfieldDescription, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldSender, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldSubject, "lightthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldMailtext, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldDescription, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldSender, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldSubject, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldMailtext, "darkthemeMandatory");
+                } else {
+                    WinJS.Utilities.removeClass(inputfieldDescription, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldSender, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldSubject, "darkthemeMandatory");
+                    WinJS.Utilities.removeClass(inputfieldMailtext, "darkthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldDescription, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldSender, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldSubject, "lightthemeMandatory");
+                    WinJS.Utilities.addClass(inputfieldMailtext, "lightthemeMandatory");
+                }
+            }
+            this.setMandetoryFields = setMandetoryFields;
+
+            var checkMandatoryFields = function () {
+                Log.call(Log.l.trace, "Mailing.Controller.");
+                var dataMail = that.binding.dataMail;
+                var ret = WinJS.Promise.as().then(function () {
+                    Log.print(Log.l.trace, "calling select MaildokumentView...");
+                    if (dataMail.Beschreibung) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("mailing.info") + " ";
+                    }
+                    if (dataMail.Sender) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("mailing.sender") + " ";
+                    }
+                    if (dataMail.Subject) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("mailing.subject") + " ";
+                    }
+                    if (dataMail.Mailtext) {
+                        that.mandatoryErrorCount += 0;
+                    } else {
+                        that.mandatoryErrorCount += 1;
+                        that.mandatoryErrorMsg += getResourceText("mailing.mailtext") + " ";
+                    }
+                }).then(function () {
+                    if (that.mandatoryErrorCount > 0) {
+                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.mandatoryerrormsgadd");
+                    }
+                });
+                return ret;
+            }
+            this.checkMandatoryFields = checkMandatoryFields;
+
             // Then, do anything special on this page
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -419,6 +488,11 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
+                    that.checkMandatoryFields();
+                    if (that.mandatoryErrorCount > 0) {
+                        alert(that.mandatoryErrorMsg);
+                        AppBar.busy = false;
+                    }  else {
                     WinJS.Promise.as().then(function () {
                         that.saveData(function (response) {
                             Log.print(Log.l.trace, "prev Mail saved");
@@ -429,8 +503,8 @@
                     }).then(function () {
                         that.loadData();
                     });
-
                     Log.ret(Log.l.trace);
+                    }
                 },
                 clickFirstQuestion: function (event) {
                     Log.call(Log.l.trace, "info.Controller.");
@@ -684,6 +758,7 @@
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                that.setMandetoryFields();
             });
             Log.ret(Log.l.trace);
         }, {
