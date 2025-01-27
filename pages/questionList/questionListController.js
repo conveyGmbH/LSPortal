@@ -343,7 +343,7 @@
                         if (question && typeof question === "object" &&
                             question.FragenAntwortenVIEWID === recordId) {
                             listView.winControl.selection.set(i).done(function () {
-                                WinJS.Promise.timeout(1500).then(function () {
+                                WinJS.Promise.timeout(50).then(function () {
                                     that.scrollToRecordId(recordId);
                                     if (bSetFocus) {
                                         that.setFocusInQuestion(i);
