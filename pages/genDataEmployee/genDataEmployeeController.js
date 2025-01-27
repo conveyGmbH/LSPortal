@@ -978,8 +978,7 @@
                         if (typeof error === "function") {
                             error(error);
                         }
-                    })
-
+                        });
                 }).then(function () {
                     if (errorLicenseExceeded) {
                         return WinJS.Promise.as();
@@ -998,9 +997,9 @@
                                 error(errorResponse);
                             }
                         });
-                    }, recordId, dataEmployee)
+                    }, recordId, dataEmployee);
                 }).then(function () {
-                    if (err) {
+                    if (err || errorLicenseExceeded) {
                         return WinJS.Promise.as();
                     } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
                         AppData._persistentStates.privacyPolicyFlag = false;
@@ -1033,7 +1032,7 @@
                     }
                 }).then(function () {
                     AppBar.busy = false;
-                    if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
+                    if (err || AppData.getRecordId("Mitarbeiter") === recordId || errorLicenseExceeded) {
                         // ignore that
                     } else {
                         var master = Application.navigator.masterControl;

@@ -316,7 +316,7 @@
                 }
                 Log.ret(Log.l.trace);
             }
-            this.scrollToRecordId = scrollToRecordId
+            this.scrollToRecordId = scrollToRecordId;
 
             var setFocusInQuestion = function (index) {
                 Log.call(Log.l.trace, "QuestionList.Controller.", "index=" + index);

@@ -342,7 +342,7 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
-                /*if (typeof firstskill.skilltypesortierung === "undefined")
+                if (typeof firstskill.skilltypesortierung === "undefined")
                     firstskill.skilltypesortierung = null;
                 if (typeof secondskill.skilltypesortierung === "undefined")
                     secondskill.skilltypesortierung = null;
@@ -352,7 +352,7 @@
                     fourthskill.skilltypesortierung = null;
                 if (typeof fifthskill.skilltypesortierung === "undefined")
                     fifthskill.skilltypesortierung = null;
-                    */
+                    
                 that.binding.restriction.countRestriction = 0;
                 if (that.binding.restriction.Login.length > 0) {
                     that.binding.restriction.countRestriction++;
@@ -369,7 +369,7 @@
                 //SkillEntryView_20472
                 // Abfrage wenn beide comboboxen nicht ausgewählt
                 // spannende Stelle // letzen Wert der Comboboxen
-                /*if (comboboxSkills1.value === "") {
+                if (comboboxSkills1.value === "") {
                     comboboxSkills1.value = "0";
                 }
                 if (comboboxSkills2.value === "") {
@@ -383,7 +383,7 @@
                 }
                 if (comboboxSkills5.value === "") {
                     comboboxSkills5.value = "0";
-                }*/
+                }
                 if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
                     that.binding.restriction.Aktiv = ["X", "X", "X"];
                 } else {
