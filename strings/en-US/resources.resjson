@@ -1822,6 +1822,10 @@
     "genDataEmployee.comment"      : "Manage your employee access data here.",
     "genDataEmployee.chooseEvent" : "Event is empty, please select an event from the combo box.",
     "genDataEmployee.chooseEventOk" : "Ok",
+    "genDataEmployee.activelicence" : "Active licence: ",
+    "genDataEmployee.maxMandantlicence" : "Max. licence: ",
+    "genDataEmployee.exceededLicence" : "Attention! Licence number exceeded!",
+    "genDataEmployee.alertatSymbol" : "Maximum one @ character allowed!",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",

@@ -1799,6 +1799,10 @@
     "genDataEmployee.comment"      : "Gestisci i dati di accesso dei tuoi dipendenti qui.",
     "genDataEmployee.chooseEvent" : "L'evento è vuoto, selezionare un evento dalla casella combinata",
     "genDataEmployee.chooseEventOk" : "Ok",
+    "genDataEmployee.activelicence" : "Licenza attiva: ",
+    "genDataEmployee.maxMandantlicence" : "Licenza massima: ",
+    "genDataEmployee.exceededLicence" : "Attenzione! Numero di licenza superato!",
+    "genDataEmployee.alertatSymbol" : "Massimo un carattere @ consentito!",
 
     "eventProducts.title"			: "Caratteristiche",
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",

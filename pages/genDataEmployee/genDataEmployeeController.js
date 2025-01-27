@@ -24,6 +24,8 @@
                 setRoleVisible: 0,
                 setRoleCheckVisible: 0,
                 noLicence: null,
+                AnzAktiveLizenz: null,
+                AnzMandantLizenz: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
                 addEventFormFlag: (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents),
@@ -46,6 +48,7 @@
 
             var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
             var roleschombo = pageElement.querySelector("#roles");
+            var myDomain = pageElement.querySelector('#myDomain');
 
             that.loadDataDelayedPromise = null;
 
@@ -212,6 +215,20 @@
                     } else {
                         that.binding.userStatus = null;
                     }
+                    if (result && result.AnzAktiveLizenz) {
+                        that.binding.AnzAktiveLizenz = result.AnzAktiveLizenz;
+                    } else {
+                        that.binding.AnzAktiveLizenz = 0;
+                    }
+                    if (result && result.AnzMandantLizenz) {
+                        that.binding.AnzMandantLizenz = result.AnzMandantLizenz;
+                    } else {
+                        that.binding.AnzMandantLizenz = 0;
+                    }
+                    // alert box licence
+                    if (that.binding.AnzAktiveLizenz > that.binding.AnzMandantLizenz) {
+                        alert(getResourceText("genDataEmployee.exceededLicence"));
+                    }
                     // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                     // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
                     // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
@@ -310,6 +327,12 @@
                                 AppBar.busy = false;
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, newEmployee).then(function () {
+                                if (newEmployeeId) {
+                                    return that.checkingLicence(newEmployeeId);
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            }).then(function () {
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller &&
                                     master.controller.binding &&
@@ -407,9 +430,16 @@
                         that.binding.dataEmployee.Password = "";
                         that.binding.dataEmployee.Password2 = "";
                         var value = event.currentTarget.value;
-                        if (value && value.indexOf("@") > 0) {
-                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = value.substr(0, value.indexOf("@"));
-                            that.binding.dataEmployee.LogInNameAfterAtSymbol = value.substr(value.lastIndexOf("@"));
+                        var index = value.indexOf("@");
+                        // wenn gespeichert wird prüfen, wenn indexof dann prüfen auf lastindexof > indexofdann alertbox
+                        if (value && index > 0) {
+                            that.binding.dataEmployee.LogInNameBeforeAtSymbol = value.substr(0, index);
+                            that.binding.dataEmployee.LogInNameAfterAtSymbol = value.substr(index);
+                            if (myDomain) {
+                                WinJS.Promise.timeout(50).then(function () {
+                                    myDomain.focus();
+                                });
+                            }
                         } else {
                             that.binding.dataEmployee.LogInNameBeforeAtSymbol = value;
                             that.binding.dataEmployee.LogInNameAfterAtSymbol = "";
@@ -937,6 +967,7 @@
                 if (dataEmployee.Login && typeof dataEmployee.Password === "string" && dataEmployee.Password.length < 5) {
                     errorMessage = getResourceText("employee.alertPasswordShort");
                     Log.print(Log.l.error, errorMessage);
+                    AppBar.busy = false;
                     alert(errorMessage);
                     if (typeof error === "function") {
                         error(errorMessage);
@@ -947,6 +978,7 @@
                     dataEmployee.Password2 !== dataEmployee.Password)) {
                     errorMessage = getResourceText("employee.alertPassword");
                     Log.print(Log.l.error, errorMessage);
+                    AppBar.busy = false;
                     alert(errorMessage);
                     if (typeof error === "function") {
                         error(errorMessage);
@@ -957,7 +989,17 @@
                     dataEmployee.INITAPUserRoleID = parseInt(dataEmployee.INITAPUserRoleID);
                 }
                 AppBar.busy = true;
-                // TODO Vor dem Update neue procedure Aufrufen die prüft ob noch lizenz frei sind. 
+
+                if (dataEmployee.Login && (dataEmployee.Login.lastIndexOf("@") > dataEmployee.Login.indexOf("@"))) {
+                    errorMessage = getResourceText("genDataEmployee.alertatSymbol");
+                    Log.print(Log.l.error, errorMessage);
+                    AppBar.busy = false;
+                    alert(errorMessage);
+                    if (typeof error === "function") {
+                        error(errorMessage);
+                    }
+                    return WinJS.Promise.wrapError(errorMessage);
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     return AppData.call("PRC_CheckMAChange", {
                         pMAID: dataEmployee.MitarbeiterVIEWID,
@@ -970,6 +1012,9 @@
                             if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
                                 errorLicenseExceeded = true;
                                 alert("ResultCode: " + result.ResultCode + " " + result.ResultMessage);
+                                if (typeof error === "function") {
+                                    error();
+                                }
                             }
                         }
                     }, function (error) {
@@ -978,7 +1023,7 @@
                         if (typeof error === "function") {
                             error(error);
                         }
-                        });
+                    });
                 }).then(function () {
                     if (errorLicenseExceeded) {
                         return WinJS.Promise.as();
@@ -1122,6 +1167,10 @@
             that.saveRestriction();
 
             that.processAll().then(function () {
+                if (myDomain) {
+                    myDomain.focus();
+                }
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());
             }).then(function () {

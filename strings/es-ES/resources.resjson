@@ -1488,5 +1488,20 @@
     "clientManagementSearchList.headereventname"			: "Evento",
     "clientManagementSearchList.all"			: "Todos",
     "clientManagementSearchList.contactdata"			: "Datos de contacto",
-    "clientManagementSearchList.fairs"			: "Ferias"
+    "clientManagementSearchList.fairs"			: "Ferias",
+
+    "genDataEmployee.event"			: "Veranstaltungen",
+    "genDataEmployee.addevent"			: "Veranstaltung",
+    "genDataEmployee.addeventbtn"			: "Hinzufügen",
+    "genDataEmployee.activebtntxt"			: "Aktivieren",
+    "genDataEmployee.targetbtntxt"			: "Ziel erneuern",
+    "genDataEmployee.inactivebtntxt"			: "Deaktivieren",
+    "genDataEmployee.title"        : "Benutzerkonten", 
+    "genDataEmployee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
+    "genDataEmployee.chooseEvent"  : "Veranstaltung ist leer, bitte wählen Sie eine Veranstaltung aus der Combobox aus.",
+    "genDataEmployee.chooseEventOk"  : "Ok",
+    "genDataEmployee.activelicence" : "Aktive Lizenz: ",
+    "genDataEmployee.maxMandantlicence" : "Max. Lizenz: ",
+    "genDataEmployee.exceededLicence" : "Achtung! Lizenz Anzahl überschritten!",
+    "genDataEmployee.alertatSymbol" : "Maximal ein @ Zeichen erlaubt!"
 }			

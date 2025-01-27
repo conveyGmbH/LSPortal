@@ -1473,5 +1473,20 @@
     "clientManagementSearchList.headerEventName"			: "Händelse",
     "clientManagementSearchList.all"			: "Alla",
     "clientManagementSearchList.contactdata"			: "Kontaktuppgifter",
-    "clientManagementSearchList.fairs"			: "Mässor"
+    "clientManagementSearchList.fairs"			: "Mässor",
+
+    "genDataEmployee.event"			: "Events",
+    "genDataEmployee.addevent"			: "Event",
+    "genDataEmployee.addeventbtn"			: "Add",
+    "genDataEmployee.activebtntxt"			: "Activate",
+    "genDataEmployee.targetbtntxt"			: "Renew target",
+    "genDataEmployee.inactivebtntxt"			: "Deactivate",
+    "genDataEmployee.title"        : "User accounts", 
+    "genDataEmployee.comment"      : "Manage your employee access data here.",
+    "genDataEmployee.chooseEvent" : "Event is empty, please select an event from the combo box.",
+    "genDataEmployee.chooseEventOk" : "Ok",
+    "genDataEmployee.activelicence" : "Active licence: ",
+    "genDataEmployee.maxMandantlicence" : "Max. licence: ",
+    "genDataEmployee.exceededLicence" : "Attention! Licence number exceeded!",
+    "genDataEmployee.alertatSymbol" : "Maximum one @ character allowed!"
 }

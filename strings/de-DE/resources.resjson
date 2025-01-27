@@ -1824,8 +1824,12 @@
     "genDataEmployee.inactivebtntxt"			: "Deaktivieren",
     "genDataEmployee.title"        : "Benutzerkonten", 
     "genDataEmployee.comment"      : "Verwalten Sie hier Ihre Mitarbeiter Zugangsdaten.",
-	"genDataEmployee.chooseEvent"  : "Veranstaltung ist leer, bitte wählen Sie eine Veranstaltung aus der Combobox aus.",
+    "genDataEmployee.chooseEvent"  : "Veranstaltung ist leer, bitte wählen Sie eine Veranstaltung aus der Combobox aus.",
     "genDataEmployee.chooseEventOk"  : "Ok",
+    "genDataEmployee.activelicence" : "Aktive Lizenz: ",
+    "genDataEmployee.maxMandantlicence" : "Max. Lizenz: ",
+    "genDataEmployee.exceededLicence" : "Achtung! Lizenz Anzahl überschritten!",
+    "genDataEmployee.alertatSymbol" : "Maximal ein @ Zeichen erlaubt!",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",
