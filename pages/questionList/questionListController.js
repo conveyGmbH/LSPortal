@@ -316,18 +316,38 @@
                 }
                 Log.ret(Log.l.trace);
             }
-            this.scrollToRecordId = scrollToRecordId;
+            this.scrollToRecordId = scrollToRecordId
 
-            var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId);
+            var setFocusInQuestion = function (index) {
+                Log.call(Log.l.trace, "QuestionList.Controller.", "index=" + index);
+                var element = listView.winControl.elementFromIndex(index);
+                if (!element) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.setFocusInQuestion(index);
+                    });
+                } else {
+                    var qustionInput = element.querySelector('input[type="text"]');
+                    if (qustionInput) {
+                        qustionInput.focus();
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setFocusInQuestion = setFocusInQuestion;
+
+            var selectRecordId = function (recordId, bSetFocus) {
+                Log.call(Log.l.trace, "QuestionList.Controller.", "recordId=" + recordId + " bSetFocus=" + bSetFocus);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     for (var i = 0; i < that.questions.length; i++) {
                         var question = that.questions.getAt(i);
                         if (question && typeof question === "object" &&
                             question.FragenAntwortenVIEWID === recordId) {
                             listView.winControl.selection.set(i).done(function () {
-                                WinJS.Promise.timeout(50).then(function () {
+                                WinJS.Promise.timeout(1500).then(function () {
                                     that.scrollToRecordId(recordId);
+                                    if (bSetFocus) {
+                                        that.setFocusInQuestion(i);
+                                    }
                                 });
                             });
                             break;
@@ -703,7 +723,7 @@
                             Log.print(Log.l.info, "PRC_InsertFragen insert: success! recordId=" + recordId);
                             that.binding.questionId = recordId;
                             that.loadData().then(function () {
-                                that.selectRecordId(that.binding.questionId);
+                                that.selectRecordId(that.binding.questionId, true);
                             });
                             AppData.setErrorMsg(that.binding, errorMsg);
                         }, function (error) {
