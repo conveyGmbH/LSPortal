@@ -1064,6 +1064,7 @@
     "eventList.btnEventAsc"  : "Nome ↑",
     "eventList.btnDateDesc"     : "Data ↓",
     "eventList.btnDateAsc"      : "Data ↑",
+    "eventList.searchtxt"      : "Ricerca",
  
     "employeegenpwlist.title" : "Password dei dipendenti pre-generate",
     "employeegenpwlist.login" : "nome di accesso",

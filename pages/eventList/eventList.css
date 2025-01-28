@@ -115,6 +115,7 @@ view-size-smallest #eventList .win-container {
     text-align: center;
     line-height: 42px;
     font-weight: bold;
+    margin-left: 8px;
 }
 #eventList .list-field-small-relative {
     text-align: left;

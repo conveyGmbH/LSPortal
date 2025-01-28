@@ -1062,6 +1062,7 @@
     "eventList.btnEventAsc"  : "Nom ↑",
     "eventList.btnDateDesc"     : "Date ↓",
     "eventList.btnDateAsc"      : "Date ↑",
+    "eventList.searchtxt"      : "Recherche",
 
     "eventslist.title" : "Événements",
     "eventslist.count"       : "Nombre",

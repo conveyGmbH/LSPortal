@@ -25,6 +25,7 @@
                 count: 0,
                 active: null,
                 dashboardIdx: 0,
+                isGlobSiteCustAdmin: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin &&
                     AppData._persistentStates.leadsuccessBasic,
                 btnFilterNotPublished: getResourceText("eventList.btnFilterNotPublished"),
@@ -876,7 +877,7 @@
                     that.hideBtnFilterNotPublished(curPageId);
                     var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                     // Problem wenn gefiltert wird und dabei count = 1 ist von Result
-                    if (that.binding.count === 1 && !that.binding.searchString) {
+                    if (that.binding.count === 1 && !that.binding.searchString && !isGlobSiteCustAdmin) {
                         if (splitViewContent && !Application.navigator._hideDetailRestored) {
                             Application.navigator._hideDetailRestored = true;
                             WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");
