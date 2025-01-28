@@ -1186,7 +1186,7 @@
 	"siteeventsTermin.mailReplyTo" : "Antwort an",
     "siteeventsTermin.eventclosed" : "Veranstaltung abschließen",
 	"siteeventsTermin.titleUpdate" : "Veranstaltungtermin ändern",
-    "siteeventsTermin.eventURL": "Veranstaltungsadresse",
+    "siteeventsTermin.eventURL": "Veranstaltungs-URL",
 
     "reorderlist.posno" : "Pos Nummer",
     "reorderlist.eventname" : "Veranstaltung",

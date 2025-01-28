@@ -1181,7 +1181,7 @@
     "siteeventsTermin.mailReplyTo" : "Reply To",
     "siteeventsTermin.eventclosed" : "Close event",
     "siteeventsTermin.titleUpdate" : "Change event date",
-    "siteeventsTermin.eventURL": "Adresse de la manifestation",
+    "siteeventsTermin.eventURL": "URL de l'événement",
 	
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "événement",

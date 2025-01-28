@@ -1183,7 +1183,7 @@
     "siteeventsTermin.mailReplyTo" : "Reply To",
     "siteeventsTermin.eventclosed" : "Close event",
     "siteeventsTermin.titleUpdate" : "Change event date",
-    "siteeventsTermin.eventURL": "Event address",
+    "siteeventsTermin.eventURL": "Event URL",
 
     "reorderlist.posno" : "PosNo.",
     "reorderlist.eventname" : "Event",
