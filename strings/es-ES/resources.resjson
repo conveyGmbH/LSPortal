@@ -1503,5 +1503,7 @@
     "genDataEmployee.activelicence" : "Aktive Lizenz: ",
     "genDataEmployee.maxMandantlicence" : "Max. Lizenz: ",
     "genDataEmployee.exceededLicence" : "Achtung! Lizenz Anzahl überschritten!",
-    "genDataEmployee.alertatSymbol" : "Maximal ein @ Zeichen erlaubt!"
+    "genDataEmployee.alertatSymbol" : "Maximal ein @ Zeichen erlaubt!",
+    "genDataEmployee.deleteMitarbeiter" : "Löschen",
+    "genDataEmployee.cancel" : "Abbrechen"
 }			

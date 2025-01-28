@@ -1806,6 +1806,8 @@
     "genDataEmployee.maxMandantlicence" : "Licence max: ",
     "genDataEmployee.exceededLicence" : "Attention ! Nombre de licences dépassé!",
     "genDataEmployee.alertatSymbol" : "Un caractère @ maximum autorisé!",
+    "genDataEmployee.deleteMitarbeiter" : "Supprimer",
+    "genDataEmployee.cancel" : "Annuler",
 
     "eventProducts.title"			: "Fonctionnalités",
     "eventProducts.ProductTitle"			: "Nom du Fonctionnalité",

@@ -1011,10 +1011,53 @@
                             var result = json.d.results[0];
                             if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
                                 errorLicenseExceeded = true;
-                                alert("ResultCode: " + result.ResultCode + " " + result.ResultMessage);
-                                if (typeof error === "function") {
-                                    error();
-                                }
+                                confirmModal(null,
+                                    "ResultCode: " + result.ResultCode + " " + result.ResultMessage,
+                                    getResourceText("genDataEmployee.deleteMitarbeiter"),
+                                    getResourceText("genDataEmployee.cancel"),
+                                    function (result) {
+                                        if (result) {
+                                            Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                            AppBar.busy = false;
+                                            deleteData(function (response) {
+                                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
+                                                var master = Application.navigator.masterControl;
+                                                if (master &&
+                                                    master.controller &&
+                                                    typeof master.controller.loadData === "function" &&
+                                                    master.controller.binding) {
+                                                    //var prevSelIdx = master.controller.binding.selIdx;
+                                                    master.controller.loadData();
+                                                }
+                                            }, function (errorResponse) {
+                                                // delete ERROR
+                                                var message = null;
+                                                Log.print(Log.l.error,
+                                                    "error status=" +
+                                                    errorResponse.status +
+                                                    " statusText=" +
+                                                    errorResponse.statusText);
+                                                if (errorResponse.data && errorResponse.data.error) {
+                                                    Log.print(Log.l.error,
+                                                        "error code=" + errorResponse.data.error.code);
+                                                    if (errorResponse.data.error.message) {
+                                                        Log.print(Log.l.error,
+                                                            "error message=" +
+                                                            errorResponse.data.error.message.value);
+                                                        message = errorResponse.data.error.message.value;
+                                                    }
+                                                }
+                                                if (!message) {
+                                                    message = getResourceText("error.delete");
+                                                }
+                                                alert(message);
+                                            });
+                                        } else {
+                                            if (typeof error === "function") {
+                                                error();
+                                            }
+                                        }
+                                    });
                             }
                         }
                     }, function (error) {
