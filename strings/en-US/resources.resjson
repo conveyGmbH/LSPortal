@@ -1875,6 +1875,8 @@
   "clientManagementSearchList.headerwebaddress" : "Web address",
   "clientManagementSearchList.headerfairmandantid" : "ID",
   "clientManagementSearchList.headereventname"			: "Event",
+    "clientManagementSearchList.headernumlicenses"			: "Events",
+    "clientManagementSearchList.headereventcount"			: "Usercount",
     "clientManagementSearchList.all"			: "All",
     "clientManagementSearchList.contactdata"			: "Contactdata",
     "clientManagementSearchList.fairs"			: "Fairs",

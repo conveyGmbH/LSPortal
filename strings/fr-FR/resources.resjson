@@ -1855,6 +1855,8 @@
     "clientManagementSearchList.headerwebadresse"			: "Adresse web",
     "clientManagementSearchList.headerfairmandantid"			: "ID",
     "clientManagementSearchList.headereventname"			: "Événement",
+    "clientManagementSearchList.headernumlicenses"			: "Événements",
+    "clientManagementSearchList.headereventcount"			: "Nombre d'utilisateurs",
     "clientManagementSearchList.all"			: "Tout ",
     "clientManagementSearchList.contactdata"			: "Données de contact",
     "clientManagementSearchList.fairs"			: "Salons",

@@ -1853,6 +1853,8 @@
     "clientManagementSearchList.headerwebadresse"			: "Indirizzo web",
     "clientManagementSearchList.headerfairmandantid"			: "ID",
     "clientManagementSearchList.headereventname"			: "Evento",
+    "clientManagementSearchList.headernumlicenses"			: "Eventi",
+    "clientManagementSearchList.headereventcount"			: "Numero di utenti",
     "clientManagementSearchList.all"			: "TTuttiout ",
     "clientManagementSearchList.contactdata"			: "Dati di contatto",
     "clientManagementSearchList.fairs"			: "Fiere",

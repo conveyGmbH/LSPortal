@@ -1880,6 +1880,8 @@
     "clientManagementSearchList.headerwebadresse"			: "Webadresse",
     "clientManagementSearchList.headerfairmandantid"			: "ID",
     "clientManagementSearchList.headereventname"			: "Event",
+    "clientManagementSearchList.headernumlicenses"			: "Veranstaltungen",
+    "clientManagementSearchList.headereventcount"			: "Userzahl",
     "clientManagementSearchList.all"			: "Alle",
     "clientManagementSearchList.contactdata"			: "Kontaktdaten",
     "clientManagementSearchList.fairs"			: "Messen",
