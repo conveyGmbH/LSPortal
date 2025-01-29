@@ -19,8 +19,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                pageId: 0, //AppData.getRecordId("Mitarbeiter"),
-                LanguageID: 0
+                recordId: 0
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -203,26 +202,18 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function(items) {
                                     var item = items[0];
-                                    var curPageId = Application.getPageId(nav.location);
-                                    that.binding.selIdx = item.index;
                                     if (item.data &&
-                                        item.data.LangAppHelpTextVIEWID &&
-                                        item.data.LangAppHelpTextVIEWID !== that.binding.pageId) {
-                                        // called asynchronously if ok
-                                        that.binding.pageId = item.data.LangAppHelpTextVIEWID;
-                                        if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
-                                            AppBar.scope.saveData(function(response) {
-                                                if (curPageId === "adminAppHelpText") {
+                                        item.data.LangAppHelpTextVIEWID !== that.binding.recordId) {
+                                        that.binding.selIdx = item.index;
+                                        that.binding.recordId = item.data.LangAppHelpTextVIEWID;
+                                        if (Application.navigator._lastPage === nav.location) {
+                                            // called asynchronously if ok
+                                            if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
+                                                AppBar.scope.saveData(function (response) {
                                                     if (typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.loadData(that.binding.pageId, parseInt(that.binding.LanguageID));
+                                                        AppBar.scope.loadData();
                                                     }
-                                                }
-                                            });
-                                        } else {
-                                            if (curPageId === "adminAppHelpText") {
-                                                if (typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData(that.binding.pageId, parseInt(that.binding.LanguageID));
-                                                }
+                                                });
                                             }
                                         }
                                     }
@@ -234,7 +225,7 @@
                 },
                 onSelectionChangedInitSprache: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.binding.LanguageID = event.target.value;
+                    that.binding.languageId = event.target.value;
                     that.loadData();
                     Log.ret(Log.l.trace);
                 },
@@ -429,7 +420,7 @@
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
                                     //setLanguage(results);
-                                    that.binding.LanguageID = AppData.getLanguageId().toString();
+                                    that.binding.languageId = AppData.getLanguageId().toString();
                                     Log.print(Log.l.trace, "calling select initSpracheView...");
                                 }
                             }
@@ -442,7 +433,7 @@
                         if (initSprache && initSprache.winControl &&
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             initSprache.winControl.data = new WinJS.Binding.List(AdminAppHelpTextList.initSpracheView.getResults());
-                            that.binding.LanguageID = AppData.getLanguageId().toString();
+                            that.binding.languageId = AppData.getLanguageId().toString();
                         }
                         return WinJS.Promise.as();
                     }
@@ -512,7 +503,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                        }, { LanguageSpecID: parseInt(that.binding.LanguageID) }, recordId);
+                        }, { LanguageSpecID: parseInt(that.binding.languageId) }, recordId);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

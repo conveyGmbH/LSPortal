@@ -21,8 +21,6 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 pageData: getEmptyDefaultValue(AdminAppHelpText.langAppHelpTextView.defaultValue),
-                pageId: 0,
-                pageLangId: 0,
                 showVideo: false,
                 appHelpTextFlags: {
                     pAppHelpTextID: 0,
@@ -89,10 +87,10 @@
                                 if (typeof complete === "function") {
                                     complete(dataPage);
                                 } else {
-                                        var master = Application.navigator.masterControl;
-                                        if (master && master.controller) {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
                                         master.controller.loadData(recordId);
-                                        }
+                                    }
                                 }
                             }, function (errorResponse) {
                                 AppBar.busy = false;
@@ -155,7 +153,7 @@
                         if (master && master.controller) {
                             master.controller.loadData(recordId);
                         }
-                        that.loadData(that.binding.pageData.LangAppHelpTextVIEWID, that.binding.pageData.LanguageSpecID);
+                        that.loadData();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call PRC_ShowAppHelpText error");
                     });
@@ -311,38 +309,39 @@
                 }
             };
 
-            var loadData = function (appHelpTextId, languageSpecId) {
+            var getRecordId = function() {
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    return master.controller.binding.recordId;
+                }
+                return 0;
+            }
+
+            var loadData = function () {
+                var recordId = getRecordId();
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                that.binding.pageId = appHelpTextId;
-                var ret;
-                if (appHelpTextId) {
-                    ret = new WinJS.Promise.as().then(function () {
-                        return AdminAppHelpText.langAppHelpTextView.select(function (json) {
-                            Log.print(Log.l.trace, "langAppHelpTextView: success!");
-                            if (json && json.d) {
-                                var result = json.d.results[0];
-                                that.binding.pageLandId = result.LangAppHelpTextVIEWID;
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.binding.pageData = result;
-                                Log.print(Log.l.trace, "Data loaded");
-                            }
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            that.loading = false;
-                            }, { LangAppHelpTextVIEWID: appHelpTextId, LanguageSpecID: languageSpecId});
-                    }).then(function() {
-                        AppBar.notifyModified = true;
-                        return WinJS.Promise.as();
-                    });
-                }
+                var ret = new WinJS.Promise.as().then(function () {
+                    return AdminAppHelpText.langAppHelpTextView.select(function (json) {
+                        Log.print(Log.l.trace, "langAppHelpTextView: success!");
+                        if (json && json.d) {
+                            var result = json.d;
+                            that.binding.pageLandId = result.LangAppHelpTextVIEWID;
+                            that.binding.pageData = result;
+                            Log.print(Log.l.trace, "Data loaded");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.loading = false;
+                    }, recordId);
+                }).then(function () {
+                    AppBar.notifyModified = true;
+                    return WinJS.Promise.as();
+                });
                 Log.ret(Log.l.trace);
-                return ret;
+                return ret || WinJS.Promise.as();
             }
             this.loadData = loadData;
 

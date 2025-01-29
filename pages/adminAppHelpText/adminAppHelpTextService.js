@@ -20,9 +20,9 @@
             }
         },
         langAppHelpTextView: {
-            select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, namespaceName + ".langAppHelpTextView.", "restriction=" + restriction);
-                var ret = AdminAppHelpText._langAppHelpTextView.select(complete, error, restriction);
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, namespaceName + ".langAppHelpTextView.", "recordId=" + recordId);
+                var ret = AdminAppHelpText._langAppHelpTextView.selectById(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
