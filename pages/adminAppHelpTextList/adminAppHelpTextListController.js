@@ -19,7 +19,8 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                recordId: 0
+                recordId: 0,
+                languageId: 0
             }, commandList, true]);
             this.nextUrl = null;
             this.loading = false;
@@ -225,8 +226,11 @@
                 },
                 onSelectionChangedInitSprache: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.binding.languageId = event.target.value;
-                    that.loadData();
+                    if (event && event.target) {
+                        var value = event.target.value;
+                        that.binding.languageId = (typeof value === "string" ? parseInt(value) : value);
+                        that.loadData();
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
@@ -342,8 +346,8 @@
                             AppData.setErrorMsg(that.binding);
                             var nextUrl = that.nextUrl;
                             //that.nextUrl = null;
-                            Log.print(Log.l.trace, "calling select fairMandantView...");
-                            ClientManagementList.fairMandantView.selectNext(function (json) {
+                            Log.print(Log.l.trace, "calling select appHelpTextView...");
+                            AdminAppHelpTextList.appHelpTextView.selectNext(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "select fairMandantView: success!");
@@ -419,9 +423,9 @@
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
-                                    //setLanguage(results);
-                                    that.binding.languageId = AppData.getLanguageId().toString();
-                                    Log.print(Log.l.trace, "calling select initSpracheView...");
+                                    if (!that.binding.languageId) {
+                                        that.binding.languageId = AppData.getLanguageId();
+                                    }
                                 }
                             }
                         }, function (errorResponse) {
@@ -433,7 +437,9 @@
                         if (initSprache && initSprache.winControl &&
                             (!initSprache.winControl.data || !initSprache.winControl.data.length)) {
                             initSprache.winControl.data = new WinJS.Binding.List(AdminAppHelpTextList.initSpracheView.getResults());
-                            that.binding.languageId = AppData.getLanguageId().toString();
+                            if (!that.binding.languageId) {
+                                that.binding.languageId = AppData.getLanguageId();
+                            }
                         }
                         return WinJS.Promise.as();
                     }
