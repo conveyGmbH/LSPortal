@@ -150,7 +150,7 @@
         { id: "MyEventsLSGrp", group: 62, svg: "keys", disabled: true, popup: true },
         { id: "localevents", group: 12, svg: "keys", disabled: true, predecGroup: 62 },
         { id: "events", group: 2, svg: "calendar_1", disabled: true, predecGroup: 62 },
-        { id: "eventProducts", group: 46, svg: "box_open", disabled: true, predecGroup: 62 },
+        { id: "eventProducts", group: 46, svg: "box_open", disabled: true, predecGroup: 41 },
         //{ id: "eventResourceAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //{ id: "eventMediaAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
         //{ id: "eventSeriesAdministration", group: 44, svg: "calendar_1", disabled: true, predecGroup: 53 },
