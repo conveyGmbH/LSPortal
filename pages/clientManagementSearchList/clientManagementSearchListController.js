@@ -135,6 +135,16 @@
             }
             this.newMandant = newMandant;
 
+            var storedSearchString = function() {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var searchString = AppData.getRecordId("FairMandantSearch");
+                if (searchString) {
+                    that.binding.searchString = searchString;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.storedSearchString = storedSearchString;
+            
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -154,6 +164,7 @@
                     that.getFilter();
                     if (event && event.currentTarget) {
                         that.binding.searchString = event.currentTarget.value;
+                        AppData.setRecordId("FairMandantSearch", that.binding.searchString);
                         that.loadData(that.binding.searchString);
                     }
                     Log.ret(Log.l.trace);
@@ -290,6 +301,9 @@
             }
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.storedSearchString();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(that.binding.searchString);
             }).then(function () {
