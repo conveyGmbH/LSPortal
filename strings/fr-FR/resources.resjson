@@ -1874,7 +1874,7 @@
     "clientManagementSummarise.jointxt"			: "Voulez-vous vraiment fusionner ces deux mandants ?",
 	
     "adminAppHelpTextList.title"			: "Pages",
-    "adminAppHelpTextList.inactive"     : "Inaktiv",
+    "adminAppHelpTextList.inactive"     : "Inactif",
 
     "adminAppHelpText.title"			: "Texte auxiliaire de la page",
     "adminAppHelpText.titledata"			: "Titre",

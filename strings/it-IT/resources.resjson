@@ -167,7 +167,7 @@
     "tooltip.sendPDF"  : "Invia biglietto PDF",
     "tooltip.sendWallet"  : "Invia biglietto del wallet",
     "tooltip.deleteTicket"  : "Cancellare il biglietto",
-	  "tooltip.showEvents"    : "Ereignisse anzeigen",
+	"tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.singlechoice" : "Con questo tipo di risposta è possibile selezionare solo una delle risposte",
     "tooltip.multchoice" : "Con questo tipo di risposta è possibile selezionare una o più risposte",
     "tooltip.rating" : "Con questo tipo di risposta è possibile selezionare una sola risposta. La risposta non può contenere testo, ma solo da uno a sei simboli stella",
@@ -1875,7 +1875,7 @@
     "clientManagementSummarise.jointxt"			: "Vuoi davvero unire questi due clienti?",
 	
     "adminAppHelpTextList.title"			: "Pagine",
-    "adminAppHelpTextList.inactive"     : "Inaktiv",
+    "adminAppHelpTextList.inactive"     : "Inattivo",
 
     "adminAppHelpText.title"			: "Testo di aiuto della pagina",
     "adminAppHelpText.titledata"			: "Titolo",

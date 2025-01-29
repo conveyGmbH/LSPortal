@@ -1499,7 +1499,7 @@
     "genDataEmployee.cancel" : "Cancel",
 
     "adminAppHelpTextList.title"			: "Pages",
-    "adminAppHelpTextList.inactive"     : "Inaktiv",
+    "adminAppHelpTextList.inactive"     : "Inactive",
 
     "adminAppHelpText.title"			: "Page help text",
     "adminAppHelpText.titledata"			: "Title",
