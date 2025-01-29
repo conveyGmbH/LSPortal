@@ -1,4 +1,4 @@
-﻿/*
+﻿
 #contactList .listview .win-selectionstylefilled {
     position: relative;
     left: 0px;
@@ -6,7 +6,7 @@
     width: 200px;
     height: 200px;
 }
-*/
+
 .contactList .win-itemcontainer .win-itembox,
 .contactList .win-listview .win-itembox {
     background-color: transparent;
@@ -267,4 +267,5 @@
     text-align: center;
     line-height: 45px;
     font-weight: bold;
+    margin-left: 2px;
 }

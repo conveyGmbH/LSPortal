@@ -371,6 +371,7 @@
     "contactList.btnCompanyDesc": "Firmenname ↓",
     "contactList.btnNameAsc" : "Nachname ↑",
     "contactList.btnNameDesc": "Nachname ↓",
+    "contactList.searchtxt": "Suche",
 
     "camera.title"          : "Kamera",
     "camera.comment"        : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

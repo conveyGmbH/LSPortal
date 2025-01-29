@@ -371,6 +371,7 @@
     "contactList.btnCompanyDesc": "Nome della società ↓",
     "contactList.btnNameAsc" : "Cognome ↑",
     "contactList.btnNameDesc": "Cognome ↓",
+    "contactList.searchtxt": "Ricerca",
 
     "camera.title"          : "Camera",
     "camera.comment"        : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
