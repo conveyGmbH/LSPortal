@@ -24,6 +24,9 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickShow", label: getResourceText("command.showHelpText"), tooltip: getResourceText("tooltip.showHelpText"), section: "primary", svg: "checkbox" },
+                { id: "clickHide", label: getResourceText("command.hideHelpText"), tooltip: getResourceText("tooltip.hideHelpText"), section: "primary", svg: "checkbox_unchecked" },
+                { id: "clickForceVersionUpdate", label: getResourceText("command.forceVersionUpdate"), tooltip: getResourceText("tooltip.forceVersionUpdate"), section: "primary", svg: "cloud_upload" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 

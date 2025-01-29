@@ -67,6 +67,9 @@
     "command.copyMitarbeiter" : "Veranstaltung wechseln",
     "command.loadListBig" : "Große Austellerliste",
     "command.loadListSmall" : "Kleine Austellerliste",
+    "command.showHelpText"   : "Show help text",
+    "command.hideHelpText"  : "Hide help text",
+    "command.forceVersionUpdate" : "Force update",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -148,6 +151,9 @@
     "tooltip.headeremailversandtzeit"			: "Product email sent",
     "tooltip.loadListBig" : "Große Austellerliste",
     "tooltip.loadListSmall" : "Kleine Austellerliste",
+    "tooltip.showHelpText"   : "Show help text",
+    "tooltip.hideHelpText"  : "Hide help text",
+    "tooltip.forceVersionUpdate" : "Force update",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1490,5 +1496,15 @@
     "genDataEmployee.exceededLicence" : "Attention! Licence number exceeded!",
     "genDataEmployee.alertatSymbol" : "Maximum one @ character allowed!",
     "genDataEmployee.deleteMitarbeiter" : "Delete",
-    "genDataEmployee.cancel" : "Cancel"
+    "genDataEmployee.cancel" : "Cancel",
+
+    "adminAppHelpTextList.title"			: "Pages",
+    "adminAppHelpTextList.inactive"     : "Inaktiv",
+
+    "adminAppHelpText.title"			: "Page help text",
+    "adminAppHelpText.titledata"			: "Title",
+    "adminAppHelpText.subTitle"			: "Title description text",
+    "adminAppHelpText.mediaURL"			: "Media url",
+    "adminAppHelpText.bodyText"			: "Help text",
+    "adminAppHelpText.htmlupload"			: "Html file upload"
 }

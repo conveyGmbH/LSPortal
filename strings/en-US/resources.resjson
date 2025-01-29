@@ -83,6 +83,9 @@
     "command.join"    : "Summarise",
     "command.loadListBig" : "Large exhibitor list",
     "command.loadListSmall" : "Small exhibitor list",
+    "command.showHelpText"   : "Show help text",
+    "command.hideHelpText"  : "Hide help text",
+    "command.forceVersionUpdate" : "Force update",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -181,6 +184,9 @@
     "tooltip.join"  :  "Summarise",
     "tooltip.loadListBig" : "Large exhibitor list",
     "tooltip.loadListSmall" : "Small exhibitor list",
+    "tooltip.showHelpText"   : "Show help text",
+    "tooltip.hideHelpText"  : "Hide help text",
+    "tooltip.forceVersionUpdate" : "Force update",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -1888,6 +1894,7 @@
     "clientManagementSummarise.jointxt"			: "Do you really want to join these two clients?",
 
     "adminAppHelpTextList.title"			: "Pages",
+    "adminAppHelpTextList.inactive"     : "Inaktiv",
 
     "adminAppHelpText.title"			: "Page help text",
     "adminAppHelpText.titledata"			: "Title",

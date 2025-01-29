@@ -83,6 +83,9 @@
     "command.join"    : "Résumer",
     "command.loadListBig" : "Grande liste d'exposants",
     "command.loadListSmall" : "Petite liste d'exposants",
+    "command.showHelpText"   : "Afficher le texte d'aide",
+    "command.hideHelpText"  : "Cacher le texte d'aide",
+    "command.forceVersionUpdate" : "forcer la mise à jour",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -181,6 +184,9 @@
     "tooltip.join"  :  "Résumer",
 	"tooltip.loadListBig" : "Grande liste d'exposants",
     "tooltip.loadListSmall" : "Petite liste d'exposants",
+    "tooltip.showHelpText"   : "Afficher le texte d'aide",
+    "tooltip.hideHelpText"  : "Cacher le texte d'aide",
+    "tooltip.forceVersionUpdate" : "forcer la mise à jour",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -1868,6 +1874,7 @@
     "clientManagementSummarise.jointxt"			: "Voulez-vous vraiment fusionner ces deux mandants ?",
 	
     "adminAppHelpTextList.title"			: "Pages",
+    "adminAppHelpTextList.inactive"     : "Inaktiv",
 
     "adminAppHelpText.title"			: "Texte auxiliaire de la page",
     "adminAppHelpText.titledata"			: "Titre",

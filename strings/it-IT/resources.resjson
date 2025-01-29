@@ -83,6 +83,12 @@
     "command.join"    : "Riassumere",
     "command.loadListBig" : "Elenco espositori grande",
     "command.loadListSmall" : "Elenco espositori piccolo",
+    "command.showHelpText"   : "Hilfetext anzeigen",
+    "command.hideHelpText"  : "Hilfetext verstecken",
+    "command.forceVersionUpdate" : "Update erzwingen",
+    "command.showHelpText"   : "Mostra il testo della guida",
+    "command.hideHelpText"  : "Nascondi il testo della guida",
+    "command.forceVersionUpdate" : "Forza l'aggiornamento",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -181,6 +187,9 @@
     "tooltip.join"  :  "Riassumere",
     "tooltip.loadListBig" : "Elenco espositori grande",
     "tooltip.loadListSmall" : "Elenco espositori piccolo",
+    "tooltip.showHelpText"   : "Mostra il testo della guida",
+    "tooltip.hideHelpText"  : "Nascondi il testo della guida",
+    "tooltip.forceVersionUpdate" : "Forza l'aggiornamento",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -1866,6 +1875,7 @@
     "clientManagementSummarise.jointxt"			: "Vuoi davvero unire questi due clienti?",
 	
     "adminAppHelpTextList.title"			: "Pagine",
+    "adminAppHelpTextList.inactive"     : "Inaktiv",
 
     "adminAppHelpText.title"			: "Testo di aiuto della pagina",
     "adminAppHelpText.titledata"			: "Titolo",

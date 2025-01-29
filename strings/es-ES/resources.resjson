@@ -67,6 +67,9 @@
 	"command.copyMitarbeiter" : "Veranstaltung wechseln",
     "command.loadListBig" : "Große Austellerliste",
     "command.loadListSmall" : "Kleine Austellerliste",
+    "command.showHelpText"   : "Hilfetext anzeigen",
+    "command.hideHelpText"  : "Hilfetext verstecken",
+    "command.forceVersionUpdate" : "Update erzwingen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -148,6 +151,9 @@
     "tooltip.headeremailversandtzeit"			: "Product email sent",
     "tooltip.loadListBig" : "Große Austellerliste",
     "tooltip.loadListSmall" : "Kleine Austellerliste",
+    "tooltip.showHelpText"   : "Hilfetext anzeigen",
+    "tooltip.hideHelpText"  : "Hilfetext verstecken",
+    "tooltip.forceVersionUpdate" : "Update erzwingen",
     
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1505,5 +1511,15 @@
     "genDataEmployee.exceededLicence" : "Achtung! Lizenz Anzahl überschritten!",
     "genDataEmployee.alertatSymbol" : "Maximal ein @ Zeichen erlaubt!",
     "genDataEmployee.deleteMitarbeiter" : "Löschen",
-    "genDataEmployee.cancel" : "Abbrechen"
+    "genDataEmployee.cancel" : "Abbrechen",
+
+    "adminAppHelpTextList.title"			: "Seiten",
+    "adminAppHelpTextList.inactive"     : "Inaktiv",
+
+    "adminAppHelpText.title"			: "Seitenhilfstext",
+    "adminAppHelpText.titledata"			: "Titel",
+    "adminAppHelpText.subTitle"			: "Titelbeschreibungstext",
+    "adminAppHelpText.mediaURL"			: "Medien-Url",
+    "adminAppHelpText.bodyText"			: "Hilfstext",
+    "adminAppHelpText.htmlupload"			: "Html Datei upload"
 }			

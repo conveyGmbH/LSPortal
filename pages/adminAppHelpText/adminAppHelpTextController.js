@@ -24,6 +24,11 @@
                 pageId: 0,
                 pageLangId: 0,
                 showVideo: false,
+                appHelpTextFlags: {
+                    pAppHelpTextID: 0,
+                    pShow: 0,
+                    pForceVersionUpdate: 0
+                },
                 videoUrl: ""
             }, commandList]);
 
@@ -130,6 +135,42 @@
             };
             this.saveData = saveData;
 
+            var showAppHelpText = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.setErrorMsg(that.binding);
+                var appHelpTextFlags = that.binding.appHelpTextFlags;
+                if (appHelpTextFlags && appHelpTextFlags.pAppHelpTextID === 0) {
+                    appHelpTextFlags.pAppHelpTextID = that.binding.pageData.AppHelpTextID;
+                }
+
+                if (that.binding.pageData.AppHelpTextID) {
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_ShowAppHelpText", {
+                        pAppHelpTextID: that.binding.pageData.AppHelpTextID,
+                        pShow: appHelpTextFlags.pShow,
+                        pForceVersionUpdate: appHelpTextFlags.pForceVersionUpdate
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_ShowAppHelpText success! ");
+                        if (typeof complete === "function") {
+                            complete(json);
+                        }
+                        that.loadData(that.binding.pageData.LangAppHelpTextVIEWID, that.binding.pageData.LanguageSpecID);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_ShowAppHelpText error");
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
+                } else {
+                    var err = { status: 0, statusText: "no AppHelpTextID selected" };
+                    if (typeof error === "function") {
+                        error(err);
+                    }
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.showAppHelpText = showAppHelpText;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -206,6 +247,25 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                clickShow: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.binding.appHelpTextFlags.pShow = 1;
+                    that.showAppHelpText();
+                    Log.ret(Log.l.trace);
+                },
+                clickHide: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.binding.appHelpTextFlags.pShow = 0;
+                    that.showAppHelpText();
+                    Log.ret(Log.l.trace);
+                },
+                clickForceVersionUpdate: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.binding.appHelpTextFlags.pShow = 1;
+                    that.binding.appHelpTextFlags.pForceVersionUpdate = 1;
+                    that.showAppHelpText();
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -219,6 +279,33 @@
                 },
                 clickOk: function () {
                     if (AppBar.modified) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickShow: function (event) {
+                    //Show - Button disabled wenn Version != 0 und Hide - Button disabled wenn Version = 0
+                    //clickForceVersionUpdate nie disabled
+                    if (that.binding.pageData.Version !== 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                clickHide: function (event) {
+                    //Show - Button disabled wenn Version != 0 und Hide - Button disabled wenn Version = 0
+                    //clickForceVersionUpdate nie disabled
+                    if (that.binding.pageData.Version === 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
+                clickForceVersionUpdate: function (event) {
+                    //Show - Button disabled wenn Version != 0 und Hide - Button disabled wenn Version = 0
+                    //clickForceVersionUpdate nie disabled
+                    if (that.binding.pageData.AppHelpTextID) {
                         return false;
                     } else {
                         return true;
@@ -251,6 +338,9 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                             that.loading = false;
                             }, { LangAppHelpTextVIEWID: appHelpTextId, LanguageSpecID: languageSpecId});
+                    }).then(function() {
+                        AppBar.notifyModified = true;
+                        return WinJS.Promise.as();
                     });
                 }
                 Log.ret(Log.l.trace);

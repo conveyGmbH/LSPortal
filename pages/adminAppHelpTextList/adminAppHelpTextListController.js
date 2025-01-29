@@ -186,6 +186,8 @@
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.nameInitial = item.Title ? item.Title.substr(0, 2) : "";
+                item.VersionText =
+                    item.Version ? "V. " + item.Version : getResourceText("adminAppHelpTextList.inactive");
             }
             this.resultConverter = resultConverter;
 
