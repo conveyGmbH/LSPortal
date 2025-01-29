@@ -142,7 +142,7 @@
                 if (appHelpTextFlags && appHelpTextFlags.pAppHelpTextID === 0) {
                     appHelpTextFlags.pAppHelpTextID = that.binding.pageData.AppHelpTextID;
                 }
-
+                var recordId = that.binding.pageLandId;
                 if (that.binding.pageData.AppHelpTextID) {
                     AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_ShowAppHelpText", {
@@ -151,15 +151,13 @@
                         pForceVersionUpdate: appHelpTextFlags.pForceVersionUpdate
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_ShowAppHelpText success! ");
-                        if (typeof complete === "function") {
-                            complete(json);
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
+                            master.controller.loadData(recordId);
                         }
                         that.loadData(that.binding.pageData.LangAppHelpTextVIEWID, that.binding.pageData.LanguageSpecID);
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call PRC_ShowAppHelpText error");
-                        if (typeof error === "function") {
-                            error(errorResponse);
-                        }
                     });
                 } else {
                     var err = { status: 0, statusText: "no AppHelpTextID selected" };
