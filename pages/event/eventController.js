@@ -659,7 +659,7 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     var recordId = that.getEventId();
                     if (recordId) {
-                        if (that.binding.prevUser !== that.binding.actUser) {
+                        if (!that.binding.prevUser && that.binding.prevUser !== that.binding.actUser) {
                             var confirmTitle = getResourceText("event.labelDeleteMsg1") + that.binding.prevUser + getResourceText("event.labelDeleteMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
@@ -683,7 +683,7 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     var recordId = that.getEventId();
                     if (recordId) {
-                        if (that.binding.prevUser !== that.binding.actUser) {
+                        if (!that.binding.prevUser && that.binding.prevUser !== that.binding.actUser) {
                             var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
@@ -700,7 +700,7 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    if (that.binding.prevUser !== that.binding.actUser) {
+                    if (!that.binding.prevUser && that.binding.prevUser !== that.binding.actUser) {
                         var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
                         confirm(confirmTitle, function (result) {
                             if (result) {
