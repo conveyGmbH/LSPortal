@@ -278,6 +278,9 @@
 .mailingListLS .list-compressed-title {
     margin-top: 2px;
 }
+.mailingListLS .list-compressed {
+    width: calc(100% - 100px);
+}
 .mailingListLS .list-symbol-IDw {
     float: right;
 }
