@@ -858,6 +858,7 @@
                                     var prevNotifyModified = AppBar.notifyModified;
                                     AppBar.notifyModified = false;
                                     var item = json.d.results[0];
+                                    AppBar.scope.setPrevUser(item.PrevModifierUser);
                                     that.resultConverter(item, scope.index);
                                     that.records.setAt(scope.index, item);
                                     AppBar.notifyModified = prevNotifyModified;
