@@ -57,55 +57,55 @@
             };
             this.getRecordId = getRecordId;
 
-            var langMsgSetter = function(langId) {
+            var langMsgSetter = function (langId) {
                 Log.call(Log.l.trace, "Employee.Controller.");
                 switch (langId) {
-                case "1": //deutsch
+                    case "1": //deutsch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextde");
-                    break;
-                case "2": //englisch
+                        break;
+                    case "2": //englisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptexten");
-                    break;
-                case "3": //französisch
+                        break;
+                    case "3": //französisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextfr");
-                    break;
-                case "4": //italienisch
+                        break;
+                    case "4": //italienisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextit");
-                    break;
-                case "5": //spanisch
+                        break;
+                    case "5": //spanisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextes");
-                     break;
-                case "16": //portogisisch
+                        break;
+                    case "16": //portogisisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextpo");
-                     break;
-                case "17": //polnisch
+                        break;
+                    case "17": //polnisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextpl");
-                     break;
-                case "18": //russisch
+                        break;
+                    case "18": //russisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextru");
-                     break;
-                case "19": //ungarisch
+                        break;
+                    case "19": //ungarisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextun");
-                     break;
-                case "20": //schwedisch
+                        break;
+                    case "20": //schwedisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextsv");
-                     break;
-                case "21": //finnisch
+                        break;
+                    case "21": //finnisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextfi");
-                     break;
-                case "22": //norwegisch
+                        break;
+                    case "22": //norwegisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextno");
-                     break;
-                case "23": //chinesisch
+                        break;
+                    case "23": //chinesisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextch");
-                     break;
-                case "24": //japanisch
+                        break;
+                    case "24": //japanisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextjp");
-                     break;
-                case "25": //koreanisch
+                        break;
+                    case "25": //koreanisch
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextko");
-                    break;
-                default: //Alle Sprachen
+                        break;
+                    default: //Alle Sprachen
                         that.binding.langMsgHelpText = getResourceText("mailing.langhelptextdefault");
                 }
                 Log.ret(Log.l.trace, langId);
@@ -340,38 +340,24 @@
             var checkMandatoryFields = function () {
                 Log.call(Log.l.trace, "Mailing.Controller.");
                 var dataMail = that.binding.dataMail;
-                var ret = WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select MaildokumentView...");
-                    if (dataMail.Beschreibung) {
-                        that.mandatoryErrorCount += 0;
-                    } else {
-                        that.mandatoryErrorCount += 1;
-                        that.mandatoryErrorMsg += getResourceText("mailing.info") + " ";
-                    }
-                    if (dataMail.Sender) {
-                        that.mandatoryErrorCount += 0;
-                    } else {
-                        that.mandatoryErrorCount += 1;
-                        that.mandatoryErrorMsg += getResourceText("mailing.sender") + " ";
-                    }
-                    if (dataMail.Subject) {
-                        that.mandatoryErrorCount += 0;
-                    } else {
-                        that.mandatoryErrorCount += 1;
-                        that.mandatoryErrorMsg += getResourceText("mailing.subject") + " ";
-                    }
-                    if (dataMail.Mailtext) {
-                        that.mandatoryErrorCount += 0;
-                    } else {
-                        that.mandatoryErrorCount += 1;
-                        that.mandatoryErrorMsg += getResourceText("mailing.mailtext") + " ";
-                    }
-                }).then(function () {
-                    if (that.mandatoryErrorCount > 0) {
-                        that.mandatoryErrorMsg += getResourceText("siteeventsneuaus.mandatoryerrormsgadd");
-                    }
-                });
-                return ret;
+                that.mandatoryErrorMsg = "";
+                if (!dataMail.Beschreibung) {
+                    that.mandatoryErrorMsg += getResourceText("mailing.info") + " " + getResourceText("mailing.mandatoryerrormsgadd");
+                    return true;
+                }
+                if (!dataMail.Sender) {
+                    that.mandatoryErrorMsg += getResourceText("mailing.sender") + " " + getResourceText("mailing.mandatoryerrormsgadd");
+                    return true;
+                }
+                if (!dataMail.Subject) {
+                    that.mandatoryErrorMsg += getResourceText("mailing.subject") + " " + getResourceText("mailing.mandatoryerrormsgadd");
+                    return true;
+                }
+                if (!dataMail.Mailtext) {
+                    that.mandatoryErrorMsg += getResourceText("mailing.mailtext") + " " + getResourceText("mailing.mandatoryerrormsgadd");
+                    return true;
+                }
+                return false;
             }
             this.checkMandatoryFields = checkMandatoryFields;
 
@@ -384,7 +370,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                changeLang: function(event) {
+                changeLang: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
                     that.langMsgSetter(event.currentTarget.value);
                     Log.ret(Log.l.trace);
@@ -488,22 +474,22 @@
                 },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "Mailing.Controller.");
-                    that.checkMandatoryFields();
-                    if (that.mandatoryErrorCount > 0) {
+                    var showAlert = that.checkMandatoryFields();
+                    if (showAlert) {
                         alert(that.mandatoryErrorMsg);
                         AppBar.busy = false;
-                    }  else {
-                    WinJS.Promise.as().then(function () {
-                        that.saveData(function (response) {
-                            Log.print(Log.l.trace, "prev Mail saved");
-                            //AppBar.modified = true;
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "error saving mail");
+                    } else {
+                        WinJS.Promise.as().then(function () {
+                            that.saveData(function (response) {
+                                Log.print(Log.l.trace, "prev Mail saved");
+                                //AppBar.modified = true;
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "error saving mail");
+                            });
+                        }).then(function () {
+                            that.loadData();
                         });
-                    }).then(function () {
-                        that.loadData();
-                    });
-                    Log.ret(Log.l.trace);
+                        Log.ret(Log.l.trace);
                     }
                 },
                 clickFirstQuestion: function (event) {

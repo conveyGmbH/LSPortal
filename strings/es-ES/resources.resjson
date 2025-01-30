@@ -154,7 +154,7 @@
     "tooltip.showHelpText"   : "Hilfetext anzeigen",
     "tooltip.hideHelpText"  : "Hilfetext verstecken",
     "tooltip.forceVersionUpdate" : "Update erzwingen",
-    
+
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
     "home.howtosection"     : "LeadSuccess Videos",
@@ -847,6 +847,7 @@
     "mailing.testmailsuccessmsg"          : "Ihre Test-E-Mail wurde erfolgreich versendet",
     "mailing.comment"          : "Senden Sie Dankes-Emails an ihre Kontakte.",
     "mailing.GDPRInfo"         : "Um diese Option einzustellen, müssen Sie die GDPR-Signatur aktivieren",
+    "mailing.mandatoryerrormsgadd" : "ist ein Pflichtfeld. Bitte ergänzen Sie die Angabe!",
     
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",

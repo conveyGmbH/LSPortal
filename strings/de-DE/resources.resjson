@@ -946,7 +946,8 @@
     "mailing.langhelptextjp"          : "Diese E-Mail-Vorlage wird an alle Besucher gesendet, deren Land Japan ist.",
     "mailing.langhelptextko"          : "Diese E-Mail-Vorlage wird an alle Besucher gesendet, deren Land Korea ist.",
     "mailing.langhelptextdefault"     : "Dieser E-Mail-Entwurf wird an alle Besucher gesendet, für deren Land noch kein anderer E-Mail-Entwurf eingestellt ist. Wenn dies der einzige Entwurf ist, wird er an alle gescannten Besucher gesendet.",
-    
+    "mailing.mandatoryerrormsgadd" : "ist ein Pflichtfeld. Bitte ergänzen Sie die Angabe!",
+
     "mailingProduct.title"         : "Mailing Produkte",
     "mailingProduct.event"         : "Veranstaltung",
     "mailingProduct.language"      : "Sprache",

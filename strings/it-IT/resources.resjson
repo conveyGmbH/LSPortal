@@ -944,6 +944,7 @@
     "mailing.langhelptextjp" : "Questa bozza di e-mail sarà inviata a tutti i visitatori il cui Paese è Giappone.",
     "mailing.langhelptextko" : "Questa bozza di e-mail sarà inviata a tutti i visitatori il cui Paese è Corea.",
     "mailing.langhelptextdefault" : "Questa bozza di e-mail verrà inviata a tutti i visitatori il cui Paese non ha ancora impostato un'altra bozza di e-mail. Se questa è l'unica bozza, verrà inviata a tutti i visitatori scansionati.",
+    "mailing.mandatoryerrormsgadd" : "è un campo obbligatorio. Si prega di completare le informazioni!",
 
 	"mailingProduct.title"         : "Mailing Prodotto",
     "mailingProduct.event"         : "Evento",

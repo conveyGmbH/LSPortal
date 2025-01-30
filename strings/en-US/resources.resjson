@@ -944,6 +944,7 @@
     "mailing.langhelptextjp" : "This email draft will be sent to all visitors whos country is Japan.",
     "mailing.langhelptextko" : "This email draft will be sent to all visitors whos country is Korea.",
     "mailing.langhelptextdefault" : "This email draft will be sent to all visitors whose country does not have another email draft set yet. If this is the only draft, it will be sent to all scanned visitors.",
+    "mailing.mandatoryerrormsgadd" : "is a mandatory field. Please complete the information!",
     
     "mailingProduct.title"    : "Mailing Products",
     "mailingProduct.event"    : "Event",

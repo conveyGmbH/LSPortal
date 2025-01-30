@@ -942,6 +942,7 @@
     "mailing.langhelptextjp" : "Ce projet d'e-mail sera envoyé à tous les visiteurs dont le pays est Japon.",
     "mailing.langhelptextko" : "Ce projet d'e-mail sera envoyé à tous les visiteurs dont le pays est Corée.",
     "mailing.langhelptextdefault" : "Ce projet d'e-mail sera envoyé à tous les visiteurs dont le pays ne dispose pas encore d'un autre projet d'e-mail. S'il s'agit de la seule ébauche, elle sera envoyée à tous les visiteurs scannés.",
+    "mailing.mandatoryerrormsgadd" : "est un champ obligatoire. Veuillez le compléter !",
 
     "mailingProduct.title"         : "Mailing Produit",
     "mailingProduct.event"         : "événement",
