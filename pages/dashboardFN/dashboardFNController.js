@@ -236,7 +236,7 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.info, "calling PRC_DBExcelRequest...");
                         AppData.call("PRC_DBExcelRequest", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                             pLanguageSpecID: AppData.getLanguageId(),
                             pExportType: "DBSUPREME",
                             psyncRun: 1
@@ -256,7 +256,7 @@
                         excelButton.disabled = "true";
                         Log.print(Log.l.info, "calling PRC_DBExcelRequest...");
                         AppData.call("PRC_DBExcelRequest", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                             pLanguageSpecID: AppData.getLanguageId(),
                             pExportType: "DBPREMIUM",
                             psyncRun: 1
