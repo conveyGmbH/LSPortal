@@ -399,7 +399,7 @@
                 visitorChartDataRaw = [];
                 visitorChartDataRawSurpreme = [];
                 var ret = AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pIntervalHours: 24
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -452,7 +452,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pIntervalHours: 24,
                     pStartTS: 0,
                     pEndTS: 0

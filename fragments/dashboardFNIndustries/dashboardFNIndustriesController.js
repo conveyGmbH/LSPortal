@@ -623,7 +623,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -668,7 +668,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pCriterion1ID: parseInt(that.binding.criteriaMain), //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: parseInt(that.binding.criteriaDays), //parseInt(that.binding.criteriaDays)
                     pLandID: parseInt(that.binding.criteriaCountry), //parseInt(that.binding.criteriaCountry)
@@ -708,7 +708,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: that.getEventId(), //
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"), //
                     pCriterion1ID: parseInt(that.binding.criteriaMain), //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: parseInt(that.binding.criteriaDays), //parseInt(that.binding.criteriaDays)
                     pLandID: 0,
@@ -873,7 +873,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { VeranstaltungID: AppData.getRecordId("Veranstaltung")});
+                        }, { VeranstaltungID: AppData.getRecordId("Veranstaltung2")});
                 });
                 Log.ret(Log.l.trace);
                 return ret;

@@ -400,7 +400,7 @@
                 visitorChartDataRaw = [];
                 visitorChartDataRawSurpreme = [];
                 var ret =AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pIntervalHours: interval,
                     pStartTS: startday,
                     pEndTS: endday
@@ -441,7 +441,7 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashTimeline", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pIntervalHours: 24,
                     pStartTS: 0,
                     pEndTS: 0

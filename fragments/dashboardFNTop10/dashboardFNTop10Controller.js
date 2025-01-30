@@ -622,7 +622,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetCriterionList", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pLanguageSpecID: that.langSet()
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
@@ -667,7 +667,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: that.getEventId(),
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                     pCriterion1ID: -3, //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: 0, //parseInt(that.binding.criteriaDays)
                     pLandID: 0, //parseInt(that.binding.criteriaCountry)
@@ -707,7 +707,7 @@
                 AppData.setErrorMsg(pageBinding);
                 that.setEventId();
                 var ret = AppData.call("PRC_GetDashboardData", {
-                    pVeranstaltungID: that.getEventId(), //
+                    pVeranstaltungID: AppData.getRecordId("Veranstaltung2"), //
                     pCriterion1ID: -3, //parseInt(that.binding.criteriaMain)
                     pCriterion2ID: 0, //parseInt(that.binding.criteriaDays)
                     pLandID: 0,
@@ -728,7 +728,7 @@
                     Log.print(Log.l.error, "call error");
                     AppData.setErrorMsg(pageBinding, error);
                 });
-                Log.ret(Log.l.trace)
+                Log.ret(Log.l.trace);
                 return ret;
             }
             this.getGetDashboardDataSurpreme = getGetDashboardDataSurpreme;
@@ -875,7 +875,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         return WinJS.Promise.as();
-                    }, { VeranstaltungID: AppData.getRecordId("Veranstaltung")});
+                        }, { VeranstaltungID: AppData.getRecordId("Veranstaltung2")});
                 });
                 Log.ret(Log.l.trace);
                 return ret;
