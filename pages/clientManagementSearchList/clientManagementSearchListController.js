@@ -141,6 +141,7 @@
                 if (searchString) {
                     that.binding.searchString = searchString;
                 }
+                that.selectionChanged();
                 Log.ret(Log.l.trace);
             }
             this.storedSearchString = storedSearchString;
