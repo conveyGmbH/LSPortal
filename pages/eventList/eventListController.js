@@ -877,7 +877,7 @@
                     that.hideBtnFilterNotPublished(curPageId);
                     var splitViewContent = Application.navigator && Application.navigator.splitViewContent;
                     // Problem wenn gefiltert wird und dabei count = 1 ist von Result
-                    if (that.binding.count === 1 && !that.binding.searchString && !isGlobSiteCustAdmin) {
+                    if (that.binding.count === 1 && !that.binding.searchString && !that.binding.isGlobSiteCustAdmin) {
                         if (splitViewContent && !Application.navigator._hideDetailRestored) {
                             Application.navigator._hideDetailRestored = true;
                             WinJS.Utilities.addClass(splitViewContent, "hide-detail-restored");
