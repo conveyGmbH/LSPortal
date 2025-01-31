@@ -22,7 +22,7 @@
             },
             defaultValue: {
                 VeranstaltungName: "",
-                LeadSuccessMobileApp: 1,
+                LeadSuccessMobileApp: 0,
                 MobilerBarcodescanner: 0
             }
         }

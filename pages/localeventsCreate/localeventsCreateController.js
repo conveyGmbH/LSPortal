@@ -57,12 +57,7 @@
                 if (typeof dataEvent.LeadSuccessMobileApp === "string") {
                     dataEvent.LeadSuccessMobileApp = parseInt(dataEvent.LeadSuccessMobileApp);
                 }
-                if (!dataEvent.LeadSuccessMobileApp || dataEvent.LeadSuccessMobileApp < 1) {
-                    dataEvent.LeadSuccessMobileApp = 1;
-                }
-                if (!dataEvent.MobilerBarcodescanner) {
-                    dataEvent.MobilerBarcodescanner = 0;
-                } else if (typeof dataEvent.MobilerBarcodescanner === "string") {
+                if (typeof dataEvent.MobilerBarcodescanner === "string") {
                     dataEvent.MobilerBarcodescanner = parseInt(dataEvent.MobilerBarcodescanner);
                 }
                 return dataEvent;

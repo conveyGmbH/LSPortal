@@ -587,11 +587,7 @@
                     }
                 },
                 clickNew: function () {
-                    if (that.binding.fairmandantId) {
                         return false;
-                    } else {
-                        return true;
-                    }
                 },
                 clickChange: function () {
                     if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
