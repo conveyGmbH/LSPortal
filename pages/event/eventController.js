@@ -683,7 +683,6 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     var recordId = that.getEventId();
                     if (recordId) {
-                        if (that.binding.prevUser !== 0 && that.binding.prevUser !== that.binding.actUser) {
                             var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
@@ -692,9 +691,6 @@
                                     Log.print(Log.l.trace, "clickChange: event choice CANCEL");
                                 }
                             });
-                        } else {
-                        that.changeEvent(recordId);
-                    }
                     }
                     Log.ret(Log.l.trace);
                 },

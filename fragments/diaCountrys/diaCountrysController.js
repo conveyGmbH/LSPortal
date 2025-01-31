@@ -22,7 +22,7 @@
             var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
-            that.isSupreme = parseInt(AppData._userData.IsSupreme) || parseInt(AppData._persistentStates.showdashboardMesagoCombo);
+            this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo) || parseInt(AppData._userData.IsSupreme);
 
             var icons = fragmentElement.querySelector(".country-chart-top-container");
             var container = fragmentElement.querySelector(".country-chart-holder");
