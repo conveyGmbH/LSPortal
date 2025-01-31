@@ -755,8 +755,8 @@
     "event.exportKontaktPDF" : "Veuillez choisir ici la langue des étiquettes pour l'exportation au format PDF\nRemarque : ce choix doit être fait AVANT l'événement. Les données déjà collectées ne seront pas modifiées, sauf si vous changez quelque chose dans les contacts individuels après avoir changé la langue",
     "event.usedlicences" : "Utilisateur",
     "event.anzkontakte" : "Contacts",
-	"event.labelChangeMsg1" : "Voulez-vous changer la version de ",
-    "event.labelChangeMsg2" : " ? ",
+	"event.labelChangeMsg1" : "Etes-vous sûr de vouloir modifier un événement créé par l'utilisateur ",
+    "event.labelChangeMsg2" : "? Cet événement n'a pas été créé par vous.",
     "event.labelDeleteMsg1" : "Voulez-vous supprimer la version de ",
     "event.labelDeleteMsg2" : " ? ",
 

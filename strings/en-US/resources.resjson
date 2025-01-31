@@ -758,8 +758,8 @@
     "event.exportKontaktPDF" : "Please choose here the language of the labels for the PDF-Export\nPlease note: this must be selected/decided upon BEFORE the event. Alredy collected data will not be changed, except if you change something in the single contacts after changing the language",
 	"event.usedlicences" : "Users",
     "event.anzkontakte" : "Contacts",
-    "event.labelChangeMsg1" : "Do you want to change the version of ",
-    "event.labelChangeMsg2" : " ? ",
+    "event.labelChangeMsg1" : "Are you sure you want to make changes to an event created by the user ",
+    "event.labelChangeMsg2" : "? This event was not created by you.",
     "event.labelDeleteMsg1" : "Do you want to delete the version of ",
     "event.labelDeleteMsg2" : " ? ",
 
