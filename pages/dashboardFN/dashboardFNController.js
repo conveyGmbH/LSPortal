@@ -31,7 +31,8 @@
             }, commandList]);
 
             var that = this;
-            this.isSupreme = parseInt(AppData._userData.IsSupreme);
+
+            this.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo) || parseInt(AppData._userData.IsSupreme);
 
             var excelButton = pageElement.querySelector("#btn-excel");
             var overlay = pageElement.querySelector("#overlay");

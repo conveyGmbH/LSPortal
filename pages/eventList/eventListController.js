@@ -403,6 +403,12 @@
                                             that.binding.active = 1;
                                         }
                                         AppData._persistentStates.showdashboardMesagoCombo = item.data.DashboardIdx;
+                                        if (AppBar.scope.binding) {
+                                            AppBar.scope.binding.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo) || parseInt(AppData._userData.IsSupreme);
+                                        }
+                                        if (typeof AppBar.scope.checkTip === "function") {
+                                            AppBar.scope.checkTip();
+                                        }
                                         if (item.data.DashboardIdx === 0) {
                                             NavigationBar.enablePage("startPremium");
                                             NavigationBar.enablePage("dashboardFN");
