@@ -138,10 +138,13 @@
             var storedSearchString = function() {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var searchString = AppData.getRecordId("FairMandantSearch");
+                var searchStringId = AppData.getRecordId("FairMandant");
+                that.curRecId = searchStringId;
                 if (searchString) {
                     that.binding.searchString = searchString;
+                    that.scopeFromRecordId(that.curRecId);
+                    that.selectionChanged();
                 }
-                that.selectionChanged();
                 Log.ret(Log.l.trace);
             }
             this.storedSearchString = storedSearchString;
