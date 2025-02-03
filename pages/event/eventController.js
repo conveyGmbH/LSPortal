@@ -36,8 +36,7 @@
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 LanguageID: 0,
                 updateExpParamData: getEmptyDefaultValue(Event.pdfExportParamView.defaultValue),
-                updateExpParamId: 0,
-                prevUser: 0
+                updateExpParamId: 0
             }, commandList]);
 
             var that = this;
@@ -674,7 +673,7 @@
                     if (recordId) {
                         var prevUser = getPrevModifiedUser();
                         if (prevUser && prevUser !== AppData.generalData.odata.login) {
-                            var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
+                            var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
                                     that.changeEvent(recordId);
@@ -692,7 +691,7 @@
                     Log.call(Log.l.trace, "Event.Controller.");
                     var prevUser = getPrevModifiedUser();
                     if (prevUser && prevUser !== AppData.generalData.odata.login) {
-                        var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
+                        var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
                         confirm(confirmTitle, function (result) {
                             if (result) {
                                 that.saveData(function (response) {
