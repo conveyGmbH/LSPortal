@@ -21,6 +21,7 @@
             Log.call(Log.l.trace, "EventList.Controller.");
             Application.Controller.apply(this, [pageElement, {
                 eventId: AppData.getRecordId("Veranstaltung"),
+                prevModifiedUser: null,
                 publishFlag: null,
                 count: 0,
                 active: null,
@@ -394,6 +395,7 @@
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         that.binding.publishFlag = item.data.PublishFlag;
+                                        that.binding.prevModifiedUser = item.data.PrevModifierUser;
                                         //that.binding.showHideFilterBtn = item.data.PublishFlag;
                                         if (typeof AppHeader === "object" &&
                                             AppHeader.controller && AppHeader.controller.binding) {
@@ -459,17 +461,16 @@
                                                         curPageId === "questiongroup" ||
                                                         curPageId === "questionList" ||
                                                         //curPageId === "optQuestionList" ||
-                                                        curPageId === "event" ||
                                                         curPageId === "skills") &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         if (typeof AppBar.scope.setEventId === "function") {
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                         }
-                                                        if (typeof AppBar.scope.setPrevUser === "function") {
-                                                            AppBar.scope.setPrevUser(item.data.PrevModifierUser);
-                                                        }
                                                         AppBar.scope.loadData();
-                                                    } else if (curPageId === "eventProducts" &&
+                                                    } else if ((curPageId === "event") &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.loadData();
+                                                    }else if (curPageId === "eventProducts" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         if (typeof AppBar.scope.setEventId === "function") {
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
@@ -520,7 +521,7 @@
                                                         });
                                                     }
                                                 }, function (errorResponse) {
-                                                    if ((curPageId === "eventCopy" ||
+                                                    if (curPageId === "eventCopy" ||
                                                         curPageId === "mandatory" ||
                                                         curPageId === "optQuestionList" ||
                                                         curPageId === "questionList" ||
@@ -528,9 +529,8 @@
                                                         curPageId === "contactResultsList" ||
                                                         curPageId === "reporting" ||
                                                         curPageId === "reportingColumnList" ||
-                                                        curPageId === "start") &&
-                                                        typeof AppBar.scope.getEventId === "function") {
-                                                        that.selectRecordId(AppBar.scope.getEventId());
+                                                        curPageId === "start") {
+                                                        that.selectRecordId(that.prevRecId);
                                                     }
                                                 });
                                             } else {
@@ -547,15 +547,8 @@
                                                         AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                     }
                                                     AppBar.scope.loadData();
-                                                }
-                                                if ((curPageId === "event") &&
+                                                } else if ((curPageId === "event") &&
                                                     typeof AppBar.scope.loadData === "function") {
-                                                    if (typeof AppBar.scope.setEventId === "function") {
-                                                        AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
-                                                    }
-                                                    if (typeof AppBar.scope.setPrevUser === "function") {
-                                                        AppBar.scope.setPrevUser(item.data.PrevModifierUser);
-                                                    }
                                                     AppBar.scope.loadData();
                                                 }
                                                 if ((curPageId === "reporting" ||

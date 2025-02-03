@@ -9,7 +9,6 @@
     var namespaceName = "Event";
 
     WinJS.Namespace.define("Event", {
-        _eventId: 0,
         _eventView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung2", 0);

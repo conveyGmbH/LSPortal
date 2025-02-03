@@ -37,8 +37,7 @@
                 LanguageID: 0,
                 updateExpParamData: getEmptyDefaultValue(Event.pdfExportParamView.defaultValue),
                 updateExpParamId: 0,
-                prevUser: 0,
-                actUser: AppData.generalData.odata.login
+                prevUser: 0
             }, commandList]);
 
             var that = this;
@@ -189,35 +188,35 @@
             };
             this.creatingPremiumDashboardComboCategory = creatingPremiumDashboardComboCategory;
 
-            var getEventId = function () {
-                Log.print(Log.l.trace, "getEventId Event._eventId=" + Event._eventId);
-                return Event._eventId;
-            }
-            this.getEventId = getEventId;
-
-            var setEventId = function (value) {
-                Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
-                if (AppData.getRecordId("VeranstaltungEdit")) {
-                    value = AppData.getRecordId("VeranstaltungEdit");
-                }
-                Event._eventId = value;
-            }
-            this.setEventId = setEventId;
-
-            var setPrevUser = function(prevUser) {
+            var getRecordId = function () {
+                var recordId = null;
                 Log.call(Log.l.trace, "Event.Controller.");
-                that.binding.prevUser = prevUser;
-                Log.ret(Log.l.trace);
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    recordId = master.controller.binding.eventId;
+                }
+                if (!recordId) {
+                    recordId = AppData.getRecordId("Veranstaltung");
+                    if (!recordId) {
+                        that.setDataEvent(getEmptyDefaultValue(Event.eventView.defaultValue));
+                    }
+                }
+                Log.ret(Log.l.trace, recordId);
+                return recordId;
             }
-            this.setPrevUser = setPrevUser;
+            this.getRecordId = getRecordId;
 
-            var master = Application.navigator.masterControl;
-            if (master &&
-                master.controller &&
-                master.controller.binding &&
-                master.controller.binding.eventId) {
-                that.setEventId(master.controller.binding.eventId);
+            var getPrevModifiedUser = function () {
+                var prevUser = null;
+                Log.call(Log.l.trace, "Event.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    prevUser = master.controller.binding.prevModifiedUser;
+                }
+                Log.ret(Log.l.trace);
+                return prevUser;
             }
+            this.getPrevModifiedUser = getPrevModifiedUser;
 
             var resultConverter = function (item, index) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
@@ -250,17 +249,6 @@
                 AppBar.triggerDisableHandlers();
             };
             this.setDataEvent = setDataEvent;
-
-            var getRecordId = function () {
-                Log.call(Log.l.trace, "Event.Controller.");
-                var recordId = AppData.getRecordId("Veranstaltung");
-                if (!recordId) {
-                    that.setDataEvent(getEmptyDefaultValue(Event.eventView.defaultValue));
-                }
-                Log.ret(Log.l.trace, recordId);
-                return recordId;
-            };
-            this.getRecordId = getRecordId;
 
             var changeEvent = function (eventID) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
@@ -456,7 +444,7 @@
                             }
                         }
                     }
-                    var eventId = that.getEventId();
+                    var eventId = getRecordId();
                     AppData.call("PRC_SETVERANSTOPTION", {
                         pVeranstaltungID: eventId, // Hier muss die ID aus Liste kommen
                         pOptionTypeID: pOptionTypeId,
@@ -657,10 +645,11 @@
                 },
                 clickDelete: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    var recordId = that.getEventId();
+                    var recordId = getRecordId();
                     if (recordId) {
-                        if (that.binding.prevUser !== 0 && that.binding.prevUser !== that.binding.actUser) {
-                            var confirmTitle = getResourceText("event.labelDeleteMsg1") + that.binding.prevUser + getResourceText("event.labelDeleteMsg2");
+                        var prevUser = getPrevModifiedUser();
+                        if (prevUser && prevUser !== AppData.generalData.odata.login) {
+                            var confirmTitle = getResourceText("event.labelDeleteMsg1") + prevUser + getResourceText("event.labelDeleteMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
                                     that.getDeleteEventData(recordId);
@@ -669,8 +658,8 @@
                                 }
                             });
                         } else {
-                        that.getDeleteEventData(recordId);
-                    }
+                            that.getDeleteEventData(recordId);
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -681,8 +670,10 @@
                 },
                 clickChange: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    var recordId = that.getEventId();
+                    var recordId = getRecordId();
                     if (recordId) {
+                        var prevUser = getPrevModifiedUser();
+                        if (prevUser && prevUser !== AppData.generalData.odata.login) {
                             var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
@@ -691,21 +682,25 @@
                                     Log.print(Log.l.trace, "clickChange: event choice CANCEL");
                                 }
                             });
+                        } else {
+                            that.changeEvent(recordId);
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    if (that.binding.prevUser !== 0 && that.binding.prevUser !== that.binding.actUser) {
+                    var prevUser = getPrevModifiedUser();
+                    if (prevUser && prevUser !== AppData.generalData.odata.login) {
                         var confirmTitle = getResourceText("event.labelChangeMsg1") + that.binding.prevUser + getResourceText("event.labelChangeMsg2");
                         confirm(confirmTitle, function (result) {
                             if (result) {
-                    that.saveData(function (response) {
-                        // called asynchronously if ok
-                        that.loadData();
-                    }, function (errorResponse) {
-                        // error already displayed
-                    });
+                                that.saveData(function (response) {
+                                    // called asynchronously if ok
+                                    that.loadData();
+                                }, function (errorResponse) {
+                                    // error already displayed
+                                });
                             } else {
                                 Log.print(Log.l.trace, "clickOk: event choice CANCEL");
                             }
@@ -823,7 +818,7 @@
                     }
                 },
                 clickExportQrcode: function () {
-                    if (that.getEventId()) {
+                    if (getRecordId()) {
                         if (AppBar.busy) {
                             return true;
                         } else {
@@ -1080,7 +1075,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        VeranstaltungID: that.getEventId(),
+                            VeranstaltungID: getRecordId(),
                         LanguageSpecID: AppData.getLanguageId()
                     });
                 }).then(function () {
@@ -1123,7 +1118,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                 }).then(function () {
-                    var recordId = getEventId();
+                    var recordId = getRecordId();
                     if (recordId) {
                         //load of format relation record data
                         Log.print(Log.l.trace, "calling select eventView...");
@@ -1141,7 +1136,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    var recordId = getEventId();
+                    var recordId = getRecordId();
                     if (recordId) {
                         return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
                             // this callback will be called asynchronously
@@ -1183,7 +1178,7 @@
                     var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.veranstOption.visitorFlowInterval);
                     dataEvent.Startdatum = getDateData(that.binding.dataEvent.dateBegin);
                     dataEvent.Enddatum = getDateData(that.binding.dataEvent.dateEnd);
-                    var recordId = getEventId();
+                    var recordId = getRecordId();
                     if (recordId) {
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
@@ -1209,7 +1204,7 @@
                                 }
                                 AppData.getUserData();
                                 Colors.updateColors();
-                                if (recordId === getEventId()) {
+                                if (recordId === getRecordId()) {
                                     // load color settings
                                     // beim reload prüfen ob die Veranstaltung in der ich gerade bin oder nicht
                                     // wenn ja dann nehme funktion von generaldata, sonst diese hier
@@ -1239,7 +1234,7 @@
                             }
                         }).then(function () {
                             if (!err) {
-                                if (recordId === getEventId()) {
+                                if (recordId === getRecordId()) {
                                     if (typeof Home === "object" && Home._actionsList) {
                                         Home._actionsList = null;
                                     }
@@ -1329,7 +1324,7 @@
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var recordId = that.getEventId();
+                var recordId = getRecordId();
                 if (recordId) {
                     ret = AppData.call("PRC_GetQRPdf", {
                         pRecID: recordId,
