@@ -282,6 +282,53 @@
             }
             this.resultConverter = resultConverter;
 
+            var updateBindings = function(data) {
+                if (data && data.VeranstaltungVIEWID) {
+                    that.binding.publishFlag = data.PublishFlag;
+                    that.binding.prevModifiedUser = data.PrevModifierUser;
+                    //that.binding.showHideFilterBtn = data.PublishFlag;
+                    if (typeof AppHeader === "object" &&
+                        AppHeader.controller && AppHeader.controller.binding) {
+                        AppHeader.controller.binding.publishFlag = AppHeader.controller.getPublishFlag(); /* that.binding.publishFlag that.binding.generalData.publishFlag*/
+                    }
+                    if (data.Aktiv) {
+                        that.binding.active = 1;
+                    }
+                    AppData._persistentStates.showdashboardMesagoCombo = data.DashboardIdx;
+                    if (AppBar.scope.binding) {
+                        AppBar.scope.binding.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo) || parseInt(AppData._userData.IsSupreme);
+                    }
+                    if (typeof AppBar.scope.checkTip === "function") {
+                        AppBar.scope.checkTip();
+                    }
+                    if (data.DashboardIdx === 0) {
+                        NavigationBar.enablePage("startPremium");
+                        NavigationBar.enablePage("dashboardFN");
+                    }
+                    if (data.DashboardIdx === 1 || data.DashboardIdx === 2 || data.DashboardIdx === 3 || data.DashboardIdx === 4) {
+                        NavigationBar.enablePage("startPremium");
+                    } else {
+                        NavigationBar.disablePage("startPremium");
+                    }
+                    /*if (data.DashboardIdx === "3" || data.DashboardIdx === "4") {
+                        NavigationBar.enablePage("dashboardFN");
+                    } else {
+                        NavigationBar.disablePage("dashboardFN");
+                    }*/
+                    if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
+                        NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
+                    } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
+                        NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startSurpreme")); //
+                    } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
+                        NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNPremium")); //getResourceText()
+                    } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
+                        NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNSupreme")); //getResourceText()
+                    } else {
+                        Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
+                    }
+                }
+            }
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -394,48 +441,7 @@
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
-                                        that.binding.publishFlag = item.data.PublishFlag;
-                                        that.binding.prevModifiedUser = item.data.PrevModifierUser;
-                                        //that.binding.showHideFilterBtn = item.data.PublishFlag;
-                                        if (typeof AppHeader === "object" &&
-                                            AppHeader.controller && AppHeader.controller.binding) {
-                                            AppHeader.controller.binding.publishFlag = AppHeader.controller.getPublishFlag(); /* that.binding.publishFlag that.binding.generalData.publishFlag*/
-                                        }
-                                        if (item.data.Aktiv) {
-                                            that.binding.active = 1;
-                                        }
-                                        AppData._persistentStates.showdashboardMesagoCombo = item.data.DashboardIdx;
-                                        if (AppBar.scope.binding) {
-                                            AppBar.scope.binding.isSupreme = parseInt(AppData._persistentStates.showdashboardMesagoCombo) || parseInt(AppData._userData.IsSupreme);
-                                        }
-                                        if (typeof AppBar.scope.checkTip === "function") {
-                                            AppBar.scope.checkTip();
-                                        }
-                                        if (item.data.DashboardIdx === 0) {
-                                            NavigationBar.enablePage("startPremium");
-                                            NavigationBar.enablePage("dashboardFN");
-                                        }
-                                        if (item.data.DashboardIdx === 1 || item.data.DashboardIdx === 2 || item.data.DashboardIdx === 3 || item.data.DashboardIdx === 4) {
-                                            NavigationBar.enablePage("startPremium");
-                                        } else {
-                                            NavigationBar.disablePage("startPremium");
-                                        }
-                                        /*if (item.data.DashboardIdx === "3" || item.data.DashboardIdx === "4") {
-                                            NavigationBar.enablePage("dashboardFN");
-                                        } else {
-                                            NavigationBar.disablePage("dashboardFN");
-                                        }*/
-                                        if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
-                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
-                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
-                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startSurpreme")); //
-                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3) {
-                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNPremium")); //getResourceText()
-                                        } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4) {
-                                            NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.dashboardFNSupreme")); //getResourceText()
-                                        } else {
-                                            Log.print(Log.l.trace, "Unknown value of IsSupreme Flag");
-                                        }
+                                        updateBindings(item.data);
                                         var prevRecId = that.curRecId;
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId + " prevRecId:" + prevRecId);
@@ -478,7 +484,7 @@
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "reporting" &&
                                                         typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
+                                                        AppBar.scope.loadData(newRecId);
                                                     } else {
                                                         var newPageId = Application.getPageId(Application.navigator._nextPage);
                                                         if (newPageId !== "event" &&
@@ -555,7 +561,7 @@
                                                     curPageId === "reportingColumnList" ||
                                                     curPageId === "start") &&
                                                     typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData(item.data.VeranstaltungVIEWID);
+                                                    AppBar.scope.loadData(newRecId);
                                                 }
                                                 if (curPageId === "mandatory" &&
                                                     typeof AppBar.scope.loadData === "function") {
@@ -861,6 +867,9 @@
                                     that.resultConverter(item, scope.index);
                                     that.records.setAt(scope.index, item);
                                     AppBar.notifyModified = prevNotifyModified;
+                                    if (that.binding.eventId === recordId) {
+                                        updateBindings(item);
+                                    }
                                 }
                             }
                         }
