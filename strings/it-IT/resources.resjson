@@ -89,6 +89,7 @@
     "command.showHelpText"   : "Mostra il testo della guida",
     "command.hideHelpText"  : "Nascondi il testo della guida",
     "command.forceVersionUpdate" : "Forza l'aggiornamento",
+    "command.changetolsmain" : "Passare a LSMain",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -190,6 +191,7 @@
     "tooltip.showHelpText"   : "Mostra il testo della guida",
     "tooltip.hideHelpText"  : "Nascondi il testo della guida",
     "tooltip.forceVersionUpdate" : "Forza l'aggiornamento",
+    "tooltip.changetolsmain" : "Passare a LSMain",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",

@@ -163,6 +163,20 @@
                     that.newMandant();
                     Log.ret(Log.l.trace);
                 },
+                clickChangeToLSMain: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_ChangeToMain", {
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        AppData.prevLogin = AppData._persistentStates.odata.login;
+                        AppData.prevPassword = AppData._persistentStates.odata.password;
+                        Application.navigateById("login");
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+                    Log.ret(Log.l.trace);
+                },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.getFilter();

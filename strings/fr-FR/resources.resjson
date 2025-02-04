@@ -86,6 +86,7 @@
     "command.showHelpText"   : "Afficher le texte d'aide",
     "command.hideHelpText"  : "Cacher le texte d'aide",
     "command.forceVersionUpdate" : "forcer la mise à jour",
+    "command.changetolsmain" : "Passer à LSMain",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -187,6 +188,7 @@
     "tooltip.showHelpText"   : "Afficher le texte d'aide",
     "tooltip.hideHelpText"  : "Cacher le texte d'aide",
     "tooltip.forceVersionUpdate" : "forcer la mise à jour",
+    "tooltip.changetolsmain" : "Passer à LSMain",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",

@@ -86,6 +86,7 @@
     "command.showHelpText"   : "Show help text",
     "command.hideHelpText"  : "Hide help text",
     "command.forceVersionUpdate" : "Force update",
+    "command.changetolsmain" : "Switch to LSMain",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -187,6 +188,7 @@
     "tooltip.showHelpText"   : "Show help text",
     "tooltip.hideHelpText"  : "Hide help text",
     "tooltip.forceVersionUpdate" : "Force update",
+    "tooltip.changetolsmain" : "Switch to LSMain",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",

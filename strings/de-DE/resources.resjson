@@ -86,6 +86,7 @@
     "command.showHelpText"   : "Hilfetext anzeigen",
     "command.hideHelpText"  : "Hilfetext verstecken",
     "command.forceVersionUpdate" : "Update erzwingen",
+    "command.changetolsmain" : "Zu LSMain wechseln",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -187,6 +188,7 @@
     "tooltip.showHelpText"   : "Hilfetext anzeigen",
     "tooltip.hideHelpText"  : "Hilfetext verstecken",
     "tooltip.forceVersionUpdate" : "Update erzwingen",
+    "tooltip.changetolsmain" : "Zu LSMain wechseln",
 
     "home.title"            : "Start",
 	"home.info"             : "Wichtige Hinweise",
