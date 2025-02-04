@@ -450,7 +450,7 @@
                                                 that.prevRecId = that.curRecId;
                                             }
                                             that.curRecId = newRecId;
-                                            that.binding.eventId = newRecId;
+                                            //that.binding.eventId = newRecId;
                                             // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
                                             AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                             var lastPageId = Application.getPageId(Application.navigator._lastPage);
@@ -461,6 +461,7 @@
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
                                                     // called asynchronously if ok
+                                                    that.binding.eventId = newRecId;
                                                     if ((curPageId === "eventCopy" ||
                                                         curPageId === "contactResultsList" ||
                                                         //curPageId === "mandatory" ||
@@ -541,6 +542,7 @@
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
+                                                that.binding.eventId = newRecId;
                                                 if ((curPageId === "eventCopy" ||
                                                     //curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
@@ -863,7 +865,6 @@
                                     var prevNotifyModified = AppBar.notifyModified;
                                     AppBar.notifyModified = false;
                                     var item = json.d.results[0];
-                                    AppBar.scope.setPrevUser(item.PrevModifierUser);
                                     that.resultConverter(item, scope.index);
                                     that.records.setAt(scope.index, item);
                                     AppBar.notifyModified = prevNotifyModified;
