@@ -15,10 +15,10 @@
             Log.call(Log.l.trace, "VisitorFlowEntExt.Controller.");
             // ListView control
             var listView = pageElement.querySelector("#visitorflowentext.listview");
-
+            this.listView = listView;
             Application.RecordsetController.apply(this, [pageElement, {
                 count: 0
-            }, commandList, false, VisitorFlowEntExt.CR_V_BereichView]);
+            }, commandList, false, null, VisitorFlowEntExt.CR_V_BereichView, listView]);
 
             var that = this;
 
