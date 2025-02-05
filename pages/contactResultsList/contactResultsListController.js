@@ -184,14 +184,6 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onsetContactId: function(event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.selectionChanged().then(function () {
-                        AppData.setRecordId("Kontakt", that.curRecId);
-                        that.binding.btnFlag = true;
-                        AppBar.modified = true;
-                    });
-                },
                 clickDelete: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var confirmText = getResourceText("contact.questionDelete");
@@ -275,21 +267,26 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
-                onSelectionChanged: function (eventInfo) {
+                onSelectionChanged: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
+                        AppData.setRecordId("Kontakt", that.curRecId);
+                        that.binding.btnFlag = true;
+                        AppBar.modified = true;
+                    });
+                },
+                onDblClick: function (eventInfo) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (that.curRecId) {
                         AppBar.triggerDisableHandlers();
                         var scope = that.scopeFromRecordId(that.curRecId);
                         if (scope) {
                             handlePageEnable(scope.item);
                         }
-                            AppData.setRecordId("Kontakt", that.curRecId);
-                        if (that.getEventId()) {
-                            Application.navigateById("contactResultsEdit");
-                        } else {
-                            Application.navigateById("contactResultsEdit");
-                        }
-                    });
+                        Application.navigateById("contactResultsEdit");
+                    } else {
+                        Log.print(Log.l.trace, "No record selected!");
+                    }
                     Log.ret(Log.l.trace);
                 },
                 onLoadingStateChanged: function (eventInfo) {
@@ -394,8 +391,8 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView, "click", this.eventHandlers.onsetContactId.bind(this));
-                this.addRemovableEventListener(listView, "dblclick", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "dblclick", this.eventHandlers.onDblClick.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }

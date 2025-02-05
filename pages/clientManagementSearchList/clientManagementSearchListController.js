@@ -25,7 +25,7 @@
                 Filter2: ClientManagementSearchList.Filter2,
                 contactId: null,
                 noctcount: 0,
-                searchString: ""
+                searchString: AppData.getRecordId("FairMandantSearch")
             }, commandList, null, null, ClientManagementSearchList.fairMandantView, listView]);
 
             var that = this;
@@ -135,20 +135,6 @@
             }
             this.newMandant = newMandant;
 
-            var storedSearchString = function() {
-                Log.call(Log.l.trace, namespaceName + ".Controller.");
-                var searchString = AppData.getRecordId("FairMandantSearch");
-                var searchStringId = AppData.getRecordId("FairMandant");
-                that.curRecId = searchStringId;
-                if (searchString) {
-                    that.binding.searchString = searchString;
-                    that.scopeFromRecordId(that.curRecId);
-                    that.selectionChanged();
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.storedSearchString = storedSearchString;
-            
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -179,11 +165,13 @@
                 },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.getFilter();
-                    if (event && event.currentTarget) {
-                        that.binding.searchString = event.currentTarget.value;
-                        AppData.setRecordId("FairMandantSearch", that.binding.searchString);
-                        that.loadData(that.binding.searchString);
+                    if (AppBar.notifyModified) {
+                        that.getFilter();
+                        if (event && event.currentTarget) {
+                            that.binding.searchString = event.currentTarget.value;
+                            AppData.setRecordId("FairMandantSearch", that.binding.searchString);
+                            that.loadData(that.binding.searchString);
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -208,16 +196,17 @@
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
-                        var scope = that.scopeFromRecordId(that.curRecId);
-                        if (scope) {
-                            AppData.setRecordId("FairMandant", that.curRecId);
-                        }
-                        if (that.curRecId) {
-                            Application.navigateById("clientManagement");
-                        } else {
-                            Log.print(Log.l.trace, "No MandantID found!");
-                        }
+                        AppData.setRecordId("FairMandant", that.curRecId);
                     });
+                    Log.ret(Log.l.trace);
+                },
+                onDblClick: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (that.curRecId) {
+                        Application.navigateById("clientManagement");
+                    } else {
+                        Log.print(Log.l.trace, "No record selected!");
+                    }
                     Log.ret(Log.l.trace);
                 },
                 clickGotoPublish: function (event) {
@@ -313,22 +302,18 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView, "dblclick", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "dblclick", this.eventHandlers.onDblClick.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.storedSearchString();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(that.binding.searchString);
             }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.scrollToRecordId(AppData.getRecordId("FairMandant"));
-            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                that.scrollToRecordId(AppData.getRecordId("FairMandant"));
                 AppBar.notifyModified = true;
             });
             Log.ret(Log.l.trace);
