@@ -102,7 +102,7 @@
                 if (!item.Plz) { item.Plz = ""; }
                 if (!item.Stadt) { item.Stadt = ""; }
                 if (!item.LandName) { item.LandName  = ""; }
-                if (!item.CostumerID) { item.CostumerID = ""; }
+                if (!item.CustomerID) { item.CustomerID = ""; }
                 if (!item.DUNSNumber) { item.DUNSNumber = ""; }
                 if (!item.WebAdresse) { item.WebAdresse = ""; }
                 if (!item.FairMandantID) { item.FairMandantID = ""; }
