@@ -732,6 +732,9 @@
                     }
                 },
                 clickNew: function () {
+                    if (AppHeader.controller.binding.userData.IsMidiAdmin) {
+                        return true;
+                    }
                     if (!AppBar.busy) {
                         var master = Application.navigator.masterControl;
                         if (master && master.controller && master.controller.binding &&
@@ -745,6 +748,9 @@
                     }
                 },
                 clickDelete: function () {
+                    if (AppHeader.controller.binding.userData.IsMidiAdmin) {
+                        return true;
+                    }
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
                         var master = Application.navigator.masterControl;

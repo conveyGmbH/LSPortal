@@ -794,13 +794,23 @@
                     return false;
                 },
                 clickNew: function () {
-                    if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents) {
+                    if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickDelete: function() {
+                    if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin) {
                         return false;
                     } else {
                         return true;
                     }
                 },
                 clickChange: function () {
+                    if (!AppHeader.controller.binding.userData.SiteAdmin && (AppHeader.controller.binding.userData.IsCustomerAdmin || AppHeader.controller.binding.userData.IsMidiAdmin)) {
+                        return true;
+                    }
                     var master = Application.navigator.masterControl;
                     if (master &&
                         master.controller &&

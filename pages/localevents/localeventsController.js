@@ -577,7 +577,8 @@
                 },
                 clickDelete: function () {
                     if (that.curRecId) {
-                        if (that.curRecId !== AppData.getRecordId("Veranstaltung") && !that.binding.active && !AppBar.busy) {
+                        if ((AppHeader.controller.binding.userData.SiteAdmin ||
+                            AppHeader.controller.binding.userData.IsCustomerAdmin) && that.curRecId !== AppData.getRecordId("Veranstaltung") && !that.binding.active && !AppBar.busy) {
                             return false;
                         } else {
                             return true;
@@ -587,9 +588,17 @@
                     }
                 },
                 clickNew: function () {
+                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppHeader.controller.binding.userData.IsCustomerAdmin) {
                         return false;
+                    } else {
+                        return true;
+                    }
                 },
                 clickChange: function () {
+                    if (!AppHeader.controller.binding.userData.SiteAdmin && (AppHeader.controller.binding.userData.IsCustomerAdmin || AppHeader.controller.binding.userData.IsMidiAdmin)) {
+                        return true;
+                    }
                     if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
                         return false;
                     } else {

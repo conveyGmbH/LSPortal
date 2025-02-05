@@ -26,7 +26,7 @@
             this.pageData.publishFlag = false;
             this.pageData.errorFlag = false;
             this.pageData.userData = AppData._userData;
-            this.pageData.genDataFlag = AppData._userData && AppData._userData.IsCustomerAdmin;
+            this.pageData.genDataFlag = AppData._userData && AppData._userData.IsCustomerAdmin || AppData._userData.IsMidiAdmin;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
             this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
@@ -41,7 +41,7 @@
 
             var getPublishFlag = function () {
                 Log.call(Log.l.trace, "Reporting.Controller.");
-                if (AppData._userData && (AppData._userData.IsCustomerAdmin || AppData._userData.SiteAdmin)) {
+                if (AppData._userData && (AppData._userData.IsCustomerAdmin || AppData._userData.SiteAdmin || AppData._userData.IsMidiAdmin)) {
                     var master = Application.navigator.masterControl;
                     if (master &&
                         master.controller &&
@@ -182,7 +182,7 @@
                 }).then(function () {
                     that.setLogo();
                     that.binding.publishFlag = that.getPublishFlag();
-                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.IsCustomerAdmin;
+                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.IsCustomerAdmin || that.binding.userData.IsMidiAdmin;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
