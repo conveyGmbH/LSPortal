@@ -19,7 +19,11 @@
         _Filter: 0,
         Filter: {
             get: function () {
-                return ClientManagementSearchList._Filter;
+                var filter = ClientManagementSearchList._Filter;
+                if (typeof ClientManagementSearchList._Filter === "string") {
+                    filter = parseInt(ClientManagementSearchList._Filter);
+                }
+                return filter;
             },
             set: function (value) {
                 ClientManagementSearchList._Filter = value;
