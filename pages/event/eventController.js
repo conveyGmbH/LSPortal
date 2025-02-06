@@ -702,6 +702,7 @@
                                 });
                             } else {
                                 Log.print(Log.l.trace, "clickOk: event choice CANCEL");
+                                that.loadData();
                             }
                         });
                     } else {
