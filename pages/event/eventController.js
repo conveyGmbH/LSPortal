@@ -647,7 +647,7 @@
                     var recordId = getRecordId();
                     if (recordId) {
                         var prevUser = getPrevModifiedUser();
-                        if (prevUser && prevUser !== AppData.generalData.odata.login) {
+                        if (prevUser && prevUser !== AppData.generalData.odata.login && AppHeader.controller.binding.userData.IsCustomerAdmin) {
                             var confirmTitle = getResourceText("event.labelDeleteMsg1") + prevUser + getResourceText("event.labelDeleteMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
@@ -672,7 +672,7 @@
                     var recordId = getRecordId();
                     if (recordId) {
                         var prevUser = getPrevModifiedUser();
-                        if (prevUser && prevUser !== AppData.generalData.odata.login) {
+                        if (prevUser && prevUser !== AppData.generalData.odata.login && AppHeader.controller.binding.userData.IsCustomerAdmin) {
                             var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
@@ -690,7 +690,7 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     var prevUser = getPrevModifiedUser();
-                    if (prevUser && prevUser !== AppData.generalData.odata.login) {
+                    if (prevUser && prevUser !== AppData.generalData.odata.login && AppHeader.controller.binding.userData.IsCustomerAdmin) {
                         var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
                         confirm(confirmTitle, function (result) {
                             if (result) {
