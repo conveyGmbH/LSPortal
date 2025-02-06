@@ -38,7 +38,7 @@
 
             var master = Application.navigator.masterControl;
             if (master && master.controller && master.controller.binding) {
-                
+
             }
 
             var getVideoId = function (url) {
@@ -47,7 +47,7 @@
                 var match = url ? url.match(regExp) : null;
                 return (match && match[2] && match[2].length === 11) ? match[2] : null;
             }
-            
+
             var resultConverter = function (item, index) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 item.index = index;
@@ -244,7 +244,7 @@
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 },
-                clickShow: function(event) {
+                clickShow: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.appHelpTextFlags.pShow = 1;
                     that.showAppHelpText();
@@ -309,7 +309,7 @@
                 }
             };
 
-            var getRecordId = function() {
+            var getRecordId = function () {
                 var master = Application.navigator.masterControl;
                 if (master && master.controller && master.controller.binding) {
                     return master.controller.binding.recordId;
@@ -322,20 +322,24 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    return AdminAppHelpText.langAppHelpTextView.select(function (json) {
-                        Log.print(Log.l.trace, "langAppHelpTextView: success!");
-                        if (json && json.d) {
-                            var result = json.d;
-                            that.binding.pageLandId = result.LangAppHelpTextVIEWID;
-                            that.binding.pageData = result;
-                            Log.print(Log.l.trace, "Data loaded");
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        that.loading = false;
-                    }, recordId);
+                    if (recordId) {
+                        return AdminAppHelpText.langAppHelpTextView.select(function (json) {
+                            Log.print(Log.l.trace, "langAppHelpTextView: success!");
+                            if (json && json.d) {
+                                var result = json.d;
+                                that.binding.pageLandId = result.LangAppHelpTextVIEWID;
+                                that.binding.pageData = result;
+                                Log.print(Log.l.trace, "Data loaded");
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            that.loading = false;
+                        }, recordId);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
