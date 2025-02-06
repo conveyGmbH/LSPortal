@@ -231,7 +231,26 @@
                     Log.call(Log.l.trace, "SiteEventsBenNach.Controller.");
                     that.loading = true;
                     AppData.setErrorMsg(that.binding);
-                    var ret = new WinJS.Promise.as().then(function () {
+                    var ret = new WinJS.Promise.as().then(function() {
+                        return AppData.call("PRC_View20564", {
+                            pVeranstaltungID: that.binding.recordID
+                        }, function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "SiteEventsBenNach: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length) {
+                                var results = json.d.results[0];
+                                results.Startdatum = that.getDateObject(results.Startdatum);
+                                results.Enddatum = that.getDateObject(results.Enddatum);
+                                that.binding.dataReorderEvent = results;
+                                that.binding.count = results.length;
+                            } else {
+                                that.binding.count = 0;
+                            }
+                        }, function (error) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    })/*.then(function () {
                         return SiteEventsBenNach.VeranstaltungView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -254,7 +273,7 @@
                             
                             }, { VeranstaltungVIEWID: that.binding.recordID}
                         );
-                    }).then(function () {
+                    })*/.then(function () {
                         var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("reorderList"));
                         if (empRolesFragmentControl && empRolesFragmentControl.controller) {
                             return empRolesFragmentControl.controller.loadData(that.binding.recordID);

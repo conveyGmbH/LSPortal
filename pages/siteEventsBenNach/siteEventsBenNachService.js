@@ -7,13 +7,13 @@
     "use strict";
 
     WinJS.Namespace.define("SiteEventsBenNach", {
-        _VeranstaltungView: {
+        /*_VeranstaltungView: {
             get: function () {
                 return AppData.getFormatView("Veranstaltung", 20564, false);
             }
-        },
-        VeranstaltungView: {
-            select: function (complete, error, restriction) {
+        },*/
+        VeranstaltungView: {               
+            /*select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "SiteEvents.");
                 var ret = SiteEventsBenNach._VeranstaltungView.select(complete,
                     error, restriction,
@@ -34,13 +34,13 @@
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
-            },
+            },*/
             defaultValue: {
                 Name: null
+            },
+            defaultRestriction: {
+                Name: null
             }
-        },
-        defaultRestriction: {
-            Name: null
         }
     });
 })();
