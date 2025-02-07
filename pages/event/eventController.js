@@ -218,28 +218,6 @@
             }
             this.getPrevModifiedUser = getPrevModifiedUser;
 
-            var checkforCustEdit = function () {
-                var prevUser = getPrevModifiedUser();
-                if (prevUser &&
-                    prevUser !== AppData.generalData.odata.login &&
-                    AppHeader.controller.binding.userData.IsCustomerAdmin &&
-                    AppBar.modified &&
-                    !AppBar.busy &&
-                    that.binding.custAdminEdit === 0) {
-                    that.binding.custAdminEdit = 1;
-                } else if (prevUser &&
-                    prevUser !== AppData.generalData.odata.login &&
-                    AppHeader.controller.binding.userData.IsCustomerAdmin &&
-                    AppBar.modified &&
-                    !AppBar.busy &&
-                    that.binding.custAdminEdit === 1) {
-                    that.binding.custAdminEdit = 0;
-                } else {
-                    that.binding.custAdminEdit = 0;
-                }
-            }
-            this.checkforCustEdit = checkforCustEdit;
-
             var resultConverter = function (item, index) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (item.DatenschutzText === null) {
@@ -1211,7 +1189,8 @@
                                         } else {
                                             Log.print(Log.l.trace, "clickOk: event choice CANCEL");
                                             AppBar.busy = false;
-                                            // hier passt es noch nicht
+                                            // if cancel then reset curRecId with prevRecId and select with prevRecId 
+                                            // after that loaddata 
                                             var master = Application.navigator.masterControl;
                                             if (master && master.controller) {
                                                 master.controller.curRecId = master.controller.prevRecId;
