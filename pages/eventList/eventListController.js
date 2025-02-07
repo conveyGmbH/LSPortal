@@ -441,7 +441,6 @@
                                     var curPageId = Application.getPageId(nav.location);
                                     that.binding.active = null;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
-                                        updateBindings(item.data);
                                         var prevRecId = that.curRecId;
                                         var newRecId = item.data.VeranstaltungVIEWID;
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId + " prevRecId:" + prevRecId);
@@ -460,6 +459,7 @@
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
                                                 AppBar.scope.saveData(function (response) {
+                                                    updateBindings(item.data);
                                                     // called asynchronously if ok
                                                     that.binding.eventId = newRecId;
                                                     if ((curPageId === "eventCopy" ||
@@ -542,6 +542,7 @@
                                                 });
                                             } else {
                                                 // current detail view has NO saveData() function - is list
+                                                updateBindings(item.data);
                                                 that.binding.eventId = newRecId;
                                                 if ((curPageId === "eventCopy" ||
                                                     //curPageId === "mandatory" ||
