@@ -36,7 +36,8 @@
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 LanguageID: 0,
                 updateExpParamData: getEmptyDefaultValue(Event.pdfExportParamView.defaultValue),
-                updateExpParamId: 0
+                updateExpParamId: 0,
+                custAdminEdit: 0
             }, commandList]);
 
             var that = this;
@@ -217,6 +218,28 @@
             }
             this.getPrevModifiedUser = getPrevModifiedUser;
 
+            var checkforCustEdit = function () {
+                var prevUser = getPrevModifiedUser();
+                if (prevUser &&
+                    prevUser !== AppData.generalData.odata.login &&
+                    AppHeader.controller.binding.userData.IsCustomerAdmin &&
+                    AppBar.modified &&
+                    !AppBar.busy &&
+                    that.binding.custAdminEdit === 0) {
+                    that.binding.custAdminEdit = 1;
+                } else if (prevUser &&
+                    prevUser !== AppData.generalData.odata.login &&
+                    AppHeader.controller.binding.userData.IsCustomerAdmin &&
+                    AppBar.modified &&
+                    !AppBar.busy &&
+                    that.binding.custAdminEdit === 1) {
+                    that.binding.custAdminEdit = 0;
+                } else {
+                    that.binding.custAdminEdit = 0;
+                }
+            }
+            this.checkforCustEdit = checkforCustEdit;
+            
             var resultConverter = function (item, index) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (item.DatenschutzText === null) {
@@ -694,6 +717,7 @@
                         var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
                         confirm(confirmTitle, function (result) {
                             if (result) {
+                                that.checkforCustEdit();
                                 that.saveData(function (response) {
                                     // called asynchronously if ok
                                     that.loadData();
@@ -702,6 +726,7 @@
                                 });
                             } else {
                                 Log.print(Log.l.trace, "clickOk: event choice CANCEL");
+                                that.checkforCustEdit();
                                 that.loadData();
                             }
                         });
@@ -1182,7 +1207,17 @@
                 AppData.setErrorMsg(that.binding);
                 var err = null;
                 var ret;
+                that.checkforCustEdit();
                 var dataEvent = that.binding.dataEvent;
+                if (that.binding.custAdminEdit === 1) {
+                    var errorMessage = getResourceText("event.alertSave");
+                    Log.print(Log.l.error, errorMessage);
+                    alert(errorMessage);
+                    if (typeof error === "function") {
+                        error(errorMessage);
+                    }
+                    return WinJS.Promise.wrapError(errorMessage);
+                }
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
                     /*Erstmal ignorieren!*/
                     var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.veranstOption.visitorFlowInterval);
@@ -1198,6 +1233,7 @@
                             // called asynchronously if ok
                             Log.print(Log.l.info, "eventData update: success!");
                             AppBar.modified = false;
+                            that.binding.custAdminEdit = 0;
                         }, function (errorResponse) {
                             AppBar.busy = false;
                             AppBar.triggerDisableHandlers();
