@@ -86,7 +86,7 @@
                 }
             }
 
-            var disableFields = function(tempAdmin) {
+            var disableFields = function (tempAdmin) {
                 Log.call(Log.l.trace, "Event.Controller.");
                 var startDate = pageElement.querySelector("#startDatum").winControl;
                 var endDate = pageElement.querySelector("#endDatum").winControl;
@@ -103,7 +103,7 @@
             }
             this.disableFields = disableFields;
 
-            var checkForTempMidiAdmin = function() {
+            var checkForTempMidiAdmin = function () {
                 Log.call(Log.l.trace, "Event.Controller.");
                 var tempAdmin = !AppHeader.controller.binding.userData.IsNoAdminUser && !AppHeader.controller.binding.userData.SiteAdmin && !AppHeader.controller.binding.userData.IsCustomerAdmin;
                 that.disableFields(tempAdmin);
@@ -239,7 +239,7 @@
                 }
             }
             this.checkforCustEdit = checkforCustEdit;
-            
+
             var resultConverter = function (item, index) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (item.DatenschutzText === null) {
@@ -446,7 +446,7 @@
                         hidePageItem = true;
                         break;
                     default:
-                        
+
 
                 }
                 if (pOptionTypeId) {
@@ -648,7 +648,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickChangeExportLanguage: function(event) {
+                clickChangeExportLanguage: function (event) {
                     Log.call(Log.l.trace, "LocalEvents.Controller.");
                     var target = event.currentTarget || event.target;
                     var recordId = that.binding.updateExpParamId;
@@ -659,10 +659,10 @@
                             // called asynchronously if ok
                             Log.print(Log.l.info, "eventData update: success!");
                         }, function (errorResponse) {
-                           // called asynchronously if an error occurs
+                            // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            }, recordId, that.binding.updateExpParamData);
+                        }, recordId, that.binding.updateExpParamData);
                     }
                 },
                 clickDelete: function (event) {
@@ -712,32 +712,12 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
-                    var prevUser = getPrevModifiedUser();
-                    if (prevUser && prevUser !== AppData.generalData.odata.login && AppHeader.controller.binding.userData.IsCustomerAdmin) {
-                        var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-                                that.checkforCustEdit();
-                                that.saveData(function (response) {
-                                    // called asynchronously if ok
-                                    that.loadData();
-                                }, function (errorResponse) {
-                                    // error already displayed
-                                });
-                            } else {
-                                Log.print(Log.l.trace, "clickOk: event choice CANCEL");
-                                that.checkforCustEdit();
-                                that.loadData();
-                            }
-                        });
-                    } else {
-                        that.saveData(function (response) {
-                            // called asynchronously if ok
-                            that.loadData();
-                        }, function (errorResponse) {
-                            // error already displayed
-                        });
-                    }
+                    that.saveData(function (response) {
+                        // called asynchronously if ok
+                        that.loadData();
+                    }, function (errorResponse) {
+                        // error already displayed
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -826,7 +806,7 @@
                         return true;
                     }
                 },
-                clickDelete: function() {
+                clickDelete: function () {
                     if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin) {
                         return false;
                     } else {
@@ -1111,8 +1091,8 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
                             VeranstaltungID: getRecordId(),
-                        LanguageSpecID: AppData.getLanguageId()
-                    });
+                            LanguageSpecID: AppData.getLanguageId()
+                        });
                 }).then(function () {
                     return Event.iNOptionTypeValueView.select(function (json) {
                         // this callback will be called asynchronously
@@ -1206,18 +1186,9 @@
                 Log.call(Log.l.trace, "Event.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var err = null;
-                var ret;
-                that.checkforCustEdit();
                 var dataEvent = that.binding.dataEvent;
-                if (that.binding.custAdminEdit === 1) {
-                    var errorMessage = getResourceText("event.alertSave");
-                    Log.print(Log.l.error, errorMessage);
-                    alert(errorMessage);
-                    if (typeof error === "function") {
-                        error(errorMessage);
-                    }
-                    return WinJS.Promise.wrapError(errorMessage);
-                }
+                var prevUser = getPrevModifiedUser();
+                var ret;
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
                     /*Erstmal ignorieren!*/
                     var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.veranstOption.visitorFlowInterval);
@@ -1227,22 +1198,50 @@
                     if (recordId) {
                         AppBar.busy = true;
                         AppBar.triggerDisableHandlers();
-                        ret = Event.eventView.update(function (response) {
-                            AppBar.busy = false;
-                            AppBar.triggerDisableHandlers();
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "eventData update: success!");
-                            AppBar.modified = false;
-                            that.binding.custAdminEdit = 0;
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            AppBar.triggerDisableHandlers();
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            err = errorResponse;
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataEvent).then(function () {
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (prevUser &&
+                                prevUser !== AppData.generalData.odata.login &&
+                                AppHeader.controller.binding.userData.IsCustomerAdmin) {
+                                var confirmTitle = getResourceText("event.labelChangeMsg1") + prevUser + getResourceText("event.labelChangeMsg2");
+                                return confirm(confirmTitle,
+                                    function (result) {
+                                        if (result) {
+                                            Log.print(Log.l.info, "save ok!");
+                                            return WinJS.Promise.as();
+                                        } else {
+                                            Log.print(Log.l.trace, "clickOk: event choice CANCEL");
+                                            AppBar.busy = false;
+                                            // hier passt es noch nicht
+                                            var master = Application.navigator.masterControl;
+                                            if (master && master.controller) {
+                                                master.controller.curRecId = master.controller.prevRecId;
+                                                master.controller.selectRecordId(master.controller.prevRecId);
+                                                that.loadData();
+                                            }
+                                            return WinJS.Promise.wrapError(confirmTitle);
+                                        }
+                                    });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }).then(function () {
+                            return Event.eventView.update(function (response) {
+                                AppBar.busy = false;
+                                AppBar.triggerDisableHandlers();
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "eventData update: success!");
+                                AppBar.modified = false;
+                                that.binding.custAdminEdit = 0;
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                AppBar.triggerDisableHandlers();
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                err = errorResponse;
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                            }, recordId, dataEvent);
+                        }).then(function () {
                             if (!err) {
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller) {
