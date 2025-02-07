@@ -766,6 +766,7 @@
     "event.labelChangeMsg2" : " erstellt wurde? Dieses Veranstaltungstermin wurde nicht von Ihnen erstellt.",
     "event.labelDeleteMsg1" : "Wollen Sie den Stand von ",
     "event.labelDeleteMsg2" : " löschen? ",
+    "event.alertSave" : "Bitte speichern Sie ihren Stand!",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",

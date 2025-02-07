@@ -764,6 +764,7 @@
     "event.labelChangeMsg2" : "? This event was not created by you.",
     "event.labelDeleteMsg1" : "Do you want to delete the version of ",
     "event.labelDeleteMsg2" : " ? ",
+    "event.alertSave" : "Please save your state!",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
