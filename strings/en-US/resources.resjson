@@ -701,6 +701,8 @@
     "label.genDataEmpList" : "User accounts",
     "label.eventProducts" : "Products",
     "label.siteEventsRoleManagement" : "Role Management",
+    "label.reportingDownload" : "Download", 
+    "label.clientManagementSummarise" : "Join",
     "label.liveBridgeGrp" : "Masterdata",
     "label.genDataSkillEntry" : "Enter skills",
     "label.helpTextList" : "Help texts",
@@ -1892,8 +1894,10 @@
     "clientManagementSearchList.all"			: "All",
     "clientManagementSearchList.contactdata"			: "Contactdata",
     "clientManagementSearchList.fairs"			: "Fairs",
+    "clientManagementSearchList.destination"			: "Target client",
+    "clientManagementSearchList.target"			: "Old client",
 
-    "clientManagementSummarise.join"			: "Summarise",
+    "clientManagementSummarise.join"			: "Join",
     "clientManagementSummarise.jointxt"			: "Do you really want to join these two clients?",
 
     "adminAppHelpTextList.title"			: "Pages",

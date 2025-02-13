@@ -1898,12 +1898,12 @@
     "clientManagementSearchList.contactdata"			: "Kontaktdaten",
     "clientManagementSearchList.fairs"			: "Messen",
     "clientManagementSearchList.destination"			: "Zielmandant",
-    "clientManagementSearchList.target"			: "Targetmandant",
+    "clientManagementSearchList.target"			: "Bisheriger Mandant",
 		
     "reportingdownload.title"			: "Export Download",
 
     "clientManagementSummarise.join"			: "Zusammenfassen",
-    "clientManagementSummarise.jointxt"			: "Wollen sie diese beiden Mandanten wirklich zusammenfügen?",
+    "clientManagementSummarise.jointxt"			: "Wollen sie diese beiden Mandanten wirklich zusammenfassen?",
 
     "adminAppHelpTextList.title"			: "Seiten",
     "adminAppHelpTextList.inactive"     : "Inaktiv",
