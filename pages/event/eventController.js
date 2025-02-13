@@ -223,10 +223,10 @@
                 if (item.DatenschutzText === null) {
                     item.DatenschutzText = "";
                 }
-                // convert Startdatum 
+                // convert Startdatum (add TimezoneOffset)
                 var beginDate = getDateObject(item.Startdatum);
                 item.dateBegin = new Date(beginDate.getTime() + beginDate.getTimezoneOffset() * 60000);
-                // convert Enddatum 
+                // convert Enddatum (add TimezoneOffset)
                 var endDateLocal = getDateObject(item.Enddatum);
                 item.dateEnd = new Date(endDateLocal.getTime() + endDateLocal.getTimezoneOffset() * 60000);
             }
@@ -1170,8 +1170,12 @@
                 if (dataEvent && AppBar.modified && !AppBar.busy) {
                     /*Erstmal ignorieren!*/
                     var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.veranstOption.visitorFlowInterval);
-                    dataEvent.Startdatum = getDateData(that.binding.dataEvent.dateBegin);
-                    dataEvent.Enddatum = getDateData(that.binding.dataEvent.dateEnd);
+                    // re-convert Startdatum (subtract TimezoneOffset)
+                    var beginDate = new Date(that.binding.dataEvent.dateBegin.getTime() - that.binding.dataEvent.dateBegin.getTimezoneOffset() * 60000)
+                    dataEvent.Startdatum = getDateData(beginDate);
+                    // re-convert Enddatum (subtract TimezoneOffset)
+                    var endDate = new Date(that.binding.dataEvent.dateEnd.getTime() - that.binding.dataEvent.dateEnd.getTimezoneOffset() * 60000)
+                    dataEvent.Enddatum = getDateData(endDate);
                     var recordId = getRecordId();
                     if (recordId) {
                         AppBar.busy = true;
