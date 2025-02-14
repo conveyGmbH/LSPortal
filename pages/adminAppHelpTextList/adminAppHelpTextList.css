@@ -224,11 +224,6 @@
     margin: 0;
 }
 
-.view-size-bigger #adminAppHelpTextList .list-portrait-only,
-.view-size-medium-small #adminAppHelpTextList .list-landscape-only {
-    display: none;
-}
-
 .view-size-medium-small #adminAppHelpTextList .list-portrait-only {
     display: block;
 }
