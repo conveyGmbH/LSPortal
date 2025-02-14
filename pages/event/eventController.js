@@ -1171,10 +1171,10 @@
                     /*Erstmal ignorieren!*/
                     var visitorFlowInterval = changeSetting("visitorFlowInterval", that.binding.veranstOption.visitorFlowInterval);
                     // re-convert Startdatum (subtract TimezoneOffset)
-                    var beginDate = new Date(that.binding.dataEvent.dateBegin.getTime() - that.binding.dataEvent.dateBegin.getTimezoneOffset() * 60000)
+                    var beginDate = new Date(that.binding.dataEvent.dateBegin.getTime() - that.binding.dataEvent.dateBegin.getTimezoneOffset() * 60000);
                     dataEvent.Startdatum = getDateData(beginDate);
                     // re-convert Enddatum (subtract TimezoneOffset)
-                    var endDate = new Date(that.binding.dataEvent.dateEnd.getTime() - that.binding.dataEvent.dateEnd.getTimezoneOffset() * 60000)
+                    var endDate = new Date(that.binding.dataEvent.dateEnd.getTime() - that.binding.dataEvent.dateEnd.getTimezoneOffset() * 60000);
                     dataEvent.Enddatum = getDateData(endDate);
                     var recordId = getRecordId();
                     if (recordId) {
