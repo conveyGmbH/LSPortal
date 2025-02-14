@@ -26,9 +26,13 @@
     height: auto !important;
 }
 
-    .adminAppHelpTextList .master-list-header.list-compact-only {
-        padding-top: 48px;
-    }
+.adminAppHelpTextList .content-header .master-list-header {
+    margin-top: 16px;
+}
+
+.adminAppHelpTextList .master-list-header.list-compact-only {
+    padding-top: 48px;
+}
 
 #adminAppHelpTextList .win-viewport {
     overflow-x: auto;
