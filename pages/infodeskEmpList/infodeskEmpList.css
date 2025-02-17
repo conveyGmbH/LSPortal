@@ -225,11 +225,13 @@
 }
 
 .infodeskEmpList .content-header {
-    height: 100px;
+    height: 140px;
 }
-
+.view-size-medium .infodeskEmpList .content-header {
+    height: 240px;
+}
 .view-size-small .infodeskEmpList .content-header {
-    height: 135px;
+    height: 280px;
 }
 
 .infodeskEmpList .sortButton {

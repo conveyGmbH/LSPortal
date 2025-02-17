@@ -644,27 +644,27 @@ select {
 }
 .progress_field {
     float: left;
-    width: calc(100% - 4px);
-    min-width: calc(100% - 4px);
+    width: calc(100% - 12px);
+    min-width: calc(100% - 12px);
 }
 .input_field_noLabel {
     float:left;
-    width: calc(100% - 4px);
-    min-width: calc(100% - 0px);
+    width: calc(100% - 12px);
+    min-width: calc(100% - 12px);
     min-height: 32px;
     margin-top: 0;
     margin-left: 0;
 }
 .input_field {
     float:left;
-    width: calc(100% - 4px);
-    min-width: calc(100% - 0px);
+    width: calc(100% - 12px);
+    min-width: calc(100% - 12px);
     min-height: 32px; 
 }
 .large_field {
     min-height:40px;
     /*float:left;*/
-    width: calc(100% - 4px);
+    width: calc(100% - 12px);
 }
 .input_group {
     float:left;
@@ -1289,6 +1289,7 @@ button.win-button {
 .view-size-medium .input_field_noLabel {
     float: right;
     width: calc(100% - 124px);
+    min-width: calc(100% - 124px);
 }
 .view-size-medium .input_field {
     float: right;
@@ -1304,7 +1305,8 @@ button.win-button {
     min-height: 40px;
     
     float: left;*/
-    width: calc(100% - 120px);
+    width: calc(100% - 124px);
+    min-width: calc(100% - 124px);
 }
 .view-size-medium .input_group {
     float: right;
@@ -1389,6 +1391,7 @@ button.win-button {
 .centerarea .input_field_noLabel {
     float: right;
     width: calc(100% - 124px);
+    min-width: calc(100% - 124px);
 }
 
 .centerarea .input_field {
@@ -1554,14 +1557,22 @@ button.win-button {
     min-height: 32px; 
     margin-right: 0;
 }
+.view-size-medium .input_field_noLabel {
+    float: left;
+    width: calc(100% - 4px);
+    min-width: calc(100% - 4px);
+}
 .view-size-small .large_field {
+    float: left;
     min-height: 40px; /*58px*/
     /*float:left;*/
-    width: calc(100% - 10px);
+    width: calc(100% - 4px);
+    min-width: calc(100% - 4px);
 }
 .view-size-small .input_group {
-    float:left;
+    float: left;
     width: calc(100% - 4px);
+    min-width: calc(100% - 4px);
     display: inline-block;
     position: relative;
     top: -4px;
