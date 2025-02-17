@@ -48,6 +48,9 @@
             var fourthskill = [];
             var fifthskill = [];
 
+            var skillTypeSkillsSelected = false;
+            var messestandDataSelected = false;
+
             this.img = null;
             var that = this;
 
@@ -522,6 +525,14 @@
                     } else {
                         value = null;
                     }
+                    firstskill = [];
+                    secondskill = [];
+                    thirdskill = [];
+                    fourthskill = [];
+                    fifthskill = [];
+                    that.binding.messestandData = getEmptyDefaultValue(Infodesk.Messestand.defaultValue);
+                    skillTypeSkillsSelected = false;
+                    messestandDataSelected = false;
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
                         master.controller.setEventId(value);
@@ -958,8 +969,15 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (!firstskill || !firstskill.length) {
-                        Log.print(Log.l.trace, "calling select skillTypeSkills...");
+                    var eventId = 0;
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.getEventId === "function") {
+                        eventId = master.controller.getEventId();
+                    }
+                    if (!skillTypeSkillsSelected && eventId) {
+                        skillTypeSkillsSelected = true;
+                        Log.print(Log.l.trace, "calling select skillTypeSkills... eventId=" + eventId);
                         return Infodesk.skillTypeSkills.select(function (json) {
                             Log.print(Log.l.trace, "skillTypeSkills: success!");
                             if (json && json.d) {
@@ -971,6 +989,10 @@
                                 AppBar.notifyModified = prevNotifyModified;
                             }
                             Log.print(Log.l.trace, "Infodesk: success!");
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                            VeranstaltungID: eventId
                         });
                     } else {
                         return WinJS.Promise.as();
@@ -978,8 +1000,15 @@
                 }).then(function () {
                     //load of format relation record data
                     // für labels
-                    if (!that.binding.messestandData.SkillType1ID) {
-                        Log.print(Log.l.trace, "calling select Messestand...");
+                    var eventId = 0;
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.getEventId === "function") {
+                        eventId = master.controller.getEventId();
+                    }
+                    if (!messestandDataSelected && eventId) {
+                        messestandDataSelected = true;
+                        Log.print(Log.l.trace, "calling select Messestand... eventId=" + eventId);
                         return Infodesk.Messestand.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "Messestand: success!");
@@ -998,6 +1027,8 @@
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                            VeranstaltungID: eventId
                         });
                     } else {
                         return WinJS.Promise.as();

@@ -24,6 +24,7 @@
                 btnEmployeeLicenceText: getResourceText("employee.licence"),
                 mitarbeiterText: getResourceText("infodesk.employee"),
                 employeeId: null,
+                eventId: null,
                 searchString: "",
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic
             }, commandList, true]);
@@ -73,15 +74,14 @@
             this.highlightorderLicenceBtn = highlightorderLicenceBtn;
 
             var getEventId = function () {
-                Log.print(Log.l.trace, "getEventId Event._eventId=" + InfodeskEmpList._eventId);
-                return InfodeskEmpList._eventId;
+                Log.print(Log.l.trace, "getEventId Event._eventId=" + that.binding.eventId);
+                return that.binding.eventId;
             }
             this.getEventId = getEventId;
 
             var setEventId = function (value) {
-                Log.print(Log.l.trace, "setEventId Event._eventId=" + value);
+                Log.print(Log.l.trace, "setEventId eventId=" + value);
                 that.binding.eventId = value;
-                InfodeskEmpList._eventId = value;
             }
             this.setEventId = setEventId;
 
@@ -612,6 +612,7 @@
                 AppBar.busy = true;
                 that.binding.loading = true;
                 AppData.setErrorMsg(that.binding);
+                that.cancelPromises();
                 ret = new WinJS.Promise.as().then(function () {
                     if (!that.events) {
                         return InfodeskEmpList.eventView.select(function (json) {
@@ -645,12 +646,10 @@
                     }
                 }).then(function () {
                     var restriction = AppData.getRestriction("SkillEntry");
-
-                    var defaultrestriction = InfodeskEmpList.defaultRestriction;
                     if (!restriction) {
-                        restriction = defaultrestriction;
+                        restriction = InfodeskEmpList.defaultRestriction;
                     }
-                    restriction.VeranstaltungID = that.getEventId();
+                    restriction.VeranstaltungID = that.binding.eventId || AppData.getRecordId("Veranstaltung");
 
                     if (restriction.OrderAttribute === "SortVorname") {
                         if (btnName) {
@@ -829,7 +828,6 @@
                     } else if (listView && listView.winControl && listView.winControl.selection) {
                         listView.winControl.selection.set(0);
                     }
-                    that.cancelPromises();
                     that.refreshPromise = WinJS.Promise.timeout(that.refreshWaitTimeMs).then(function () {
                         that.loadData();
                     });
@@ -841,19 +839,15 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                
-                var restriction = AppData.getRestriction("SkillEntry");
-                if (restriction && restriction.VeranstaltungID) {
-                    that.setEventId(restriction.VeranstaltungID);
-                } else {
-                    that.setEventId(AppData.getRecordId("Veranstaltung"));
-                }
-
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
+                var restriction = AppData.getRestriction("SkillEntry");
+                if (restriction && restriction.VeranstaltungID) {
+                    that.binding.eventId = restriction.VeranstaltungID;
+                } else {
+                    that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                }
                 return that.selectRecordId(that.binding.employeeId);
             }).then(function () {
                 Log.print(Log.l.trace, "Record selected");

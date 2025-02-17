@@ -7,7 +7,6 @@
     "use strict";
 
     WinJS.Namespace.define("InfodeskEmpList", {
-        _eventId: 0,
         _employeeSkillentryView: {
             get: function () {
                 var ret = AppData.getFormatView("SkillEntry", 20472, false); // -> wichtig für später MitarbeiterView_20471
