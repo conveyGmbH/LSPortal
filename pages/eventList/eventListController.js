@@ -861,6 +861,7 @@
 
                         } else {
                             if (json && json.d && json.d.results && json.d.results[0] && that.records) {
+                                that.binding.count = that.records.length;
                                 var scope = that.scopeFromRecordId(recordId);
                                 if (scope) {
                                     var prevNotifyModified = AppBar.notifyModified;
