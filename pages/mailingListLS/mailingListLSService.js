@@ -32,6 +32,8 @@
                                 complete({});
                             }
                         });
+                    } else if (typeof restriction === "number") {
+                        ret = MailingListLS._MaildokumentView.selectById(complete, error, restriction);
                     } else if (restriction && typeof restriction === "string") {
                         var mainLanguage = Application.language.split("-")[0];
                         if (!MailingListLS._collator) {

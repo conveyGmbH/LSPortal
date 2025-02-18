@@ -218,9 +218,7 @@
                                 AppBar.modified = false;
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller) {
-                                    master.controller.loadData()/*.then(function () {
-                                        master.controller.selectRecordId(getRecordId());
-                                    })*/;
+                                    master.controller.loadData(recordId);
                                 }
                                 if (typeof complete === "function") {
                                     complete(dataMail);

@@ -125,6 +125,31 @@
             }
             this.selectRecordId = selectRecordId;
 
+            var scopeFromRecordId = function (recordId) {
+                var ret = null;
+                Log.call(Log.l.trace, "EventList.Controller.", "recordId=" + recordId);
+                if (that.maildocuments && recordId) {
+                    var i, item = null;
+                    for (i = 0; i < that.maildocuments.length; i++) {
+                        var record = that.maildocuments.getAt(i);
+                        if (record && typeof record === "object" &&
+                            record.MaildokumentVIEWID === recordId) {
+                            item = record;
+                            break;
+                        }
+                    }
+                    if (item) {
+                        Log.print(Log.l.trace, "found i=" + i);
+                        ret = { index: i, item: item };
+                    } else {
+                        Log.print(Log.l.trace, "not found");
+                    }
+                }
+                Log.ret(Log.l.trace, ret);
+                return ret;
+            }
+            this.scopeFromRecordId = scopeFromRecordId;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 if (item.Beschreibung && item.Subject) {
@@ -303,7 +328,7 @@
             }
 
 
-            var loadData = function () {
+            var loadData = function (recordId) {
                 Log.call(Log.l.trace, "MailingList.Controller.");
                 that.loading = true;
                 AppData.setErrorMsg(that.binding);
@@ -345,6 +370,7 @@
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "MailingList: success!");
                         // employeeView returns object already parsed from json file in response
+                        if (!recordId) {
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             that.nextUrl = MailingListLS.MaildokumentView.getNextUrl(json);
                             var results = json.d.results;
@@ -384,14 +410,26 @@
                             }
                             that.loading = false;
                         }
+                        } else {
+                            if (json && json.d && that.maildocuments) {
+                                that.binding.count = that.maildocuments.length;
+                                var scope = that.scopeFromRecordId(recordId);
+                                if (scope) {
+                                    var prevNotifyModified = AppBar.notifyModified;
+                                    AppBar.notifyModified = false;
+                                    var item = json.d;
+                                    that.resultConverter(item, scope.index);
+                                    that.maildocuments.setAt(scope.index, item);
+                                    AppBar.notifyModified = prevNotifyModified;
+                                }
+                            }
+                        }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.loading = false;
-                    }, {
-                            SpecType: ["NULL", 1]
-                        }
+                    }, recordId || {SpecType: ["NULL", 1]}
                     );
                 }).then(function () {
                     if (that.binding.count === 0) {
