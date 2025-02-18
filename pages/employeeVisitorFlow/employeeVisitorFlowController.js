@@ -123,14 +123,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData(function (response) {
                         Log.print(Log.l.trace, "employee saved");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding && typeof master.controller.selectRecordId !== "undefined") {
-                            master.controller.binding.employeeId = that.binding.dataEmployee.BenutzerVIEWID;
-                            master.controller.loadData().then(function () {
-                                Log.print(Log.l.info, "master.controller.loadData: success!");
-                                master.controller.selectRecordId(that.binding.dataEmployee.BenutzerVIEWID);
-                            });
-                        }
+                        //Dont need reload masterlist because - nothing changed for the list
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -197,12 +190,7 @@
                     if (AppBar.modified) {
                         return that.saveData(function () {
                             Log.print(Log.l.trace, "saveData completed...");
-                            var master = Application.navigator.masterControl;
-                            if (master && master.controller) {
-                                master.controller.loadData().then(function () {
-                                    master.controller.selectRecordId(recordId);
-                                });
-                            }
+                            //Dont need reload masterlist because - nothing changed for the list
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "saveData error...");
                             AppData.setErrorMsg(that.binding, errorResponse);

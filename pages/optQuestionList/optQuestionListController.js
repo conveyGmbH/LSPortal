@@ -230,8 +230,7 @@
                                     that.saveData(function (response) {
                                         AppBar.busy = false;
                                         Log.print(Log.l.trace, "question saved");
-                                    },
-                                        function (errorResponse) {
+                                    }, function (errorResponse) {
                                             AppBar.busy = false;
                                             Log.print(Log.l.error, "error saving question");
                                         });

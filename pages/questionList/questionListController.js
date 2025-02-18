@@ -553,7 +553,7 @@
                                 if (saveResponse) {
                                     var master = Application.navigator.masterControl;
                                     if (master && master.controller) {
-                                        master.controller.loadData();
+                                        master.controller.loadData(that.getEventId());
                                     }
                                     //that.checkingQuestionnaireBarcodePdf();
                                     if (typeof complete === "function") {
@@ -670,7 +670,7 @@
                         AppBar.modified = false;
                         var master = Application.navigator.masterControl;
                         if (master && master.controller) {
-                            master.controller.loadData();
+                            master.controller.loadData(that.getEventId());
                         }
                         complete(json);
                     }, function (errorResponse) {
