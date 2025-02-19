@@ -980,7 +980,7 @@
                         Log.print(Log.l.trace, "calling select skillTypeSkills... eventId=" + eventId);
                         return Infodesk.skillTypeSkills.select(function (json) {
                             Log.print(Log.l.trace, "skillTypeSkills: success!");
-                            if (json && json.d) {
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
                                 var prevNotifyModified = AppBar.notifyModified;
                                 AppBar.notifyModified = false;
                                 json.d.results.forEach(function (item, index) {
