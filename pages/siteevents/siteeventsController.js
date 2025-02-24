@@ -1,4 +1,4 @@
-// controller for page: info
+﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -24,8 +24,6 @@
                 newFileData: getEmptyDefaultValue(SiteEvents.doc3import_file.defaultValue),
                 dataSiteeventsHeaderValue: getEmptyDefaultValue(SiteEvents.defaultHeaderRestriction),
                 dataSiteeventsHeaderText: getEmptyDefaultValue(SiteEvents.defaultHeaderRestriction),
-                siteeventsdataCombobox: null,
-                siteeventsdata: null,
                 mailingtrackingrestriction: null,
                 count: 0,
                 veranstaltungId: 0,
@@ -96,70 +94,16 @@
             }
             this.endeMailingTracking = endeMailingTracking;
 
-            var setInitialHeaderTextValue = function () {
-                Log.print(Log.l.trace, "Setting up initial header texts and value shown in header of table");
-                //text part
-                that.binding.dataSiteeventsHeaderText.FairMandant_Name = getResourceText("siteevents.exhibitorname");
-                that.binding.dataSiteeventsHeaderText.FairMandant_Ansprechpartner = getResourceText("siteevents.contact");
-                that.binding.dataSiteeventsHeaderText.StandHall = getResourceText("siteevents.hall");
-                that.binding.dataSiteeventsHeaderText.StandNo = getResourceText("siteevents.stand");
-                that.binding.dataSiteeventsHeaderText.NumUsers = getResourceText("siteevents.numberofusers");
-                that.binding.dataSiteeventsHeaderText.NumUsedUsers = getResourceText("siteevents.numberofregisteredusers");
-                that.binding.dataSiteeventsHeaderText.NumContacts = getResourceText("siteevents.numberofcontacts");
-                that.binding.dataSiteeventsHeaderText.NumLockedContacts = getResourceText("siteevents.numberofblockedcontacts");
-                that.binding.dataSiteeventsHeaderText.NumActiveUsers = getResourceText("siteevents.numberofusersused");
-                that.binding.dataSiteeventsHeaderText.NumContactsBC = getResourceText("siteevents.numberofcontactsBRQR");
-                that.binding.dataSiteeventsHeaderText.NumContactsVC = getResourceText("siteevents.numberofcontactsBC");
-                that.binding.dataSiteeventsHeaderText.NumContactsMan = getResourceText("siteevents.numberofcontactsMA");
-                that.binding.dataSiteeventsHeaderText.NumExports = getResourceText("siteevents.numberofexports");
-                that.binding.dataSiteeventsHeaderText.LastExportTS = getResourceText("siteevents.lastexportdateandtime");
-                that.binding.dataSiteeventsHeaderText.FBStatus = getResourceText("siteevents.questionnairestatus");
-                that.binding.dataSiteeventsHeaderText.NumSentEmails = getResourceText("siteevents.numberofemailssent");
-                that.binding.dataSiteeventsHeaderText.PortalLoginTS = getResourceText("siteevents.lastlogintotheportal");
-                that.binding.dataSiteeventsHeaderText.FairMandant_CustomerID = getResourceText("siteevents.customerid");
-                that.binding.dataSiteeventsHeaderText.StandSize = getResourceText("siteevents.standsize");
-                that.binding.dataSiteeventsHeaderText.DUNSNumber = getResourceText("siteevents.dunsnumber");
-                that.binding.dataSiteeventsHeaderText.Auswertungsvariante = getResourceText("siteevents.auswertungsvariante");
-                that.binding.dataSiteeventsHeaderText.OrderNumber = getResourceText("siteevents.ordernumber");
-                that.binding.dataSiteeventsHeaderText.Servername = getResourceText("siteevents.servername");
-                that.binding.dataSiteeventsHeaderText.MailCategory = getResourceText("siteevents.mailtype");
-                that.binding.dataSiteeventsHeaderText.ProductList = getResourceText("siteevents.productlist");
-               //value part
-                that.binding.dataSiteeventsHeaderValue.FairMandant_Name = 1;
-                that.binding.dataSiteeventsHeaderValue.FairMandant_Ansprechpartner = 2;
-                that.binding.dataSiteeventsHeaderValue.StandHall = 3;
-                that.binding.dataSiteeventsHeaderValue.StandNo = 4;
-                that.binding.dataSiteeventsHeaderValue.NumUsers = 5;
-                that.binding.dataSiteeventsHeaderValue.NumUsedUsers = 6;
-                that.binding.dataSiteeventsHeaderValue.NumLockedContacts = 7;
-                that.binding.dataSiteeventsHeaderValue.NumActiveUsers = 8;
-                that.binding.dataSiteeventsHeaderValue.NumContacts = 9;
-                that.binding.dataSiteeventsHeaderValue.NumContactsBC = 10;
-                that.binding.dataSiteeventsHeaderValue.NumContactsVC = 11;
-                that.binding.dataSiteeventsHeaderValue.NumContactsMan = 12;
-                that.binding.dataSiteeventsHeaderValue.NumExports = 13;
-                that.binding.dataSiteeventsHeaderValue.LastExportTS = 14;
-                that.binding.dataSiteeventsHeaderValue.FBStatus = 15;
-                that.binding.dataSiteeventsHeaderValue.NumSentEmails = 16;
-                that.binding.dataSiteeventsHeaderValue.PortalLoginTS = 17;
-                that.binding.dataSiteeventsHeaderValue.FairMandant_CustomerID = 18;
-                that.binding.dataSiteeventsHeaderValue.StandSize = 19;
-                that.binding.dataSiteeventsHeaderValue.DUNSNumber = 20;
-                that.binding.dataSiteeventsHeaderValue.Auswertungsvariante = 21;
-                that.binding.dataSiteeventsHeaderValue.OrderNumber = 22;
-                that.binding.dataSiteeventsHeaderValue.Servername = 23;
-                that.binding.dataSiteeventsHeaderValue.MailCategory = 24;
-                that.binding.dataSiteeventsHeaderValue.ProductList = 25;
-            }
-            this.setInitialHeaderTextValue = setInitialHeaderTextValue;
-
             var setResName = function(sortname) {
+                //MailCategory
                 Log.print(Log.l.trace, "Set Res name for sorting!");
                 switch (sortname) {
                     case getResourceText("siteevents.exhibitorname"):
                         return "FairMandant_Name";
                     case getResourceText("siteevents.contact"):
                         return "FairMandant_Ansprechpartner";
+                    case getResourceText("siteevents.adminLoginList"):
+                        return "AdminLoginList ";
                     case getResourceText("siteevents.hall"):
                         return "StandHall";
                     case getResourceText("siteevents.stand"):
@@ -202,9 +146,9 @@
                         return "OrderNumber";
                     case getResourceText("siteevents.servername"):
                         return "Servername";
-                    case getResourceText("siteevents.mailType"):
+                    case getResourceText("siteevents.mailtype"):
                         return "MailCategory";
-                    case getResourceText("siteevents.productList"):
+                    case getResourceText("siteevents.productlist"):
                         return "ProductList";
                 default:
                 }
@@ -215,12 +159,18 @@
                 Log.print(Log.l.trace, "Processing blocked users in table!");
                 // Get the table element by its id
                 var table = pageElement.querySelector("#tableId");
-
+                var tableHeader = pageElement.querySelectorAll("th");
+                var indexOfBlockedContacts = null;
+                tableHeader.forEach(function (item, index) {
+                    if (item.textContent === getResourceText('siteevents.numberofblockedcontacts')) {
+                        indexOfBlockedContacts = index;
+                    }
+                });
                 // Check if the table exists
                 if (table) {
                     for (var i = 0; i < table.rows.length; i++) {
                         // Get the 5th cell
-                        var cell7 = table.rows[i].cells[6];
+                        var cell7 = table.rows[i].cells[indexOfBlockedContacts];
 
                         // Get the cell value as a number
                         var value = parseFloat(cell7.textContent);
@@ -240,89 +190,6 @@
             }
             this.setTableCellRed = setTableCellRed;
 
-            var setCellTitle = function() {
-                Log.print(Log.l.trace, "Setting up initial Title of the cells!");
-                var cells = pageElement.querySelectorAll("td");
-                for (var i = 0; i < cells.length; i++) {
-                    if (cells[i].title === "1") {
-                        cells[i].title = getResourceText("siteevents.exhibitorname");
-                    }
-                    if (cells[i].title === "2") {
-                        cells[i].title = getResourceText("siteevents.contact");
-                    }
-                    if (cells[i].title === "3") {
-                        cells[i].title = getResourceText("siteevents.hall");
-                    }
-                    if (cells[i].title === "4") {
-                        cells[i].title = getResourceText("siteevents.stand");
-                    }
-                    if (cells[i].title === "5") {
-                        cells[i].title = getResourceText("siteevents.numberofusers");
-                    }
-                    if (cells[i].title === "6") {
-                        cells[i].title = getResourceText("siteevents.numberofregisteredusers");
-                    }
-                    if (cells[i].title === "7") {
-                        cells[i].title = getResourceText("siteevents.numberofblockedcontacts");
-                    }
-                    if (cells[i].title === "8") {
-                        cells[i].title = getResourceText("siteevents.numberofusersused");
-                    }
-                    if (cells[i].title === "9") {
-                        cells[i].title = getResourceText("siteevents.numberofcontacts");
-                    }
-                    if (cells[i].title === "10") {
-                        cells[i].title = getResourceText("siteevents.numberofcontactsBRQR");
-                    }
-                    if (cells[i].title === "11") {
-                        cells[i].title = getResourceText("siteevents.numberofcontactsBC");
-                    }
-                    if (cells[i].title === "12") {
-                        cells[i].title = getResourceText("siteevents.numberofcontactsMA");
-                    }
-                    if (cells[i].title === "13") {
-                        cells[i].title = getResourceText("siteevents.numberofexports");
-                    }
-                    if (cells[i].title === "14") {
-                        cells[i].title = getResourceText("siteevents.lastexportdateandtime");
-                    }
-                    if (cells[i].title === "15") {
-                        cells[i].title = getResourceText("siteevents.questionnairestatus");
-                    }
-                    if (cells[i].title === "16") {
-                        cells[i].title = getResourceText("siteevents.numberofemailssent");
-                    }
-                    if (cells[i].title === "17") {
-                        cells[i].title = getResourceText("siteevents.lastlogintotheportal");
-                    }
-                    if (cells[i].title === "18") {
-                        cells[i].title = getResourceText("siteevents.customerid");
-                    }
-                    if (cells[i].title === "19") {
-                        cells[i].title = getResourceText("siteevents.standsize");
-                    }
-                    if (cells[i].title === "20") {
-                        cells[i].title = getResourceText("siteevents.dunsnumber");
-                    }
-                    if (cells[i].title === "21") {
-                        cells[i].title = getResourceText("siteevents.auswertungsvariante");
-                    }
-                    if (cells[i].title === "22") {
-                        cells[i].title = getResourceText("siteevents.ordernumber");
-                    }
-                    if (cells[i].title === "23") {
-                        cells[i].title = getResourceText("siteevents.servername");
-                    }
-                    if (cells[i].title === "24") {
-                        cells[i].title = getResourceText("siteevents.mailtype");
-                    }
-                    if (cells[i].title === "25") {
-                        cells[i].title = getResourceText("siteevents.productlist");
-                    }
-                }
-            }
-            this.setCellTitle = setCellTitle;
-
             var addHeaderRowHandlers = function () {
                 if (tableHeader) {
                     var cells = tableHeader.getElementsByTagName("th");
@@ -331,44 +198,15 @@
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
                                 return function () {
-                                    var restriction = SiteEvents.defaultRestriction;
-                                    var sortId = myrow.value;
                                     var sorttextold = myrow.textContent;
                                     var sorttextnew = that.setResName(sorttextold);
-                                    if (restriction.OrderAttribute !== sorttextnew) {
-                                        restriction.VeranstaltungTerminID = that.binding.restriction.VeranstaltungTerminID;
-                                        restriction.OrderAttribute = sorttextnew;
-                                        if (memSearchText !== sorttextnew) {
-                                                restriction.OrderDesc = "D";
-                                                memSearchText = sorttextnew;
+                                    that.binding.restriction.OrderAttribute = sorttextnew;
+                                    if (that.binding.restriction.OrderType === 'desc') {
+                                        that.binding.restriction.OrderType = 'asc';
                                         } else {
-                                          if (restriction.OrderDesc === "D") {
-                                                restriction.OrderDesc = "A";
-                                                memSearchText = sorttextnew;
-                                        } else {
-                                                restriction.OrderDesc = "D";
-                                                memSearchText = sorttextnew;
-                                        }
-                                        }
-                                        that.loadData(restriction.VeranstaltungID, sorttextnew, restriction.OrderDesc);
-                                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
-                                    } else {
-                                        if (memSearchText !== sorttextnew) {
-                                                restriction.OrderDesc = "D";
-                                                memSearchText = sorttextnew;
-                                        } else {
-                                            if (restriction.OrderDesc === "D") {
-                                                restriction.OrderDesc = "A";
-                                                memSearchText = sorttextnew;
-                                            } else {
-                                                restriction.OrderDesc = "D";
-                                                memSearchText = sorttextnew;
-                                            }
-                                        }
-                                        restriction.VeranstaltungTerminID = that.binding.restriction.VeranstaltungTerminID;
-                                        that.loadData(restriction.VeranstaltungTerminID, sorttextnew, restriction.OrderDesc);
-                                        Log.call(Log.l.trace, "ContactResultsList.Controller.");
+                                        that.binding.restriction.OrderType = 'desc';
                                     }
+                                    that.loadData();
                                 };
                             }(cell);
                         }
@@ -442,7 +280,7 @@
                         pVeranstaltungID: recordId
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
-                        that.loadData(that.binding.restriction.VeranstaltungTerminID);
+                        that.loadData();
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
@@ -760,7 +598,6 @@
                             }
                             that.addBodyRowHandlers();
                             that.addHeaderRowHandlers();
-                            that.setCellTitle();
                             that.setTableCellRed();
                             that.binding.count = results.length;
                             AppBar.busy = false;
@@ -792,7 +629,7 @@
                     that.processSearch(searchstring);
                 } else {
                     that.searchStringData = "";
-                    that.loadData(that.binding.restriction.VeranstaltungTerminID);
+                    that.loadData();
                 }
                 Log.ret(Log.l.trace);
             }
@@ -958,7 +795,7 @@
                             }
                         }
                     } else {
-                        that.loadData(AppData.getRecordId("VeranstaltungTermin"));
+                        that.loadData();
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -1229,7 +1066,7 @@
                             { id: 'clickLoadList', label: getResourceText('command.loadListBig'), tooltip: getResourceText('tooltip.loadListBig'), section: 'primary', svg: 'hourglass' }
                         ]);
                     }
-                    that.loadData(AppData.getRecordId("VeranstaltungTermin"));
+                    that.loadData();
                     Log.ret(Log.l.trace);
                 }
             }
@@ -1257,11 +1094,7 @@
                     }
                 },
                 clickNew: function () {
-                    if (typeof that.vidID2 !== "undefined") {
                         return false;
-                    } else {
-                        return true;
-                    }
                 },
                 clickDelete: function () {
                     if (!that.reorderId || that.binding.active === 1 || AppData.generalData.eventId === that.reorderId || AppBar.busy) {
@@ -1346,18 +1179,6 @@
                 that.siteeventsdata = null;
                 that.siteeventsdataraw = null;
                 that.loading = true;
-                if (!sortIdx) {
-                    sortIdx = "";
-                }
-                if (!sortType) {
-                    sortType = "A";
-                }
-                if (vid) {
-                    that.binding.restriction.VeranstaltungTerminID = vid;
-                    that.vidID = vid;
-                } else {
-                    that.binding.restriction.VeranstaltungTerminID = that.vidID;
-                }
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
@@ -1367,17 +1188,17 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                var recordId = that.binding.restriction.VeranstaltungTerminID;
-                if (recordId) {
+                that.binding.restriction.VeranstaltungTerminID = AppData.getRecordId("VeranstaltungTermin");
+                if (that.binding.restriction.VeranstaltungTerminID) {
                     if (that._selectPromise) {
                         that._selectPromise.cancel();
                         that._selectPromise = null;
                     }
                     ret = AppData.call("PRC_GetExhibitorList", {
-                        pVeranstaltungTerminID: recordId,
+                        pVeranstaltungTerminID: that.binding.restriction.VeranstaltungTerminID,
                         pSearchString: that.searchStringData,
-                        pSortField: sortIdx,
-                        pSortType: sortType,
+                        pSortField: that.binding.restriction.OrderAttribute || 'FairMandant_Name',
+                        pSortType: that.binding.restriction.OrderType || 'asc',
                         pIsPortal: that.binding.isPortal
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
@@ -1385,7 +1206,6 @@
                         Log.print(Log.l.trace, "LocalEvent: success!");
                         // employeeView returns object already parsed from json file in response
                         if (json && json.d && json.d.results.length > 0) {
-                            that.setInitialHeaderTextValue();
                             that.binding.count = json.d.results.length;
                             var results = json.d.results;
                             results.forEach(function (item, index) {
@@ -1399,10 +1219,8 @@
                                 tableBody.winControl.data = that.siteeventsdata;
                             }
                             Log.print(Log.l.trace, "Data loaded");
-                            //that.setInitialHeaderTextValue();
                             that.addBodyRowHandlers();
                             that.addHeaderRowHandlers();
-                            that.setCellTitle();
                             that.setTableCellRed();
                         } else {
                             that.binding.count = 0;
@@ -1442,7 +1260,7 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData(AppData.getRecordId("VeranstaltungTermin"));
+                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");

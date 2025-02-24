@@ -49,16 +49,17 @@
             }
         },
         defaultRestriction: {
-            VeranstaltungTerminID: null,
+            VeranstaltungTerminID: AppData.getRecordId("VeranstaltungTermin"),
             Name: null,
             bAndInEachRow: true,
             bUseOr: false,
-            OrderAttribute: 0,
-            OrderType: "desc"
+            OrderAttribute: "FairMandant_Name",
+            OrderType: "asc"
         },
         defaultHeaderRestriction: {
             FairMandant_Name: "",
             FairMandant_Ansprechpartner: "",
+            AdminLoginList: "",
             StandHall: "",
             StandNo: "",
             NumUsers: "",
@@ -86,6 +87,7 @@
         defaultHeaderLabelRestriction: {
             FairMandant_NameLabel: "",
             FairMandant_AnsprechpartnerLabel: "",
+            AdminLoginList: "",
             StandHallLabel: "",
             StandNoLabel: "",
             NumUsersLabel: "",

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -35,60 +35,62 @@
                         <table id="tableId">
                             <thead class="table-header">
                                 <tr>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.FairMandant_Name; textContent: dataSiteeventsHeaderText.FairMandant_Name"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.FairMandant_Ansprechpartner; textContent: dataSiteeventsHeaderText.FairMandant_Ansprechpartner"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.StandHall; textContent: dataSiteeventsHeaderText.StandHall"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.StandNo; textContent: dataSiteeventsHeaderText.StandNo"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumUsers; textContent: dataSiteeventsHeaderText.NumUsers"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumUsedUsers; textContent: dataSiteeventsHeaderText.NumUsedUsers"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumLockedContacts; textContent: dataSiteeventsHeaderText.NumLockedContacts"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumActiveUsers; textContent: dataSiteeventsHeaderText.NumActiveUsers"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumContacts; textContent: dataSiteeventsHeaderText.NumContacts"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumContactsBC; textContent: dataSiteeventsHeaderText.NumContactsBC"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumContactsVC; textContent: dataSiteeventsHeaderText.NumContactsVC"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumContactsMan; textContent: dataSiteeventsHeaderText.NumContactsMan"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumExports; textContent: dataSiteeventsHeaderText.NumExports"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.LastExportTS; textContent: dataSiteeventsHeaderText.LastExportTS"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.FBStatus; textContent: dataSiteeventsHeaderText.FBStatus"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.NumSentEmails; textContent: dataSiteeventsHeaderText.NumSentEmails"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.PortalLoginTS; textContent: dataSiteeventsHeaderText.PortalLoginTS"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.FairMandant_CustomerID; textContent: dataSiteeventsHeaderText.FairMandant_CustomerID"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.StandSize; textContent: dataSiteeventsHeaderText.StandSize"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.DUNSNumber; textContent: dataSiteeventsHeaderText.DUNSNumber"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.Auswertungsvariante; textContent: dataSiteeventsHeaderText.Auswertungsvariante"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.OrderNumber; textContent: dataSiteeventsHeaderText.OrderNumber"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.Servername; textContent: dataSiteeventsHeaderText.Servername"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.MailCategory; textContent: dataSiteeventsHeaderText.MailCategory"></th>
-                                    <th data-win-bind="value: dataSiteeventsHeaderValue.ProductList; textContent: dataSiteeventsHeaderText.ProductList"></th>
+                                    <th data-win-res="{textContent: 'siteevents.exhibitorname'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.contact'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.adminLoginList'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.hall'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.stand'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofusers'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofregisteredusers'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofblockedcontacts'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofusersused'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofcontacts'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofcontactsBRQR'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofcontactsBC'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofcontactsMA'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofexports'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.lastexportdateandtime'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.questionnairestatus'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.numberofemailssent'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.lastlogintotheportal'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.customerid'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.standsize'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.dunsnumber'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.auswertungsvariante'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.ordernumber'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.servername'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.mailtype'}"></th>
+                                    <th data-win-res="{textContent: 'siteevents.productlist'}"></th>
                                 </tr>
                             </thead>
                             <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
                                 <tr data-win-bind="value: VeranstaltungVIEWID">
-                                    <td title="1" data-win-bind="textContent: FairMandant_Name"></td>
-                                    <td title="2" data-win-bind="textContent: FairMandant_Ansprechpartner"></td>
-                                    <td title="3" data-win-bind="textContent: StandHall"></td>
-                                    <td title="4" data-win-bind="textContent: StandNo"></td>
-                                    <td title="5" data-win-bind="textContent: NumUsers"></td>
-                                    <td title="6" data-win-bind="textContent: NumUsedUsers"></td>
-                                    <td title="7" data-win-bind="textContent: NumLockedContacts"></td>
-                                    <td title="8" data-win-bind="textContent: NumActiveUsers"></td>
-                                    <td title="9" data-win-bind="textContent: NumContacts"></td>
-                                    <td title="10" data-win-bind="textContent: NumContactsBC"></td>
-                                    <td title="11" data-win-bind="textContent: NumContactsVC"></td>
-                                    <td title="12" data-win-bind="textContent: NumContactsMan"></td>
-                                    <td title="13" data-win-bind="textContent: NumExports"></td>
-                                    <td title="14" data-win-bind="textContent: LastExportTS"></td>
-                                    <td title="15" data-win-bind="textContent: FBStatus"></td>
-                                    <td title="16" data-win-bind="textContent: NumSentEmails"></td>
-                                    <td title="17" data-win-bind="textContent: PortalLoginTS"></td>
-                                    <td title="18" data-win-bind="textContent: FairMandant_CustomerID"></td>
-                                    <td title="19" data-win-bind="textContent: StandSize"></td>
-                                    <td title="20" data-win-bind="textContent: DUNSNumber"></td>
-                                    <td title="21" data-win-bind="textContent: Auswertungsvariante"></td>
-                                    <td title="22" data-win-bind="textContent: OrderNumber"></td>
-                                    <td title="23" data-win-bind="textContent: ServerName"></td>
-                                    <td title="24" data-win-bind="textContent: MailCategory"></td>
-                                    <td title="25" data-win-bind="textContent: ProductList"></td>
+                                    <td data-win-bind="textContent: FairMandant_Name"></td>
+                                    <td data-win-bind="textContent: FairMandant_Ansprechpartner"></td>
+                                    <td data-win-bind="textContent: AdminLoginList"></td>
+                                    <td data-win-bind="textContent: StandHall"></td>
+                                    <td data-win-bind="textContent: StandNo"></td>
+                                    <td data-win-bind="textContent: NumUsers"></td>
+                                    <td data-win-bind="textContent: NumUsedUsers"></td>
+                                    <td data-win-bind="textContent: NumLockedContacts"></td>
+                                    <td data-win-bind="textContent: NumActiveUsers"></td>
+                                    <td data-win-bind="textContent: NumContacts"></td>
+                                    <td data-win-bind="textContent: NumContactsBC"></td>
+                                    <td data-win-bind="textContent: NumContactsVC"></td>
+                                    <td data-win-bind="textContent: NumContactsMan"></td>
+                                    <td data-win-bind="textContent: NumExports"></td>
+                                    <td data-win-bind="textContent: LastExportTS"></td>
+                                    <td data-win-bind="textContent: FBStatus"></td>
+                                    <td data-win-bind="textContent: NumSentEmails"></td>
+                                    <td data-win-bind="textContent: PortalLoginTS"></td>
+                                    <td data-win-bind="textContent: FairMandant_CustomerID"></td>
+                                    <td data-win-bind="textContent: StandSize"></td>
+                                    <td data-win-bind="textContent: DUNSNumber"></td>
+                                    <td data-win-bind="textContent: Auswertungsvariante"></td>
+                                    <td data-win-bind="textContent: OrderNumber"></td>
+                                    <td data-win-bind="textContent: ServerName"></td>
+                                    <td data-win-bind="textContent: MailCategory"></td>
+                                    <td data-win-bind="textContent: ProductList"></td>
 
                                 </tr>
                             </tbody>
