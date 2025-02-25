@@ -41,28 +41,20 @@
             this.loading = false;
 
             var contentArea = pageElement.querySelector(".contentarea");
-            var suggestionBox = pageElement.querySelector("#suggestionBox");
             var autosuggestbox = pageElement.querySelector(".win-autosuggestbox");
             var searchInput = pageElement.querySelector("#searchInput");
 
-            var prevMasterLoadPromise = null;
             // ListView control
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
-            var tableBodyRow = pageElement.querySelector(".list-symbol-ID");
             var progress = null;
             var counter = null;
-            var layout = null;
-            var memSearchText = "";
 
             //picturedata
             this.imageData = "";
             this.imageName = "";
             this.imageLength = 0;
-
-            var maxLeadingPages = 0;
-            var maxTrailingPages = 0;
 
             var timer = null;
             this._selectPromise = null;
@@ -85,7 +77,7 @@
             }
             that.binding.restriction = restriction;
 
-            var endeMailingTracking = function(enabled) {
+            var endeMailingTracking = function (enabled) {
                 if (enabled) {
                     NavigationBar.enablePage("mailingTracking");
                 } else {
@@ -94,71 +86,9 @@
             }
             this.endeMailingTracking = endeMailingTracking;
 
-            var setResName = function(sortname) {
-                //MailCategory
-                Log.print(Log.l.trace, "Set Res name for sorting!");
-                switch (sortname) {
-                    case getResourceText("siteevents.exhibitorname"):
-                        return "FairMandant_Name";
-                    case getResourceText("siteevents.contact"):
-                        return "FairMandant_Ansprechpartner";
-                    case getResourceText("siteevents.adminLoginList"):
-                        return "AdminLoginList ";
-                    case getResourceText("siteevents.hall"):
-                        return "StandHall";
-                    case getResourceText("siteevents.stand"):
-                        return "StandNo";
-                    case getResourceText("siteevents.numberofusers"):
-                        return "NumUsers";
-                    case getResourceText("siteevents.numberofregisteredusers"):
-                        return "NumUsedUsers";
-                    case getResourceText("siteevents.numberofcontacts"):
-                        return "NumContacts";
-                    case getResourceText("siteevents.numberofblockedcontacts"):
-                        return "NumLockedContacts";
-                    case getResourceText("siteevents.numberofusersused"):
-                        return "NumActiveUsers";
-                    case getResourceText("siteevents.numberofcontactsBRQR"):
-                        return "NumContactsBC";
-                    case getResourceText("siteevents.numberofcontactsBC"):
-                        return "NumContactsVC";
-                    case getResourceText("siteevents.numberofcontactsMA"):
-                        return "NumContactsMan";
-                    case getResourceText("siteevents.numberofexports"):
-                        return "NumExports";
-                    case getResourceText("siteevents.lastexportdateandtime"):
-                        return "LastExportTS";
-                    case getResourceText("siteevents.questionnairestatus"):
-                        return "FBStatus";
-                    case getResourceText("siteevents.numberofemailssent"):
-                        return "NumSentEmails";
-                    case getResourceText("siteevents.lastlogintotheportal"):
-                        return "PortalLoginTS";
-                    case getResourceText("siteevents.customerid"):
-                        return "FairMandant_CustomerID";
-                    case getResourceText("siteevents.standsize"):
-                        return "StandSize";
-                    case getResourceText("siteevents.dunsnumber"):
-                        return "DUNSNumber";
-                    case getResourceText("siteevents.auswertungsvariante"):
-                        return "Auswertungsvariante";
-                    case getResourceText("siteevents.ordernumber"):
-                        return "OrderNumber";
-                    case getResourceText("siteevents.servername"):
-                        return "Servername";
-                    case getResourceText("siteevents.mailtype"):
-                        return "MailCategory";
-                    case getResourceText("siteevents.productlist"):
-                        return "ProductList";
-                default:
-                }
-            }
-            this.setResName = setResName;
-
-            var setTableCellRed = function() {
+            var setTableCellRed = function () {
                 Log.print(Log.l.trace, "Processing blocked users in table!");
                 // Get the table element by its id
-                var table = pageElement.querySelector("#tableId");
                 var tableHeader = pageElement.querySelectorAll("th");
                 var indexOfBlockedContacts = null;
                 tableHeader.forEach(function (item, index) {
@@ -170,10 +100,10 @@
                 if (table) {
                     for (var i = 0; i < table.rows.length; i++) {
                         // Get the 5th cell
-                        var cell7 = table.rows[i].cells[indexOfBlockedContacts];
+                        var cell = table.rows[i].cells[indexOfBlockedContacts];
 
                         // Get the cell value as a number
-                        var value = parseFloat(cell7.textContent);
+                        var value = parseFloat(cell.textContent);
 
                         // Check if the value is greater than 0
                         if (value > 0) {
@@ -181,9 +111,9 @@
                             table.rows[i].style.borderTop = "thick solid red";
                             table.rows[i].style.borderBottom = "thick solid red";
                             // Set the text color of the cell to red and bold
-                            cell7.style.color = "white";
-                            cell7.style.backgroundColor = "red";
-                            cell7.style.fontWeight = "900";
+                            cell.style.color = "white";
+                            cell.style.backgroundColor = "red";
+                            cell.style.fontWeight = "900";
                         }
                     }
                 }
@@ -198,12 +128,11 @@
                         if (!cell.onclick) {
                             cell.onclick = function (myrow) {
                                 return function () {
-                                    var sorttextold = myrow.textContent;
-                                    var sorttextnew = that.setResName(sorttextold);
-                                    that.binding.restriction.OrderAttribute = sorttextnew;
+                                    var attribute = myrow.id;
+                                    that.binding.restriction.OrderAttribute = attribute;
                                     if (that.binding.restriction.OrderType === 'desc') {
                                         that.binding.restriction.OrderType = 'asc';
-                                        } else {
+                                    } else {
                                         that.binding.restriction.OrderType = 'desc';
                                     }
                                     that.loadData();
@@ -237,7 +166,7 @@
 
             var resetSearchFilter = function () {
                 that.binding.dataEvents = getEmptyDefaultValue(SiteEvents.VeranstaltungView.defaultValue),
-                that.binding.restriction = getEmptyDefaultValue(SiteEvents.defaultRestriction);
+                    that.binding.restriction = getEmptyDefaultValue(SiteEvents.defaultRestriction);
                 that.binding.restriction.Firmenname = "";
                 autosuggestbox.winControl.queryText = "";
                 autosuggestbox.winControl._prevQueryText = "";
@@ -463,7 +392,7 @@
             }
             this.exportPwdQrCodeEmployeePdf = exportPwdQrCodeEmployeePdf;
 
-            var exportExhibitorList = function(exhId) {
+            var exportExhibitorList = function (exhId) {
                 Log.call(Log.l.trace, "SiteEvents.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
@@ -691,7 +620,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickExportExhibitorList: function() {
+                clickExportExhibitorList: function () {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     AppBar.busy = true;
                     var ret;
@@ -763,42 +692,6 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                onquerychanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    /*var queryText = eventInfo && eventInfo.detail && eventInfo.detail.queryText;
-                    Log.print(Log.l.trace, queryText);
-                    function filterEvents(item) {
-                        var srtrLower = queryText.toLowerCase();
-                        var re = new RegExp(srtrLower, "g");
-                        if (srtrLower.length > 0 &&
-                        (item.Firmenname &&
-                            item.Firmenname.toLowerCase().match(re))) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                    if (that.siteeventsdata) {
-                        var hits = that.siteeventsdata.filter(filterEvents, { queryText: queryText });
-                        for (var i = 0; i < hits.length; i++) {
-                            eventInfo.detail.searchSuggestionCollection.appendQuerySuggestion(hits[i].Firmenname);
-                        }
-                    }*/
-                    var queryText = eventInfo.detail.queryText, query = queryText.toLowerCase(), suggestionCollection = eventInfo.detail.searchSuggestionCollection;
-                    if (queryText.length > 0 && that.siteeventsdata && that.siteeventsdata.length > 0) {
-                        for (var i = 0, len = that.siteeventsdata.length; i < len; i++) {
-                            if (that.siteeventsdata.getAt(i).Firmenname.toLowerCase().indexOf(query) >= 0 ||
-                                that.siteeventsdata.getAt(i).StandHall.toLowerCase().indexOf(query) >= 0 ||
-                                that.siteeventsdata.getAt(i).StandNo.toLowerCase().indexOf(query) >= 0 ||
-                                that.siteeventsdata.getAt(i).FairMandant_Email.toLowerCase().indexOf(query) >= 0) {
-                                suggestionCollection.appendQuerySuggestion(that.siteeventsdata.getAt(i).Firmenname);
-                            }
-                        }
-                    } else {
-                        that.loadData();
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 clickChange: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
                     that.changeEvent();
@@ -844,54 +737,6 @@
                             Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
                         }
                     });
-                    Log.ret(Log.l.trace);
-                },
-                changeSearchField: function (event) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    /* that.binding.restriction.Firmenname = [];
-                    if (event.target.value) {
-                        that.binding.restriction.Firmenname = event.target.value;
-                        that.binding.restriction.VeranstaltungTerminID = that.vidID;
-                        that.binding.restriction.bUseOr = false;
-                        that.binding.restriction.bAndInEachRow = true;
-                    } else {
-                        that.binding.restriction.Firmenname = event.target.value;
-                        delete that.binding.restriction.bUseOr;
-                    }
-                    AppData.setRestriction("Veranstaltung", that.binding.restriction);
-                    that.loadData();
-                    that.binding.restriction.Firmenname = "";
-                    var master = Application.navigator.masterControl;
-                    if (master && master.controller && master.controller.binding) {
-                        if (prevMasterLoadPromise &&
-                            typeof prevMasterLoadPromise.cancel === "function") {
-                            prevMasterLoadPromise.cancel();
-                        }
-                        //master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                        prevMasterLoadPromise = master.controller.loadData().then(function () {
-                            prevMasterLoadPromise = null;
-                            if (master && master.controller && that.binding.employeeId) {
-                                master.controller.selectRecordId(that.binding.employeeId);
-                            }
-                        });
-                    }*/
-                    Log.ret(Log.l.trace);
-                },
-                onquerysubmitted: function (eventInfo) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    that.binding.restriction.Firmenname = "";
-                    if (eventInfo.detail.queryText) {
-                        that.binding.restriction.Firmenname = eventInfo.detail.queryText;
-                        that.binding.restriction.VeranstaltungTerminID = that.vidID;
-                        that.binding.restriction.bUseOr = false;
-                        that.binding.restriction.bAndInEachRow = true;
-                    } else {
-                        that.binding.restriction.Firmenname = eventInfo.detail.queryText;
-                        delete that.binding.restriction.bUseOr;
-                    }
-                    AppData.setRestriction("Veranstaltung", that.binding.restriction);
-                    that.loadData();
-                    that.binding.restriction.Firmenname = "";
                     Log.ret(Log.l.trace);
                 },
                 onItemInvoked: function (eventInfo) {
@@ -1094,7 +939,7 @@
                     }
                 },
                 clickNew: function () {
-                        return false;
+                    return false;
                 },
                 clickDelete: function () {
                     if (!that.reorderId || that.binding.active === 1 || AppData.generalData.eventId === that.reorderId || AppBar.busy) {
@@ -1162,10 +1007,6 @@
             }
 
             // register ListView event handler
-            if (suggestionBox) {
-                this.addRemovableEventListener(suggestionBox, "suggestionsrequested", this.eventHandlers.onquerychanged.bind(this));
-                this.addRemovableEventListener(suggestionBox, "querysubmitted", this.eventHandlers.onquerysubmitted.bind(this));
-            }
             if (searchInput) {
                 this.addRemovableEventListener(searchInput, "keyup", this.eventHandlers.onSearchInput.bind(this));
             }
@@ -1265,25 +1106,23 @@
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
             }).then(function () {
-
                 Log.print(Log.l.trace, "Binding wireup page complete");
             });
             Log.ret(Log.l.trace);
         }, {
-            eventChangeId: null,
-            vidID: null,
-            vidID2: null,
-            nextUrl: null,
-            loading: false,
-            siteeventsdata: null,
-            deleteEventData: null,
-            suggestionList: null,
-            reorderId: null,
-            imageData: null,
-            isConvertable: null,
-            siteeventsdataraw: null,
-            searchStringData: ""
-        })
-
+                eventChangeId: null,
+                vidID: null,
+                vidID2: null,
+                nextUrl: null,
+                loading: false,
+                siteeventsdata: null,
+                deleteEventData: null,
+                suggestionList: null,
+                reorderId: null,
+                imageData: null,
+                isConvertable: null,
+                siteeventsdataraw: null,
+                searchStringData: ""
+            })
     });
 })();

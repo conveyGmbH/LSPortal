@@ -26,41 +26,36 @@
                         <span class="label landscape_only" data-win-res="{textContent: 'siteevents.search'}"></span>
                         <input id="searchInput" class="input_field win-textbox" type="text" data-win-bind="value: searchString Binding.Mode.twoway" data-win-res="{placeholder: 'siteevents.searchplaceholder'}"/>
                     </div>
-                    <!--<div id="suggestionBox"
-                         class="input_half_right win-autosuggestbox"
-                         data-win-control="WinJS.UI.AutoSuggestBox"
-                         data-win-bind="winControl.placeholderText: eventText; wincontrol.queryText: siteeventsdata.Firmenname" oninput="AppBar.handleEvent('oninput', 'changeSearchField', event)">
-                    </div>-->
                     <div class="field_line scroll-line">
                         <table id="tableId">
                             <thead class="table-header">
                                 <tr>
-                                    <th data-win-res="{textContent: 'siteevents.exhibitorname'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.contact'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.adminLoginList'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.hall'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.stand'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofusers'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofregisteredusers'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofblockedcontacts'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofusersused'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofcontacts'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofcontactsBRQR'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofcontactsBC'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofcontactsMA'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofexports'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.lastexportdateandtime'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.questionnairestatus'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.numberofemailssent'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.lastlogintotheportal'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.customerid'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.standsize'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.dunsnumber'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.auswertungsvariante'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.ordernumber'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.servername'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.mailtype'}"></th>
-                                    <th data-win-res="{textContent: 'siteevents.productlist'}"></th>
+                                    <th id="FairMandant_Name" data-win-res="{textContent: 'siteevents.exhibitorname'}"></th>
+                                    <th id="FairMandant_Ansprechpartner" data-win-res="{textContent: 'siteevents.contact'}"></th>
+                                    <th id="AdminLoginList" data-win-res="{textContent: 'siteevents.adminLoginList'}"></th>
+                                    <th id="StandHall" data-win-res="{textContent: 'siteevents.hall'}"></th>
+                                    <th id="StandNo" data-win-res="{textContent: 'siteevents.stand'}"></th>
+                                    <th id="NumUsers" data-win-res="{textContent: 'siteevents.numberofusers'}"></th>
+                                    <th id="NumUsedUsers" data-win-res="{textContent: 'siteevents.numberofregisteredusers'}"></th>
+                                    <th id="NumLockedContacts" data-win-res="{textContent: 'siteevents.numberofblockedcontacts'}"></th>
+                                    <th id="NumActiveUsers" data-win-res="{textContent: 'siteevents.numberofusersused'}"></th>
+                                    <th id="NumContacts" data-win-res="{textContent: 'siteevents.numberofcontacts'}"></th>
+                                    <th id="NumContactsBC" data-win-res="{textContent: 'siteevents.numberofcontactsBRQR'}"></th>
+                                    <th id="NumContactsVC" data-win-res="{textContent: 'siteevents.numberofcontactsBC'}"></th>
+                                    <th id="NumContactsMan" data-win-res="{textContent: 'siteevents.numberofcontactsMA'}"></th>
+                                    <th id="NumExports" data-win-res="{textContent: 'siteevents.numberofexports'}"></th>
+                                    <th id="LastExportTS" data-win-res="{textContent: 'siteevents.lastexportdateandtime'}"></th>
+                                    <th id="FBStatus" data-win-res="{textContent: 'siteevents.questionnairestatus'}"></th>
+                                    <th id="NumSentEmails" data-win-res="{textContent: 'siteevents.numberofemailssent'}"></th>
+                                    <th id="PortalLoginTS" data-win-res="{textContent: 'siteevents.lastlogintotheportal'}"></th>
+                                    <th id="FairMandant_CustomerID" data-win-res="{textContent: 'siteevents.customerid'}"></th>
+                                    <th id="StandSize" data-win-res="{textContent: 'siteevents.standsize'}"></th>
+                                    <th id="DUNSNumber" data-win-res="{textContent: 'siteevents.dunsnumber'}"></th>
+                                    <th id="Auswertungsvariante" data-win-res="{textContent: 'siteevents.auswertungsvariante'}"></th>
+                                    <th id="OrderNumber" data-win-res="{textContent: 'siteevents.ordernumber'}"></th>
+                                    <th id="Servername" data-win-res="{textContent: 'siteevents.servername'}"></th>
+                                    <th id="MailCategory" data-win-res="{textContent: 'siteevents.mailtype'}"></th>
+                                    <th id="ProductList" data-win-res="{textContent: 'siteevents.productlist'}"></th>
                                 </tr>
                             </thead>
                             <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
