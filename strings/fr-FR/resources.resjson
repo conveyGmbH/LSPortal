@@ -1145,6 +1145,7 @@
     "siteevents.servername" : "Nom du serveur",
     "siteevents.mailtype" : "Type de courrier",
     "siteevents.productlist" : "Liste des produits",
+    "siteevents.adminLoginList" : "AdminLoginList",
 
     "siteeventsneuaus.title" : "Nouvel exposant",
     "siteeventsneuaus.veranstaltungsname" : "nom de l'événement",

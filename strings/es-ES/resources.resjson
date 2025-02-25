@@ -1015,6 +1015,7 @@
     "siteevents.loadListSmall": "Kleine Austellerliste",
     "siteevents.mailtype" : "Mail type",
     "siteevents.productlist" : "Product List",
+    "siteevents.adminLoginList" : "AdminLoginList",
 
     "siteeventsneuaus.title" : "Neuer Aussteller",
     "siteeventsneuaus.veranstaltungsname" : "Veranstaltungsname",

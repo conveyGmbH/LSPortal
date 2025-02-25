@@ -1149,6 +1149,7 @@
     "siteevents.questionnairestatus" : "Questionnaire Status",
     "siteevents.numberofemailssent" : "Number of emails sent",
     "siteevents.lastlogintotheportal" : "Last login to the portal",
+    "siteevents.adminLoginList" : "AdminLoginList",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",

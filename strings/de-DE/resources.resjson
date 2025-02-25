@@ -1149,7 +1149,7 @@
     "siteevents.servername" : "Server Name",
     "siteevents.mailtype" : "Mail-Typ",
     "siteevents.productlist" : "Produkte",
-
+    "siteevents.adminLoginList" : "AdminLoginList",
 
     "siteeventsneuaus.title" : "Neuer Aussteller",
     "siteeventsneuaus.veranstaltungsname" : "Veranstaltungsname",
