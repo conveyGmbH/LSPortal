@@ -52,7 +52,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newMandant"), section: "primary", svg: "plus" },
-                { id: "clickChangeToLSMain", label: getResourceText("command.changetolsmain"), tooltip: getResourceText("tooltip.changetolsmain"), section: "primary", svg: "va_wechsel" }
+                { id: "clickChangeToLSMain", label: getResourceText("command.changetolsmain"), tooltip: getResourceText("tooltip.changetolsmain"), section: "primary", svg: "central_bank" }
             ];
 
             this.controller = new ClientManagementSearchList.Controller(element, commandList);
