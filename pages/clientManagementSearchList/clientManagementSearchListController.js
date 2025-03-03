@@ -163,6 +163,16 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                changeRadioButtons: function(event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller."); 
+                    if (AppBar.notifyModified && that.binding.searchString) {
+                        that.getFilter();
+                        if (event && event.currentTarget) {
+                            that.loadData(that.binding.searchString);
+                        }
+                    }
+                    Log.ret(Log.l.trace);
+                },
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (AppBar.notifyModified) {

@@ -16,6 +16,7 @@
         _prevJson: null,
         _collator: null,
         _FilterOption: "ALL",
+        _prevFilterOption: "ALL",
         _Filter: 0,
         Filter: {
             get: function () {
@@ -78,7 +79,8 @@
                         });
                     }
                     if (ClientManagementSearchList._prevJson &&
-                        ClientManagementSearchList._prevRestriction === restriction) {
+                        ClientManagementSearchList._prevRestriction === restriction &&
+                        ClientManagementSearchList._FilterOption === ClientManagementSearchList._prevFilterOption) {
                         Log.print(Log.l.info, "re-use previous PRC_GetMandantList results!");
                         var json = ClientManagementSearchList._prevJson;
                         ret = new WinJS.Promise.as().then(function () {
@@ -105,6 +107,7 @@
                                 ClientManagementSearchList._orderAttribute) {
                                 Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
                                 json.d.results.sort(ClientManagementSearchList.fairMandantView.compare);
+                                ClientManagementSearchList._prevFilterOption = ClientManagementSearchList._FilterOption;
                             }
                             if (typeof complete === "function") {
                                 complete(json);

@@ -32,17 +32,20 @@
                             <div class="input_group">
                                 <label class="radio">
                                     <input type="radio" name="Filter" value="0" class="win-checkbox"
-                                           data-win-bind="checked: Filter0">
+                                           data-win-bind="checked: Filter0"
+                                           onclick="AppBar.handleEvent('click', 'changeRadioButtons', event)">
                                     <span data-win-res="{textContent: 'clientManagementSearchList.all'}"></span>
                                 </label>
                                 <label class="radio">
                                     <input type="radio" name="Filter" value="1" class="win-checkbox"
-                                           data-win-bind="checked: Filter1">
+                                           data-win-bind="checked: Filter1"
+                                           onclick="AppBar.handleEvent('click', 'changeRadioButtons', event)">
                                     <span data-win-res="{textContent: 'clientManagementSearchList.contactdata'}"></span>
                                 </label>
                                 <label class="radio">
                                     <input type="radio" name="Filter" value="2" class="win-checkbox"
-                                           data-win-bind="checked: Filter2">
+                                           data-win-bind="checked: Filter2"
+                                           onclick="AppBar.handleEvent('click', 'changeRadioButtons', event)">
                                     <span data-win-res="{textContent: 'clientManagementSearchList.fairs'}"></span>
                                 </label>
                             </div>
