@@ -712,7 +712,7 @@
                             Log.print(Log.l.trace, "Mailing: success!");
                             if (json && json.d) {
                                 that.binding.dataMail = setDataMail(json.d);
-                                that.langMsgSetter(json.d.INITSpracheID);
+                                that.langMsgSetter(json.d.INITSpracheID.toString());
                                 Log.print(Log.l.trace, "Mailing: success!");
                             }
                             // startContact returns object already parsed from json file in response
