@@ -10,6 +10,7 @@
 /// <reference path="~/www/pages/mailingTypes/mailingTypesService.js" />
 /// <reference path="~/www/pages/siteEventsList/siteEventsListController.js" />
 /// <reference path="~/www/fragments/empRoles/empRolesController.js" />
+/// <reference path="~/www/lib/moment/scripts/moment-with-locales.min.js" />
 
 (function () {
     "use strict";
@@ -83,6 +84,11 @@
                     }
                 } else {
                     item.useSendStartTime = false;
+                }
+                var curMoment = moment(item.CalcSendTSUTC);
+                if (curMoment) {
+                    curMoment.locale(Application.language);
+                    item.CalcSendTSUTC = curMoment.format("LLLL");
                 }
             }
             this.resultConverter = resultConverter;
