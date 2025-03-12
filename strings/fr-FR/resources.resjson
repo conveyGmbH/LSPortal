@@ -1002,6 +1002,7 @@
     "mailingTypes.bccplaceholder"           : "Entrez ici l'adresse e-mail du BCC. Exemple : marketing@votresociété.fr",
 	"mailingTypes.sendDayplaceholder"   : "Entrez un nombre compris entre -14 et 14",
 	"mailingTypes.sendStartTimeplaceholder" : "Le courrier ne sera envoyé qu'après cette heure",
+    "mailingTypes.calcsendTime" : "Temps d'antenne",
 
 	"mailingTemplate.title" : "Modèle de courrier",
 	"mailingTemplate.subject" : "Respect",

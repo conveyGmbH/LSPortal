@@ -1006,6 +1006,7 @@
     "mailingTypes.bccplaceholder"           : "Enter here the BCC email address. Example: MyCompany@Company.com",
 	"mailingTypes.sendDayplaceholder"   : "Enter a number between -14 and 14",
 	"mailingTypes.sendStartTimeplaceholder" : "Mail will only be sent after this time",
+    "mailingTypes.calcsendTime" : "Sendtime",
 
 	"mailingTemplate.title" : "Mailtemplate",
 	"mailingTemplate.subject" : "Subject",

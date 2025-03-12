@@ -1004,6 +1004,7 @@
     "mailingTypes.bccplaceholder"           : "Inserire qui l'indirizzo per il BCC. Per esemio: Ditta@ditta.it",
 	"mailingTypes.sendDayplaceholder"   : "Inserire qui un numero compreso tra -14 e 14",
 	"mailingTypes.sendStartTimeplaceholder" : "La posta verrà inviata solo dopo questo orario",
+    "mailingTypes.calcsendTime" : "Ora d'aria",
 
 	"mailingTemplate.title" : "Mailtemplate",
 	"mailingTemplate.subject" : "Riguardo",
