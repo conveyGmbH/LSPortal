@@ -1028,6 +1028,7 @@
     "mandatory.count"  : "Nombre",
     "mandatory.noticeOn" : "Afficher un message et un indice, mais autoriser la poursuite de l'édition même sans répondre aux questions obligatoires.",
     "mandatory.noticeOff" : "Ne PAS autoriser la poursuite de l'édition sans répondre aux questions obligatoires.",
+    "mandatory.helpText"       : "Remarque : les champs de données d'adresse sélectionnés seront marqués en jaune dans la page des coordonnées de l'APP. La collecte de données ne sera PAS bloquée si un ou plusieurs champs sont vides. Cela n'influence PAS les données collectées lors du balayage d'un badge/ticket ou d'une carte de visite.",
 
 	"barcodeAdministration.title" : "Barcode",
 	"barcodeAdministration.count" : "Nombre",

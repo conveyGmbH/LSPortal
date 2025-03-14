@@ -1032,6 +1032,7 @@
     "mandatory.count"       : "Anzahl",
     "mandatory.noticeOn"       : "Hinweise anzeigen aber weitere Bearbeitung möglich",
     "mandatory.noticeOff"       : "Weitere Bearbeitung NICHT zulassen",
+    "mandatory.helpText"       : "Bitte beachten Sie: Die ausgewählten Adressdatenfelder werden auf der Seite mit den Kontaktdaten in der APP gelb markiert. Die Datenerfassung wird NICHT blockiert, wenn eines oder mehrere Felder leer bleiben. Es hat KEINEN Einfluss auf die Daten, die beim Scannen eines Ausweises/Tickets oder einer Visitenkarte erfasst werden.",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Anzahl",

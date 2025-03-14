@@ -1032,6 +1032,7 @@
     "mandatory.count"  : "Count",
 	"mandatory.noticeOn" : "Show message and hint, but allow further editing even without answering the mandatory questions.",
     "mandatory.noticeOff" : "Do NOT allow further editing without answering the mandatory questions",
+    "mandatory.helpText"       : "Please note: the selected address data fields will be marked yellow in the contact details page in the APP. It will NOT block the data collection if one or more are left empty.It does NOT influence the data collected when scanning a badge/ticket or a business card.",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Count",

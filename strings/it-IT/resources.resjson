@@ -1030,6 +1030,7 @@
     "mandatory.count"  : "Totale",
     "mandatory.noticeOn" : "Mostrare il messaggio e il suggerimento, ma consentire l'ulteriore modifica anche senza rispondere alle domande obbligatorie.",
     "mandatory.noticeOff" : "NON consentire l'ulteriore modifica senza rispondere alle domande obbligatorie.",
+    "mandatory.helpText"       : "Nota bene: i campi dell'indirizzo selezionati saranno contrassegnati in giallo nella pagina dei dettagli del contatto dell'APP. NON blocca la raccolta dei dati se uno o più campi sono lasciati vuoti. NON influisce sui dati raccolti durante la scansione di un badge/biglietto o di un biglietto da visita.",
 
     "barcodeAdministration.title" : "Barcode",
     "barcodeAdministration.count" : "Totale",
