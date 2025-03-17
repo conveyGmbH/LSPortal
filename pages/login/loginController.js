@@ -75,6 +75,11 @@
                         AppBar.triggerDisableHandlers();
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickPasswordRecovery: function(event) {
+                    Log.call(Log.l.trace, "Login.Controller");
+                    Application.navigateById("recover", event, true);
+                    Log.ret(Log.l.trace);
                 }
             };
 

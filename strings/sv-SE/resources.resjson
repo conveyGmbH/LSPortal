@@ -395,7 +395,8 @@
     "login.progress"        : "Progress",
     "login.unknown"         : "Specified user not found!",
     "login.inactive"        : "The service is currently inactive!",
-     
+    "login.passwordRecovery": "Password reset",
+
     "register.title"        : "Registration",
     "register.welcome"      : "Welcome to LeadSuccess!",
     "register.commentEmail" : "Please enter your email address. Later, You can use it to login as a user.",

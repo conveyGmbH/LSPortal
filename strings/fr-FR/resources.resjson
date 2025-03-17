@@ -437,6 +437,7 @@
     "login.progress"        : "Avancée",
     "login.unknown"         : "Utilisateur spécifié introuvable!",
     "login.inactive"        : "Le service est actuellement inactif!",
+    "login.passwordRecovery": "Réinitialiser le mot de passe",
      
     "register.title"        : "Inscription",
     "register.welcome"      : "Bienvenue au LeadSuccess!",

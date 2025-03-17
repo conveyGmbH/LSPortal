@@ -48,3 +48,18 @@
 #privacyPolicyLink {
     margin-left: 36px;
 }
+
+#passworRecovery {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: rgb(0, 0, 238);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 24px;
+}

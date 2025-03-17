@@ -440,6 +440,7 @@
     "login.progress"        : "Progresso",
     "login.unknown"         : "Nome utente specificato non trovato!",
     "login.inactive"        : "Il servizio è attualmente inattivo!",
+    "login.passwordRecovery": "Password reset",
      
     "register.title"        : "Registrazione",
     "register.welcome"      : "Benvenuto in LeadSuccess!",
