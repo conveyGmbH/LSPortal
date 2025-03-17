@@ -505,6 +505,7 @@
                                     that.binding.dataMailingTypeData.SendStartTime = hour + ":" + minutes;
                                 }
                                 }*/
+                                that.loadData(AppData.getRecordId("VeranstaltungTermin"), AppData.getRecordId("MailType"));
                                 AppBar.modified = false;
                             },
                             function (error) {

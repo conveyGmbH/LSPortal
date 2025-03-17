@@ -991,7 +991,7 @@
 	"mailingTypes.fromAddr"	: "Sender",
 	"mailingTypes.replyToAddr"	: "Reply",
 	"mailingTypes.sendDay"	: "Number of days",
-	"mailingTypes.sendDayHook"	: "Send day hook",
+	"mailingTypes.sendDayHook"	: "Distance refers to",
 	"mailingTypes.eventStart" : "Fair start",
 	"mailingTypes.eventEnde" : "End of the fair",
 	"mailingTypes.sendLater"	: "Delayed mailing",

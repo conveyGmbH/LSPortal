@@ -991,7 +991,7 @@
 	"mailingTypes.fromAddr"	: "Absender",
 	"mailingTypes.replyToAddr"	: "Antwort an",
 	"mailingTypes.sendDay"	: "Tage Abstand",
-	"mailingTypes.sendDayHook"	: "Haken setzen, um E-Mail an einem bestimmten Tag zu senden",
+	"mailingTypes.sendDayHook"	: "Abstand bezieht sich auf",
 	"mailingTypes.eventStart" : "Messebeginn",
 	"mailingTypes.eventEnde" : "Messeende",
 	"mailingTypes.sendLater"	: "Verzögerte Sendung",

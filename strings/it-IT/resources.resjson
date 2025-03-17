@@ -989,7 +989,7 @@
 	"mailingTypes.fromAddr"	: "Mittente",
 	"mailingTypes.replyToAddr"	: "Risposta",
 	"mailingTypes.sendDay"	: "Numero di giorni",
-	"mailingTypes.sendDayHook"	: "Tageshaken senden",
+	"mailingTypes.sendDayHook"	: "La distanza si riferisce a",
 	"mailingTypes.eventStart" : "Buon inizio",
 	"mailingTypes.useSendStartTime" : "Utilizza",
 	"mailingTypes.eventEnde" : "Fine della fiera",

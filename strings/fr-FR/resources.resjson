@@ -987,7 +987,7 @@
 	"mailingTypes.fromAddr"	: "Expéditeur",
 	"mailingTypes.replyToAddr"	: "Réponse",
 	"mailingTypes.sendDay"	: "nombre de jours",
-	"mailingTypes.sendDayHook"	: "Décrochez le jour",
+	"mailingTypes.sendDayHook"	: "La distance se réfère à",
 	"mailingTypes.eventStart" : "Avec la date",
 	"mailingTypes.eventEnde" : "Bon début",
 	"mailingTypes.sendLater"	: "Envoi différé",
