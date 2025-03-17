@@ -21,6 +21,22 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _GlobalUserServersVIEW: {
+            get: function () {
+                return AppData.getFormatView("GlobalUserServers", 20581, false);
+            }
+        },
+        GlobalUserServersVIEW: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".GlobalUserServersVIEW.");
+                var ret = AppHeader._GlobalUserServersVIEW.select(complete, error, restriction, {
+                    ordered: true
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+
+            }
         }
     });
 })();

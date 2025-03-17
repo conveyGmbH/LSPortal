@@ -1,4 +1,4 @@
-﻿﻿// controller for page: contact
+﻿// controller for page: contact
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -27,15 +27,17 @@
             this.pageData.errorFlag = false;
             this.pageData.userData = AppData._userData;
             this.pageData.genDataFlag = AppData._userData && AppData._userData.IsCustomerAdmin || AppData._userData.IsMidiAdmin;
+            this.pageData.isSiteAdmin = AppData._userData.SiteAdmin? true : false;
             this.pageData.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
             this.pageData.photoData = null;
             this.pageData.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
             this.pageData.loadUserImage = true;
+            this.pageData.ServerName = "";
 
             AppHeader.controller = this;
 
             var that = this;
-          
+
             // First, we call WinJS.Binding.as to get the bindable proxy object
             this.binding = WinJS.Binding.as(this.pageData);
 
@@ -83,7 +85,7 @@
                                 oldElement.innerHTML = "";
                             }
                         }
-                        WinJS.Promise.timeout(50).then(function() {
+                        WinJS.Promise.timeout(50).then(function () {
                             if (userImg && userImg.style && userImg.naturalWidth && userImg.naturalHeight) {
                                 var width = userImg.naturalWidth;
                                 var height = userImg.naturalHeight;
@@ -113,7 +115,7 @@
                 Log.ret(Log.l.trace);
             }
 
-            var setLogo = function() {
+            var setLogo = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var appLogoContainer = pageElement.querySelector(".app-logo-container");
                 if (appLogoContainer) {
@@ -136,9 +138,47 @@
             }
             this.setLogo = setLogo;
 
+            var setServerList = function (results) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        var row = results[i];
+                        if (row.IsActive === "1") {
+                            Log.print(Log.l.info, "found LanguageId=" + row.LocationID);
+                            that.binding.LocationID = row.LocationID;
+                            that.binding.ServerName = row.LocationName;
+                            break;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var ret = new WinJS.Promise.as().then(function () {
+                    return AppHeader.GlobalUserServersVIEW.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
+                        if (json && json.d && json.d.results && json.d.results.length) {
+                            that.binding.count = json.d.results.length;
+                            if (that.binding.count > 1) {
+                                that.binding.showServerList = true;
+                            }
+                            //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
+                            var results = json.d.results;
+                            setServerList(results);
+                        } else {
+                            Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, null);
+                }).then(function () {
                     var employeeId = AppData.getRecordId("Mitarbeiter");
                     if (that.binding.errorFlag) {
                         return WinJS.Promise.as();
@@ -183,6 +223,7 @@
                     that.setLogo();
                     that.binding.publishFlag = that.getPublishFlag();
                     that.binding.genDataFlag = that.binding.userData && that.binding.userData.IsCustomerAdmin || that.binding.userData.IsMidiAdmin;
+                    that.binding.isSiteAdmin = that.binding.userData && that.binding.userData.SiteAdmin;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -197,11 +238,11 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            pageData: {
-                generalData: AppData.generalData,
-                appSettings: AppData.appSettings
-            }
-        })
+                pageData: {
+                    generalData: AppData.generalData,
+                    appSettings: AppData.appSettings
+                }
+            })
     });
 })();
 

@@ -747,6 +747,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     width: 100%;
 }
 
+.server-name {
+    font-size: xx-small;
+    width: 100%;
+}
 /*.appHeader .win-button {
     z-index: 9900;
 }*/
