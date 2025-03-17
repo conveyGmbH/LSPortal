@@ -174,14 +174,12 @@
                                 } else {
                                     Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
                                 }
-                            },
-                            function(errorResponse) {
+                        }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            },
-                            null);
+                        }, null);
                     } else {
                         return WinJS.Promise.as();
                     }
