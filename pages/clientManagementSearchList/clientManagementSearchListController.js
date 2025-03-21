@@ -34,6 +34,8 @@
 
             var layout = null;
 
+            that.loadDataDelayedPromise = null;
+
             this.dispose = function () {
                 ClientManagementSearchList._prevJson = null;
                 ClientManagementSearchList._collator = null;
@@ -135,6 +137,20 @@
             }
             this.newMandant = newMandant;
 
+            var loadDataDelayed = function (searchString) {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    that.getFilter();
+                    AppData.setRecordId("FairMandantSearch", searchString);
+                    that.loadData(searchString);
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -166,8 +182,11 @@
                 changeRadioButtons: function(event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller."); 
                     if (AppBar.notifyModified && that.binding.searchString) {
-                        that.getFilter();
                         if (event && event.currentTarget) {
+                            if (that.loadDataDelayedPromise) {
+                                that.loadDataDelayedPromise.cancel();
+                                that.removeDisposablePromise(that.loadDataDelayedPromise);
+                            }
                             that.loadData(that.binding.searchString);
                         }
                     }
@@ -176,11 +195,9 @@
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (AppBar.notifyModified) {
-                        that.getFilter();
                         if (event && event.currentTarget) {
                             that.binding.searchString = event.currentTarget.value;
-                            AppData.setRecordId("FairMandantSearch", that.binding.searchString);
-                            that.loadData(that.binding.searchString);
+                            that.loadDataDelayed(that.binding.searchString);
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -193,6 +210,10 @@
                         } else {
                             ClientManagementSearchList._orderAttribute = event.currentTarget.id;
                             ClientManagementSearchList._orderDesc = false;
+                        }
+                        if (that.loadDataDelayedPromise) {
+                            that.loadDataDelayedPromise.cancel();
+                            that.removeDisposablePromise(that.loadDataDelayedPromise);
                         }
                         that.loadData(that.binding.searchString);
                     }
