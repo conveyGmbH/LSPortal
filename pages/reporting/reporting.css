@@ -1,4 +1,4 @@
-/**
+﻿/**
     reporting page styles
 */
 .reporting-bar-chart {
@@ -7,7 +7,7 @@
 }
 
 #reportingListhost.fragmenthost {
-    height: 200px;
+    height: 250px;
 }
 
 .view-size-big #reportingListhost.fragmenthost {
@@ -25,10 +25,29 @@
 .view-size-medium-small #reportingListhost.fragmenthost {
     height: 350px;
 }
-
 .view-size-small .reportingListhost-line {
     display: none;
 }
+#exportPanelsthost.fragmenthost {
+    height: 200px;
+}
+
+.view-size-big #exportPanelsthost.fragmenthost {
+    height: 450px;
+}
+
+.view-size-bigger #exportPanelsthost.fragmenthost {
+    height: 450px;
+}
+
+.view-size-medium #exportPanelsthost.fragmenthost {
+    height: 450px;
+}
+
+.view-size-medium-small #exportPanelsthost.fragmenthost {
+    height: 450px;
+}
+
 #exportlist {
     font-size: medium;
 }
@@ -142,4 +161,31 @@
 
 #showExcelReporting .win-toggleswitch-value-off {
     width: 500px !important;
+}
+.collapsible {
+    background-color: #0078D4;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    user-select: none;
+}
+
+.content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #f1f1f1;
+    padding: 0 10px;
+}
+
+.content.open {
+    padding: 10px;
+}
+#selectedValues {
+    font-size: 14px;
+    margin-top: 5px;
 }

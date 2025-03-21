@@ -842,6 +842,10 @@
     "reporting.comment"      : "Exportieren Sie Ihre Kontakte in Excel/PDF",
     "reporting.pdfZipDownloadText"      : "Ihre PDF- und Audio-Exportdatei wurde erstellt. Bitte klicken Sie auf dem Download Button, um die Zip-Datei herunterzuladen: ",
 	"reporting.noFileAvailable" : "Es konnte kein Export erstellt werden. Bitte prüfen Sie Ihre Daten!",
+    "reporting.filterup" : "Filter ausklappen",
+	"reporting.filterdown" : "Filter einklappen",
+    "reporting.downloadselection" : "Download Auswahl",
+    "reporting.downloadfiles" : "Download Dateien",
 
 	"reportingColumnList.title"       : "Benutzerdefinierter Export",
     "reportingColumnList.optionText"       : "Bitte wählen Sie hier die Spalten aus, die Sie exportiert haben möchten. Bitte beachten Sie: dies betrifft nur den Excel-Export Kontaktliste, nicht die anderen Exporte.",

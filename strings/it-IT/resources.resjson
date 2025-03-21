@@ -840,6 +840,10 @@
     "reporting.comment"      : "Esporta qui i tuoi dati in Excel o come PDF",
     "reporting.pdfZipDownloadText"      : "Il file di esportazione PDF e audio è stato creato. Fare clic sul pulsante Download per scaricare il file zip: ",
     "reporting.noFileAvailable" : "Non è stato possibile creare un'esportazione. Controllare i dati!",
+    "reporting.filterup" : "Espandi il filtro",
+    "reporting.filterdown" : "Filtro di chiusura",
+    "reporting.downloadselection" : "Selezione di download",
+    "reporting.downloadfiles" : "Scarica i file",
 
     "reportingColumnList.title"       : "Costume Export",
     "reportingColumnList.optionText"       : "Scegliere qui le colonne che si desidera esportare. Nota bene: questo influisce solo sull'esportazione Excel elenco contatti, non sulle altre esportazioni.",

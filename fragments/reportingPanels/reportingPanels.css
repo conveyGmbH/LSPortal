@@ -1,0 +1,36 @@
+﻿#reportingPanels.listview {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#reportingPanels .reporting-button {
+    height: 180px;
+    width: 200px;
+    text-align: center;
+}
+
+#reportingPanels .button-container {
+    height: 180px;
+}
+
+#reportingPanels .titlearea-bkg-white {
+    color: #ffffff;
+}
+
+#reportingPanels.win-nonselectable .reporting-button {
+}
+
+#reportingPanels .action-image-container {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#reportingPanels .action-label-container {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
+#reportingPanels .button-container {
+    filter: saturate(30%);
+}

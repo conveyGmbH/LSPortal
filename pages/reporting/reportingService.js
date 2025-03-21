@@ -6,6 +6,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "Reporting";
+
     WinJS.Namespace.define("Reporting", {
         _initLandView: {
             get: function () {
@@ -766,7 +768,20 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _exportPDFPanelView: {
+            get: function () {
+                return AppData.getFormatView("ExportPDF", 20700);
+            }
+        },
+        exportPDFPanelView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".exportPDFPanelView.", "restriction=" + restriction);
+                var ret = Reporting._exportPDFPanelView.select(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
         }
+        },
     });
 })();
 

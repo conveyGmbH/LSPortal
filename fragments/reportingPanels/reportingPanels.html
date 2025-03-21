@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="reportingPanels.css" rel="stylesheet" />
+    <script type="text/javascript" src="reportingPanelsService.js"></script>
+    <script type="text/javascript" src="reportingPanelsController.js"></script>
+    <script type="text/javascript" src="reportingPanels.js"></script>
+</head>
+<body class="win-type-body">
+    <div class="reportingPanels fragment">
+        <div id="reportingPanelsController" class="data-container">
+            <section aria-label="Main content" role="main" class="animationElement">
+                <div class="contentarea win-type-body">
+                    <div class="reportingPanels-template"
+                         data-win-control="WinJS.Binding.Template" style="display: none">
+                        <div class="button-container win-surface win-itemscontainer titlearea-bkg-white">
+                            <button class="reporting-button win-button titlearea-bkg"
+                                    onclick="AppBar.handleEvent('click', 'clickReportingPanel', event)"
+                                    data-win-bind="value: ReportName">
+                                <div class="action-label-container titlearea-bkg-white">
+                                    <span data-win-bind="textContent: ReportName"></span>
+                                </div>
+                                <div class="action-label-container titlearea-bkg-white">
+                                    <span data-win-bind="textContent: RquestedBy"></span>
+                                </div>
+                                <div class="action-label-container titlearea-bkg-white">
+                                    <span data-win-bind="textContent: FinishedTS"></span>
+                                </div>
+                                <div class="action-image-container">
+                                    <!--<img data-win-bind="src: exportTypeIcon" style="height: 50px; color: white"/>-->
+                                    <div name="download" class="action-image" style="width: 50px; height: 50px"></div>
+                                </div>
+                            </button>
+                        </div>
+                        </div>
+                            <div id="reportingPanels"
+                                 class="listview win-selectionstylefilled"
+                                 data-win-control="WinJS.UI.ListView"
+                                 data-win-options="{itemTemplate: select('.reportingPanels-template')}">
+                            </div>
+                    </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

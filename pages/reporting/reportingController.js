@@ -1,4 +1,4 @@
-// controller for page: info
+ï»¿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -51,7 +51,7 @@
                     },
                     templatexlsx: "",
                     showExcelExportErfassungsdatum: false, // excel 
-                    showExportAllExportErfassungsdatum: false, // Stand 22.10 für pdf-export/all und audiodaten
+                    showExportAllExportErfassungsdatum: false, // Stand 22.10 fï¿½r pdf-export/all und audiodaten
                     showModifiedTS: false,
                     showFilter: false,
                     showPdfReportingFilter: false
@@ -80,6 +80,9 @@
             var modifiedTs = pageElement.querySelector("#ModifiedTs.win-datepicker");
             var pdfZipDownload = pageElement.querySelector(".pdfZipDownload");
             var pdfZipDownloadData = pageElement.querySelector(".pdfZipDownloadData");
+            var collapsibleDiv = pageElement.querySelector("#collapsibleDiv");
+            var content = pageElement.querySelector(".content");
+            var selectedValues = pageElement.querySelector("#selectedValues");
 
             this.dispose = function () {
                 if (that.audioIddata) {
@@ -151,6 +154,12 @@
                 }
             }
             this.showProgress = showProgress;
+
+            var setColor = function() {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                collapsibleDiv.style.background = AppData._persistentStates.colorSettings.accentColor;
+            }
+            this.setColor = setColor;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -539,6 +548,7 @@
                             that.disableReportingList(false);
                             that.showDashboardLoadingText(false);
                             AppBar.busy = false;
+                            that.loadData();
                         } else {
                             Log.print(Log.l.error, "call error result of DOC3ExportPDFView is null");
                             that.disableReportingList(false);
@@ -587,6 +597,7 @@
                                 that.disableReportingList(false);
                                 that.showDashboardLoadingText(false);
                                 AppBar.busy = false;
+                                that.loadData();
                             }
                         }
                     }, function (errorResponse) {
@@ -605,6 +616,53 @@
                 return ret;
             }
             this.exportPdfExcelZip = exportPdfExcelZip;
+
+            var exportDataPanel = function (reportingName) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                if (reportingName) {
+                    AppBar.busy = true;
+                    ret = Reporting.exportPDFPanelView.select(function (json) {
+                        Log.print(Log.l.trace, "exportKontaktDataView: success!");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var results = json.d.results[0];
+                            if (results.DownloadFlag) {
+                                location.href = results.DownloadLink;
+                                AppBar.busy = false;
+                            } else {
+                                var excelDataraw = results.FileData;
+                                var sub = excelDataraw.search("\r\n\r\n");
+                                var excelDataBase64 = excelDataraw.substr(sub + 4);
+                                var excelData = that.base64ToBlob(excelDataBase64, results.FileType);
+                                var excelName = results.FileName;
+                                saveAs(excelData, excelName);
+                                AppBar.busy = false;
+                            }
+                        } else {
+                            Log.print(Log.l.error, "call error result of exportPDFPanelView is null");
+                            var errorResponse = {
+                                status: 204,
+                                statusText: getResourceText("reporting.noFileAvailable")
+                            };
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }
+                    }, function (errorResponse) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                        }, { ReportName: reportingName });
+                } else {
+                    var err = { status: 0, statusText: "no record selected" };
+                    error(err);
+                    ret = WinJS.Promise.as();
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.exportDataPanel = exportDataPanel;
 
             var exportData = function (exportselection) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
@@ -814,7 +872,7 @@
                 // rufe setrestriction auf 
                 that.binding.restrictionPdf = setRestriction();
                 that.binding.restrictionPdf.LandTitle = that.binding.restriction.InitLandID ? that.binding.restriction.InitLandID : null;
-                that.binding.restrictionPdf.Erfasser = that.binding.restriction.ErfasserID; // mögliches Problem?!
+                that.binding.restrictionPdf.Erfasser = that.binding.restriction.ErfasserID; // mï¿½gliches Problem?!
                 for (var prop in that.binding.restrictionPdf) {
                     if (that.binding.restrictionPdf.hasOwnProperty(prop)) {
                         //hasRestriction = true;
@@ -975,7 +1033,7 @@
                     }, recordId);
                 } else if (that.pdfIddata.length >= 0) {
                     Log.print(Log.l.trace, "collected all, pdfIddata.length=" + that.pdfIddata.length);
-                    // XLSX Einfügen
+                    // XLSX Einfï¿½gen
                     if (!that.pdfzip) {
                         that.pdfzip = new JSZip();
                     }
@@ -1058,6 +1116,27 @@
                         WinJS.Navigation.back(1).done( /* Your success and error handlers */);
                     }
                     Log.ret(Log.l.trace);
+                },
+                clickReportingPanel: function(event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    var repId = event.currentTarget.value;
+                    if (repId) {
+                        that.exportDataPanel(repId);
+                    } else {
+                        Log.print(Log.l.trace, "repId: not found!");
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                onClickFilters: function(event) {
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        collapsibleDiv.textContent = getResourceText("reporting.filterup");
+                        collapsibleDiv.appendChild(selectedValues); // Keep selected values visible
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        collapsibleDiv.textContent = getResourceText("reporting.filterdown");
+                        collapsibleDiv.appendChild(selectedValues); // Keep selected values visible
+                    }
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
@@ -1188,6 +1267,9 @@
                     Log.ret(Log.l.trace);
                 }
             };
+            if (collapsibleDiv) {
+                this.addRemovableEventListener(collapsibleDiv, "click", this.eventHandlers.onClickFilters.bind(this));
+            }
 
             this.disableHandlers = {
                 clickBack: function () {
@@ -1273,6 +1355,18 @@
                         var parentElement = pageElement.querySelector("#reportingListhost");
                         if (parentElement) {
                             return Application.loadFragmentById(parentElement, "ReportingList", {eventId: recordId});
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }
+                }).then(function () {
+                    var exportPanelsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("reportingPanels"));
+                    if (exportPanelsFragmentControl && exportPanelsFragmentControl.controller) {
+                        return exportPanelsFragmentControl.controller.loadData({ VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId() });
+                    } else {
+                        var parentElement = pageElement.querySelector("#exportPanelsthost");
+                        if (parentElement) {
+                            return Application.loadFragmentById(parentElement, "reportingPanels", { VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId()});
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -1413,7 +1507,7 @@
             that.setInitialDate();
             that.showDateRestrictions();
             that.processAll().then(function () {
-                //reset filter if showFilter false - möglicherweiße unnötig (siehe Zeile 32) workaround 11.11.2023
+                //reset filter if showFilter false - mï¿½glicherweiï¿½e unnï¿½tig (siehe Zeile 32) workaround 11.11.2023
                 if (!that.binding.showFilter) {
                     that.binding.restriction.INITLandID = null;
                     that.binding.restriction.MitarbeiterVIEWID = null;
@@ -1423,6 +1517,9 @@
                     that.binding.restriction.AenderungsDatum = "null";
                     that.binding.restriction.KontaktModifiedTS = null;
                 }
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.setColor();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.setpdfZipDownloadData(false);
