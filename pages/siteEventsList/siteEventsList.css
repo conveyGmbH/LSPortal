@@ -8,6 +8,7 @@
 .siteEventsList .content-header {
     height: auto !important;
     min-height: 48px;
+    display: inline-block;
 }
 .siteEventsList .master-list-header {
     min-height: 40px;
