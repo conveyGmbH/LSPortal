@@ -187,6 +187,7 @@
                                 that.loadDataDelayedPromise.cancel();
                                 that.removeDisposablePromise(that.loadDataDelayedPromise);
                             }
+                            that.getFilter();
                             that.loadData(that.binding.searchString);
                         }
                     }
