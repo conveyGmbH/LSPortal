@@ -193,14 +193,14 @@
                 if (typeof item.CS1504SerienNr === "string") {
                     item.CS1504SerienNr = that.cutSerialnumber(item.CS1504SerienNr);
                 }
-                if (item.Gesperrt === 1) {
+                /*if (item.Gesperrt === 1) {
                     if (AppHeader.controller.binding.userData.SiteAdmin) {
                         item.Gesperrt = 0;
                     } else {
                         item.Gesperrt = 1;
                     }
-                    item.disabled = true;
-                }
+                    //item.disabled = true;
+                }*/
                 item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "GenDataEmpList");
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
@@ -245,11 +245,12 @@
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data && item.data.MitarbeiterVIEWID &&
-                                        item.data.MitarbeiterVIEWID !== that.binding.employeeId && item.data.Gesperrt !== 1) {
+                                        item.data.MitarbeiterVIEWID !== that.binding.employeeId) { //&& item.data.Gesperrt !== 1
                                         if (AppBar.scope &&
                                             typeof AppBar.scope.saveData === "function") {
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
+                                                //that.binding.gesperrt = item.data.Gesperrt;
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.selIdx = item.index;

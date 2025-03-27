@@ -1,4 +1,4 @@
-// controller for page: info
+﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -175,14 +175,14 @@
                 if (typeof item.CS1504SerienNr === "string") {
                     item.CS1504SerienNr = that.cutSerialNumber(item.CS1504SerienNr);
                 }
-                if (item.Gesperrt === 1) {
+                /*if (item.Gesperrt === 1) {
                     if (AppHeader.controller.binding.userData.SiteAdmin) {
                         item.Gesperrt = 0;
                     } else {
                         item.Gesperrt = 1;
                     }
                     item.disabled = true;
-                }
+                }*/
                 item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "EmpList");
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
@@ -206,7 +206,7 @@
                                         AppBar.scope.binding.isVeranstaltungComboboxVisible = false;
                                     }
                                     if (item.data && item.data.MitarbeiterVIEWID &&
-                                        item.data.MitarbeiterVIEWID !== that.binding.employeeId && item.data.Gesperrt !== 1) {
+                                        item.data.MitarbeiterVIEWID !== that.binding.employeeId) {
                                         if (AppBar.scope &&
                                             typeof AppBar.scope.saveData === "function") {
                                             AppBar.scope.saveData(function (response) {

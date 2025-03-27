@@ -26,13 +26,15 @@
                 noLicence: null,
                 AnzAktiveLizenz: null,
                 AnzMandantLizenz: null,
+                userLocked: null,
                 allowEditLogin: null,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
                 addEventFormFlag: (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents),
                 eventId: null,
                 disableLoginName: false,
                 disableLoginFirstPart: false,
-                disableDomain: false
+                disableDomain: false,
+                disablePassword: false
             }, commandList]);
 
             var that = this;
@@ -215,6 +217,14 @@
                     } else {
                         that.binding.userStatus = null;
                     }
+                    if (result && result.Gesperrt) {
+                        that.binding.userLocked = result.Gesperrt;
+                    } else {
+                        that.binding.userLocked = null;
+                    }
+                    if (result && result.IconID) {
+                        that.binding.iconID = result.IconID;
+                    }
                     if (result && result.AnzAktiveLizenz) {
                         that.binding.AnzAktiveLizenz = result.AnzAktiveLizenz;
                     } else {
@@ -232,15 +242,18 @@
                     // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                     // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
                     // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                    that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents;
+                    //|| AppHeader.controller.binding.userData.HasLocalEvents 
+                    that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin;
                     if (that.binding.allowEditLogin) {
                         that.binding.disableLoginFirstPart = false;
                         that.binding.disableDomain = false;
                         that.binding.disableLoginName = false;
+                        that.binding.disablePassword = false;
                     } else {
                         that.binding.disableLoginFirstPart = true;
                         that.binding.disableDomain = true;
                         that.binding.disableLoginName = true;
+                        that.binding.disablePassword = true;
                     }
                     AppBar.triggerDisableHandlers();
                     return WinJS.Promise.as();
@@ -259,10 +272,12 @@
                     that.binding.disableLoginFirstPart = false;
                     that.binding.disableDomain = false;
                     that.binding.disableLoginName = false;
+                    that.binding.disablePassword = false;
                 } else {
                     that.binding.disableLoginFirstPart = false;
                     that.binding.disableDomain = true;
                     that.binding.disableLoginName = true;
+                    that.binding.disablePassword = true;
                 }
                 Log.ret(Log.l.trace);
             }
@@ -625,9 +640,17 @@
                     return confirm(confirmTitle, function (result) {
                         // called asynchronously if user-choice
                         if (result) {
+                            if (that.binding.iconID === 5) {
+                                that.binding.disableLoginName = true;
+                                that.binding.disableLoginFirstPart = true;
+                            } else {
+                                that.binding.disableLoginName = false;
                             that.binding.disableLoginFirstPart = false;
+                            }
+                            //that.binding.disableLoginFirstPart = false;
                             that.binding.disableDomain = true;
-                            that.binding.disableLoginName = false;
+                            //that.binding.disableLoginName = false;
+                            //that.binding.disablePassword = true;
                             that.binding.allowEditLogin = 1;
                         }
                         Log.ret(Log.l.trace);
@@ -769,7 +792,8 @@
                     return AppBar.busy;
                 },
                 clickChangeLogin: function () {
-                    return that.binding.allowEditLogin;
+                    // svc bei nicht siteadmin nicht erlauben
+                    return that.binding.allowEditLogin || that.binding.iconID === 5;
                 },
                 clickExportQrcode: function () {
                     if (getRecordId()) {
