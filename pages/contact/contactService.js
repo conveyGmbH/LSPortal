@@ -104,13 +104,30 @@
         },
         _exportKontaktDataView: {
             get: function () {
-                return AppData.getFormatView("DOC3ExportKontaktData", 20553);
+                return AppData.getFormatView("DOC3ExportKontaktData", 20554);
             }
         },
         exportKontaktDataView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".exportKontaktDataView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
                 var ret = Contact._exportKontaktDataView.select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+
+            }
+        },
+        _exportKontaktDataPDFView: {
+            get: function () {
+                return AppData.getFormatView("DOC3ExportKontaktData", 20553);
+            }
+        },
+        exportKontaktDataPDFView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".exportKontaktDataView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
+                var ret = Contact._exportKontaktDataPDFView.select(complete, error, restriction);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;

@@ -580,7 +580,7 @@
                 var recordId = getRecordId();
                 if (recordId) {
                     AppBar.busy = true;
-                    ret = Contact.exportKontaktDataView.select(function (json) {
+                    ret = Contact.exportKontaktDataPDFView.select(function (json) {
                         Log.print(Log.l.trace, "exportKontaktDataView: success!");
                         if (json && json.d) {
                             var results = json.d.results[0];
