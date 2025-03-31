@@ -107,6 +107,7 @@
                 var progress = null;
                 var counter = null;
                 var layout = null;
+                that.loadDataDelayedPromise = null;
 
                 var maxLeadingPages = 0;
                 var maxTrailingPages = 0;
@@ -133,6 +134,18 @@
                     Log.ret(Log.l.trace);
                 }
                 this.setSelIndex = setSelIndex;
+
+                var loadDataDelayed = function (searchString) {
+                    if (that.loadDataDelayedPromise) {
+                        that.loadDataDelayedPromise.cancel();
+                        that.removeDisposablePromise(that.loadDataDelayedPromise);
+                    }
+                    that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                        that.loadData(searchString);
+                    });
+                    that.addDisposablePromise(that.loadDataDelayedPromise);
+                }
+                this.loadDataDelayed = loadDataDelayed;
 
                 var handlePageEnable = function (contact) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + (contact && contact.KontaktVIEWID));
@@ -503,7 +516,8 @@
                         Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (event && event.currentTarget) {
                             that.binding.searchString = event.currentTarget.value;
-                            that.loadData(that.binding.searchString);
+                            that.loadDataDelayed(that.binding.searchString);
+                            //that.loadData(that.binding.searchString);
                         }
                         Log.ret(Log.l.trace);
                     },

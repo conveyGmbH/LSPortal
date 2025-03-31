@@ -47,6 +47,7 @@
             var that = this;
             that.prevRecId = 0;
             that.curRecId = 0;
+            that.loadDataDelayedPromise = null;
 
             // ListView control
             var listView = pageElement.querySelector("#eventList.listview");
@@ -211,6 +212,28 @@
             }
             this.loadNextUrl = loadNextUrl;
 
+            var scrollToRecordId = function (recordId) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.", "recordId=" + recordId);
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else {
+                    if (recordId && listView && listView.winControl) {
+                        for (var i = 0; i < that.records.length; i++) {
+                            var events = that.records.getAt(i);
+                            if (events && typeof events === "object" &&
+                                events.VeranstaltungVIEWID === recordId) {
+                                listView.winControl.indexOfFirstVisible = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId = scrollToRecordId;
+
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "EventList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
@@ -219,6 +242,7 @@
                         if (events && typeof events === "object" &&
                             events.VeranstaltungVIEWID === recordId) {
                             listView.winControl.selection.set(i);
+                            that.scrollToRecordId(recordId);
                             break;
                         }
                     }
@@ -328,6 +352,19 @@
                     }
                 }
             }
+            var loadDataDelayed = function () {
+                if (that.loadDataDelayedPromise) {
+                    that.loadDataDelayedPromise.cancel();
+                    that.removeDisposablePromise(that.loadDataDelayedPromise);
+                }
+                that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
+                    //that.getFilter();
+                    //AppData.setRecordId("FairMandantSearch", searchString);
+                    that.loadData();
+                });
+                that.addDisposablePromise(that.loadDataDelayedPromise);
+            }
+            this.loadDataDelayed = loadDataDelayed;
 
             // define handlers
             this.eventHandlers = {
@@ -342,7 +379,8 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.currentTarget) {
                         that.binding.searchString = event.currentTarget.value;
-                        that.loadData();
+                        //that.loadData();
+                        that.loadDataDelayed();
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -474,7 +512,7 @@
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                         }
                                                         AppBar.scope.loadData();
-                                                    } else if ((curPageId === "event") &&
+                                                    } else if ((curPageId === "event" || curPageId === "genDataSettings") &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
                                                     }else if (curPageId === "eventProducts" &&
@@ -556,7 +594,7 @@
                                                         AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                     }
                                                     AppBar.scope.loadData();
-                                                } else if ((curPageId === "event") &&
+                                                } else if ((curPageId === "event" || curPageId === "genDataSettings") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 }
@@ -840,6 +878,8 @@
                                         listView.winControl.selection.set(0);
                                     }
                                 }
+                                //reset it after selection
+                                AppData.setRecordId("VeranstaltungEdit", null);
                             } else {
                                 that.binding.count = 0;
                                 that.nextUrl = null;
