@@ -39,16 +39,11 @@
             var getDateObject = function (dateData) {
                 var ret;
                 if (dateData) {
-                    var interval = parseInt(that.binding.dayhourflag);
                     var dateString = dateData.replace("\/Date(", "").replace(")\/", "");
                     var milliseconds = parseInt(dateString) - AppData.appSettings.odata.timeZoneAdjustment * 60000;
-                    if (interval === 1) {
-                        ret = new Date(milliseconds).toLocaleDateString();
-                    } else {
                         moment().locale("de");
                         ret = moment(milliseconds).locale("de").format("DD.MM.YYYY HH:mm");//new Date(milliseconds).toLocaleTimeString().slice(0, -3);
 
-                    }
                     //.toLocaleString('de-DE').substr(0, 10);
                 } else {
                     ret = "";
@@ -112,6 +107,8 @@
             }
             
             that.processAll().then(function () {
+                that.loadData();
+            }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
             });
             Log.ret(Log.l.trace);

@@ -32,6 +32,7 @@
                     restriction: {
                         MitarbeiterVIEWID: null,
                         INITLandID: null,
+                            TITLE: null,
                         Erfassungsdatum: null,
                         showErfassungsdatum: false,
                         AenderungsDatum: null,
@@ -82,7 +83,7 @@
             var pdfZipDownloadData = pageElement.querySelector(".pdfZipDownloadData");
             var collapsibleDiv = pageElement.querySelector("#collapsibleDiv");
             var content = pageElement.querySelector(".content");
-            var selectedValues = pageElement.querySelector("#selectedValues");
+            //var selectedValues = pageElement.querySelector("#selectedValues");
 
             this.dispose = function () {
                 if (that.audioIddata) {
@@ -154,12 +155,6 @@
                 }
             }
             this.showProgress = showProgress;
-
-            var setColor = function() {
-                Log.call(Log.l.trace, "Reporting.Controller.");
-                collapsibleDiv.style.background = AppData._persistentStates.colorSettings.accentColor;
-            }
-            this.setColor = setColor;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -1366,7 +1361,7 @@
                     } else {
                         var parentElement = pageElement.querySelector("#exportPanelsthost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "reportingPanels", { VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId()});
+                            return Application.loadFragmentById(parentElement, "reportingPanels");
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -1517,9 +1512,6 @@
                     that.binding.restriction.AenderungsDatum = "null";
                     that.binding.restriction.KontaktModifiedTS = null;
                 }
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setColor();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.setpdfZipDownloadData(false);
