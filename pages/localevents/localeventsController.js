@@ -596,9 +596,6 @@
                     }
                 },
                 clickChange: function () {
-                    if (!AppHeader.controller.binding.userData.SiteAdmin && (AppHeader.controller.binding.userData.IsCustomerAdmin || AppHeader.controller.binding.userData.IsMidiAdmin)) {
-                        return true;
-                    }
                     if (that.curRecId && AppData.generalData.eventId !== that.curRecId) {
                         return false;
                     } else {
@@ -677,6 +674,7 @@
                                     }
                                     that.loading = false;
                                 }
+                            that.selectRecordId(AppData.getRecordId("Veranstaltung"));
                             Log.print(Log.l.trace, "Data loaded");
                         } else {
                             that.binding.count = 0;

@@ -792,9 +792,9 @@
                     }
                 },
                 clickChange: function () {
-                    if (!AppHeader.controller.binding.userData.SiteAdmin && (AppHeader.controller.binding.userData.IsCustomerAdmin || AppHeader.controller.binding.userData.IsMidiAdmin)) {
-                        return true;
-                    }
+                    /*if (AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin || AppHeader.controller.binding.userData.IsMidiAdmin) {
+                        return false;
+                    }*/
                     var master = Application.navigator.masterControl;
                     if (master &&
                         master.controller &&
