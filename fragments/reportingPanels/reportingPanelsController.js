@@ -54,8 +54,21 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
+                item.TooltipData = "";
                 if (item.FinishedTS) {
                     item.FinishedTS = that.getDateObject(item.FinishedTS);
+                }
+                if (item.FilterCreateDate) {
+                    item.TooltipData += getResourceText("reporting.entrydatelabel") + that.getDateObject(item.FilterCreateDate) + "\n";
+                }
+                if (item.FilterModDate) {
+                    item.TooltipData += getResourceText("reporting.changedatelabel") + that.getDateObject(item.FilterModDate) + "\n";
+                }
+                if (item.FilterByLand) {
+                    item.TooltipData += getResourceText("reporting.countrylabel") + item.FilterByLand + "\n";
+                }
+                if (item.FilterByMitarbeiter) {
+                    item.TooltipData += getResourceText("reporting.employeelabel") + item.FilterByMitarbeiter;
                 }
             }
             this.resultConverter = resultConverter;
