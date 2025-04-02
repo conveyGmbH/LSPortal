@@ -188,7 +188,29 @@
 .content.open {
     padding: 10px;
 }
-#selectedValues {
-    font-size: 14px;
-    margin-top: 5px;
+.filterShowContainer {
+    margin-left: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between spans */
+}
+
+    .filterShowContainer span {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f8f8f8;
+        text-align: center;
+    }
+#selectedErfassungsdatum {
+    display: none;
+}
+#selectedModifiedTs {
+    display: none;
+}
+#selectedLand {
+    display: none;
+}
+#selectedErfasser {
+    display: none;
 }

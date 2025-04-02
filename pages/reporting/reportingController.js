@@ -71,6 +71,8 @@
             this.employeechart = null;
             this.xlsxfilename = "PDFExport.xlsx";
             this.isSupreme = parseInt(AppData._userData.IsSupreme);
+            this.landRef = [];
+            this.mitarbeiterRef = [];
 
             var that = this;
 
@@ -83,7 +85,11 @@
             var pdfZipDownloadData = pageElement.querySelector(".pdfZipDownloadData");
             var collapsibleDiv = pageElement.querySelector("#collapsibleDiv");
             var content = pageElement.querySelector(".content");
-            //var selectedValues = pageElement.querySelector("#selectedValues");
+            var selectedValues = pageElement.querySelector("#selectedValues");
+            var selectedErfassungsdatum = pageElement.querySelector("#selectedErfassungsdatum");
+            var selectedModifiedTs = pageElement.querySelector("#selectedModifiedTs");
+            var selectedLand = pageElement.querySelector("#selectedLand");
+            var selectedErfasser = pageElement.querySelector("#selectedErfasser");
 
             this.dispose = function () {
                 if (that.audioIddata) {
@@ -102,6 +108,25 @@
                     that.employeedataID = null;
                 }
             }
+
+            var landRefSearch = function(landId) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                for (var i = 0; i < landRef.length; i++) {
+                    if (landRef[i].INITLandID === landId) {
+                        selectedLand.textContent = getResourceText("reporting.entrydatelabel") + landRef[i].TITLE;
+                    }
+                }
+                Log.ret(Log.l.trace, landId);
+            }
+            this.landRefSearch = landRefSearch;
+
+            var showDate = function(date) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var showDate = moment(date).format('DD.MM.YYYY');
+                Log.ret(Log.l.trace, showDate);
+                return showDate;
+            }
+            this.showDate = showDate;
 
             var getEventId = function () {
                 var eventId = null;
@@ -588,7 +613,7 @@
                                     exportPdfExcelZip(results.ExportPDFVIEWID); // Call itself to repeat after 15 seconds
                                 }, 15000);
                             } else {
-                                that.setpdfZipDownloadData(true, results.DownloadLink);
+                                //that.setpdfZipDownloadData(true, results.DownloadLink);
                                 that.disableReportingList(false);
                                 that.showDashboardLoadingText(false);
                                 AppBar.busy = false;
@@ -1099,6 +1124,10 @@
                 if (erfasserID) {
                     erfasserID.dataSource = [];
                 }
+                selectedErfassungsdatum.style.display = "none";
+                selectedModifiedTs.style.display = "none";
+                selectedLand.style.display = "none";
+                selectedErfasser.style.display = "none";
                 Log.ret(Log.l.trace);
             }
             this.resetFilters = resetFilters;
@@ -1208,6 +1237,12 @@
                     if (event.currentTarget) {
                         that.binding.showErfassungsdatum = event.currentTarget.checked;
                         that.binding.restriction.Erfassungsdatum = new Date();
+                        selectedErfassungsdatum.textContent = getResourceText("reporting.entrydatelabel") + that.showDate(new Date());
+                    }
+                    if (!event.currentTarget.checked) {
+                        selectedErfassungsdatum.style.display = "none";
+                    } else {
+                        selectedErfassungsdatum.style.display = "block";
                     }
                     that.showDateRestrictions();
                 },
@@ -1216,13 +1251,54 @@
                         that.binding.showModifiedTS = event.currentTarget.checked;
                         that.binding.restriction.AenderungsDatum = new Date();
                         that.binding.restriction.KontaktModifiedTS = new Date();
+                        selectedModifiedTs.textContent = getResourceText("reporting.changedatelabel") + that.showDate(new Date());
+                    }
+                    if (!event.currentTarget.checked) {
+                        selectedModifiedTs.style.display = "none";
+                    } else {
+                        selectedModifiedTs.style.display = "block";
                     }
                     that.showDateRestrictions();
                 },
+                changeErfassungsDatum: function (event) {
+                    if (event.currentTarget) {
+                        var eid = erfassungsdatum.winControl.current;
+                        selectedErfassungsdatum.textContent = getResourceText("reporting.entrydatelabel") + that.showDate(eid);
+                    }
+                },
                 changeModifiedTS: function (event) {
                     if (event.currentTarget) {
-                        that.binding.restriction.ModifiedTs = event.currentTarget.current;
+                        var mid = modifiedTs.winControl.current;
+                        selectedModifiedTs.textContent = getResourceText("reporting.changedatelabel") + that.showDate(mid);
                     }
+                },
+                changeLand: function(event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    for (var i = 0; i < that.landRef.length; i++) {
+                        if (event.currentTarget.value !== "0") {
+                            if (that.landRef[i].INITLandID === parseInt(event.currentTarget.value)) {
+                                selectedLand.textContent = getResourceText("reporting.countrylabel") + that.landRef[i].TITLE;
+                                selectedLand.style.display = "block";
+                            }
+                        } else {
+                            selectedLand.style.display = "none";
+                        }
+                    }
+                    Log.ret(Log.l.trace, event.currentTarget.value);
+                },
+                changeMitarbeiter: function (event) {
+                    Log.call(Log.l.trace, "Reporting.Controller.");
+                    for (var i = 0; i < that.mitarbeiterRef.length; i++) {
+                        if (event.currentTarget.value !== "undefined") {
+                            if (that.mitarbeiterRef[i].EmployeeID === parseInt(event.currentTarget.value)) {
+                                selectedErfasser.textContent = getResourceText("reporting.employeelabel") + that.mitarbeiterRef[i].EmployeeName;
+                                selectedErfasser.style.display = "block";
+                            }
+                        } else {
+                            selectedErfasser.style.display = "none";
+                        }
+                    }
+                    Log.ret(Log.l.trace, event.currentTarget.value);
                 },
                 clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -1257,6 +1333,10 @@
                             that.binding.restriction.AenderungsDatumValue = null;
                             that.binding.restriction.AenderungsDatum = "null";
                             that.binding.restriction.KontaktModifiedTS = null;
+                            selectedErfassungsdatum.style.display = "none";
+                            selectedModifiedTs.style.display = "none";
+                            selectedLand.style.display = "none";
+                            selectedErfasser.style.display = "none";
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -1264,6 +1344,18 @@
             };
             if (collapsibleDiv) {
                 this.addRemovableEventListener(collapsibleDiv, "click", this.eventHandlers.onClickFilters.bind(this));
+            }
+            if (erfassungsdatum) {
+                this.addRemovableEventListener(erfassungsdatum, "change", this.eventHandlers.changeErfassungsDatum.bind(this));
+            }
+            if (modifiedTs) {
+                this.addRemovableEventListener(modifiedTs, "change", this.eventHandlers.changeModifiedTS.bind(this));
+            }
+            if (initLand) {
+                this.addRemovableEventListener(initLand, "change", this.eventHandlers.changeLand.bind(this));
+            }
+            if (erfasserID) {
+                this.addRemovableEventListener(erfasserID, "change", this.eventHandlers.changeMitarbeiter.bind(this));
             }
 
             this.disableHandlers = {
@@ -1378,6 +1470,7 @@
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
+                                    that.landRef = json.d.results;
                                 }
                             }
                         }, function (errorResponse) {
@@ -1400,6 +1493,7 @@
                             if (json && json.d) {
                                 that.nextUrl = Reporting.employeeView.getNextUrl(json);
                                 var results = json.d.results;
+                                that.mitarbeiterRef = json.d.results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                     that.employees.push(item);

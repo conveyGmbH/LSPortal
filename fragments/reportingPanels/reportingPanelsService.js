@@ -18,12 +18,13 @@
         exportPDFView: {
             select: function (complete, error, restriction, options) {
                 Log.call(Log.l.trace, namespaceName + ".exportPDFView.");
-                /**
-                 *
-                 * restriction = {
+                  var master = Application.navigator.masterControl
+                  if (!restriction) {
+                      restriction = {
+                            VeranstaltungID: master.controller.binding.eventId,
                         LanguageSpecID: AppData.getLanguageId()
+                  }
                 };
-                 */
                 if (!options) {
                     options = {
                         ordered: true,
