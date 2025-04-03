@@ -7,6 +7,9 @@
 #reportingPanels .reporting-button {
     height: 180px;
     width: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -19,8 +22,10 @@
 }
 
 #reportingPanels .action-image-container {
-    display: inline-block;
-    margin-top: 10px;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #reportingPanels .action-label-container {

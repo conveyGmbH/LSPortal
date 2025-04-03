@@ -35,6 +35,14 @@
                 }
             }
 
+            var showTooltipDate = function (date) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var showDate = moment(date).format('DD.MM.YYYY');
+                Log.ret(Log.l.trace, showDate);
+                return showDate;
+            }
+            this.showTooltipDate = showTooltipDate;
+
             //Date convertion
             var getDateObject = function (dateData) {
                 var ret;
@@ -59,10 +67,10 @@
                     item.FinishedTS = that.getDateObject(item.FinishedTS);
                 }
                 if (item.FilterCreateDate) {
-                    item.TooltipData += getResourceText("reporting.entrydatelabel") + that.getDateObject(item.FilterCreateDate) + "\n";
+                    item.TooltipData += getResourceText("reporting.entrydatelabel") + that.showTooltipDate(item.FilterCreateDate) + "\n";
                 }
                 if (item.FilterModDate) {
-                    item.TooltipData += getResourceText("reporting.changedatelabel") + that.getDateObject(item.FilterModDate) + "\n";
+                    item.TooltipData += getResourceText("reporting.changedatelabel") + that.showTooltipDate(item.FilterModDate) + "\n";
                 }
                 if (item.FilterByLand) {
                     item.TooltipData += getResourceText("reporting.countrylabel") + item.FilterByLand + "\n";
