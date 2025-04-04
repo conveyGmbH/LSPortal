@@ -613,7 +613,7 @@
                                     exportPdfExcelZip(results.ExportPDFVIEWID); // Call itself to repeat after 15 seconds
                                 }, 15000);
                             } else {
-                                //that.setpdfZipDownloadData(true, results.DownloadLink);
+                                that.setpdfZipDownloadData(true, results.DownloadLink);
                                 that.disableReportingList(false);
                                 that.showDashboardLoadingText(false);
                                 AppBar.busy = false;
@@ -637,11 +637,11 @@
             }
             this.exportPdfExcelZip = exportPdfExcelZip;
 
-            var exportDataPanel = function (reportingName) {
+            var exportDataPanel = function (fileName) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
-                if (reportingName) {
+                if (fileName) {
                     AppBar.busy = true;
                     ret = Reporting.exportPDFPanelView.select(function (json) {
                         Log.print(Log.l.trace, "exportKontaktDataView: success!");
@@ -673,7 +673,7 @@
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
-                        }, { ReportName: reportingName });
+                        }, { FileName: fileName });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
                     error(err);
