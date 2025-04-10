@@ -157,6 +157,8 @@
                             master.controller.loadData(response.FairMandantVIEWID).then(function() {
                                 master.controller.selectRecordId(response.FairMandantVIEWID);
                             });
+                        } else {
+                            Application.navigateById("clientManagementSearchList");
                         };
                     }, function (error) {
                         Log.print(Log.l.trace, "error update mandant");
