@@ -57,7 +57,11 @@
                 VeranstaltungID: 0,
                 INITSpracheID: 0,
                 MailFooter: "",
-                GDPR_Flag: null
+                GDPR_Flag: null,
+                MailServerAddr: "",
+                MailServerUser: "",
+                MailServerPassword: "",
+                MailServerProto: ""
             }
         },
         _FragebogenzeileView: {
