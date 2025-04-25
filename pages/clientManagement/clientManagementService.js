@@ -33,7 +33,11 @@
                 PLZ: "",
                 Stadt: "",
                 LandID: "",
-                TelefonFestnetz: ""
+                TelefonFestnetz: "",
+                DUNSNumber: "",
+                WebAdresse: "",
+                FairMandantID: "",
+                LocationID: ""
             }
         }
     });

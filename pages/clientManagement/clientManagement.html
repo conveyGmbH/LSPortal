@@ -35,6 +35,22 @@
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
+                            <input name="Email" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.EMail Binding.Mode.twoway" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'clientmanagement.fairmandantid'}"></span>
+                            <div class="label landscape_only">
+                                <span data-win-res="{textContent: 'clientmanagement.fairmandantid'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <input name="Lizenznummer" class="input_small_left win-textbox" type="text" data-win-bind="value: dataClientManagement.FairMandantID Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" readonly="readonly" />
+                                <span class="input_small_left" data-win-bind="textContent: dataClientManagement.FairMandantID; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay" readonly="readonly"></span>
+                            </div>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'clientmanagement.numLicenses'}"></span>
                             <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'clientmanagement.customerID'}"></span>
                             <div class="label landscape_only">
@@ -48,11 +64,18 @@
                             </div>
                         </div>
                         <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
-                            <input name="Email" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.EMail Binding.Mode.twoway" />
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'clientmanagement.locationid'}"></span>
+                            <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'clientmanagement.dunsnumber'}"></span>
+                            <div class="label landscape_only">
+                                <span data-win-res="{textContent: 'clientmanagement.locationid'}"></span> / <span data-win-res="{textContent: 'clientmanagement.dunsnumber'}"></span>
+                            </div>
+                            <div class="input_group">
+                                <input name="Lizenznummer" class="input_small_left win-textbox" type="text" data-win-bind="value: dataClientManagement.LocationID Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <input name="Kundennummer" class="input_small_right win-textbox" type="text" data-win-bind="value: dataClientManagement.DUNSNumber Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                                <span class="input_small_left" data-win-bind="textContent: dataClientManagement.LocationID; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                                <span class="input_small_right" data-win-bind="textContent: dataClientManagement.DUNSNumber; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
+                            </div>
                         </div>
-                        <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.street'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.street'}"></span>

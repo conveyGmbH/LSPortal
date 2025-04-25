@@ -77,7 +77,9 @@
                             pStadt: dataClientManagement.Stadt,
                             pLandID: parseInt(dataClientManagement.LandID),
                             pTelefonFestnetz: dataClientManagement.TelefonFestnetz,
-                            pCreateEventUser: createApiUserValue
+                            pCreateEventUser: createApiUserValue,
+                            pDUNSNumber: dataClientManagement.DUNSNumber,
+                            pServerLocationID: dataClientManagement.LocationID
                         }, function(json) {
                             Log.print(Log.l.info, "call PRC_UpdateFairMandant success! ");
                             AppBar.busy = false;

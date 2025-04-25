@@ -1240,6 +1240,9 @@
     "clientmanagement.telefon" : "Phone",
     "clientmanagement.createapiuser" : "Create Api-User for LiveBridge",
     "clientmanagement.apidata" : "Api-User Data",
+    "clientmanagement.dunsnumber" : "DUNS Number",	
+    "clientmanagement.locationid" : "ServerLocationID",
+    "clientmanagement.fairmandantid" : "FairMandantID",
 
 
     "clientmanagementlist.title" : "Client",
