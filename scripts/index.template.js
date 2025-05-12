@@ -272,7 +272,7 @@
         { id: "visitorFlowDashboard", group: -20, disabled: true },
         { id: "visitorFlowEntExt", group: -22, disabled: true },
         { id: "contactResultsList", group: 29, disabled: true },
-        { id: "contactResultsEvents", group: 68, disabled: false },
+        //{ id: "contactResultsEvents", group: 68, disabled: false },
         { id: "contactResultsEdit", group: 68, disabled: false },
         //{ id: "contactResultsCriteria", group: 68, disabled: false },
         { id: "contactResultsQuestion", group: 68, disabled: false },
@@ -347,7 +347,7 @@
         { id: "contactResultsEdit", master: "contactList" },
         { id: "contactResultsAttach", master: "contactList" },
         //{ id: "contactResultsCriteria", master: "contactList" },
-        { id: "contactResultsEvents", master: "contactList" },
+        //{ id: "contactResultsEvents", master: "contactList" },
         { id: "startPremium", master: "eventList" },
         { id: "adminAppHelpText", master: "adminAppHelpTextList" }
     ];
