@@ -60,8 +60,22 @@
             };
             this.getDateObject = getDateObject;
 
+            var checkandcutString = function(stringToCheck) {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                var maxLength = 18;
+                if (stringToCheck.length <= maxLength) {
+                    return stringToCheck;
+                } else {
+                    return stringToCheck.substring(0, maxLength) + "...";
+                }
+            }
+            this.checkandcutString = checkandcutString;
+
             var resultConverter = function (item, index) {
                 item.index = index;
+                if (item.RquestedBy) {
+                    item.RquestedBy = that.checkandcutString(item.RquestedBy);
+                }
                 item.TooltipData = "";
                 if (item.FinishedTS) {
                     item.FinishedTS = that.getDateObject(item.FinishedTS);

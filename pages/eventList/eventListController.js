@@ -523,6 +523,7 @@
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "reporting" &&
                                                         typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.setpdfZipDownloadData();
                                                         AppBar.scope.loadData(newRecId);
                                                     } else {
                                                         var newPageId = Application.getPageId(Application.navigator._nextPage);
@@ -602,6 +603,7 @@
                                                     curPageId === "reportingColumnList" ||
                                                     curPageId === "start") &&
                                                     typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.setpdfZipDownloadData();
                                                     AppBar.scope.loadData(newRecId);
                                                 }
                                                 if (curPageId === "mandatory" &&
