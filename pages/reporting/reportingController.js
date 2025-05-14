@@ -1449,7 +1449,7 @@
                 }).then(function () {
                     var exportPanelsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("reportingPanels"));
                     if (exportPanelsFragmentControl && exportPanelsFragmentControl.controller) {
-                        return exportPanelsFragmentControl.controller.loadData({ VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId() });
+                        return exportPanelsFragmentControl.controller.loadData({ VeranstaltungID: recordId, LanguageSpecID: AppData.getLanguageId(), LoginName: AppData._userData.Login });
                     } else {
                         var parentElement = pageElement.querySelector("#exportPanelsthost");
                         if (parentElement) {
