@@ -344,6 +344,7 @@
         { id: "mandatory", master: "eventList" },
         { id: "reporting", master: "eventList" },
         { id: "reportingColumnList", master: "eventList" },
+        { id: "contactResultsQuestion", master: "contactList" },
         { id: "contactResultsEdit", master: "contactList" },
         { id: "contactResultsAttach", master: "contactList" },
         //{ id: "contactResultsCriteria", master: "contactList" },

@@ -585,6 +585,9 @@
                                                     else if (curPageId === "contact" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
+                                                    } else if (curPageId === "contactResultsQuestion" &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.loadData();
                                                     } else if (curPageId === "contactResultsAttach" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
@@ -607,7 +610,10 @@
                                                 that.binding.contactId = item.data.KontaktVIEWID;
                                                 AppData.setRecordId("Kontakt", that.binding.contactId);
                                                 handlePageEnable(item.data);
-                                                if (curPageId === "contactResultsEdit" &&
+                                                if (curPageId === "contactResultsQuestion" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                } else if (curPageId === "contact" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else if (curPageId === "contact" &&
