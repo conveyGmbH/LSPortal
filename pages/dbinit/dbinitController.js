@@ -80,9 +80,9 @@
                     ret = AppData.openDB(function () {
                         AppBar.busy = false;
                         Log.print(Log.l.info, "openDB success!");
-                        AppData._curGetUserDataId = 0;
-                        AppData.getUserData();
-                        AppData.getMessagesData();
+                        //AppData._curGetUserDataId = 0;
+                        //AppData.getUserData();
+                        //AppData.getMessagesData();
                     }, function (err) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "openDB error!");
@@ -95,6 +95,10 @@
                                 show: 1
                             }
                         }
+                    }).then(function () {
+                        AppData._curGetUserDataId = 0;
+                        AppData.getMessagesData();
+                        return AppData.getUserData();
                     }).then(function () {
                         AppData._persistentStates.hideQuestionnaire = false;
                         AppData._persistentStates.hideSketch = false;
