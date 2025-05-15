@@ -1,12 +1,10 @@
 ﻿#contactPhoto.photoview {
     width: 100%;
     height: 100%;
-    float: left;
 }
 .contactResultsEdit .doc-container {
-    max-height: 200px !important;
-    max-width: 380px !important;
-    width: auto !important;
+    max-height: 400px !important;
+    max-width: 600px !important;
     float: left;
     margin-left: 30px;
     margin-bottom: 50px;
@@ -16,6 +14,9 @@
     min-height: 20px !important;
 }
 .contactResultsEdit .active {
-    height: 200px !important;
-    width: 360px !important;
+    height: 400px !important;
+    width: 600px !important;
+}
+#contactResultsEdit .label.group {
+    white-space: normal;
 }
