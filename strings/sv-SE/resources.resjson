@@ -376,6 +376,7 @@
     "settings.individual"   : "Individual colors",
     "settings.active"   : "Aktiv",
     "settings.inactive"   : "Inaktiv",
+    "settings.mandantOption" : "Mandantoption",
 
     "dbinit.title"          : "Open database",
     "dbinit.progress"       : "Progress",

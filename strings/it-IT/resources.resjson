@@ -421,6 +421,7 @@
     "settings.inactive": "Inaktiv",
     "settings.yes"          : "Si",
     "settings.no"           : "No",
+    "settings.mandantOption" : "Mandantoption",
 
     "dbinit.title"          : "Apri database",
     "dbinit.progress"       : "Progresso",

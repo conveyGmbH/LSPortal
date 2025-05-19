@@ -54,7 +54,7 @@
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteevent"), section: "primary", svg: "garbage_can" },
                 { id: "copyQuestionnaire", label: getResourceText("command.copyQuestionnaire"), tooltip: getResourceText("tooltip.copyQuestionnaire"), section: "primary", svg: "copy" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
+                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "checkbox" }
             ];
 
             var isMaster = Application.navigator && Application.navigator._nextMaster === pageName;

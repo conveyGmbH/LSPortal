@@ -144,7 +144,8 @@
                     }
                     if (pOptionTypeId) {
                         AppData.call("PRC_SETVERANSTOPTION", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            pIsforMandant: that.binding.generalData.mandantOption ? 1 : 0,
+                            pVeranstaltungID: that.binding.generalData.mandantOption ? 0 : AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
                         },  function (json) {
@@ -264,6 +265,13 @@
                             Log.print(Log.l.error, "call error");
                         });
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickMandantOption: function(event) {
+                    Log.call(Log.l.trace, "Settings.Controller.");
+                    var toggle = event.currentTarget.winControl;
+                    that.binding.generalData.mandantOption = toggle.checked;
+                    //Application.pageframe.savePersistentStates();
                     Log.ret(Log.l.trace);
                 },
                 clickIndividualColors: function (event) {

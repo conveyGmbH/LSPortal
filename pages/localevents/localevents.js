@@ -57,7 +57,7 @@
                 { id: "clickEdit", label: getResourceText("command.edit"), tooltip: getResourceText("tooltip.edit"), section: "primary", svg: "edit" },
                 //{ id: "copyQuestionnaire", label: getResourceText("command.copyQuestionnaire"), tooltip: getResourceText("tooltip.copyQuestionnaire"), section: "primary", svg: "copy" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "navigate_check" }
+                { id: "clickChange", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "checkbox" }
             ];
 
             this.controller = new LocalEvents.Controller(element, commandList);

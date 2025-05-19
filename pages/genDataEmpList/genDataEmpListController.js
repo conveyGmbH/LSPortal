@@ -19,7 +19,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
-                eventId: null,
+                eventId: 0,
                 searchString: "",
                 hasContacts: null,
                 hasLocalevents: null,
@@ -511,7 +511,8 @@
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
                                     delete AppData._persistentStates.allRecIds["Veranstaltung2"];
-                                    eventsDropdown.selectedIndex = 0;
+                                    //eventsDropdown.selectedIndex = 0;
+                                    that.binding.eventId = AppData.getRecordId("Veranstaltung");
                                 }
                             }
                         },

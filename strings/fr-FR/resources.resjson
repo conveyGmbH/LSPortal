@@ -418,6 +418,7 @@
     "settings.inactive": "Inactive",
     "settings.yes"          : "Oui",
     "settings.no"           : "Non",
+    "settings.mandantOption" : "Mandantoption",
 
     "dbinit.title"          : "Ouvrir la base de donnée",
     "dbinit.progress"       : "Suivant",

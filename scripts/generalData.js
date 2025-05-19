@@ -67,7 +67,8 @@
             VeranstaltungName: "",
             Login: "",
             Present: 0,
-            PublishFlag: 0
+            PublishFlag: 0,
+            VeranstaltungTyp: 0
         },
         _userMessagesData: {
             MessagesCounter: 0

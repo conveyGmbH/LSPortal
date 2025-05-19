@@ -157,7 +157,7 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var employeeId = AppData.getRecordId("Mitarbeiter");
-                var ret = new WinJS.Promise.as().then(function () {
+                var ret = new WinJS.Promise.as()/*.then(function () {
                     if (employeeId) {
                         return AppHeader.GlobalUserServersVIEW.select(function(json) {
                                 // this callback will be called asynchronously
@@ -183,7 +183,7 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
+                })*/.then(function () {
                     if (that.binding.errorFlag) {
                         return WinJS.Promise.as();
                     }

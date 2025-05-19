@@ -748,7 +748,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .server-name {
-    font-size: small;
+    font-size: 12px;
     margin-top: -3px; 
     width: 100%;
 }

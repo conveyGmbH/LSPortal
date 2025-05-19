@@ -26,7 +26,7 @@
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteevent"), section: "primary", svg: "garbage_can" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.eventchange"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "va_wechsel" },
+                { id: "clickChange", label: getResourceText("command.eventchange"), tooltip: getResourceText("tooltip.eventchange"), section: "primary", svg: "checkbox" }
             ];
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
                 AppData._persistentStates.leadsuccessBasic) {

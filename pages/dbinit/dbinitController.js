@@ -19,6 +19,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
+                ServerName: "",
                 progress: {
                     percent: 0,
                     text: "",
@@ -28,7 +29,7 @@
 
             var that = this;
 
-            var getStartPage = function() {
+            var getStartPage = function () {
                 var startPage;
                 var userId = null;
                 if (typeof AppData._persistentStates.allRecIds !== "undefined" &&
@@ -64,6 +65,23 @@
             };
 
             this.disableHandlers = {
+            }
+
+            var setServerList = function (results) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        var row = results[i];
+                        if (row.IsActive === "1") {
+                            Log.print(Log.l.info, "found LanguageId=" + row.LocationID);
+                            that.binding.LocationID = row.LocationID;
+                            that.binding.ServerName = row.LocationName;
+                            AppHeader.controller.binding.ServerName = that.binding.ServerName;
+                            break;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
             }
 
             var openDb = function () {
@@ -142,7 +160,7 @@
                                 Home._actionsList = null;
                             }
                             Log.print(Log.l.trace, "calling select appListSpecView...");
-                            return DBInit.appListSpecView.select(function(json) {
+                            return DBInit.appListSpecView.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "select appListSpecView: success!");
@@ -153,12 +171,38 @@
                                     NavigationBar.showGroupsMenu([]);
                                 }
                             },
-                            function (errorResponse) {
+                                function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    Log.print(Log.l.error, "select appListSpecView: error!");
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (getStartPage() === Application.startPageId) {
+                            return DBInit.GlobalUserServersVIEW.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
+                                if (json && json.d && json.d.results && json.d.results.length) {
+                                    that.binding.count = json.d.results.length;
+                                    if (that.binding.count > 1) {
+                                        that.binding.showServerList = true;
+                                    }
+                                    //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
+                                    var results = json.d.results;
+                                    setServerList(results);
+                                } else {
+                                    Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
+                                }
+                            }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-                                Log.print(Log.l.error, "select appListSpecView: error!");
+                                Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            });
+                            }, null);
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -240,8 +284,8 @@
                             AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                         // ignore this error here for compatibility!
                     }, {
-                        LoginName: that.binding.appSettings.odata.login
-                    });
+                            LoginName: that.binding.appSettings.odata.login
+                        });
                 }).then(function () {
                     // #7573 Check Mitarbeiter_Anmeldung && prevOnlinePath !== that.binding.appSettings.odata.onlinePath
                     if (!err) {

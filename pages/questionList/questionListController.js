@@ -1374,6 +1374,9 @@
                                     // Now, we call WinJS.Binding.List to get the bindable list
                                     that.questions = new WinJS.Binding.List([]);
                                 }
+                                if (that.binding.count) {
+                                    that.binding.count = 0;
+                                }
                                 results.forEach(function (item) {
                                     that.resultConverter(item, that.questions.length);
                                     that.binding.count = that.questions.push(item);

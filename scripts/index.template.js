@@ -72,6 +72,7 @@
         loadRemoteResource: true,
         expandSubMenuMode: "single",
         manualTheme: true,
+        mandantOption: false
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",

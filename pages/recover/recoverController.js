@@ -171,11 +171,25 @@
             var saveData = function (complete, error) {
                 var err;
                 Log.call(Log.l.trace, "Recover.Controller.");
+                // always with register path 
+                // that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
+                // that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
                 // reset ErfassungsStatus!
                 that.binding.dataRecover.ErfassungsStatus = 0;
                 AppData.setErrorMsg(that.binding);
                 AppBar.busy = true;
-                var ret = Recover.recoverView.insert(function (json) {
+                //PRC_RequestPWReset
+                var ret = AppData.call("PRC_RequestPWReset", {
+                    pEMail: that.binding.dataRecover.Email
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppData.prevLogin = AppData._persistentStates.odata.login;
+                    AppData.prevPassword = AppData._persistentStates.odata.password;
+                    Application.navigateById("login");
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                }, true);
+                /*var ret = Recover.recoverView.insert(function (json) {
                     AppBar.busy = false;
                     // this callback will be called asynchronously
                     // when the response is available
@@ -196,7 +210,7 @@
                     AppData.setErrorMsg(that.binding, errorResponse);
                     error(errorResponse);
                     return WinJS.Promise.as();
-                }, that.binding.dataRecover);
+                }, that.binding.dataRecover);*/
                 Log.ret(Log.l.trace);
                 return ret;
             }
