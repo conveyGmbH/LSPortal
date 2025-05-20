@@ -173,10 +173,6 @@
             var saveData = function (complete, error) {
                 var err;
                 Log.call(Log.l.trace, "Recover.Controller.");
-                // always with register path 
-                // that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
-                // that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
-                // reset ErfassungsStatus!
                 that.binding.dataRecover.ErfassungsStatus = 0;
                 AppData.setErrorMsg(that.binding);
                 AppBar.busy = true;
@@ -201,8 +197,9 @@
                         //error(err);
                     }
                     return WinJS.Promise.as();
-                }, function (error) {
+                }, function (err) {
                     Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(that.binding, err);
                 }, true);
                 /*var ret = Recover.recoverView.insert(function (json) {
                     AppBar.busy = false;
