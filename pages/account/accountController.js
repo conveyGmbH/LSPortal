@@ -204,7 +204,7 @@
             };
 
             this.disableHandlers = {
-                clickOk: function() {
+                clickOk: function () {
                     // work on user change handling!
                     if (!that.binding.appSettings.odata.useOffline) {
                         that.binding.doReloadDb = false;
@@ -238,7 +238,7 @@
                     }
                     return AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag;
                 },
-                clickLogoff: function() {
+                clickLogoff: function () {
                     return !AppData.getRecordId("Mitarbeiter");
                 },
                 clickChangeServer: function () {
@@ -338,10 +338,10 @@
                 return ret;
             }
 
-            var loadData = function() {
+            var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function() {
+                var ret = new WinJS.Promise.as().then(function () {
                     if (!Account.initSpracheView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initSpracheView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
@@ -355,7 +355,7 @@
                                     setLanguage(results);
                                 }
                             }
-                        }, function(errorResponse) {
+                        }, function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
@@ -370,30 +370,30 @@
                     }
                 }).then(function () {
                     if (that.binding.dataLogin.Login && that.binding.dataLogin.Password) {
-                    return Account.GlobalUserServersVIEW.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
-                        if (json && json.d && json.d.results && json.d.results.length) {
-                            that.binding.count = json.d.results.length;
-                            if (that.binding.count > 1) {
-                                that.binding.showServerList = true;
+                        return Account.GlobalUserServersVIEW.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
+                            if (json && json.d && json.d.results && json.d.results.length) {
+                                that.binding.count = json.d.results.length;
+                                if (that.binding.count > 1) {
+                                    that.binding.showServerList = true;
+                                }
+                                //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
+                                var results = json.d.results;
+                                if (globalUserServer && globalUserServer.winControl) {
+                                    globalUserServer.winControl.data = new WinJS.Binding.List(results);
+                                    setServerList(results);
+                                }
+                            } else {
+                                Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
                             }
-                            //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
-                            var results = json.d.results;
-                            if (globalUserServer && globalUserServer.winControl) {
-                                globalUserServer.winControl.data = new WinJS.Binding.List(results);
-                                setServerList(results);
-                            }
-                        } else {
-                            Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
-                        }
-                            }, function(errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                            }, null);
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, null);
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -450,156 +450,160 @@
                             AppData.setErrorMsg(that.binding, err);
                             error(err);
                         }
-                    }, function(errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                         // ignore this error here for compatibility!
                     }, {
-                        LoginName: that.binding.dataLogin.Login
-                    }).then(function () {
-                        if (!err) {
-                            var dataLogin = {
-                                Login: that.binding.dataLogin.Login,
-                                Password: that.binding.dataLogin.Password,
-                                LanguageID: getLanguage(),
-                                Aktion: "Portal"
-                            };
-                            return Account.loginView.insert(function(json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "loginView: success!");
-                                // loginData returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    dataLogin = json.d;
-                                    if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
-                                        AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
-                                        AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                        NavigationBar.enablePage("settings");
-                                        NavigationBar.enablePage("info");
-                                        var prevMitarbeiterId = AppData.getRecordId("Mitarbeiter");
-                                        var doReloadDb = false;
-                                        if (prevMitarbeiterId !== dataLogin.MitarbeiterID ||
-                                            that.binding.doReloadDb) {
-                                            doReloadDb = true;
-                                        }
-                                        Log.print(Log.l.info, "loginData: doReloadDb=" + doReloadDb + " useOffline=" + that.binding.appSettings.odata.useOffline);
-                                        if (doReloadDb) {
-                                            AppData._persistentStates.allRestrictions = {};
-                                            AppData._persistentStates.allRecIds = {};
-                                            AppData._userData = {};
-                                            AppData._userRemoteData = {};
-                                            AppData._contactData = {};
-                                            AppData._photoData = null;
-                                            AppData._barcodeType = null;
-                                            AppData._barcodeRequest = null;
-                                            AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
-                                        }
-                                        AppData._persistentStates.languageId = dataLogin.LanguageID;
-                                        if (that.binding.appSettings.odata.useOffline) {
+                            LoginName: that.binding.dataLogin.Login
+                        }).then(function () {
+                            if (!err) {
+                                var dataLogin = {
+                                    Login: that.binding.dataLogin.Login,
+                                    Password: that.binding.dataLogin.Password,
+                                    LanguageID: getLanguage(),
+                                    Aktion: "Portal"
+                                };
+                                return Account.loginView.insert(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "loginView: success!");
+                                    // loginData returns object already parsed from json file in response
+                                    if (json && json.d) {
+                                        dataLogin = json.d;
+                                        if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
+                                            AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                            AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                            NavigationBar.enablePage("settings");
+                                            NavigationBar.enablePage("info");
+                                            var prevMitarbeiterId = AppData.getRecordId("Mitarbeiter");
+                                            var doReloadDb = false;
+                                            if (prevMitarbeiterId !== dataLogin.MitarbeiterID ||
+                                                that.binding.doReloadDb) {
+                                                doReloadDb = true;
+                                            }
+                                            Log.print(Log.l.info, "loginData: doReloadDb=" + doReloadDb + " useOffline=" + that.binding.appSettings.odata.useOffline);
                                             if (doReloadDb) {
-                                                AppData._persistentStates.odata.dbSiteId = dataLogin.Mitarbeiter_AnmeldungVIEWID;
-                                                Application.pageframe.savePersistentStates();
-                                                return that.openDb(complete, error);
+                                                AppData._persistentStates.allRestrictions = {};
+                                                AppData._persistentStates.allRecIds = {};
+                                                AppData._userData = {};
+                                                AppData._userRemoteData = {};
+                                                AppData._contactData = {};
+                                                AppData._photoData = null;
+                                                AppData._barcodeType = null;
+                                                AppData._barcodeRequest = null;
+                                                AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                            }
+                                            AppData._persistentStates.languageId = dataLogin.LanguageID;
+                                            if (that.binding.appSettings.odata.useOffline) {
+                                                if (doReloadDb) {
+                                                    AppData._persistentStates.odata.dbSiteId = dataLogin.Mitarbeiter_AnmeldungVIEWID;
+                                                    Application.pageframe.savePersistentStates();
+                                                    return that.openDb(complete, error);
+                                                } else {
+                                                    Application.pageframe.savePersistentStates();
+                                                    AppBar.busy = false;
+                                                    AppData._curGetUserDataId = 0;
+                                                    AppData.getUserData();
+                                                    return WinJS.Promise.as();
+                                                }
                                             } else {
-                                                Application.pageframe.savePersistentStates();
                                                 AppBar.busy = false;
+                                                //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
+                                                Application.pageframe.savePersistentStates();
                                                 AppData._curGetUserDataId = 0;
                                                 AppData.getUserData();
                                                 return WinJS.Promise.as();
                                             }
                                         } else {
                                             AppBar.busy = false;
-                                            //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
-                                            Application.pageframe.savePersistentStates();
-                                            AppData._curGetUserDataId = 0;
-                                            AppData.getUserData();
+                                            that.binding.messageText = dataLogin.MessageText;
+                                            err = { status: 401, statusText: dataLogin.MessageText };
+                                            AppData.setErrorMsg(that.binding, err);
+                                            error(err);
                                             return WinJS.Promise.as();
                                         }
                                     } else {
                                         AppBar.busy = false;
-                                        that.binding.messageText = dataLogin.MessageText;
-                                        err = { status: 401, statusText: dataLogin.MessageText };
+                                        err = { status: 404, statusText: "no data found" };
                                         AppData.setErrorMsg(that.binding, err);
                                         error(err);
                                         return WinJS.Promise.as();
                                     }
-                                } else {
+                                }, function (errorResponse) {
                                     AppBar.busy = false;
-                                    err = { status: 404, statusText: "no data found" };
-                                    AppData.setErrorMsg(that.binding, err);
+                                    err = errorResponse;
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    error(errorResponse);
+                                    return WinJS.Promise.as();
+                                }, dataLogin);
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }).then(function () {
+                            if (!err) {
+                                // load color settings
+                                //AppData._persistentStates.hideQuestionnaire = false;
+                                //AppData._persistentStates.hideSketch = false;
+                                return AppData.getOptions(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "CR_VERANSTOPTION_ODataView: success!");
+                                    // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                        var results = json.d.results;
+                                        results.forEach(function (item, index) {
+                                            that.resultConverter(item, index);
+                                        });
+                                        Application.pageframe.savePersistentStates();
+                                    }
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    error(err);
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                }, {
+                                    VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                                    MandantWide: 0,
+                                    IsForApp: 0
+                                }).then(function () {
+                                    var colors = Colors.updateColors();
+                                    return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                                });
+                            } else {
+                                return WinJS.Promise.as();
+                            }
+                        }).then(function () {
+                            if (!err) {
+                                if (typeof Home === "object" && Home._actionsList) {
+                                    Home._actionsList = null;
+                                }
+                                return Account.appListSpecView.select(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "appListSpecView: success!");
+                                    // kontaktanzahlView returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results) {
+                                        NavigationBar.showGroupsMenu(json.d.results, true);
+                                    } else {
+                                        NavigationBar.showGroupsMenu([]);
+                                    }
+                                    complete(json);
+                                    return WinJS.Promise.as();
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
                                     error(err);
                                     return WinJS.Promise.as();
-                                }
-                            }, function(errorResponse) {
-                                AppBar.busy = false;
-                                err = errorResponse;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                });
+                            } else {
                                 return WinJS.Promise.as();
-                            }, dataLogin);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        if (!err) {
-                            // load color settings
-                            //AppData._persistentStates.hideQuestionnaire = false;
-                            //AppData._persistentStates.hideSketch = false;
-                            return Account.CR_VERANSTOPTION_ODataView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "CR_VERANSTOPTION_ODataView: success!");
-                                // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-                                if (json && json.d && json.d.results && json.d.results.length > 1) {
-                                    var results = json.d.results;
-                                    results.forEach(function(item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                    Application.pageframe.savePersistentStates();
-                                }
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                error(err);
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, { VeranstaltungID: AppData.getRecordId("Veranstaltung") }).then(function () {
-                                var colors = Colors.updateColors();
-                                return (colors && colors._loadCssPromise) || WinJS.Promise.as();
-                            });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        if (!err) {
-                            if (typeof Home === "object" && Home._actionsList) {
-                                Home._actionsList = null;
                             }
-                            return Account.appListSpecView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "appListSpecView: success!");
-                                // kontaktanzahlView returns object already parsed from json file in response
-                                if (json && json.d && json.d.results) {
-                                    NavigationBar.showGroupsMenu(json.d.results, true);
-                                } else {
-                                    NavigationBar.showGroupsMenu([]);
-                                }
-                                complete(json);
-                                return WinJS.Promise.as();
-                            },  function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(err);
-                                return WinJS.Promise.as();
-                            });
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    });
+                        });
                 }
                 Log.ret(Log.l.trace);
                 return ret;

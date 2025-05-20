@@ -262,7 +262,7 @@
                             AppData._persistentStates.productMailOn = true;
                             AppData._persistentStates.thankMailOn = true;
                             Application.pageframe.savePersistentStates();
-                            return Login.CR_VERANSTOPTION_ODataView.select(function (json) {
+                            return AppData.getOptions(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Login: success!");
@@ -279,7 +279,11 @@
                                 // or server returns response with an error status.
                                 error(errorResponse);
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                            }, { VeranstaltungID: AppData.getRecordId("Veranstaltung") }).then(function () {
+                            }, {
+                                VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                                MandantWide: 0,
+                                IsForApp: 0
+                            }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
                             });

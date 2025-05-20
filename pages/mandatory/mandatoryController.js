@@ -478,7 +478,7 @@
             }
 
             var resultConverter = function (item, index) {
-                switch (item.INITOptionTypeID) {
+                switch (item.INITOptionTypeID || item.OptionTypeID) {
                     case 22:
                         if (item.LocalValue === "0") {
                             //AppData._persistentStates.showConfirmQuestion = false;
@@ -532,7 +532,7 @@
                     }, null);
                 }).then(function () {
                     //AppData._persistentStates.showConfirmQuestion = true;
-                    return Mandatory.CR_VERANSTOPTION_ODataView.select(function (json) {
+                    return AppData.getOptions(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Reporting: success!");
@@ -549,7 +549,11 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    });
+                    }, {
+                            VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                            MandantWide: 0,
+                            IsForApp: 0
+                        });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

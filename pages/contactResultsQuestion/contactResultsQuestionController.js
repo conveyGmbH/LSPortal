@@ -375,7 +375,7 @@
             this.resultConverter = resultConverter;
 
             var resultMandatoryConverter = function (item) {
-                if (item.INITOptionTypeID === 22) {
+                if (item.INITOptionTypeID === 22 || item.OptionTypeID === 22) {
                     if (item.LocalValue === "1") {
                         AppData._persistentStates.showConfirmQuestion = true;
                     } else {

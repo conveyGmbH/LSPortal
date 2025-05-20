@@ -840,7 +840,7 @@
                 Log.call(Log.l.u1, "AppData.");
                 var color;
                 var property = "";
-                switch (item.INITOptionTypeID) {
+                switch (item.INITOptionTypeID || item.OptionTypeID) {
                     case 19:
                         // feature obsolete
                         if (item.LocalValue === "1") {
@@ -1131,7 +1131,7 @@
                 }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {
-                        return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
+                        return AppData.getOptions(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Account: success!");
@@ -1146,7 +1146,11 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { VeranstaltungID: recordId });
+                        }, {
+                                VeranstaltungID: recordId || 0, //AppData.getRecordId("Veranstaltung")
+                                MandantWide: 0,
+                                IsForApp: 0
+                            });
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -1237,7 +1241,7 @@
                                     // beim reload prüfen ob die Veranstaltung in der ich gerade bin oder nicht
                                     // wenn ja dann nehme funktion von generaldata, sonst diese hier
 
-                                    return Event.CR_VERANSTOPTION_ODataView.select(function (json) {
+                                    return AppData.getOptions(function (json) {
                                         // this callback will be called asynchronously
                                         // when the response is available
                                         Log.print(Log.l.trace, "Account: success!");
@@ -1253,7 +1257,11 @@
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
                                         AppData.setErrorMsg(that.binding, errorResponse);
-                                    }, { VeranstaltungID: recordId });
+                                    }, {
+                                VeranstaltungID: recordId || 0, //AppData.getRecordId("Veranstaltung")
+                                MandantWide: 0,
+                                IsForApp: 0
+                            });
                                 } else {
                                     return WinJS.Promise.as();
                                 }

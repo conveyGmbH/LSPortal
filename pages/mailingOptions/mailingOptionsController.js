@@ -170,7 +170,7 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     var recordId = getEventId();
                     if (recordId) {
-                        return MailingOptions.CR_VERANSTOPTION_ODataView.select(function (json) {
+                        return AppData.getOptions(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "MailingOptions: success!");
@@ -179,7 +179,7 @@
                                 var results = json.d.results;
                                 results.forEach(function (item, index) {
                                     //that.resultConverterOption(item, index);
-                                    if (item.INITOptionTypeID && item.INITOptionTypeID === 31) {
+                                    if (item.INITOptionTypeID && item.INITOptionTypeID === 31 || item.OptionTypeID && item.OptionTypeID === 31) {
                                         if (item.LocalValue === "1") {
                                             that.binding.isThankMailOn = true;
                                         } else {
@@ -192,7 +192,11 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { VeranstaltungID: recordId });
+                        }, {
+                                VeranstaltungID: recordId, //AppData.getRecordId("Veranstaltung")
+                                MandantWide: 0,
+                                IsForApp: 0
+                            });
                     } else {
                         return WinJS.Promise.as();
                     }

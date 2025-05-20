@@ -66,13 +66,13 @@
                 switch (colorProperty) {
                     case "backgroundColor":
                         color = checkColorLimit(color, true);
-                    break;
+                        break;
                     case "navigationColor":
                         color = checkColorLimit(color, false);
-                    break;
+                        break;
                     case "dashboardColor":
                         color = checkColorLimit(color, false);
-                    break;
+                        break;
                 }
                 if (that.binding && that.binding.generalData &&
                     that.binding.generalData.colorSettings) {
@@ -144,11 +144,11 @@
                     }
                     if (pOptionTypeId) {
                         AppData.call("PRC_SETVERANSTOPTION", {
-                            pIsforMandant: that.binding.generalData.mandantOption ? 1 : 0,
+                            pIsForMandant: that.binding.generalData.mandantOption ? 1 : 0,
                             pVeranstaltungID: that.binding.generalData.mandantOption ? 0 : AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
-                        },  function (json) {
+                        }, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             if (that.binding && that.binding.generalData &&
                                 that.binding.generalData.colorSettings) {
@@ -267,7 +267,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickMandantOption: function(event) {
+                clickMandantOption: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
                     var toggle = event.currentTarget.winControl;
                     that.binding.generalData.mandantOption = toggle.checked;
@@ -299,8 +299,8 @@
                                     }
                                     var colorSettings =
                                         AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType ||
-                                                AppData._userData.VeranstaltungTyp] ||
-                                            AppData.persistentStatesDefaults.colorSettingsDefaults[0];
+                                        AppData._userData.VeranstaltungTyp] ||
+                                        AppData.persistentStatesDefaults.colorSettingsDefaults[0];
                                     if (colorSettings) {
                                         AppData.persistentStatesDefaults.colorSettings = copyByValue(colorSettings);
                                     }
@@ -551,12 +551,27 @@
                     }
                     return WinJS.Promise.as();
                 }).then(function () {
-                    return Settings.CR_VERANSTOPTION_ODataView.select(function (json) {
+                    return AppData.getOptions(function (json) {
+                        var results = json.d.results;
+                        results.forEach(function (item, index) {
+                            if (typeof that.resultConverter === "function") {
+                                that.resultConverter(item, index);
+                            }
+                        });
+                        Application.pageframe.savePersistentStates();
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                            VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                            MandantWide: 0,
+                            IsForApp: 0
+                        });
+                    /*return Settings.CR_VERANSTOPTION_ODataView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Reporting: success!");
                         // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-
+    
                         if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
                             results.forEach(function (item, index) {
@@ -568,7 +583,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { VeranstaltungID: AppData.getRecordId("Veranstaltung")});
+                    }, { VeranstaltungID: AppData.getRecordId("Veranstaltung") });*/
                 }).then(function () {
                     for (var i = 0; i < Application.navigationBarGroups.length; i++) {
                         if (Application.navigationBarGroups[i].id === "events") {

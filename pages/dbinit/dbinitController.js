@@ -125,7 +125,7 @@
                         if (getStartPage() === Application.startPageId) {
                             // load color settings
                             Log.print(Log.l.trace, "calling select CR_VERANSTOPTION_ODataView...");
-                            return DBInit.CR_VERANSTOPTION_ODataView.select(function (json) {
+                            return AppData.getOptions(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "select CR_VERANSTOPTION_ODataView: success!");
@@ -147,7 +147,11 @@
                                         Application.navigateById("login");
                                     });
                                 }
-                            }, { VeranstaltungID: AppData.getRecordId("Veranstaltung") }).then(function () {
+                            }, {
+                                VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                                MandantWide: 0,
+                                IsForApp: 0
+                            }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
                             });

@@ -382,7 +382,7 @@
             this.resultConverter = resultConverter;
 
             var resultMandatoryConverter = function (item) {
-                if (item.INITOptionTypeID === 22) {
+                if (item.INITOptionTypeID === 22 || item.OptionTypeID === 22) {
                     if (item.LocalValue === "1") {
                         AppData._persistentStates.showConfirmQuestion = true;
                     } else {
@@ -1557,7 +1557,7 @@
                         });
                     }
                 }).then(function () {
-                    ret = Questionnaire.CR_VERANSTOPTION_ODataView.select(function (json) {
+                    ret = AppData.getOptions(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "Login: success!");
@@ -1570,6 +1570,10 @@
                         } else {
                             AppData._persistentStates.showConfirmQuestion = false;
                         }
+                    }, {
+                        VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                        MandantWide: 0,
+                        IsForApp: 0
                     });
                 }).then(function () {
                     AppBar.triggerDisableHandlers();

@@ -199,7 +199,7 @@
                                 AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
                                 AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
                                 // Call in homeController
-                                AppHeader.controller.loadData(); 
+                                AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
                                 if (typeof AppBar.scope.updateActions === "function" &&
@@ -405,7 +405,7 @@
             Log.call(Log.l.u1, "AppData.");
             var color;
             var property = "";
-            switch (item.INITOptionTypeID) {
+            switch (item.INITOptionTypeID || item.OptionTypeID) {
                 case 10:
                     item.colorPickerId = "individualColors";
                     property = item.colorPickerId;
@@ -712,20 +712,20 @@
                 if (AppData._userData.VeranstaltungTyp === 0) {
                     //if(AppData._userData.isSupreme === "1")
                     switch (AppData._userData.IsSupreme) {
-                    case "1":
-                        // type 3 
-                        dashboardColorType = 3;
-                        break;
-                    case "2":
-                        // type 4
-                        dashboardColorType = 4;
-                        break;
-                    default:
+                        case "1":
+                            // type 3 
+                            dashboardColorType = 3;
+                            break;
+                        case "2":
+                            // type 4
+                            dashboardColorType = 4;
+                            break;
+                        default:
                     }
                 }
                 var colorSettings =
                     AppData.persistentStatesDefaults.colorSettingsDefaults[dashboardColorType ||
-                    AppData._userData.VeranstaltungTyp] || 
+                    AppData._userData.VeranstaltungTyp] ||
                     AppData.persistentStatesDefaults.colorSettingsDefaults[0];
                 if (colorSettings) {
                     AppData.persistentStatesDefaults.colorSettings = copyByValue(colorSettings);
@@ -826,6 +826,22 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        getOptions: function (complete, error, param) {
+            Log.call(Log.l.trace, "AppData.getVAOptions.");
+            var ret = AppData.call("PRC_GetOptions", {
+                pVeranstaltungID: param["VeranstaltungID"] || 0,
+                pMandantWide: param["MandantWide"] || 0,
+                pIsForApp: param["IsForApp"] || 0
+            }, function (json) {
+                Log.print(Log.l.info, "call PRC_GetOptions: success! ");
+                complete(json);
+            }, function (err) {
+                Log.print(Log.l.error, "call PRC_GetOptions: error");
+                error(err);
+            });
+            Log.ret(Log.l.trace);
+            return ret;
         },
         getHelpText: function (pageId) {
             Log.call(Log.l.trace, "AppData.getHelpText.");
