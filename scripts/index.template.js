@@ -218,6 +218,7 @@
         { id: "startMediaAdministration", group: 55, disabled: false },
         { id: "genDataEmployee", group: 74, disabled: false },
         { id: "genDataUserInfo", group: 74, disabled: false },
+	{ id: "employeeVisitorFlow", group: 74, disabled: false}, //04.02.2025 manuell fix show visitorflow employee feature - assign area
         { id: "genDataSkillEntry", group: 74, disabled: false },
         { id: "employeeGenPWList", group: 74, disabled: false },
         { id: "genDataModDetails", group: 54, disabled: false },
