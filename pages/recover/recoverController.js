@@ -21,6 +21,8 @@
                 recoverOkFlag: null
             }, commandList]);
 
+            var token = Application.query && Application.query.Token;
+
             var that = this;
 
             var getEmailOkFlag = function () {
@@ -185,7 +187,20 @@
                     Log.print(Log.l.info, "call success! ");
                     AppData.prevLogin = AppData._persistentStates.odata.login;
                     AppData.prevPassword = AppData._persistentStates.odata.password;
-                    Application.navigateById("login");
+                    AppBar.busy = false;
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.trace, "recoverData: success!");
+                    // loginData returns object already parsed from json file in response
+                    if (json && json.d) {
+                        that.setDataRecover(json.d);
+                        Application.navigateById("login");
+                    } else {
+                        //err = { status: 404, statusText: "no data found" };
+                        //AppData.setErrorMsg(that.binding, err);
+                        //error(err);
+                    }
+                    return WinJS.Promise.as();
                 }, function (error) {
                     Log.print(Log.l.error, "call error");
                 }, true);
