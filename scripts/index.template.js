@@ -72,7 +72,7 @@
         loadRemoteResource: true,
         expandSubMenuMode: "single",
         manualTheme: true,
-        mandantOption: true
+        mandantOption: true,
         odata: {
             https: true,
             hostName: "leadsuccess.convey.de",
@@ -257,6 +257,7 @@
         { id: "infodesk", group: 9, disabled: false },
         { id: "info", group: 36, disabled: false }, /*10*/
         { id: "settings", group: 36, disabled: false }, /*10*/
+        //{ id: "genDataSettings", group: 36, disabled: false },
         { id: "account", group: 36, disabled: false }, /*39*/
         //{ id: "support", group: -11, disabled: false },
         { id: "localevents", group: -12, disabled: false },
@@ -332,6 +333,7 @@
         { id: "publish", master: "eventList" },
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },
+        { id: "genDataSettings", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
         { id: "start", master: "eventList" },
         { id: "genDataEmployee", master: "genDataEmpList" },
@@ -350,11 +352,15 @@
         { id: "contactResultsEdit", master: "contactList" },
         { id: "contactResultsAttach", master: "contactList" },
         //{ id: "contactResultsCriteria", master: "contactList" },
-        //{ id: "contactResultsEvents", master: "contactList" },
+        { id: "contactResultsEvents", master: "contactList" },
         { id: "startPremium", master: "eventList" },
         { id: "adminAppHelpText", master: "adminAppHelpTextList" }
     ];
-
+    var query = getQueryStringParameters();
+    // only on pw recover page 
+    if (query && query.pageId === "recover") {
+        Application.query = query;
+    }
     // init page for app startup
     Application.initPage = Application.getPagePath("dbinit");
     // home page of app

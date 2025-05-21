@@ -190,7 +190,7 @@
                     // loginData returns object already parsed from json file in response
                     if (json && json.d) {
                         that.setDataRecover(json.d);
-                        Application.navigateById("login");
+                        //Application.navigateById("login");
                     } else {
                         //err = { status: 404, statusText: "no data found" };
                         //AppData.setErrorMsg(that.binding, err);
@@ -235,6 +235,34 @@
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 AppBar.notifyModified = true;
+            }).then(function () {
+                //AppBar.notifyModified = true;
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                if (AppHeader && AppHeader.controller) {
+                    return AppHeader.controller.loadData();
+                } else {
+                    return WinJS.Promise.as();
+                }
+                }).then(function () {
+                if (!token) {
+                    return WinJS.Promise.as();
+                }
+                return AppData.call("PRC_DoPWReset", {
+                    pTokenString: token,
+                    pAction: "CHECK"
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppBar.busy = false;
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    Log.print(Log.l.trace, "DoPWReset: success!");
+                    if (json && json.d) {
+                        Log.print(Log.l.info, "call success! response=" + json.d);
+                    }
+                }, function (err) {
+                    Log.print(Log.l.error, "call error");
+                    AppData.setErrorMsg(that.binding, err);
+                }, true);
             });
             Log.ret(Log.l.trace);
         })
