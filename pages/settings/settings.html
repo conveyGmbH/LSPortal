@@ -24,18 +24,6 @@
                     </div>
                 <div data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
                 <div class="field_line field_line_odd">
-	                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.theme'}"></span>
-	                <span class="label landscape_only" data-win-res="{textContent: 'settings.theme'}"></span>
-	                <select id="themeSelect"
-	                        class="input_field win-dropdown"
-	                        data-win-control="WinJS.UI.Repeater"
-	                        data-win-bind="value: themeId"
-	                        onchange="AppBar.handleEvent('change', 'changedTheme', event)">
-		                <option data-win-bind="value: themeId; textContent: label"></option>
-	                </select>
-                </div>
-                <div class="line-separator"></div>
-                <div class="field_line field_line_odd">
 	                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.mandantOption'}"></span>
 	                <span class="label landscape_only" data-win-res="{textContent: 'settings.mandantOption'}"></span>
 	                <div class="input_field toggle-switch-parent">
@@ -45,6 +33,18 @@
 		                     onchange="AppBar.handleEvent('change', 'clickMandantOption', event)">
 		                </div>
 	                </div>
+                </div>
+                <div class="line-separator"></div>
+                <div class="field_line field_line_odd">
+	                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'settings.theme'}"></span>
+	                <span class="label landscape_only" data-win-res="{textContent: 'settings.theme'}"></span>
+	                <select id="themeSelect"
+	                        class="input_field win-dropdown"
+	                        data-win-control="WinJS.UI.Repeater"
+	                        data-win-bind="value: themeId"
+	                        onchange="AppBar.handleEvent('change', 'changedTheme', event)">
+		                <option data-win-bind="value: themeId; textContent: label"></option>
+	                </select>
                 </div>
                 <div class="individualColor" data-win-bind="style.display: showSettingsFlag Binding.Converter.toDisplay">
 	                <div class="field_line field_line_even">
