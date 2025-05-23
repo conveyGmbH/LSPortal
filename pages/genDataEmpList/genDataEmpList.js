@@ -49,6 +49,10 @@
             this.prevWidth = 0;
             this.prevHeight = 0;
 
+            if (!AppData._persistentStates.showvisitorFlow) {
+                NavigationBar.disablePage("employeeVisitorFlow");
+            }
+
             this.controller = new GenDataEmpList.Controller(element);
             Log.ret(Log.l.trace);
         },

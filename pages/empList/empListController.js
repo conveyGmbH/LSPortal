@@ -530,6 +530,8 @@
             if (!AppData._persistentStates.showvisitorFlow) {
                 NavigationBar.disablePage("employeeVisitorFlow");
             }
+            //#8443 only TEMP - Admin cant see it 
+            NavigationBar.disablePage("skillentry");
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

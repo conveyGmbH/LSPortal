@@ -48,6 +48,11 @@
             this.inResize = 0;
             this.prevWidth = 0;
             this.prevHeight = 0;
+            if (!AppData._persistentStates.showvisitorFlow) {
+                NavigationBar.disablePage("employeeVisitorFlow");
+            }
+            //#8443 only TEMP - Admin cant see it 
+            NavigationBar.disablePage("skillentry");
 
             this.controller = new EmpList.Controller(element);
             Log.ret(Log.l.trace);

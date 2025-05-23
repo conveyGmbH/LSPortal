@@ -30,7 +30,11 @@
                 // { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" },
                 { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" }
             ];
-
+            if (!AppData._persistentStates.showvisitorFlow) {
+                NavigationBar.disablePage("employeeVisitorFlow");
+            }
+            //#8443 only TEMP - Admin cant see it 
+            NavigationBar.disablePage("skillentry");
             this.controller = new Employee.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
