@@ -14,3 +14,30 @@
 .recover-checkbox {
     margin-bottom: 0;
 }
+
+.recover .centerarea {
+    height: 300px;
+}
+
+.recover .centerarea .field_line.field_line_odd.half,
+.recover .centerarea .field_line.field_line_even.half {
+    width: calc(50% - 36px);
+}
+
+.recover .centerarea .large_field {
+    overflow-x: hidden;
+    padding: 0;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    /*float:left;*/
+    width: calc(100% - 12px);
+}
+
+.recover .centerarea .large_field.extra {
+    float: left;
+    text-align: center;
+    font-weight: bold;
+}
+.recover .centerarea .customer-field {
+    margin-left: 18px;
+}

@@ -441,7 +441,7 @@
     "login.progress"        : "Progresso",
     "login.unknown"         : "Nome utente specificato non trovato!",
     "login.inactive"        : "Il servizio è attualmente inattivo!",
-    "login.passwordRecovery": "Password reset",
+    "login.passwordRecovery": "Avete dimenticato la password?",
      
     "register.title"        : "Registrazione",
     "register.welcome"      : "Benvenuto in LeadSuccess!",
@@ -463,10 +463,12 @@
     "register.confirmation" : "Conferma",
     "register.complete"     : "Grazie per esserti registrato! A breve riceverai una E-Mail di conferma all'indirizzo immesso prima.",
      
-    "recover.title"         : "Password dimenticata",
-    "recover.commentEmail"  : "Per favore inserisci la tua E-Mail. È possibile utilizzarlo per reimpostare la password.",
-    "recover.email"         : "Email",
-    "recover.complete"      : "A breve riceverai una E-Mail di conferma.",
+    "recover.title" : "Password dimenticata",
+    "recover.commentEmail" : "Inserisci il tuo indirizzo e-mail. Può utilizzarlo per reimpostare la password",
+    "recover.email" : "Email",
+    "recover.customer" : "Espositore",
+    "recover.matchedCustomer" : "Si prega di inserire una nuova password",
+    "recover.complete" : "Riceverà a breve un'e-mail di conferma all'indirizzo sopra indicato",
      
     "account.title"         : "Impostazioni di login",
     "account.comment"       : "Attenzione: al momento del log-out o connettendosi con un altro utente, tutti i dati salvati solo localmente verranno cancellati",

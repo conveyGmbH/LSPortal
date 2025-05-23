@@ -438,7 +438,7 @@
     "login.progress"        : "Progress",
     "login.unknown"         : "Specified user not found!",
     "login.inactive"        : "The service is currently inactive!",
-    "login.passwordRecovery": "Password reset",
+    "login.passwordRecovery": "Have you forgotten your password?",
      
     "register.title"        : "Registration",
     "register.welcome"      : "Welcome to LeadSuccess!",
@@ -460,10 +460,15 @@
     "register.confirmation" : "Confirmation",
     "register.complete"     : "Thank you very much for your registration! You will receive an email for confirmation soon. It will be send to the address written above.",
      
-    "recover.title"         : "Forgot password",
-    "recover.commentEmail"  : "Please enter your email address. You can use it to reset yout password.",
+    "recover.title" : "Forgotten password",
+    "recover.commentEmail" : "Please enter your email address. You can use it to reset your password.",
     "recover.email"         : "Email",
-    "recover.complete"      : "You will receive an email for confirmation soon. It will be send to the address written above.",
+    "recover.customer" : "Exhibitor",
+    "recover.matchedCustomer" : "Please enter a new password",
+    "recover.complete" : "You will shortly receive a confirmation email to the address given above.",
+    "recover.recoverOk" : "Ok",
+    "recover.recoverCancel" : "Cancel process",
+    "recover.tokenConfirmed": "Valid token for resetting the password",
      
     "account.title"         : "Logon Settings",
     "account.comment"       : "Please, pay attention to the fact, that all data of the app stored locally on the deviced will be deleted if you logoff or login with another account!",

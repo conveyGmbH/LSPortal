@@ -438,7 +438,7 @@
     "login.progress"        : "Avancée",
     "login.unknown"         : "Utilisateur spécifié introuvable!",
     "login.inactive"        : "Le service est actuellement inactif!",
-    "login.passwordRecovery": "Réinitialiser le mot de passe",
+    "login.passwordRecovery": "Vous avez oublié votre mot de passe?",
      
     "register.title"        : "Inscription",
     "register.welcome"      : "Bienvenue au LeadSuccess!",
@@ -460,10 +460,15 @@
     "register.confirmation" : "Confirmation",
     "register.complete"     : "Merci pour votre inscription! Vous recevrez bientôt un email de confirmation. Il sera envoyé à l'adresse indiquée ci-dessus.",
      
-    "recover.title"         : "Mot de passe oublié",
-    "recover.commentEmail"  : "S'il vous plaît entrer votre adresse e-mail. Vous pouvez l'utiliser pour réinitialiser votre mot de passe.",
-    "recover.email"         : "Adresse e-mail",
-    "recover.complete"      : "Vous recevrez bientôt un email de confirmation.",
+    "recover.title" : "Mot de passe oublié",
+    "recover.commentEmail" : "Veuillez saisir votre adresse e-mail. Vous pourrez ainsi réinitialiser votre mot de passe",
+    "recover.email" : "E-mail",
+    "recover.customer" : "Exposant",
+    "recover.matchedCustomer" : "Veuillez saisir un nouveau mot de passe",
+    "recover.complete" : "Vous recevrez prochainement un e-mail de confirmation à l'adresse indiquée ci-dessus",
+    "recover.recoverOk" : "Ok",
+    "recover.recoverCancel" : "Annuler la procédure",
+    "recover.tokenConfirmed" : "Jeton valide pour réinitialiser le mot de passe",
      
     "account.title"         : "Paramètres de connexion",
     "account.comment"       : "Attention, tout les données sauvgarder sur l'application peut'il supprimée si vous disconnester ou connecter avec un autre compte!",

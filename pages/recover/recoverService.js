@@ -23,7 +23,11 @@
                 Email: "",
                 ErfassungsStatus: 0,
                 Freischaltung: 0,
-                LanguageID: 0
+                LanguageID: 0,
+                Token: "",
+                Password: "",
+                Password2: "",
+                MatchedCustomer: ""
             }
         }
     });

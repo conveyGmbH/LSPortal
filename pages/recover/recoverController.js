@@ -21,14 +21,23 @@
                 recoverOkFlag: null
             }, commandList]);
 
-            var token = Application.query && Application.query.Token;
+            var queryToken = Application.query && Application.query.Token;
 
             var that = this;
 
-            var getEmailOkFlag = function () {
+            var getEmailOkFlagObsolet = function () {
                 if (that.binding.dataRecover &&
                     (that.binding.dataRecover.ErfassungsStatus === 1 ||
-                     that.binding.dataRecover.Freischaltung > 0)) {
+                        that.binding.dataRecover.Freischaltung > 0)) {
+                    return 1;
+                } else {
+                    return null;
+                }
+            };
+            this.getEmailOkFlagObsolet = getEmailOkFlagObsolet;
+
+            var getEmailOkFlag = function () {
+                if (that.binding.dataRecover && that.binding.dataRecover.ErfassungsStatus) {
                     return 1;
                 } else {
                     return null;
@@ -59,7 +68,7 @@
                     that.binding.dataRecover.Freischaltung = 2;
                     recoverEmail = pageElement.querySelectorAll(".recover-email");
                     if (recoverEmail && recoverEmail.length > 0) {
-                        WinJS.UI.Animation.exitContent(recoverEmail, null).then(function() {
+                        WinJS.UI.Animation.exitContent(recoverEmail, null).then(function () {
                             for (i = 0; i < recoverEmail.length; i++) {
                                 if (recoverEmail[i].style) {
                                     recoverEmail[i].style.visibility = "hidden";
@@ -92,6 +101,13 @@
 
             // define handlers
             this.eventHandlers = {
+                clickBackToLogin: function (event) {
+                    Log.call(Log.l.trace, "Recover.Controller.");
+                    that.binding.dataRecover.Token = "";
+                    Application.query.Token = "";
+                    Application.navigateById("login");
+                    Log.ret(Log.l.trace);
+                },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Recover.Controller.");
                     that.saveData(function (response) {
@@ -114,7 +130,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Start.Controller.");
+                    Log.call(Log.l.trace, "Recover.Controller.");
                     var confirmTitle = getResourceText("account.confirmLogOff");
                     confirm(confirmTitle, function (result) {
                         if (result) {
@@ -143,20 +159,80 @@
                         }
                     }*/
                     Log.ret(Log.l.trace);
+                },
+                clickRecoverOk: function (event) {
+                    Log.call(Log.l.trace, "Recover.Controller.");
+                    var dataRecover = that.binding.dataRecover;
+                    var errorMessage = null;
+                    if (typeof dataRecover.Password === "string" && dataRecover.Password.length < 5) {
+                        errorMessage = getResourceText("employee.alertPasswordShort");
+                        Log.print(Log.l.error, errorMessage);
+                        alert(errorMessage);
+                        if (typeof error === "function") {
+                            error(errorMessage);
+                        }
+                        return WinJS.Promise.wrapError(errorMessage);
+                    }
+                    if ((!dataRecover.Password || !dataRecover.Password2 ||
+                        dataRecover.Password2 !== dataRecover.Password)) {
+                        errorMessage = getResourceText("employee.alertPassword");
+                        Log.print(Log.l.error, errorMessage);
+                        alert(errorMessage);
+                        if (typeof error === "function") {
+                            error(errorMessage);
+                        }
+                        return WinJS.Promise.wrapError(errorMessage);
+                    }
+                    that.doPWReset(function (response) {
+                        that.binding.dataRecover.Token = null;
+                        delete Application.query.Token;
+                        var state = {};
+                        var title = "";
+                        var location = window.location.href.split("?")[0] + "?" + createQueryStringFromParameters(Application.query);
+                        window.history.replaceState(state, title, location);
+                        confirmModal(null,
+                            "Passwort erfolgreich geändert!",
+                            "Ok",
+                            null,
+                            function (result) {
+                                if (result)
+                                    Application.navigateById("login");
+                            },
+                            null);
+                    }, null, queryToken, "CONFIRM");
+                    Log.ret(Log.l.trace);
+                },
+                changePassword: function (event) {
+                    Log.call(Log.l.trace, "Recover.Controller.");
+                    if (AppBar.notifyModified) {
+                        that.binding.dataRecover.Password2 = "";
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickRecoverCancel: function (event) {
+                    Log.call(Log.l.trace, "Recover.Controller.");
+                    that.binding.dataRecover.Token = "";
+                    delete Application.query.Token;
+                    var state = {};
+                    var title = "";
+                    var location = window.location.href.split("?")[0] + "?" + createQueryStringFromParameters(Application.query);
+                    window.history.replaceState(state, title, location);
+                    Application.navigateById("login");
+                    Log.ret(Log.l.trace);
                 }
             };
 
             this.disableHandlers = {
+                clickBackToLogin: function () {
+                    return false;
+                },
                 clickOk: function () {
-                    if (that.binding.dataRecover.Email === "") {
-                        return true;
+                    var ret = AppBar.busy || (that.binding.dataRecover.Email.length === 0);
+                    var recoverButton = pageElement.querySelector("#recoverButton");
+                    if (recoverButton) {
+                        recoverButton.disabled = ret;
                     }
-                    if (!that.binding.dataRecover.Freischaltung ||
-                        that.binding.dataRecover.Freischaltung < 3) {
-                        return AppBar.busy;
-                    } else {
-                        return true;
-                    }
+                    return ret;
                 },
                 clickLogoff: function () {
                     var logoffbutton = document.getElementById("logoffbutton");
@@ -167,6 +243,14 @@
                         return false;
                     }
                     return !that.binding.generalData.logOffOptionActive;
+                },
+                clickRecoverOk: function () {
+                    /*var ret = !(that.binding.dataRecover.Password.length === 0 && that.binding.dataRecover.Password2.length === 0);
+                    var recoverButtonOk = pageElement.querySelector("#recoverButtonOk");
+                    if (recoverButtonOk) {
+                        recoverButtonOk.disabled = ret;
+                    }*/
+                    return false;
                 }
             }
 
@@ -188,13 +272,53 @@
                     // when the response is available
                     Log.print(Log.l.trace, "recoverData: success!");
                     // loginData returns object already parsed from json file in response
-                    if (json && json.d) {
-                        that.setDataRecover(json.d);
+                    if (json && json.d && json.d.results && json.d.results.length > 0) {
+                        //that.setDataRecover(json.d);
                         //Application.navigateById("login");
+                        var result = json.d.results[0];
+                        if (result && result.ResultCode === 0) {
+                            confirmModal(null,
+                                result.ResultMessage,
+                                "OK",
+                                null,
+                                function (result) {
+                                    if (result) {
+                                        Log.print(Log.l.info, "call ok" + result);
+                                        that.binding.emailOkFlag = true;
+                                        var recoverComplete = pageElement.querySelectorAll(".recover-complete");
+                                        if (recoverComplete && recoverComplete.length > 0) {
+                                            for (var i = 0; i < recoverComplete.length; i++) {
+                                                if (recoverComplete[i].style) {
+                                                    recoverComplete[i].style.display = "inline";
+                                                    recoverComplete[i].style.visibility = "visible";
+                                                }
+                                            }
+                                            //WinJS.UI.Animation.enterContent(recoverComplete, null, { mechanism: "transition" });
+                                            return WinJS.Promise.timeout(100).then(function() {
+                                                WinJS.UI.Animation.slideUp(recoverComplete);
+                                            });
+                                        }
+                                        AppBar.triggerDisableHandlers();
+                                    }
+                                });
+                        }
+                        if (result && result.ResultCode === 2) {
+                            confirmModal(null,
+                                result.ResultMessage,
+                                "OK",
+                                null,
+                                function (result) {
+                                    if (result) {
+                                        Log.print(Log.l.info, "call ok" + result);
+                                        //that.binding.emailOkFlag = true;
+                                        //AppBar.triggerDisableHandlers();
+                                    }
+                                });
+                        }
                     } else {
-                        //err = { status: 404, statusText: "no data found" };
-                        //AppData.setErrorMsg(that.binding, err);
-                        //error(err);
+                        err = { status: 404, statusText: "result of PRC_RequestPWReset is empty" };
+                        AppData.setErrorMsg(that.binding, err);
+                        error(err);
                     }
                     return WinJS.Promise.as();
                 }, function (err) {
@@ -227,7 +351,37 @@
                 return ret;
             }
             this.saveData = saveData;
-            
+
+            var doPWReset = function (complete, error, token, action) {
+                Log.call(Log.l.trace, "AppData.getVAOptions.");
+                var ret = AppData.call("PRC_DoPWReset", {
+                    pTokenString: token,
+                    pAction: action,
+                    pNewPassword: action === "CONFIRM" ? that.binding.dataRecover.Password : null
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    var result = null;
+                    AppBar.busy = false;
+                    Log.print(Log.l.trace, "DoPWReset: success!");
+                    if (json && json.d && json.d.results.length > 0) {
+                        Log.print(Log.l.info, "call success! response=" + json.d.results[0]);
+                        result = json.d.results[0];
+                    }
+                    if (typeof complete === "function") {
+                        complete(result);
+                    }
+                }, function (err) {
+                    Log.print(Log.l.error, "call error");
+                    if (typeof error === "function") {
+                        error(err);
+                    }
+                    AppData.setErrorMsg(that.binding, err);
+                }, true);
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.doPWReset = doPWReset;
+
             that.setDataRecover(getEmptyDefaultValue(Recover.recoverView.defaultValue));
             that.binding.dataRecover.LanguageID = AppData.getLanguageId();
             Log.print(Log.l.trace, "LanguageID=" + that.binding.dataRecover.LanguageID);
@@ -236,6 +390,9 @@
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 AppBar.notifyModified = true;
             }).then(function () {
+                Log.print(Log.l.trace, "Appheader refresh complete");
+                Application.pageframe.hideSplashScreen();
+            }).then(function () {
                 //AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 if (AppHeader && AppHeader.controller) {
@@ -243,26 +400,33 @@
                 } else {
                     return WinJS.Promise.as();
                 }
-                }).then(function () {
-                if (!token) {
+            }).then(function () {
+                if (!queryToken) {
                     return WinJS.Promise.as();
                 }
-                return AppData.call("PRC_DoPWReset", {
-                    pTokenString: token,
-                    pAction: "CHECK"
-                }, function (json) {
-                    Log.print(Log.l.info, "call success! ");
-                    AppBar.busy = false;
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    Log.print(Log.l.trace, "DoPWReset: success!");
-                    if (json && json.d) {
-                        Log.print(Log.l.info, "call success! response=" + json.d);
+                return that.doPWReset(function (response) {
+                    if (response) {
+                        if (response.ResultCode === 1330) {
+                            return confirmModal(null,
+                                response.ResultMessage + " Please request a reset again!",
+                                "Ok",
+                                null,
+                                function(result) {
+                                    if (result) {
+                                        that.binding.dataRecover.Token = null;
+                                        Application.query.Token = null;
+                                        var state = {};
+                                        var title = "";
+                                        var location = window.location.href.split("?")[0] + "?" + createQueryStringFromParameters(Application.query);
+                                        window.history.replaceState(state, title, location);
+                                    }
+                                });
+                        }
+                        that.binding.dataRecover.Token = queryToken;
+                        that.binding.dataRecover.MatchedCustomer = response.MatchedCustomer;
+                        that.binding.emailOkFlag = response;
                     }
-                }, function (err) {
-                    Log.print(Log.l.error, "call error");
-                    AppData.setErrorMsg(that.binding, err);
-                }, true);
+                }, null, queryToken, "CHECK");
             });
             Log.ret(Log.l.trace);
         })

@@ -21,29 +21,81 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="line-separator recover-email"></div>
-                    <div class="field_line field_line_full recover-email">
-                        <span class="large_field"
-                              data-win-res="{textContent: 'recover.commentEmail'}"></span>
+                    <div class="centerarea">
+                        <div class="line-separator recover-email"></div>
+                        <div class="field_line field_line_full recover-email" data-win-bind="style.display: emailOkFlag Binding.Converter.toDisplayNone">
+                            <span class="large_field"
+                                  data-win-res="{textContent: 'recover.commentEmail'}"></span>
+                        </div>
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: dataRecover.Token Binding.Converter.toDisplayNone">
+                            <span class="label win-type-caption portrait_only" data-win-bind="style.display: emailOkFlag Binding.Converter.toDisplayNone"
+                                  data-win-res="{textContent: 'recover.email'}"></span>
+                            <span class="label landscape_only" data-win-bind="style.display: emailOkFlag Binding.Converter.toDisplayNone"
+                                  data-win-res="{textContent: 'recover.email'}"></span>
+                            <input class="input_field win-textbox" type="text"
+                                   data-win-bind="value: dataRecover.Email Binding.Mode.twoway; style.display: emailOkFlag Binding.Converter.toDisplayNone"
+                                   data-win-bind-onevent="oninput" />
+                            <span class="large_field extra"
+                                  data-win-bind="textContent: dataRecover.Email; style.display: emailOkFlag Binding.Converter.toDisplay"></span>
+                        </div>
+                        <div class="field_line field_line_full" data-win-bind="style.display: emailOkFlag Binding.Converter.toDisplayNone">
+                            <div class="button_line">
+                                <div class="button-element">
+                                    <button id="recoverButton"
+                                            class="text-lightcolor titlearea-bkg win-button"
+                                            onclick="AppBar.handleEvent('click', 'clickOk', event)">
+                                        <span class="win-type-title"
+                                              data-win-res="{textContent: 'recover.recoverOk'}"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: dataRecover.Token Binding.Converter.toDisplay">
+	                        <div class="customer-field">
+		                        <span class="large_field"
+		                              data-win-res="{textContent: 'recover.matchedCustomer'}"></span>
+	                        </div>
+	                        <div class="field_line field_line_odd">
+		                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'recover.customer'}"></span>
+		                        <span class="label landscape_only" data-win-res="{textContent: 'recover.customer'}"></span>
+		                        <span class="input_field"
+		                              data-win-bind="textContent: dataRecover.MatchedCustomer; style.display: dataRecover.MatchedCustomer Binding.Converter.toDisplay"></span>
+	                        </div>
+	                        <div class="field_line field_line_odd">
+		                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.password'}"></span>
+		                        <span class="label landscape_only" data-win-res="{textContent: 'employee.password'}"></span>
+		                        <input class="input_field win-textbox" type="password" autocomplete="new-password"
+		                               oninput="AppBar.handleEvent('change', 'changePassword', event)"
+		                               data-win-bind="value: dataRecover.Password Binding.Mode.twoway; disabled: disablePassword"/>
+	                        </div>
+	                        <div class="field_line field_line_even">
+		                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.password2'}"></span>
+		                        <span class="label landscape_only" data-win-res="{textContent: 'employee.password2'}"></span>
+		                        <input class="input_field win-textbox" type="password" autocomplete="new-password"
+		                               data-win-bind="value: dataRecover.Password2 Binding.Mode.twoway; disabled: disablePassword"/>
+	                        </div>
+	                        <div class="line-separator"></div>
+	                        <div class="field_line field_line_full">
+		                        <div class="button_line">
+			                        <div class="button-element">
+				                        <button id="recoverButtonOk"
+				                                class="text-lightcolor titlearea-bkg win-button"
+				                                onclick="AppBar.handleEvent('click', 'clickRecoverOk', event)">
+					                        <span class="win-type-title"
+					                              data-win-res="{textContent: 'recover.recoverOk'}"></span>
+				                        </button>
+			                        </div>
+		                        </div>
+	                        </div>
+                        </div>
+                        <div class="line-separator recover-complete"></div>
+                        <div class="field_line field_line_full recover-complete">
+                            <span class="large_field"
+                                  data-win-res="{textContent: 'recover.complete'}"></span>
+                        </div>
+                        <div class="line-separator"></div>
                     </div>
-                    <div class="line-separator"></div>
-                    <div class="field_line field_line_odd">
-                        <span class="label win-type-caption portrait_only"
-                              data-win-res="{textContent: 'recover.email'}"></span>
-                        <span class="label landscape_only"
-                              data-win-res="{textContent: 'recover.email'}"></span>
-                        <input class="input_field win-textbox" type="text"
-                               data-win-bind="value: dataRecover.Email Binding.Mode.twoway; style.display: emailOkFlag Binding.Converter.toDisplayNone" 
-                               data-win-bind-onevent="oninput"/>
-                        <span class="input_field win-type-subtitle"
-                              data-win-bind="textContent: dataRecover.Email; style.display: emailOkFlag Binding.Converter.toDisplay"></span>
-                    </div>
-                    <div class="line-separator recover-complete"></div>
-                    <div class="field_line field_line_full recover-complete">
-                        <span class="large_field"
-                              data-win-res="{textContent: 'recover.complete'}"></span>
-                    </div>
-                    <div class="line-separator"></div>
                 </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>

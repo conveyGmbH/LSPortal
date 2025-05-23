@@ -396,7 +396,7 @@
     "login.progress"        : "Fortschritt",
     "login.unknown"         : "Angegebener Benutzer nicht gefunden!",
     "login.inactive"        : "Der Dienst ist zur Zeit inaktiv!",
-    "login.passwordRecovery": "Passwort zurücksetzen",
+    "login.passwordRecovery": "Haben Sie Ihr Passwort vergessen?",
 
     "register.title"        : "Neuregistrierung",
     "register.welcome"      : "Willkommen bei LeadSuccess!",
@@ -421,7 +421,12 @@
     "recover.title"         : "Kennwort vergessen",
     "recover.commentEmail"  : "Bitte geben Sie Ihre E-Mail-Adresse an. Sie können damit ihr Kennwort zurücksetzen.",
     "recover.email"         : "E-Mail",
+    "recover.customer"      : "Aussteller",
+    "recover.matchedCustomer" : "Bitte geben Sie ein neues Passwort ein",
     "recover.complete"      : "Sie erhalten in Kürze eine E-Mail zur Bestätigung an die oben angegebene Adresse.",
+    "recover.recoverOk"     : "Ok",
+    "recover.recoverCancel" : "Vorgang abbrechen",
+    "recover.tokenConfirmed": "Gültiges Token zum Zurücksetzen des Passwortes",
 
     "account.title"         : "Angaben zu Ihrer Anmeldung",
     "account.comment"       : "Beachten Sie bitte, daß alle von der App lokal auf dem Gerät gespeicherten Daten gelöscht werden, wenn Sie sich abmelden oder mit einem anderen Konto anmelden!",
