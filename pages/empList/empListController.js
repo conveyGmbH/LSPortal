@@ -530,6 +530,7 @@
             if (!AppData._persistentStates.showvisitorFlow) {
                 NavigationBar.disablePage("employeeVisitorFlow");
             }
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
