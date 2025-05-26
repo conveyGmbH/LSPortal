@@ -404,6 +404,12 @@
                 }
                 if (!item.KontaktVIEWID) {
                     item.Nachbearbeitet = 1;
+                    item.complete = null;
+                }
+                if (item.Nachbearbeitet) {
+                    item.complete = null;
+                } else {
+                    item.complete = 1;
                 }
                 item.Mitarbeiter_Fullname = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") + (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
                 item.Bearbeiter_Fullname = (item.Bearbeiter_Vorname ? (item.Bearbeiter_Vorname + " ") : "") + (item.Bearbeiter_Nachname ? item.Bearbeiter_Nachname : "");
@@ -1163,7 +1169,7 @@
                 var ret;
                 var dataContact = that.binding.dataContact;
                 // set Nachbearbeitet empty!
-                if (!dataContact.Nachbearbeitet) {
+                if (dataContact.complete) {
                     dataContact.Nachbearbeitet = null;
                 } else {
                     dataContact.Nachbearbeitet = 1;
