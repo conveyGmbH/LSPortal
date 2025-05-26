@@ -288,6 +288,7 @@
     "contact.mr"            : "Mr",
     "contact.mrs"           : "Mrs",
     "contact.useRestriction": "use",
+    "contact.comment3"      : "Comment",
 
     "contactRemote.title"   : "Already uploaded Contact",
 
@@ -462,7 +463,7 @@
      
     "recover.title" : "Forgotten password",
     "recover.commentEmail" : "Please enter your email address. You can use it to reset your password.",
-    "recover.email"         : "Email",
+    "recover.email" : "Email",
     "recover.customer" : "Exhibitor",
     "recover.matchedCustomer" : "Please enter a new password",
     "recover.complete" : "You will shortly receive a confirmation email to the address given above.",

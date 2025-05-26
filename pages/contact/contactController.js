@@ -37,9 +37,10 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(Contact.contactView.defaultValue),
+                dataContactNote: getEmptyDefaultValue(Contact.contactNoteView.defaultValue),
                 dataContactAudio: getEmptyDefaultValue(Contact.exportAudioDataView.defaultValue),
-                InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
-                InitLandItem: { InitLandID: 0, TITLE: "" },
+                InitAnredeItem: { INITAnredeID: 0, TITLE: "" },
+                InitLandItem: { INITLandID: 0, TITLE: "" },
                 showPhoto: false,
                 showModified: false
             }, commandList]);
@@ -83,11 +84,11 @@
 
             var photoview = pageElement.querySelector("#contactPhoto.photoview");
 
-            var getPhotoData = function() {
+            var getPhotoData = function () {
                 return AppData._photoData;
             }
 
-            var hasDoc = function() {
+            var hasDoc = function () {
                 return (typeof getPhotoData() === "string" && getPhotoData() !== null);
             }
             this.hasDoc = hasDoc;
@@ -285,7 +286,7 @@
                                 var scale = prevScale * e.originalEvent.gesture.scale;
                                 if (scale <= 1 &&
                                     ((imgRotation === 0 || imgRotation === 180) && imgWidth * scale > 100 ||
-                                    (imgRotation === 90 || imgRotation === 270) && imgHeight * scale > 100)) {
+                                        (imgRotation === 90 || imgRotation === 270) && imgHeight * scale > 100)) {
                                     that.calcImagePosition({
                                         scale: scale
                                     });
@@ -295,7 +296,7 @@
                                 var scale = prevScale * e.originalEvent.gesture.scale;
                                 if (scale <= 1 &&
                                     ((imgRotation === 0 || imgRotation === 180) && imgWidth * scale > 100 ||
-                                    (imgRotation === 90 || imgRotation === 270) && imgHeight * scale > 100)) {
+                                        (imgRotation === 90 || imgRotation === 270) && imgHeight * scale > 100)) {
                                     that.calcImagePosition({
                                         scale: scale
                                     });
@@ -419,7 +420,7 @@
             }
             this.setDataContact = setDataContact;
 
-            var setInitLandItem = function(newInitLandItem) {
+            var setInitLandItem = function (newInitLandItem) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
@@ -461,7 +462,7 @@
                 Log.ret(Log.l.trace);
             }
             this.setRecordId = setRecordId;
-            
+
             var getAudioData = function () {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -469,7 +470,7 @@
                 var recordId = getRecordId();
                 if (recordId) {
                     AppBar.busy = true;
-                    ret = Contact.exportAudioDataView.select(function(json) {
+                    ret = Contact.exportAudioDataView.select(function (json) {
                         Log.print(Log.l.trace, "exportAudioDataView: success!");
                         if (json && json.d) {
                             var results = json.d.results;
@@ -483,12 +484,12 @@
                             }
                             AppBar.busy = false;
                         }
-                    }, function(errorResponse) {
+                    }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                         KontaktID: recordId
-                    });
+                            KontaktID: recordId
+                        });
                 } else {
                     ret = WinJS.Promise.as();
                 }
@@ -519,7 +520,7 @@
             }
             this.exportContactAudio = exportContactAudio;
 
-            var checkOnPdf = function() {
+            var checkOnPdf = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret;
@@ -545,7 +546,7 @@
                     }, { KontaktID: recordId });
                 } else {
                     ret = WinJS.Promise.as();
-                } 
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -595,7 +596,7 @@
                     }, function (errorResponse) {
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { KontaktID: recordId});
+                    }, { KontaktID: recordId });
                 } else {
                     ret = WinJS.Promise.as();
                 }
@@ -609,20 +610,20 @@
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
                 if (recordId) {
-                        AppData.setErrorMsg(that.binding);
-                        AppData.call("PRC_DeleteKontakt", {
-                            pKontaktID: recordId
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_DeleteKontakt success! ");
-                            if (typeof complete === "function") {
-                                complete(json);
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_DeleteKontakt error");
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        });
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_DeleteKontakt", {
+                        pKontaktID: recordId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_DeleteKontakt success! ");
+                        if (typeof complete === "function") {
+                            complete(json);
+                        }
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_DeleteKontakt error");
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
                 } else {
                     var err = { status: 0, statusText: "no record selected" };
                     if (typeof error === "function") {
@@ -633,7 +634,7 @@
             };
             this.deleteData = deleteData;
 
-            var getOffset = function(el) {
+            var getOffset = function (el) {
                 var _x = 0;
                 var _y = 0;
                 while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
@@ -676,17 +677,17 @@
                     that.exportContactPdf();
                     Log.ret(Log.l.trace);
                 },
-                clickExportAudio: function() {
+                clickExportAudio: function () {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.exportContactAudio(that.binding.dataContactAudio);
                     Log.ret(Log.l.trace);
                 },
-                clickNew: function(event){
+                clickNew: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById(Application.navigateNewId, event);
                     Log.ret(Log.l.trace);
                 },
-                clickDelete: function(event){
+                clickDelete: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var confirmText = getResourceText("contact.questionDelete");
                     var confirmTitle = getResourceText("tooltip.delete");
@@ -695,15 +696,15 @@
                     //confirm(confirmTitle, function (result) {
                     confirmModal(confirmTitle, confirmText, confirmFirst, confirmSecond, function (result) {
                         if (result) {
-                            Log.print(Log.l.trace,"clickDelete: user choice OK");
-                            deleteData(function(response) {
+                            Log.print(Log.l.trace, "clickDelete: user choice OK");
+                            deleteData(function (response) {
                                 // delete OK - load master list
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller) {
                                     master.controller.removeSelectedRow();
                                     //master.controller.loadData();
                                 }
-                            }, function(errorResponse) {
+                            }, function (errorResponse) {
                                 // delete ERROR
                                 var message = null;
                                 Log.print(Log.l.error, "error status=" + errorResponse.status + " statusText=" + errorResponse.statusText);
@@ -742,7 +743,7 @@
                     that.saveData();
                     Log.ret(Log.l.trace);
                 },
-                clickZoomIn: function(event) {
+                clickZoomIn: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.hasDoc() && imgScale * scaleIn < 1) {
                         that.calcImagePosition({
@@ -760,7 +761,7 @@
                     Log.call(Log.l.trace, "Contact.Controller.");
                     if (that.hasDoc() &&
                         ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale * scaleOut > 100 ||
-                         (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale * scaleOut > 100)) {
+                            (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale * scaleOut > 100)) {
                         that.calcImagePosition({
                             scale: imgScale * scaleOut
                         });
@@ -812,7 +813,7 @@
                         }
                         // Check if the user is scrolling up or down
                         if (prevScrollpos > currentScrollPos) {
-                            Log.print(Log.l.u1,'User is scrolling up');
+                            Log.print(Log.l.u1, 'User is scrolling up');
                             // Do something when scrolling up
                             var docContainerRect = imgDoc2.getBoundingClientRect();
                             var isFullyVisible = (
@@ -828,16 +829,16 @@
                                 } else {
                                     imgDoc.style.marginTop = 0 + "%"; //currentScrollPos + 150 + "px";
                                 }
-                                
+
                             } else {
                                 imgDoc.style.position = "static";
                             }
                         } else {
-                            Log.print(Log.l.u1,'User is scrolling down');
+                            Log.print(Log.l.u1, 'User is scrolling down');
                             // Do something when scrolling down
                             var docContainerRect = imgDoc2.getBoundingClientRect();
                             var isFullyVisible = (
-                                docContainerRect.top >= 0 
+                                docContainerRect.top >= 0
                             );
 
                             if (!isFullyVisible) {
@@ -846,7 +847,7 @@
                                 } else {
                                     imgDoc.style.marginTop = 30 + "%";
                                 }
-                                 //currentScrollPos + 150 + "px";
+                                //currentScrollPos + 150 + "px";
                             } else {
                                 imgDoc2.style.position = "static";
                             }
@@ -889,10 +890,10 @@
             };
 
             this.disableHandlers = {
-                clickBack: function() {
+                clickBack: function () {
                     return !WinJS.Navigation.canGoBack;
                 },
-                clickExport: function() {
+                clickExport: function () {
                     if (pdfExists === true) {
                         return false;
                     } else {
@@ -906,14 +907,14 @@
                         return true;
                     }
                 },
-                clickNew: function() {
+                clickNew: function () {
                     if (that.binding.dataContact && that.binding.dataContact.KontaktVIEWID) {
                         return false;
                     } else {
                         return true;
                     }
                 },
-                clickDelete: function() {
+                clickDelete: function () {
                     if (that.binding.dataContact && that.binding.dataContact.KontaktVIEWID && !AppBar.busy) {
                         return false;
                     } else {
@@ -930,7 +931,7 @@
                 clickZoomOut: function () {
                     if (that.hasDoc() &&
                         ((imgRotation === 0 || imgRotation === 180) && imgWidth * imgScale > 100 ||
-                         (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale > 100)) {
+                            (imgRotation === 90 || imgRotation === 270) && imgHeight * imgScale > 100)) {
                         return false;
                     } else {
                         return true;
@@ -975,7 +976,7 @@
                         }
                     }
                     if (typeof that.binding.dataContact.INITLandID !== "undefined") {
-                        Log.print(Log.l.trace, "select INITLandID=" + that.binding.dataContact.INITAnredeID);
+                        Log.print(Log.l.trace, "calling select initLandData: Id=" + that.binding.dataContact.INITLandID + "...");
                         map = AppData.initLandView.getMap();
                         results = AppData.initLandView.getResults();
                         if (map && results) {
@@ -1017,7 +1018,7 @@
                             (!initAnrede.winControl.data || !initAnrede.winControl.data.length)) {
                             initAnrede.winControl.data = new WinJS.Binding.List(AppData.initAnredeView.getResults());
                         }
-                        return WinJS.Promise.as();
+                        return WinJS.Promise.timeout(100);
                     }
                 }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
@@ -1044,7 +1045,7 @@
                             (!initLand.winControl.data || !initLand.winControl.data.length)) {
                             initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                         }
-                        return WinJS.Promise.as();
+                        return WinJS.Promise.timeout(100);
                     }
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select mandatoryView...");
@@ -1066,8 +1067,8 @@
                         Log.print(Log.l.error, "mandatoryView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                        LanguageSpecID: AppData.getLanguageId()
-                    });
+                            LanguageSpecID: AppData.getLanguageId()
+                        });
                 }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {
@@ -1147,6 +1148,35 @@
                         }
                     }
                 }).then(function () {
+                    // Kommentar (neues Feld aus KontaktNotiz)
+                    var recordId = getRecordId();
+                    if (recordId) {
+                        //load of format relation record data
+                        Log.print(Log.l.trace, "calling select contactView...");
+                        var contactNoteSelectPromise = Contact.contactNoteView.select(function (json) {
+                            that.removeDisposablePromise(contactNoteSelectPromise);
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "contactView: success!");
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                var result = json.d.results[0];
+                                that.binding.dataContactNote = result;
+                            } else {
+                                that.binding.dataContactNote =
+                                    getEmptyDefaultValue(Contact.contactNoteView.defaultValue);
+                            }
+                        }, function (errorResponse) {
+                            that.removeDisposablePromise(contactNoteSelectPromise);
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                                KontaktID: recordId,
+                                DocGroup: 3,
+                                DocFormat: 4025
+                            });
+                        return that.addDisposablePromise(contactNoteSelectPromise);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -1173,44 +1203,88 @@
                     if (recordId) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "calling update contactView recordId=" + recordId);
-                        ret = Contact.contactView.update(function (response) {
-                            AppBar.busy = false;
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "update contactView: success!");
-                            AppBar.modified = false;
-                            if (typeof complete === "function") {
-                                complete(that.binding.dataContact);
-                                return WinJS.Promise.as();
-                            } else {
-                                return that.loadData().then(function () {
-                                    var master = Application.navigator.masterControl;
-                                    if (master && master.controller && master.controller.binding) {
-                                        master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                                        master.controller.loadData(master.controller.binding.contactId).then(function () {
-                                            master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
-                                        });
+                        ret = new WinJS.Promise.as().then(function () {
+                            // AppData.generalData.setRecordId("Kontakt", recordId);
+                            var tmpKontaktid = AppData.generalData.getRecordId("Kontakt");
+                            var dataSketch = {
+                                KontaktID: that.binding.dataContact.KontaktID || AppData.getRecordId("Kontakt"),
+                                Titel: "Kommentar/Comment",
+                                DocGroup: 3,
+                                DocFormat: 4025,
+                                ExecAppTypeID: 2,
+                                Quelltext: that.binding.dataContactNote.Quelltext || ""
+                            };
+                            if (that.binding.dataContactNote.KontaktNotizVIEWID) {
+                                return Contact.contactNoteView.update(function (response) {
+                                    // called asynchronously if ok
+                                    Log.print(Log.l.info, "contactData update: success!");
+                                    if (typeof complete === "function") {
+                                        complete(response);
                                     }
-                                });
-                            }
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            err = errorResponse;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.info, "update contactView: success!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        }, recordId, dataContact).then(function () {
-                            if (!err) {
-                                var master = Application.navigator.masterControl;
-                                if (master && master.controller) {
-                                    master.controller.loadData(recordId);
-                                }
+                                    return WinJS.Promise.as();
+                                }, function (errorResponse) {
+                                    AppBar.busy = false;
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    error(errorResponse);
+                                }, that.binding.dataContactNote.KontaktNotizVIEWID, dataSketch);
                             } else {
-                                return WinJS.Promise.as();
+                                return Contact.contactNoteView.insert(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "sketchData insert: success!");
+                                    // contactData returns object already parsed from json file in response
+                                    Log.print(Log.l.info, "contactData update: success!");
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (typeof error === "function") {
+                                        error(errorResponse);
+                                    }
+                                }, dataSketch);
                             }
+                        }).then(function () {
+                            return Contact.contactView.update(function (response) {
+                                AppBar.busy = false;
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "update contactView: success!");
+                                AppBar.modified = false;
+                                if (typeof complete === "function") {
+                                    complete(that.binding.dataContact);
+                                    return WinJS.Promise.as();
+                                } else {
+                                    return that.loadData().then(function () {
+                                        var master = Application.navigator.masterControl;
+                                        if (master && master.controller && master.controller.binding) {
+                                            master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                            master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                                master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                            });
+                                        }
+                                    });
+                                }
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.info, "update contactView: success!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, dataContact).then(function () {
+                                if (!err) {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
+                                        return master.controller.loadData(recordId);
+                                    }
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            });
                         });
                     } else {
                         dataContact.HostName = (window.device && window.device.uuid);
@@ -1261,7 +1335,7 @@
                         }, dataContact);
                     }
                 } else if (AppBar.busy) {
-                    ret = WinJS.Promise.timeout(100).then(function() {
+                    ret = WinJS.Promise.timeout(100).then(function () {
                         return that.saveData(complete, error);
                     });
                 } else {

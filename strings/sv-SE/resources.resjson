@@ -253,6 +253,7 @@
     "contact.mr"            : "Mr",
     "contact.mrs"           : "Mrs",
     "contact.useRestriction": "use",
+    "contact.comment3"      : "Comment",
 
     "contactRemote.title"   : "Already uploaded Contact",
 
