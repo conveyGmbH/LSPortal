@@ -21,7 +21,7 @@
                 recoverOkFlag: null
             }, commandList]);
 
-            var queryToken = Application.query && Application.query.Token;
+            var queryToken = Application.query && (Application.query.Token || Application.query.token);
 
             var that = this;
 
