@@ -48,8 +48,8 @@
             var that = this;
 
             // select combo
-            var initAnrede = pageElement.querySelector("#InitAnrede");
-            var initLand = pageElement.querySelector("#InitLand");
+            var initAnrede = pageElement.querySelector("#InitAnredeFeld");
+            var initLand = pageElement.querySelector("#InitLandFeld");
             var textComment = pageElement.querySelector(".input_text_comment");
 
             //pdf exists flag
@@ -650,9 +650,9 @@
                 if (item.FieldFlag) {
                     var inputField = null;
                     if (item.AttributeName === "AnredeID") {
-                        inputField = pageElement.querySelector("#InitAnrede");
+                        inputField = pageElement.querySelector("#InitAnredeFeld");
                     } else if (item.AttributeName === "LandID") {
-                        inputField = pageElement.querySelector("#InitLand");
+                        inputField = pageElement.querySelector("#InitLandFeld");
                     } else {
                         inputField = pageElement.querySelector("input[name=" + item.AttributeName + "]");
                     }
@@ -1018,7 +1018,6 @@
                             (!initAnrede.winControl.data || !initAnrede.winControl.data.length)) {
                             initAnrede.winControl.data = new WinJS.Binding.List(AppData.initAnredeView.getResults());
                         }
-                        return WinJS.Promise.timeout(100);
                     }
                 }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
@@ -1045,7 +1044,6 @@
                             (!initLand.winControl.data || !initLand.winControl.data.length)) {
                             initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                         }
-                        return WinJS.Promise.timeout(100);
                     }
                 }).then(function () {
                     Log.print(Log.l.trace, "calling select mandatoryView...");
