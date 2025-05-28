@@ -277,30 +277,21 @@
                         //Application.navigateById("login");
                         var result = json.d.results[0];
                         if (result && result.ResultCode === 0) {
-                            confirmModal(null,
-                                result.ResultMessage,
-                                "OK",
-                                null,
-                                function (result) {
-                                    if (result) {
-                                        Log.print(Log.l.info, "call ok" + result);
+                            var recoverComplete = pageElement.querySelectorAll(".recover-complete");
+                            if (recoverComplete && recoverComplete.length > 0) {
+                                for (var i = 0; i < recoverComplete.length; i++) {
+                                    if (recoverComplete[i].style) {
+                                        recoverComplete[i].style.display = "inline";
+                                        recoverComplete[i].style.visibility = "visible";
                                         that.binding.emailOkFlag = true;
-                                        var recoverComplete = pageElement.querySelectorAll(".recover-complete");
-                                        if (recoverComplete && recoverComplete.length > 0) {
-                                            for (var i = 0; i < recoverComplete.length; i++) {
-                                                if (recoverComplete[i].style) {
-                                                    recoverComplete[i].style.display = "inline";
-                                                    recoverComplete[i].style.visibility = "visible";
-                                                }
-                                            }
-                                            //WinJS.UI.Animation.enterContent(recoverComplete, null, { mechanism: "transition" });
-                                            return WinJS.Promise.timeout(100).then(function() {
-                                                WinJS.UI.Animation.slideUp(recoverComplete);
-                                            });
-                                        }
-                                        AppBar.triggerDisableHandlers();
                                     }
+                                }
+                                //WinJS.UI.Animation.enterContent(recoverComplete, null, { mechanism: "transition" });
+                                return WinJS.Promise.timeout(100).then(function () {
+                                    WinJS.UI.Animation.slideUp(recoverComplete);
                                 });
+                            }
+                            AppBar.triggerDisableHandlers();
                         }
                         if (result && result.ResultCode === 2) {
                             confirmModal(null,

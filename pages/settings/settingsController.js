@@ -563,7 +563,7 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
                             VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
-                            MandantWide: 0,
+                            MandantWide: 1,
                             IsForApp: 0
                         });
                     /*return Settings.CR_VERANSTOPTION_ODataView.select(function (json) {

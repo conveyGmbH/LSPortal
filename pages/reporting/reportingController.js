@@ -1398,6 +1398,9 @@
                             if (erfasserID && erfasserID.winControl) {
                                 erfasserID.winControl.data = that.employees;
                             }
+                            if (that.nextUrl) {
+                                that.getNextData();
+                            }
                         } else {
                             that.nextUrl = null;
                         }
@@ -1515,7 +1518,7 @@
                             });
                     }
                 }).then(function () {
-                    if (that.nextUrl !== null) {
+                    if (that.nextUrl) {
                         that.getNextData();
                     }
                 }).then(function () {
