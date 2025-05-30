@@ -603,6 +603,10 @@
                                                     curPageId === "reportingColumnList" ||
                                                     curPageId === "start") &&
                                                     typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData(newRecId);
+                                                }
+                                                if ((curPageId === "reporting") &&
+                                                    typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.setpdfZipDownloadData();
                                                     AppBar.scope.loadData(newRecId);
                                                 }
