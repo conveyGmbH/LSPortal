@@ -193,6 +193,12 @@
                             } else {
                                 NavigationBar.disablePage("eventsList");
                             }
+                            //#8443 Midi - Admin cant see it - global/siteadmin still can see it
+                            if (AppData._userData.IsMidiAdmin) {
+                                NavigationBar.disablePage("genDataSkillEntry");
+                            } else {
+                                NavigationBar.enablePage("genDataSkillEntry");
+                            }
                             if (typeof AppHeader === "object" &&
                                 AppHeader.controller && AppHeader.controller.binding) {
                                 AppHeader.controller.binding.userData = AppData._userData;
