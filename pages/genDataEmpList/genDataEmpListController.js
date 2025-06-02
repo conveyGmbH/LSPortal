@@ -510,9 +510,8 @@
                                 that.events = new WinJS.Binding.List(results);
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
-                                    delete AppData._persistentStates.allRecIds["Veranstaltung2"];
-                                    //eventsDropdown.selectedIndex = 0;
                                     that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                                    AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                 }
                             }
                         },
