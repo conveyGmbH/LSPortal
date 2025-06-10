@@ -142,8 +142,8 @@
                     imgRotation = newRotate;
                 }
                 if (photoview && that.img) {
-                    var containerWidth = 600; //photoview.clientWidth
-                    var containerHeight = 470; //photoview.clientHeight
+                    var containerWidth = photoview.clientWidth; // 600
+                    var containerHeight = photoview.clientHeight; // 470
 
                     if (newScale) {
                         imgScale = newScale;
@@ -649,6 +649,18 @@
                 Log.ret(Log.l.trace);
             };
             this.deleteData = deleteData;
+
+            var getOffset = function (el) {
+                var _x = 0;
+                var _y = 0;
+                while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+                    _x += el.offsetLeft - el.scrollLeft;
+                    _y += el.offsetTop - el.scrollTop;
+                    el = el.offsetParent;
+                }
+                return { top: _y, left: _x };
+            }
+            this.getOffset = getOffset;
 
             var resultMandatoryConverter = function (item, index) {
                 if (item.FieldFlag) {
