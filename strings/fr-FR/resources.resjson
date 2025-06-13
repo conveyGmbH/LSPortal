@@ -87,6 +87,8 @@
     "command.hideHelpText"  : "Cacher le texte d'aide",
     "command.forceVersionUpdate" : "forcer la mise à jour",
     "command.changetolsmain" : "Passer à LSMain",
+    "command.eventFavourite" : "Favourite",
+    "command.testmailopen"  : "E-Mail testen",
 
     "tooltip.backward"      : "Page présédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -127,6 +129,7 @@
     "tooltip.sendMessage"	: "Envoyer un message",
     "tooltip.newevent"		: "Créer un nouvel événement",
     "tooltip.eventchange"	: "Changer d'exposant",
+    "tooltip.eventFavourite" : "Événement préféré",
     "tooltip.savepdf"	    : "Enregistrer le nom du fichier PDF",
     "tooltip.exportpdf"	    : "Exporter PDF",
     "tooltip.deletemail"	: "Supprimer le mail",

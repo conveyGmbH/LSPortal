@@ -70,6 +70,8 @@
     "command.showHelpText"   : "Hilfetext anzeigen",
     "command.hideHelpText"  : "Hilfetext verstecken",
     "command.forceVersionUpdate" : "Update erzwingen",
+    "command.eventFavourite" : "Favourite",
+    "command.testmailopen"  : "E-Mail testen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -143,6 +145,7 @@
     "tooltip.newmod"        : "Neuer Moderator",
 	"tooltip.showEvents"    : "Ereignisse anzeigen",
     "tooltip.changeLogin" : "Mitarbeiter Login ändern",
+    "tooltip.eventFavourite" : "Preferred event",
     "tooltip.copyMitarbeiter" : "Veranstaltung wechseln",
     "tooltip.deleteUserPhoto"  :  "Delete image",
     "tooltip.companyname"       :  "Company name",

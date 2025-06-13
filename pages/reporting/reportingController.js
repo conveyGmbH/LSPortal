@@ -62,9 +62,11 @@
             this.audiozip = null;
             this.audioIddata = [];
             this.nextUrl = null;
+            this.nextINITLandUrl = null;
             this.curAudioIdx = 0;
             this.analysis = null;
             this.employees = null;
+            this.initLand = null;
             this.templatestr = null;
             this.landHisto = null;
             this.employeeHisto = null;
@@ -273,7 +275,7 @@
                 if (that.binding.restriction.MitarbeiterVIEWID === "null") {
                     that.binding.restriction.MitarbeiterVIEWID = null;
                 }
-                reportingRestriction.Mitarbeiter = that.binding.restriction.MitarbeiterVIEWID ? that.binding.restriction.MitarbeiterVIEWID : "null";
+                reportingRestriction.Mitarbeiter = that.binding.restriction.MitarbeiterVIEWID ? that.binding.restriction.MitarbeiterVIEWID : null;
                 if (that.binding.showErfassungsdatum && that.binding.restriction.Erfassungsdatum) {
                     reportingRestriction.Erfassungsdatum = that.binding.restriction.Erfassungsdatum;
                     reportingRestriction.ErfassungsdatumValue = that.binding.restriction.Erfassungsdatum;
@@ -705,6 +707,21 @@
                         psyncRun: 1
                     }, function (json) {
                         Log.print(Log.l.info, "call success!");
+                        if (that.binding.restriction.INITLandID === null)
+                            that.binding.restriction.INITLandID = 0;
+                        if (that.binding.restriction.INITLandID &&
+                            typeof that.binding.restriction.INITLandID === "string") {
+                            that.binding.restriction.INITLandID = parseInt(that.binding.restriction.INITLandID);
+                        } else {
+                            that.binding.restriction.INITLandID = null;
+                        }
+                        if (that.binding.restriction.MitarbeiterVIEWID &&
+                            typeof that.binding.restriction.MitarbeiterVIEWID === "string") {
+                            that.binding.restriction.MitarbeiterVIEWID =
+                                parseInt(that.binding.restriction.MitarbeiterVIEWID);
+                        } else {
+                            that.binding.restriction.MitarbeiterVIEWID = null;
+                        }
                         if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 0) {
                             that.exportDbExcel(json.d.results[0].DOC3ExportPdfID);
                         } else if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 1) {
@@ -1429,6 +1446,60 @@
             }
             this.getNextData = getNextData;
 
+            var getNextINITLandData = function () {
+                Log.call(Log.l.trace, "Reporting.Controller.");
+                if (that.nextINITLandUrl !== null) {
+                    that.loading = true;
+                    AppData.setErrorMsg(that.binding);
+                    Log.print(Log.l.trace, "calling select Search.employeeView...");
+                    Reporting.initLandView.selectNext(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Search.employeeView: success!");
+                        var savediD = initLand.value;
+                        var saveIndex = initLand.selectedIndex;
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.nextINITLandUrl = Reporting.initLandView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                                that.binding.count = that.initLand.push(item);
+                            });
+                            if (initLand && initLand.winControl) {
+                                initLand.winControl.data = that.initLand;
+                            }
+                            if (that.nextINITLandUrl) {
+                                that.getNextINITLandData();
+                            }
+                        } else {
+                            that.nextUrl = null;
+                        }
+
+                        for (var i = 0; i < initLand.length; i++) {
+                            if (initLand[i].value === that.binding.restriction.INITLandID) {
+                                saveIndex = i;
+                            }
+                        }
+                        //erfasserIDname.selectedIndex = saveIndex; 
+                        initLand.selectedIndex = saveIndex;
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        if (progress && progress.style) {
+                            progress.style.display = "none";
+                        }
+                        that.loading = false;
+                    },
+                        null,
+                        that.nextINITLandUrl);
+                    that.loading = false;
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.getNextINITLandData = getNextINITLandData;
+
             var loadData = function (eventId) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -1438,13 +1509,13 @@
                     recordId = that.getEventId();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("ReportingList"));
+                    var reportingListFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("reportingList"));
                     if (reportingListFragmentControl && reportingListFragmentControl.controller) {
                         return reportingListFragmentControl.controller.loadData(recordId);
                     } else {
                         var parentElement = pageElement.querySelector("#reportingListhost");
                         if (parentElement) {
-                            return Application.loadFragmentById(parentElement, "ReportingList", {eventId: recordId});
+                            return Application.loadFragmentById(parentElement, "reportingList", { eventId: recordId });
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -1469,14 +1540,27 @@
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "initLandView: success!");
+                            //Reporting.initLandView.defaultValue
+                            that.initLand = new WinJS.Binding.List([]);
                             if (json && json.d && json.d.results) {
+                                //that.nextINITLandUrl = Reporting.initLandView.getNextUrl(json);
+                                var results = json.d.results;
                                 // Now, we call WinJS.Binding.List to get the bindable list
-                                if (initLand && initLand.winControl) {
+                                /*if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
                                     that.landRef = json.d.results;
+                                }*/
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                    that.initLand.push(item);
+                                });
+                                if (initLand && initLand.winControl) {
+                                    initLand.winControl.data = that.initLand;
                                 }
+                                initLand.selectedIndex = 0;
                             }
-                        }, function (errorResponse) {
+                        },
+                            function (errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
@@ -1484,15 +1568,17 @@
                                 VeranstaltungID: recordId,
                                 LanguageSpecID: AppData.getLanguageId()
                             });
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
                     if (recordId) {
-                        that.employees = new WinJS.Binding.List([Reporting.employeeView.defaultValue]);
                         return Reporting.employeeView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Reporting: success!");
                             // employeeView returns object already parsed from json file in response
+                            that.employees = new WinJS.Binding.List([Reporting.employeeView.defaultValue]);
                             if (json && json.d) {
                                 that.nextUrl = Reporting.employeeView.getNextUrl(json);
                                 var results = json.d.results;
@@ -1516,8 +1602,13 @@
                         }, {
                                 VeranstaltungID: recordId
                             });
+                    } else {
+                        return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    if (that.nextINITLandUrl) {
+                        that.getNextINITLandData();
+                    }
                     if (that.nextUrl) {
                         that.getNextData();
                     }

@@ -87,6 +87,8 @@
     "command.hideHelpText"  : "Hilfetext verstecken",
     "command.forceVersionUpdate" : "Update erzwingen",
     "command.changetolsmain" : "Zu LSMain wechseln",
+    "command.eventFavourite" : "Favourite",
+	"command.testmailopen"  : "E-Mail testen",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -127,6 +129,7 @@
     "tooltip.sendMessage"	: "Nachricht senden",
     "tooltip.newevent"		: "Neue Veranstaltung erstellen",
     "tooltip.eventchange"	: "Aussteller wechseln",
+    "tooltip.eventFavourite"	: "Bevorzugte Veranstaltung",
     "tooltip.savepdf"	    : "PDF Dateiname speichern",
     "tooltip.exportpdf"	    : "PDF exportieren",
     "tooltip.deletemail"	: "E-Mail löschen",

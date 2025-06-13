@@ -64,7 +64,7 @@
             // TODO: Respond to changes in viewState.
             if (element && !that.inResize) {
                 that.inResize = 1;
-                ret = WinJS.Promise.timeout(0).then(function () {
+                ret = WinJS.Promise.timeout(100).then(function () {
                     var win_single_itemsblock = element.querySelector("#mandatoryList .win-single-itemsblock");
                     var win_itemscontainer = element.querySelector("#mandatoryList .win-itemscontainer");/*#mandatoryList.listview*/
                     if (win_itemscontainer && win_itemscontainer.style) {

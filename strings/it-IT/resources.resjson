@@ -90,6 +90,8 @@
     "command.hideHelpText"  : "Nascondi il testo della guida",
     "command.forceVersionUpdate" : "Forza l'aggiornamento",
     "command.changetolsmain" : "Passare a LSMain",
+    "command.eventFavourite" : "Favourite",
+    "command.testmailopen"  : "E-Mail testen",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -130,6 +132,7 @@
     "tooltip.sendMessage"	: "Invia un messaggio",
     "tooltip.newevent"		: "Crea un nuovo evento",
     "tooltip.eventchange"	: "Cambia espositore",
+    "tooltip.eventFavourite"	: "Evento preferito",
     "tooltip.savepdf"	    : "Salva il nome del file PDF",
     "tooltip.exportpdf"	    : "Esporta PDF",
     "tooltip.deletemail"	: "Elimina la posta",

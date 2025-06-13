@@ -70,6 +70,8 @@
     "command.showHelpText"   : "Show help text",
     "command.hideHelpText"  : "Hide help text",
     "command.forceVersionUpdate" : "Force update",
+    "command.eventFavourite" : "Favourite",
+    "command.testmailopen"  : "E-Mail testen",
 
     "tooltip.backward"      : "Browse back",
     "tooltip.edit"          : "Edit current record",
@@ -110,6 +112,7 @@
     "tooltip.sendMessage"	: "Send Message",
     "tooltip.newevent"		: "Create new event",
     "tooltip.eventchange"	: "Change event",
+    "tooltip.eventFavourite" : "Preferred event",
     "tooltip.savepdf"	    : "Save PDF filename",
     "tooltip.exportpdf"	    : "Export PDF",
     "tooltip.deletemail"	: "Delete mail",

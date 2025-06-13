@@ -32,27 +32,44 @@
                 var ret = Reporting._initLandView.map;
                 Log.ret(Log.l.trace);
                 return ret;
-            }
-        },
-        _analysisListView: {
-            get: function() {
-                return AppData.getFormatView("OLELetter", 20458);
-            }
-        },
-        analysisListView: {
-            select: function(complete, error) {
+            },
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting.");
-                var ret = Reporting._analysisListView.select(complete, error, {
-                    LanguageID: AppData.getLanguageId()
-                }, {
-                    ordered: true,
-                    orderAttribute: "OLELetterID"
-                });
+                var ret = Reporting._initLandView.getNextUrl(response);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            selectNext: function (complete, error, response, nextUrl) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._initLandView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function(response) {
+            defaultValue: {
+                INITLandID: null, //0
+                TITLE: "NO RESTRICTION"
+            }
+        },
+        _analysisListView: {
+            get: function () {
+                return AppData.getFormatView("OLELetter", 20458);
+            }
+        },
+        analysisListView: {
+            select: function (complete, error) {
+                Log.call(Log.l.trace, "Reporting.");
+                var ret = Reporting._analysisListView.select(complete, error, {
+                    LanguageID: AppData.getLanguageId()
+                }, {
+                        ordered: true,
+                        orderAttribute: "OLELetterID"
+                    });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting._analysisListView.");
                 var ret = Reporting._analysisListView.getNextUrl(response);
                 Log.ret(Log.l.trace);
@@ -72,45 +89,45 @@
             }
         },
         _xLAuswertungView: {
-            get: function() {
+            get: function () {
                 return AppData.getFormatView("Kontakt", 20459);
             }
         },
         xLAuswertungView: {
-            select: function(complete, error, restriction) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLAuswertungView.select(complete, error, restriction, {
-                   
+
                 });
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            selectNext: function(complete, error, response, nextUrl) {
+            selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLAuswertungView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function(response) {
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLAuswertungView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getDbView: function() {
+            getDbView: function () {
                 return Reporting._xLAuswertungView;
             }
         },
 
         _xLReportView: {
-            get: function() {
+            get: function () {
                 return AppData.getFormatView("Kontakt", 20460);
             }
         },
         xLReportView: {
-            select: function(complete, error, restriction) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLReportView.select(complete, error, restriction, {
                     ordered: true,
@@ -120,20 +137,20 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            selectNext: function(complete, error, response, nextUrl) {
+            selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLReportView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function(response) {
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting.xLReportView.");
                 var ret = Reporting._xLReportView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getDbView: function() {
+            getDbView: function () {
                 return Reporting._xLReportView;
             }
         },
@@ -260,7 +277,7 @@
         },
         __xLAuswertungViewNoQuest: null,
         _xLAuswertungViewNoQuest: {
-            get: function() {
+            get: function () {
                 if (!Reporting.___xLAuswertungViewNoQuest) {
                     Reporting.___xLAuswertungViewNoQuest = new AppData.formatViewData("Kontakt", 20461);
                 }
@@ -268,7 +285,7 @@
             }
         },
         xLAuswertungViewNoQuest: {
-            select: function(complete, error, restriction) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLAuswertungViewNoQuest.select(complete, error, restriction, {
                     ordered: true,
@@ -278,20 +295,20 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            selectNext: function(complete, error, response, nextUrl) {
+            selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLAuswertungViewNoQuest.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function(response) {
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting._xLAuswertungViewNoQuest.");
                 var ret = Reporting._xLAuswertungViewNoQuest.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getDbView: function() {
+            getDbView: function () {
                 return Reporting._xLAuswertungViewNoQuest;
             }
         },
@@ -319,7 +336,7 @@
         },
         __xLReportViewNoQuest: null,
         _xLReportViewNoQuest: {
-            get: function() {
+            get: function () {
                 if (!Reporting.__xLReportViewNoQuest) {
                     Reporting.__xLReportViewNoQuest = new AppData.formatViewData("Kontakt", 20462);
                 }
@@ -327,7 +344,7 @@
             }
         },
         xLReportViewNoQuest: {
-            select: function(complete, error, restriction) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLReportViewNoQuest.select(complete, error, restriction, {
                     ordered: true,
@@ -337,20 +354,20 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            selectNext: function(complete, error, response, nextUrl) {
+            selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._xLReportViewNoQuest.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function(response) {
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting._xLReportViewNoQuest.");
                 var ret = Reporting._xLReportViewNoQuest.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getDbView: function() {
+            getDbView: function () {
                 return Reporting._xLReportViewNoQuest;
             }
         },
@@ -568,12 +585,12 @@
             }
         },
         _employeeView: {
-            get: function() {
+            get: function () {
                 return AppData.getFormatView("Veranstaltung", 20688);
             }
         },
         employeeView: {
-            select: function(complete, error, restriction) {
+            select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._employeeView.select(complete, error, restriction, {
                     ordered: true,
@@ -582,13 +599,13 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            getNextUrl: function(response) {
+            getNextUrl: function (response) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._employeeView.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            selectNext: function(complete, error, response, nextUrl) {
+            selectNext: function (complete, error, response, nextUrl) {
                 Log.call(Log.l.trace, "Reporting.");
                 var ret = Reporting._employeeView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
@@ -604,7 +621,7 @@
         },
         defaultrestriction: {
             MitarbeiterVIEWID: null,
-            InitLandID: null,
+            INITLandID: null,
             Erfassungsdatum: null,
             showErfassungsdatum: false,
             AenderungsDatum: null,
@@ -780,8 +797,8 @@
                 var ret = Reporting._exportPDFPanelView.select(complete, error, restriction);
                 Log.ret(Log.l.trace);
                 return ret;
+            }
         }
-        },
     });
 })();
 

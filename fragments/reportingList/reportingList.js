@@ -10,7 +10,7 @@
 (function () {
     "use strict";
 
-    var fragmentName = Application.getFragmentPath("ReportingList");
+    var fragmentName = Application.getFragmentPath("reportingList");
 
     Fragments.define(fragmentName, {
         // This function is called whenever a user navigates to this fragment. It
