@@ -73,8 +73,6 @@
             this.employeechart = null;
             this.xlsxfilename = "PDFExport.xlsx";
             this.isSupreme = parseInt(AppData._userData.IsSupreme);
-            this.landRef = [];
-            this.mitarbeiterRef = [];
 
             var that = this;
 
@@ -111,16 +109,17 @@
                 }
             }
 
-            var landRefSearch = function(landId) {
+            /*var landRefSearch = function (landId) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 for (var i = 0; i < landRef.length; i++) {
-                    if (landRef[i].INITLandID === landId) {
-                        selectedLand.textContent = getResourceText("reporting.entrydatelabel") + landRef[i].TITLE;
+                    var initLand = that.initLand.getAt(i);
+                    if (initLand.INITLandID === landId) {
+                        selectedLand.textContent = getResourceText("reporting.entrydatelabel") + initLand.TITLE;
                     }
                 }
                 Log.ret(Log.l.trace, landId);
             }
-            this.landRefSearch = landRefSearch;
+            this.landRefSearch = landRefSearch;*/
 
             var showDate = function(date) {
                 Log.call(Log.l.trace, "Reporting.Controller.");
@@ -709,7 +708,7 @@
                         Log.print(Log.l.info, "call success!");
                         if (that.binding.restriction.INITLandID === null)
                             that.binding.restriction.INITLandID = 0;
-                        if (that.binding.restriction.INITLandID &&
+                        /*if (that.binding.restriction.INITLandID &&
                             typeof that.binding.restriction.INITLandID === "string") {
                             that.binding.restriction.INITLandID = parseInt(that.binding.restriction.INITLandID);
                         } else {
@@ -721,7 +720,7 @@
                                 parseInt(that.binding.restriction.MitarbeiterVIEWID);
                         } else {
                             that.binding.restriction.MitarbeiterVIEWID = null;
-                        }
+                        }*/
                         if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 0) {
                             that.exportDbExcel(json.d.results[0].DOC3ExportPdfID);
                         } else if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 1) {
@@ -1291,10 +1290,11 @@
                 },
                 changeLand: function(event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    for (var i = 0; i < that.landRef.length; i++) {
+                    for (var i = 0; i < that.initLand.length; i++) {
+                        var initLand = that.initLand.getAt(i);
                         if (event.currentTarget.value !== "0") {
-                            if (that.landRef[i].INITLandID === parseInt(event.currentTarget.value)) {
-                                selectedLand.textContent = getResourceText("reporting.countrylabel") + that.landRef[i].TITLE;
+                            if (initLand.INITLandID === parseInt(event.currentTarget.value)) {
+                                selectedLand.textContent = getResourceText("reporting.countrylabel") + initLand.TITLE;
                                 selectedLand.style.display = "block";
                             }
                         } else {
@@ -1305,10 +1305,11 @@
                 },
                 changeMitarbeiter: function (event) {
                     Log.call(Log.l.trace, "Reporting.Controller.");
-                    for (var i = 0; i < that.mitarbeiterRef.length; i++) {
+                    for (var i = 0; i < that.employees.length; i++) {
+                        var employee = that.employees.getAt(i);
                         if (event.currentTarget.value !== "undefined") {
-                            if (that.mitarbeiterRef[i].EmployeeID === parseInt(event.currentTarget.value)) {
-                                selectedErfasser.textContent = getResourceText("reporting.employeelabel") + that.mitarbeiterRef[i].EmployeeName;
+                            if (employee.EmployeeID === parseInt(event.currentTarget.value)) {
+                                selectedErfasser.textContent = getResourceText("reporting.employeelabel") + employee.EmployeeName;
                                 selectedErfasser.style.display = "block";
                             }
                         } else {
@@ -1548,7 +1549,6 @@
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 /*if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
-                                    that.landRef = json.d.results;
                                 }*/
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
@@ -1582,7 +1582,6 @@
                             if (json && json.d) {
                                 that.nextUrl = Reporting.employeeView.getNextUrl(json);
                                 var results = json.d.results;
-                                that.mitarbeiterRef = json.d.results;
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                     that.employees.push(item);
