@@ -403,8 +403,23 @@
             };
             this.loadData = loadData;
 
+            var tfaStatus = function () {
+                var ret = null;
+                var tfaContainer = pageElement.querySelector("#tfa-container");
+                if (tfaContainer && typeof TwoFactorLib === "object") {
+                    // in that.binding.dataLogin.Password steht initial ds vom User eingegebene Password
+                    // im Fall TFA soll that.binding.dataLogin.Password überschrieben werden mit dem "Token-Password"
+                    // User muss für TFA-Änderungen explizit in einem weiteren Input-Element nochmal "sein Password" eingeben, 
+                    // unabhängig davon was gerade in that.binding.dataLogin.Password steht!
+                    ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
+                        that.binding.dataLogin.Password = token;
+                    }));
+                }
+                return ret;
+            }
+
             var saveData = function (complete, error) {
-                var err = null, ret;
+                var err = null, ret = null, hasTwoFactor = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (contentarea) {
                     contentarea.scrollTop = 0;
@@ -436,6 +451,7 @@
                                 AppData.setErrorMsg(that.binding, err);
                                 error(err);
                             } else {
+                                hasTwoFactor = json.d.HasTwoFactor;
                                 var location = json.d.ODataLocation;
                                 //if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
                                 if (location !== "odata_online") {
@@ -456,8 +472,18 @@
                         Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                         // ignore this error here for compatibility!
                     }, {
-                            LoginName: that.binding.dataLogin.Login
-                        }).then(function () {
+                        LoginName: that.binding.dataLogin.Login
+                    }).then(function () {
+                        // nur aufrufen wenn in DB TFA eingetragen ist
+                        if (hasTwoFactor) {
+                            return tfaStatus() || WinJS.Promise.as();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function (tfaResult) {
+                        if (tfaResult) {
+                            // Behandlung TFA-Result..
+                        }
                             if (!err) {
                                 var dataLogin = {
                                     Login: that.binding.dataLogin.Login,
@@ -609,6 +635,9 @@
                 return ret;
             };
             this.saveData = saveData;
+
+            // initialer TFA-Aufruf beim Laden der Seite
+            tfaStatus();
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
