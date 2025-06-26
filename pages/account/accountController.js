@@ -592,8 +592,8 @@
                                     error(err);
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                 }, {
-                                    VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
-                                    MandantWide: 0,
+                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), //0
+                                    MandantWide: 1, //0
                                     IsForApp: 0
                                 }).then(function () {
                                     var colors = Colors.updateColors();

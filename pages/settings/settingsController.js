@@ -145,7 +145,7 @@
                     if (pOptionTypeId) {
                         AppData.call("PRC_SETVERANSTOPTION", {
                             pIsForMandant: that.binding.generalData.mandantOption ? 1 : 0,
-                            pVeranstaltungID: that.binding.generalData.mandantOption ? 0 : AppData.getRecordId("Veranstaltung"),
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: pOptionTypeId,
                             pValue: pValue
                         }, function (json) {
@@ -256,6 +256,7 @@
                             pValue = "0";
                         }
                         AppData.call("PRC_SETVERANSTOPTION", {
+                            pIsForMandant: that.binding.generalData.mandantOption ? 1 : 0,
                             pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             pOptionTypeID: 18,
                             pValue: pValue
@@ -329,6 +330,7 @@
                                 pValue = "0";
                             }
                             AppData.call("PRC_SETVERANSTOPTION", {
+                                pIsForMandant: that.binding.generalData.mandantOption ? 1 : 0,
                                 pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
                                 pOptionTypeID: 10,
                                 pValue: pValue
@@ -562,7 +564,7 @@
                     }, function (errorResponse) {
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                            VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
+                            VeranstaltungID: AppData.getRecordId("Veranstaltung"), //AppData.getRecordId("Veranstaltung")
                             MandantWide: 1,
                             IsForApp: 0
                         });
