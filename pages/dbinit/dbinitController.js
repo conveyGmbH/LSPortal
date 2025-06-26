@@ -148,8 +148,8 @@
                                     });
                                 }
                             }, {
-                                VeranstaltungID: 0, //AppData.getRecordId("Veranstaltung")
-                                MandantWide: 0,
+                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), //AppData.getRecordId("Veranstaltung")
+                                    MandantWide: 1,
                                 IsForApp: 0
                             }).then(function () {
                                 var colors = Colors.updateColors();
