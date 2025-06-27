@@ -66,6 +66,9 @@
                     });
                 } else {
                     if (dataClientManagement && AppBar.modified && !AppBar.busy) {
+                        if (!dataClientManagement.LocationID) {
+                            dataClientManagement.LocationID = -1;
+                        }
                         ret = AppData.call("PRC_UpdateFairMandant", {
                             pFairMandantID: dataClientManagement.FairMandantVIEWID,
                             pName: dataClientManagement.Name,
@@ -80,8 +83,8 @@
                             pTelefonFestnetz: dataClientManagement.TelefonFestnetz,
                             pCreateEventUser: createApiUserValue,
                             pDUNSNumber: dataClientManagement.DUNSNumber,
-                            pServerLocationID: dataClientManagement.LocationID,
-                            pDefLanguageSpecID: dataClientManagement.DefLanguageID
+                            pServerLocationID: parseInt(dataClientManagement.LocationID),
+                            pDefLanguageSpecID: parseInt(dataClientManagement.DefLanguageID)
                         }, function(json) {
                             Log.print(Log.l.info, "call PRC_UpdateFairMandant success! ");
                             AppBar.busy = false;
