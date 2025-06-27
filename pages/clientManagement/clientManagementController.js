@@ -27,6 +27,7 @@
 
             var that = this;
 
+            var initSprache = pageElement.querySelector("#InitSprache");
             var initLand = pageElement.querySelector("#InitLand");
             var apiToggle = pageElement.querySelector("#createApiUser");
 
@@ -79,7 +80,8 @@
                             pTelefonFestnetz: dataClientManagement.TelefonFestnetz,
                             pCreateEventUser: createApiUserValue,
                             pDUNSNumber: dataClientManagement.DUNSNumber,
-                            pServerLocationID: dataClientManagement.LocationID
+                            pServerLocationID: dataClientManagement.LocationID,
+                            pDefLanguageSpecID: dataClientManagement.DefLanguageID
                         }, function(json) {
                             Log.print(Log.l.info, "call PRC_UpdateFairMandant success! ");
                             AppBar.busy = false;
@@ -225,6 +227,31 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (!ClientManagement.initSpracheView.getResults().length) {
+                        Log.print(Log.l.trace, "calling select initSpracheView...");
+                        //@nedra:25.09.2015: load the list of INITAnrede for Combobox
+                        return ClientManagement.initSpracheView.select(function (json) {
+                            Log.print(Log.l.trace, "initSpracheView: success!");
+                            if (json && json.d) {
+                                var results = json.d.results;
+                                // Now, we call WinJS.Binding.List to get the bindable list
+                                if (initSprache && initSprache.winControl) {
+                                    initSprache.winControl.data = new WinJS.Binding.List(results);
+                                }
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        });
+                    } else {
+                        if (initSprache && initSprache.winControl) {
+                            var results = ClientManagement.initSpracheView.getResults();
+                            initSprache.winControl.data = new WinJS.Binding.List(results);
+                        }
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     if (apiToggle) {
                         apiToggle.winControl.checked = false;
                     }

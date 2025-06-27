@@ -37,8 +37,34 @@
                 DUNSNumber: "",
                 WebAdresse: "",
                 FairMandantID: "",
-                LocationID: ""
+                LocationID: "",
+                DefLanguageID: null
             }
+        },
+        _initSpracheView: {
+            get: function () {
+                return AppData.getLgntInit("LGNTINITSprache", false, true);
         }
+        },
+        initSpracheView: {
+            select: function (complete, error, recordId) {
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
+                var ret = ClientManagement._initSpracheView.select(complete, error, recordId, { ordered: true });
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
+                var ret = ClientManagement._initSpracheView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, namespaceName + ".initSpracheView.");
+                var ret = ClientManagement._initSpracheView.map;
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            }
     });
 })();
