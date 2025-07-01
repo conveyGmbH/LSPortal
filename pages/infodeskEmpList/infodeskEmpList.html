@@ -54,14 +54,16 @@
                         </div>
                     </div>
                     <div class="headerFooterPlaceholder">
-                        <div class="list-header">
+                        <div class="list-header masterhost-background">
                             <div class="list-landscape-only list-header-columns">
-                                <div class="list-field-small-fixed"
-                                     data-win-res="{textContent: 'infodeskEmpList.name'}"></div>
-                                <div class="list-field-small-fixed"
-                                     data-win-res="{textContent: 'infodeskEmpList.firstName'}"></div>
-                                <div class="list-field-small-fixed"
-                                     data-win-res="{textContent: 'infodeskEmpList.login'}"></div>
+	                            <div class="list-field-small-relative-15 win-type-ellipsis"
+	                                 data-win-res="{textContent: 'infodeskEmpList.firstname'}"></div>
+	                            <div class="list-field-small-relative-15 win-type-ellipsis"
+	                                 data-win-res="{textContent: 'infodeskEmpList.name'}"></div>
+	                            <div class="list-field-small-relative-30 win-type-ellipsis"
+	                                 data-win-res="{textContent: 'infodeskEmpList.login'}"></div>
+	                            <div class="list-field-big-variable win-type-ellipsis"
+	                                 data-win-res="{textContent: 'infodeskEmpList.name'}"></div>
                             </div>
                         </div>
                     </div>
@@ -75,14 +77,14 @@
                         </div>
                         <div class="list-landscape-only" data-win-bind="disabled: disabled">
                             <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: Nachname"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+                            <div class="list-field-small-relative-15 win-type-ellipsis"
                                  data-win-bind="textContent: Vorname"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-small-relative-15 win-type-ellipsis"
+                                 data-win-bind="textContent: Nachname"></div>
+                            <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Login"></div>
-                            <div class="list-field-small-fixed win-type-ellipsis"
+                            <div class="list-field-big-variable win-type-ellipsis"
                                  data-win-bind="textContent: mitarbeiterFullName"></div>
                         </div>
                         <div class="list-portrait-only" data-win-bind="disabled: disabled">
@@ -101,9 +103,9 @@
                                     <!--list-empList-->
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
                                           data-win-bind="textContent: fullName"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                    <span class="list-compressed-title win-type-ellipsis"
                                           data-win-bind="textContent: Login"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+                                    <span class="list-compressed-title win-type-subsubtitle win-type-ellipsis"
                                           data-win-bind="textContent: title; style.display: title Binding.Converter.toDisplay"></span>
                                 </div>
                             </div>
