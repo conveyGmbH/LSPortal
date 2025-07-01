@@ -22,10 +22,13 @@
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    color: Window;
+    color: #fff;
 }
 .user-message-title {
     min-height: 12px;
+}
+.desk-message-item .user-message-title {
+    text-align: right;
 }
 .user-message-title > span {
     margin: 6px;
