@@ -1,26 +1,38 @@
 ﻿/**
     userMessages fragment styles
 */
-#userMessageList {
-
+.userMessages .win-itembox {
+    background: none;
 }
-
-.view-size-medium #empRoleList {
-
-}
-
-.view-size-small #empRoleList {
-
-}
-.userMessage-title {
+.userMessages .message-item {
     width: 100%;
-    margin-left: 13px;
+}
+.user-message-item {
+    float: left;
+    width: auto;
+    min-height: 40px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.desk-message-item {
+    float: right;
+    width: auto;
+    min-height: 40px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    color: Window;
+}
+.user-message-title {
     min-height: 12px;
 }
+.user-message-title > span {
+    margin: 6px;
+}
 
-.list-role-messageitem {
-    width: 100%;
-    margin-left: 5px;
+.user-message-body {
+    margin: 0 6px;
     min-height: 12px;
 }
 #userMessageList.listview {

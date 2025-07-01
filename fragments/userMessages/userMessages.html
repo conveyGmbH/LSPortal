@@ -12,26 +12,28 @@
         <div id="userMessagesController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
-                    <!--Problem mit dem userMessageList-template-->
-                    <!--<div class="userMessage-title">
-                        <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'infodesk.newsOverview'}"></span>
-                        <span class="label landscape_only" data-win-res="{textContent: 'infodesk.newsOverview'}"></span>
-                        <span class="label landscape_only_small" data-win-bind="textContent: dataBenutzer.Info2TS Binding.Converter.toDateString"></span>
-                        <textarea class="textarea_half win-textarea input_text_message" 
-                                  data-win-bind="value: message Binding.Mode.twoway"
-                                  data-win-bind-onevent="oninput"></textarea>
-                    </div>-->
-                    <div class="userMessageList-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-role-messageitem">
-                            <!-- <label class="list-role-field">-->
-                            <div style="display: block" data-win-bind="textContent: SendTS Binding.Converter.toDateString"></div>
-                            <div style="display: block" data-win-bind="textContent: InfoText; style.fontWeight: newInfo1Flag Binding.Converter.toBold"></div> <!--; style.fontWeight: newInfo1Flag Binding.Converter.toBold-->
-                            <!--</label>   style="float: right  -->
-                        </div>
-                    </div>
+	                <div class="userMessageList-template"
+	                     data-win-control="WinJS.Binding.Template" style="display: none">
+		                <div class="message-item">
+			                <div class="user-message-item window-color"
+			                     data-win-bind="style.display: EmpfaengerID Binding.Converter.toDisplayNone">
+                                <div class="user-message-title win-type-caption">
+                                    <span data-win-bind="textContent: Login"></span>
+                                    <span data-win-bind="textContent: SendTS Binding.Converter.toDateString"></span>
+                                </div>
+				                <div class="user-message-body" data-win-bind="textContent: InfoText; style.fontWeight: newInfo1Flag Binding.Converter.toBold"></div> <!--; style.fontWeight: newInfo1Flag Binding.Converter.toBold-->
+			                </div>
+			                <div class="desk-message-item navigation-background-color"
+			                     data-win-bind="style.display: EmpfaengerID Binding.Converter.toDisplay">
+				                <div class="user-message-title win-type-caption">
+					                <span data-win-bind="textContent: SendTS Binding.Converter.toDateString"></span>
+				                </div>
+				                <div class="user-message-body" data-win-bind="textContent: InfoText; style.fontWeight: newInfo1Flag Binding.Converter.toBold"></div> <!--; style.fontWeight: newInfo1Flag Binding.Converter.toBold-->
+			                </div>
+		                </div>
+	                </div>
                     <div id="userMessageList"
-                         class="listview"
+                         class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
                             itemTemplate: select('.userMessageList-template'),
