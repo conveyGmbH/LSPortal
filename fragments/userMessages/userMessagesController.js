@@ -73,14 +73,6 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
-                        // single list selection
-                        if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.single) {
-                            listView.winControl.selectionMode = WinJS.UI.SelectionMode.single;
-                        }
-                        // direct selection on each tap
-                        if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.directSelect) {
-                            listView.winControl.tapBehavior = WinJS.UI.TapBehavior.directSelect;
-                        }
                         if (listView.winControl.loadingState === "itemsLoading") {
                             if (!layout) {
                                 layout = UserMessages.ListLayout.MessagesLayout;
