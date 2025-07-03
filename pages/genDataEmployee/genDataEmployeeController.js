@@ -770,7 +770,7 @@
                         return true;
                     }
                 },
-                clickDelete: function () {
+                /*clickDelete: function () {
                     if (AppHeader.controller.binding.userData.IsMidiAdmin) {
                         return true;
                     }
@@ -784,6 +784,19 @@
                         } else {
                             return true;
                         }
+                    } else {
+                        return true;
+                    }
+                },*/
+                clickDelete: function () {
+                    var master = Application.navigator.masterControl;
+                    //Stand 23.06 Warum wird nach !master.controller.binding.hasLocalevents geprüft? Die Anwendung wird explizit ausgeblendet für Admins die wohl nur eine Veranstaltung sehen können
+                    if (AppHeader.controller.binding.userData.IsMidiAdmin || master && master.controller && master.controller.binding && master.controller.binding.hasContacts) {
+                        return true;
+                    }
+                    if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
+                        that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
+                        return false
                     } else {
                         return true;
                     }

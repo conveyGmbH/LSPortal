@@ -512,6 +512,7 @@
                                     eventsDropdown.winControl.data = that.events;
                                     that.binding.eventId = AppData.getRecordId("Veranstaltung");
                                     AppData.setRecordId("Veranstaltung2", that.binding.eventId);
+                                    restriction.VeranstaltungID = that.binding.eventId;
                                 }
                             }
                         },
