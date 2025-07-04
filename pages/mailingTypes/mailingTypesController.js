@@ -362,19 +362,23 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling select MailingTypes...");
-                    return MailingTypes.MailTypeVIEW.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "MailingTypes: success!");
+                    Log.print(Log.l.trace, "calling PRC_ChangeUserVeranstaltung...");
+                    return AppData.call("PRC_GetMailtypeList", {
+                        pLanguageSpecID: AppData.getLanguageId()
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
                         if (json && json.d && json.d.results.length > 0) {
-                            // now always edit!
-                            var firstItem = [{ MailTypeVIEWID: 0, Name: "" }];
-                            var results = firstItem.concat(json.d.results);
+                            var results = json.d.results;
+                            
                             if (mailTypes && mailTypes.winControl) {
-                                //that.binding.dataMailTypesData = json.d.results
-                                mailTypes.winControl.data = new WinJS.Binding.List(results);
+                                mailTypes.winControl.data = new WinJS.Binding.List(json.d.results);
                             }
+                            
                         } else {
+                            Log.call(Log.l.trace, "No pLanguageSpecID found!");
+                        }
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
                             AppData.call("PRC_InitCR_Event_MailType",
                                 {
                                     pEventID: AppData.getRecordId("VeranstaltungTermin")
@@ -386,11 +390,8 @@
                                     Log.print(Log.l.error, "call error");
                                     AppData.setErrorMsg(that.binding, error);
                                 });
-                        }
-                    },
-                        function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
                         });
+                    Log.ret(Log.l.trace);
                 }).then(function () {
                         if (!mailTypeId) {
                             mailTypeId = AppData.getRecordId("MailType");
