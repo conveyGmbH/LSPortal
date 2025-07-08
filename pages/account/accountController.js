@@ -55,6 +55,9 @@
             var initSprache = pageElement.querySelector("#InitSprache");
             var globalUserServer = pageElement.querySelector("#GlobalUserServer");
 
+            // TFA UI
+            var tfaContainer = pageElement.querySelector("#tfa-container");
+
             var prevLogin = AppData._persistentStates.odata.login;
             var prevPassword = AppData._persistentStates.odata.password;
             var prevHostName = AppData._persistentStates.odata.hostName;
@@ -82,7 +85,6 @@
 
             this.dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                var tfaContainer = pageElement.querySelector("#tfa-container");
                 if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.clear === "function") {
                     TwoFactorLib.clear(tfaContainer);
                 }
@@ -414,7 +416,7 @@
 
             var tfaStatus = function () {
                 var ret = null;
-                var tfaContainer = pageElement.querySelector("#tfa-container");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.getStatus === "function") {
                     // Hiermit soll die Oberfläche für TFA-Administration erzeugt werden
                     // in that.binding.dataLogin.Password steht initial das vom User eingegebene Password
@@ -422,20 +424,28 @@
                     // User muss für TFA-Änderungen explizit in einem weiteren Input-Element nochmal "sein Password" eingeben, 
                     // unabhängig davon was gerade in that.binding.dataLogin.Password steht!
                     ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
+                        Log.print(Log.info, "setTokenPassword called: password " + (that.binding.dataLogin.Password === token ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = token;
                     }, Application.language));
+                } else {
+                    Log.print(Log.info, "no TFA Lib");
                 }
+                Log.ret(Log.l.trace);
                 return ret;
             }
             var tfaVerify = function() {
                 var ret = null;
-                var tfaContainer = pageElement.querySelector("#tfa-container");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
                     // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden
                     ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
+                        Log.print(Log.info, "setTokenPassword called: password " + (that.binding.dataLogin.Password === token ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = token;
                     }, Application.language));
+                } else {
+                    Log.print(Log.info, "no TFA Lib");
                 }
+                Log.ret(Log.l.trace);
                 return ret;
             }
 
