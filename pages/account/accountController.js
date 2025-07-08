@@ -80,6 +80,15 @@
                 privacyPolicyLink.innerHTML = "<a href=\"https://" + getResourceText("login.privacyPolicyLink") + "\" target=\"_blank\">" + getResourceText("login.privacyPolicyLink") + "</a>";
             }
 
+            this.dispose = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var tfaContainer = pageElement.querySelector("#tfa-container");
+                if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.clear === "function") {
+                    TwoFactorLib.clear(tfaContainer);
+                }
+                Log.ret(Log.l.trace);
+            }
+
             // define handlers
             this.eventHandlers = {
                 clickBack: function (event) {
@@ -128,7 +137,7 @@
                         pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_ChangeLoginServer success! ");
-                        Application.navigateById("home", event);
+                        Application.navigateById(Application.startPageId, event);
                     }, function (error) {
                         Log.print(Log.l.error, "callPRC_ChangeLoginServer error");
                         AppData.setErrorMsg(that.binding, error);
@@ -406,14 +415,26 @@
             var tfaStatus = function () {
                 var ret = null;
                 var tfaContainer = pageElement.querySelector("#tfa-container");
-                if (tfaContainer && typeof TwoFactorLib === "object") {
-                    // in that.binding.dataLogin.Password steht initial ds vom User eingegebene Password
+                if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.getStatus === "function") {
+                    // Hiermit soll die Oberfläche für TFA-Administration erzeugt werden
+                    // in that.binding.dataLogin.Password steht initial das vom User eingegebene Password
                     // im Fall TFA soll that.binding.dataLogin.Password überschrieben werden mit dem "Token-Password"
                     // User muss für TFA-Änderungen explizit in einem weiteren Input-Element nochmal "sein Password" eingeben, 
                     // unabhängig davon was gerade in that.binding.dataLogin.Password steht!
                     ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
                         that.binding.dataLogin.Password = token;
-                    }));
+                    }, Application.language));
+                }
+                return ret;
+            }
+            var tfaVerify = function() {
+                var ret = null;
+                var tfaContainer = pageElement.querySelector("#tfa-container");
+                if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
+                    // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden
+                    ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
+                        that.binding.dataLogin.Password = token;
+                    }, Application.language));
                 }
                 return ret;
             }
@@ -432,7 +453,7 @@
                 }
                 that.binding.messageText = null;
                 AppData.setErrorMsg(that.binding);
-                if (!that.binding.doEdit && newLanguageId === prevLanguageId) {
+                if (!that.binding.doEdit && newLanguageId === prevLanguageId && prevPassword === that.binding.dataLogin.Password) {
                     ret = WinJS.Promise.as();
                     complete({});
                 } else {
@@ -476,7 +497,7 @@
                     }).then(function () {
                         // nur aufrufen wenn in DB TFA eingetragen ist
                         if (hasTwoFactor) {
-                            return tfaStatus() || WinJS.Promise.as();
+                            return tfaVerify() || WinJS.Promise.as();
                         } else {
                             return WinJS.Promise.as();
                         }
