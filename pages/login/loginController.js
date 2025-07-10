@@ -14,6 +14,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "Login";
+
     WinJS.Namespace.define("Login", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "Login.Controller.");
