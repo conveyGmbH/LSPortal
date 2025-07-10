@@ -423,9 +423,9 @@
                     // im Fall TFA soll that.binding.dataLogin.Password überschrieben werden mit dem "Token-Password"
                     // User muss für TFA-Änderungen explizit in einem weiteren Input-Element nochmal "sein Password" eingeben, 
                     // unabhängig davon was gerade in that.binding.dataLogin.Password steht!
-                    ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
-                        Log.print(Log.info, "setTokenPassword called: password " + (that.binding.dataLogin.Password === token ? "NOT" : "") + " changed");
-                        that.binding.dataLogin.Password = token;
+                    ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
+                        Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
+                        that.binding.dataLogin.Password = dbPassword;
                     }, Application.language));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
@@ -438,9 +438,9 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
                     // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden
-                    ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setTokenPassword(token) {
-                        Log.print(Log.info, "setTokenPassword called: password " + (that.binding.dataLogin.Password === token ? "NOT" : "") + " changed");
-                        that.binding.dataLogin.Password = token;
+                    ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
+                        Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
+                        that.binding.dataLogin.Password = dbPassword;
                     }, Application.language));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
