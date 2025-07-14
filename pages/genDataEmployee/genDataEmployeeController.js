@@ -796,7 +796,7 @@
                     }
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
-                        return false
+                        return false;
                     } else {
                         return true;
                     }

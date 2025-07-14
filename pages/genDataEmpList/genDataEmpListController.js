@@ -639,6 +639,10 @@
                 NavigationBar.disablePage("employeeVisitorFlow");
             }
 
+            if (AppData._userData.IsMidiAdmin) {
+                NavigationBar.disablePage("genDataSkillEntry");
+            }
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();
