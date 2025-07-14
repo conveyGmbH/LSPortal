@@ -473,6 +473,9 @@
     "recover.customer" : "Espositore",
     "recover.matchedCustomer" : "Si prega di inserire una nuova password",
     "recover.complete" : "Riceverà a breve un'e-mail di conferma all'indirizzo sopra indicato",
+    "recover.recoverOk" : "Ok",
+    "recover.recoverCancel" : "Annullamento del processo",
+    "recover.tokenConfirmed": "Token valido per la reimpostazione della password",
      
     "account.title"         : "Impostazioni di login",
     "account.comment"       : "Attenzione: al momento del log-out o connettendosi con un altro utente, tutti i dati salvati solo localmente verranno cancellati",
