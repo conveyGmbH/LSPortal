@@ -1256,6 +1256,11 @@
                 if (myDomain) {
                     myDomain.focus();
                 }
+                that.resetVisibleList();
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    that.handleVisibleList(master.controller.binding.hasLocalEvents, master.controller.binding.siteAdmin);
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());

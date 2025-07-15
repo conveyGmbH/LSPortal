@@ -253,6 +253,8 @@
                                                 //that.binding.gesperrt = item.data.Gesperrt;
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
+                                                that.binding.hasLocalEvents = item.data.HasLocalEvents;
+                                                that.binding.siteAdmin = item.data.SiteAdmin;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "genDataEmployee") &&
