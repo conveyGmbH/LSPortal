@@ -15,7 +15,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "SiteEventsTermin.Controller.");
             Application.Controller.apply(this, [pageElement, {
-                dataTermin: SiteEventsTermin.defaultValue,
+                dataTermin: getEmptyDefaultValue(SiteEventsTermin.defaultValue), //SiteEventsTermin.defaultValue
                 InitFairVeranstalterItem: { FairVeranstalterID: 0, Name: "" },
                 VeranstaltungTerminID: 0,
                 eventclosedtext: getResourceText("siteeventsTermin.eventclosed")
