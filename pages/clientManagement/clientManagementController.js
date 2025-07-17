@@ -28,6 +28,7 @@
             var that = this;
 
             var initSprache = pageElement.querySelector("#InitSprache");
+            var globalUserServer = pageElement.querySelector("#GlobalUserServer");
             var initLand = pageElement.querySelector("#InitLand");
             var apiToggle = pageElement.querySelector("#createApiUser");
 
@@ -237,6 +238,13 @@
                             Log.print(Log.l.trace, "initSpracheView: success!");
                             if (json && json.d) {
                                 var results = json.d.results;
+
+                                // Leeren Eintrag einfügen, falls nicht vorhanden
+                                results.unshift({
+                                    INITLandID: null,
+                                    TITLE: ""
+                                });
+
                                 // Now, we call WinJS.Binding.List to get the bindable list
                                 if (initSprache && initSprache.winControl) {
                                     initSprache.winControl.data = new WinJS.Binding.List(results);
@@ -250,6 +258,13 @@
                     } else {
                         if (initSprache && initSprache.winControl) {
                             var results = ClientManagement.initSpracheView.getResults();
+
+                            // Leeren Eintrag einfügen, falls nicht vorhanden
+                            results.unshift({
+                                INITLandID: null,
+                                TITLE: ""
+                            });
+
                             initSprache.winControl.data = new WinJS.Binding.List(results);
                         }
                         return WinJS.Promise.as();
@@ -287,6 +302,25 @@
                         initLand.selectedIndex = 0;
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                        Log.print(Log.l.trace, "calling select globalUserServersVIEW...");
+                        return ClientManagement.globalUserServersVIEW.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "ClientManagement.globalUserServersVIEW: success!");
+                            // select returns object already parsed from json file in response
+                            if (json && json.d) {
+                                var results = json.d.results;
+                                if (globalUserServer && globalUserServer.winControl) {
+                                    globalUserServer.winControl.data = new WinJS.Binding.List(results);
+                                }
+                            }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "globalUserServersVIEW: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
                 }).then(function () {
                     if (mandantId) {
                         Log.print(Log.l.trace, "calling select fairMandantView...");

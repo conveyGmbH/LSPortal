@@ -65,6 +65,31 @@
                 Log.ret(Log.l.trace);
                 return ret;
             }
+        },
+        _globalUserServersVIEW: {
+            get: function () {
+                return AppData.getFormatView("GlobalUserServers", 20581);
+            }
+        },
+        globalUserServersVIEW: {
+            select: function (complete, error, restriction, options) {
+                Log.call(Log.l.trace, namespaceName + ".globalUserServersVIEW.");
+                var ret = ClientManagement._globalUserServersVIEW.select(complete, error, restriction, options);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, namespaceName + ".globalUserServersVIEW.");
+                var ret = ClientManagement._globalUserServersVIEW.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, namespaceName + ".globalUserServersVIEW.");
+                var ret = ClientManagement._globalUserServersVIEW.map;
+                Log.ret(Log.l.trace);
+                return ret;
+            }
             }
     });
 })();

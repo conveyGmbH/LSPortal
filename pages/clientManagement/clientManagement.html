@@ -17,6 +17,9 @@
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>
                         <div class="content-header-line win-type-caption">
                             <span class="id-field"></span>
+                            <span class="id-field" data-win-bind="style.display: dataClientManagement.FairMandantID Binding.Converter.toDisplay">
+                                <span data-win-res="{textContent: 'clientmanagement.fairmandantid'}"></span><span data-win-bind="textContent: dataClientManagement.FairMandantID"></span>
+                            </span>
                             <span class="caption-field" data-win-res="{textContent: 'clientmanagement.title'}"></span>
                             <span class="date-field"></span>
                         </div>
@@ -39,16 +42,6 @@
                             <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.email'}"></span>
                             <input name="Email" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.EMail Binding.Mode.twoway" />
                         </div>
-                        <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'clientmanagement.fairmandantid'}"></span>
-                            <div class="label landscape_only">
-                                <span data-win-res="{textContent: 'clientmanagement.fairmandantid'}"></span>
-                            </div>
-                            <div class="input_group">
-                                <input name="Lizenznummer" class="input_small_left win-textbox" type="text" data-win-bind="value: dataClientManagement.FairMandantID Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" readonly="readonly" />
-                                <span class="input_small_left" data-win-bind="textContent: dataClientManagement.FairMandantID; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay" readonly="readonly"></span>
-                            </div>
-                        </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'clientmanagement.numLicenses'}"></span>
@@ -64,17 +57,20 @@
                             </div>
                         </div>
                         <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'clientmanagement.locationid'}"></span>
-                            <span class="label win-type-caption portrait_only_right" data-win-res="{textContent: 'clientmanagement.dunsnumber'}"></span>
-                            <div class="label landscape_only">
-                                <span data-win-res="{textContent: 'clientmanagement.locationid'}"></span> / <span data-win-res="{textContent: 'clientmanagement.dunsnumber'}"></span>
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.locationid'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.locationid'}"></span>
+                            <select id="GlobalUserServer"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: dataClientManagement.LocationID Binding.Mode.twoway">
+                                <option data-win-bind="value: LocationID; textContent: LocationName"></option>
+                            </select>
                             </div>
-                            <div class="input_group">
-                                <input name="Lizenznummer" class="input_small_left win-textbox" type="text" data-win-bind="value: dataClientManagement.LocationID Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                <input name="Kundennummer" class="input_small_right win-textbox" type="text" data-win-bind="value: dataClientManagement.DUNSNumber Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
-                                <span class="input_small_left" data-win-bind="textContent: dataClientManagement.LocationID; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                                <span class="input_small_right" data-win-bind="textContent: dataClientManagement.DUNSNumber; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
-                            </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.dunsnumber'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.dunsnumber'}"></span>
+                            <input name="Kundennummer" class="input_field win-textbox" type="text" data-win-bind="value: dataClientManagement.DUNSNumber Binding.Mode.twoway; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplayNone" />
+                            <span class="input_field" data-win-bind="textContent: dataClientManagement.DUNSNumber; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
                         </div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.street'}"></span>
@@ -83,8 +79,8 @@
                             <span class="input_field" data-win-bind="textContent: dataClientManagement.Strasse; style.display: dataClientManagement.Flag_NoEdit Binding.Converter.toDisplay"></span>
                         </div>
                         <div class="field_line field_line_even">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'account.language'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'account.language'}"></span>
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientmanagement.preflanguage'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'clientmanagement.preflanguage'}"></span>
                             <select id="InitSprache"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"

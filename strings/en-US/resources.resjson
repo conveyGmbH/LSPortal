@@ -1239,10 +1239,10 @@
 
     "clientmanagement.title" : "Client",
     "clientmanagement.companyname" : "Companyname",
-    "clientmanagement.contactperson" : "Contactperson",
+    "clientmanagement.contactperson" : "Contact person (name and surname)",
     "clientmanagement.email" : "Email",
     "clientmanagement.numLicenses" : "Licenses",
-    "clientmanagement.customerID" : "Customernumber",
+    "clientmanagement.customerID" : "External or additional customer number",
     "clientmanagement.street" : "Street",
     "clientmanagement.zip" : "Zip",
     "clientmanagement.city" : "City",
@@ -1251,8 +1251,9 @@
     "clientmanagement.createapiuser" : "Create Api-User for LiveBridge",
     "clientmanagement.apidata" : "Api-User Data",
     "clientmanagement.dunsnumber" : "DUNS Number",	
-    "clientmanagement.locationid" : "ServerLocationID",
-    "clientmanagement.fairmandantid" : "FairMandantID",
+    "clientmanagement.locationid" : "Preferred server",
+    "clientmanagement.fairmandantid" : "LeadSuccess unique customer number",
+    "clientmanagement.preflanguage" : "Preferred language for client",
 
 
     "clientmanagementlist.title" : "Client",

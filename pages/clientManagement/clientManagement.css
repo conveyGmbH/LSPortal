@@ -1,2 +1,5 @@
 ﻿body {
 }
+.clientManagement .portrait_only_right {
+    width: 300px !important;
+}
