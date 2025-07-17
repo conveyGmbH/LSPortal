@@ -400,14 +400,11 @@
                 Log.call(Log.l.trace, "GenDataEmpList.eventView.");
                 var nextJson = null;
                 var ret = ContactList._eventView.select(function(json) {
-                        nextJson = json;
-                    },
-                    error,
-                    null,
-                    {
-                        ordered: true,
-                        orderAttribute: "Name"
-                    }).then(function() {
+                    nextJson = json;
+                }, error, null, {
+                    ordered: true,
+                    orderAttribute: "Name"
+                }).then(function() {
                     if (nextJson) {
                         return ContactList.eventView.fetchAll(nextJson, complete, error);
                     } else {

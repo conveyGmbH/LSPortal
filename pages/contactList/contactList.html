@@ -13,65 +13,49 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
-                        <div class="win-type-subtitle master-list-header list-portrait-only">
-                            <div class="master-list-header-title">
-                                <span data-win-res="{textContent: 'contactList.title'}"></span>
-                            </div>
-                            <div class="master-list-header-line win-type-caption">
-                                <span data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span>
-                                <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
-                            </div>
-                        </div>
-                        <div class="win-type-subtitle master-list-header list-landscape-only">
-                            <div class="master-list-header-title">
-                                <span data-win-res="{textContent: 'contactList.title'}"></span>
-                            </div>
-                            <div class="master-list-header-line win-type-caption">
-                                <span data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span>
-                                <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
-                            </div>
-                            <div class="master-list-header-line win-type-caption">
-                                <span data-win-res="{textContent: 'contactList.davon'}"></span>
-                                <span data-win-bind="textContent: noeccount"></span>
-                                <span data-win-res="{textContent: 'contactList.numberofeditedcontacts'}"></span><span> / </span>
-                                <span data-win-bind="textContent: nouccount"></span><span>&nbsp;</span>
-                                <span data-win-res="{textContent: 'contactList.numberofunprocessedcontacts'}"></span>
-                            </div>
-                        </div>
-                        <div class="win-type-subtitle master-list-header list-compact-only">
-                            <div class="master-list-header-line win-type-caption">
-                                <span data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span>
-                                <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
-                            </div>
-                        </div>
-                        <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
+	                        <div class="master-list-header-title">
+		                        <span data-win-res="{textContent: 'contactList.title'}"></span>
+	                        </div>
+	                        <div class="master-list-header-line win-type-caption">
+		                        <span data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span>
+		                        <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
+	                        </div>
+                        </div>
+                        <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <select id="events"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
                                     data-win-bind="value: eventId">
-                                <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+	                            <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
                             </select>
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
-                            <div id="events-container">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
-                                <input class="input_field win-textbox" type="text" id="searchField" />
+	                        <div id="events-container">
+		                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
+		                        <span class="label landscape_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
+		                        <input class="input_field win-textbox" type="text" id="searchField" />
+	                        </div>
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>
+                            <div class="input_group">
+	                            <button class="list-button-left win-button" id="btnDateSort"
+	                                    data-win-bind="textContent: btnDateSort"></button>
+	                            <button class="list-button-left win-button" id="btnCompanySort"
+	                                    data-win-bind="textContent: btnCompanySort"></button>
+	                            <button class="list-button-left win-button" id="btnNameSort"
+	                                    data-win-bind="textContent: btnNameSort"></button>
                             </div>
                         </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <div class="input_group">
-                                <button class="list-button-left win-button" id="btnDateSort"
-                                        data-win-bind="textContent: btnDateSort"></button>
-                                <button class="list-button-left win-button" id="btnCompanySort"
-                                        data-win-bind="textContent: btnCompanySort"></button>
-                                <button class="list-button-left win-button" id="btnNameSort"
-                                        data-win-bind="textContent: btnNameSort"></button>
+                        <div class="win-type-subtitle master-list-header list-compact-only">
+                            <div class="master-list-header-line win-type-caption">
+                                <span data-win-res="{textContent: 'contactList.numberofcontactstotal'}"></span><span>: </span>
+                                <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
                             </div>
                         </div>
                     </div>
@@ -127,7 +111,7 @@
                         <div class="list-compact-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
-                                <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
+                                <span class="win-type-title win-type-ellipsis"
                                       data-win-bind="textContent: nameInitial"></span>
                             </div>
                         </div>

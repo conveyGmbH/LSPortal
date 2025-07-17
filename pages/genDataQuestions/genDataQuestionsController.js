@@ -36,6 +36,18 @@
             }
             this.resultConverter = resultConverter;
 
+            var checkLoadingFinished = function () {
+                WinJS.Promise.timeout(10).then(function () {
+                    if (!AppBar.busy) {
+                        that.binding.loading = false;
+                    } else {
+                        WinJS.Promise.timeout(100).then(function () {
+                            that.checkLoadingFinished();
+                        });
+                    }
+                });
+            }
+            this.checkLoadingFinished = checkLoadingFinished;
             // define handlers
             this.eventHandlers = {
                 onSelectionChanged: function (eventInfo) {
@@ -62,15 +74,16 @@
                                 layout = Application.GenDataQuestionsLayout.GenDataQuestionsLayout;
                                 listView.winControl.layout = { type: layout };
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
                             //smallest List color change
-                            var circleElement = pageElement.querySelector('#nameInitialcircle');
+                            var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
                             if (circleElement && circleElement.style) {
-                            circleElement.style.backgroundColor = Colors.accentColor;
+                                circleElement.style.backgroundColor = Colors.accentColor;
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
+                        } else if (listView.winControl.loadingState === "complete") {
+                            that.checkLoadingFinished();
                         }
                     }
                     that.loadingStateChanged(eventInfo);

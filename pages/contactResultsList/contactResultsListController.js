@@ -299,7 +299,7 @@
                                 layout = Application.ContactResultsListLayout.ContactResultsListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
                             //set list-order column
                             var headerListFields = listView.querySelectorAll(".list-header-columns > div");
                             if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
@@ -317,7 +317,7 @@
                                 }
                             }
                             //smallest List color change
-                            var circleElements = listView.querySelectorAll('#nameInitialcircle');
+                            var circleElements = listView.querySelectorAll(".list-compact-only .list-div-left > span");
                             if (circleElements) for (i = 0; i < circleElements.length; i++) {
                                 circleElements[i].style.backgroundColor = Colors.navigationColor;
                             }
@@ -325,6 +325,7 @@
                             Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                 "barcode-qr": { useStrokeColor: false }
                             });
+                        } else if (listView.winControl.loadingState === "complete") {
                         }
                     }
                     that.loadingStateChanged(eventInfo);

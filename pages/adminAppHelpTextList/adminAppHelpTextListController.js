@@ -287,15 +287,15 @@
                                     }
                                 }
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
                             //smallest List color change
-                            var circleElement = pageElement.querySelector('#nameInitialcircle');
+                            var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
                             if (circleElement && circleElement.style) {
-                            circleElement.style.backgroundColor = Colors.accentColor;
+                                circleElement.style.backgroundColor = Colors.accentColor;
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                             Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
+                        } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");

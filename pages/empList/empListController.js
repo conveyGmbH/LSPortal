@@ -299,7 +299,7 @@
                                     }
                                 }
                                 //smallest List color change
-                                var circleElement = pageElement.querySelector('#nameInitialcircle');
+                                var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
                                 if (circleElement && circleElement.style) {
                                     circleElement.style.backgroundColor = Colors.accentColor;
                                 }

@@ -13,15 +13,16 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
                     <div class="content-header">
-                        <div class="field_line field_line_odd win-type-subtitle master-list-header">
-                            <span data-win-res="{textContent: 'eventslist.title'}"></span>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line" id="btnFilterNotPublishedfieldline" data-win-bind="style.display: showHideFilterBtn Binding.Converter.toDisplay">
-                            <button class="list-button-left win-button" id="btnFilterNotPublished"
-                                    data-win-bind="textContent: btnFilterNotPublished"></button>
-                        </div>
-                        <div class="field_line" id="dashboardFeature" data-win-bind="style.display: showHideDashboardFeature Binding.Converter.toDisplay">
+	                    <div class="field_line field_line_odd">
+		                    <div class="master-list-header-title">
+			                    <span data-win-res="{textContent: 'eventslist.title'}"></span>
+		                    </div>
+		                    <div class="master-list-header-title" id="btnFilterNotPublishedfieldline" data-win-bind="style.display: showHideFilterBtn Binding.Converter.toDisplay">
+			                    <button class="list-button-left win-button" id="btnFilterNotPublished"
+			                            data-win-bind="textContent: btnFilterNotPublished"></button>
+		                    </div>
+	                    </div>
+                        <div class="field_line field_line_even" id="dashboardFeature" data-win-bind="style.display: showHideDashboardFeature Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'eventList.dashboardbox'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'eventList.dashboardbox'}"></span>
                             <select id="showDashboardCombo"
@@ -37,8 +38,9 @@
                             <span class="label landscape_only" data-win-res="{textContent: 'eventList.searchtxt'}"></span>
                             <input class="input_field win-textbox" type="text" id="searchField" />
                         </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
+                        <div class="field_line field_line_even">
+	                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>
+	                        <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>
                             <div class="input_group">
                                 <button class="list-button-left win-button" id="btnEventSort"
                                         data-win-bind="textContent: btnEventSort"></button>
@@ -52,7 +54,7 @@
                         <div class="list-compact-only" data-win-bind="disabled: disabled">
                             <div class="row-separator"></div>
                             <div class="list-div-left">
-                                <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
+                                <span class="win-type-title win-type-ellipsis"
                                       data-win-bind="textContent: nameInitial"></span>
                             </div>
                         </div>
