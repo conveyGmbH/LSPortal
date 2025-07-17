@@ -88,34 +88,6 @@
     padding-bottom: 8px;
 }
 
-.onsite-offsiteInfodeskList{
-    width: 16px;
-    height: 16px;
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: white;
-    display: block;
-    position: relative;
-    left: 22px;
-    top: -22px;
-    z-index: 10000;
-    padding: 0;
-    text-align: center;
-    vertical-align: top;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
-/*
-.onsite-offsite-symbol {
-    font-family: "Symbols";
-    padding: 16px;
-    display: block;
-    position: relative;
-    left: -14px;
-    top: -15px;
-}*/
 /*.user-image-container {
     display: block;
     position: absolute;
@@ -137,7 +109,7 @@
 .user-photo-list {
     display: inline;
     position: absolute;
-    left:25px;
+    left: 25px;
     top: 20px; /*12*/
     width: 40px;
     height: 40px;

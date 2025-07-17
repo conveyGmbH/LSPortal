@@ -26,12 +26,14 @@
             // add page specific commands to AppBar
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
-                { id: "clickExportQrcode", label: getResourceText("command.userPwExport"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
-                //{ id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
                 { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newEmployee"), section: "primary", svg: "user_plus" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" },
-                { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" }            ];
+                { id: "clickExportQrcode", label: getResourceText("command.userPwExport"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
+                { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" },
+                //{ id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
+                { id: "clickDelete2fa", label: getResourceText("command.delete2fa"), tooltip: getResourceText("tooltip.delete2fa"), section: "primary", svg: "lock_open" },
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" }
+            ];
 
             this.controller = new GenDataEmployee.Controller(element, commandList);
             if (this.controller.eventHandlers) {

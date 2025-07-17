@@ -399,6 +399,21 @@
                         item.title = results[curIndex].TITLE;
                     }
                 }
+                item.onlineColor = "gray";
+                if (item.LastCallTS) {
+                    var lastCallDate = getDateObject(item.LastCallTS);
+                    if (lastCallDate) {
+                        var lastCallMs = lastCallDate.getTime();
+                        var diffMinutes = (Date.now() - lastCallMs) / 60000;
+                        if (diffMinutes > 15) {
+                            item.onlineColor = "red";
+                        } else if (diffMinutes > 3) {
+                            item.onlineColor = "orange";
+                        } else {
+                            item.onlineColor = "forestgreen";
+                        }
+                    }
+                }
                 item.OvwContentDOCCNT3 = "";
                 if (that.docs) {  //   && index >= that.firstEmployeesIndex
                     for (var i = 0; i < that.docs.length; i++) {

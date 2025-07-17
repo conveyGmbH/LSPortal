@@ -24,6 +24,7 @@
                 searchString: "",
                 hasContacts: null,
                 hasLocalevents: null,
+                hasTwoFactor: null,
                 licenceWarning: false,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 btnFirstNameText: getResourceText("employee.firstName"),
@@ -187,6 +188,11 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
+                if (item.HasTwoFactor) {
+                    item.addonIcon = "lock";
+                } else {
+                    item.addonIcon = "";
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -213,6 +219,7 @@
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
+                                                that.binding.hasTwoFactor = item.data.HasTwoFactor;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry" || curPageId === "employeeVisitorFlow") &&
@@ -300,7 +307,12 @@
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
-                            Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
+                            Colors.loadSVGImageElements(listView, "addon-image", 16, "#ffffff", "name", null, {
+                                "lock": {
+                                    strokeWidth: 200
+                                }
+                            });
+                            Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
@@ -500,6 +512,9 @@
                                 var objectRec = scopeFromRecordId(recordId);
                                 if (objectRec && objectRec.index >= 0) {
                                     that.employees.setAt(objectRec.index, employee);
+                                    that.binding.employeeId = recordId;
+                                    that.binding.hasContacts = employee.HatKontakte;
+                                    that.binding.hasTwoFactor = employee.HasTwoFactor;
                                 } else {
                                     licenceWarningSelected = false;
                                     that.loadData();

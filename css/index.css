@@ -852,17 +852,62 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     height: 40px;
 }
 
+.list-symbol-addon {
+    display: inline-block;
+    position: relative;
+    left: 0px;
+    bottom: 25px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #e6e6e6;
+    overflow: hidden;
+}
+
+.addon-image {
+    display: inline-block;
+    position: absolute;
+    background-color: forestgreen;
+    width: 100%;
+    height: 100%;
+}
+
+.cnv-ui-dark .list-symbol-addon {
+    border-color: #101010;
+}
+/*
+.cnv-ui-dark .addon-image {
+    background-color: lightgreen;
+}
+*/
+.addon-image > svg {
+    display: inline-block;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+.list-id-field {
+    display: block;
+    position: relative;
+    left: 0;
+    top: -6px;
+    opacity: 0.6;
+}
+
 .onsite-offsite {
     width: 16px;
     height: 16px;
     border-radius: 10px;
     border-style: solid;
     border-width: 2px;
-    border-color: #f0f0f0;
+    border-color: #e6e6e6;
     display: block;
     position: relative;
-    left: 20px;
-    top: 20px;
+    left: 22px;
+    top: -22px;
     z-index: 10000;
     padding: 0;
     text-align: center;
@@ -870,6 +915,23 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+.cnv-ui-dark .onsite-offsite {
+    border-color: #101010;
+}
+
+.win-selected .onsite-offsite, .win-selected .list-symbol-addon {
+    border-color: #c66145;
+}
+/*
+.onsite-offsite-symbol {
+    font-family: "Symbols";
+    padding: 16px;
+    display: block;
+    position: relative;
+    left: -14px;
+    top: -15px;
+}*/
 
 .onsite-offsite-symbol {
     font-family: "Symbols";
@@ -918,8 +980,18 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     color: white;
 }
 
+.statusPause {
+    background-color: orange;
+    color: white;
+}
+
 .statusOff {
     background-color: red;
+    color: white;
+}
+
+.statusUnknown {
+    background-color: grey;
     color: white;
 }
 

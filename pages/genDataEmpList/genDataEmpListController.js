@@ -23,6 +23,7 @@
                 searchString: "",
                 hasContacts: null,
                 hasLocalevents: null,
+                hasTwoFactor: null,
                 licenceWarning: false,
                 btnFirstNameText: getResourceText("employee.firstName"),
                 btnNameText: getResourceText("employee.name"),
@@ -205,6 +206,11 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
+                if (item.HasTwoFactor) {
+                    item.addonIcon = "lock";
+                } else {
+                    item.addonIcon = "";
+                }
                 if (item.UserStatus === "INACTIVE") {
                     item.InactiveShowFlag = 1;
                 } else {
@@ -254,6 +260,7 @@
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.hasLocalEvents = item.data.HasLocalEvents;
+                                                that.binding.hasTwoFactor = item.data.HasTwoFactor;
                                                 that.binding.siteAdmin = item.data.SiteAdmin;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
@@ -351,7 +358,12 @@
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
-                            Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
+                            Colors.loadSVGImageElements(listView, "addon-image", 12, /*Colors.isDarkTheme ? "#000000" :*/ "#ffffff", "name", null, {
+                                "lock": {
+                                    strokeWidth: 200
+                                }
+                            });
+                            Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
@@ -602,6 +614,7 @@
                                     that.employees.setAt(objectrec.index, employee);
                                     that.binding.employeeId = recordId;
                                     that.binding.hasContacts = employee.HatKontakte;
+                                    that.binding.hasTwoFactor = employee.HasTwoFactor;
                                     /*#7573 Kommentar Nr.5 */
                                     //that.selectRecordId(recordId);
                                     var curPageId = Application.getPageId(nav.location);

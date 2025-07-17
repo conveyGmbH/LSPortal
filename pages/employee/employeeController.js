@@ -85,6 +85,17 @@
             }
             this.getRecordId = getRecordId;
 
+            var getHasTwoFactor = function () {
+                var hasTwoFactor = null;
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    hasTwoFactor = master.controller.binding.hasTwoFactor;
+                }
+                Log.ret(Log.l.trace, hasTwoFactor);
+                return hasTwoFactor;
+            }
+            this.getHasTwoFactor = getHasTwoFactor;
 
             var deleteData = function (complete, error) {
                 var ret;
@@ -477,6 +488,30 @@
                         return that.exportPwdQrCodeEmployeePdf();
                     });
                     Log.ret(Log.l.trace);
+                },
+                clickDelete2fa: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var confirmTitle = getResourceText("employee.questionDelete2fa");
+                    confirm(confirmTitle, function (result) {
+                        if (result) {
+                            Log.print(Log.l.trace, "clickDelete2fa: user choice OK");
+                            AppData.call("PRC_DeleteTwoFactorUser", {
+                                pUserLogin: that.binding.dataEmployee.Login
+                            }, function (result) {
+                                Log.print(Log.l.info, "call PRC_DeleteTwoFactorUser: success! ");
+                                var master = Application.navigator.masterControl;
+                                if (master && master.controller &&
+                                    typeof master.controller.loadData === "function") {
+                                    master.controller.loadData(getRecordId());
+                                }
+                            }, function (error) {
+                                Log.print(Log.l.error, "call PRC_DeleteTwoFactorUser: error");
+                            });
+                        } else {
+                            Log.print(Log.l.trace, "clickDelete2fa: user choice CANCEL");
+                        }
+                    });
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -533,6 +568,9 @@
                     } else {
                         return true;
                     }
+                },
+                clickDelete2fa: function () {
+                    return !getHasTwoFactor();
                 }
             };
 
