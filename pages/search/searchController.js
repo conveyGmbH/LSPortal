@@ -50,6 +50,7 @@
 
             // set to null here to initiate bindinghandler later on change
             that.binding.restriction.INITLandID = null; //
+            that.binding.restriction.MitarbeiterID = null;
 
             var getEventId = function () {
                 var eventId = null;
@@ -381,7 +382,7 @@
                             (!initLand.winControl.data || !initLand.winControl.data.length)) {
                             initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                         }
-                        initLand.selectedIndex = 0;
+                        //initLand.selectedIndex = 0;
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -403,8 +404,8 @@
                                 if (erfasserID && erfasserID.winControl) {
                                     erfasserID.winControl.data = that.employees;
                                 }
-                                erfasserID.selectedIndex = Search.employeeView.defaultValue.index;
-                                that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
+                                //erfasserID.selectedIndex = Search.employeeView.defaultValue.index;
+                                //that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
 
                             } else {
                                 that.nextUrl = null;
@@ -479,6 +480,9 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
+            }).then(function () {
                 var savedRestriction = AppData.getRestriction("Kontakt");
                 if (typeof savedRestriction === "object") {
                     that.binding.restriction = savedRestriction;
@@ -489,9 +493,6 @@
                 }
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showDateRestrictions();
-            }).then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Date restrictions shown");
