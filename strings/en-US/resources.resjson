@@ -280,7 +280,7 @@
     "contact.barcode"       : "Barcode",
     "contact.incomplete"    : "Editing incomplete",
     "contact.complete"		: "Manually editied/reviewed after acquisition",
-    "contact.notice"        : "Comment",
+    "contact.notice"        : "Add. business card Info",
     "contact.url"           : "Website",
     "contact.barcodeState"  : "Barcode State",
     "contact.requiredField" : "Mandatory item",
@@ -291,7 +291,7 @@
     "contact.mr"            : "Mr",
     "contact.mrs"           : "Mrs",
     "contact.useRestriction": "use",
-    "contact.comment3"      : "Comment",
+    "contact.comment3"      : "Comments and lead notes",
 
     "contactRemote.title"   : "Already uploaded Contact",
 
@@ -1180,6 +1180,7 @@
     "siteevents.numberofemailssent" : "Number of emails sent",
     "siteevents.lastlogintotheportal" : "Last login to the portal",
     "siteevents.adminLoginList" : "AdminLoginList",
+    "siteevents.adminContactList" : "adminContactList",
 
     "siteeventsneuaus.title" : "New Exhibitor",
     "siteeventsneuaus.veranstaltungsname" : "Event name",

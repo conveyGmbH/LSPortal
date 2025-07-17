@@ -134,6 +134,34 @@
                 DateName: "",
                 DocContentDOCCNT1 : ""
             }
+        },
+        getContactNoteView: function () {
+            return AppData.getFormatView("KontaktNotiz", 0, false);
+        },
+        contactNoteView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".sketchDocView.");
+                var ret = ContactResultsEdit.getContactNoteView().select(complete, error, restriction);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, namespaceName + ".contactView.", "recordId=" + recordId);
+                var ret = ContactResultsEdit.getContactNoteView().update(complete, error, recordId, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            insert: function (complete, error, viewResponse) {
+                Log.call(Log.l.trace, "wavSketchView.");
+                var ret = ContactResultsEdit.getContactNoteView().insert(complete, error, viewResponse);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                KontaktNotizVIEWID: 0,
+                Quelltext: ""
+            }
         }
     });
 })();

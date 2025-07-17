@@ -36,6 +36,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataContact: getEmptyDefaultValue(ContactResultsEdit.contactView.defaultValue),
+                dataContactNote: getEmptyDefaultValue(ContactResultsEdit.contactNoteView.defaultValue),
                 dataContactAudio: getEmptyDefaultValue(ContactResultsEdit.exportAudioDataView.defaultValue),
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
@@ -1166,6 +1167,35 @@
                         }
                     }
                 }).then(function () {
+                    // Kommentar (neues Feld aus KontaktNotiz)
+                    var recordId = getRecordId();
+                    if (recordId) {
+                        //load of format relation record data
+                        Log.print(Log.l.trace, "calling select contactView...");
+                        var contactNoteSelectPromise = ContactResultsEdit.contactNoteView.select(function (json) {
+                            that.removeDisposablePromise(contactNoteSelectPromise);
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "contactView: success!");
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                var result = json.d.results[0];
+                                that.binding.dataContactNote = result;
+                            } else {
+                                that.binding.dataContactNote =
+                                    getEmptyDefaultValue(ContactResultsEdit.contactNoteView.defaultValue);
+                            }
+                        }, function (errorResponse) {
+                            that.removeDisposablePromise(contactNoteSelectPromise);
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, {
+                                KontaktID: recordId,
+                                DocGroup: 3,
+                                DocFormat: 4025
+                            });
+                        return that.addDisposablePromise(contactNoteSelectPromise);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
@@ -1191,38 +1221,89 @@
                     if (recordId) {
                         AppBar.busy = true;
                         Log.print(Log.l.trace, "calling update contactView recordId=" + recordId);
-                        ret = ContactResultsEdit.contactView.update(function (response) {
-                            AppBar.busy = false;
-                            // called asynchronously if ok
-                            Log.print(Log.l.info, "update contactView: success!");
-                            AppBar.modified = false;
-                            if (typeof complete === "function") {
-                                complete(that.binding.dataContact);
-                                return WinJS.Promise.as();
-                            } else {
-                                return that.loadData().then(function () {
-                                    var master = Application.navigator.masterControl;
-                                    if (master && master.controller &&
-                                        master.controller.binding &&
-                                        typeof master.controller.loadData === "function" &&
-                                        typeof master.controller.selectRecordId === "function") {
-                                        master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                                        master.controller.loadData(master.controller.binding.contactId).then(function () {
-                                            master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
-                                        });
+                         ret = new WinJS.Promise.as().then(function () {
+                            // AppData.generalData.setRecordId("Kontakt", recordId);
+                            var tmpKontaktid = AppData.generalData.getRecordId("Kontakt");
+                            var dataSketch = {
+                                KontaktID: that.binding.dataContact.KontaktID || AppData.getRecordId("Kontakt"),
+                                Titel: "Kommentar/Comment",
+                                DocGroup: 3,
+                                DocFormat: 4025,
+                                ExecAppTypeID: 2,
+                                Quelltext: that.binding.dataContactNote.Quelltext || ""
+                            };
+                            if (that.binding.dataContactNote.KontaktNotizVIEWID) {
+                                return ContactResultsEdit.contactNoteView.update(function (response) {
+                                    // called asynchronously if ok
+                                    Log.print(Log.l.info, "contactData update: success!");
+                                    if (typeof complete === "function") {
+                                        complete(response);
                                     }
-                                });
+                                    return WinJS.Promise.as();
+                                }, function (errorResponse) {
+                                    AppBar.busy = false;
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    error(errorResponse);
+                                }, that.binding.dataContactNote.KontaktNotizVIEWID, dataSketch);
+                            } else {
+                                return ContactResultsEdit.contactNoteView.insert(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "sketchData insert: success!");
+                                    // contactData returns object already parsed from json file in response
+                                    Log.print(Log.l.info, "contactData update: success!");
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (typeof error === "function") {
+                                        error(errorResponse);
+                                    }
+                                }, dataSketch);
                             }
-                        }, function (errorResponse) {
-                            AppBar.busy = false;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.info, "update contactView: success!");
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        }, recordId, dataContact);
+                        }).then(function () {
+                            return ContactResultsEdit.contactView.update(function (response) {
+                                AppBar.busy = false;
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "update contactView: success!");
+                                AppBar.modified = false;
+                                if (typeof complete === "function") {
+                                    complete(that.binding.dataContact);
+                                    return WinJS.Promise.as();
+                                } else {
+                                    return that.loadData().then(function () {
+                                        var master = Application.navigator.masterControl;
+                                        if (master && master.controller && master.controller.binding) {
+                                            master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                            master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                                master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                            });
+                                        }
+                                    });
+                                }
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.info, "update contactView: success!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }, recordId, dataContact).then(function () {
+                                if (!err) {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
+                                        return master.controller.loadData(recordId);
+                                    }
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            });
+                        });
                     } else {
                         dataContact.HostName = (window.device && window.device.uuid);
                         dataContact.MitarbeiterID = AppData.getRecordId("Mitarbeiter");
