@@ -686,34 +686,34 @@ select {
     display: block;
     width: 175px;
     position: relative;
-    top: 4px;
+    top: 8px;
 }
 .portrait_only_quarter {
     display: block;
     position: relative;
     left: 25%;
-    top: -22px;
+    top: -18px;
     height: 0;
 }
 .portrait_only_half {
     display: block;
     position: relative;
     left: 50%;
-    top: -22px;
+    top: -18px;
     height: 4px;
 }
 .portrait_only_threeQuarter {
     display: block;
     position: relative;
     left: 50%;
-    top: -22px;
+    top: -18px;
     height: 4px;
 }
 .portrait_only_right {
     display: block;
     position: relative;
     left: 108px;
-    top: -22px;
+    top: -18px;
     height: 4px;
     width: 110px;
 }
