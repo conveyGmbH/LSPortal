@@ -610,7 +610,7 @@
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
                     var master = Application.navigator.masterControl;
                     var orderLicenceButton = master.controller.getOrderLicenceBtn();
-                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === "red") {
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
                         //that.binding.restriction.OrderDesc = true;
                         delete that.binding.restriction.NichtLizenzierteApp;
                         master.controller.highlightorderLicenceBtn(0);
@@ -731,7 +731,7 @@
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
-                            Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
+                            Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");

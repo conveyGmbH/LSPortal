@@ -78,7 +78,7 @@
 
             var highlightorderLicenceBtn = function(state) {
                 if (state === 1) {
-                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "red";
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = Colors.offColor;
                 } else {
                     pageElement.querySelector("#orderLicenceBtn").style.borderColor = "transparent";
                 }
@@ -349,21 +349,21 @@
                                         }
                                     }
                                 }
+                                //smallest List color change
+                                var circleElement = pageElement.querySelector('#nameInitialcircle');
+                                if (circleElement && circleElement.style) {
+                                    circleElement.style.backgroundColor = Colors.accentColor;
+                                }
+                                // load SVG images
+                                Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
+                                Colors.loadSVGImageElements(listView, "addon-image", 12, /*Colors.isDarkTheme ? "#000000" :*/ "#ffffff", "name", null, {
+                                    "lock": {
+                                        strokeWidth: 200
+                                    }
+                                });
+                                Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            //smallest List color change
-                            var circleElement = pageElement.querySelector('#nameInitialcircle');
-                            if (circleElement && circleElement.style) {
-                                circleElement.style.backgroundColor = Colors.accentColor;
-                            }
-                            // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
-                            Colors.loadSVGImageElements(listView, "addon-image", 12, /*Colors.isDarkTheme ? "#000000" :*/ "#ffffff", "name", null, {
-                                "lock": {
-                                    strokeWidth: 200
-                                }
-                            });
-                            Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");

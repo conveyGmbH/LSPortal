@@ -375,7 +375,7 @@
 }
 
 .circle-with-text-event-dot {
-    background-color: red;
+    background-color: firebrick;
     border-color: white;
     border-radius: 50%;
     border-width: 5px;
@@ -392,7 +392,7 @@
 }
 
 .circle-with-text-global-dot {
-    background-color: red;
+    background-color: firebrick;
     border-color: white;
     border-radius: 50%;
     border-width: 5px;

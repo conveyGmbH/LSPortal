@@ -137,10 +137,10 @@
     float: right;
 }
 .empList .list-compressed {
-    width: calc(100% - 100px);
+    width: calc(100% - 90px);
 }
 .empList .licence-warning-text {
-    color: red;
+    color: firebrick;
     font-size: large;
     font-weight: bold;
 }

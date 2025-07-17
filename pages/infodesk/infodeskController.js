@@ -697,7 +697,7 @@
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
                     var master = Application.navigator.masterControl;
                     var orderLicenceButton = master.controller.getOrderLicenceBtn();
-                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === "red") {
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
                         //that.binding.restriction.OrderDesc = true;
                         delete that.binding.restriction.NichtLizenzierteApp;
                         master.controller.highlightorderLicenceBtn(0);

@@ -215,12 +215,12 @@
         }),
         toStatusColor: WinJS.Binding.converter(function(value) {
             if  (value === getResourceText("contactResultsCriteria.incomplete")) {
-                return "red";
+                return Colors.offColor;
             }
             if (value === getResourceText("contactResultsCriteria.partialcomplete")) {
-                return "orange";
+                return Colors.pauseColor;
             }
-            return "green";
+            return Colors.onColor;
         })
     });
 })();

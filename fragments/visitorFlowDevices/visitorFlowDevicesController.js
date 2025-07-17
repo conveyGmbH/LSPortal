@@ -47,15 +47,15 @@
                 var datecomp = dateactminsum - datedataminsum;
                 if (dateactdate === datedataday && dateactminsum >= datedataminsum) {
                     if (datecomp >= 60) {
-                        element.style.backgroundColor = "red";
+                        element.style.backgroundColor = Colors.offColor;
                     }
                     else if (datecomp >= 30 && datecomp < 60) {
-                        element.style.backgroundColor = "orange";
+                        element.style.backgroundColor = Colors.pauseColor;
                     } else {
-                        element.style.backgroundColor = "green";
+                        element.style.backgroundColor = Colors.onColor;
                     }
                 } else {
-                    element.style.backgroundColor = "red";
+                    element.style.backgroundColor = Colors.offColor;
                 }
                 Log.ret(log.l.trace);
             }
@@ -128,18 +128,18 @@
                     var datecomp = dateactminsum - datedataminsum;
                     if (dateactdate === datedataday && dateactminsum >= datedataminsum) {
                         if (datecomp >= 60) {
-                            item.dotdevColor = "red";
+                            item.dotdevColor = Colors.offColor;
                         }
                         else if (datecomp >= 30 && datecomp < 60) {
-                            item.dotdevColor = "orange";
+                            item.dotdevColor = Colors.pauseColor;
                         } else {
-                            item.dotdevColor = "green";
+                            item.dotdevColor = Colors.onColor;
                         }
                     } else {
-                        item.dotdevColor = "red";
+                        item.dotdevColor = Colors.offColor;
                     }
                 } else {
-                    item.dotdevColor = "red";
+                    item.dotdevColor = Colors.offColor;
                 }
             }
             this.resultConverter = resultConverter;

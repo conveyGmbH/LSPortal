@@ -1121,7 +1121,7 @@ button.win-button {
     margin-top: 12px;
 }
 .list-symbol-ID {
-    width:60px;
+    width:44px;
     float:left;
     height:60px;
 }
@@ -1141,7 +1141,7 @@ button.win-button {
     float: left;
     width:calc(100% - 65px); 
     height:100%;
-    color: red
+    color: firebrick;
 }
 .list-compressed-green {
     float: left;

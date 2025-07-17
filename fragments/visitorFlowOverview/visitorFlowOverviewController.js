@@ -48,11 +48,11 @@
                     that.binding.ZutritteAlle = 0;
                 }
                 if (that.binding.ZutritteAlle >= item.Limit) {
-                    dot.style.backgroundColor = "red";
+                    dot.style.backgroundColor = Colors.offColor;
                 } else if (item.WarnLimit !== null && item.WarnLimit > 0 && that.binding.ZutritteAlle >= item.WarnLimit && that.binding.ZutritteAlle < item.Limit) {
-                    dot.style.backgroundColor = "orange";
+                    dot.style.backgroundColor = Colors.pauseColor;
                 } else {
-                    dot.style.backgroundColor = "lawngreen";
+                    dot.style.backgroundColor = Colors.onColor;
                 }
             }
             this.resultConverter = resultConverter;

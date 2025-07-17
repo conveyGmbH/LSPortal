@@ -58,9 +58,9 @@
                 var active = getResourceText("mailingList.active");
                 for (var i = 0; i <= templateActiveStatus.length; i++) {
                     if (templateActiveStatus[i].textContent === active) {
-                        templateActiveStatus[i].style.backgroundColor = "green";
+                        templateActiveStatus[i].style.backgroundColor = Colors.onColor;
                     } else {
-                        templateActiveStatus[i].style.backgroundColor = "orange";
+                        templateActiveStatus[i].style.backgroundColor = Colors.pauseColor;
                     }
                 }
             }

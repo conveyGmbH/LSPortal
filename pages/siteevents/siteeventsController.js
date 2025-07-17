@@ -108,11 +108,11 @@
                         // Check if the value is greater than 0
                         if (value > 0) {
                             //Set Border-LEFT red
-                            table.rows[i].style.borderTop = "thick solid red";
-                            table.rows[i].style.borderBottom = "thick solid red";
+                            table.rows[i].style.borderTop = "thick solid " + Colors.offColor;
+                            table.rows[i].style.borderBottom = "thick solid " + Colors.offColor;
                             // Set the text color of the cell to red and bold
                             cell.style.color = "white";
-                            cell.style.backgroundColor = "red";
+                            cell.style.backgroundColor = Colors.offColor;
                             cell.style.fontWeight = "900";
                         }
                     }

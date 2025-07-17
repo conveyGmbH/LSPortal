@@ -764,12 +764,12 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     top: 8px;
 }
 .publish-button .win-button:not(:hover) {
-    color: rgba(255,0,0,0.8);
+    color: rgba(178,34,34,0.8);
     background-color: #e6e6e6;
 }
 .publish-button .win-button:hover,
 .publish-button .win-button:active {
-    color: red;
+    color: firebrick;
     background-color: #f2f2f2;
 }
 /*
@@ -971,7 +971,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .statusNew {
-    background-color: blue;
+    background-color: navy;
     color: white;
 }
 
@@ -986,7 +986,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .statusOff {
-    background-color: red;
+    background-color: firebrick;
     color: white;
 }
 

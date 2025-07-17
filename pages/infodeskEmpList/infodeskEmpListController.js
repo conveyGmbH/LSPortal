@@ -66,7 +66,7 @@
 
             var highlightorderLicenceBtn = function (state) {
                 if (state === 1) {
-                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "red";
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = Colors.offColor;
                 } else {
                     pageElement.querySelector("#orderLicenceBtn").style.borderColor = "transparent";
                 }
@@ -406,11 +406,11 @@
                         var lastCallMs = lastCallDate.getTime();
                         var diffMinutes = (Date.now() - lastCallMs) / 60000;
                         if (diffMinutes > 15) {
-                            item.onlineColor = "red";
+                            item.onlineColor = Colors.offColor;
                         } else if (diffMinutes > 3) {
-                            item.onlineColor = "orange";
+                            item.onlineColor = Colors.pauseColor;
                         } else {
-                            item.onlineColor = "forestgreen";
+                            item.onlineColor = Colors.onColor;
                         }
                     }
                 }

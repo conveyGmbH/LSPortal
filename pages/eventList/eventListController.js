@@ -432,7 +432,7 @@
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
-                            Colors.loadSVGImageElements(listView, "warning-image", 40, "red");
+                            Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
                             that.loadNextUrl();
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
                             if (that.disabledindexes && that.disabledindexes.length > 0) {
