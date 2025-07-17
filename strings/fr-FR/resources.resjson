@@ -1300,7 +1300,7 @@
 
     "voucheradministrationlist.articlename" : "Client",
     "voucheradministrationlist.articlesum" : "Compter",
-    "voucheradministrationlist.articlecomment" : "Commande",
+    "voucheradministrationlist.articlecomment" : "Commentaire",
     "voucheradministrationlist.articlestatus" : "Statut",
     "voucheradministrationlist.articledwn" : "Télécharger",
     "voucheradministrationlist.btnlabelO" : "Info",
