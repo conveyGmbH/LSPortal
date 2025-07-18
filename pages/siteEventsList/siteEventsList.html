@@ -13,11 +13,12 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
-                        <div class="field_line field_line_odd win-type-subtitle master-list-header">
-                            <span data-win-res="{textContent: 'siteEventsList.title'}"></span>
-                        </div>
-                        <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
+                            <div class="win-type-subtitle master-list-header-title">
+	                            <span data-win-res="{textContent: 'siteEventsList.title'}"></span>
+                            </div>
+                        </div>
+                        <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.eventcombotitle'}"></span>
                             <span class="label win-type-caption landscape_only" data-win-res="{textContent: 'siteEventsList.eventcombotitle'}"></span>
                             <select id="eventTyp"
@@ -27,7 +28,8 @@
                                 <option data-win-bind="value: value; textContent: title"></option>
                             </select>
                         </div>
-                        <div class="field_line field_line_even">
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
                             <span class="label win-type-caption landscape_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
                             <input id="searchInput" class="input_field win-textbox" data-win-res="{placeholder: 'siteEventsList.searchtxt'}" type="text" data-win-bind="value: searchString Binding.Mode.twoway" />

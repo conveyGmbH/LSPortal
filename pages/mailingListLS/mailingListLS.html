@@ -12,22 +12,24 @@
         <div id="mailingListLSController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplayNone">
-                    <div class="content-header">
-                        <div class="win-type-subtitle master-list-header">
-                            <span data-win-res="{textContent: 'mailingList.title'}"></span>
-                        </div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
-                            <select id="events"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: eventId"
-                                    onchange="AppBar.handleEvent('change', 'changeEventId', event)">
-                                <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
-                            </select>
-                        </div>
-                    </div>
+	                <div class="content-header">
+		                <div class="field_line field_line_odd">
+			                <div class="win-type-subtitle master-list-header-title">
+				                <span data-win-res="{textContent: 'mailingList.title'}"></span>
+			                </div>
+		                </div>
+		                <div class="field_line field_line_even">
+			                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
+			                <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
+			                <select id="events"
+			                        class="input_field win-dropdown"
+			                        data-win-control="WinJS.UI.Repeater"
+			                        data-win-bind="value: eventId"
+			                        onchange="AppBar.handleEvent('change', 'changeEventId', event)">
+				                <option data-win-bind="value: VeranstaltungVIEWID; textContent: Name"></option>
+			                </select>
+		                </div>
+	                </div>
                     <div class="headerFooterPlaceholder">
                         <div class="list-header masterhost-background">
                             <div class="list-landscape-only">

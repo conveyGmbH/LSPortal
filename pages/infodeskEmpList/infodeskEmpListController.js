@@ -565,6 +565,7 @@
                                 layout = Application.EmpListLayout.EmployeesLayout;
                                 listView.winControl.layout = { type: layout };
                             }
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
                             var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
                             if (circleElement && circleElement.style) {
                                 circleElement.style.backgroundColor = Colors.accentColor;
