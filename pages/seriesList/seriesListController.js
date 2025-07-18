@@ -155,6 +155,7 @@
                     }
                 }
                 item.nameInitial = (item.Titel) ? item.Titel.substr(0, 2) : "";
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
             }
             this.resultConverter = resultConverter;
 

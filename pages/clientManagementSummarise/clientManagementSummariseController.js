@@ -121,6 +121,8 @@
                 if (!item.DUNSNumber) { item.DUNSNumber = ""; }
                 if (!item.WebAdresse) { item.WebAdresse = ""; }
                 if (!item.FairMandantID) { item.FairMandantID = ""; }
+                item.nameInitial = item.Firmenname.substr(0, 2);
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
             }
             this.resultConverter = resultConverter;
 
@@ -277,7 +279,7 @@
                                 layout = Application.ClientManagementSummariseLayout.ClientManagementSummariseLayout;
                                 listView.winControl.layout = { type: layout };
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
                             //set list-order column
                             var headerListFields = listView.querySelectorAll(".list-header-columns > div");
                             if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
@@ -294,15 +296,22 @@
                                     WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
                                 }
                             }
-                            //smallest List color change
-                            var circleElements = listView.querySelectorAll('#nameInitialcircle');
-                            if (circleElements) for (i = 0; i < circleElements.length; i++) {
-                                circleElements[i].style.backgroundColor = Colors.navigationColor;
-                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                 "barcode-qr": { useStrokeColor: false }
                             });
+                        } else if (listView.winControl.loadingState === "complete") {
+                            if (that.loading) {
+                                var progress = listView.querySelector(".list-footer .progress");
+                                var counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
                         }
                     }
                     that.loadingStateChanged(eventInfo);

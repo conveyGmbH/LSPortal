@@ -10,6 +10,7 @@
 .genDataQuestions .content-header {
     height: auto !important;
     min-height: 48px;
+    display: inline-block;
 }
 
 .genDataQuestions .master-list-header {

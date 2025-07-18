@@ -10,6 +10,7 @@
 .startList .content-header {
     height: auto !important;
     min-height: 48px;
+    display: inline-block;
 }
 
 .startList .master-list-header {

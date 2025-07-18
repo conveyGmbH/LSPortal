@@ -11,6 +11,7 @@
 .eventslist .content-header {
     height: auto !important;
     min-height: 48px;
+    display: inline-block;
 }
 
 .eventslist .master-list-header {

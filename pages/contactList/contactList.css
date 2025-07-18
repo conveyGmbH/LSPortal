@@ -19,6 +19,7 @@
 .contactList .content-header {
     height: auto !important;
     min-height: 48px;
+    display: inline-block;
 }
 
 .contactList .master-list-header {

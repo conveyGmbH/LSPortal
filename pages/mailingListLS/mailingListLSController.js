@@ -154,7 +154,14 @@
                 item.index = index;
                 if (item.Beschreibung && item.Subject) {
                     item.nameInitial = item.Beschreibung.substr(0, 1) + item.Subject.substr(0, 1);
+                } else if (item.Beschreibung) {
+                    item.nameInitial = item.Beschreibung.substr(0, 2);
+                } else if (item.Subject) {
+                    item.nameInitial = item.Subject.substr(0, 2);
+                } else  {
+                    item.nameInitial = "";
                 }
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                 item.mandatoryWarning = (!item.Beschreibung || !item.Sender || !item.Subject || !item.Mailtext) ? true : false;
             }
             this.resultConverter = resultConverter;

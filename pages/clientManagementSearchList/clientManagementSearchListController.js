@@ -280,6 +280,17 @@
                                 "barcode-qr": { useStrokeColor: false }
                             });
                         } else if (listView.winControl.loadingState === "complete") {
+                            if (that.loading) {
+                                var progress = listView.querySelector(".list-footer .progress");
+                                var counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
                         }
                     }
                     that.loadingStateChanged(eventInfo);

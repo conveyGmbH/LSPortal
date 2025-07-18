@@ -268,6 +268,7 @@
                     item.AnzKontakte = 0;
                 }
                 item.nameInitial = item.VeranstaltungName.substr(0, 2);
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                 if (item.StartDatum) {
                 item.StartDatum = that.getDateObject(item.StartDatum);
                 }

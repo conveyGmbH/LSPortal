@@ -8,6 +8,7 @@
 .genDataEmpList .content-header {
     height: auto;
     min-height: 48px;
+    display: inline-block;
 }
 .genDataEmpList .master-list-header {
     width: auto !important;

@@ -967,6 +967,9 @@ button.win-button span.win-type-title {
     min-height: 40px;
     width: 100%;
 }
+.view-size-smallest .listview {
+    margin-top: -6px;
+}
 .view-size-smallest .list-header,
 .view-size-smallest .list-footer {
     margin: 0 !important;

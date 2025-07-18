@@ -199,19 +199,6 @@
     font-size: small;
 }
 
-.view-size-smallest #clientManagementSummarise .win-item {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.view-size-smallest .clientManagementSummarise .list-div-left {
-    width: 100%;
-    margin: 0;
-}
-
 .view-size-bigger #clientManagementSummarise .list-portrait-only,
 .view-size-medium-small #clientManagementSummarise .list-landscape-only {
     display: none;
@@ -249,14 +236,3 @@
     min-width: 300px;
 }
 
-.clientManagementSummarise #nameInitialcircle {
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 45px;
-    font-weight: bold;
-}

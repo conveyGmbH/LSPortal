@@ -8,6 +8,7 @@
 .empList .content-header {
     height: auto;
     min-height: 48px;
+    display: inline-block;
 }
 .empList .master-list-header {
     width: auto !important;
