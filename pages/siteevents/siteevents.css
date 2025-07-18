@@ -58,14 +58,21 @@
     border-top: 1px solid grey;
 }
 .siteevents th {
+    /*
     background: white;
+    */
     position: sticky;
     top: 0; /* Don't forget this, required for the stickiness */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 .siteevents .table-body tr:hover {
-    background: #f8f9fb;
+    background-color: rgba(0, 0, 0, 0.1);
 }
+
+.cnv-ui-dark .siteevents .table-body tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .siteevents table,
 .siteevents tr,
 .siteevents #status {

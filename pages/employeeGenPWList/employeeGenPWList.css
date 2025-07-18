@@ -53,9 +53,6 @@
     margin-bottom: 105px;
     overflow: hidden;
 }
-/*.userinfo-qrcode-container {
-    background-color: white;
-}*/
 
 .employeeGenPWList .userinfo-qrcode-container {
     text-align: left;
@@ -91,14 +88,21 @@
     border-top: 1px solid grey;
 }
 .employeeGenPWList th {
-    background: white;
+    /*
+    background-color: var(--Window);
+    */
     position: sticky;
     top: 0; /* Don't forget this, required for the stickiness */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 .employeeGenPWList .table-body tr:hover {
-    background: #f8f9fb;
+    background-color: rgba(0, 0, 0, 0.1);
 }
+
+.cnv-ui-dark .employeeGenPWList .table-body tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .employeeGenPWList table,
 .employeeGenPWList tr,
 .employeeGenPWList #status {
