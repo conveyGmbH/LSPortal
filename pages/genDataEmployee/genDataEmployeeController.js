@@ -255,7 +255,9 @@
                     // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
                     // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
                     //|| AppHeader.controller.binding.userData.HasLocalEvents 
-                    that.binding.allowEditLogin = AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin;
+                    that.binding.allowEditLogin = !getHasTwoFactor() &&
+                       (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppHeader.controller.binding.userData.IsCustomerAdmin);
                     if (that.binding.allowEditLogin) {
                         that.binding.disableLoginFirstPart = false;
                         that.binding.disableDomain = false;
@@ -280,7 +282,8 @@
 
             var checkingReadonlyFlag = function () {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                if (AppHeader.controller.binding.userData.SiteAdmin) {
+                if (AppHeader.controller.binding.userData.SiteAdmin ||
+                    AppHeader.controller.binding.userData.IsCustomerAdmin) {
                     that.binding.disableLoginFirstPart = false;
                     that.binding.disableDomain = false;
                     that.binding.disableLoginName = false;
@@ -655,14 +658,13 @@
                             if (that.binding.iconID === 5) {
                                 that.binding.disableLoginName = true;
                                 that.binding.disableLoginFirstPart = true;
+                                that.binding.disablePassword = true;
                             } else {
                                 that.binding.disableLoginName = false;
                                 that.binding.disableLoginFirstPart = false;
+                                that.binding.disablePassword = getHasTwoFactor();
                             }
-                            //that.binding.disableLoginFirstPart = false;
                             that.binding.disableDomain = true;
-                            //that.binding.disableLoginName = false;
-                            //that.binding.disablePassword = getHasTwoFactor();
                             that.binding.allowEditLogin = 1;
                         }
                         Log.ret(Log.l.trace);
