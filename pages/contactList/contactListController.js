@@ -32,9 +32,15 @@
                     searchString: "",
                     eventId: 0,
                     leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
-                    btnDateSort: getResourceText("contactList.btnDateDesc"),
-                    btnCompanySort: getResourceText("contactList.btnCompanyDesc"),
-                    btnNameSort: getResourceText("contactList.btnNameDesc"),
+                    btnDateSort: ContactList._orderAttribute === "Erfassungsdatum" ?
+                        getResourceText(ContactList._orderDesc ? "contactList.btnDateDesc" : "contactList.btnDateAsc"):
+                        getResourceText("contactList.btnDateSort"),
+                    btnCompanySort: ContactList._orderAttribute === "Firmenname" ?
+                        getResourceText(ContactList._orderDesc ? "contactList.btnCompanyDesc" : "contactList.btnCompanyAsc") :
+                        getResourceText("contactList.btnCompanySort"),
+                    btnNameSort: ContactList._orderAttribute === "Name" ?
+                        getResourceText(ContactList._orderDesc ? "contactList.btnNameDesc" : "contactList.btnNameAsc") :
+                        getResourceText("contactList.btnNameSort"),
                     showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents
                 }, commandList, true]);
                 this.nextUrl = null;
@@ -536,12 +542,18 @@
                             var newOrderAttribute = null;
                             if (event.currentTarget.id === "btnDateSort") {
                                 newOrderAttribute = "Erfassungsdatum";
+                                that.binding.btnCompanySort = getResourceText("contactList.btnCompanySort");
+                                that.binding.btnNameSort = getResourceText("contactList.btnNameSort");
                             }
                             if (event.currentTarget.id === "btnCompanySort") {
                                 newOrderAttribute = "Firmenname";
+                                that.binding.btnDateSort = getResourceText("contactList.btnDateSort");
+                                that.binding.btnNameSort = getResourceText("contactList.btnNameSort");
                             }
                             if (event.currentTarget.id === "btnNameSort") {
                                 newOrderAttribute = "Name";
+                                that.binding.btnDateSort = getResourceText("contactList.btnDateSort");
+                                that.binding.btnCompanySort = getResourceText("contactList.btnCompanySort");
                             }
                             if (newOrderAttribute !== ContactList._orderAttribute) {
                                 // bei mehreren Button müsste hier der vorher ausgewählte auf "Default-Text gesetzt werden!
