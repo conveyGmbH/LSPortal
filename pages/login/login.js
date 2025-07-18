@@ -22,6 +22,7 @@
             var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
             if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
                 splitviewPaneWrapper.style.width = "0";
+                splitviewPaneWrapper.style.maxWidth = "0";
             }
             NavigationBar.enablePage("home");
             NavigationBar.disablePage("localevents");
@@ -56,6 +57,7 @@
                     var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
                     if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
                         splitviewPaneWrapper.style.width = "";
+                        splitviewPaneWrapper.style.maxWidth = "";
                     }
                     complete(response);
                 }, function (errorResponse) {
