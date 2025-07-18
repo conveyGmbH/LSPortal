@@ -256,14 +256,15 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 }
 
 .help-content {
-    display: inline-block;
-    position: relative;
-    margin: 18px 36px 0 0;
+    margin: 0;
     line-height: 1.25em;
 }
+.help-pane-opener .help-content {
+    padding-right: 16px;
+}
 .expanded .help-content {
-    margin: 0;
     padding-right: 8px;
+    padding-bottom: 16px;
 }
 
 .help-pane .help-title {
