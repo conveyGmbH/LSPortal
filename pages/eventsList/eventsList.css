@@ -107,7 +107,7 @@ view-size-smallest #eventslist .win-container {
     margin: 4px;
 }
 
-#eventslist #nameInitialcircle {
+#eventslist .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 42px;
     height: 42px;

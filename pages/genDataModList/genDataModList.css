@@ -138,7 +138,7 @@
 .genDataModList .list-div-left {
     width: 100%
 }
-.genDataModList #nameInitialcircle {
+.genDataModList .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 45px;
     height: 45px;

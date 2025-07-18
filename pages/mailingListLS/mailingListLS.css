@@ -264,7 +264,7 @@
         width: auto;
     }
 
-.mailingListLS #nameInitialcircle {
+.mailingListLS .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 45px;
     height: 45px;

@@ -94,7 +94,7 @@ view-size-smallest #seriesList .win-container {
     margin: 0;
 }
 
-#seriesList #nameInitialcircle {
+#seriesList .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 45px;
     height: 45px;

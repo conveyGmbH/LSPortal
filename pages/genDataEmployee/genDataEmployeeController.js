@@ -21,6 +21,7 @@
                 restriction: copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
+                hasTwoFactor: false,
                 setRoleVisible: 0,
                 setRoleCheckVisible: 0,
                 noLicence: null,
@@ -137,6 +138,7 @@
                 prevPassword = newDataEmployee.Password;
                 that.resultConverter(newDataEmployee);
                 that.binding.dataEmployee = newDataEmployee;
+                that.binding.hasTwoFactor = that.getHasTwoFactor();
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace);

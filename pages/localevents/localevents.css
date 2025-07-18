@@ -252,7 +252,7 @@
         min-width: 300px;
     }
 
-.localevents #nameInitialcircle {
+.localevents .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 45px;
     height: 45px;

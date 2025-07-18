@@ -144,10 +144,6 @@
     font-weight: bold;
 }
 
-#employeeList .list-div-left {
-    width: 100%
-}
-
 .empList .list-compressed-title.win-type-body {
     line-height: 1;
 }
@@ -162,7 +158,7 @@ view-size-smallest #employeeList .win-container {
     margin: 4px;
 }
 
-.empList #nameInitialcircle {
+.empList .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 42px;
     height: 42px;

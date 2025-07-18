@@ -247,7 +247,7 @@
     min-width: 300px;
 }
 
-.contactResultsList #nameInitialcircle {
+.contactResultsList .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 45px;
     height: 45px;

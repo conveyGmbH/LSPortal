@@ -102,7 +102,7 @@ view-size-smallest #startList .win-container {
     margin: 0;
 }
 
-#startList #nameInitialcircle {
+#startList .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 45px;
     height: 45px;

@@ -100,7 +100,7 @@ view-size-smallest #mailingvslist .win-container {
     margin: 4px;
 }
 
-#mailingvslist #nameInitialcircle {
+#mailingvslist .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 42px;
     height: 42px;

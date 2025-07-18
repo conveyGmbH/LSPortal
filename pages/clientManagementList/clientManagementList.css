@@ -93,7 +93,7 @@ view-size-smallest #clientManagementList .win-container {
     margin: 4px;
 }
 
-.clientManagementList #nameInitialcircle {
+.clientManagementList .list-compact-only .list-div-left > span {
     display: inline-block;
     width: 42px;
     height: 42px;
