@@ -30,7 +30,7 @@
             }, commandList, true]);
 
             this.refreshPromise = null;
-            this.refreshWaitTimeMs = 1000 * 30000;
+            this.refreshWaitTimeMs = 1000 * 30;
 
             this.nextUrl = null;
             this.nextskillentryUrl = null;
