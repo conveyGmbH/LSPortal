@@ -110,6 +110,14 @@
                         if (listView.winControl.loadingState === "itemsLoading") {
                             //
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            var winContainers = listView.querySelectorAll(".win-container");
+                            if (winContainers) {
+                                for (i = 0; i < winContainers.length; i++) {
+                                    if (winContainers[i] && winContainers[i].style) {
+                                        winContainers[i].style.borderRadius = (Colors.inputBorderRadius * 4) + "px";
+                                    }
+                                }
+                            }
                             Colors.loadSVGImageElements(listView, "action-image", 40, "#ffffff", "name", function (svgInfo) {
                                 if (svgInfo.element && svgInfo.element.parentNode) {
                                     var actionItem = svgInfo.element.parentNode.parentNode;
