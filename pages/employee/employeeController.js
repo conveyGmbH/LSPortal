@@ -22,7 +22,6 @@
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
                 restriction: copyByValue(Employee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin,
-                hasTwoFactor: false,
                 eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
                 userStatus: null,
@@ -61,7 +60,6 @@
                 prevPassword = newDataEmployee.Password;
                 that.resultConverter(newDataEmployee);
                 that.binding.dataEmployee = newDataEmployee;
-                that.binding.hasTwoFactor = that.getHasTwoFactor();
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace);
@@ -166,7 +164,7 @@
                         that.binding.disableLoginFirstPart = false;
                         that.binding.disableDomain = false;
                         that.binding.disableLoginName = false;
-                        that.binding.disablePassword = false;
+                        that.binding.disablePassword = getHasTwoFactor();
                     } else {
                         that.binding.disableLoginFirstPart = true;
                         that.binding.disableDomain = true;
@@ -189,7 +187,7 @@
                     that.binding.disableLoginFirstPart = false;
                     that.binding.disableDomain = false;
                     that.binding.disableLoginName = false;
-                    that.binding.disablePassword = false;
+                    that.binding.disablePassword = getHasTwoFactor();
                 } else {
                     that.binding.disableLoginFirstPart = false;
                     that.binding.disableDomain = true;
@@ -476,7 +474,7 @@
                                 that.binding.disableLoginFirstPart = false;
                             }
                             that.binding.disableDomain = true;
-                            //that.binding.disablePassword = false;
+                            //that.binding.disablePassword = getHasTwoFactor();
                             that.binding.allowEditLogin = 1;
                         }
                         Log.ret(Log.l.trace);
