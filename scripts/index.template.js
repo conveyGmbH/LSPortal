@@ -203,6 +203,7 @@
 
     // static array of pages for the navigation bar
     Application.navigationBarPages = [
+        { id: "login", group: -1, disabled: false }, 
         { id: "home", group: -1, disabled: false },
         { id: "start", group: 15, disabled: false },
         { id: "startPremium", group: 15, disabled: false },
