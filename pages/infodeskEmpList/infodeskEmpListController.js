@@ -30,7 +30,7 @@
             }, commandList, true]);
 
             this.refreshPromise = null;
-            this.refreshWaitTimeMs = 1 * 30000;
+            this.refreshWaitTimeMs = 1000 * 30000;
 
             this.nextUrl = null;
             this.nextskillentryUrl = null;
@@ -391,6 +391,7 @@
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                 if (item.INITBenAnwID !== 0 && item.INITBenAnwID !== null && item.Present !== 1) {
                     var map = InfodeskEmpList.initBenAnwView.getMap();
                     var results = InfodeskEmpList.initBenAnwView.getResults();
@@ -566,10 +567,6 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
-                            var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
-                            if (circleElement && circleElement.style) {
-                                circleElement.style.backgroundColor = Colors.accentColor;
-                            }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                         } else if (listView.winControl.loadingState === "complete") {

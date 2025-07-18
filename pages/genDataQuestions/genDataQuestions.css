@@ -21,10 +21,6 @@
     height: auto !important;
 }
 
-    .genDataQuestions .master-list-header.list-compact-only {
-        padding-top: 48px;
-    }
-
 #genDataQuestions .list-header {
     font-weight: bold;
 }
@@ -72,45 +68,11 @@
     padding-right: 10px;
 }
 
-.view-size-smallest #genDataQuestions .win-item,
-.view-size-smallest #genDataQuestions .list-header {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-}
-
 .genDataQuestions .content-header .master-list-header {
     margin-top: 16px;
 }
 
-.view-size-smallest .genDataQuestions .content-header .field_line {
-    display: none !important;
-}
-
 .genDataQuestions .list-compressed-title.win-type-body {
     line-height: 1;
-}
-
-view-size-smallest #genDataQuestions .win-container {
-    width: 100% !important;
-    padding-left: 0;
-}
-
-.view-size-smallest .genDataQuestions .list-div-left,
-.view-size-smallest .genDataQuestions .list-div-right {
-    width: 100%;
-    margin: 0;
-}
-
-#genDataQuestions .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 45px;
-    font-weight: bold;
 }
 

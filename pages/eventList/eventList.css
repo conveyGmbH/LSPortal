@@ -15,14 +15,7 @@
     min-height: 48px;
 }
 .eventList .master-list-header {
-    min-height: 40px;
-    padding-left: 0;
-}
-.eventList .master-list-header {
     height: auto !important;
-}
-.eventList .master-list-header.list-compact-only {
-    padding-top: 48px;
 }
 #eventList .list-header {
     font-weight: bold;
@@ -73,50 +66,14 @@
     padding-right: 10px;
 }
 
-.view-size-smallest #eventList .win-headercontainer {
-    display: none;
-}
-
-.view-size-smallest #eventList .win-item,
-.view-size-smallest #eventList .list-header {
-    width: 100%;
-    padding: 0;
-    height: 48px;
-}
 .eventList .content-header .master-list-header {
     margin-top: 16px;
-}
-
-.view-size-smallest .eventList .content-header .field_line {
-    display: none !important;
 }
 
 .eventList .list-compressed-title.win-type-body {
     line-height: 1;
 }
 
-view-size-smallest #eventList .win-container {
-    width: 100% !important;
-    padding-left: 0;
-}
-
-.view-size-smallest .eventList .list-div-left,
-.view-size-smallest .eventList .list-div-right {
-    width: 100%;
-    margin: 4px;
-}
-#eventList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
-    margin-left: 8px;
-}
 #eventList .list-field-small-relative {
     text-align: left;
     width: calc(80% - 200px);

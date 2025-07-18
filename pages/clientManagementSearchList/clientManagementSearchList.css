@@ -19,7 +19,6 @@
 .clientManagementSearchList .content-header {
     height: auto !important;
     min-height: 48px;
-    display: inline-block;
 }
 
 .clientManagementSearchList .master-list-header {
@@ -199,19 +198,6 @@
     font-size: small;
 }
 
-.view-size-smallest #clientManagementSearchList .win-item {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.view-size-smallest .clientManagementSearchList .list-div-left {
-    width: 100%;
-    margin: 0;
-}
-
 .view-size-bigger #clientManagementSearchList .list-portrait-only,
 .view-size-medium-small #clientManagementSearchList .list-landscape-only {
     display: none;
@@ -249,14 +235,3 @@
     min-width: 300px;
 }
 
-.clientManagementSearchList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 45px;
-    font-weight: bold;
-}

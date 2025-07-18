@@ -59,21 +59,8 @@
     padding-right: 10px;
 }
 
-.view-size-smallest #clientManagementList .win-headercontainer {
-    display: none;
-}
-
-.view-size-smallest #clientManagementList .win-item,
-.view-size-smallest #clientManagementList .list-header {
-    width: 100%;
-    padding: 0;
-    height: 48px;
-}
 .clientManagementList .content-header .master-list-header {
     margin-top: 16px;
-}
-.view-size-smallest .clientManagementList .content-header .field_line {
-    display: none !important;
 }
 .clientManagementList .list-div-left {
     width: 100%;
@@ -83,24 +70,3 @@
     line-height: 1;
 }
 
-view-size-smallest #clientManagementList .win-container {
-    width: 100% !important;
-    padding-left: 0;
-}
-
-.view-size-smallest .clientManagementList .list-div-left {
-    width: 100%;
-    margin: 4px;
-}
-
-.clientManagementList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
-}

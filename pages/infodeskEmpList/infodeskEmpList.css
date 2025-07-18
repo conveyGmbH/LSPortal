@@ -18,10 +18,6 @@
     padding: 0;
 }
 
-.infodeskEmpList .master-list-header.list-compact-only {
-    padding-top: 48px;
-}
-
 .infodeskEmpList .content-header .field_line {
     min-height: 32px;
 }
@@ -161,18 +157,6 @@
     margin-left: 0px;
 }
 
-.infodeskEmpList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
-}
-
 /*.infodeskEmpList .list-div-left {
     width: 100%;
 }
@@ -213,30 +197,9 @@
     padding-right: 10px;
 }
 
-.view-size-smallest .infodeskEmpList .list-div-left {
-    width: 100%;
-    margin: 4px;
-}*/
-.view-size-smallest #infodeskEmployeeList.listview {
-    margin-top: -6px;
-}
-
-.view-size-smallest #infodeskEmployeeList .win-headercontainer {
-    display: none;
-}
-
-.view-size-smallest #infodeskEmployeeList .win-item {
-    width: 100%;
-    padding: 0;
-    height: 54px;
-}
-
+*/
 .infodeskEmpList .content-header .master-list-header {
     margin-top: 16px;
-}
-
-.view-size-smallest .infodeskEmpList .content-header .field_line {
-    display: none !important;
 }
 
 .infodeskEmpList .sortButton {

@@ -19,7 +19,6 @@
 .adminAppHelpTextList .content-header {
     height: auto !important;
     min-height: 48px;
-    display: inline-block;
 }
 
 .adminAppHelpTextList .master-list-header {
@@ -28,10 +27,6 @@
 
 .adminAppHelpTextList .content-header .master-list-header {
     margin-top: 16px;
-}
-
-.adminAppHelpTextList .master-list-header.list-compact-only {
-    padding-top: 48px;
 }
 
 #adminAppHelpTextList .win-viewport {
@@ -211,19 +206,6 @@
     font-size: small;
 }
 
-.view-size-smallest #adminAppHelpTextList .win-item {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.view-size-smallest .adminAppHelpTextList .list-div-left {
-    width: 100%;
-    margin: 0;
-}
-
 .view-size-medium-small #adminAppHelpTextList .list-portrait-only {
     display: block;
 }
@@ -232,14 +214,6 @@
     border-right-style: solid;
     border-right-color: gray;
     border-right-width: 1px;
-}
-
-.view-size-smallest #adminAppHelpTextList .list-portrait-only {
-    display: none;
-}
-
-.view-size-smallest .adminAppHelpTextList .content-header .field_line {
-    display: none !important;
 }
 
 #adminAppHelpTextList .wrap-text {
@@ -253,20 +227,9 @@
     padding: 8px;
 }
 
-    #adminAppHelpTextList .list-field-small-fixed > span {
-        display: inline-block;
-        height: auto;
-        width: auto;
-    }
-
-.adminAppHelpTextList .list-compact-only .list-div-left > span {
+#adminAppHelpTextList .list-field-small-fixed > span {
     display: inline-block;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 45px;
-    font-weight: bold;
+    height: auto;
+    width: auto;
 }
+

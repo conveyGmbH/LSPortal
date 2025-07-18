@@ -188,6 +188,7 @@
                 item.StartDatum = that.getDateObject(item.StartDatum);
                 item.EndDatum = that.getDateObject(item.EndDatum);
                 item.nameInitial = item.DisplayName ? item.DisplayName.substr(0, 2) : "";
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
             }
             this.resultConverter = resultConverter;
 
@@ -247,7 +248,7 @@
                     }
                     if (event.keyCode === 13) {
                         if (searchInput.value) {
-                        return AppData.call("PRC_GetEventList",
+                            AppData.call("PRC_GetEventList",
                             {
                                 pSearchString: searchInput.value,
                                 pTerminTyp: parseInt(that.binding.eventTypID)
@@ -352,10 +353,19 @@
                                 layout = Application.SiteEventsListLayout.SiteEventsListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
                         } else if (listView.winControl.loadingState === "complete") {
-                            // load SVG images
-                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
-                            that.loadNextUrl();
+                            if (that.loading) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);

@@ -191,6 +191,7 @@
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                 if (typeof item.CS1504SerienNr === "string") {
                     item.CS1504SerienNr = that.cutSerialnumber(item.CS1504SerienNr);
                 }
@@ -348,11 +349,6 @@
                                             }
                                         }
                                     }
-                                }
-                                //smallest List color change
-                                var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
-                                if (circleElement && circleElement.style) {
-                                    circleElement.style.backgroundColor = Colors.accentColor;
                                 }
                                 // load SVG images
                                 Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");

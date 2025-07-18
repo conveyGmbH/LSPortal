@@ -21,10 +21,6 @@
     height: auto !important;
 }
 
-.eventStatusList .master-list-header.list-compact-only {
-    padding-top: 48px;
-}
-
 #eventstatuslist .list-header {
     font-weight: bold;
     display: flex;
@@ -74,50 +70,12 @@
     padding-right: 10px;
 }
 
-.view-size-smallest #eventstatuslist .win-headercontainer {
-    display: none;
-}
-
-.view-size-smallest #eventstatuslist .win-item,
-.view-size-smallest #eventstatuslist .list-header {
-    width: 100%;
-    padding: 0;
-    height: 48px;
-}
-
 .eventStatusList .content-header .master-list-header {
     margin-top: 16px;
 }
 
-.view-size-smallest .eventStatusList .content-header .field_line {
-    display: none !important;
-}
-
 .eventStatusList .list-compressed-title.win-type-body {
     line-height: 1;
-}
-
-view-size-smallest #eventstatuslist .win-container {
-    width: 100% !important;
-    padding-left: 0;
-}
-
-.view-size-smallest .eventStatusList .list-div-left,
-.view-size-smallest .eventStatusList .list-div-right {
-    width: 100%;
-    margin: 4px;
-}
-
-#eventstatuslist .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
 }
 
 #eventstatuslist .list-field-small-relative {

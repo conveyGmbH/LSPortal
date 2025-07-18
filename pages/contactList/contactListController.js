@@ -363,6 +363,7 @@
                     item.nameInitial = (item.Vorname && item.Name)
                         ? item.Vorname.substr(0, 1) + item.Name.substr(0, 1)
                         : (item.Vorname ? item.Vorname.substr(0, 2) : item.Name ? item.Name.substr(0, 2) : "");
+                    item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                     item.company = ((item.Firmenname ? (item.Firmenname + " ") : ""));
                     item.fullName = ((item.Title ? (item.Title + " ") : "") +
                         (item.Vorname ? (item.Vorname + " ") : "") + (item.Name ? item.Name : ""));
@@ -699,11 +700,6 @@
                                         WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
                                         WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
                                     }
-                                }
-                                //smallest List color change
-                                var circleElements = listView.querySelectorAll(".list-compact-only .list-div-left > span");
-                                if (circleElements) for (i = 0; i < circleElements.length; i++) {
-                                    circleElements[i].style.backgroundColor = Colors.navigationColor;
                                 }
                                 // load SVG images
                                 Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {

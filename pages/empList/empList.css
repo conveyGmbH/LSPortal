@@ -8,15 +8,10 @@
 .empList .content-header {
     height: auto;
     min-height: 48px;
-    display: inline-block;
 }
 .empList .master-list-header {
     width: auto !important;
     padding: 0;
-}
-
-.empList .master-list-header.list-compact-only {
-    padding-top: 48px;
 }
 
 .empList .content-header .field_line {
@@ -94,26 +89,8 @@
     padding-right: 10px;
 }
 
-.view-size-smallest #employeeList.listview {
-    margin-top: -6px;
-}
-
-.view-size-smallest #employeeList .win-headercontainer {
-    display: none;
-}
-
-.view-size-smallest #employeeList .win-item {
-    width: 100%;
-    padding: 0;
-    height: 48px;
-}
-
 .empList .content-header .master-list-header {
     margin-top: 16px;
-}
-
-.view-size-smallest .empList .content-header .field_line {
-    display: none !important;
 }
 
 .empList .list-button-left {
@@ -139,28 +116,6 @@
 
 .empList .list-compressed-title.win-type-body {
     line-height: 1;
-}
-
-view-size-smallest #employeeList .win-container {
-    width: 100% !important;
-    padding-left: 0;
-}
-
-.view-size-smallest .empList .list-div-left {
-    width: 100%;
-    margin: 4px;
-}
-
-.empList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
 }
 
 #Seriennummer {

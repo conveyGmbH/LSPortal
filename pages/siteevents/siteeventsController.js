@@ -886,9 +886,22 @@
                 },
                 onFooterVisibilityChanged: function (eventInfo) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var element = eventInfo.target;
-                    if (that.siteeventsdataraw && that.nextUrl && Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0) {
-                        that.loadNextUrl();
+                    if (eventInfo && eventInfo.detail) {
+                        progress = listView.querySelector(".list-footer .progress");
+                        counter = listView.querySelector(".list-footer .counter");
+                        var visible = eventInfo.detail.visible;
+                        if (visible && that.siteeventsdataraw && that.nextUrl) {
+                            that.loading = true;
+                            that.loadNextUrl();
+                        } else {
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },

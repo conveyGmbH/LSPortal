@@ -293,6 +293,7 @@
                     item.EndDatum = endMoment.format("ll");
                 }
                 item.nameInitial = item.VeranstaltungName ? item.VeranstaltungName.substr(0, 2) : "";
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                 if (item.Disabled) {
                     item.disabled = true;
                     that.disabledindexes.push(index);
@@ -449,11 +450,6 @@
                                         }
                                     }
                                 }
-                            }
-                            //smallest List color change
-                            var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
-                            if (circleElement && circleElement.style) {
-                                circleElement.style.backgroundColor = Colors.accentColor;
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);

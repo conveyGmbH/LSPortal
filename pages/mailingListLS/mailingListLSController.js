@@ -263,11 +263,22 @@
                                 layout = Application.MailingListLayout.MailingListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor); //Colors.isDarkTheme ? "#8b4513" : "lightyellow"
-                            that.loadNextUrl();
+                        } else if (listView.winControl.loadingState === "complete") {
+                            if (that.loading) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);

@@ -198,11 +198,22 @@
                                 layout = Application.SeriesListLayout.SeriesListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
-                        } else if (listView.winControl.loadingState === "complete") {
+                        } else if (listView.winControl.loadingState === "iremsLoaded") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);
-                            that.loadNextUrl();
+                        } else if (listView.winControl.loadingState === "complete") {
+                            if (that.loading) {
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);

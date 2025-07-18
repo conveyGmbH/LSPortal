@@ -958,14 +958,22 @@ button.win-button {
     min-height: 40px;
     width: 100%;
 }
+.view-size-smallest .list-header,
+.view-size-smallest .list-footer {
+    margin: 0 !important;
+}
 
 .list-footer .progress,
 .list-footer .counter {
     margin-left: 6px;
     width: 100%;
 }
-.column-header{
-    margin-top:40px;
+.view-size-smallest .list-footer .progress,
+.view-size-smallest .list-footer .counter {
+    margin: 0;
+}
+.column-header {
+    margin-top: 40px;
 }
 
 .list-landscape-only {
@@ -979,6 +987,40 @@ button.win-button {
 }
 .pagecontrol:not(.view-size-smallest) .list-compact-only {
     display: none;
+}
+
+view-size-smallest .win-container {
+    width: 100% !important;
+    padding: 0 !important;
+}
+.view-size-smallest .win-item {
+    width: 100% !important;
+    padding: 0 !important;
+    height: 48px !important;
+}
+.view-size-smallest .list-div-left {
+    width: 100%;
+    margin: 4px;
+}
+.view-size-smallest .win-headercontainer {
+    display: none !important;
+}
+.view-size-smallest .list-portrait-only {
+    display: none !important;
+}
+.view-size-smallest .content-header .field_line {
+    display: none !important;
+}
+.list-compact-only .list-div-left > span {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: grey;
+    color: black;
+    text-align: center;
+    line-height: 42px;
+    font-weight: bold;
 }
 
 .list-field-small-relative-10 {

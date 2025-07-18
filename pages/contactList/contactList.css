@@ -19,7 +19,6 @@
 .contactList .content-header {
     height: auto !important;
     min-height: 48px;
-    display: inline-block;
 }
 
 .contactList .master-list-header {
@@ -207,19 +206,6 @@
     font-size: small;
 }
 
-.view-size-smallest #contactList .win-item {
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.view-size-smallest .contactList .list-div-left {
-    width: 100%;
-    margin: 0;
-}
-
 .view-size-bigger #contactList .list-portrait-only,
 .view-size-medium-small #contactList .list-landscape-only {
     display: none;
@@ -233,12 +219,6 @@
     border-right-style: solid;
     border-right-color: gray;
     border-right-width: 1px;
-}
-.view-size-smallest #contactList .list-portrait-only {
-    display: none;
-}
-.view-size-smallest .contactList .content-header .field_line {
-    display: none !important;
 }
 #contactList .wrap-text {
     white-space: pre-wrap;
@@ -257,15 +237,3 @@
         width: auto;
 }
 
-.contactList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 45px;
-    font-weight: bold;
-    margin-left: 2px;
-}

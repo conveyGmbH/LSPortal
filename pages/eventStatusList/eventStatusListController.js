@@ -155,6 +155,7 @@
                     }
                 }
                 item.nameInitial = (item.Name) ? item.Name.substr(0, 2) : "";
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
             }
             this.resultConverter = resultConverter;
 
@@ -198,11 +199,7 @@
                                 layout = Application.EventStatusListLayout.EventStatusListLayout;
                                 listView.winControl.layout = { type: layout };
                             }
-                            //smallest List color change
-                            var circleElement = pageElement.querySelector(".list-compact-only .list-div-left > span");
-                            if (circleElement && circleElement.style) {
-                                circleElement.style.backgroundColor = Colors.accentColor;
-                            }
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor);
                             Colors.loadSVGImageElements(listView, "action-image-flag", 40);

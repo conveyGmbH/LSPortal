@@ -8,14 +8,10 @@
 .genDataEmpList .content-header {
     height: auto;
     min-height: 48px;
-    display: inline-block;
 }
 .genDataEmpList .master-list-header {
     width: auto !important;
     padding: 0;
-}
-.genDataEmpList .master-list-header.list-compact-only {
-    padding-top: 48px;
 }
 .genDataEmpList .content-header .field_line {
     min-height: 32px;
@@ -109,27 +105,8 @@
     padding-left: 10px;
     padding-right: 10px;
 }
-
-.view-size-smallest #genDataEmpList.listview {
-    margin-top: -6px;
-}
-
-.view-size-smallest #genDataEmpList .win-headercontainer {
-    display: none;
-}
-
-.view-size-smallest #genDataEmpList .win-item {
-    width: 100%;
-    padding: 0;
-    height: 48px;
-}
-
 .genDataEmpList .content-header .master-list-header {
     margin-top: 16px;
-}
-
-.view-size-smallest .genDataEmpList .content-header .field_line {
-    display: none !important;
 }
 
 .genDataEmpList .list-button-left {
@@ -156,28 +133,6 @@
 
 .genDataEmpList .list-compressed-title.win-type-body {
     line-height: 1;
-}
-
-view-size-smallest #genDataEmpList .win-container {
-    width: 100% !important;
-    padding-left: 0;
-}
-
-.view-size-smallest .genDataEmpList .list-div-left {
-    width: 100%;
-    margin: 4px;
-}
-
-.genDataEmpList .list-compact-only .list-div-left > span {
-    display: inline-block;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(254,54,0,1);
-    color: black;
-    text-align: center;
-    line-height: 42px;
-    font-weight: bold;
 }
 
 #Seriennummer {

@@ -108,6 +108,8 @@
                 if (!item.DUNSNumber) { item.DUNSNumber = ""; }
                 if (!item.WebAdresse) { item.WebAdresse = ""; }
                 if (!item.FairMandantID) { item.FairMandantID = ""; }
+                item.nameInitial = item.Firmenname ? item.Firmenname.substr(0, 2) : "";
+                item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
             }
             this.resultConverter = resultConverter;
 
@@ -272,11 +274,6 @@
                                     WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
                                     WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
                                 }
-                            }
-                            //smallest List color change
-                            var circleElements = listView.querySelectorAll(".list-compact-only .list-div-left > span");
-                            if (circleElements) for (i = 0; i < circleElements.length; i++) {
-                                circleElements[i].style.backgroundColor = Colors.navigationColor;
                             }
                             // load SVG images
                             Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
