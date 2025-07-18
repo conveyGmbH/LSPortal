@@ -22,7 +22,8 @@
 		                        <span data-win-bind="textContent: noctcount"></span><span>&nbsp;</span>
 	                        </div>
                         </div>
-                        <div class="field_line field_line_even">
+                        <div class="field_line field_line_even"
+                             data-win-bind="style.display: showEventCombo Binding.Converter.toDisplay">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'genFragEvents.event'}"></span>
                             <select id="events"
@@ -34,11 +35,9 @@
                         </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
-	                        <div id="events-container">
-		                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
-		                        <span class="label landscape_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
-		                        <input class="input_field win-textbox" type="text" id="searchField" />
-	                        </div>
+	                        <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
+	                        <span class="label landscape_only" data-win-res="{textContent: 'contactList.searchtxt'}"></span>
+	                        <input class="input_field win-textbox" type="text" id="searchField" />
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>

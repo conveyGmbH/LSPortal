@@ -354,8 +354,8 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 }
 .win-splitviewcommand-label {
     color: var(--WindowText);
-    font-size: 20px;
-    margin-top: 12px;
+    font-size: 16px;
+    margin-top: 16px;
     margin-bottom: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -370,12 +370,18 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     font-weight: 600;
     font-family: "Segoe MDL2 Assets", "Symbols";
     content: "\e0e3\00a0\00a0";
+    position: relative;
+    display: inline-block;
+    top: -2px;
 }
 .win-splitviewcommand.submenu-expanded .win-splitviewcommand-label:before {
     font-size: 8px;
     font-weight: 600;
     font-family: "Segoe MDL2 Assets", "Symbols";
     content: "\e019\00a0\00a0";
+    position: relative;
+    display: inline-block;
+    top: -2px;
 }
 
 .win-splitviewcommand.win-disabled {
@@ -457,12 +463,13 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .pane-submenu .win-splitviewcommand-icon {
-    margin: 16px 8px 0 0;
+    margin: 14px 8px 0 0;
     padding: 0;
 }
 
 .pane-submenu .win-splitviewcommand-label {
-    font-size: 16px;
+    font-size: 14px;
+    margin-top: 12px;
 }
 
 .navigationbar-horizontal-template,
@@ -515,12 +522,15 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 .navigationbar-text {
     margin: 0;
-    padding-top: 12px;
+    font-size: 16px;
+    padding-top: 16px;
     padding-bottom: 0;
     padding-right: 0;
     height: 36px;
-    text-transform: uppercase;
     display: inherit;
+    /*
+    text-transform: uppercase;
+    */
 }
 
 .pane-submenu-icon-container {
@@ -631,11 +641,11 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 */
 .view-size-small .navigationbar-text {
-    padding-top: 14px;
-    font-size: 15px;
+    padding-top: 16px;
+    font-size: 14px;
 }
 .view-size-small .win-splitviewcommand-label {
-    font-size: 15px;
+    font-size: 14px;
     margin-top: 16px;
 }
 

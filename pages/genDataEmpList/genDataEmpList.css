@@ -158,7 +158,7 @@
     line-height: 1;
 }
 
-view-size-smallest #employeeList .win-container {
+view-size-smallest #genDataEmpList .win-container {
     width: 100% !important;
     padding-left: 0;
 }

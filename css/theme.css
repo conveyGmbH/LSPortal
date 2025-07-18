@@ -173,8 +173,13 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .cnv-input-border-bottom span.input_small_left,
 .cnv-input-border-bottom span.input_threequarter_left,
 .cnv-input-border-bottom span.input_quarter_right {
-    border-bottom-color: #e6e6e6;
+    /*
+    border-bottom-color: #d0d0d0;
     border-bottom-style: solid;
+    */
+    border-bottom-color: transparent;
+    border-bottom-width: 0;
+    border-bottom-style: none;
 }
 .cnv-ui-dark:not(.cnv-input-border-bottom) .field_line,
 .cnv-ui-dark .cnv-input-border-bottom span.input_field,
@@ -182,8 +187,13 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .cnv-ui-dark .cnv-input-border-bottom span.input_small_left,
 .cnv-ui-dark .cnv-input-border-bottom span.input_threequarter_left,
 .cnv-ui-dark .cnv-input-border-bottom span.input_quarter_right {
+    /*
     border-bottom-color: #393939;
     border-bottom-style: solid;
+    */
+    border-bottom-color: transparent;
+    border-bottom-width: 0;
+    border-bottom-style: none;
 }
 .cnv-ui-dark .win-selectionstylefilled .win-selected .win-textbox {
     background-color: rgba(250,250,250,0.2);

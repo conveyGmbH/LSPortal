@@ -14,35 +14,39 @@
             <section aria-label="Main content" role="main" class="animationElement">
                 <div class="contentarea win-type-body">
                     <div class="content-header">
-                        <div class="field_line field_line_odd">
-	                        <div class="win-type-subtitle master-list-header-title">
-		                        <span data-win-res="{textContent: 'empList.title'}"></span>
-	                        </div>
-                            <div class="input_group">
-                                <button class="list-button-left win-button"
-                                        data-win-bind="textContent: btnNameText"
-                                        onclick="AppBar.handleEvent('click', 'clickOrderLastname', event)"></button>
-                                <button class="list-button-left win-button"
-                                        data-win-bind="textContent: btnFirstNameText"
-                                        onclick="AppBar.handleEvent('click', 'clickOrderFirstname', event)"></button>
-                                <button class="list-button-left win-button"
-                                        data-win-bind="textContent: btnEmployeeLicenceText"
-                                        onclick="AppBar.handleEvent('click', 'clickOrderLicence', event)"></button>
-                            </div>
-                        </div>
-                        <div class="field_line field_line_even"
-                             data-win-bind="style.display: licenceWarning Binding.Converter.toDisplay">
-                            <span class="input_field licence-warning-text" 
-                                  data-win-res="{textContent: 'empList.licenceWarning'}"></span>
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
-                            <input class="input_field win-textbox" type="text"
-                                   data-win-bind="value: searchString Binding.Mode.twoway"
-                                   oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
-                        </div>
+	                    <div class="field_line field_line_odd">
+		                    <div class="win-type-subtitle master-list-header-title">
+			                    <span data-win-res="{textContent: 'empList.title'}"></span>
+		                    </div>
+		                    <div class="win-type-caption input_field_noLabel licence-warning-text"
+		                         data-win-bind="style.display: licenceWarning Binding.Converter.toDisplay">
+			                    <span data-win-res="{textContent: 'empList.licenceWarning'}"></span>
+		                    </div>
+	                    </div>
+	                    <div class="line-separator"></div>
+	                    <div class="field_line field_line_odd">
+		                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
+		                    <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.searchtxt'}"></span>
+		                    <input class="input_field win-textbox" type="text"
+		                           data-win-bind="value: searchString Binding.Mode.twoway"
+		                           oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
+	                    </div>
+	                    <div class="field_line field_line_even">
+		                    <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>
+		                    <span class="label landscape_only" data-win-res="{textContent: 'siteEventsList.ordertxt'}"></span>
+		                    <div class="input_group">
+			                    <button class="list-button-left win-button"
+			                            data-win-bind="textContent: btnNameText"
+			                            onclick="AppBar.handleEvent('click', 'clickOrderLastname', event)"></button>
+			                    <button class="list-button-left win-button"
+			                            data-win-bind="textContent: btnFirstNameText"
+			                            onclick="AppBar.handleEvent('click', 'clickOrderFirstname', event)"></button>
+			                    <button id="orderLicenceBtn"
+			                            class="list-button-left win-button"
+			                            data-win-bind="textContent: btnEmployeeLicenceText"
+			                            onclick="AppBar.handleEvent('click', 'clickFilterLicence', event)"></button>
+		                    </div>
+	                    </div>
                     </div>
                     <div class="employeeList-template"
                          data-win-control="WinJS.Binding.Template" style="display: none">

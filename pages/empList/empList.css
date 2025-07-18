@@ -53,10 +53,10 @@
 }
 
 /* Styles used for the custom layout */
-.listView .contactListLayout {
+.listView .empListLayout {
     position: static;
 }
-.listView .contactListLayout .win-surface {
+.listView .empListLayout .win-surface {
     margin-left: 0;
 }
 #employeeList .win-container {
@@ -70,14 +70,6 @@
     opacity: 0.4;
 }
 
-#employeeList .win-item {
-    width: calc(100% - 52px);
-    padding-left: 26px;
-    padding-right: 26px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
- 
 #employeeList .win-item,
 #employeeList .list-header,
 #employeeList .list-footer {
@@ -124,10 +116,11 @@
     display: none !important;
 }
 
-.list-button-left {
+.empList .list-button-left {
     min-width: 100px;
     padding: 4px;
     height: 18px;
+    margin-top: 4px;
     margin-bottom: 2px;
 }
 .empList .list-div-left {
@@ -173,7 +166,4 @@ view-size-smallest #employeeList .win-container {
 #Seriennummer {
     text-align: right;
     width: 118%;
-}
-.empList .input_group {
-    margin-top: 15px;
 }

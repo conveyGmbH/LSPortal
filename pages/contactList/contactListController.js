@@ -775,8 +775,8 @@
                     }
                     AppData.setErrorMsg(that.binding);
                     var ret = new WinJS.Promise.as().then(function () {
-                        if (!that.binding.showEventCombo) {
-                            eventsContainer.style.display = "none";
+                        if (!(AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents)) {
+                            that.binding.showEventCombo = false;
                             return WinJS.Promise.as();
                         } else {
                             if (!that.events) {
@@ -787,7 +787,7 @@
                                     // eventView returns object already parsed from json file in response
                                     if (json && json.d && json.d.results.length > 0) {
                                         if (json.d.results.length <= 1) {
-                                            eventsContainer.style.display = "none";
+                                            that.binding.showEventCombo = false;
                                         } else {
                                             var results = json.d.results;
                                             that.events = new WinJS.Binding.List(results);
@@ -804,10 +804,10 @@
                                                     eventsDropdown.selectedIndex = 0;
                                                 }
                                             }
-                                            eventsContainer.style.display = "";
+                                            that.binding.showEventCombo = true;
                                         }
                                     } else {
-                                        eventsContainer.style.display = "none";
+                                        that.binding.showEventCombo = false;
                                     }
                                 }, function (errorResponse) {
                                     // called asynchronously if an error occurs
