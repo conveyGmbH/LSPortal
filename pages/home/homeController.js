@@ -114,7 +114,7 @@
                             if (winContainers) {
                                 for (i = 0; i < winContainers.length; i++) {
                                     if (winContainers[i] && winContainers[i].style) {
-                                        winContainers[i].style.borderRadius = (Colors.inputBorderRadius * 4) + "px";
+                                        winContainers[i].style.borderRadius = (Colors.inputBorderRadius * 2) + "px";
                                     }
                                 }
                             }
