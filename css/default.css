@@ -469,8 +469,11 @@ section[role=main] {
     border-width: 1px;
     border-color: black;
     background-color: gray;
-    box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
     border-radius: 2px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+    /*
+    box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
+    */
 }
 
 .error-message {
@@ -862,8 +865,14 @@ input.win-checkbox, input.win-radio, select.win-dropdown {
 button.win-button {
     border-radius: 0;
 }
+button.win-button span {
+}
 .button-element .win-button {
     padding: 12px 24px;
+}
+button.win-button span.win-type-title {
+    font-weight: bold;
+    font-size: 16px;
 }
 .input_text_comment {
     height: 32px;

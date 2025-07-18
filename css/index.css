@@ -164,7 +164,10 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     height: fit-content;
     border-style: solid;
     border-width: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+    /*
     box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
+    */
 }
 .help-pane-container.expanded {
     top: 48px;
@@ -607,8 +610,11 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 /* Confirm modal */
 #confirmModal .win-contentdialog-dialog {
-    margin-top: 48px;
+    margin-top: 64px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+    /*
     box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
+    */
 }
 #confirmText {
     margin-top: 16px;
@@ -619,8 +625,11 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 /* Flyout buttons */
 #alertFlyout {
     visibility: hidden;
-    margin-top: 48px;
+    margin-top: 64px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+    /*
     box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
+    */
 }
 
 #alertText {
