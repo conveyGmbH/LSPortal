@@ -19,6 +19,10 @@
         ready: function(element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
+            var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+            if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                splitviewPaneWrapper.style.width = "0";
+            }
             NavigationBar.enablePage("home");
             NavigationBar.disablePage("localevents");
             NavigationBar.disablePage("siteevents");
@@ -49,6 +53,10 @@
             if (this.controller) {
                 ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok
+                    var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+                    if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                        splitviewPaneWrapper.style.width = "";
+                    }
                     complete(response);
                 }, function (errorResponse) {
                     error(errorResponse);

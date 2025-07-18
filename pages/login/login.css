@@ -2,7 +2,7 @@
     styles for page: login, with 2FA token
 */
 .login .centerarea, .token .centerarea {
-    height: 450px;
+    height: 480px;
 }
 
 /************Form for 2FA token input************/
@@ -56,7 +56,7 @@
     /*optional*/
     font-family: arial, sans-serif;
     /*input has OS specific font-family*/
-    color: rgb(0, 0, 238);
+    color: -webkit-link;
     text-decoration: underline;
     cursor: pointer;
     font-size: 16px;

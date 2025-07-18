@@ -183,7 +183,7 @@ label {
 .half-circle-lightcolor {
     border-bottom-color: #f0f0f0 !important;
 }
-.text-lightcolor {
+.text-lightcolor:not(:disabled) {
     color: #f0f0f0 !important;
 }
 
@@ -307,10 +307,14 @@ header[role=banner] {
 .button_line {
     text-align: center;
     width: 100%;
+    display: flex;
 }
-.changeStateButton{
-    float:right;
-    width:100%;
+.button-element {
+    flex: auto;
+}
+.changeStateButton {
+    float: right;
+    width: 100%;
     visibility: hidden;
 }
 
@@ -1817,6 +1821,7 @@ button.win-button {
 }
 .use-border-radius {
     border-radius: 0;
+    padding: 0;
 }
 
 .resize-helper-gripper {

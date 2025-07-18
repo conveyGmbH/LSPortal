@@ -312,22 +312,22 @@
         </div>
     </div>
     <!-- Flyout for Alert / Confirm Boxes -->
-    <div id="alertFlyout"
+    <div id="alertFlyout" class="use-border-radius"
          data-win-control="WinJS.UI.Flyout"
          style="display: none">
-        <div id="alertText"></div>
-        <button id="okButton"
-                class="win-button"
-                data-win-res="{textContent: 'flyout.ok'}"></button>
-        <button id="cancelButton"
-                class="win-button"
-                style="display: none"
-                data-win-res="{textContent: 'flyout.cancel'}"></button>
+	    <div id="alertText"></div>
+	    <button id="okButton"
+	            class="win-button"
+	            data-win-res="{textContent: 'flyout.ok'}"></button>
+	    <button id="cancelButton"
+	            class="win-button"
+	            style="display: none"
+	            data-win-res="{textContent: 'flyout.cancel'}"></button>
     </div>
-    <div id="confirmModal"
+    <div id="confirmModal" class="use-border-radius"
          data-win-control="WinJS.UI.ContentDialog"
          style="display: none">
-        <div id="confirmText"></div>
+	    <div id="confirmText"></div>
     </div>
 </body>
 </html>

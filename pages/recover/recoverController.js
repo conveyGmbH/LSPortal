@@ -101,7 +101,7 @@
 
             // define handlers
             this.eventHandlers = {
-                clickBackToLogin: function (event) {
+                clickBack: function (event) {
                     Log.call(Log.l.trace, "Recover.Controller.");
                     that.binding.dataRecover.Token = "";
                     Application.query.Token = "";
