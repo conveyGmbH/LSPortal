@@ -26,7 +26,7 @@
 
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickBackToLogin", label: getResourceText("recover.recoverCancel"), tooltip: getResourceText("recover.recoverCancel"), section: "primary", svg: "navigate_left" },
+                { id: "clickBack", label: getResourceText("recover.recoverCancel"), tooltip: getResourceText("recover.recoverCancel"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter }
             ];
 
