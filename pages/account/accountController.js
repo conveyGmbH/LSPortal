@@ -122,14 +122,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    AppData._isLoggingOut = true;
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-
-                    // clean container 2FA before navigating 
-                    if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.clear === "function") {
-                        TwoFactorLib.clear(tfaContainer);
-                    }
-
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -137,10 +130,7 @@
                             AppHeader.controller.binding.userData.VeranstaltungName = "";
                         }
                     }
-                    WinJS.Promise.timeout(100).then(function() {
-                        Application.navigateById("login", event);
-                    });
-                    // Application.navigateById("login", event);
+                    Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeServer: function (event) {
@@ -462,15 +452,6 @@
             var saveData = function (complete, error) {
                 var err = null, ret = null, hasTwoFactor = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-
-                 if (AppData._isLoggingOut) {
-                    Log.print(Log.l.info, "Logout in progress - skipping 2FA and login logic");
-                    complete({});
-                    return WinJS.Promise.as();
-                }
-
-
-
                 if (contentarea) {
                     contentarea.scrollTop = 0;
                 }
@@ -686,10 +667,8 @@
             };
             this.saveData = saveData;
 
-            // initialer TFA-Aufruf beim Laden der Seite - nur wenn nicht vom Logout
-            if (!AppData._isLoggingOut) {
-                tfaStatus();
-            }
+            // initialer TFA-Aufruf beim Laden der Seite
+            tfaStatus();
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
