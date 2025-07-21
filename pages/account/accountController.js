@@ -426,7 +426,7 @@
                     ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
                         Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language));
+                    }, Application.language, that.binding.appSettings.odata.hostName));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
                 }
@@ -441,7 +441,7 @@
                     ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
                         Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language));
+                    }, Application.language, that.binding.appSettings.odata.hostName));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
                 }
