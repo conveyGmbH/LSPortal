@@ -2,11 +2,16 @@
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
+/// <reference path="~/www/lib/convey/scripts/strings.js" />
+/// <reference path="~/www/lib/convey/scripts/winjs-es6promise.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dbinit.js" />
 /// <reference path="~/www/lib/convey/scripts/dataService.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
+/// <reference path="~/www/lib/convey/scripts/navigator.js" />
+/// <reference path="~/www/lib/convey/scripts/replService.js" />
+/// <reference path="~/www/lib/twoFactorLib/scripts/twoFactorLib.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/account/accountService.js" />
 /// <reference path="~/www/pages/home/homeService.js" />
@@ -122,14 +127,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    AppData._isLoggingOut = true;
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-
-                    // clean container 2FA before navigating 
-                    if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.clear === "function") {
-                        TwoFactorLib.clear(tfaContainer);
-                    }
-
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -137,10 +135,7 @@
                             AppHeader.controller.binding.userData.VeranstaltungName = "";
                         }
                     }
-                    WinJS.Promise.timeout(100).then(function() {
-                        Application.navigateById("login", event);
-                    });
-                    // Application.navigateById("login", event);
+                    Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeServer: function (event) {
@@ -436,7 +431,7 @@
                     ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
                         Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language));
+                    }, Application.language, that.binding.appSettings.odata.hostName));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
                 }
@@ -451,7 +446,7 @@
                     ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
                         Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language));
+                    }, Application.language, that.binding.appSettings.odata.hostName));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
                 }
@@ -462,15 +457,6 @@
             var saveData = function (complete, error) {
                 var err = null, ret = null, hasTwoFactor = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-
-                 if (AppData._isLoggingOut) {
-                    Log.print(Log.l.info, "Logout in progress - skipping 2FA and login logic");
-                    complete({});
-                    return WinJS.Promise.as();
-                }
-
-
-
                 if (contentarea) {
                     contentarea.scrollTop = 0;
                 }
@@ -686,10 +672,8 @@
             };
             this.saveData = saveData;
 
-            // initialer TFA-Aufruf beim Laden der Seite - nur wenn nicht vom Logout
-            if (!AppData._isLoggingOut) {
-                tfaStatus();
-            }
+            // initialer TFA-Aufruf beim Laden der Seite
+            tfaStatus();
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
