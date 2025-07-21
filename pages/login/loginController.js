@@ -50,10 +50,13 @@
                 }
             }, commandList]);
 
+            AppData._isLoggingOut = false;
+
             var that = this;
 
-            // TFA UI
+            // TFA UI  Only initialize if we're actually on login page for login process
             var tfaContainer = pageElement.querySelector("#tfa-container");
+            var isLoginProcess = false; // Flag to track if we're in login process
 
             var privacyPolicyLink = pageElement.querySelector("#privacyPolicyLink");
             if (privacyPolicyLink) {
@@ -72,6 +75,9 @@
             this.eventHandlers = {
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
+                     // Set flag to indicate we're starting login process
+                    isLoginProcess = true;
+                    Log.print(Log.l.info, "Login process started - isLoginProcess set to true");
                     Application.navigateById(Application.startPageId, event);
                     Log.ret(Log.l.trace);
                 },
@@ -171,24 +177,150 @@
             };
             that.openDb = openDb;
 
-            var tfaVerify = function () {
+            //  (1)  var tfaVerify = function (sessionToken) {
+        //             var ret = null;
+        //             Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    
+        //             // Only execute TFA verification if we're in an active login process
+        //             if (isLoginProcess && tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
+        //                 Log.print(Log.l.info, "Starting 2FA verification process for login - isLoginProcess: " + isLoginProcess + ", sessionToken: " + (sessionToken ? "present" : "missing"));
+
+        //                  if (TwoFactorLib.setSessionPassword && that.binding.dataLogin.Password) {
+        //                     TwoFactorLib.setSessionPassword(that.binding.dataLogin.Password);
+        //                 }
+
+        //                 // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden                        
+        //                 ret = toWinJSPromise(TwoFactorLib.verify2FA(
+        //                     tfaContainer, 
+        //                     that.binding.dataLogin.Login, 
+        //                     function setDBPassword(dbPassword) {
+        //                         // Log.print(Log.l.info, "Password updated after 2FA verification");
+        //                         Log.print(Log.l.info, "DB password received but not used for login");
+        //                         that.binding.dataLogin.Password = dbPassword;
+
+        //                         if (AppData._persistentStates && AppData._persistentStates.odata) {
+        //                             AppData._persistentStates.odata.password = dbPassword;
+        //                         }
+        //                 }, 
+        //                 Application.language, 
+        //                 sessionToken
+        //             )); 
+        //             } else {
+        //                 Log.print(Log.l.info, "TFA verification skipped - isLoginProcess: " + isLoginProcess + ", TFA Lib available: " + !!(tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function"));
+        //                 ret = WinJS.Promise.as();
+        //             }
+        //             Log.ret(Log.l.trace);
+        //             return ret;
+        //         }
+
+        // ✅ FONCTION TFAVERIFY CORRIGÉE - À remplacer dans loginController.js
+           
+        //  (2) var tfaVerify = function (sessionToken) {
+        //         var ret = null;
+        //         Log.call(Log.l.trace, namespaceName + ".Controller.");
+                
+        //         // Only execute TFA verification if we're in an active login process
+        //         if (isLoginProcess && tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
+        //             Log.print(Log.l.info, "🔐 Starting 2FA verification for login");
+
+        //             // Stocker le mot de passe ORIGINAL avant 2FA
+        //             var originalPassword = that.binding.dataLogin.Password;
+        //             Log.print(Log.l.info, "💾 Original password stored for login: " + (originalPassword ? "YES" : "NO"));
+
+        //             if (TwoFactorLib.setSessionPassword && originalPassword) {
+        //                 TwoFactorLib.setSessionPassword(originalPassword);
+        //             }
+
+        //             ret = toWinJSPromise(TwoFactorLib.verify2FA(
+        //                 tfaContainer, 
+        //                 that.binding.dataLogin.Login, 
+        //                 function setDBPassword(dbPassword) {
+        //                     // Utiliser le DBPassword pour le login final
+        //                     Log.print(Log.l.info, "🔑 DB password received from 2FA - USING for login");
+                            
+        //                     // IMPORTANT: Mettre à jour le mot de passe pour le login final
+        //                     that.binding.dataLogin.Password = dbPassword;
+
+        //                     // Mettre à jour aussi les états persistants
+        //                     if (AppData._persistentStates && AppData._persistentStates.odata) {
+        //                         AppData._persistentStates.odata.password = dbPassword;
+        //                     }
+
+        //                     Log.print(Log.l.info, "Password updated for final login step");
+        //                 }, 
+        //                 Application.language, 
+        //                 sessionToken
+        //             )); 
+        //         } else {
+        //             Log.print(Log.l.info, "⏭️ Skipping 2FA verification - not required or not in login process");
+        //             ret = WinJS.Promise.as();
+        //         }
+        //         Log.ret(Log.l.trace);
+        //         return ret;
+        //     }
+
+
+            var tfaVerify = function (sessionToken) {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
-                    // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden
-                    ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
-                        Log.print(Log.info, "setTokenPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
+
+                if (
+                isLoginProcess &&
+                tfaContainer &&
+                TwoFactorLib &&
+                typeof TwoFactorLib.verify2FA === "function"
+                ) {
+                Log.print(
+                    Log.l.info,
+                    "🔐 Starting 2FA verification for login"
+                );
+
+                var originalPassword = that.binding.dataLogin.Password;
+
+                if (
+                    TwoFactorLib.setSessionPassword &&
+                    originalPassword
+                ) {
+                    TwoFactorLib.setSessionPassword(originalPassword);
+                }
+
+                ret = toWinJSPromise(
+                    TwoFactorLib.verify2FA(
+                    tfaContainer,
+                    that.binding.dataLogin.Login,
+                    function setDBPassword(dbPassword) {
+                        Log.print(
+                        Log.l.info,
+                        "🔑 DB password received - updating for login: " +
+                            (dbPassword ? "YES" : "NO")
+                        );
+                        // ✅ CRITIQUE: Mettre à jour le mot de passe immédiatement
                         that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language));
+                    },
+                    Application.language,
+                    sessionToken
+                    )
+                );
                 } else {
-                    Log.print(Log.info, "no TFA Lib");
+                ret = WinJS.Promise.as();
                 }
                 Log.ret(Log.l.trace);
                 return ret;
-            }
+            };
 
             var saveData = function (complete, error) {
-                var err = null, hasTwoFactor = null;
+
+                // Only proceed with login if we have valid credentials
+                if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
+                    Log.print(Log.l.info, "No credentials provided - skipping login process");
+                    isLoginProcess = false;
+                    complete({});
+                    return WinJS.Promise.as();
+                }
+
+                Log.print(Log.l.info, "Starting saveData with isLoginProcess: " + isLoginProcess);
+
+                var err = null, hasTwoFactor = null, sessionToken = null; 
                 Log.call(Log.l.trace, "Login.Controller.");
                 that.binding.messageText = null;
                 AppData.setErrorMsg(that.binding);
@@ -199,28 +331,58 @@
                     // this callback will be called asynchronously
                     // when the response is available
                     Log.call(Log.l.trace, "loginRequest: success!");
-                    // loginData returns object already parsed from json file in response
-                    if (json && json.d && json.d.ODataLocation) {
-                        if (json.d.InactiveFlag) {
-                            AppBar.busy = false;
-                            err = { status: 503, statusText: getResourceText("account.inactive") };
-                            AppData.setErrorMsg(that.binding, err);
-                            error(err);
-                        } else {
-                            hasTwoFactor = json.d.HasTwoFactor;
+
+                     if (json && json.success && json.user) {
+                        // This is a 2FA backend response
+                        Log.print(Log.l.info, "2FA Backend login response detected");
+                        hasTwoFactor = json.user.requires2FA;
+                        sessionToken = json.sessionToken;
+
+                        // We still need to check for ODataLocation for WinJS compatibility
+                        if (json.d && json.d.ODataLocation) {
                             var location = json.d.ODataLocation;
                             if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
                                 that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
                                 that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
                             }
-                            Application.pageframe.savePersistentStates();
                         }
-                    } else {
-                        AppBar.busy = false;
-                        err = { status: 404, statusText: getResourceText("login.unknown") };
-                        AppData.setErrorMsg(that.binding, err);
-                        error(err);
+                        Application.pageframe.savePersistentStates();
                     }
+                        // We still need to check for ODataLocation for WinJS compatibility
+                        else if (json && json.d && json.d.ODataLocation) {
+
+                            // Legacy WinJS login response
+                            Log.print(Log.l.info, "Legacy WinJS login response detected");
+                            if (json.d.InactiveFlag) {
+                                AppBar.busy = false;
+                                isLoginProcess = false;
+                                err = { status: 503, statusText: getResourceText("account.inactive") };
+                                AppData.setErrorMsg(that.binding, err);
+                                error(err);
+                                return WinJS.Promise.as();
+                            } else {
+                                        hasTwoFactor = json.d.requires2FA || json.d.HasTwoFactor;
+                                        sessionToken = json.d.sessionToken || json.d.SessionToken;
+                                        Log.print(Log.l.info, "Legacy response - requires2FA: " + hasTwoFactor + ", sessionToken: " + sessionToken);
+                                    
+
+                                var location = json.d.ODataLocation;
+
+                                if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                    that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
+                                    that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
+                                }
+                                Application.pageframe.savePersistentStates();
+                            }
+                        } else {
+                            AppBar.busy = false;
+                            isLoginProcess = false;
+                            err = { status: 404, statusText: getResourceText("login.unknown") };
+                            AppData.setErrorMsg(that.binding, err);
+                            error(err);
+                        }
+                    Log.print(Log.l.info, "Login processed - hasTwoFactor: " + hasTwoFactor + ", sessionToken: " + (sessionToken ? "present" : "missing"));
+
                     return WinJS.Promise.as();
                 }, function (errorResponse) {
                     // called asynchronously if an error occurs
@@ -228,65 +390,90 @@
                     Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                     // ignore this error here for compatibility!
                     return WinJS.Promise.as();
-                }, {
+                }, 
+                {
                     LoginName: that.binding.dataLogin.Login
                 }).then(function () {
-                    // nur aufrufen wenn in DB TFA eingetragen ist
-                    if (hasTwoFactor) {
-                        return tfaVerify() || WinJS.Promise.as();
-                    } else {
+                    // Only call 2FA if actually required AND we have sessionToken
+                    Log.print(Log.l.info, "2FA Check - hasTwoFactor: " + hasTwoFactor + ", isLoginProcess: " + isLoginProcess + ", sessionToken: " + (sessionToken ? "present" : "missing"));
+
+                    if (hasTwoFactor== true && isLoginProcess && sessionToken) {
+                        Log.print(Log.l.info, "Calling 2FA verification with sessionToken: " + sessionToken);
+
+                        return tfaVerify(sessionToken) || WinJS.Promise.as();
+                    }else if (hasTwoFactor === true && isLoginProcess && !sessionToken) {
+                        Log.print(Log.l.error, "2FA required but no sessionToken available - this should not happen");
+                        AppBar.busy = false;
+                        isLoginProcess = false;
+                        err = { status: 500, statusText: "2FA session error - please try again" };
+                        AppData.setErrorMsg(that.binding, err);
+                        error(err);
+                        return WinJS.Promise.as();
+                    } 
+                    else {
+                        Log.print(Log.l.info, "Skipping 2FA verification - not required or not in login process");
                         return WinJS.Promise.as();
                     }
-                }).then(function (tfaResult) {
-                    if (tfaResult) {
-                        // Behandlung TFA-Result..
-                    }
-                        if (!err) {
-                            var dataLogin = {
-                                Login: that.binding.dataLogin.Login,
-                                Password: that.binding.dataLogin.Password,
-                                LanguageID: AppData.getLanguageId(),
-                                Aktion: "Portal"
-                            };
-                            return Login.loginView.insert(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.call(Log.l.trace, "loginData: success!");
-                                // loginData returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    dataLogin = json.d;
-                                    if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
-                                        AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
-                                        AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                        AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
-                                        NavigationBar.enablePage("settings");
-                                        NavigationBar.enablePage("info");
-                                        AppBar.busy = false;
-                                    } else {
-                                        AppBar.busy = false;
-                                        that.binding.messageText = dataLogin.MessageText;
-                                        err = { status: 401, statusText: dataLogin.MessageText };
-                                        AppData.setErrorMsg(that.binding, err);
-                                        error(err);
-                                    }
+                })
+
+                .then(function (tfaResult) {
+                    Log.print(Log.l.info, "🔄 2FA Result received: " + (tfaResult ? "SUCCESS" : "NONE"));
+    
+                    if (!err) {
+                        var dataLogin = {
+                            Login: that.binding.dataLogin.Login,
+                            Password: that.binding.dataLogin.Password,  // ✅ Utilise le mot de passe mis à jour
+                            LanguageID: AppData.getLanguageId(),
+                            Aktion: "Portal"
+                        };
+
+                        Log.print(Log.l.info, "🚀 Calling loginView.insert with password length: " + 
+                            (dataLogin.Password ? dataLogin.Password.length : 0));
+                        
+                        return Login.loginView.insert(function (json) {
+                            Log.call(Log.l.trace, "loginData: success!");
+                            
+                            if (json && json.d) {
+                                dataLogin = json.d;
+                                if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
+                                    // ✅ Sauvegarde uniquement le login, pas le DBPassword
+                                    AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                    // Ne pas sauvegarder le DBPassword dans les états persistants
+                                    
+                                    AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                    NavigationBar.enablePage("settings");
+                                    NavigationBar.enablePage("info");
+                                    AppBar.busy = false;
+                                    isLoginProcess = false;
+                                    Log.print(Log.l.info, "✅ Login completed successfully - redirecting to home");
+
                                 } else {
                                     AppBar.busy = false;
-                                    err = { status: 404, statusText: "no data found" };
+                                    isLoginProcess = false;
+                                    that.binding.messageText = dataLogin.MessageText;
+                                    err = { status: 401, statusText: dataLogin.MessageText };
                                     AppData.setErrorMsg(that.binding, err);
                                     error(err);
                                 }
-                            }, function (errorResponse) {
+                            } else {
                                 AppBar.busy = false;
-                                err = errorResponse;
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            }, dataLogin);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
+                                isLoginProcess = false;
+                                err = { status: 404, statusText: "no data found" };
+                                AppData.setErrorMsg(that.binding, err);
+                                error(err);
+                            }
+                        }, function (errorResponse) {
+                            AppBar.busy = false;
+                            isLoginProcess = false;
+                            err = errorResponse;
+                            Log.print(Log.l.error, "❌ loginView.insert failed: " + JSON.stringify(errorResponse));
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            error(errorResponse);
+                        }, dataLogin);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                         if (!err) {
                             AppData._curGetUserDataId = 0;
                             AppData.getMessagesData();
@@ -306,7 +493,7 @@
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "Login: success!");
-                                // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                                // kontaktanzahlView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results && json.d.results.length > 1) {
                                     var results = json.d.results;
                                     results.forEach(function (item, index) {
@@ -373,6 +560,17 @@
                 that.binding.isPrivacyPolicyFlag = true;
                 AppData.prevLogin = null;
                 AppData.prevPassword = null;
+
+                // Set login process flag for automatic login
+                isLoginProcess = true;
+
+                isLoginProcess = true;
+                Log.print(Log.l.info, "LOGIN PROCESS STARTED - isLoginProcess: " + isLoginProcess);
+                Log.print(Log.l.info, "Current password length: " + (that.binding.dataLogin.Password ? that.binding.dataLogin.Password.length : 0));
+
+
+                Log.print(Log.l.info, "Automatic login detected - isLoginProcess set to true");
+
                 WinJS.Promise.timeout(0).then(function () {
                     Application.navigateById(Application.startPageId);
                 });
