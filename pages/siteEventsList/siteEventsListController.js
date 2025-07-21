@@ -354,6 +354,8 @@
                                 listView.winControl.layout = { type: layout };
                             }
                         } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            // load SVG images
+                            Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 progress = listView.querySelector(".list-footer .progress");
