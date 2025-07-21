@@ -238,7 +238,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function (tfaResult) {
-                    if (tfaResult && tfaResult.status !== "ok") {
+                    if (tfaResult && tfaResult.status !== "success") {
                         // Behandlung TFA-Result-Fehler..
                         // besser Fehler message-text in übergebener language
                         AppData.setErrorMsg(that.binding, tfaResult.status); 
