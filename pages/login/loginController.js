@@ -179,7 +179,7 @@
                     ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
                         Log.print(Log.info, "setTokenPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
                         that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language));
+                    }, Application.language, that.binding.appSettings.odata.hostName));
                 } else {
                     Log.print(Log.info, "no TFA Lib");
                 }
@@ -238,10 +238,12 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function (tfaResult) {
-                    if (tfaResult) {
-                        // Behandlung TFA-Result..
-                    }
-                        if (!err) {
+                    if (tfaResult && tfaResult.status !== "ok") {
+                        // Behandlung TFA-Result-Fehler..
+                        // besser Fehler message-text in übergebener language
+                        AppData.setErrorMsg(that.binding, tfaResult.status); 
+                        return WinJS.Promise.as();
+                    } else if (!err) {
                             var dataLogin = {
                                 Login: that.binding.dataLogin.Login,
                                 Password: that.binding.dataLogin.Password,
