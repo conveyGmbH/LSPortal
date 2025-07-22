@@ -180,26 +180,18 @@
             var tfaVerify = function () {
               var ret = null;
               Log.call(Log.l.trace, namespaceName + ".Controller.");
-              if (
-                tfaContainer &&
-                TwoFactorLib &&
-                typeof TwoFactorLib.verify2FA === "function"
-              ) {
+              if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
                 // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden
                 ret = toWinJSPromise(
-                  TwoFactorLib.verify2FA(
-                    tfaContainer,
-                    that.binding.dataLogin.Login,
+                    TwoFactorLib.verify2FA(
+                        tfaContainer,
+                        that.binding.dataLogin.Login,
+
                     function setDBPassword(dbPassword) {
-                      Log.print(
-                        Log.l.info,
-                        "setDBPassword called: password " +
-                          (that.binding.dataLogin.Password === dbPassword
-                            ? "NOT"
-                            : "") +
-                          " changed"
-                      );
-                      that.binding.dataLogin.Password = dbPassword;
+                      Log.print( Log.l.info,  "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword  ? "NOT"  : "") + " changed");
+                    //   that.binding.dataLogin.Password = dbPassword;
+
+                       Log.print(Log.l.info, "2FA verification successful - password unchanged");
 
                       // Also update persistent states
                       if (
@@ -208,9 +200,7 @@
                         AppData._persistentStates.odata
                       ) {
                         AppData._persistentStates.odata.password = dbPassword;
-                        Log.print(
-                          Log.l.info,
-                          "Updated persistent states with new DB password"
+                        Log.print(Log.l.info, "Updated persistent states with new DB password"
                         );
                       }
                     },
@@ -252,10 +242,7 @@
                         } else {
                           hasTwoFactor = json.d.HasTwoFactor;
                           var location = json.d.ODataLocation;
-                          if (
-                            location !==
-                            AppData._persistentStatesDefaults.odata.onlinePath
-                          ) {
+                          if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
                             that.binding.appSettings.odata.onlinePath =
                               location +
                               that.binding.appSettings.odata.onlinePath;
@@ -295,90 +282,99 @@
                   .then(function () {
                     // nur aufrufen wenn in DB TFA eingetragen ist
                     if (hasTwoFactor) {
+                    Log.print(Log.l.info, "Calling tfaVerify() for user with 2FA");
                       return tfaVerify() || WinJS.Promise.as();
                     } else {
                       return WinJS.Promise.as();
                     }
-                  })
+                  }).then(function (tfaResult) {
+                      Log.print(Log.l.info, "TFA Result received: " + JSON.stringify(tfaResult));
 
+                        if (tfaResult && tfaResult.status === "cancelled") {
 
-                .then(function (tfaResult) {
-                    if (tfaResult && tfaResult.status === "cancelled") {
-                        // User cancelled 2FA verification - return to login page
-                        AppBar.busy = false;
-                        Log.print(Log.l.info, "2FA verification cancelled by user");                        
-                        return WinJS.Promise.as();
-                    } else if (tfaResult && tfaResult.status === "error") {
-                        // 2FA verification error
-                        AppBar.busy = false;
-                        Log.print(Log.l.error, "2FA verification error: " + (tfaResult.message || "Unknown error"));
-                        
-                        AppData.setErrorMsg(that.binding, {
-                            status: 401,
-                            statusText: tfaResult.message || "2FA verification failed",
-                        });
-                        error({
-                            status: 401,
-                            statusText: tfaResult.message || "2FA verification failed",
-                        });
-                        return WinJS.Promise.as();
-                    } else if (!err) {                        
-                        Log.print(Log.l.info, "2FA verification successful, proceeding with login");
-                        
-                        var dataLogin = {
-                            Login: that.binding.dataLogin.Login,
-                            Password: that.binding.dataLogin.Password, // Contains DBPassword now
-                            LanguageID: AppData.getLanguageId(),
-                            Aktion: "Portal",
-                        };
+                            // User cancelled 2FA verification - return to login page
+                            AppBar.busy = false;
+                            Log.print(Log.l.info, "2FA verification cancelled by user");                        
+                            return WinJS.Promise.as();
+                        } else if (tfaResult && tfaResult.status === "error") {
+                            // 2FA verification error
+                            AppBar.busy = false;
+                            Log.print(Log.l.error, "2FA verification error: " + (tfaResult.message || "Unknown error"));
+                            
+                            AppData.setErrorMsg(that.binding, {
+                                status: 401,
+                                statusText: tfaResult.message || "2FA verification failed",
+                            });
+                            error({
+                                status: 401,
+                                statusText: tfaResult.message || "2FA verification failed",
+                            });
+                            return WinJS.Promise.as();
+                        } else if (!err) { 
+                            Log.print(Log.l.info, "🎯 Entering login continuation block, tfaResult: " + (tfaResult ? "EXISTS" : "NULL"));
 
-                        return Login.loginView.insert(
-                            function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.call(Log.l.trace, "loginData: success!");
-                                // loginData returns object already parsed from json file in response
-                                if (json && json.d) {
-                                    dataLogin = json.d;
-                                    if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
-                                        AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
-                                        AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                        AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
-                                        NavigationBar.enablePage("settings");
-                                        NavigationBar.enablePage("info");
-                                        AppBar.busy = false;
-                                        
-                                        Log.print(Log.l.info, "Login completed successfully with 2FA");
+                            
+                            Log.print(Log.l.info, "2FA verification successful, proceeding with login");
+                            
+                            var dataLogin = {
+                                Login: that.binding.dataLogin.Login,
+                                Password: that.binding.dataLogin.Password, // Contains DBPassword now
+                                LanguageID: AppData.getLanguageId(),
+                                Aktion: "Portal",
+                            };
+
+                            return Login.loginView.insert(
+                                function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.call(Log.l.trace, "loginData: success!");
+                                    // loginData returns object already parsed from json file in response
+                                    if (json && json.d) {
+                                        dataLogin = json.d;
+                                        if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
+                                            AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                            AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                            AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                            NavigationBar.enablePage("settings");
+                                            NavigationBar.enablePage("info");
+                                            AppBar.busy = false;
+                                            
+                                            Log.print(Log.l.info, "Login completed successfully with 2FA");
+                                        } else {
+                                            AppBar.busy = false;
+                                            that.binding.messageText = dataLogin.MessageText;
+                                            err = { status: 401, statusText: dataLogin.MessageText };
+                                            AppData.setErrorMsg(that.binding, err);
+                                            error(err);
+                                        }
                                     } else {
                                         AppBar.busy = false;
-                                        that.binding.messageText = dataLogin.MessageText;
-                                        err = { status: 401, statusText: dataLogin.MessageText };
+                                        err = { status: 404, statusText: "no data found" };
                                         AppData.setErrorMsg(that.binding, err);
                                         error(err);
                                     }
-                                } else {
+                                },
+                                function (errorResponse) {
                                     AppBar.busy = false;
-                                    err = { status: 404, statusText: "no data found" };
-                                    AppData.setErrorMsg(that.binding, err);
-                                    error(err);
-                                }
-                            },
-                            function (errorResponse) {
-                                AppBar.busy = false;
-                                err = errorResponse;
-                                Log.print(Log.l.error, "Login error after 2FA success: " + JSON.stringify(errorResponse));
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
-                            },
-                            dataLogin
-                        );
-                    } else {
-                        return WinJS.Promise.as();
-                    }
+                                    err = errorResponse;
+                                    Log.print(Log.l.error, "Login error after 2FA success: " + JSON.stringify(errorResponse));
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    error(errorResponse);
+                                },
+                                dataLogin
+                            );
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                 }).then(function () {
                     if (!err) {
+                     
+
+
+
+
                       AppData._curGetUserDataId = 0;
                       AppData.getMessagesData();
                       return AppData.getUserData();
