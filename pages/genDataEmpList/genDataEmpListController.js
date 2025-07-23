@@ -21,7 +21,6 @@
                 employeeId: 0,
                 eventId: 0,
                 searchString: "",
-                hasContacts: null,
                 hasLocalevents: null,
                 hasTwoFactor: null,
                 licenceWarning: false,
@@ -150,7 +149,6 @@
                                     that.scrollToRecordId(recordId);
                                 });
                             });
-                            that.binding.hasContacts = employee.HatKontakte;
                             break;
                         }
                     }
@@ -183,7 +181,6 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.fullName = (item.Vorname && item.Nachname)
                     ? (item.Vorname + " " + item.Nachname)
                     : (item.Vorname ? item.Vorname
@@ -192,17 +189,6 @@
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
                 item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
-                if (typeof item.CS1504SerienNr === "string") {
-                    item.CS1504SerienNr = that.cutSerialnumber(item.CS1504SerienNr);
-                }
-                /*if (item.Gesperrt === 1) {
-                    if (AppHeader.controller.binding.userData.SiteAdmin) {
-                        item.Gesperrt = 0;
-                    } else {
-                        item.Gesperrt = 1;
-                    }
-                    //item.disabled = true;
-                }*/
                 item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "GenDataEmpList");
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
@@ -257,24 +243,13 @@
                                             typeof AppBar.scope.saveData === "function") {
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
-                                                //that.binding.gesperrt = item.data.Gesperrt;
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
-                                                that.binding.hasContacts = item.data.HatKontakte;
-                                                that.binding.hasLocalEvents = item.data.HasLocalEvents;
                                                 that.binding.hasTwoFactor = item.data.HasTwoFactor;
-                                                that.binding.siteAdmin = item.data.SiteAdmin;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
-                                                if ((curPageId === "genDataEmployee") &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.resetVisibleList();
-                                                    AppBar.scope.loadData(that.binding.employeeId);
-                                                        AppBar.scope.handleVisibleList(item.data.HasLocalEvents, item.data.SiteAdmin);
-                                                    
-                                                } else if ((curPageId === "genDataSkillEntry") &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData(that.binding.employeeId);
-                                                } else if ((curPageId === "genDataUserInfo") &&
+                                                if ((curPageId === "genDataEmployee" ||
+                                                    curPageId === "genDataSkillEntry" ||
+                                                    curPageId === "genDataUserInfo") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
                                                 } else {
@@ -479,7 +454,7 @@
                 if (!restriction) {
                     restriction = defaultrestriction;
                 }
-                if (restriction.OrderAttribute === "Vorname") {
+                if (restriction.OrderAttribute === "SortVorname") {
                     if (restriction.OrderDesc) {
                         that.binding.btnFirstNameText = getResourceText("employee.firstNameDesc");
                     } else {
@@ -487,7 +462,7 @@
                     }
                     that.binding.btnNameText = getResourceText("employee.name");
                     that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
-                } else if (restriction.OrderAttribute === "Nachname") {
+                } else if (restriction.OrderAttribute === "SortNachname") {
                     that.binding.btnFirstNameText = getResourceText("employee.firstName");
                     if (restriction.OrderDesc) {
                         that.binding.btnNameText = getResourceText("employee.nameDesc");
@@ -609,7 +584,6 @@
                                 if (objectrec && objectrec.index >= 0) {
                                     that.employees.setAt(objectrec.index, employee);
                                     that.binding.employeeId = recordId;
-                                    that.binding.hasContacts = employee.HatKontakte;
                                     that.binding.hasTwoFactor = employee.HasTwoFactor;
                                     /*#7573 Kommentar Nr.5 */
                                     //that.selectRecordId(recordId);

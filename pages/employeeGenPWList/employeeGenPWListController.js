@@ -263,26 +263,6 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
-                clickTopButton: function (event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    var anchor = document.getElementById("menuButton");
-                    var menu = document.getElementById("menu1").winControl;
-                    var placement = "bottom";
-                    menu.show(anchor, placement);
-                    Log.ret(Log.l.trace);
-                },
-                clickLogoff: function (event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    AppData._persistentStates.privacyPolicyFlag = false;
-                    if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
-                        AppHeader.controller.binding.userData = {};
-                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
-                            AppHeader.controller.binding.userData.VeranstaltungName = "";
-                        }
-                    }
-                    Application.navigateById("login", event);
-                    Log.ret(Log.l.trace);
-                },
                 clickGotoPublish: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     Application.navigateById("publish", event);
@@ -333,7 +313,7 @@
                 },
                 clickOrderFirstname: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                    that.binding.restriction.OrderAttribute = "Vorname";
+                    that.binding.restriction.OrderAttribute = "SortVorname";
                     if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
                         that.binding.restriction.OrderDesc = true;
                     } else {
@@ -349,7 +329,7 @@
                 },
                 clickOrderLastname: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                    that.binding.restriction.OrderAttribute = "Nachname";
+                    that.binding.restriction.OrderAttribute = "SortNachname";
                     if (event.target.textContent === getResourceText("employee.nameAsc")) {
                         that.binding.restriction.OrderDesc = true;
                     } else {
@@ -410,6 +390,26 @@
                     Log.ret(Log.l.trace);
 
 
+                },
+                clickTopButton: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    var anchor = document.getElementById("menuButton");
+                    var menu = document.getElementById("menu1").winControl;
+                    var placement = "bottom";
+                    menu.show(anchor, placement);
+                    Log.ret(Log.l.trace);
+                },
+                clickLogoff: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData._persistentStates.privacyPolicyFlag = false;
+                    if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
+                        AppHeader.controller.binding.userData = {};
+                        if (!AppHeader.controller.binding.userData.VeranstaltungName) {
+                            AppHeader.controller.binding.userData.VeranstaltungName = "";
+                        }
+                    }
+                    Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
                 }
             };
             this.disableHandlers = {

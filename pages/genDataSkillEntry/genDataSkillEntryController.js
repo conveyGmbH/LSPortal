@@ -545,6 +545,73 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickOrderFirstname: function (event) {
+                    Log.call(Log.l.trace, "GenDataSkillEntry.Controller.");
+                    that.binding.restriction.OrderAttribute = "SortVorname";
+                    if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderLastname: function (event) {
+                    Log.call(Log.l.trace, "GenDataSkillEntry.Controller.");
+                    that.binding.restriction.OrderAttribute = "SortNachname";
+                    if (event.target.textContent === getResourceText("employee.nameAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickOrderLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataSkillEntry.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    if (event.target.textContent === getResourceText("employee.licenceAsc")) {
+                        that.binding.restriction.OrderDesc = true;
+                    } else {
+                        that.binding.restriction.OrderDesc = false;
+                    }
+                    that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+                },
+                clickFilterLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataSkillEntry.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
+                    var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
+                        //that.binding.restriction.OrderDesc = true;
+                        delete that.binding.restriction.NichtLizenzierteApp;
+                        master.controller.highlightorderLicenceBtn(0);
+                    } else {
+                        //that.binding.restriction.OrderDesc = false;
+                        that.binding.restriction.NichtLizenzierteApp = 1;
+                        master.controller.highlightorderLicenceBtn(1);
+                    }
+                    that.saveRestriction();
+                    if (master && master.controller) {
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
+
+
+                },
                 clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     var anchor = document.getElementById("menuButton");

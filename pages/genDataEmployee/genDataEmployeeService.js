@@ -8,9 +8,14 @@
     "use strict";
 
     WinJS.Namespace.define("GenDataEmployee", {
-        _employeeView: {
+        _employeeTableView: {
             get: function () {
                 return AppData.getFormatView("Mitarbeiter", 0, false);
+            }
+        },
+        _employeeView: {
+            get: function () {
+                return AppData.getFormatView("Mitarbeiter", 20678);
             }
         },
         employeeView: {
@@ -23,19 +28,19 @@
             },
             deleteRecord: function (complete, error, recordId) {
                 Log.call(Log.l.trace, "employeeView.");
-                var ret = GenDataEmployee._employeeView.deleteRecord(complete, error, recordId);
+                var ret = GenDataEmployee._employeeTableView.deleteRecord(complete, error, recordId);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             update: function (complete, error, recordId, viewResponse) {
                 Log.call(Log.l.trace, "employeeView.");
-                var ret = GenDataEmployee._employeeView.update(complete, error, recordId, viewResponse);
+                var ret = GenDataEmployee._employeeTableView.update(complete, error, recordId, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
             insert: function (complete, error, viewResponse) {
                 Log.call(Log.l.trace, "employeeView.");
-                var ret = GenDataEmployee._employeeView.insert(complete, error, viewResponse);
+                var ret = GenDataEmployee._employeeTableView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
             },
@@ -59,31 +64,26 @@
                 OrderDesc: false
             }
         },
-        _licenceBView: {
+        _initAPUserRoleView: {
             get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20678);
+                return AppData.getLgntInit("LGNTINITAPUserRole");
             }
         },
-        licenceBView: {
-            select: function (complete, error, recordId) {
-                Log.call(Log.l.trace, "employeeView.");
-                var ret = GenDataEmployee._licenceBView.selectById(complete, error, recordId);
+        initAPUserRoleView: {
+            select: function (complete, error) {
+                var ret = GenDataEmployee._initAPUserRoleView.select(complete, error);
                 Log.ret(Log.l.trace);
                 return ret;
-
-            }
-        },
-        _LGNTINITAPUserRoleView: {
-            get: function () {
-                return AppData.getFormatView("LGNTINITAPUserRole", 20695);
-            }
-        },
-        LGNTINITAPUserRoleView: {
-            select: function (complete, error, restriction) {
-                var ret = GenDataEmployee._LGNTINITAPUserRoleView.select(complete, error, restriction, {
-                    ordered: true,
-                    orderAttribute: "INITAPUserRoleID"
-                });
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, "GenDataEmployee.initAnredeView.");
+                var ret = GenDataEmployee._initAPUserRoleView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, "GenDataEmployee.initAnredeView.");
+                var ret = GenDataEmployee._initAPUserRoleView.map;
                 Log.ret(Log.l.trace);
                 return ret;
             }

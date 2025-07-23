@@ -21,8 +21,8 @@
                 restriction: copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
-                setRoleVisible: 0,
-                setRoleCheckVisible: 0,
+                setRoleVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
+                setRoleCheckVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 noLicence: null,
                 AnzAktiveLizenz: null,
                 AnzMandantLizenz: null,
@@ -39,17 +39,13 @@
 
             var that = this;
 
-            var prevMasterLoadPromise = null;
-            var prevLogin = null;
-            var prevPassword;
             var progress = null;
             var counter = null;
             var layout = null;
             this.events = null;
-            this.roles = null;
 
             var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
-            var roleschombo = pageElement.querySelector("#roles");
+            var roles = pageElement.querySelector("#roles");
             var myDomain = pageElement.querySelector('#myDomain');
 
             that.loadDataDelayedPromise = null;
@@ -61,45 +57,7 @@
                 if (that.events) {
                     that.events = null;
                 }
-                if (that.roles) {
-                    that.roles = null;
-                }
             }
-
-            var handleVisibleList = function (hasLocal, siteadmin) {
-                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                if (that.binding.addEventFormFlag) {
-                    if (hasLocal === 1 || siteadmin === 1) {
-                        that.binding.addEventFormFlag = null;
-                    } else {
-                        that.binding.addEventFormFlag = 1;
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            that.handleVisibleList = handleVisibleList;
-
-            var resetVisibleList = function () {
-                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                that.binding.addEventFormFlag = (AppHeader.controller.binding.userData.SiteAdmin ||
-                    AppHeader.controller.binding.userData.HasLocalEvents);
-                Log.ret(Log.l.trace);
-            }
-            this.resetVisibleList = resetVisibleList;
-
-            var setRoleVisible = function () {
-                if (!AppHeader.controller.binding.userData.SiteAdmin && AppHeader.controller.binding.userData.HasLocalEvents) {
-                    that.binding.setRoleVisible = 1;
-                    that.binding.setRoleCheckVisible = 0;
-                } else if (AppHeader.controller.binding.userData.SiteAdmin) {
-                    that.binding.setRoleVisible = 1;
-                    that.binding.setRoleCheckVisible = 1;
-                } else {
-                    that.binding.setRoleVisible = 0;
-                    that.binding.setRoleCheckVisible = 0;
-                }
-            }
-            this.setRoleVisible = setRoleVisible;
 
             var loadDataDelayed = function (searchString) {
                 if (that.loadDataDelayedPromise) {
@@ -133,10 +91,16 @@
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 var prevNotifyModified = AppBar.notifyModified;
                 AppBar.notifyModified = false;
-                prevLogin = newDataEmployee.Login;
-                prevPassword = newDataEmployee.Password;
                 that.resultConverter(newDataEmployee);
                 that.binding.dataEmployee = newDataEmployee;
+                that.checkingLicence(newDataEmployee);
+                if ((AppHeader.controller.binding.userData.SiteAdmin ||
+                    AppHeader.controller.binding.userData.HasLocalEvents) &&
+                    !newDataEmployee.HasLocalEvents) {
+                    that.binding.addEventFormFlag = null;
+                } else {
+                    that.binding.addEventFormFlag = 1;
+                }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace);
@@ -168,6 +132,7 @@
             }
             this.getRecordId = getRecordId;
 
+            // wird über Liste geholt weil wg. remote-Abfrage nicht auch noch im eigenen employeeView
             var getHasTwoFactor = function() {
                 var hasTwoFactor = null;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
@@ -211,70 +176,59 @@
             };
             this.deleteData = deleteData;
 
-            var checkingLicence = function (recordId) {
+            var checkingLicence = function (result) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                AppData.setErrorMsg(that.binding);
-                var ret = GenDataEmployee.licenceBView.select(function (json) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    Log.print(Log.l.info, "licenceBView select: success!");
-                    var result = json.d;
-                    if (result && result.NichtLizenzierteApp) {
-                        that.binding.noLicence = result.NichtLizenzierteApp;
-                    } else {
-                        that.binding.noLicence = null;
-                    }
-                    if (result && result.UserStatus) {
-                        that.binding.userStatus = result.UserStatus;
-                    } else {
-                        that.binding.userStatus = null;
-                    }
-                    if (result && result.Gesperrt) {
-                        that.binding.userLocked = result.Gesperrt;
-                    } else {
-                        that.binding.userLocked = null;
-                    }
-                    if (result && result.IconID) {
-                        that.binding.iconID = result.IconID;
-                    }
-                    if (result && result.AnzAktiveLizenz) {
-                        that.binding.AnzAktiveLizenz = result.AnzAktiveLizenz;
-                    } else {
-                        that.binding.AnzAktiveLizenz = 0;
-                    }
-                    if (result && result.AnzMandantLizenz) {
-                        that.binding.AnzMandantLizenz = result.AnzMandantLizenz;
-                    } else {
-                        that.binding.AnzMandantLizenz = 0;
-                    }
-                    // alert box licence
-                    if (that.binding.AnzAktiveLizenz > that.binding.AnzMandantLizenz) {
-                        alert(getResourceText("genDataEmployee.exceededLicence"));
-                    }
-                    // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
-                    // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
-                    // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                    //|| AppHeader.controller.binding.userData.HasLocalEvents 
-                    that.binding.allowEditLogin = !getHasTwoFactor() &&
-                       (AppHeader.controller.binding.userData.SiteAdmin ||
-                        AppHeader.controller.binding.userData.IsCustomerAdmin);
-                    if (that.binding.allowEditLogin) {
-                        that.binding.disableLoginFirstPart = false;
-                        that.binding.disableDomain = false;
-                        that.binding.disableLoginName = false;
-                        that.binding.disablePassword = getHasTwoFactor();
-                    } else {
-                        that.binding.disableLoginFirstPart = true;
-                        that.binding.disableDomain = true;
-                        that.binding.disableLoginName = true;
-                        that.binding.disablePassword = true;
-                    }
-                    AppBar.triggerDisableHandlers();
-                    return WinJS.Promise.as();
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "error selecting licenceBView");
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                }, recordId);
+                if (result && result.NichtLizenzierteApp) {
+                    that.binding.noLicence = result.NichtLizenzierteApp;
+                } else {
+                    that.binding.noLicence = null;
+                }
+                if (result && result.UserStatus) {
+                    that.binding.userStatus = result.UserStatus;
+                } else {
+                    that.binding.userStatus = null;
+                }
+                if (result && result.Gesperrt) {
+                    that.binding.userLocked = result.Gesperrt;
+                } else {
+                    that.binding.userLocked = null;
+                }
+                if (result && result.IconID) {
+                    that.binding.iconID = result.IconID;
+                }
+                if (result && result.AnzAktiveLizenz) {
+                    that.binding.AnzAktiveLizenz = result.AnzAktiveLizenz;
+                } else {
+                    that.binding.AnzAktiveLizenz = 0;
+                }
+                if (result && result.AnzMandantLizenz) {
+                    that.binding.AnzMandantLizenz = result.AnzMandantLizenz;
+                } else {
+                    that.binding.AnzMandantLizenz = 0;
+                }
+                // alert box licence
+                if (that.binding.AnzAktiveLizenz > that.binding.AnzMandantLizenz) {
+                    alert(getResourceText("genDataEmployee.exceededLicence"));
+                }
+                // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
+                // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
+                // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
+                //|| AppHeader.controller.binding.userData.HasLocalEvents 
+                that.binding.allowEditLogin = !getHasTwoFactor() &&
+                    (AppHeader.controller.binding.userData.SiteAdmin ||
+                     AppHeader.controller.binding.userData.IsCustomerAdmin);
+                if (that.binding.allowEditLogin) {
+                    that.binding.disableLoginFirstPart = false;
+                    that.binding.disableDomain = false;
+                    that.binding.disableLoginName = false;
+                    that.binding.disablePassword = getHasTwoFactor();
+                } else {
+                    that.binding.disableLoginFirstPart = true;
+                    that.binding.disableDomain = true;
+                    that.binding.disableLoginName = true;
+                    that.binding.disablePassword = true;
+                }
+                AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
                 return ret;
             }
@@ -341,7 +295,6 @@
                                 if (json && json.d) {
                                     var employee = json.d;
                                     that.setDataEmployee(employee);
-                                    that.setRoleVisible();
                                     if (!AppHeader.controller.binding.userData.SiteAdmin) {
                                         var userName = AppData.generalData.userName;
                                         if (userName && userName.indexOf("@") > 0) {
@@ -358,7 +311,7 @@
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, newEmployee).then(function () {
                                 if (newEmployeeId) {
-                                    return that.checkingLicence(newEmployeeId);
+                                    return that.loadData(newEmployeeId);
                                 } else {
                                     return WinJS.Promise.as();
                                 }
@@ -552,7 +505,7 @@
                 },
                 clickOrderFirstname: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                    that.binding.restriction.OrderAttribute = "Vorname";
+                    that.binding.restriction.OrderAttribute = "SortVorname";
                     if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
                         that.binding.restriction.OrderDesc = true;
                     } else {
@@ -568,7 +521,7 @@
                 },
                 clickOrderLastname: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
-                    that.binding.restriction.OrderAttribute = "Nachname";
+                    that.binding.restriction.OrderAttribute = "SortNachname";
                     if (event.target.textContent === getResourceText("employee.nameAsc")) {
                         that.binding.restriction.OrderDesc = true;
                     } else {
@@ -718,9 +671,7 @@
                         return true;
                     }
                     if (!AppBar.busy) {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding &&
-                            master.controller.binding.hasLocalevents) {
+                        if (that.binding.dataEmployee.HasLocalevents) {
                             return false;
                         } else {
                             return true;
@@ -748,9 +699,13 @@
                     }
                 },*/
                 clickDelete: function () {
+                    // Löschen von Mitarbeiter mit Kontakten nicht erlaubt!
+                    if (that.binding.dataEmployee.HatKontakte) {
+                        return true;
+                    }
                     var master = Application.navigator.masterControl;
                     //Stand 23.06 Warum wird nach !master.controller.binding.hasLocalevents geprüft? Die Anwendung wird explizit ausgeblendet für Admins die wohl nur eine Veranstaltung sehen können
-                    if (AppHeader.controller.binding.userData.IsMidiAdmin || master && master.controller && master.controller.binding && master.controller.binding.hasContacts) {
+                    if (AppHeader.controller.binding.userData.IsMidiAdmin || master && master.controller && master.controller.binding) {
                         return true;
                     }
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
@@ -835,67 +790,72 @@
                 if (!recordId) {
                     recordId = getRecordId();
                 }
+                if (!recordId) {
+                    that.setDataEmployee(getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue));
+                    Log.ret(Log.l.trace, "no record selected");
+                    return WinJS.Promise.as();
+                }
                 var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select employeeView...");
-                    that.roles = null;
-                    return GenDataEmployee.LGNTINITAPUserRoleView.select(function (json) {
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "employeeView: success!");
-                        if (json && json.d && json.d.results.length > 0) {
-                            that.roles = new WinJS.Binding.List(json.d.results);
-                        }
-                        if (roleschombo && roleschombo.winControl) {
-                            roleschombo.winControl.data = that.roles;
-                        }
-                        /*if (AppHeader.controller.binding.userData.SiteAdmin === 1 && AppHeader.controller.binding.userData.HasLocalEvents === 1) {
-                            that.binding.isEmpRolesCustomVisible = 0;
-                        }*/
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                    }, { LanguageSpecID: AppData.getLanguageId() });
-                }).then(function () {
-                    if (recordId) {
-                        that.events = null;
-                        return AppData.call("PRC_MAWeitereVeranstaltungen", {
-                            pMitarbeiterID: recordId
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                            if (json && json.d && json.d.results.length > 0) {
-                                that.events = new WinJS.Binding.List(json.d.results);
+                    if (!GenDataEmployee.initAPUserRoleView.getResults().length) {
+                        return GenDataEmployee.initAPUserRoleView.select(function (json) {
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "employeeView: success!");
+                            if (roles && roles.winControl) {
+                                var results = json && json.d && json.d.results;
+                                var filteredResults = results.filter(function (item) {
+                                    return (!item.NoDefault);
+                                });
+                                roles.winControl.data = new WinJS.Binding.List(filteredResults);
                             }
-                            if (addEventFormfieldcombo && addEventFormfieldcombo.winControl) {
-                                addEventFormfieldcombo.winControl.data = that.events;
-                                addEventFormfieldcombo.selectedIndex = -1;
-                            }
-                        }, function (error) {
-                            Log.print(Log.l.error, "call error");
+                        }, function (errorResponse) {
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         });
                     } else {
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (recordId) {
-                        //load of format relation record data
-                        Log.print(Log.l.trace, "calling select employeeView...");
-                        return GenDataEmployee.employeeView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                that.setDataEmployee(json.d);
-                                that.setRoleVisible();
-                            }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
+                    //load of format relation record data
+                    Log.print(Log.l.trace, "calling select employeeView...");
+                    return GenDataEmployee.employeeView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "employeeView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            that.setDataEmployee(json.d);
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
+                //}).then(function () {
+                //    if (recordId) {
+                //        Log.print(Log.l.trace, "Checking for licence!");
+                //        return that.checkingLicence(recordId);
+                //    } else {
+                //        return WinJS.Promise.as();
+                //    }
                 }).then(function () {
-                    if (recordId) {
-                        Log.print(Log.l.trace, "Checking for licence!");
-                        return that.checkingLicence(recordId);
+                    if (recordId && that.binding.addEventFormFlag && that.binding.dataEmployee.UserSpecID) {
+                        that.events = null;
+                        return AppData.call("PRC_MAWeitereVeranstaltungen", {
+                            pMitarbeiterID: recordId
+                        }, function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            if (addEventFormfieldcombo && addEventFormfieldcombo.winControl) {
+                                var results = json && json.d && json.d.results;
+                                that.events = new WinJS.Binding.List(results);
+                                addEventFormfieldcombo.winControl.data = that.events;
+                                addEventFormfieldcombo.selectedIndex = -1;
+                            }
+                        }, function (error) {
+                            if (that.events) {
+                                that.events.length = 0;
+                            }
+                            Log.print(Log.l.error, "call error");
+                        });
                     } else {
+                        if (that.events) {
+                            that.events.length = 0;
+                        }
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
@@ -1217,11 +1177,6 @@
             that.processAll().then(function () {
                 if (myDomain) {
                     myDomain.focus();
-                }
-                that.resetVisibleList();
-                var master = Application.navigator.masterControl;
-                if (master && master.controller && master.controller.binding) {
-                    that.handleVisibleList(master.controller.binding.hasLocalEvents, master.controller.binding.siteAdmin);
                 }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
