@@ -258,13 +258,6 @@
                     } else {
                         if (initSprache && initSprache.winControl) {
                             var results = ClientManagement.initSpracheView.getResults();
-
-                            // Leeren Eintrag einfügen, falls nicht vorhanden
-                            results.unshift({
-                                INITLandID: null,
-                                TITLE: ""
-                            });
-
                             initSprache.winControl.data = new WinJS.Binding.List(results);
                         }
                         return WinJS.Promise.as();
