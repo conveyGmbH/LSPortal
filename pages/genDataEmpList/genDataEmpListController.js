@@ -523,8 +523,16 @@
                     }
                 }).then(function () {
                     if (!that.licenceWarningSelected) {
+                        var eventId = 0;
+                        if (restriction.VeranstaltungID) {
+                            if (typeof restriction.VeranstaltungID === "string") {
+                                eventId = parseInt(restriction.VeranstaltungID);
+                            } else if (typeof restriction.VeranstaltungID === "number") {
+                                eventId = restriction.VeranstaltungID;
+                            }
+                        }
                         AppData.call("FCT_ExistsLicenceWarning", {
-                            pVeranstaltungID: AppData.getRecordId("Veranstaltung")
+                            pVeranstaltungID: eventId
                         }, function (json) {
                             Log.print(Log.l.info, "call FCT_ExistsLicenceWarning: success! FCT_ExistsLicenceWarning=" +
                                 (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning));
