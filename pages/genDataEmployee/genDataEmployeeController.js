@@ -717,7 +717,9 @@
                     }
                 },
                 clickDelete2fa: function() {
-                    return !getHasTwoFactor();
+                    return !getHasTwoFactor() ||
+                        that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
+                        AppBar.busy;
                 }
             };
 
