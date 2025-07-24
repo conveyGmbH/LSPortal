@@ -48,7 +48,7 @@
                 }
             }
 
-            var licenceWarningSelected = false;
+            this.licenceWarningSelected = false;
             var progress = null;
             var counter = null;
             var layout = null;
@@ -449,32 +449,32 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!licenceWarningSelected) {
-                        // only licence user select
-                        Log.print(Log.l.trace, "calling select employeeView...only licence user select!");
-                        return EmpList.employeeView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "select employeeView: success!");
-                            // licenceUserView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results.length > 0) {
-                                var results = json.d.results;
+                    if (!that.licenceWarningSelected) {
+                        var eventId = 0;
+                        if (restriction.VeranstaltungID) {
+                            if (typeof restriction.VeranstaltungID === "string") {
+                                eventId = parseInt(restriction.VeranstaltungID);
+                            } else if (typeof restriction.VeranstaltungID === "number") {
+                                eventId = restriction.VeranstaltungID;
+                            }
+                        }
+                        AppData.call("FCT_ExistsLicenceWarning", {
+                            pVeranstaltungID: eventId
+                        }, function (json) {
+                            Log.print(Log.l.info, "call FCT_ExistsLicenceWarning: success! FCT_ExistsLicenceWarning=" +
+                                (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning));
+                            if (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning) {
                                 that.binding.licenceWarning = true;
                             } else {
                                 that.binding.licenceWarning = false;
                             }
-                            Log.print(Log.l.trace, "licenceWarning=" + that.binding.licenceWarning);
+                            that.licenceWarningSelected = true;
                         }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "select employeeView: error!");
+                            Log.print(Log.l.error, "call FCT_ExistsLicenceWarning: error");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { NichtLizenzierteApp: 1 });
-                    } else {
-                        return WinJS.Promise.as();
+                        });
                     }
-                }).then(function () {
-                    Log.print(Log.l.trace, "calling select employeeView again...");
+                    Log.print(Log.l.trace, "calling select employeeView...");
                     return EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -482,9 +482,6 @@
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
-                                if (that.binding.count !== json.d.results.length) {
-                                    licenceWarningSelected = false;
-                                }
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = EmpList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
@@ -526,7 +523,6 @@
                                     that.binding.hasTwoFactor = employee.HasTwoFactor;
                                     that.binding.locked = employee.Locked;
                                 } else {
-                                    licenceWarningSelected = false;
                                     that.loadData();
                                 }
                             }

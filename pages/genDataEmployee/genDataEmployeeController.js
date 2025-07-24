@@ -510,6 +510,7 @@
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
+                        master.controller.licenceWarningSelected = false;
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);

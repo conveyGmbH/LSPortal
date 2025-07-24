@@ -53,7 +53,7 @@
                 AppData.setRestriction("Employee", {});
             }
 
-            var licenceWarningSelected = false;
+            this.licenceWarningSelected = false;
             var progress = null;
             var counter = null;
             var layout = null;
@@ -522,32 +522,23 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (!licenceWarningSelected) {
-                        // only licence user select
-                        return GenDataEmpList.employeeView.select(function(json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "licenceView: success!");
-                            // licenceUserView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results.length > 0) {
-                                var results = json.d.results;
+                    if (!that.licenceWarningSelected) {
+                        AppData.call("FCT_ExistsLicenceWarning", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung")
+                        }, function (json) {
+                            Log.print(Log.l.info, "call FCT_ExistsLicenceWarning: success! FCT_ExistsLicenceWarning=" +
+                                (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning));
+                            if (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning) {
                                 that.binding.licenceWarning = true;
-                                //change order for the next select - list
                             } else {
                                 that.binding.licenceWarning = false;
                             }
-                            licenceWarningSelected = true;
-                        },
-                        function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
+                            that.licenceWarningSelected = true;
+                        }, function (errorResponse) {
+                            Log.print(Log.l.error, "call FCT_ExistsLicenceWarning: error");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        },
-                        { NichtLizenzierteApp: 1 });
-                    } else {
-                        return WinJS.Promise.as();
+                        });       
                     }
-                }).then(function () {
                     return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -555,9 +546,6 @@
                         // employeeView returns object already parsed from json file in response
                         if (!recordId) {
                             if (json && json.d && json.d.results.length > 0) {
-                                if (that.binding.count !== json.d.results.length) {
-                                    licenceWarningSelected = false;
-                                }
                                 that.binding.count = json.d.results.length;
                                 that.nextUrl = GenDataEmpList.employeeView.getNextUrl(json);
                                 var results = json.d.results;
@@ -608,7 +596,6 @@
                                         Application.navigateById("genDataEmployee");
                                     }
                                 } else {
-                                    licenceWarningSelected = false;
                                     that.loadData();
                                 }
                             }
