@@ -21,7 +21,6 @@
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
                 restriction: copyByValue(Employee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
                 userStatus: null,
@@ -60,6 +59,7 @@
                 prevPassword = newDataEmployee.Password;
                 that.resultConverter(newDataEmployee);
                 that.binding.dataEmployee = newDataEmployee;
+                that.checkingLicence(newDataEmployee);
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
                 Log.ret(Log.l.trace);
@@ -130,56 +130,45 @@
             };
             this.deleteData = deleteData;
 
-            var checkingLicence = function (recordId) {
+            var checkingLicence = function (result) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                AppData.setErrorMsg(that.binding);
-                var ret = Employee.licenceBView.select(function (json) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    Log.print(Log.l.info, "licenceBView select: success!");
-                    var result = json.d;
-                    if (result && result.NichtLizenzierteApp) {
-                        that.binding.noLicence = result.NichtLizenzierteApp;
-                    } else {
-                        that.binding.noLicence = null;
-                    }
-                    if (result && result.UserStatus) {
-                        that.binding.userStatus = result.UserStatus;
-                    } else {
-                        that.binding.userStatus = null;
-                    }
-                    if (result && result.Gesperrt) {
-                        that.binding.userLocked = result.Gesperrt;
-                    } else {
-                        that.binding.userLocked = null;
-                    }
-                    if (result && result.IconID) {
-                        that.binding.iconID = result.IconID;
-                    }
-                    // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
-                    // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
-                    // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                    that.binding.allowEditLogin = !getHasTwoFactor() &&
-                        (AppHeader.controller.binding.userData.SiteAdmin ||
-                         AppHeader.controller.binding.userData.IsCustomerAdmin);
-                    if (that.binding.allowEditLogin) {
-                        that.binding.disableLoginFirstPart = false;
-                        that.binding.disableDomain = false;
-                        that.binding.disableLoginName = false;
-                        that.binding.disablePassword = getHasTwoFactor();
-                    } else {
-                        that.binding.disableLoginFirstPart = true;
-                        that.binding.disableDomain = true;
-                        that.binding.disableLoginName = true;
-                        that.binding.disablePassword = true;
-                    }
-                    AppBar.triggerDisableHandlers();
-                }, function (errorResponse) {
-                    Log.print(Log.l.error, "error selecting mailerzeilen");
-                    AppData.setErrorMsg(that.binding, errorResponse);
-                }, recordId);
+                if (result && result.NichtLizenzierteApp) {
+                    that.binding.noLicence = result.NichtLizenzierteApp;
+                } else {
+                    that.binding.noLicence = null;
+                }
+                if (result && result.UserStatus) {
+                    that.binding.userStatus = result.UserStatus;
+                } else {
+                    that.binding.userStatus = null;
+                }
+                if (result && result.Gesperrt) {
+                    that.binding.userLocked = result.Gesperrt;
+                } else {
+                    that.binding.userLocked = null;
+                }
+                if (result && result.IconID) {
+                    that.binding.iconID = result.IconID;
+                }
+                // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
+                // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
+                // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
+                that.binding.allowEditLogin = !getHasTwoFactor() &&
+                    (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppHeader.controller.binding.userData.IsCustomerAdmin);
+                if (that.binding.allowEditLogin) {
+                    that.binding.disableLoginFirstPart = false;
+                    that.binding.disableDomain = false;
+                    that.binding.disableLoginName = false;
+                    that.binding.disablePassword = getHasTwoFactor();
+                } else {
+                    that.binding.disableLoginFirstPart = true;
+                    that.binding.disableDomain = true;
+                    that.binding.disableLoginName = true;
+                    that.binding.disablePassword = true;
+                }
+                AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
-                return ret;
             }
             this.checkingLicence = checkingLicence;
 
@@ -401,7 +390,7 @@
                 },
                 clickOrderFirstname: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.binding.restriction.OrderAttribute = "Vorname";
+                    that.binding.restriction.OrderAttribute = "SortVorname";
                     if (event.target.textContent === getResourceText("employee.firstNameAsc")) {
                         that.binding.restriction.OrderDesc = true;
                     } else {
@@ -416,7 +405,7 @@
                 },
                 clickOrderLastname: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.binding.restriction.OrderAttribute = "Nachname";
+                    that.binding.restriction.OrderAttribute = "SortNachname";
                     if (event.target.textContent === getResourceText("employee.nameAsc")) {
                         that.binding.restriction.OrderDesc = true;
                     } else {
@@ -516,6 +505,31 @@
                         }
                     });
                     Log.ret(Log.l.trace);
+                },
+                clickFilterLicence: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
+                    var master = Application.navigator.masterControl;
+                    if (master &&
+                        master.controller &&
+                        typeof master.controller.getOrderLicenceBtn === "function" &&
+                        typeof master.controller.highlightorderLicenceBtn === "function") {
+                        var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                        if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
+                            //that.binding.restriction.OrderDesc = true;
+                            delete that.binding.restriction.NichtLizenzierteApp;
+                            master.controller.highlightorderLicenceBtn(0);
+                        } else {
+                            //that.binding.restriction.OrderDesc = false;
+                            that.binding.restriction.NichtLizenzierteApp = 1;
+                            master.controller.highlightorderLicenceBtn(1);
+                        }
+                        that.saveRestriction();
+                        if (master && master.controller) {
+                            master.controller.loadData();
+                        }
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -529,9 +543,7 @@
                 },
                 clickNew: function () {
                     if (!AppBar.busy) {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding &&
-                            master.controller.binding.hasLocalevents) {
+                        if (AppHeader.controller.binding.userData.HasLocalEvents) {
                             return false;
                         } else {
                             return true;
@@ -541,16 +553,15 @@
                     }
                 },
                 clickDelete: function () {
+                    if (that.binding.dataEmployee && that.binding.dataEmployee.HatKontakte) {
+                        return true;
+                    }
+                    if (!AppHeader.controller.binding.userData.HasLocalEvents) {
+                        return true;
+                    }
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
                         that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding &&
-                            master.controller.binding.hasLocalevents &&
-                            !master.controller.binding.hasContacts) {
-                            return false;
-                        } else {
-                            return true;
-                        }
+                        return false;
                     } else {
                         return true;
                     }
@@ -584,6 +595,11 @@
                 if (!recordId) {
                     recordId = getRecordId();
                 }
+                if (!recordId) {
+                    that.setDataEmployee(getEmptyDefaultValue(Employee.employeeView.defaultValue));
+                    Log.ret(Log.l.trace, "no record selected");
+                    return WinJS.Promise.as();
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (recordId) {
                         //load of format relation record data
@@ -602,35 +618,12 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (recordId) {
-                        Log.print(Log.l.trace, "Checking for licence!");
-                        return that.checkingLicence(recordId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (recordId) {
-                        var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                            return empRolesFragmentControl.controller.loadData(recordId);
-                        } else {
-                            var parentElement = pageElement.querySelector("#emproleshost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        }
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
                     AppBar.notifyModified = true;
                     if (recordId) {
                         Log.print(Log.l.trace, "Data loaded");
-                        //that.resizeGenFragEvents();
                         var master = Application.navigator.masterControl;
-                        if (master && master.controller) {
+                        if (master && master.controller &&
+                            typeof master.controller.scrollToRecordId === "function") {
                             master.controller.scrollToRecordId(recordId);
                         }
                     }

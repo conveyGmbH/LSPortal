@@ -66,6 +66,20 @@
             };
             this.background = background;
 
+            var getOrderLicenceBtn = function () {
+                return pageElement.querySelector("#orderLicenceBtn");
+            }
+            this.getOrderLicenceBtn = getOrderLicenceBtn;
+
+            var highlightorderLicenceBtn = function (state) {
+                if (state === 1) {
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = Colors.offColor;
+                } else {
+                    pageElement.querySelector("#orderLicenceBtn").style.borderColor = "transparent";
+                }
+            }
+            this.highlightorderLicenceBtn = highlightorderLicenceBtn;
+
             var setSelIndex = function (index) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
                 if (that.employees && that.employees.length > 0) {
@@ -164,7 +178,6 @@
 
             var resultConverter = function (item, index) {
                 item.index = index;
-                that.binding.hasLocalevents = AppHeader.controller.binding.userData.HasLocalEvents;
                 item.Names = "";
                 item.fullName = (item.Vorname && item.Nachname)
                     ? (item.Vorname + " " + item.Nachname)
@@ -177,14 +190,6 @@
                 if (typeof item.CS1504SerienNr === "string") {
                     item.CS1504SerienNr = that.cutSerialNumber(item.CS1504SerienNr);
                 }
-                /*if (item.Gesperrt === 1) {
-                    if (AppHeader.controller.binding.userData.SiteAdmin) {
-                        item.Gesperrt = 0;
-                    } else {
-                        item.Gesperrt = 1;
-                    }
-                    item.disabled = true;
-                }*/
                 item.recordIcon = Binding.Converter.getIconFromID(item.IconID, "EmpList");
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
@@ -408,7 +413,7 @@
                 if (!restriction) {
                     restriction = defaultRestriction;
                 }
-                if (restriction.OrderAttribute === "Vorname") {
+                if (restriction.OrderAttribute === "SortVorname") {
                     if (restriction.OrderDesc) {
                         that.binding.btnFirstNameText = getResourceText("employee.firstNameDesc");
                     } else {
@@ -416,7 +421,7 @@
                     }
                     that.binding.btnNameText = getResourceText("employee.name");
                     that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
-                } else if (restriction.OrderAttribute === "Nachname") {
+                } else if (restriction.OrderAttribute === "SortNachname") {
                     that.binding.btnFirstNameText = getResourceText("employee.firstName");
                     if (restriction.OrderDesc) {
                         that.binding.btnNameText = getResourceText("employee.nameDesc");

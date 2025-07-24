@@ -230,7 +230,6 @@
                 }
                 AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
-                return ret;
             }
             this.checkingLicence = checkingLicence;
 
@@ -565,23 +564,26 @@
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.binding.restriction.OrderAttribute = "NichtLizenzierteApp";
                     var master = Application.navigator.masterControl;
-                    var orderLicenceButton = master.controller.getOrderLicenceBtn();
-                    if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
-                        //that.binding.restriction.OrderDesc = true;
-                        delete that.binding.restriction.NichtLizenzierteApp;
-                        master.controller.highlightorderLicenceBtn(0);
-                    } else {
-                        //that.binding.restriction.OrderDesc = false;
-                        that.binding.restriction.NichtLizenzierteApp = 1;
-                        master.controller.highlightorderLicenceBtn(1);
-                    }
-                    that.saveRestriction();
-                    if (master && master.controller) {
-                        master.controller.loadData();
+                    if (master &&
+                        master.controller &&
+                        typeof master.controller.getOrderLicenceBtn === "function" &&
+                        typeof master.controller.highlightorderLicenceBtn === "function") {
+                        var orderLicenceButton = master.controller.getOrderLicenceBtn();
+                        if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
+                            //that.binding.restriction.OrderDesc = true;
+                            delete that.binding.restriction.NichtLizenzierteApp;
+                            master.controller.highlightorderLicenceBtn(0);
+                        } else {
+                            //that.binding.restriction.OrderDesc = false;
+                            that.binding.restriction.NichtLizenzierteApp = 1;
+                            master.controller.highlightorderLicenceBtn(1);
+                        }
+                        that.saveRestriction();
+                        if (master && master.controller) {
+                            master.controller.loadData();
+                        }
                     }
                     Log.ret(Log.l.trace);
-
-
                 },
                 clickTopButton: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
@@ -671,7 +673,7 @@
                         return true;
                     }
                     if (!AppBar.busy) {
-                        if (that.binding.dataEmployee.HasLocalevents) {
+                        if (AppHeader.controller.binding.userData.HasLocalEvents) {
                             return false;
                         } else {
                             return true;
@@ -680,32 +682,13 @@
                         return true;
                     }
                 },
-                /*clickDelete: function () {
-                    if (AppHeader.controller.binding.userData.IsMidiAdmin) {
-                        return true;
-                    }
-                    if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
-                        that.binding.dataEmployee.MitarbeiterVIEWID !== AppData.getRecordId("Mitarbeiter")) {
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller && master.controller.binding &&
-                            master.controller.binding.hasLocalevents &&
-                            !master.controller.binding.hasContacts) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        return true;
-                    }
-                },*/
                 clickDelete: function () {
                     // Löschen von Mitarbeiter mit Kontakten nicht erlaubt!
-                    if (that.binding.dataEmployee.HatKontakte) {
+                    if (that.binding.dataEmployee && that.binding.dataEmployee.HatKontakte) {
                         return true;
                     }
-                    var master = Application.navigator.masterControl;
                     //Stand 23.06 Warum wird nach !master.controller.binding.hasLocalevents geprüft? Die Anwendung wird explizit ausgeblendet für Admins die wohl nur eine Veranstaltung sehen können
-                    if (AppHeader.controller.binding.userData.IsMidiAdmin || master && master.controller && master.controller.binding) {
+                    if (AppHeader.controller.binding.userData.IsMidiAdmin) {
                         return true;
                     }
                     if (that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID && !AppBar.busy &&
@@ -897,7 +880,7 @@
                         var master = Application.navigator.masterControl;
                         if (master && master.controller &&
                             typeof master.controller.scrollToRecordId === "function") {
-                            //master.controller.scrollToRecordId(recordId);
+                            master.controller.scrollToRecordId(recordId);
                         }
                     }
                 });

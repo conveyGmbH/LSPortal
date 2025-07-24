@@ -21,7 +21,6 @@
                 employeeId: 0,
                 eventId: 0,
                 searchString: "",
-                hasLocalevents: null,
                 hasTwoFactor: null,
                 licenceWarning: false,
                 btnFirstNameText: getResourceText("employee.firstName"),
