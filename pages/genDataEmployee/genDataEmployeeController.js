@@ -97,9 +97,9 @@
                 if ((AppHeader.controller.binding.userData.SiteAdmin ||
                     AppHeader.controller.binding.userData.HasLocalEvents) &&
                     !newDataEmployee.HasLocalEvents) {
-                    that.binding.addEventFormFlag = null;
-                } else {
                     that.binding.addEventFormFlag = 1;
+                } else {
+                    that.binding.addEventFormFlag = null;
                 }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
@@ -315,7 +315,6 @@
                                     }
                                     newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                                 }
-                                //AppBar.modified = true;
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "error inserting employee");
                                 AppBar.busy = false;
