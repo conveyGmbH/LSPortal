@@ -876,7 +876,7 @@
     "employee.tfa"          : "2FA",
     "employee.count"        : "Numero",
     "employee.questionDelete": "Siete sicuri di vole cancellare questo utente?",
-    "employee.questionDelete2fa": "Si desidera rimuovere l'autenticazione a due fattori per l'account utente corrente?",
+    "employee.questionDelete2fa": "Si desidera rimuovere l'autenticazione a due fattori per l'account utente corrente? Verrà assegnata una nuova password casuale. È possibile recuperarla alla pagina: Pregenerati",
     "employee.alertPassword": "La password non è stata confermata in modo corretto!",
 	"employee.name"         : "Cognome",
 	"employee.firstName"    : "Nome",

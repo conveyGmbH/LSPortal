@@ -877,7 +877,7 @@
     "employee.tfa"          : "2FA",
     "employee.count"        : "Nombre",
     "employee.questionDelete": "Voulez-vous supprimer l'utilisateur courant?",
-    "employee.questionDelete2fa": "Souhaitez-vous supprimer l'authentification à deux facteurs pour le compte utilisateur actuel ?",
+    "employee.questionDelete2fa": "Souhaitez-vous supprimer l'authentification à deux facteurs pour le compte utilisateur actuel ? Un nouveau mot de passe aléatoire sera attribué. Vous pouvez le récupérer sur la page : Prégénéré",
     "employee.alertPassword": "Le mot de passe n'a pas été correctement confirmé!",
 	"employee.name"         : "Nom",
 	"employee.firstName"    : "Prénom",

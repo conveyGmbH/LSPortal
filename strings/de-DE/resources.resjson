@@ -881,7 +881,7 @@
     "employee.tfa"          : "2FA",
     "employee.count"        : "Anzahl",
     "employee.questionDelete": "Möchten Sie das aktuelle Benutzerkonto löschen?",
-    "employee.questionDelete2fa": "Möchten Sie beim aktuellen Benutzerkonto die Zwei-Faktor-Authentifizierung entfernen?",
+    "employee.questionDelete2fa": "Möchten Sie beim aktuellen Benutzerkonto die Zwei-Faktor-Authentifizierung entfernen? Es wird ein neues Zufalls-Kennwort vergeben. Sie können dieses abrufen auf der Seite: Vorgeneriert",
     "employee.alertPassword": "Das Kennwort wurde nicht korrekt bestätigt!",
 	"employee.name"         : "Name",
 	"employee.firstName"    : "Vorname",

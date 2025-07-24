@@ -791,7 +791,7 @@
     "employee.tfa"          : "2FA",
     "employee.count"        : "Count",
     "employee.questionDelete": "Do you want to delete the current user account?",
-    "employee.questionDelete2fa": "Would you like to remove two-factor authentication for the current user account?",
+    "employee.questionDelete2fa": "Would you like to remove two-factor authentication for the current user account? A new random password will be assigned. You can retrieve it on the page: Pre-generated",
     "employee.alertPassword": "Password isn't confirmed correctly!",
     "employee.name"         : "Last name",
 	"employee.firstName"    : "Firstname",
