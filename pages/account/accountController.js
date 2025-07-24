@@ -422,33 +422,49 @@
             var tfaStatus = function () {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+                
                 if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.getStatus === "function") {
                     // Hiermit soll die Oberfläche für TFA-Administration erzeugt werden
                     // in that.binding.dataLogin.Password steht initial das vom User eingegebene Password
                     // im Fall TFA soll that.binding.dataLogin.Password überschrieben werden mit dem "Token-Password"
                     // User muss für TFA-Änderungen explizit in einem weiteren Input-Element nochmal "sein Password" eingeben, 
                     // unabhängig davon was gerade in that.binding.dataLogin.Password steht!
-                    ret = toWinJSPromise(TwoFactorLib.getStatus(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
-                        Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
-                        that.binding.dataLogin.Password = dbPassword;
-                    }, Application.language, that.binding.appSettings.odata.hostName));
+                    ret = toWinJSPromise(TwoFactorLib.getStatus(
+                        tfaContainer, 
+                        that.binding.dataLogin.Login,
+                        that.binding.dataLogin.Password, 
+
+                        function setDBPassword(dbPassword) { 
+                            that.binding.dataLogin.Password = dbPassword;
+                        },
+                        Application.language, 
+                        that.binding.appSettings.odata.hostName
+                    ));
                 } else {
-                    Log.print(Log.info, "no TFA Lib");
+                    Log.print(Log.info, "No twofactorLib was found");
                 }
                 Log.ret(Log.l.trace);
                 return ret;
             }
+            
             var tfaVerify = function() {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+
                 if (tfaContainer && TwoFactorLib && typeof TwoFactorLib.verify2FA === "function") {
                     // Hiermit soll die Oberfläche für die TFA-Authentifizierung (Popup-Dialog) erzeugt werden
-                    ret = toWinJSPromise(TwoFactorLib.verify2FA(tfaContainer, that.binding.dataLogin.Login, function setDBPassword(dbPassword) {
-                        Log.print(Log.info, "setDBPassword called: password " + (that.binding.dataLogin.Password === dbPassword ? "NOT" : "") + " changed");
-                        that.binding.dataLogin.Password = dbPassword;
+                    // IMPORTANT: Pass original password, handle dbPassword for API calls only
+                    ret = toWinJSPromise(TwoFactorLib.verify2FA(
+                        tfaContainer, 
+                        that.binding.dataLogin.Login, 
+                        that.binding.dataLogin.Password, 
+                            function setDBPassword(dbPassword) {
+
+                            that.binding.dataLogin.Password = dbPassword;
+
                     }, Application.language, that.binding.appSettings.odata.hostName));
                 } else {
-                    Log.print(Log.info, "no TFA Lib");
+                    Log.print(Log.info, "No twofactorLib was found");
                 }
                 Log.ret(Log.l.trace);
                 return ret;
@@ -511,7 +527,8 @@
                         LoginName: that.binding.dataLogin.Login
                     }).then(function () {
                         // nur aufrufen wenn in DB TFA eingetragen ist
-                        if (hasTwoFactor) {
+                        // und Login  geändert wurde
+                        if (hasTwoFactor && (prevLogin !== that.binding.dataLogin.Login)) {
                             return tfaVerify() || WinJS.Promise.as();
                         } else {
                             return WinJS.Promise.as();
@@ -673,7 +690,13 @@
             this.saveData = saveData;
 
             // initialer TFA-Aufruf beim Laden der Seite
-            tfaStatus();
+            // Nur wenn Login und Passwort ausgefüllt sind
+
+            if(that.binding.dataLogin.Login && that.binding.dataLogin.Password){
+                tfaStatus();
+            }else{
+                Log.print(Log.l.trace, "No  2FA status, if not login");
+            }
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
