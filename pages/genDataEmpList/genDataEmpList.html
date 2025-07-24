@@ -73,7 +73,7 @@
 			                    <div class="list-symbol-ID">
 				                    <div data-win-bind="name: recordIcon" class="action-image"></div>
 				                    <div class="list-symbol-addon" data-win-bind="style.display: addonIcon Binding.Converter.toDisplay">
-					                    <div data-win-bind="name: addonIcon" class="addon-image"></div>
+					                    <div class="addon-image" data-win-bind="name: addonIcon;style.backgroundColor: addonColor"></div>
 				                    </div>
 			                    </div>
 			                    <div class="list-compressed">
@@ -81,14 +81,19 @@
 				                          data-win-bind="textContent: fullName"></span>
 				                    <span class="list-compressed-title win-type-ellipsis"
 				                          data-win-bind="textContent: Login"></span>
-                                    <span class="list-compressed-title win-type-subsubtitle win-type-ellipsis"
-                                          data-win-bind="textContent: VeranstaltungName"></span>
-                                    <div class="list-compressed-title win-type-caption win-type-ellipsis">
-                                        <span data-win-bind="textContent: Startdatum"></span>
-                                        <span data-win-bind="style.display: Enddatum Binding.Converter.toDisplay">&nbsp;-&nbsp;</span>
-                                        <span data-win-bind="textContent: Enddatum"></span>
-                                    </div>
+				                    <span class="list-compressed-title win-type-subsubtitle win-type-ellipsis"
+				                          data-win-bind="textContent: VeranstaltungName"></span>
+				                    <div class="list-compressed-title win-type-caption win-type-ellipsis">
+					                    <span data-win-bind="textContent: Startdatum"></span>
+					                    <span data-win-bind="style.display: Enddatum Binding.Converter.toDisplay">&nbsp;-&nbsp;</span>
+					                    <span data-win-bind="textContent: Enddatum"></span>
+				                    </div>
 			                    </div>
+                                <div class="list-compressed-red"
+                                     data-win-bind="style.display: ReasonLocked Binding.Converter.toDisplay">
+                                    <span class="list-compressed-title win-type-subsubtitle win-type-ellipsis"
+                                          data-win-bind="textContent: ReasonLocked"></span>
+                                </div>
 			                    <div class="list-symbol-IDw" data-win-bind="style.display: NichtLizenzierteApp Binding.Converter.toDisplay">
 				                    <div id="about" class="warning-image"></div>
 			                    </div>
@@ -108,7 +113,7 @@
                             </div>
                             <div class="list-field-image-fixed win-type-ellipsis"
                                  data-win-bind="style.visibility: addonIcon Binding.Converter.toVisibility">
-	                            <div data-win-bind="name: addonIcon" class="action-image"></div>
+	                            <div data-win-bind="name: addonIcon; title: addonIconTitle" class="action-image"></div>
                             </div>
                             <div class="list-field-small-relative-15 win-type-ellipsis"
                                  data-win-bind="textContent: Vorname"></div>

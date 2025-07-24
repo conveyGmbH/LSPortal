@@ -1217,6 +1217,9 @@ view-size-smallest .win-container {
     height:100%;
     color: firebrick;
 }
+.win-selected .list-compressed-red {
+    background-color: whitesmoke;
+}
 .list-compressed-green {
     float: left;
     width: calc(100% - 65px);

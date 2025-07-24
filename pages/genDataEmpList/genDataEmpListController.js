@@ -22,6 +22,7 @@
                 eventId: 0,
                 searchString: "",
                 hasTwoFactor: null,
+                locked: null,
                 licenceWarning: false,
                 btnFirstNameText: getResourceText("employee.firstName"),
                 btnNameText: getResourceText("employee.name"),
@@ -192,10 +193,18 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
-                if (item.HasTwoFactor) {
+                if (item.Locked) {
+                    item.addonIcon = "delete";
+                    item.addonColor = "firebrick";
+                    item.addonIconTitle = item.ReasonLocked;
+                } else if (item.HasTwoFactor) {
                     item.addonIcon = "lock";
+                    item.addonColor = "forestgreen";
+                    item.addonIconTitle = "2FA enabled";
                 } else {
                     item.addonIcon = "";
+                    item.addonColor = "transparent";
+                    item.addonIconTitle = "";
                 }
                 if (item.UserStatus === "INACTIVE") {
                     item.InactiveShowFlag = 1;
@@ -244,6 +253,7 @@
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
                                                 that.binding.hasTwoFactor = item.data.HasTwoFactor;
+                                                that.binding.locked = item.data.Locked;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "genDataEmployee" ||
@@ -328,7 +338,10 @@
                                 Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                                 Colors.loadSVGImageElements(listView, "addon-image", 12, /*Colors.isDarkTheme ? "#000000" :*/ "#ffffff", "name", null, {
                                     "lock": {
-                                        strokeWidth: 200
+                                        strokeWidth: 600
+                                    },
+                                    "delete": {
+                                        strokeWidth: 600
                                     }
                                 });
                                 Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
@@ -584,6 +597,7 @@
                                     that.employees.setAt(objectrec.index, employee);
                                     that.binding.employeeId = recordId;
                                     that.binding.hasTwoFactor = employee.HasTwoFactor;
+                                    that.binding.locked = employee.Locked;
                                     /*#7573 Kommentar Nr.5 */
                                     //that.selectRecordId(recordId);
                                     var curPageId = Application.getPageId(nav.location);

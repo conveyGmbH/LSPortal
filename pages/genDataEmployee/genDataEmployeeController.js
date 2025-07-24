@@ -145,6 +145,18 @@
             }
             this.getHasTwoFactor = getHasTwoFactor;
 
+            var getLocked = function () {
+                var locked = null;
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    locked = master.controller.binding.locked;
+                }
+                Log.ret(Log.l.trace, locked);
+                return locked;
+            }
+            this.getLocked = getLocked;
+
             var deleteData = function (complete, error) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
@@ -649,12 +661,30 @@
                                     typeof master.controller.loadData === "function") {
                                     master.controller.loadData(getRecordId());
                                 }
-                            }, function (error) {
+                            }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_DeleteTwoFactorUser: error");
+                                AppData.setErrorMsg(that.binding, errorResponse);
                             });                            
                         } else {
                             Log.print(Log.l.trace, "clickDelete2fa: user choice CANCEL");
                         }
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickUnlock: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    AppData.call("PRC_UnlockUser", {
+                        pUserName: that.binding.dataEmployee.Login
+                    }, function (result) {
+                        Log.print(Log.l.info, "call PRC_UnlockUser: success! ");
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller &&
+                            typeof master.controller.loadData === "function") {
+                            master.controller.loadData(getRecordId());
+                        }
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_UnlockUser: error");
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
                 }
@@ -719,6 +749,10 @@
                 clickDelete2fa: function() {
                     return !getHasTwoFactor() ||
                         that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
+                        AppBar.busy;
+                },
+                clickUnlock: function () {
+                    return !getLocked() ||
                         AppBar.busy;
                 }
             };

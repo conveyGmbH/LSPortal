@@ -890,7 +890,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 .addon-image {
     display: inline-block;
     position: absolute;
-    background-color: forestgreen;
+    background-color: transparent;
     width: 100%;
     height: 100%;
 }

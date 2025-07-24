@@ -22,9 +22,8 @@
                 count: 0,
                 employeeId: 0,
                 searchString: "",
-                hasContacts: null,
-                hasLocalevents: null,
                 hasTwoFactor: null,
+                locked: null,
                 licenceWarning: false,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 btnFirstNameText: getResourceText("employee.firstName"),
@@ -145,7 +144,6 @@
                                     that.scrollToRecordId(recordId);
                                 });
                             });
-                            that.binding.hasContacts = employee.HatKontakte;
                             break;
                         }
                     }
@@ -194,10 +192,18 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
-                if (item.HasTwoFactor) {
+                if (item.Locked) {
+                    item.addonIcon = "delete";
+                    item.addonColor = "firebrick";
+                    item.addonIconTitle = item.ReasonLocked;
+                } else if (item.HasTwoFactor) {
                     item.addonIcon = "lock";
+                    item.addonColor = "forestgreen";
+                    item.addonIconTitle = "2FA enabled";
                 } else {
                     item.addonIcon = "";
+                    item.addonColor = "transparent";
+                    item.addonIconTitle = "";
                 }
             }
             this.resultConverter = resultConverter;
@@ -224,8 +230,8 @@
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
-                                                that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.hasTwoFactor = item.data.HasTwoFactor;
+                                                that.binding.locked = item.data.Locked;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry" || curPageId === "employeeVisitorFlow") &&
@@ -308,7 +314,10 @@
                                 Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                                 Colors.loadSVGImageElements(listView, "addon-image", 16, "#ffffff", "name", null, {
                                     "lock": {
-                                        strokeWidth: 200
+                                        strokeWidth: 600
+                                    },
+                                    "delete": {
+                                        strokeWidth: 600
                                     }
                                 });
                                 Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
@@ -514,8 +523,8 @@
                                 if (objectRec && objectRec.index >= 0) {
                                     that.employees.setAt(objectRec.index, employee);
                                     that.binding.employeeId = recordId;
-                                    that.binding.hasContacts = employee.HatKontakte;
                                     that.binding.hasTwoFactor = employee.HasTwoFactor;
+                                    that.binding.locked = employee.Locked;
                                 } else {
                                     licenceWarningSelected = false;
                                     that.loadData();
