@@ -56,7 +56,6 @@
                 if (that.events) {
                     that.events = null;
                 }
-                AppData.setRestriction("Employee", {});
             }
 
             var progress = null;

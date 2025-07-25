@@ -17,10 +17,11 @@
     WinJS.Namespace.define("Employee", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
-                restriction: copyByValue(Employee.employeeView.defaultRestriction),
+                restriction: restriction ? restriction : copyByValue(Employee.employeeView.defaultRestriction),
                 eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
                 userStatus: null,
