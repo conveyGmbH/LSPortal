@@ -799,20 +799,30 @@
                     return WinJS.Promise.as();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!GenDataEmployee.initAPUserRoleView.getResults().length) {
-                        return GenDataEmployee.initAPUserRoleView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
-                            if (roles && roles.winControl) {
-                                var results = json && json.d && json.d.results;
-                                var filteredResults = results.filter(function (item) {
-                                    return (!item.NoDefault);
-                                });
-                                roles.winControl.data = new WinJS.Binding.List(filteredResults);
+                    if (roles && roles.winControl &&
+                        (!roles.winControl.data || !roles.winControl.data.length)) {
+                        function setRoles(results) {
+                            if (!results) {
+                                results = [];
                             }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                            var filteredResults = results.filter(function (item) {
+                                return (!item.NoDefault);
+                            });
+                            roles.winControl.data = new WinJS.Binding.List(filteredResults);
+                        }
+                        if (GenDataEmployee.initAPUserRoleView.getResults().length) {
+                            Log.print(Log.l.trace, "initAPUserRoleView: from cache!");
+                            setRoles(GenDataEmployee.initAPUserRoleView.getResults());
+                            return WinJS.Promise.as();
+                        } else {
+                            return GenDataEmployee.initAPUserRoleView.select(function (json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "initAPUserRoleView: success!");
+                                setRoles(json && json.d && json.d.results);
+                            }, function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                        }
                     } else {
                         return WinJS.Promise.as();
                     }
