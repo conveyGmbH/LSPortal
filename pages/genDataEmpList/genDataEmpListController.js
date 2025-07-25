@@ -16,11 +16,12 @@
     WinJS.Namespace.define("GenDataEmpList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "GenDataEmpList.Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
                 eventId: 0,
-                searchString: "",
+                searchString: (restriction && restriction.Name) ? restriction.Name[0]: "",
                 hasTwoFactor: null,
                 locked: null,
                 licenceWarning: false,
@@ -489,7 +490,7 @@
                 if (counter && counter.style) {
                     counter.style.display = "none";
                 }
-                var restriction = AppData.getRestriction("Employee");
+                restriction = AppData.getRestriction("Employee");
                 Log.print(Log.l.trace, "restriction Employee:" + restriction);
                 var defaultrestriction = copyByValue(GenDataEmpList.employeeView.defaultRestriction);
                 if (!restriction) {
