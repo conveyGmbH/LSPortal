@@ -32,6 +32,7 @@
                 { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" },
                 //{ id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
                 { id: "clickDelete2fa", label: getResourceText("command.delete2fa"), tooltip: getResourceText("tooltip.delete2fa"), section: "primary", svg: "lock_open" },
+                { id: "clickUnlock", label: getResourceText("command.unlockUser"), tooltip: getResourceText("tooltip.unlockUser"), section: "primary", svg: "arrow_circle2" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" }
             ];
 

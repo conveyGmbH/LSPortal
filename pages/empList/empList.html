@@ -63,7 +63,7 @@
                                 <div class="list-symbol-ID">
                                     <div data-win-bind="name: recordIcon" class="action-image"></div>
                                     <div class="list-symbol-addon" data-win-bind="style.display: addonIcon Binding.Converter.toDisplay">
-	                                    <div data-win-bind="name: addonIcon" class="addon-image"></div>
+	                                    <div class="addon-image" data-win-bind="name: addonIcon;style.backgroundColor: addonColor"></div>
                                     </div>
                                 </div>
                                 <div class="list-compressed">
@@ -87,7 +87,7 @@
                             </div>
                             <div class="list-field-image-fixed win-type-ellipsis"
                                  data-win-bind="style.visibility: addonIcon Binding.Converter.toVisibility">
-                                <div data-win-bind="name: addonIcon" class="action-image"></div>
+                                <div data-win-bind="name: addonIcon; title: addonIconTitle" class="action-image"></div>
                             </div>
                             <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Vorname"></div>

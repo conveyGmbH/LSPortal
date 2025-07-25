@@ -22,9 +22,8 @@
                 count: 0,
                 employeeId: 0,
                 searchString: "",
-                hasContacts: null,
-                hasLocalevents: null,
                 hasTwoFactor: null,
+                locked: null,
                 licenceWarning: false,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                 btnFirstNameText: getResourceText("employee.firstName"),
@@ -34,6 +33,8 @@
             this.nextUrl = null;
             this.loading = false;
             this.employees = null;
+            this.selectEmployeePromise = null;
+            this.licenceWarningSelected = false;
 
             var that = this;
 
@@ -41,6 +42,9 @@
             var listView = pageElement.querySelector("#employeeList.listview");
 
             this.dispose = function () {
+                if (that.selectEmployeePromise) {
+                    that.selectEmployeePromise.cancel();
+                }
                 if (listView && listView.winControl) {
                     listView.winControl.itemDataSource = null;
                 }
@@ -49,7 +53,6 @@
                 }
             }
 
-            var licenceWarningSelected = false;
             var progress = null;
             var counter = null;
             var layout = null;
@@ -135,9 +138,11 @@
 
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
-                if (recordId && listView && listView.winControl && listView.winControl.selection && that.employees) {
-                    for (var i = 0; i < that.employees.length; i++) {
-                        var employee = that.employees.getAt(i);
+                if (listView && listView.winControl && listView.winControl.selection && that.employees) {
+                    var found = false;
+                    var employee;
+                    if (recordId) for (var i = 0; i < that.employees.length; i++) {
+                        employee = that.employees.getAt(i);
                         if (employee && typeof employee === "object" &&
                             employee.MitarbeiterVIEWID === recordId) {
                             listView.winControl.selection.set(i).done(function () {
@@ -145,8 +150,24 @@
                                     that.scrollToRecordId(recordId);
                                 });
                             });
-                            that.binding.hasContacts = employee.HatKontakte;
+                            found = true;
                             break;
+                        }
+                    }
+                    if (!found) {
+                        listView.winControl.selection.set(0);
+                        var curPageId = Application.getPageId(nav.location);
+                        if ((curPageId === "genDataEmployee" ||
+                                curPageId === "genDataSkillEntry" ||
+                                curPageId === "genDataUserInfo") &&
+                            typeof AppBar.scope.loadData === "function") {
+                            employee = that.employees.getAt(0);
+                            if (employee) {
+                                that.binding.employeeId = employee.MitarbeiterVIEWID;
+                            } else {
+                                that.binding.employeeId = 0;
+                            }
+                            AppBar.scope.loadData(that.binding.employeeId);
                         }
                     }
                 }
@@ -194,10 +215,18 @@
                 if (!item.recordIcon) {
                     item.recordIcon = "user";
                 }
-                if (item.HasTwoFactor) {
+                if (item.Locked) {
+                    item.addonIcon = "delete";
+                    item.addonColor = "firebrick";
+                    item.addonIconTitle = item.ReasonLocked;
+                } else if (item.HasTwoFactor) {
                     item.addonIcon = "lock";
+                    item.addonColor = "forestgreen";
+                    item.addonIconTitle = "2FA enabled";
                 } else {
                     item.addonIcon = "";
+                    item.addonColor = "transparent";
+                    item.addonIconTitle = "";
                 }
             }
             this.resultConverter = resultConverter;
@@ -224,8 +253,8 @@
                                             AppBar.scope.saveData(function (response) {
                                                 // called asynchronously if ok
                                                 that.binding.employeeId = item.data.MitarbeiterVIEWID;
-                                                that.binding.hasContacts = item.data.HatKontakte;
                                                 that.binding.hasTwoFactor = item.data.HasTwoFactor;
+                                                that.binding.locked = item.data.Locked;
                                                 that.binding.selIdx = item.index;
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "employee" || curPageId === "skillentry" || curPageId === "employeeVisitorFlow") &&
@@ -308,7 +337,10 @@
                                 Colors.loadSVGImageElements(listView, "action-image", 40, Colors.textColor, "name");
                                 Colors.loadSVGImageElements(listView, "addon-image", 16, "#ffffff", "name", null, {
                                     "lock": {
-                                        strokeWidth: 200
+                                        strokeWidth: 600
+                                    },
+                                    "delete": {
+                                        strokeWidth: 600
                                     }
                                 });
                                 Colors.loadSVGImageElements(listView, "warning-image", 40, Colors.offColor);
@@ -397,7 +429,11 @@
             }
 
             var loadData = function (recordId) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
+                var jsonResponse = null;
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId + "prevID" + that.binding.employeeId);
+                if (that.selectEmployeePromise) {
+                    that.selectEmployeePromise.cancel();
+                }
                 that.loading = true;
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -439,89 +475,30 @@
                     }
                 }
                 AppData.setErrorMsg(that.binding);
-                var ret = new WinJS.Promise.as().then(function () {
-                    if (!licenceWarningSelected) {
-                        // only licence user select
-                        Log.print(Log.l.trace, "calling select employeeView...only licence user select!");
-                        return EmpList.employeeView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "select employeeView: success!");
-                            // licenceUserView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results.length > 0) {
-                                var results = json.d.results;
+                that.selectEmployeePromise = new WinJS.Promise.as().then(function () {
+                    if (!that.licenceWarningSelected) {
+                        AppData.call("FCT_ExistsLicenceWarning", {
+                            pVeranstaltungID: AppData.getRecordId("Veranstaltung")
+                        }, function (json) {
+                            Log.print(Log.l.info, "call FCT_ExistsLicenceWarning: success! FCT_ExistsLicenceWarning=" +
+                                (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning));
+                            if (json && json.d && json.d.results && json.d.results.FCT_ExistsLicenceWarning) {
                                 that.binding.licenceWarning = true;
                             } else {
                                 that.binding.licenceWarning = false;
                             }
-                            Log.print(Log.l.trace, "licenceWarning=" + that.binding.licenceWarning);
+                            that.licenceWarningSelected = true;
                         }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            Log.print(Log.l.error, "select employeeView: error!");
+                            Log.print(Log.l.error, "call FCT_ExistsLicenceWarning: error");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        }, { NichtLizenzierteApp: 1 });
-                    } else {
-                        return WinJS.Promise.as();
+                        });
                     }
-                }).then(function () {
-                    Log.print(Log.l.trace, "calling select employeeView again...");
+                    Log.print(Log.l.trace, "calling select employeeView...");
                     return EmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "select employeeView: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (!recordId) {
-                            if (json && json.d && json.d.results.length > 0) {
-                                if (that.binding.count !== json.d.results.length) {
-                                    licenceWarningSelected = false;
-                                }
-                                that.binding.count = json.d.results.length;
-                                that.nextUrl = EmpList.employeeView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.employees = new WinJS.Binding.List(results);
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.employees.dataSource;
-                                }
-                                that.selectRecordId(that.binding.employeeId || results[0].MitarbeiterVIEWID);
-                            } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.employees = null;
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
-                                progress = listView.querySelector(".list-footer .progress");
-                                counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
-                        } else {
-                            if (json && json.d) {
-                                var employee = json.d;
-                                that.resultConverter(employee);
-                                var objectRec = scopeFromRecordId(recordId);
-                                if (objectRec && objectRec.index >= 0) {
-                                    that.employees.setAt(objectRec.index, employee);
-                                    that.binding.employeeId = recordId;
-                                    that.binding.hasContacts = employee.HatKontakte;
-                                    that.binding.hasTwoFactor = employee.HasTwoFactor;
-                                } else {
-                                    licenceWarningSelected = false;
-                                    that.loadData();
-                                }
-                            }
-                        }
+                        jsonResponse = json;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -537,9 +514,61 @@
                         }
                         that.loading = false;
                         }, recordId || restriction);
+                }).then(function () {
+                    var ret = null;
+                    var json = jsonResponse;
+                    // employeeView returns object already parsed from json file in response
+                    if (!recordId) {
+                        if (json && json.d && json.d.results.length > 0) {
+                            that.binding.count = json.d.results.length;
+                            that.nextUrl = EmpList.employeeView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                            });
+                            that.employees = new WinJS.Binding.List(results);
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = that.employees.dataSource;
+                            }
+                            that.selectRecordId(that.binding.employeeId);
+                        } else {
+                            that.binding.count = 0;
+                            that.nextUrl = null;
+                            that.employees = null;
+                            if (listView.winControl) {
+                                // add ListView dataSource
+                                listView.winControl.itemDataSource = null;
+                            }
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                        }
+                    } else {
+                        if (json && json.d) {
+                            var employee = json.d;
+                            that.resultConverter(employee);
+                            var objectRec = scopeFromRecordId(recordId);
+                            if (objectRec && objectRec.index >= 0) {
+                                that.employees.setAt(objectRec.index, employee);
+                                that.binding.employeeId = recordId;
+                                that.binding.hasTwoFactor = employee.HasTwoFactor;
+                                that.binding.locked = employee.Locked;
+                            } else {
+                                ret = that.loadData();
+                            }
+                        }
+                    }
+                    return ret || WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
-                return ret;
+                return that.selectEmployeePromise;
             };
             this.loadData = loadData;
 

@@ -97,9 +97,9 @@
                 if ((AppHeader.controller.binding.userData.SiteAdmin ||
                     AppHeader.controller.binding.userData.HasLocalEvents) &&
                     !newDataEmployee.HasLocalEvents) {
-                    that.binding.addEventFormFlag = null;
-                } else {
                     that.binding.addEventFormFlag = 1;
+                } else {
+                    that.binding.addEventFormFlag = null;
                 }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
@@ -144,6 +144,18 @@
                 return hasTwoFactor;
             }
             this.getHasTwoFactor = getHasTwoFactor;
+
+            var getLocked = function () {
+                var locked = null;
+                Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding) {
+                    locked = master.controller.binding.locked;
+                }
+                Log.ret(Log.l.trace, locked);
+                return locked;
+            }
+            this.getLocked = getLocked;
 
             var deleteData = function (complete, error) {
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
@@ -303,7 +315,6 @@
                                     }
                                     newEmployeeId = that.binding.dataEmployee.MitarbeiterVIEWID;
                                 }
-                                //AppBar.modified = true;
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "error inserting employee");
                                 AppBar.busy = false;
@@ -379,21 +390,6 @@
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
-                    Log.ret(Log.l.trace);
-                },
-                clickExport: function (event) {
-                    Log.call(Log.l.trace, "Reporting.Controller.");
-                    var exporter = new ExportXlsx.ExporterClass();
-                    var dbView = EmpList.employeePWExportView;
-                    var fileName = "Passworte";
-                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                    }, null, null);
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -498,6 +494,7 @@
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
+                        master.controller.licenceWarningSelected = false;
                         master.controller.loadData();
                     }
                     Log.ret(Log.l.trace);
@@ -649,12 +646,30 @@
                                     typeof master.controller.loadData === "function") {
                                     master.controller.loadData(getRecordId());
                                 }
-                            }, function (error) {
+                            }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_DeleteTwoFactorUser: error");
+                                AppData.setErrorMsg(that.binding, errorResponse);
                             });                            
                         } else {
                             Log.print(Log.l.trace, "clickDelete2fa: user choice CANCEL");
                         }
+                    });
+                    Log.ret(Log.l.trace);
+                },
+                clickUnlock: function (event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    AppData.call("PRC_UnlockUser", {
+                        pUserName: that.binding.dataEmployee.Login
+                    }, function (result) {
+                        Log.print(Log.l.info, "call PRC_UnlockUser: success! ");
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller &&
+                            typeof master.controller.loadData === "function") {
+                            master.controller.loadData(getRecordId());
+                        }
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_UnlockUser: error");
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
                 }
@@ -719,6 +734,10 @@
                 clickDelete2fa: function() {
                     return !getHasTwoFactor() ||
                         that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
+                        AppBar.busy;
+                },
+                clickUnlock: function () {
+                    return !getLocked() ||
                         AppBar.busy;
                 }
             };
