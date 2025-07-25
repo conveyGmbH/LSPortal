@@ -60,6 +60,8 @@
                 Vorname: "",
                 Nachname: "",
                 Login: "",
+                bUseOr: false,
+                bAndInEachRow: false,
                 OrderAttribute: "Nachname",
                 OrderDesc: false
             }
