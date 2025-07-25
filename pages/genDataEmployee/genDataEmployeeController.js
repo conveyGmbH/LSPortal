@@ -645,11 +645,12 @@
                                 pUserLogin: that.binding.dataEmployee.Login
                             }, function (result) {
                                 Log.print(Log.l.info, "call PRC_DeleteTwoFactorUser: success! ");
-                                that.loadData();
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller &&
                                     typeof master.controller.loadData === "function") {
-                                    master.controller.loadData(getRecordId());
+                                    master.controller.loadData(getRecordId()).then(function () {
+                                        AppBar.triggerDisableHandlers();
+                                    });
                                 }
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_DeleteTwoFactorUser: error");
@@ -667,11 +668,12 @@
                         pUserName: that.binding.dataEmployee.Login
                     }, function (result) {
                         Log.print(Log.l.info, "call PRC_UnlockUser: success! ");
-                        that.loadData();
                         var master = Application.navigator.masterControl;
                         if (master && master.controller &&
                             typeof master.controller.loadData === "function") {
-                            master.controller.loadData(getRecordId());
+                            master.controller.loadData(getRecordId()).then(function () {
+                                AppBar.triggerDisableHandlers();
+                            });
                         }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call PRC_UnlockUser: error");
@@ -732,7 +734,7 @@
                 },
                 clickChangeLogin: function () {
                     // svc bei nicht siteadmin nicht erlauben
-                    return that.binding.allowEditLogin || that.binding.iconID === 5;
+                    return getHasTwoFactor() || that.binding.allowEditLogin || that.binding.iconID === 5;
                 },
                 clickExportQrcode: function () {
                     if (getRecordId()) {
@@ -746,12 +748,12 @@
                     }
                 },
                 clickDelete2fa: function() {
-                    return !getHasTwoFactor() ||
+                    return AppBar.modified || !getHasTwoFactor() ||
                         that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
                         AppBar.busy;
                 },
                 clickUnlock: function () {
-                    return !getLocked() ||
+                    return AppBar.modified || !getLocked() ||
                         AppBar.busy;
                 }
             };
