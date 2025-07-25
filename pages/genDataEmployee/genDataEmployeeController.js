@@ -645,6 +645,7 @@
                                 pUserLogin: that.binding.dataEmployee.Login
                             }, function (result) {
                                 Log.print(Log.l.info, "call PRC_DeleteTwoFactorUser: success! ");
+                                that.loadData();
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller &&
                                     typeof master.controller.loadData === "function") {
@@ -666,6 +667,7 @@
                         pUserName: that.binding.dataEmployee.Login
                     }, function (result) {
                         Log.print(Log.l.info, "call PRC_UnlockUser: success! ");
+                        that.loadData();
                         var master = Application.navigator.masterControl;
                         if (master && master.controller &&
                             typeof master.controller.loadData === "function") {
