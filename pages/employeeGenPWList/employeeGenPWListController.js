@@ -19,9 +19,10 @@
     WinJS.Namespace.define("EmployeeGenPWList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                restriction: copyByValue(EmployeeGenPWList.employeePWView.defaultRestriction),
+                restriction: (restriction && restriction.Vorname) ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 veranstaltungId: 0,
                 fairmandantId: 0,
                 firstentry: 0,
@@ -271,15 +272,13 @@
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     // attention: use restriction arrays due to "AND VeranstaltungID=" restriction!
-                    that.binding.restriction.Name = [];
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Login = [];
                     that.binding.restriction.Nachname = [];
                     if (event.target.value) {
-                        that.binding.restriction.Name = [event.target.value, null, null, null];
-                        that.binding.restriction.Vorname = [null, event.target.value, null, null];
-                        that.binding.restriction.Login = [null, null, event.target.value, null];
-                        that.binding.restriction.Nachname = [null, null, null, event.target.value];
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
                     }

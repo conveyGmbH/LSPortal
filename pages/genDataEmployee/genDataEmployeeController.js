@@ -19,7 +19,7 @@
             var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue),
-                restriction: restriction ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
+                restriction: (restriction && restriction.Vorname)  ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
                 setRoleVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
@@ -108,15 +108,8 @@
             this.setDataEmployee = setDataEmployee;
 
             var saveRestriction = function () {
-                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
-                    that.binding.restriction.Aktiv = ["X", "X", "X"];
-                } else {
-                    that.binding.restriction.Aktiv = ["X", "X", "X"];
-                }
-                that.binding.restriction.bAndInEachRow = true;
-                that.binding.restriction.bUseOr = false;
-                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
-                AppData.setRestriction("Employee", that.binding.restriction);
+                var restriction = copyByValue(that.binding.restriction);
+                AppData.setRestriction("Employee", restriction);
             }
             this.saveRestriction = saveRestriction;
 
@@ -464,15 +457,13 @@
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     // attention: use restriction arrays due to "AND VeranstaltungID=" restriction!
-                    that.binding.restriction.Name = [];
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Login = [];
                     that.binding.restriction.Nachname = [];
                     if (event.target.value) {
-                        that.binding.restriction.Name = [event.target.value, null, null, null];
-                        that.binding.restriction.Vorname = [null, event.target.value, null, null];
-                        that.binding.restriction.Login = [null, null, event.target.value, null];
-                        that.binding.restriction.Nachname = [null, null, null, event.target.value];
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
                     }

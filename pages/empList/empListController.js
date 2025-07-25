@@ -22,7 +22,7 @@
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
-                searchString: (restriction && restriction.Name) ? restriction.Name[0] : "",
+                searchString: (restriction && restriction.Vorname) ? restriction.Vorname[0] : "",
                 hasTwoFactor: null,
                 locked: null,
                 licenceWarning: false,

@@ -21,7 +21,7 @@
             Application.Controller.apply(this, [pageElement, {
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
-                restriction: restriction ? restriction : copyByValue(Employee.employeeView.defaultRestriction),
+                restriction: (restriction && restriction.Vorname) ? restriction : copyByValue(Employee.employeeView.defaultRestriction),
                 eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
                 userStatus: null,
@@ -68,7 +68,8 @@
             this.setDataEmployee = setDataEmployee;
 
             var saveRestriction = function () {
-                AppData.setRestriction("Employee", that.binding.restriction);
+                var restriction = copyByValue(that.binding.restriction);
+                AppData.setRestriction("Employee", restriction);
             }
             this.saveRestriction = saveRestriction;
 
@@ -364,18 +365,11 @@
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
                     if (event.target.value) {
-                        that.binding.restriction.Names = event.target.value;
                         that.binding.restriction.Vorname = [event.target.value, null, null];
                         that.binding.restriction.Login = [null, event.target.value, null];
                         that.binding.restriction.Nachname = [null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
-                    } else {
-                        that.binding.restriction.Names = event.target.value;
-                        that.binding.restriction.Login = event.target.value;
-                        that.binding.restriction.Vorname = event.target.value;
-                        that.binding.restriction.Nachname = event.target.value;
-                        delete that.binding.restriction.bUseOr;
                     }
                     that.saveRestriction();
                     /*explizit AppBar.modified auf false setzen -> twoway binding */
