@@ -392,21 +392,6 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickExport: function (event) {
-                    Log.call(Log.l.trace, "Reporting.Controller.");
-                    var exporter = new ExportXlsx.ExporterClass();
-                    var dbView = EmpList.employeePWExportView;
-                    var fileName = "Passworte";
-                    exporter.saveXlsxFromView(dbView, fileName, function (result) {
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                    }, function (errorResponse) {
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        AppBar.busy = false;
-                        AppBar.triggerDisableHandlers();
-                    }, null, null);
-                    Log.ret(Log.l.trace);
-                },
                 clickChangeUserState: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     Application.navigateById("userinfo", event);

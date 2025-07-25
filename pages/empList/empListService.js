@@ -78,41 +78,6 @@
                 OrderAttribute: "Nachname",
                 OrderDesc: false
             }
-        },
-        _employeePWExportView: {
-            get: function () {
-                return AppData.getFormatView("Mitarbeiter", 20552);
-            }
-        },
-        employeePWExportView: {
-            select: function (complete, error, restriction, options) {
-                if (!options) {
-                    options = {
-                        ordered: true
-                    };
-                }
-                Log.call(Log.l.trace, namespaceName + ".employeePWExportView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
-                var ret = EmpList._employeePWExportView.select(complete, error, restriction, options);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getNextUrl: function (response) {
-                Log.call(Log.l.trace, namespaceName + ".employeePWExportView.");
-                var ret = EmpList._employeePWExportView.getNextUrl(response);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, namespaceName + ".employeePWExportView.");
-                var ret = EmpList._employeePWExportView.selectNext(complete, error, response, nextUrl);
-                // this will return a promise to controller
-                Log.ret(Log.l.trace);
-                return ret;
-            },
-            getDbView: function () {
-                return EmpList._employeePWExportView;
-            }
         }
     });
 })();
