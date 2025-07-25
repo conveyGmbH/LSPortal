@@ -588,9 +588,9 @@
                 if (item.LandID === 0) {
                     item.Land = "-";
                 }
+                if (item.Qualifier) {
                 countryIndustriesLabels.push(item.Qualifier);
                 var splitQualifier = item.Qualifier.split(" ");
-                if (item.Qualifier) {
                     countryIndustriesLabelsMultiline.push(splitQualifier);
                 }
                 if (item.NumHits) {
