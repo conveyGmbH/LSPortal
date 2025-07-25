@@ -381,6 +381,11 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                clickAddLicences: function(event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    Application.navigateById("clientManagement");
+                    Log.ret(Log.l.trace);
+                },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.saveData(function (response) {
@@ -677,6 +682,14 @@
             this.disableHandlers = {
                 clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickAddLicences: function() {
+                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppHeader.controller.binding.userData.HasLocalEvents) {
                         return false;
                     } else {
                         return true;

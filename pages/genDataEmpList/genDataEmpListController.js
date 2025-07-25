@@ -253,6 +253,9 @@
                     endMoment.locale(Application.language);
                     item.Enddatum = endMoment.format("ll");
                 }
+                if (item.FairMandantID) {
+                    AppData.setRecordId("FairMandant", item.FairMandantID);
+                }
             }
             this.resultConverter = resultConverter;
 
