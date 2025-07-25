@@ -622,31 +622,24 @@
                     return WinJS.Promise.as();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (recordId) {
-                        //load of format relation record data
-                        Log.print(Log.l.trace, "calling select employeeView...");
-                        return Employee.employeeView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                that.setDataEmployee(json.d);
-                            }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
+                    Log.print(Log.l.trace, "calling select employeeView...");
+                    return Employee.employeeView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "employeeView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            that.setDataEmployee(json.d);
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
                 }).then(function () {
                     AppBar.notifyModified = true;
-                    if (recordId) {
-                        Log.print(Log.l.trace, "Data loaded");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller &&
-                            typeof master.controller.scrollToRecordId === "function") {
-                            master.controller.scrollToRecordId(recordId);
-                        }
+                    Log.print(Log.l.trace, "Data loaded");
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.scrollToRecordId === "function") {
+                        master.controller.scrollToRecordId(recordId);
                     }
                 });
                 Log.ret(Log.l.trace);

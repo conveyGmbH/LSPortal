@@ -44,7 +44,6 @@
             var layout = null;
             this.events = null;
 
-            var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
             var roles = pageElement.querySelector("#roles");
             var myDomain = pageElement.querySelector('#myDomain');
 
@@ -818,9 +817,9 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    //load of format relation record data
+                    //now load all of record data in parallel
                     Log.print(Log.l.trace, "calling select employeeView...");
-                    return GenDataEmployee.employeeView.select(function (json) {
+                    var employeePromise = GenDataEmployee.employeeView.select(function (json) {
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "employeeView: success!");
                         if (json && json.d) {
@@ -830,79 +829,43 @@
                     }, function (errorResponse) {
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
-                //}).then(function () {
-                //    if (recordId) {
-                //        Log.print(Log.l.trace, "Checking for licence!");
-                //        return that.checkingLicence(recordId);
-                //    } else {
-                //        return WinJS.Promise.as();
-                //    }
-                }).then(function () {
-                    if (recordId && that.binding.addEventFormFlag && that.binding.dataEmployee.UserSpecID) {
-                        that.events = null;
-                        return AppData.call("PRC_MAWeitereVeranstaltungen", {
-                            pMitarbeiterID: recordId
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                            if (addEventFormfieldcombo && addEventFormfieldcombo.winControl) {
-                                var results = json && json.d && json.d.results;
-                                that.events = new WinJS.Binding.List(results);
-                                addEventFormfieldcombo.winControl.data = that.events;
-                                addEventFormfieldcombo.selectedIndex = -1;
-                            }
-                        }, function (error) {
-                            if (that.events) {
-                                that.events.length = 0;
-                            }
-                            Log.print(Log.l.error, "call error");
-                        });
+                    var empRolesPromise;
+                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
+                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                        empRolesPromise = empRolesFragmentControl.controller.loadData(recordId);
                     } else {
-                        if (that.events) {
-                            that.events.length = 0;
-                        }
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (recordId) {
-                        var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                            return empRolesFragmentControl.controller.loadData(recordId);
+                        var parentElementempRoles = pageElement.querySelector("#emproleshost");
+                        if (parentElementempRoles) {
+                            empRolesPromise = Application.loadFragmentById(parentElementempRoles, "empRoles", { employeeId: recordId });
                         } else {
-                            var parentElement = pageElement.querySelector("#emproleshost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
+                            empRolesPromise = WinJS.Promise.as();
                         }
-                    } else {
-                        return WinJS.Promise.as();
                     }
-                }).then(function () {
-                    if (recordId) {
-                        var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
-                        if (genFragEventsFragmentControl && genFragEventsFragmentControl.controller) {
-                            return genFragEventsFragmentControl.controller.loadData(recordId);
+                    var genFragEventsPromise;
+                    var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
+                    if (genFragEventsFragmentControl && genFragEventsFragmentControl.controller) {
+                        genFragEventsPromise = genFragEventsFragmentControl.controller.loadData(recordId);
+                    } else {
+                        var parentElementGenFragEvents = pageElement.querySelector("#genfrageventshost");
+                        if (parentElementGenFragEvents) {
+                            genFragEventsPromise = Application.loadFragmentById(parentElementGenFragEvents, "genFragEvents", { employeeId: recordId });
                         } else {
-                            var parentElement = pageElement.querySelector("#genfrageventshost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "genFragEvents", { employeeId: recordId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
+                            genFragEventsPromise = WinJS.Promise.as();
                         }
-                    } else {
-                        return WinJS.Promise.as();
                     }
+                    var js = {
+                        doc: employeePromise,
+                        text: empRolesPromise,
+                        layout: genFragEventsPromise
+                    }
+                    return WinJS.Promise.join(js);
                 }).then(function () {
                     AppBar.notifyModified = true;
-                    if (recordId) {
-                        Log.print(Log.l.trace, "Data loaded");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller &&
-                            typeof master.controller.scrollToRecordId === "function") {
-                            master.controller.scrollToRecordId(recordId);
-                        }
+                    Log.print(Log.l.trace, "Data loaded");
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.scrollToRecordId === "function") {
+                        master.controller.scrollToRecordId(recordId);
                     }
                 });
                 Log.ret(Log.l.trace);
