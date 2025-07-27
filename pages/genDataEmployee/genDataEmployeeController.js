@@ -16,9 +16,10 @@
     WinJS.Namespace.define("GenDataEmployee", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue),
-                restriction: copyByValue(GenDataEmployee.employeeView.defaultRestriction),
+                restriction: (restriction && restriction.Vorname)  ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
                 setRoleVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
@@ -44,7 +45,6 @@
             var layout = null;
             this.events = null;
 
-            var addEventFormfieldcombo = pageElement.querySelector("#addEventFormEventData");
             var roles = pageElement.querySelector("#roles");
             var myDomain = pageElement.querySelector('#myDomain');
 
@@ -108,15 +108,8 @@
             this.setDataEmployee = setDataEmployee;
 
             var saveRestriction = function () {
-                /*if (that.binding.restriction.Names && that.binding.restriction.Names.length > 0) {
-                    that.binding.restriction.Aktiv = ["X", "X", "X"];
-                } else {
-                    that.binding.restriction.Aktiv = ["X", "X", "X"];
-                }
-                that.binding.restriction.bAndInEachRow = true;
-                that.binding.restriction.bUseOr = false;
-                Log.print("restriction number:" + that.binding.restriction.countCombobox + ", restriction: " + that.binding.restriction);*/
-                AppData.setRestriction("Employee", that.binding.restriction);
+                var restriction = copyByValue(that.binding.restriction);
+                AppData.setRestriction("Employee", restriction);
             }
             this.saveRestriction = saveRestriction;
 
@@ -382,6 +375,11 @@
                     });
                     Log.ret(Log.l.trace);
                 },
+                clickAddLicences: function(event) {
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                    Application.navigateById("clientManagement");
+                    Log.ret(Log.l.trace);
+                },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                     that.saveData(function (response) {
@@ -459,15 +457,13 @@
                 changeSearchField: function (event) {
                     Log.call(Log.l.trace, "Event.Controller.");
                     // attention: use restriction arrays due to "AND VeranstaltungID=" restriction!
-                    that.binding.restriction.Name = [];
                     that.binding.restriction.Vorname = [];
                     that.binding.restriction.Login = [];
                     that.binding.restriction.Nachname = [];
                     if (event.target.value) {
-                        that.binding.restriction.Name = [event.target.value, null, null, null];
-                        that.binding.restriction.Vorname = [null, event.target.value, null, null];
-                        that.binding.restriction.Login = [null, null, event.target.value, null];
-                        that.binding.restriction.Nachname = [null, null, null, event.target.value];
+                        that.binding.restriction.Vorname = [event.target.value, null, null];
+                        that.binding.restriction.Login = [null, event.target.value, null];
+                        that.binding.restriction.Nachname = [null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
                     }
@@ -644,7 +640,9 @@
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller &&
                                     typeof master.controller.loadData === "function") {
-                                    master.controller.loadData(getRecordId());
+                                    master.controller.loadData(getRecordId()).then(function () {
+                                        AppBar.triggerDisableHandlers();
+                                    });
                                 }
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_DeleteTwoFactorUser: error");
@@ -665,7 +663,9 @@
                         var master = Application.navigator.masterControl;
                         if (master && master.controller &&
                             typeof master.controller.loadData === "function") {
-                            master.controller.loadData(getRecordId());
+                            master.controller.loadData(getRecordId()).then(function () {
+                                AppBar.triggerDisableHandlers();
+                            });
                         }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call PRC_UnlockUser: error");
@@ -678,6 +678,14 @@
             this.disableHandlers = {
                 clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickAddLicences: function() {
+                    if (AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppHeader.controller.binding.userData.HasLocalEvents) {
                         return false;
                     } else {
                         return true;
@@ -718,7 +726,7 @@
                 },
                 clickChangeLogin: function () {
                     // svc bei nicht siteadmin nicht erlauben
-                    return that.binding.allowEditLogin || that.binding.iconID === 5;
+                    return getHasTwoFactor() || that.binding.allowEditLogin || that.binding.iconID === 5;
                 },
                 clickExportQrcode: function () {
                     if (getRecordId()) {
@@ -732,12 +740,12 @@
                     }
                 },
                 clickDelete2fa: function() {
-                    return !getHasTwoFactor() ||
+                    return AppBar.modified || !getHasTwoFactor() ||
                         that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
                         AppBar.busy;
                 },
                 clickUnlock: function () {
-                    return !getLocked() ||
+                    return AppBar.modified || !getLocked() ||
                         AppBar.busy;
                 }
             };
@@ -800,27 +808,37 @@
                     return WinJS.Promise.as();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!GenDataEmployee.initAPUserRoleView.getResults().length) {
-                        return GenDataEmployee.initAPUserRoleView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
-                            if (roles && roles.winControl) {
-                                var results = json && json.d && json.d.results;
-                                var filteredResults = results.filter(function (item) {
-                                    return (!item.NoDefault);
-                                });
-                                roles.winControl.data = new WinJS.Binding.List(filteredResults);
+                    if (roles && roles.winControl &&
+                        (!roles.winControl.data || !roles.winControl.data.length)) {
+                        function setRoles(results) {
+                            if (!results) {
+                                results = [];
                             }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
+                            var filteredResults = results.filter(function (item) {
+                                return (!item.NoDefault);
+                            });
+                            roles.winControl.data = new WinJS.Binding.List(filteredResults);
+                        }
+                        if (GenDataEmployee.initAPUserRoleView.getResults().length) {
+                            Log.print(Log.l.trace, "initAPUserRoleView: from cache!");
+                            setRoles(GenDataEmployee.initAPUserRoleView.getResults());
+                            return WinJS.Promise.as();
+                        } else {
+                            return GenDataEmployee.initAPUserRoleView.select(function (json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "initAPUserRoleView: success!");
+                                setRoles(json && json.d && json.d.results);
+                            }, function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                        }
                     } else {
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    //load of format relation record data
+                    //now load all of record data in parallel
                     Log.print(Log.l.trace, "calling select employeeView...");
-                    return GenDataEmployee.employeeView.select(function (json) {
+                    var employeePromise = GenDataEmployee.employeeView.select(function (json) {
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "employeeView: success!");
                         if (json && json.d) {
@@ -830,79 +848,43 @@
                     }, function (errorResponse) {
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
-                //}).then(function () {
-                //    if (recordId) {
-                //        Log.print(Log.l.trace, "Checking for licence!");
-                //        return that.checkingLicence(recordId);
-                //    } else {
-                //        return WinJS.Promise.as();
-                //    }
-                }).then(function () {
-                    if (recordId && that.binding.addEventFormFlag && that.binding.dataEmployee.UserSpecID) {
-                        that.events = null;
-                        return AppData.call("PRC_MAWeitereVeranstaltungen", {
-                            pMitarbeiterID: recordId
-                        }, function (json) {
-                            Log.print(Log.l.info, "call success! ");
-                            if (addEventFormfieldcombo && addEventFormfieldcombo.winControl) {
-                                var results = json && json.d && json.d.results;
-                                that.events = new WinJS.Binding.List(results);
-                                addEventFormfieldcombo.winControl.data = that.events;
-                                addEventFormfieldcombo.selectedIndex = -1;
-                            }
-                        }, function (error) {
-                            if (that.events) {
-                                that.events.length = 0;
-                            }
-                            Log.print(Log.l.error, "call error");
-                        });
+                    var empRolesPromise;
+                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
+                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
+                        empRolesPromise = empRolesFragmentControl.controller.loadData(recordId);
                     } else {
-                        if (that.events) {
-                            that.events.length = 0;
-                        }
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (recordId) {
-                        var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                        if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                            return empRolesFragmentControl.controller.loadData(recordId);
+                        var parentElementempRoles = pageElement.querySelector("#emproleshost");
+                        if (parentElementempRoles) {
+                            empRolesPromise = Application.loadFragmentById(parentElementempRoles, "empRoles", { employeeId: recordId });
                         } else {
-                            var parentElement = pageElement.querySelector("#emproleshost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "empRoles", { employeeId: recordId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
+                            empRolesPromise = WinJS.Promise.as();
                         }
-                    } else {
-                        return WinJS.Promise.as();
                     }
-                }).then(function () {
-                    if (recordId) {
-                        var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
-                        if (genFragEventsFragmentControl && genFragEventsFragmentControl.controller) {
-                            return genFragEventsFragmentControl.controller.loadData(recordId);
+                    var genFragEventsPromise;
+                    var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
+                    if (genFragEventsFragmentControl && genFragEventsFragmentControl.controller) {
+                        genFragEventsPromise = genFragEventsFragmentControl.controller.loadData(recordId);
+                    } else {
+                        var parentElementGenFragEvents = pageElement.querySelector("#genfrageventshost");
+                        if (parentElementGenFragEvents) {
+                            genFragEventsPromise = Application.loadFragmentById(parentElementGenFragEvents, "genFragEvents", { employeeId: recordId });
                         } else {
-                            var parentElement = pageElement.querySelector("#genfrageventshost");
-                            if (parentElement) {
-                                return Application.loadFragmentById(parentElement, "genFragEvents", { employeeId: recordId });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
+                            genFragEventsPromise = WinJS.Promise.as();
                         }
-                    } else {
-                        return WinJS.Promise.as();
                     }
+                    var js = {
+                        doc: employeePromise,
+                        text: empRolesPromise,
+                        layout: genFragEventsPromise
+                    }
+                    return WinJS.Promise.join(js);
                 }).then(function () {
                     AppBar.notifyModified = true;
-                    if (recordId) {
-                        Log.print(Log.l.trace, "Data loaded");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller &&
-                            typeof master.controller.scrollToRecordId === "function") {
-                            master.controller.scrollToRecordId(recordId);
-                        }
+                    Log.print(Log.l.trace, "Data loaded");
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.scrollToRecordId === "function") {
+                        master.controller.scrollToRecordId(recordId);
                     }
                 });
                 Log.ret(Log.l.trace);

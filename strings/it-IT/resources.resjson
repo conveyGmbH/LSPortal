@@ -94,6 +94,7 @@
     "command.changetolsmain" : "Passare a LSMain",
     "command.eventFavourite" : "Favourite",
     "command.testmailopen"  : "E-Mail testen",
+    "command.addLicences"  : "Altre licenze",
 
     "tooltip.backward"      : "Pagina precedente",
     "tooltip.edit"          : "Modifica Record attuale",
@@ -199,6 +200,7 @@
     "tooltip.hideHelpText"  : "Nascondi il testo della guida",
     "tooltip.forceVersionUpdate" : "Forza l'aggiornamento",
     "tooltip.changetolsmain" : "Passare a LSMain",
+    "tooltip.addLicences" : "Altre licenze",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",

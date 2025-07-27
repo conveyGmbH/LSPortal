@@ -17,10 +17,11 @@
     WinJS.Namespace.define("Employee", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 actualEventID: 0,
                 dataEmployee: getEmptyDefaultValue(Employee.employeeView.defaultValue),
-                restriction: copyByValue(Employee.employeeView.defaultRestriction),
+                restriction: (restriction && restriction.Vorname) ? restriction : copyByValue(Employee.employeeView.defaultRestriction),
                 eventname: AppData._userData.VeranstaltungName,
                 noLicence: null,
                 userStatus: null,
@@ -67,7 +68,8 @@
             this.setDataEmployee = setDataEmployee;
 
             var saveRestriction = function () {
-                AppData.setRestriction("Employee", that.binding.restriction);
+                var restriction = copyByValue(that.binding.restriction);
+                AppData.setRestriction("Employee", restriction);
             }
             this.saveRestriction = saveRestriction;
 
@@ -363,18 +365,11 @@
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
                     if (event.target.value) {
-                        that.binding.restriction.Names = event.target.value;
                         that.binding.restriction.Vorname = [event.target.value, null, null];
                         that.binding.restriction.Login = [null, event.target.value, null];
                         that.binding.restriction.Nachname = [null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
-                    } else {
-                        that.binding.restriction.Names = event.target.value;
-                        that.binding.restriction.Login = event.target.value;
-                        that.binding.restriction.Vorname = event.target.value;
-                        that.binding.restriction.Nachname = event.target.value;
-                        delete that.binding.restriction.bUseOr;
                     }
                     that.saveRestriction();
                     /*explizit AppBar.modified auf false setzen -> twoway binding */
@@ -492,7 +487,9 @@
                                 var master = Application.navigator.masterControl;
                                 if (master && master.controller &&
                                     typeof master.controller.loadData === "function") {
-                                    master.controller.loadData(getRecordId());
+                                    master.controller.loadData(getRecordId()).then(function () {
+                                        AppBar.triggerDisableHandlers();
+                                    });
                                 }
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_DeleteTwoFactorUser: error");
@@ -513,7 +510,9 @@
                         var master = Application.navigator.masterControl;
                         if (master && master.controller &&
                             typeof master.controller.loadData === "function") {
-                            master.controller.loadData(getRecordId());
+                            master.controller.loadData(getRecordId()).then(function() {
+                                AppBar.triggerDisableHandlers();
+                            });
                         }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call PRC_UnlockUser: error");
@@ -586,7 +585,7 @@
                 },
                 clickChangeLogin: function () {
                     // svc bei nicht siteadmin nicht erlauben
-                    return that.binding.allowEditLogin || that.binding.iconID === 5;
+                    return getHasTwoFactor() || that.binding.allowEditLogin || that.binding.iconID === 5;
                 },
                 clickExportQrcode: function () {
                     if (getRecordId()) {
@@ -600,12 +599,12 @@
                     }
                 },
                 clickDelete2fa: function () {
-                    return !getHasTwoFactor() || 
+                    return AppBar.modified || !getHasTwoFactor() || 
                         that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
                         AppBar.busy;
                 },
                 clickUnlock: function () {
-                    return !getLocked() ||
+                    return AppBar.modified || !getLocked() ||
                         AppBar.busy;
                 }
             };
@@ -622,31 +621,24 @@
                     return WinJS.Promise.as();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (recordId) {
-                        //load of format relation record data
-                        Log.print(Log.l.trace, "calling select employeeView...");
-                        return Employee.employeeView.select(function (json) {
-                            AppData.setErrorMsg(that.binding);
-                            Log.print(Log.l.trace, "employeeView: success!");
-                            if (json && json.d) {
-                                // now always edit!
-                                that.setDataEmployee(json.d);
-                            }
-                        }, function (errorResponse) {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, recordId);
-                    } else {
-                        return WinJS.Promise.as();
-                    }
+                    Log.print(Log.l.trace, "calling select employeeView...");
+                    return Employee.employeeView.select(function (json) {
+                        AppData.setErrorMsg(that.binding);
+                        Log.print(Log.l.trace, "employeeView: success!");
+                        if (json && json.d) {
+                            // now always edit!
+                            that.setDataEmployee(json.d);
+                        }
+                    }, function (errorResponse) {
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, recordId);
                 }).then(function () {
                     AppBar.notifyModified = true;
-                    if (recordId) {
-                        Log.print(Log.l.trace, "Data loaded");
-                        var master = Application.navigator.masterControl;
-                        if (master && master.controller &&
-                            typeof master.controller.scrollToRecordId === "function") {
-                            master.controller.scrollToRecordId(recordId);
-                        }
+                    Log.print(Log.l.trace, "Data loaded");
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller &&
+                        typeof master.controller.scrollToRecordId === "function") {
+                        master.controller.scrollToRecordId(recordId);
                     }
                 });
                 Log.ret(Log.l.trace);

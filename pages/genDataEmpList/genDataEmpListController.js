@@ -16,11 +16,12 @@
     WinJS.Namespace.define("GenDataEmpList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "GenDataEmpList.Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 employeeId: 0,
                 eventId: 0,
-                searchString: "",
+                searchString: (restriction && restriction.Vorname) ? restriction.Vorname[0]: "",
                 hasTwoFactor: null,
                 locked: null,
                 licenceWarning: false,
@@ -55,7 +56,6 @@
                 if (that.events) {
                     that.events = null;
                 }
-                AppData.setRestriction("Employee", {});
             }
 
             var progress = null;
@@ -252,6 +252,9 @@
                     var endMoment = moment(item.Enddatum);
                     endMoment.locale(Application.language);
                     item.Enddatum = endMoment.format("ll");
+                }
+                if (item.FairMandantID) {
+                    AppData.setRecordId("FairMandant", item.FairMandantID);
                 }
             }
             this.resultConverter = resultConverter;
@@ -486,7 +489,7 @@
                 if (counter && counter.style) {
                     counter.style.display = "none";
                 }
-                var restriction = AppData.getRestriction("Employee");
+                restriction = AppData.getRestriction("Employee");
                 Log.print(Log.l.trace, "restriction Employee:" + restriction);
                 var defaultrestriction = copyByValue(GenDataEmpList.employeeView.defaultRestriction);
                 if (!restriction) {

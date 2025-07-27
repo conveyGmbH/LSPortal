@@ -16,9 +16,10 @@
     WinJS.Namespace.define("GenDataUserInfo", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "GenDataUserInfo.Controller.");
+            var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 dataBenutzer: GenDataUserInfo.benutzerView && getEmptyDefaultValue(GenDataUserInfo.benutzerView.defaultValue),
-                restriction: copyByValue(GenDataUserInfo.benutzerView.defaultValueRes),
+                restriction: (restriction && restriction.Vorname) ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 InitAnredeItem: { InitAnredeID: 0, TITLE: "" },
                 InitLandItem: { InitLandID: 0, TITLE: "" },
                 photoData: "",
@@ -487,18 +488,11 @@
                     that.binding.restriction.Nachname = [];
                     that.binding.restriction.Login = [];
                     if (event.target.value) {
-                        that.binding.restriction.Names = event.target.value;
                         that.binding.restriction.Vorname = [event.target.value, null, null];
                         that.binding.restriction.Login = [null, event.target.value, null];
                         that.binding.restriction.Nachname = [null, null, event.target.value];
                         that.binding.restriction.bUseOr = false;
                         that.binding.restriction.bAndInEachRow = true;
-                    } else {
-                        that.binding.restriction.Names = event.target.value;
-                        that.binding.restriction.Login = event.target.value;
-                        that.binding.restriction.Vorname = event.target.value;
-                        that.binding.restriction.Nachname = event.target.value;
-                        delete that.binding.restriction.bUseOr;
                     }
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
