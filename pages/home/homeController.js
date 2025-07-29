@@ -287,12 +287,6 @@
                     return WinJS.Promise.as();
                 }
             }).then(function () {
-                if (!Application.pageframe.splashScreenDone) {
-                    WinJS.Promise.timeout(20).then(function () {
-                        return Application.pageframe.hideSplashScreen();
-                    });
-                }
-            }).then(function () {
                 if(typeof AppHeader === "object" &&
                     AppHeader.controller && AppHeader.controller.binding) {
                     /*AppHeader.controller.binding.userData = AppData._userData;
@@ -300,7 +294,6 @@
                     AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;*/
                     AppHeader.controller.loadData();
                 }
-            }).then(function () {
                 if (AppData._persistentStates.eventColor) {
                     Colors.accentColor = AppData._persistentStates.eventColor;
                 }
@@ -309,22 +302,23 @@
             }).then(function () {
                 AppBar.loadIcons();
                 // workaround fix loading menu icon color
-                NavigationBar.groups = Application.navigationBarGroups;              
-            }).then(function () {
-                WinJS.Promise.timeout(50).then(function () {
-                    // prüfen ob auf mandantfähigkeit dieses Flag 
-                    if (!AppHeader.controller.binding.userData.IsNoAdminUser && that.binding.generalData.publishFlag && AppData._userData && !AppData._userData.IsCustomerAdmin && !AppData._userData.SiteAdmin) {
-                        var confirmTitle = getResourceText("start.confirmTextPublish");
-                        confirm(confirmTitle, function (result) {
-                            if (result) {
-                                Application.navigateById("publish");
-                            } else {
-                                Log.print(Log.l.trace, "publishflag: user choice CANCEL");
-                            }
-                        });
-                    }
-                });
-                Log.print(Log.l.trace, "Splash screen vanished");
+                NavigationBar.groups = Application.navigationBarGroups;
+                Application.pageframe.hideSplashScreen();
+                // prüfen ob auf mandantfähigkeit dieses Flag
+                if (!AppHeader.controller.binding.userData.IsNoAdminUser &&
+                    that.binding.generalData.publishFlag &&
+                    AppData._userData &&
+                    !AppData._userData.IsCustomerAdmin &&
+                    !AppData._userData.SiteAdmin) {
+                    var confirmTitle = getResourceText("start.confirmTextPublish");
+                    confirm(confirmTitle, function(result) {
+                        if (result) {
+                            Application.navigateById("publish");
+                        } else {
+                            Log.print(Log.l.trace, "publishflag: user choice CANCEL");
+                        }
+                    });
+                }
             });
             Log.ret(Log.l.trace);
         })

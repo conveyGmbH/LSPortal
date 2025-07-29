@@ -170,17 +170,16 @@
                                 Log.print(Log.l.trace, "select appListSpecView: success!");
                                 // kontaktanzahlView returns object already parsed from json file in response
                                 if (json && json.d && json.d.results) {
-                                    NavigationBar.showGroupsMenu(json.d.results, true);
+                                    NavigationBar.showGroupsMenu(json.d.results);
                                 } else {
                                     NavigationBar.showGroupsMenu([]);
                                 }
-                            },
-                                function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    Log.print(Log.l.error, "select appListSpecView: error!");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                });
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "select appListSpecView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
                         } else {
                             return WinJS.Promise.as();
                         }

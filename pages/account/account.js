@@ -42,6 +42,20 @@
                 ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok
                     Application.pageframe.reCheckForLanguage(function() {
+                        // called asynchronously if ok
+                        AppBar.loadIcons();
+                        NavigationBar.groups = Application.navigationBarGroups;
+                        if (NavigationBar.data) {
+                            var curGroup = NavigationBar.curGroup;
+                            NavigationBar.data.length = 0;
+                            NavigationBar.curGroup = 0;
+                            NavigationBar.setItemsForGroup(curGroup);
+                        }
+                        if (AppHeader &&
+                            AppHeader.controller &&
+                            typeof AppHeader.controller.reloadMenu === "function") {
+                            AppHeader.controller.reloadMenu();
+                        }
                         complete(response);
                     }, function () {
                         var errorResponse = "Error: failed to switch language!";

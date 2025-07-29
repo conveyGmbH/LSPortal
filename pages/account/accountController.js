@@ -666,7 +666,7 @@
                                     Log.print(Log.l.trace, "appListSpecView: success!");
                                     // kontaktanzahlView returns object already parsed from json file in response
                                     if (json && json.d && json.d.results) {
-                                        NavigationBar.showGroupsMenu(json.d.results, true);
+                                        NavigationBar.showGroupsMenu(json.d.results);
                                     } else {
                                         NavigationBar.showGroupsMenu([]);
                                     }

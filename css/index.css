@@ -697,43 +697,39 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     z-index: 10010;
 }
 
-#accountbutton {
-    color: black !important;
-    text-transform: uppercase;
-    background: #ffffff;
-    padding: 20px;
-    display: inline-block;
+.appHeader #menu1 {
+    border-color: WindowFrame;
 }
 
-    #accountbutton:hover {
-        color: black !important;
-        background: #d4d4d4;
-        border-color: #d4d4d4 !important;
-        transition: all 0.4s ease 0s;
-    }
-
-#logoffbutton {
-    color: #ed3330 !important;
+.appHeader #menu1 .win-command {
+    color: var(--MenuText) !important;
+    /*
+    text-transform: uppercase;
+    */
+    background-color: var(--Window);
     font-weight: bold;
-    text-transform: uppercase;
-    background: #ffffff;
     padding: 20px;
     display: inline-block;
 }
 
-    #logoffbutton:hover {
-        color: #ffffff !important;
-        font-weight: bold;
-        background: #ed3330;
-        border-color: #ed3330 !important;
-        transition: all 0.4s ease 0s;
-    }
+.appHeader #menu1 .win-command:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease 0s;
+}
 
-#menu1 {
-    border-color: #d4d4d4;
+.cnv-ui-dark .appHeader #menu1 .win-command:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.appHeader #menu1 .win-command#logoff {
+    color: firebrick !important;
+}
+.appHeader #menu1 .win-command#logoff:hover {
+    color: white !important;
+    background-color: firebrick !important;
 }
 /*
-    event name
+event name
 */
 .event-line {
     width: calc(100% - 284px);

@@ -35,9 +35,8 @@
             this.pageData.ServerName = "";
 
             AppHeader.controller = this;
-
             var that = this;
-
+            
             // First, we call WinJS.Binding.as to get the bindable proxy object
             this.binding = WinJS.Binding.as(this.pageData);
 
@@ -233,6 +232,24 @@
                 return ret;
             }
             this.loadData = loadData;
+
+            var reloadMenu = function() {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                var menu1 = pageElement.querySelector("#menu1");
+                if (menu1) {
+                    var commands = menu1.querySelectorAll(".win-command");
+                    if (commands) for (var i = 0; i < commands.length; i++) {
+                        var command = commands[i];
+                        if (command) {
+                            var newLabel = getResourceText("label." + command.id);
+                            Log.print(Log.l.trace, "label[" + command.id + "]=" + newLabel);
+                            command.textContent = newLabel;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.reloadMenu = reloadMenu;
 
             // Finally, wire up binding
             WinJS.Resources.processAll(that.element).then(function () {
