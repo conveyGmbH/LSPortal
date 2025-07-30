@@ -159,6 +159,39 @@
             Application.pageframe.savePersistentStates();
             Log.ret(Log.l.trace);
         },
+        cancelPromises: function() {
+            Log.call(Log.l.trace, "AppData.");
+            if (AppData._userRemoteDataPromise) {
+                AppData._userRemoteDataPromise.cancel();
+                AppData._userRemoteDataPromise = null;
+            }
+            if (AppData._messagesDataPromise) {
+                AppData._messagesDataPromise.cancel();
+                AppData._messagesDataPromise = null;
+            }
+            Log.ret(Log.l.trace);
+        },
+        checkForNavigateToLogin: function (errorResponse) {
+            Log.call(Log.l.trace, "AppData.");
+            if (errorResponse && (errorResponse.status === 401 || errorResponse.status === 404)) {
+                var curPageId = Application.getPageId(Application.navigator._lastPage);
+                var onLoginPage = curPageId === "dbinit" || curPageId === "login" || curPageId === "account";
+                if (errorResponse.status === 401 && !onLoginPage) {
+                    // user is not authorized to access this service
+                    AppBar.scope.binding.generalData.notAuthorizedUser = true;
+                    //var errorMessage = getResourceText("general.unauthorizedUser");
+                    AppBar.scope.binding.generalData.oDataErrorMsg = getResourceText("general.unauthorizedUser") + "\n\nError: " + (errorResponse && errorResponse.statusText);
+                    alert(AppBar.scope.binding.generalData.oDataErrorMsg);
+                }
+                AppData.cancelPromises();
+                if (!onLoginPage) {
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("login");
+                    });
+                }
+            }
+            Log.ret(Log.l.trace);
+        },
         getUserData: function () {
             var ret;
             //AppData._userRemoteDataPromise = null;
@@ -238,24 +271,8 @@
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        Log.print(Log.l.error, "error in select generalUserView statusText=" + errorResponse.statusText);
-                        if (errorResponse.status === 401) {
-                            // user is not authorized to access this service
-                            AppBar.scope.binding.generalData.notAuthorizedUser = true;
-                            //var errorMessage = getResourceText("general.unauthorizedUser");
-                            AppBar.scope.binding.generalData.oDataErrorMsg = errorResponse;
-                            alert(errorMessage);
-                            //AppData.setErrorMsg(AppBar.scope.binding, errorResponse);
-                            // user is not authorized to access this service
-                            WinJS.Promise.timeout(0).then(function () {
-                                Application.navigateById("login");
-                            });
-                        }
-                        if (errorResponse.status === 404) {
-                            WinJS.Promise.timeout(0).then(function () {
-                                Application.navigateById("login");
-                            });
-                        }
+                        Log.print(Log.l.error, "error in select generalUserView statusText=" + (errorResponse && errorResponse.statusText));
+                        AppData.checkForNavigateToLogin(errorResponse);
                         AppData._curGetUserDataId = 0;
                     }, userId);
                 });
@@ -296,14 +313,13 @@
                         Log.print(Log.l.info, "getMessagesData: Now, wait for timeout=" + timeout + "s");
                         AppData._messagesDataPromise = WinJS.Promise.timeout(timeout * 1000).then(function () {
                             Log.print(Log.l.info, "getMessagesData: Now, timeout=" + timeout + "s is over!");
-                            //AppData._curGetUserRemoteDataId = 0;
                             AppData.getMessagesData();
                         });
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
-                        Log.print(Log.l.error, "error in select generalUserMessageVIEW statusText=" + errorResponse.statusText);
-                        //AppData._curGetUserDataId = 0;
+                        Log.print(Log.l.error, "error in select generalUserMessageVIEW statusText=" + (errorResponse && errorResponse.statusText));
+                        AppData.checkForNavigateToLogin(errorResponse);
                     });
                 });
             }

@@ -11,6 +11,9 @@
     <div class="login fragment">
         <div id="loginController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
+	            <div class="wait-circle-container" data-win-bind="style.display: showWaitCircle Binding.Converter.toDisplay">
+		            <progress class="win-ring win-large wait-circle"></progress>
+	            </div>
                 <div class="contentarea win-type-body">
                     <div class="header-separator"></div>
                     <div class="content-header">
@@ -21,7 +24,7 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                    <div class="centerarea">
+                    <div class="centerarea" data-win-bind="style.display: showWaitCircle Binding.Converter.toDisplayNone">
                         <div class="line-separator"
                              data-win-bind="style.display: hideLoginData Binding.Converter.toDisplayNone"></div>
                         <div class="field_line"

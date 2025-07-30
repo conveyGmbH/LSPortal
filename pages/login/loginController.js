@@ -52,7 +52,8 @@
                     percent: 0,
                     text: "",
                     show: null
-                }
+                },
+                showWaitCircle: false
             }, commandList]);
 
             var that = this;
@@ -77,7 +78,17 @@
             this.eventHandlers = {
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
-                    Application.navigateById(Application.startPageId, event);
+                    that.saveData(function (response) {
+                        // called asynchronously if ok
+                        var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+                        if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                            splitviewPaneWrapper.style.width = "";
+                            splitviewPaneWrapper.style.maxWidth = "";
+                        }
+                        Application.navigateById(Application.startPageId);
+                    }, function (errorResponse) {
+                        // already handled
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickAccount: function (event) {
@@ -141,41 +152,6 @@
             }
             this.resultConverter = resultConverter;
 
-            var openDb = function (complete, error) {
-                var ret;
-                Log.call(Log.l.info, "Login.Controller.");
-                if (AppRepl.replicator &&
-                    AppRepl.replicator.state === "running") {
-                    Log.print(Log.l.info, "replicator still running - try later!");
-                    ret = WinJS.Promise.timeout(500).then(function () {
-                        that.openDb(complete, error);
-                    });
-                } else {
-                    ret = AppData.openDB(function (json) {
-                        AppBar.busy = false;
-                        AppData._curGetUserDataId = 0;
-                        AppData.getUserData();
-                        AppData.getMessagesData();
-                        complete(json);
-                    }, function (curerr) {
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, curerr);
-                        error(curerr);
-                    }, function (res) {
-                        if (res) {
-                            that.binding.progress = {
-                                percent: res.percent,
-                                text: res.statusText,
-                                show: 1
-                            };
-                        }
-                    }, true);
-                }
-                Log.ret(Log.l.info);
-                return ret;
-            };
-            that.openDb = openDb;
-
             var tfaVerify = function () {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -204,62 +180,77 @@
             }
 
             var saveData = function (complete, error) {
-                var err = null, hasTwoFactor = null;
+                var err = null, response = null, hasTwoFactor = null;
                 Log.call(Log.l.trace, "Login.Controller.");
+                AppData.cancelPromises();
                 that.binding.messageText = null;
                 AppData.setErrorMsg(that.binding);
                 AppBar.busy = true;
                 that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
                 that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
-                var ret = Login.loginRequest.insert(function (json) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-                    Log.call(Log.l.trace, "loginRequest: success!");
-                    // loginData returns object already parsed from json file in response
-                    if (json && json.d && json.d.ODataLocation) {
-                        if (json.d.InactiveFlag) {
+                var ret;
+                if (!AppBar.modified) {
+                    ret = WinJS.Promise.as();
+                    complete({});
+                } else {
+                    ret = Login.loginRequest.insert(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.call(Log.l.trace, "loginRequest: success!");
+                        // loginData returns object already parsed from json file in response
+                        if (json && json.d && json.d.ODataLocation) {
+                            if (json.d.InactiveFlag) {
+                                AppBar.busy = false;
+                                err = { status: 503, statusText: getResourceText("account.inactive") };
+                                AppData.setErrorMsg(that.binding, err);
+                                error(err);
+                            } else {
+                                hasTwoFactor = json.d.HasTwoFactor;
+                                var location = json.d.ODataLocation;
+                                if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                    that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
+                                    that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
+                                }
+                                Application.pageframe.savePersistentStates();
+                            }
+                        } else {
                             AppBar.busy = false;
-                            err = { status: 503, statusText: getResourceText("account.inactive") };
+                            err = { status: 404, statusText: getResourceText("login.unknown") };
                             AppData.setErrorMsg(that.binding, err);
                             error(err);
-                        } else {
-                            hasTwoFactor = json.d.HasTwoFactor;
-                            var location = json.d.ODataLocation;
-                            if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
-                                that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
-                                that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
-                            }
-                            Application.pageframe.savePersistentStates();
                         }
-                    } else {
-                        AppBar.busy = false;
-                        err = { status: 404, statusText: getResourceText("login.unknown") };
-                        AppData.setErrorMsg(that.binding, err);
-                        error(err);
-                    }
-                    return WinJS.Promise.as();
-                }, function (errorResponse) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                    Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
-                    // ignore this error here for compatibility!
-                    return WinJS.Promise.as();
-                }, {
-                    LoginName: that.binding.dataLogin.Login
-                }).then(function () {
-                    // nur aufrufen wenn in DB TFA eingetragen ist
-                    if (hasTwoFactor) {
-                        return tfaVerify() || WinJS.Promise.as();
-                    } else {
                         return WinJS.Promise.as();
-                    }
-                }).then(function (tfaResult) {
-                    if (tfaResult && tfaResult.status !== "success") {
-                        // Behandlung TFA-Result-Fehler..
-                        // besser Fehler message-text in übergebener language
-                        AppData.setErrorMsg(that.binding, tfaResult.status); 
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
+                        // ignore this error here for compatibility!
                         return WinJS.Promise.as();
-                    } else if (!err) {
+                    }, {
+                        LoginName: that.binding.dataLogin.Login
+                    }).then(function () {
+                        // nur aufrufen wenn in DB TFA eingetragen ist
+                        if (hasTwoFactor) {
+                            return tfaVerify().then(function (tfaResult) {
+                                that.binding.showWaitCircle = true;
+                                // now wait 1s for the DB-USer to be changed....
+                                return WinJS.Promise.timeout(5000).then(function () {
+                                    return WinJS.Promise.as(tfaResult);
+                                });
+                            }) || WinJS.Promise.as();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function (tfaResult) {
+                        if (tfaResult && tfaResult.status !== "success") {
+                            // Behandlung TFA-Result-Fehler..
+                            // besser Fehler message-text in übergebener language
+                            that.binding.showWaitCircle = false;
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, tfaResult.message);
+                            err = { status: 401, statusText: tfaResult.message };
+                            return WinJS.Promise.as();
+                        } else if (!err) {
                             var dataLogin = {
                                 Login: that.binding.dataLogin.Login,
                                 Password: that.binding.dataLogin.Password,
@@ -273,14 +264,16 @@
                                 // loginData returns object already parsed from json file in response
                                 if (json && json.d) {
                                     dataLogin = json.d;
+                                    AppBar.modified = false;
                                     if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
                                         AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                         AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
                                         AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                         NavigationBar.enablePage("settings");
                                         NavigationBar.enablePage("info");
-                                        AppBar.busy = false;
+                                        response = json;
                                     } else {
+                                        that.binding.showWaitCircle = false;
                                         AppBar.busy = false;
                                         that.binding.messageText = dataLogin.MessageText;
                                         err = { status: 401, statusText: dataLogin.MessageText };
@@ -288,12 +281,14 @@
                                         error(err);
                                     }
                                 } else {
+                                    that.binding.showWaitCircle = false;
                                     AppBar.busy = false;
                                     err = { status: 404, statusText: "no data found" };
                                     AppData.setErrorMsg(that.binding, err);
                                     error(err);
                                 }
                             }, function (errorResponse) {
+                                that.binding.showWaitCircle = false;
                                 AppBar.busy = false;
                                 err = errorResponse;
                                 // called asynchronously if an error occurs
@@ -302,14 +297,7 @@
                                 error(errorResponse);
                             }, dataLogin);
                         } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        if (!err) {
-                            AppData._curGetUserDataId = 0;
-                            AppData.getMessagesData();
-                            return AppData.getUserData();
-                        } else {
+                            that.binding.showWaitCircle = false;
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
@@ -335,16 +323,19 @@
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
+                                AppBar.busy = false;
+                                that.binding.showWaitCircle = false;
+                                err = errorResponse;
                                 error(errorResponse);
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
-                                VeranstaltungID: AppData.getRecordId("Veranstaltung"), // 0
-                                MandantWide: 1, // 0
-                                IsForApp: 0
-                            }).then(function () {
-                                var colors = Colors.updateColors();
-                                return (colors && colors._loadCssPromise) || WinJS.Promise.as();
-                            });
+                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), // 0
+                                    MandantWide: 1, // 0
+                                    IsForApp: 0
+                                }).then(function () {
+                                    var colors = Colors.updateColors();
+                                    return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                                });
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -363,20 +354,36 @@
                                 } else {
                                     NavigationBar.showGroupsMenu([]);
                                 }
-                                complete(json);
                                 return WinJS.Promise.as();
-                            },
-                                function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    error(errorResponse);
-                                    return WinJS.Promise.as();
-                                });
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppBar.busy = false;
+                                that.binding.showWaitCircle = false;
+                                err = errorResponse;
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                                return WinJS.Promise.as();
+                            });
                         } else {
                             return WinJS.Promise.as();
                         }
+                    }).then(function () {
+                        if (!err) {
+                            AppData._curGetUserDataId = 0;
+                            AppData.getMessagesData();
+                            return AppData.getUserData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (!err) {
+                            AppBar.busy = false;
+                            that.binding.showWaitCircle = false;
+                            complete(response);
+                        }
                     });
+                }
                 Log.ret(Log.l.trace);
                 return ret;
             };
@@ -392,7 +399,17 @@
                 AppData.prevLogin = null;
                 AppData.prevPassword = null;
                 WinJS.Promise.timeout(0).then(function () {
-                    Application.navigateById(Application.startPageId);
+                    that.saveData(function (response) {
+                        // called asynchronously if ok
+                        var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+                        if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                            splitviewPaneWrapper.style.width = "";
+                            splitviewPaneWrapper.style.maxWidth = "";
+                        }
+                        Application.navigateById(Application.startPageId);
+                    }, function (errorResponse) {
+                        // already handled
+                    });
                 });
             }
 

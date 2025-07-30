@@ -11,7 +11,22 @@
     <div class="account fragment">
         <div id="accountController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
+	            <div class="wait-circle-container" data-win-bind="style.display: showWaitCircle Binding.Converter.toDisplay">
+		            <progress class="win-ring win-large wait-circle"></progress>
+	            </div>
+	            <div class="contentarea win-type-body" data-win-bind="style.display: showWaitCircle Binding.Converter.toDisplay">
+		            <div class="header-separator"></div>
+		            <div class="content-header">
+			            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+			            <div class="content-header-line win-type-caption">
+				            <span class="id-field"></span>
+				            <span class="caption-field"
+				                  data-win-res="{textContent: 'account.title'}"></span>
+				            <span class="date-field"></span>
+			            </div>
+		            </div>
+	            </div>
+                <div class="contentarea win-type-body" data-win-bind="style.display: showWaitCircle Binding.Converter.toDisplayNone">
                     <div class="header-separator"></div>
                     <div class="content-header">
                         <div class="half-circle half-circle-textcolor">&nbsp;</div>

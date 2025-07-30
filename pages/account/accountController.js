@@ -22,9 +22,6 @@
     var namespaceName = "Account";
 
     WinJS.Namespace.define("Account", {
-        getClassNameOffline: function (useOffline) {
-            return useOffline ? "field_line field_line_even" : "hide-element";
-        },
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
@@ -39,14 +36,14 @@
                     LanguageID: null
                 },
                 doEdit: false,
-                doReloadDb: false,
                 progress: {
                     percent: 0,
                     text: "",
                     show: null
                 },
                 showLanguages: false,
-                showServerList: false
+                showServerList: false,
+                showWaitCircle: false
             }, commandList]);
 
             if (typeof navigator.globalization === "object") {
@@ -68,7 +65,6 @@
             var prevHostName = AppData._persistentStates.odata.hostName;
             var prevOnlinePort = AppData._persistentStates.odata.onlinePort;
             var prevOnlinePath = AppData._persistentStates.odata.onlinePath;
-            var prevUseOffline = AppData._persistentStates.odata.useOffline;
             if (!prevLogin || !prevPassword || !prevHostName) {
                 // enable edit per default on empty settings
                 this.binding.doEdit = true;
@@ -172,33 +168,12 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickDoReloadDb: function (event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    if (event.currentTarget && AppBar.notifyModified && that.binding.doEdit) {
-                        var toggle = event.currentTarget.winControl;
-                        if (toggle) {
-                            that.binding.doReloadDb = toggle.checked;
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
                 clickHttps: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event.currentTarget && AppBar.notifyModified && that.binding.doEdit) {
                         var toggle = event.currentTarget.winControl;
                         if (toggle) {
                             that.binding.appSettings.odata.https = toggle.checked;
-                        }
-                    }
-                    Log.ret(Log.l.trace);
-                },
-                clickUseOffline: function (event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    if (event.currentTarget && AppBar.notifyModified && that.binding.doEdit) {
-                        var toggle = event.currentTarget.winControl;
-                        if (toggle) {
-                            that.binding.appSettings.odata.useOffline = toggle.checked;
-                            AppBar.triggerDisableHandlers();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -222,17 +197,6 @@
             this.disableHandlers = {
                 clickOk: function () {
                     // work on user change handling!
-                    if (!that.binding.appSettings.odata.useOffline) {
-                        that.binding.doReloadDb = false;
-                    } else if (that.binding.dataLogin.Login !== prevLogin ||
-                        that.binding.dataLogin.Password !== prevPassword ||
-                        that.binding.appSettings.odata.hostName !== prevHostName ||
-                        that.binding.appSettings.odata.onlinePort !== prevOnlinePort ||
-                        that.binding.appSettings.odata.onlinePath !== prevOnlinePath ||
-                        !prevUseOffline) {
-                        that.binding.doReloadDb = true;
-                        that.binding.doEdit = true;
-                    }
                     if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
                         that.binding.dataLogin.PrivacyPolicyFlag = false;
                         that.binding.dataLogin.PrivacyPolicydisabled = false;
@@ -274,40 +238,6 @@
                 }
             }
             this.resultConverter = resultConverter;
-
-            var openDb = function (complete, error) {
-                var ret;
-                Log.call(Log.l.info, namespaceName + ".Controller.");
-                if (AppRepl.replicator &&
-                    AppRepl.replicator.state === "running") {
-                    Log.print(Log.l.info, "replicator still running - try later!");
-                    ret = WinJS.Promise.timeout(500).then(function () {
-                        that.openDb(complete, error);
-                    });
-                } else {
-                    ret = AppData.openDB(function (json) {
-                        AppBar.busy = false;
-                        AppData._curGetUserDataId = 0;
-                        AppData.getUserData();
-                        complete(json);
-                    }, function (curerr) {
-                        AppBar.busy = false;
-                        AppData.setErrorMsg(that.binding, curerr);
-                        error(curerr);
-                    }, function (res) {
-                        if (res) {
-                            that.binding.progress = {
-                                percent: res.percent,
-                                text: res.statusText,
-                                show: 1
-                            };
-                        }
-                    }, true);
-                }
-                Log.ret(Log.l.info);
-                return ret;
-            };
-            that.openDb = openDb;
 
             var setServerList = function (results) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -471,7 +401,7 @@
             }
 
             var saveData = function (complete, error) {
-                var err = null, ret = null, hasTwoFactor = null;
+                var err = null, response = null, ret = null, hasTwoFactor = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (contentarea) {
                     contentarea.scrollTop = 0;
@@ -488,6 +418,7 @@
                     ret = WinJS.Promise.as();
                     complete({});
                 } else {
+                    AppData.cancelPromises();
                     AppBar.busy = true;
                     that.binding.appSettings.odata.onlinePath = "odata_online";//AppData._persistentStatesDefaults.odata.onlinePath;
                     that.binding.appSettings.odata.registerPath = "odata_register";//AppData._persistentStatesDefaults.odata.registerPath;
@@ -529,160 +460,163 @@
                         // nur aufrufen wenn in DB TFA eingetragen ist
                         // und Login  geändert wurde
                         if (hasTwoFactor && (prevLogin !== that.binding.dataLogin.Login)) {
-                            return tfaVerify() || WinJS.Promise.as();
+                            return tfaVerify().then(function (tfaResult) {
+                                that.binding.showWaitCircle = true;
+                                // now wait 5s for the DB-USer to be changed....
+                                return WinJS.Promise.timeout(5000).then(function () {
+                                    return WinJS.Promise.as(tfaResult);
+                                });
+                            }) || WinJS.Promise.as();
                         } else {
                             return WinJS.Promise.as();
                         }
                     }).then(function (tfaResult) {
-                        if (tfaResult) {
-                            // Behandlung TFA-Result..
-                        }
-                            if (!err) {
-                                var dataLogin = {
-                                    Login: that.binding.dataLogin.Login,
-                                    Password: that.binding.dataLogin.Password,
-                                    LanguageID: getLanguage(),
-                                    Aktion: "Portal"
-                                };
-                                return Account.loginView.insert(function (json) {
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                    Log.print(Log.l.trace, "loginView: success!");
-                                    // loginData returns object already parsed from json file in response
-                                    if (json && json.d) {
-                                        dataLogin = json.d;
-                                        if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
-                                            AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
-                                            AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
-                                            NavigationBar.enablePage("settings");
-                                            NavigationBar.enablePage("info");
-                                            var prevMitarbeiterId = AppData.getRecordId("Mitarbeiter");
-                                            var doReloadDb = false;
-                                            if (prevMitarbeiterId !== dataLogin.MitarbeiterID ||
-                                                that.binding.doReloadDb) {
-                                                doReloadDb = true;
-                                            }
-                                            Log.print(Log.l.info, "loginData: doReloadDb=" + doReloadDb + " useOffline=" + that.binding.appSettings.odata.useOffline);
-                                            if (doReloadDb) {
-                                                AppData._persistentStates.allRestrictions = {};
-                                                AppData._persistentStates.allRecIds = {};
-                                                AppData._userData = {};
-                                                AppData._userRemoteData = {};
-                                                AppData._contactData = {};
-                                                AppData._photoData = null;
-                                                AppData._barcodeType = null;
-                                                AppData._barcodeRequest = null;
-                                                AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
-                                            }
-                                            AppData._persistentStates.languageId = dataLogin.LanguageID;
-                                            if (that.binding.appSettings.odata.useOffline) {
-                                                if (doReloadDb) {
-                                                    AppData._persistentStates.odata.dbSiteId = dataLogin.Mitarbeiter_AnmeldungVIEWID;
-                                                    Application.pageframe.savePersistentStates();
-                                                    return that.openDb(complete, error);
-                                                } else {
-                                                    Application.pageframe.savePersistentStates();
-                                                    AppBar.busy = false;
-                                                    AppData._curGetUserDataId = 0;
-                                                    AppData.getUserData();
-                                                    return WinJS.Promise.as();
-                                                }
-                                            } else {
-                                                AppBar.busy = false;
-                                                //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
-                                                Application.pageframe.savePersistentStates();
-                                                AppData._curGetUserDataId = 0;
-                                                AppData.getUserData();
-                                                return WinJS.Promise.as();
-                                            }
-                                        } else {
-                                            AppBar.busy = false;
-                                            that.binding.messageText = dataLogin.MessageText;
-                                            err = { status: 401, statusText: dataLogin.MessageText };
-                                            AppData.setErrorMsg(that.binding, err);
-                                            error(err);
-                                            return WinJS.Promise.as();
-                                        }
+                        if (tfaResult && tfaResult.status !== "success") {
+                            // Behandlung TFA-Result-Fehler..
+                            // besser Fehler message-text in übergebener language
+                            that.binding.showWaitCircle = false;
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, tfaResult.message); 
+                            err = { status: 401, statusText: tfaResult.message };
+                            return WinJS.Promise.as();
+                        } else if (err) {
+                            that.binding.showWaitCircle = false;
+                            return WinJS.Promise.as();
+                        } else {
+                            var dataLogin = {
+                                Login: that.binding.dataLogin.Login,
+                                Password: that.binding.dataLogin.Password,
+                                LanguageID: getLanguage(),
+                                Aktion: "Portal"
+                            };
+                            return Account.loginView.insert(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "loginView: success!");
+                                // loginData returns object already parsed from json file in response
+                                if (json && json.d) {
+                                    dataLogin = json.d;
+                                    if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
+                                        AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
+                                        AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                        NavigationBar.enablePage("settings");
+                                        NavigationBar.enablePage("info");
+                                        response = json;
+                                        AppData._persistentStates.languageId = dataLogin.LanguageID;
+                                        //AppData.setRecordId("Kontakt", dataLogin.KontaktID);
+                                        Application.pageframe.savePersistentStates();
+                                        return WinJS.Promise.as();
                                     } else {
+                                        that.binding.showWaitCircle = false;
                                         AppBar.busy = false;
-                                        err = { status: 404, statusText: "no data found" };
+                                        that.binding.messageText = dataLogin.MessageText;
+                                        err = { status: 401, statusText: dataLogin.MessageText };
                                         AppData.setErrorMsg(that.binding, err);
                                         error(err);
                                         return WinJS.Promise.as();
                                     }
-                                }, function (errorResponse) {
+                                } else {
+                                    that.binding.showWaitCircle = false;
                                     AppBar.busy = false;
-                                    err = errorResponse;
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    error(errorResponse);
-                                    return WinJS.Promise.as();
-                                }, dataLogin);
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        }).then(function () {
-                            if (!err) {
-                                // load color settings
-                                //AppData._persistentStates.hideQuestionnaire = false;
-                                //AppData._persistentStates.hideSketch = false;
-                                return AppData.getOptions(function (json) {
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                    Log.print(Log.l.trace, "CR_VERANSTOPTION_ODataView: success!");
-                                    // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
-                                    if (json && json.d && json.d.results && json.d.results.length > 1) {
-                                        var results = json.d.results;
-                                        results.forEach(function (item, index) {
-                                            that.resultConverter(item, index);
-                                        });
-                                        Application.pageframe.savePersistentStates();
-                                    }
-                                }, function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
+                                    err = { status: 404, statusText: "no data found" };
+                                    AppData.setErrorMsg(that.binding, err);
                                     error(err);
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                }, {
-                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), //0
-                                    MandantWide: 1, //0
-                                    IsForApp: 0
-                                }).then(function () {
-                                    var colors = Colors.updateColors();
-                                    return (colors && colors._loadCssPromise) || WinJS.Promise.as();
-                                });
-                            } else {
-                                return WinJS.Promise.as();
-                            }
-                        }).then(function () {
-                            if (!err) {
-                                if (typeof Home === "object" && Home._actionsList) {
-                                    Home._actionsList = null;
+                                    return WinJS.Promise.as();
                                 }
-                                return Account.appListSpecView.select(function (json) {
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                    Log.print(Log.l.trace, "appListSpecView: success!");
-                                    // kontaktanzahlView returns object already parsed from json file in response
-                                    if (json && json.d && json.d.results) {
-                                        NavigationBar.showGroupsMenu(json.d.results);
-                                    } else {
-                                        NavigationBar.showGroupsMenu([]);
-                                    }
-                                    complete(json);
-                                    return WinJS.Promise.as();
-                                }, function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    error(err);
-                                    return WinJS.Promise.as();
-                                });
-                            } else {
+                            }, function (errorResponse) {
+                                that.binding.showWaitCircle = false;
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
                                 return WinJS.Promise.as();
+                            }, dataLogin);
+                        }
+                    }).then(function () {
+                        if (!err) {
+                            // load color settings
+                            //AppData._persistentStates.hideQuestionnaire = false;
+                            //AppData._persistentStates.hideSketch = false;
+                            return AppData.getOptions(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "CR_VERANSTOPTION_ODataView: success!");
+                                // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results && json.d.results.length > 1) {
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    Application.pageframe.savePersistentStates();
+                                }
+                            }, function (errorResponse) {
+                                that.binding.showWaitCircle = false;
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, {
+                                VeranstaltungID: AppData.getRecordId("Veranstaltung"), //0
+                                MandantWide: 1, //0
+                                IsForApp: 0
+                            }).then(function () {
+                                var colors = Colors.updateColors();
+                                return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                            });
+                        } else {
+                            that.binding.showWaitCircle = false;
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (!err) {
+                            if (typeof Home === "object" && Home._actionsList) {
+                                Home._actionsList = null;
                             }
-                        });
+                            return Account.appListSpecView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "appListSpecView: success!");
+                                // kontaktanzahlView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results) {
+                                    NavigationBar.showGroupsMenu(json.d.results);
+                                } else {
+                                    NavigationBar.showGroupsMenu([]);
+                                }
+                                return WinJS.Promise.as();
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                that.binding.showWaitCircle = false;
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                error(errorResponse);
+                                return WinJS.Promise.as();
+                            });
+                        } else {
+                            that.binding.showWaitCircle = false;
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (!err) {
+                            AppData._curGetUserDataId = 0;
+                            AppData.getMessagesData();
+                            return AppData.getUserData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (!err) {
+                            AppBar.busy = false;
+                            that.binding.showWaitCircle = false;
+                            complete(response);
+                        }
+                    });
                 }
                 Log.ret(Log.l.trace);
                 return ret;
