@@ -698,35 +698,83 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .appHeader #menu1 {
-    border-color: WindowFrame;
+    border-color: #e6e6e6;
+    padding: 0 !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+}
+.cnv-ui-dark .appHeader #menu1 {
+    border-color: #525252;
 }
 
 .appHeader #menu1 .win-command {
-    color: var(--MenuText) !important;
     /*
     text-transform: uppercase;
+    font-weight: bold;
     */
     background-color: var(--Window);
-    font-weight: bold;
-    padding: 20px;
+    height: 48px;
+}
+
+.appHeader #menu1 .win-menucommand-liner {
+    opacity: 0.9;
+}
+
+.appHeader #menu1 .win-command .white-icon {
     display: inline-block;
+    position: absolute;
 }
-
-.appHeader #menu1 .win-command:hover {
+.appHeader #menuButton {
+    border: none !important;
+}
+.appHeader #menu1 .win-command:hover,
+.appHeader #menuButton:hover {
     background-color: rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease 0s;
+    transition: all 0.2s ease 0s;
 }
-
-.cnv-ui-dark .appHeader #menu1 .win-command:hover {
+.cnv-ui-dark .appHeader #menu1 .win-command:hover,
+.cnv-ui-dark .appHeader #menuButton:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
+.appHeader #menu1 .win-command:active,
+.appHeader #menuButton:active {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: none;
+}
 
-.appHeader #menu1 .win-command#logoff {
-    color: firebrick !important;
+.cnv-ui-dark .appHeader #menu1 .win-command:active,
+.cnv-ui-dark .appHeader #menuButton:active {
+    background-color: rgba(255, 255, 255, 0.4);
+    transition: none;
 }
 .appHeader #menu1 .win-command#logoff:hover {
+    background-color: firebrick;
+}
+.appHeader #menu1 .win-command#logoff:active {
+    background-color: #C14E4E;
+    transition: none;
+}
+.appHeader #menu1 .win-command#logoff:not(:hover):not(:active) .white-icon {
+    display: none !important;
+}
+
+.appHeader #menu1 .win-command#logoff:hover .red-icon,
+.appHeader #menu1 .win-command#logoff:active .red-icon {
+    visibility: hidden !important;
+}
+.appHeader #menu1 .win-command#logoff:not(:hover):not(:active) .win-label {
+    color: firebrick !important;
+}
+.appHeader #menu1 .win-command#logoff:hover .win-label,
+.appHeader #menu1 .win-command#logoff:active .win-label {
     color: white !important;
-    background-color: firebrick !important;
+}
+.appHeader #menu1 .win-toggleicon {
+    display: block !important;
+    visibility: visible !important;
+    margin-top: 4px;
+}
+.appHeader #menu1 .win-toggleicon::before {
+    content: none !important;
 }
 /*
 event name
@@ -792,24 +840,24 @@ event name
 /*
     user name and on-site / off-site button
 */
-    .status-on-off {
-        margin: 0;
-        padding-top: 2px;
-        padding-right: 4px;
-        padding-bottom: 2px;
-        padding-left: 2px;
-        min-width: 60px;
-        max-width: 236px;
-        height: 48px;
-        visibility: hidden;
-        display: block;
-        position: absolute;
-        right: 0;
-    }
+.status-on-off {
+    margin: 0;
+    padding-top: 2px;
+    padding-right: 4px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    min-width: 60px;
+    max-width: 236px;
+    height: 48px;
+    visibility: hidden;
+    display: block;
+    position: absolute;
+    right: 0;
+}
 
 .user-name-container {
     float: left;
-    padding: 4px 40px 4px 4px;
+    padding: 4px 48px 4px 4px;
     text-align: right;
     white-space: nowrap;
     max-width: 196px;
@@ -832,8 +880,8 @@ event name
 .user-overlay-container {
     display: block;
     position: absolute;
-    top: 2px;
-    left: calc(100% - 40px);
+    top: 4px;
+    left: calc(100% - 48px);
     width: 40px;
     height: 40px;
     border: none;
@@ -843,8 +891,8 @@ event name
 .user-image-container {
     display: block;
     position: absolute;
-    top: 2px;
-    left: calc(100% - 40px);
+    top: 4px;
+    left: calc(100% - 48px);
     background-color: gray;
     width: 40px;
     height: 40px;

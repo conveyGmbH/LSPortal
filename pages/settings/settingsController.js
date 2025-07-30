@@ -247,6 +247,11 @@
                             that.createColorPicker("dashboardColor");
                             AppBar.loadIcons();
                             NavigationBar.groups = Application.navigationBarGroups;
+                            if (AppHeader &&
+                                AppHeader.controller &&
+                                typeof AppHeader.controller.reloadMenu === "function") {
+                                AppHeader.controller.reloadMenu();
+                            }
                         });
                         Application.pageframe.savePersistentStates();
                         var pValue;

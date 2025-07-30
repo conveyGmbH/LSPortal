@@ -233,18 +233,43 @@
             }
             this.loadData = loadData;
 
-            var reloadMenu = function() {
+            var reloadMenu = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var menu1 = pageElement.querySelector("#menu1");
                 if (menu1) {
                     var commands = menu1.querySelectorAll(".win-command");
                     if (commands) for (var i = 0; i < commands.length; i++) {
                         var command = commands[i];
-                        if (command) {
+                        if (command && command.winControl) {
                             var newLabel = getResourceText("label." + command.id);
                             Log.print(Log.l.trace, "label[" + command.id + "]=" + newLabel);
-                            command.textContent = newLabel;
+                            command.winControl.label = newLabel;
+                            var winToggleIcon = command.querySelector(".win-toggleicon");
+                            if (winToggleIcon) {
+                                if (command.id === "logoff") {
+                                    if (!WinJS.Utilities.hasClass(winToggleIcon.nextElementSibling, "win-toggleicon")) {
+                                        var clonedIcon = winToggleIcon.cloneNode();
+                                        if (clonedIcon) {
+                                            WinJS.Utilities.addClass(winToggleIcon, "red-icon");
+                                            clonedIcon.name = command.name;
+                                            WinJS.Utilities.addClass(clonedIcon, "white-icon");
+                                            if (clonedIcon.style) {
+                                                clonedIcon.style.display = "inline";
+                                            }
+                                            winToggleIcon.parentElement.insertBefore(clonedIcon, winToggleIcon.nextElementSibling);
+                                            WinJS.Promise.timeout(0).then(function () {
+                                                Colors.loadSVGImageElements(menu1, "white-icon", 24, "#ffffff", "name");
+                                                Colors.loadSVGImageElements(menu1, "win-toggleicon.red-icon", 24, Colors.offColor, "name");
+                                            });
+                                        }
+                                    }
+                                } else while (winToggleIcon.firstElementChild || winToggleIcon.firstChild) {
+                                    winToggleIcon.removeChild(winToggleIcon.firstElementChild || winToggleIcon.firstChild);
+                                }
+                                winToggleIcon.name = command.name;
+                            }
                         }
+                        Colors.loadSVGImageElements(menu1, "win-toggleicon:not(.red-icon):not(.white-icon)", 24, Colors.isDarkTheme ? "#ffffff" : "#000000", "name");
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -255,15 +280,16 @@
             WinJS.Resources.processAll(that.element).then(function () {
                 return WinJS.Binding.processAll(that.element, that.binding);
             }).then(function () {
+                that.reloadMenu();
                 Log.print(Log.l.trace, "Binding wireup page complete, data will be loaded later!");
             });
             Log.ret(Log.l.trace);
         }, {
-                pageData: {
-                    generalData: AppData.generalData,
-                    appSettings: AppData.appSettings
-                }
-            })
+            pageData: {
+                generalData: AppData.generalData,
+                appSettings: AppData.appSettings
+            }
+        })
     });
 })();
 

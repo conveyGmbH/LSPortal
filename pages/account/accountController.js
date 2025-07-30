@@ -197,7 +197,7 @@
             this.disableHandlers = {
                 clickOk: function () {
                     // work on user change handling!
-                    var ret = AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.isPrivacyPolicyFlag;
+                    var ret = AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag;
                     if (ret) {
                         NavigationBar.disablePage("home");
                         NavigationBar.disablePage("localevents");
