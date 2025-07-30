@@ -84,6 +84,16 @@
                 Log.ret(Log.l.trace);
             }
 
+            var checkForNavigateToLogin = function (errorResponse) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (errorResponse && (errorResponse.status === 401 || errorResponse.status === 404)) {
+                    WinJS.Promise.timeout(0).then(function () {
+                        Application.navigateById("login");
+                    });
+                }
+                Log.ret(Log.l.trace);
+            }
+
             var openDb = function () {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -98,9 +108,6 @@
                     ret = AppData.openDB(function () {
                         AppBar.busy = false;
                         Log.print(Log.l.info, "openDB success!");
-                        //AppData._curGetUserDataId = 0;
-                        //AppData.getUserData();
-                        //AppData.getMessagesData();
                     }, function (err) {
                         AppBar.busy = false;
                         Log.print(Log.l.error, "openDB error!");
@@ -114,8 +121,8 @@
                             }
                         }
                     }).then(function () {
-                        AppData._curGetUserDataId = 0;
                         AppData.getMessagesData();
+                        AppData._curGetUserDataId = 0;
                         return AppData.getUserData();
                     }).then(function () {
                         AppData._persistentStates.hideQuestionnaire = false;
@@ -140,16 +147,12 @@
                             }, function (errorResponse) {
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
-                                //AppData.setErrorMsg(that.binding, errorResponse);
+                                AppData.setErrorMsg(that.binding, errorResponse);
                                 Log.print(Log.l.error, "error in select CR_VERANSTOPTION_ODataView statusText=" + (errorResponse && errorResponse.statusText));
-                                if (errorResponse.status === 401 || errorResponse.status === 404) {
-                                    WinJS.Promise.timeout(0).then(function () {
-                                        Application.navigateById("login");
-                                    });
-                                }
+                                checkForNavigateToLogin(errorResponse);
                             }, {
-                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), //AppData.getRecordId("Veranstaltung")
-                                    MandantWide: 1,
+                                VeranstaltungID: AppData.getRecordId("Veranstaltung"), //AppData.getRecordId("Veranstaltung")
+                                MandantWide: 1,
                                 IsForApp: 0
                             }).then(function () {
                                 var colors = Colors.updateColors();
@@ -232,7 +235,7 @@
                 that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
                 var ret = new WinJS.Promise.as().then(function () {
                     var languageId = AppData.getLanguageId();
-                    Log.print(Log.l.trace, "calling PRC_GetLangText...");
+                    Log.print(Log.l.trace, "calling PRC_GetLangText (with Register-login)...");
                     return AppData.call("PRC_GetLangText", {
                         pLanguageID: languageId,
                         pTextTitle: 'login',
@@ -250,7 +253,7 @@
                             AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                     }, true);
                 }).then(function () {
-                    Log.print(Log.l.trace, "calling insert loginRequest...");
+                    Log.print(Log.l.trace, "calling insert loginRequest (with Register-login)... LoginName=" + that.binding.appSettings.odata.login);
                     return DBInit.loginRequest.insert(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -287,8 +290,8 @@
                             AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
                         // ignore this error here for compatibility!
                     }, {
-                            LoginName: that.binding.appSettings.odata.login
-                        });
+                        LoginName: that.binding.appSettings.odata.login
+                    });
                 }).then(function () {
                     // #7573 Check Mitarbeiter_Anmeldung && prevOnlinePath !== that.binding.appSettings.odata.onlinePath
                     if (!err) {
@@ -298,7 +301,7 @@
                             LanguageID: AppData.getLanguageId(),
                             Aktion: "Portal"
                         };
-                        Log.print(Log.l.trace, "calling insert loginView...");
+                        Log.print(Log.l.trace, "calling insert loginView (with Register-login) Login=" + dataLogin.Login);
                         return DBInit.loginView.insert(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
@@ -314,9 +317,6 @@
                                     NavigationBar.enablePage("info");
                                     Application.pageframe.savePersistentStates();
                                     AppBar.busy = false;
-                                    AppData._curGetUserDataId = 0;
-                                    AppData.getUserData();
-                                    AppData.getMessagesData();
                                     if (typeof complete === "function") {
                                         complete(json);
                                     }
@@ -325,6 +325,7 @@
                                     that.binding.messageText = dataLogin.MessageText;
                                     err = { status: 401, statusText: dataLogin.MessageText };
                                     AppData.setErrorMsg(that.binding, err);
+                                    checkForNavigateToLogin(err);
                                     if (typeof error === "function") {
                                         error(err);
                                     }
@@ -334,6 +335,7 @@
                                 Log.print(Log.l.error, "insert loginView: error no data found!");
                                 err = { status: 404, statusText: "no data found" };
                                 AppData.setErrorMsg(that.binding, err);
+                                checkForNavigateToLogin(err);
                                 if (typeof error === "function") {
                                     error(err);
                                 }
@@ -346,6 +348,7 @@
                             Log.print(Log.l.error, "insert loginView error: " +
                                 AppData.getErrorMsgFromResponse(errorResponse));
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            checkForNavigateToLogin(errorResponse);
                             if (typeof error === "function") {
                                 error(errorResponse);
                             }
