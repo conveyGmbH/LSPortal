@@ -197,14 +197,13 @@
             this.disableHandlers = {
                 clickOk: function () {
                     // work on user change handling!
-                    if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
-                        that.binding.dataLogin.PrivacyPolicyFlag = false;
-                        that.binding.dataLogin.PrivacyPolicydisabled = false;
-                    }
-                    if (AppBar.busy || (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag)) {
+                    var ret = AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.isPrivacyPolicyFlag;
+                    if (ret) {
                         NavigationBar.disablePage("home");
                         NavigationBar.disablePage("localevents");
+                        NavigationBar.disablePage("siteevents");
                         NavigationBar.disablePage("events");
+                        NavigationBar.disablePage("questionList");
                         NavigationBar.disablePage("mailing");
                         NavigationBar.disablePage("employee");
                         NavigationBar.disablePage("contacts");
@@ -213,10 +212,15 @@
                         NavigationBar.disablePage("settings");
                         NavigationBar.disablePage("info");
                         NavigationBar.disablePage("search");
+                        NavigationBar.disablePage("support");
                     } else {
                         NavigationBar.enablePage("home");
                     }
-                    return AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.dataLogin.PrivacyPolicyFlag;
+                    if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
+                        that.binding.dataLogin.PrivacyPolicyFlag = false;
+                        that.binding.dataLogin.PrivacyPolicydisabled = false;
+                    }
+                    return ret;
                 },
                 clickLogoff: function () {
                     return !AppData.getRecordId("Mitarbeiter");
@@ -412,12 +416,12 @@
                     AppData._persistentStates.languageId = newLanguageId;
                     Application.pageframe.savePersistentStates();
                 }
-                that.binding.messageText = null;
-                AppData.setErrorMsg(that.binding);
                 if (!that.binding.doEdit && newLanguageId === prevLanguageId && prevPassword === that.binding.dataLogin.Password) {
                     ret = WinJS.Promise.as();
                     complete({});
                 } else {
+                    that.binding.messageText = null;
+                    AppData.setErrorMsg(that.binding);
                     AppData.cancelPromises();
                     AppBar.busy = true;
                     that.binding.appSettings.odata.onlinePath = "odata_online";//AppData._persistentStatesDefaults.odata.onlinePath;
@@ -582,6 +586,21 @@
                                 // when the response is available
                                 Log.print(Log.l.trace, "appListSpecView: success!");
                                 // kontaktanzahlView returns object already parsed from json file in response
+                                AppBar.busy = false;
+                                NavigationBar.enablePage("home");
+                                NavigationBar.enablePage("localevents");
+                                NavigationBar.enablePage("siteevents");
+                                NavigationBar.enablePage("events");
+                                NavigationBar.enablePage("questionList");
+                                NavigationBar.enablePage("mailing");
+                                NavigationBar.enablePage("employee");
+                                NavigationBar.enablePage("contacts");
+                                NavigationBar.enablePage("reporting");
+                                NavigationBar.enablePage("infodesk");
+                                NavigationBar.enablePage("settings");
+                                NavigationBar.enablePage("info");
+                                NavigationBar.enablePage("search");
+                                NavigationBar.enablePage("support");
                                 if (json && json.d && json.d.results) {
                                     NavigationBar.showGroupsMenu(json.d.results);
                                 } else {
@@ -612,7 +631,6 @@
                         }
                     }).then(function () {
                         if (!err) {
-                            AppBar.busy = false;
                             that.binding.showWaitCircle = false;
                             complete(response);
                         }

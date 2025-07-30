@@ -114,10 +114,13 @@
 
             this.disableHandlers = {
                 clickOk: function () {
-                    if (AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag)) {
+                    var ret = AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.isPrivacyPolicyFlag;
+                    if (ret) {
                         NavigationBar.disablePage("home");
                         NavigationBar.disablePage("localevents");
+                        NavigationBar.disablePage("siteevents");
                         NavigationBar.disablePage("events");
+                        NavigationBar.disablePage("questionList");
                         NavigationBar.disablePage("mailing");
                         NavigationBar.disablePage("employee");
                         NavigationBar.disablePage("contacts");
@@ -126,6 +129,7 @@
                         NavigationBar.disablePage("settings");
                         NavigationBar.disablePage("info");
                         NavigationBar.disablePage("search");
+                        NavigationBar.disablePage("support");
                     } else {
                         NavigationBar.enablePage("home");
                     }
@@ -134,7 +138,6 @@
                         that.binding.dataLogin.privacyPolicydisabled = false;
                         that.binding.isPrivacyPolicyFlag = false;
                     }
-                    var ret = AppBar.busy || (that.binding.dataLogin.Login.length === 0 || that.binding.dataLogin.Password.length === 0 || !that.binding.isPrivacyPolicyFlag);
                     var loginButton = pageElement.querySelector("#loginButton");
                     if (loginButton) {
                         loginButton.disabled = ret;
@@ -182,17 +185,17 @@
             var saveData = function (complete, error) {
                 var err = null, response = null, hasTwoFactor = null;
                 Log.call(Log.l.trace, "Login.Controller.");
-                AppData.cancelPromises();
-                that.binding.messageText = null;
-                AppData.setErrorMsg(that.binding);
-                AppBar.busy = true;
-                that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
-                that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
                 var ret;
                 if (!AppBar.modified) {
                     ret = WinJS.Promise.as();
                     complete({});
                 } else {
+                    that.binding.messageText = null;
+                    AppData.setErrorMsg(that.binding);
+                    that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
+                    that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
+                    AppData.cancelPromises();
+                    AppBar.busy = true;
                     ret = Login.loginRequest.insert(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -269,8 +272,6 @@
                                         AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                         AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
                                         AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
-                                        NavigationBar.enablePage("settings");
-                                        NavigationBar.enablePage("info");
                                         response = json;
                                     } else {
                                         that.binding.showWaitCircle = false;
@@ -329,13 +330,13 @@
                                 error(errorResponse);
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
-                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), // 0
-                                    MandantWide: 1, // 0
-                                    IsForApp: 0
-                                }).then(function () {
-                                    var colors = Colors.updateColors();
-                                    return (colors && colors._loadCssPromise) || WinJS.Promise.as();
-                                });
+                                VeranstaltungID: AppData.getRecordId("Veranstaltung"), // 0
+                                MandantWide: 1, // 0
+                                IsForApp: 0
+                            }).then(function () {
+                                var colors = Colors.updateColors();
+                                return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                            });
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -349,6 +350,21 @@
                                 // when the response is available
                                 Log.print(Log.l.trace, "appListSpecView: success!");
                                 // kontaktanzahlView returns object already parsed from json file in response
+                                AppBar.busy = false;
+                                NavigationBar.enablePage("home");
+                                NavigationBar.enablePage("localevents");
+                                NavigationBar.enablePage("siteevents");
+                                NavigationBar.enablePage("events");
+                                NavigationBar.enablePage("questionList");
+                                NavigationBar.enablePage("mailing");
+                                NavigationBar.enablePage("employee");
+                                NavigationBar.enablePage("contacts");
+                                NavigationBar.enablePage("reporting");
+                                NavigationBar.enablePage("infodesk");
+                                NavigationBar.enablePage("settings");
+                                NavigationBar.enablePage("info");
+                                NavigationBar.enablePage("search");
+                                NavigationBar.enablePage("support");
                                 if (json && json.d && json.d.results) {
                                     NavigationBar.showGroupsMenu(json.d.results);
                                 } else {
@@ -378,7 +394,6 @@
                         }
                     }).then(function () {
                         if (!err) {
-                            AppBar.busy = false;
                             that.binding.showWaitCircle = false;
                             complete(response);
                         }
