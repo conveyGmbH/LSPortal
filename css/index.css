@@ -761,6 +761,9 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 .appHeader #menu1 .win-command#logoff:active .red-icon {
     visibility: hidden !important;
 }
+.appHeader #menu1 .win-command#logoff .win-label {
+    font-weight: bold;
+}
 .appHeader #menu1 .win-command#logoff:not(:hover):not(:active) .win-label {
     color: firebrick !important;
 }
