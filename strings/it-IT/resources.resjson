@@ -1226,7 +1226,7 @@
     "siteeventsTermin.terminStatus" : "Termin Status",
     "siteeventsTermin.hostReference" : "Host Reference",
     "siteeventsTermin.eventSuccessID" : "EventSuccessID",
-    "siteeventsTermin.defRemoteKonfigID" : "Barcode Server",
+    "siteeventsTermin.defRemoteKonfigID" : "Qr-Code Server",
     "siteeventsTermin.mailBCC" : "BCC",
     "siteeventsTermin.mailCC" : "CC",
     "siteeventsTermin.mailFrom" : "Sender",
