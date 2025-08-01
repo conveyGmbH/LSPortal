@@ -114,6 +114,11 @@
                             AppData.setErrorMsg(that.binding, error);
                         });
                     } else {
+                        var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+                        if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                            splitviewPaneWrapper.style.width = "";
+                            splitviewPaneWrapper.style.maxWidth = "";
+                        }
                         if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
                             WinJS.Navigation.back(1).done();
                         } else {
