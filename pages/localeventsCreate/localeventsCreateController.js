@@ -24,6 +24,9 @@
 
             var that = this;
 
+            var startfield = pageElement.querySelector("#startDatum");
+            var endfield = pageElement.querySelector("#endDatum");
+
             var resultConverter = function (item, index) {
                 // Bug: textarea control shows 'null' string on null value in Internet Explorer!
                 if (item.DatenschutzText === null) {
@@ -66,6 +69,8 @@
             
             var insertData = function() {
                 Log.call(Log.l.trace, "LocalEventsCreate.Controller.");
+                var startDate = getDateIsoString(startfield.winControl.current);
+                var endDate = getDateIsoString(endfield.winControl.current);
                 AppData.setErrorMsg(that.binding);
                 var dataEvent = getEventData();
                 Log.call(Log.l.trace, "PDFExport.Controller.");
@@ -73,8 +78,8 @@
                 AppData.call("PRC_CreateUserVeranstaltung",
                     {
                         pVeranstaltungName: dataEvent.VeranstaltungName,
-                        pStartDatumString: dataEvent.StartDatum,
-                        pEndDatumString: dataEvent.EndDatum,
+                        pStartDatumString: startDate,
+                        pEndDatumString: endDate,
                         pAppUser: dataEvent.LeadSuccessMobileApp,
                         pScanUser: dataEvent.MobilerBarcodescanner
 
