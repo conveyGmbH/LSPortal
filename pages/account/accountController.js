@@ -374,6 +374,8 @@
                         that.binding.dataLogin.Password, 
 
                         function setDBPassword(dbPassword) { 
+                            AppData._persistentStates.odata.password = dbPassword;
+                            Application.pageframe.savePersistentStates();
                             that.binding.dataLogin.Password = dbPassword;
                         },
                         Application.language, 
