@@ -1958,5 +1958,8 @@
     "adminAppHelpText.subTitle"			: "Titelbeschreibungstext",
     "adminAppHelpText.mediaURL"			: "Medien-Url",
     "adminAppHelpText.bodyText"			: "Hilfstext",
-    "adminAppHelpText.htmlupload"			: "Html Datei upload"
+    "adminAppHelpText.htmlupload"			: "Html Datei upload",
+
+    "tfa.overview" : "Zwei-Faktor-Authentifizierung"
+
 }		
