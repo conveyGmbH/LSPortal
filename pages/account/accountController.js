@@ -373,10 +373,11 @@
                         that.binding.dataLogin.Login,
                         that.binding.dataLogin.Password, 
 
-                        function setDBPassword(dbPassword) { 
-                            AppData._persistentStates.odata.password = dbPassword;
-                            Application.pageframe.savePersistentStates();
+                        function setDBPassword(dbPassword) {
                             that.binding.dataLogin.Password = dbPassword;
+                            that.saveData().then(function() {
+                                prevPassword = AppData._persistentStates.odata.password;
+                            });
                         },
                         Application.language, 
                         that.binding.appSettings.odata.hostName
@@ -425,7 +426,9 @@
                 }
                 if (!that.binding.doEdit && newLanguageId === prevLanguageId && prevPassword === that.binding.dataLogin.Password) {
                     ret = WinJS.Promise.as();
-                    complete({});
+                    if (typeof complete === "function") {
+                        complete({});
+                    }
                 } else {
                     that.binding.messageText = null;
                     AppData.setErrorMsg(that.binding);
@@ -443,7 +446,9 @@
                                 AppBar.busy = false;
                                 err = { status: 503, statusText: getResourceText("account.inactive") };
                                 AppData.setErrorMsg(that.binding, err);
-                                error(err);
+                                if (typeof error === "function") {
+                                    error(err);
+                                }
                             } else {
                                 hasTwoFactor = json.d.HasTwoFactor;
                                 var location = json.d.ODataLocation;
@@ -458,7 +463,9 @@
                             AppBar.busy = false;
                             err = { status: 404, statusText: getResourceText("login.unknown") };
                             AppData.setErrorMsg(that.binding, err);
-                            error(err);
+                            if (typeof error === "function") {
+                                error(err);
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -523,7 +530,9 @@
                                         that.binding.messageText = dataLogin.MessageText;
                                         err = { status: 401, statusText: dataLogin.MessageText };
                                         AppData.setErrorMsg(that.binding, err);
-                                        error(err);
+                                        if (typeof error === "function") {
+                                            error(err);
+                                        }
                                         return WinJS.Promise.as();
                                     }
                                 } else {
@@ -531,7 +540,9 @@
                                     AppBar.busy = false;
                                     err = { status: 404, statusText: "no data found" };
                                     AppData.setErrorMsg(that.binding, err);
-                                    error(err);
+                                    if (typeof error === "function") {
+                                        error(err);
+                                    }
                                     return WinJS.Promise.as();
                                 }
                             }, function (errorResponse) {
@@ -541,7 +552,9 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                                 return WinJS.Promise.as();
                             }, dataLogin);
                         }
@@ -569,7 +582,9 @@
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
                                 VeranstaltungID: AppData.getRecordId("Veranstaltung"), //0
@@ -621,7 +636,9 @@
                                 AppBar.busy = false;
                                 err = errorResponse;
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                                 return WinJS.Promise.as();
                             });
                         } else {
@@ -639,7 +656,9 @@
                     }).then(function () {
                         if (!err) {
                             that.binding.showWaitCircle = false;
-                            complete(response);
+                            if (typeof complete === "function") {
+                                complete(response);
+                            }
                         }
                     });
                 }
