@@ -1022,21 +1022,23 @@
                     if (errorLicenseExceeded) {
                         return WinJS.Promise.as();
                     }
-                    return GenDataEmployee.employeeView.update(function (response) {
+                    return AppData.call("PRC_SaveUserAccountData", {
+                        pMitarbeiterID: dataEmployee.MitarbeiterVIEWID,
+                        pFirstName: dataEmployee.Vorname,
+                        pLastName: dataEmployee.Nachname,
+                        pLogin: dataEmployee.Login,
+                        pPassword: dataEmployee.Password
+                    }, function (json) {
                         // called asynchronously if ok
                         Log.print(Log.l.info, "employeeData update: success!");
-                    }, function (errorResponse) {
-                        AppBar.busy = false;
-                        err = errorResponse;
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
+                    }, function (error) {
                         AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                             AppData.setErrorMsg(that.binding, errorResponse);
                             if (typeof error === "function") {
                                 error(errorResponse);
                             }
                         });
-                    }, recordId, dataEmployee);
+                    });
                 }).then(function () {
                     if (err || errorLicenseExceeded) {
                         return WinJS.Promise.as();
