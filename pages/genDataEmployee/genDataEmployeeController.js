@@ -1031,7 +1031,7 @@
                     }, function (json) {
                         // called asynchronously if ok
                         Log.print(Log.l.info, "employeeData update: success!");
-                    }, function (error) {
+                    }, function (errorResponse) {
                         AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                             AppData.setErrorMsg(that.binding, errorResponse);
                             if (typeof error === "function") {
