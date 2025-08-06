@@ -41,6 +41,11 @@
             if (this.controller) {
                 ret = this.controller.saveData(function (response) {
                     // called asynchronously if ok
+                    var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+                    if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                        splitviewPaneWrapper.style.width = "";
+                        splitviewPaneWrapper.style.maxWidth = "";
+                    }
                     Application.pageframe.reCheckForLanguage(function() {
                         // called asynchronously if ok
                         AppBar.loadIcons();
