@@ -136,7 +136,6 @@
     "tooltip.eventchange"	: "Aussteller wechseln",
     "tooltip.eventFavourite"	: "Bevorzugte Veranstaltung",
     "tooltip.savepdf"	    : "PDF Dateiname speichern",
-    "tooltip.exportpdf"	    : "PDF exportieren",
     "tooltip.deletemail"	: "E-Mail löschen",
     "tooltip.newmail"	    : "Neue E-Mail",
     "tooltip.save"			    : "Speichern",
@@ -432,6 +431,7 @@
     "settings.yes"          : "Ja",
     "settings.no"           : "Nein",
 	"settings.mandantOption" : "Mandantoption",
+	"settings.mandantInfo"  : "Mandantoption aktiviert -> Design Einstellung für alle Veranstaltungen\n MandantOption deaktiviert -> Design Einstellung für aktuelle Veranstaltung",
 
     "dbinit.title"          : "Datenbank öffnen",
     "dbinit.progress"       : "Fortschritt",

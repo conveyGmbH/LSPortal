@@ -139,7 +139,6 @@
     "tooltip.eventchange"	: "Cambia espositore",
     "tooltip.eventFavourite"	: "Evento preferito",
     "tooltip.savepdf"	    : "Salva il nome del file PDF",
-    "tooltip.exportpdf"	    : "Esporta PDF",
     "tooltip.deletemail"	: "Elimina la posta",
     "tooltip.newmail"	    : "Nuova e-mail",
     "tooltip.save"			    : "Salvare",
@@ -435,6 +434,7 @@
     "settings.yes"          : "Si",
     "settings.no"           : "No",
     "settings.mandantOption" : "Mandantoption",
+    "settings.mandantInfo" : "Opzione cliente attivata -> impostazione di progettazione per tutti gli eventi” Opzione cliente disattivata -> impostazione di progettazione per l'evento corrente",
 
     "dbinit.title"          : "Apri database",
     "dbinit.progress"       : "Progresso",

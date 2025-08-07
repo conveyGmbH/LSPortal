@@ -136,7 +136,6 @@
     "tooltip.eventchange"	: "Change exhibitor",
     "tooltip.eventFavourite"	: "Preferred event",
     "tooltip.savepdf"	    : "Save PDF filename",
-    "tooltip.exportpdf"	    : "Export PDF",
     "tooltip.deletemail"	: "Delete mail",
     "tooltip.newmail"	    : "New Mail",
     "tooltip.save"			    : "Save",
@@ -432,6 +431,7 @@
     "settings.yes"          : "Yes",
     "settings.no"           : "No",
     "settings.mandantOption" : "Mandantoption",
+    "settings.mandantInfo" : "Client option activated -> design setting for all events\n Client option deactivated -> design setting for current event",
 
     "dbinit.title"          : "Open database",
     "dbinit.progress"       : "Progress",

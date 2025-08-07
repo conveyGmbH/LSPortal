@@ -21,6 +21,7 @@
                 showSettingsFlag: false,
                 themeId: 2,
                 leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
+                mandantInfo: getResourceText("settings.mandantInfo") + " " + AppData._userData.VeranstaltungName,
                 serviceUrl: "https://" + getResourceText("general.leadsuccessservicelink"),
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com"

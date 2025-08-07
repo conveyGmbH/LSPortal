@@ -136,7 +136,6 @@
     "tooltip.eventchange"	: "Changer d'exposant",
     "tooltip.eventFavourite" : "Événement préféré",
     "tooltip.savepdf"	    : "Enregistrer le nom du fichier PDF",
-    "tooltip.exportpdf"	    : "Exporter PDF",
     "tooltip.deletemail"	: "Supprimer le mail",
     "tooltip.newmail"	    : "Nouveau mail",
     "tooltip.save"			    : "Sauver",
@@ -432,6 +431,7 @@
     "settings.yes"          : "Oui",
     "settings.no"           : "Non",
     "settings.mandantOption" : "Mandantoption",
+    "settings.mandantInfo" : "Option mandant activée -> Réglage du design pour toutes les manifestations\N Option mandant désactivée -> Réglage du design pour la manifestation actuelle",
 
     "dbinit.title"          : "Ouvrir la base de donnée",
     "dbinit.progress"       : "Suivant",

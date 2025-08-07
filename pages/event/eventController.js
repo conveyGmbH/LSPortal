@@ -1148,7 +1148,7 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
                                 VeranstaltungID: recordId || 0, //AppData.getRecordId("Veranstaltung")
-                                MandantWide: 0,
+                                MandantWide: 1,
                                 IsForApp: 0
                             });
                     } else {
