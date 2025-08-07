@@ -370,8 +370,18 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var results = json.d.results;
                             
+                            results.sort(function (a, b) {
+                                if (a.MailTypeText < b.MailTypeText) {
+                                    return -1;
+                                }
+                                if (a.MailTypeText > b.MailTypeText) {
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            
                             if (mailTypes && mailTypes.winControl) {
-                                mailTypes.winControl.data = new WinJS.Binding.List(json.d.results);
+                                mailTypes.winControl.data = new WinJS.Binding.List(results);
                             }
                             
                         } else {
