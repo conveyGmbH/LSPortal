@@ -688,21 +688,23 @@
                     return WinJS.Promise.wrapError(errorMessage);
                 }
                 AppBar.busy = true;
-                var ret = Employee.employeeView.update(function (response) {
+                var ret = AppData.call("PRC_SaveUserAccountData", {
+                    pMitarbeiterID: dataEmployee.MitarbeiterVIEWID,
+                    pFirstName: dataEmployee.Vorname,
+                    pLastName: dataEmployee.Nachname,
+                    pLogin: dataEmployee.Login,
+                    pPassword: dataEmployee.Password
+                }, function (json) {
                     // called asynchronously if ok
                     Log.print(Log.l.info, "employeeData update: success!");
                 }, function (errorResponse) {
-                    AppBar.busy = false;
-                    err = errorResponse;
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
                     AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                         AppData.setErrorMsg(that.binding, errorResponse);
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
                     });
-                }, recordId, dataEmployee).then(function () {
+                }).then(function () {
                     if (err) {
                         return WinJS.Promise.as();
                     } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
