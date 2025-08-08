@@ -431,7 +431,7 @@
     "settings.yes"          : "Oui",
     "settings.no"           : "Non",
     "settings.mandantOption" : "Mandantoption",
-    "settings.mandantInfo" : "Option mandant activée -> Réglage du design pour toutes les manifestations\N Option mandant désactivée -> Réglage du design pour la manifestation actuelle",
+    "settings.mandantInfo" : "Option mandant activée -> Réglage du design pour toutes les manifestations\n Option mandant désactivée -> Réglage du design pour la manifestation actuelle",
 
     "dbinit.title"          : "Ouvrir la base de donnée",
     "dbinit.progress"       : "Suivant",
