@@ -148,7 +148,7 @@
                 for (i = 0; i < that.questions.length; i++) {
                     var question = that.questions.getAt(i);
                     if (question && typeof question === "object" &&
-                        question.skillEntryLineVIEWID === recordId) {
+                        question.SkillEntryLineVIEWID === recordId) {
                         item = question;
                         break;
                     }
@@ -180,7 +180,7 @@
                         var newRecord = that.getFieldEntries(curScope.index);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) { //|| AppBar.modified
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
-                            ret = GenDataSkillEntry._skillEntryLine_E.update(function (response) {
+                            ret = GenDataSkillEntry.skilltypeskillsView.update(function (response) {
                                 Log.print(Log.l.info, "SkillEntryLine update: success!");
                                 AppData.getUserData();
                                 // called asynchronously if ok
