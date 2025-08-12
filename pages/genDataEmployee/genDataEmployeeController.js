@@ -672,6 +672,13 @@
                         AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
+                },
+                clickReorder: function (event) {
+                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    var eventId = AppData.getRecordId("Veranstaltung2");
+                    AppData.setRecordId("VeranstaltungAnlage", eventId);
+                    Application.navigateById("siteEventsBenNach", event);
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -747,6 +754,13 @@
                 clickUnlock: function () {
                     return AppBar.modified || !getLocked() ||
                         AppBar.busy;
+                }, 
+                clickReorder: function () {
+                    if (AppHeader.controller.binding.userData.SiteAdmin) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             };
 
