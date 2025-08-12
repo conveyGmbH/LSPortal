@@ -204,3 +204,7 @@
 .view-size-small .list-question-content {
     padding-left: 9px;
 }
+.genDataSkillEntry .win-listview {
+    overflow: hidden;
+    height: auto !important;
+}
