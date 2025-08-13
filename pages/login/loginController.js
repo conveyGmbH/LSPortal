@@ -404,30 +404,6 @@
             };
             this.saveData = saveData;
 
-            if (AppData.prevLogin && AppData.prevPassword) {
-                that.binding.dataLogin.Login = AppData.prevLogin;
-                that.binding.dataLogin.Password = AppData.prevPassword;
-                that.binding.hideLoginData = true;
-                that.binding.dataLogin.privacyPolicyFlag = true;
-                that.binding.dataLogin.privacyPolicydisabled = true;
-                that.binding.isPrivacyPolicyFlag = true;
-                AppData.prevLogin = null;
-                AppData.prevPassword = null;
-                WinJS.Promise.timeout(0).then(function () {
-                    that.saveData(function (response) {
-                        // called asynchronously if ok
-                        var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
-                        if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
-                            splitviewPaneWrapper.style.width = "";
-                            splitviewPaneWrapper.style.maxWidth = "";
-                        }
-                        Application.navigateById(Application.startPageId);
-                    }, function (errorResponse) {
-                        // already handled
-                    });
-                });
-            }
-
             that.processAll().then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Binding wireup page complete");
@@ -446,6 +422,19 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Appheader refresh complete");
                 Application.pageframe.hideSplashScreen();
+                if (AppData.prevLogin && AppData.prevPassword) {
+                    // Wechsel des Mandanten: sofort Login ausführen
+                    that.binding.dataLogin.Login = AppData.prevLogin;
+                    that.binding.dataLogin.Password = AppData.prevPassword;
+                    that.binding.hideLoginData = true;
+                    that.binding.dataLogin.privacyPolicyFlag = true;
+                    that.binding.dataLogin.privacyPolicydisabled = true;
+                    that.binding.isPrivacyPolicyFlag = true;
+                    AppData.prevLogin = null;
+                    AppData.prevPassword = null;
+                    AppBar.modified = true;
+                    that.eventHandlers.clickOk();
+                }
             });
             Log.ret(Log.l.trace);
         })
