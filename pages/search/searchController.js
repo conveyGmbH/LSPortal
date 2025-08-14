@@ -339,9 +339,9 @@
                                 that.events = new WinJS.Binding.List(results);
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
-                                    if (that.binding.eventId) {
+                                    if (that.getEventId()) {
                                         for (var i = 0; i < results.length; i++) {
-                                            if (that.binding.eventId === results[i].VeranstaltungVIEWID) {
+                                            if (that.getEventId() === results[i].VeranstaltungVIEWID) {
                                                 eventsDropdown.selectedIndex = i;
                                             }
                                         }
@@ -404,8 +404,8 @@
                                 if (erfasserID && erfasserID.winControl) {
                                     erfasserID.winControl.data = that.employees;
                                 }
-                                //erfasserID.selectedIndex = Search.employeeView.defaultValue.index;
-                                //that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
+                                erfasserID.selectedIndex = Search.employeeView.defaultValue.index;
+                                that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
 
                             } else {
                                 that.nextUrl = null;
@@ -452,8 +452,9 @@
                         } else {
                             radios[6].checked = true;
                         }
-                        that.binding.restriction.MitarbeiterID = savedRestriction.MitarbeiterID;
-
+                        if (savedRestriction.MitarbeiterID && typeof savedRestriction.MitarbeiterID === "string") {
+                            that.binding.restriction.MitarbeiterID = parseInt(savedRestriction.MitarbeiterID);
+                        }
                     }
                     var defaultRestriction = Search.contactView.defaultValue;
                     var prop;
