@@ -14,7 +14,7 @@
     "general.october"       : "Oct",
     "general.november"      : "Nov",
     "general.december"      : "Dec",
-	"general.unauthorizedUser" : "Invalid username/password!\nlogon denied!\nPassword may have been changed, please login again",
+	"general.unauthorizedUser" : "Invalid username/password!\nlogon denied!\nPassword may have expired, please login again",
 	"general.leadsuccessbasicaccess1" : "This application is not available with LeadSuccess Basic. To gain access to this and other functions, you must book an upgrade in the  ",
     "general.leadsuccessbasicaccess2" : " You can find an overview of the various packages and their extensions here:",
     "general.leadsuccessservicelink" : "serviceshop.messefrankfurt.com/portallogin?lang=en",
