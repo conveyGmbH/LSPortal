@@ -149,7 +149,7 @@
                 item.mitarbeiterFullName = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") +
                     (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
                 if (item.SHOW_Barcode || item.IMPORT_CARDSCANID && !item.SHOW_Visitenkarte) {
-                    item.svgSource = item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode";
+                    item.svgSource = "barcode-qr"; //item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode"
                 } else if (!item.SHOW_Barcode && item.IMPORT_CARDSCANID && item.SHOW_Visitenkarte) {
                     item.svgSource = "";
                 } else {
