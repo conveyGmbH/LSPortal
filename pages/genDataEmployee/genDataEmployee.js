@@ -34,8 +34,8 @@
                 { id: "clickDelete2fa", label: getResourceText("command.delete2fa"), tooltip: getResourceText("tooltip.delete2fa"), section: "primary", svg: "lock_open" },
                 { id: "clickUnlock", label: getResourceText("command.unlockUser"), tooltip: getResourceText("tooltip.unlockUser"), section: "primary", svg: "arrow_circle2" },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" },
-                { id: "clickReorder", label: getResourceText("command.newNachbestellungen"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "bestellungen2" },
-                { id: "clickAddLicences", label: getResourceText("command.addLicences"), tooltip: getResourceText("tooltip.addLicences"), section: "primary", svg: "bestellungen" }
+                { id: "clickReorder", label: getResourceText("command.newNachbestellungen"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "bestellungen" },
+                { id: "clickAddLicences", label: getResourceText("command.addLicences"), tooltip: getResourceText("tooltip.addLicences"), section: "primary", svg: "bestellungen2" }
             ];
 
             this.controller = new GenDataEmployee.Controller(element, commandList);
