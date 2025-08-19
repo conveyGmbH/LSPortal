@@ -27,7 +27,7 @@
                 Name: "",
                 Ansprechpartner: "",
                 EMail: "",
-                NumLicenses: "",
+                NumLicenses: 0,
                 CustomerID: "",
                 Strasse: "",
                 PLZ: "",

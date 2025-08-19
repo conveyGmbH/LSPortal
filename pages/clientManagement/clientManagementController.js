@@ -53,9 +53,8 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var dataClientManagement = that.binding.dataClientManagement;
-                if (dataClientManagement.NumLicenses === null) {
-                    dataClientManagement.NumLicenses = -2;
-                    parseInt(dataClientManagement.NumLicenses);
+                if (dataClientManagement.NumLicenses === null || dataClientManagement.NumLicenses === "") {
+                    dataClientManagement.NumLicenses = 0;
                 }
                 AppData.setErrorMsg(that.binding);
                 if (!dataClientManagement.FairMandantVIEWID || dataClientManagement.FairMandantVIEWID < 0) {
