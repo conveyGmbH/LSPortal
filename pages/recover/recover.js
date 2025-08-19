@@ -20,6 +20,11 @@
         ready: function(element, options) {
             Log.call(Log.l.trace, pageName + ".");
             // TODO: Initialize the page here.
+            var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
+            if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
+                splitviewPaneWrapper.style.width = "0";
+                splitviewPaneWrapper.style.maxWidth = "0";
+            }
             NavigationBar.disablePage("start");
             NavigationBar.disablePage("info");
             NavigationBar.disablePage("search");
