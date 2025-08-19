@@ -32,11 +32,15 @@
                 { id: "clickChangeLogin", label: getResourceText("command.changeLogin"), tooltip: getResourceText("tooltip.changeLogin"), section: "primary", svg: "benutzer" },
                 //{ id: "clickExport", label: getResourceText("command.export"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
                 { id: "clickDelete2fa", label: getResourceText("command.delete2fa"), tooltip: getResourceText("tooltip.delete2fa"), section: "primary", svg: "lock_open" },
-                { id: "clickUnlock", label: getResourceText("command.unlockUser"), tooltip: getResourceText("tooltip.unlockUser"), section: "primary", svg: "arrow_circle2" },
-                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" },
-                { id: "clickReorder", label: getResourceText("command.newNachbestellungen"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "bestellungen" },
-                { id: "clickAddLicences", label: getResourceText("command.addLicences"), tooltip: getResourceText("tooltip.addLicences"), section: "primary", svg: "bestellungen2" }
+                { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteEmployee"), section: "primary", svg: "garbage_can" }
             ];
+            if (AppHeader.controller.binding.userData.SiteAdmin) {
+                commandList.push(
+                { id: "clickReorder", label: getResourceText("command.newNachbestellungen"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "bestellungen" },
+                    { id: "clickAddLicences", label: getResourceText("command.addLicences"), tooltip: getResourceText("tooltip.addLicences"), section: "primary", svg: "bestellungen2" },
+                    { id: "clickUnlock", label: getResourceText("command.unlockUser"), tooltip: getResourceText("tooltip.unlockUser"), section: "primary", svg: "arrow_circle2" }
+                );
+            }
 
             this.controller = new GenDataEmployee.Controller(element, commandList);
             if (this.controller.eventHandlers) {
