@@ -432,10 +432,12 @@
                         if (prevLocationId === that.binding.dataLogin.LocationID || !that.binding.dataLogin.LocationID || !that.binding.count) {
                             return WinJS.Promise.as();
                         } else {
+                            var newLocationId = parseInt(that.binding.dataLogin.LocationID);
                             return AppData.call("PRC_ChangeLoginServer", {
-                                pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
+                                pNewLocationID: newLocationId
                             }, function (json) {
-                                Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : ""));
+                                Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : "") + " newLocationId=" + newLocationId);
+                                prevLocationId = newLocationId;
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
                                 AppBar.busy = false;
