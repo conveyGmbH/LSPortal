@@ -65,31 +65,40 @@
                         });
                     } else {
                         Log.print(Log.l.info, "calling PRC_SearchKontaktListe...restriction=" + restriction);
-                        ret = AppData.call("PRC_SearchKontaktListe", {
-                            pAttributeIdx: 0,
-                            pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
-                            pSuchText: restriction
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
-                            // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
-                            ContactList._prevRestriction = restriction;
-                            ContactList._prevJson = json;
-                            ContactList._prevEventId = ContactList._eventId;
-                            // invalidate prev. doc result!
-                            ContactList._prevDocJson = null;
-                            if (json && json.d && json.d.results && json.d.results.length > 0 &&
-                                ContactList._orderAttribute) {
-                                Log.print(Log.l.info, "call sort orderAttribute=" + ContactList._orderAttribute);
-                                json.d.results.sort(ContactList.contactView.compare);
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (!ContactList._contactView.attribSpecs) {
+                                Log.print(Log.l.info, "dummy select on View to get attribSpecs");
+                                return ContactList._contactView.selectById(function () { }, function () { }, 0);
+                            } else {
+                                return WinJS.Promise.as();
                             }
-                            if (typeof complete === "function") {
-                                complete(json);
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_SearchKontaktListe: error");
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
+                        }).then(function () {
+                            return AppData.call("PRC_SearchKontaktListe", {
+                                pAttributeIdx: 0,
+                                pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
+                                pSuchText: restriction
+                            }, function (json) {
+                                Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
+                                // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
+                                ContactList._prevRestriction = restriction;
+                                ContactList._prevJson = json;
+                                ContactList._prevEventId = ContactList._eventId;
+                                // invalidate prev. doc result!
+                                ContactList._prevDocJson = null;
+                                if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                    ContactList._orderAttribute) {
+                                    Log.print(Log.l.info, "call sort orderAttribute=" + ContactList._orderAttribute);
+                                    json.d.results.sort(ContactList.contactView.compare);
+                                }
+                                if (typeof complete === "function") {
+                                    complete(json);
+                                }
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "call PRC_SearchKontaktListe: error");
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            });
                         });
                     }
                 } else {

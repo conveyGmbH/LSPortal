@@ -36,7 +36,7 @@
             ];
             if (AppHeader.controller.binding.userData.SiteAdmin) {
                 commandList.push(
-                { id: "clickReorder", label: getResourceText("command.newNachbestellungen"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "bestellungen" },
+                    { id: "clickReorder", label: getResourceText("command.newNachbestellungen"), tooltip: getResourceText("tooltip.newNachbestellungen"), section: "primary", svg: "bestellungen" },
                     { id: "clickAddLicences", label: getResourceText("command.addLicences"), tooltip: getResourceText("tooltip.addLicences"), section: "primary", svg: "bestellungen2" },
                     { id: "clickUnlock", label: getResourceText("command.unlockUser"), tooltip: getResourceText("tooltip.unlockUser"), section: "primary", svg: "arrow_circle2" }
                 );

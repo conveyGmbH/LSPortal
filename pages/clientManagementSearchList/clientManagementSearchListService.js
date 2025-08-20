@@ -95,28 +95,37 @@
                         });
                     } else {
                         Log.print(Log.l.info, "calling PRC_GetMandantList...");
-                        ret = AppData.call("PRC_GetMandantList", {
-                            pSearchString: restriction,
-                            pSearchOptions: ClientManagementSearchList._FilterOption
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_GetMandantList: success!");
-                            // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
-                            ClientManagementSearchList._prevRestriction = restriction;
-                            ClientManagementSearchList._prevJson = json;
-                            if (json && json.d && json.d.results && json.d.results.length > 0 &&
-                                ClientManagementSearchList._orderAttribute) {
-                                Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
-                                json.d.results.sort(ClientManagementSearchList.fairMandantView.compare);
-                                ClientManagementSearchList._prevFilterOption = ClientManagementSearchList._FilterOption;
+                        ret = new WinJS.Promise.as().then(function() {
+                            if (!ClientManagementSearchList._fairMandantView.attribSpecs) {
+                                Log.print(Log.l.info, "dummy select on View to get attribSpecs");
+                                return ClientManagementSearchList._fairMandantView.selectById(function() {}, function() {}, 0);
+                            } else {
+                                return WinJS.Promise.as();
                             }
-                            if (typeof complete === "function") {
-                                complete(json);
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_GetMandantList: error");
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
+                        }).then(function() {
+                            return AppData.call("PRC_GetMandantList", {
+                                pSearchString: restriction,
+                                pSearchOptions: ClientManagementSearchList._FilterOption
+                            }, function (json) {
+                                Log.print(Log.l.info, "call PRC_GetMandantList: success!");
+                                // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
+                                ClientManagementSearchList._prevRestriction = restriction;
+                                ClientManagementSearchList._prevJson = json;
+                                if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                    ClientManagementSearchList._orderAttribute) {
+                                    Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
+                                    json.d.results.sort(ClientManagementSearchList.fairMandantView.compare);
+                                    ClientManagementSearchList._prevFilterOption = ClientManagementSearchList._FilterOption;
+                                }
+                                if (typeof complete === "function") {
+                                    complete(json);
+                                }
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "call PRC_GetMandantList: error");
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            });
                         });
                     }
                 } else {

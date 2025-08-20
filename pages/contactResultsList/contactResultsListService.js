@@ -55,28 +55,37 @@
                         });
                     } else {
                         Log.print(Log.l.info, "calling PRC_SearchKontaktListe...");
-                        ret = AppData.call("PRC_SearchKontaktListe", {
-                            pAttributeIdx: 0,
-                            pVeranstaltungId: ContactResultsList._eventId, // Für Alle suchen 0 eintragen!
-                            pSuchText: restriction
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
-                            // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
-                            ContactResultsList._prevRestriction = restriction;
-                            ContactResultsList._prevJson = json;
-                            if (json && json.d && json.d.results && json.d.results.length > 0 &&
-                                ContactResultsList._orderAttribute) {
-                                Log.print(Log.l.info, "call sort orderAttribute=" + ContactResultsList._orderAttribute);
-                                json.d.results.sort(ContactResultsList.contactResultsView.compare);
+                        ret = new WinJS.Promise.as().then(function () {
+                            if (!ContactResultsList._contactResultsView.attribSpecs) {
+                                Log.print(Log.l.info, "dummy select on View to get attribSpecs");
+                                return ContactResultsList._contactResultsView.selectById(function () { }, function () { }, 0);
+                            } else {
+                                return WinJS.Promise.as();
                             }
-                            if (typeof complete === "function") {
-                                complete(json);
-                            }
-                        }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_SearchKontaktListe: error");
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
+                        }).then(function () {
+                            return AppData.call("PRC_SearchKontaktListe", {
+                                pAttributeIdx: 0,
+                                pVeranstaltungId: ContactResultsList._eventId, // Für Alle suchen 0 eintragen!
+                                pSuchText: restriction
+                            }, function (json) {
+                                Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
+                                // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
+                                ContactResultsList._prevRestriction = restriction;
+                                ContactResultsList._prevJson = json;
+                                if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                    ContactResultsList._orderAttribute) {
+                                    Log.print(Log.l.info, "call sort orderAttribute=" + ContactResultsList._orderAttribute);
+                                    json.d.results.sort(ContactResultsList.contactResultsView.compare);
+                                }
+                                if (typeof complete === "function") {
+                                    complete(json);
+                                }
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "call PRC_SearchKontaktListe: error");
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            });
                         });
                     }
                 } else {

@@ -348,6 +348,7 @@
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");
                 AppBar.notifyModified = true;
+                Application.showDetail();
             });
             Log.ret(Log.l.trace);
         })

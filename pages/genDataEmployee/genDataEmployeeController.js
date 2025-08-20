@@ -375,8 +375,10 @@
                     });
                     Log.ret(Log.l.trace);
                 },
-                clickAddLicences: function(event) {
-                    Log.call(Log.l.trace, "GenDataEmployee.Controller.");
+                clickAddLicences: function (event) {
+                    var myFairMandantId = AppData._userData && AppData._userData.FairMandantID;
+                    Log.call(Log.l.trace, "GenDataEmployee.Controller.", "reset myFairMandantId=" + myFairMandantId);
+                    AppData.setRecordId("FairMandant", myFairMandantId);
                     Application.navigateById("clientManagement");
                     Log.ret(Log.l.trace);
                 },
@@ -692,8 +694,8 @@
                 },
                 clickAddLicences: function() {
                     // FairmandantID 
-                    var fairMandantID = AppData.getRecordId("FairMandant");
-                    if (fairMandantID && (AppHeader.controller.binding.userData.SiteAdmin ||
+                    var myFairMandantId = AppData._userData && AppData._userData.FairMandantID;
+                    if (myFairMandantId && (AppHeader.controller.binding.userData.SiteAdmin ||
                         AppHeader.controller.binding.userData.HasLocalEvents)) {
                         return false;
                     } else {

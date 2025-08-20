@@ -213,8 +213,12 @@
                         if (json && json.d) {
                             var prevUserData = AppData._userData;
                             AppData._userData = json.d;
+                            Log.print(Log.l.info, "set my VeranstaltungID=" + AppData._userData.VeranstaltungID);
                             AppData.setRecordId("Veranstaltung", AppData._userData.VeranstaltungID);
-                            AppData.setRecordId("FairMandant", AppData._userData.FairMandantID);
+                            Log.print(Log.l.info, "set my FairMandantID=" + AppData._userData.FairMandantID);
+                            if (!AppData.getRecordId("FairMandant")) {
+                                AppData.setRecordId("FairMandant", AppData._userData.FairMandantID);
+                            }
                             if (!AppData.generalUserView.isLocal) {
                                 AppData._userData.AnzLokaleKontakte = AppData._userData.AnzVersendeteKontakte;
                             }

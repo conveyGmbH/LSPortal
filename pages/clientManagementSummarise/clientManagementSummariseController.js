@@ -74,11 +74,11 @@
                     });
                 } else if (listView && listView.winControl) {
                     var scope = that.scopeFromRecordId(recordId);
-                    if (!scope && recordId) {
-                        that.loadNext();
-                        that.scrollToRecordId(recordId);
-                    }
-                    if (scope && scope.index >= 0) {
+                    if (!scope && recordId && that.nextUrl) {
+                        that.loadNext().then(function () {
+                            that.scrollToRecordId(recordId);
+                        });
+                    } else if (scope && scope.index >= 0) {
                         listView && listView.winControl.ensureVisible(scope.index);
                         WinJS.Promise.timeout(50).then(function() {
                             var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
@@ -93,7 +93,7 @@
                                     listView.winControl.indexOfFirstVisible = scope.index;
                                 }
                             }
-                            that.selectRecordId(AppData.getRecordId("FairMandant"));
+                            that.selectRecordId(recordId);
                         });
                     }
                 }
