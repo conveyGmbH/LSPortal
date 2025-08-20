@@ -689,6 +689,32 @@
                         }
                     }).then(function () {
                         if (!err) {
+                            return DBInit.GlobalUserServersVIEW.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
+                                if (json && json.d && json.d.results && json.d.results.length) {
+                                    that.binding.count = json.d.results.length;
+                                    if (that.binding.count > 1) {
+                                        that.binding.showServerList = true;
+                                    }
+                                    //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
+                                    var results = json.d.results;
+                                    setServerList(results);
+                                } else {
+                                    Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, null);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (!err) {
                             that.binding.showWaitCircle = false;
                             if (typeof complete === "function") {
                                 complete(response);
