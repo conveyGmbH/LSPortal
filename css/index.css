@@ -820,7 +820,7 @@ event name
 
 .server-name {
     font-size: 12px;
-    margin-top: 0px; 
+    margin-top: -2px; 
     width: 100%;
 }
 /*.appHeader .win-button {
