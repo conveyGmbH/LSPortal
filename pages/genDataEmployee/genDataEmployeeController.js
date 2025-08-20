@@ -973,7 +973,7 @@
                         pNewAPUserRoleID: dataEmployee.INITAPUserRoleID,
                         pNewLoginName: dataEmployee.Login
                     }, function (json) {
-                        Log.print(Log.l.info, "call success! ");
+                        Log.print(Log.l.info, "call PRC_CheckMAChange success! ");
                         if (json && json.d && json.d.results.length > 0) {
                             var result = json.d.results[0];
                             if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
@@ -1027,15 +1027,18 @@
                                     });
                             }
                         }
-                    }, function (error) {
-                        Log.print(Log.l.error, "call error");
-                        AppData.setErrorMsg(that.binding, error);
-                        if (typeof error === "function") {
-                            error(error);
-                        }
+                    }, function (errorResponse) {
+                        err = errorResponse;
+                        Log.print(Log.l.error, "call PRC_CheckMAChange error");
+                        AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
                     });
                 }).then(function () {
-                    if (errorLicenseExceeded) {
+                    if (err || errorLicenseExceeded) {
                         return WinJS.Promise.as();
                     }
                     return AppData.call("PRC_SaveUserAccountData", {
@@ -1047,8 +1050,10 @@
                         pAPUserRoleID: dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string" ? parseInt(dataEmployee.INITAPUserRoleID) : dataEmployee.INITAPUserRoleID
                     }, function (json) {
                         // called asynchronously if ok
-                        Log.print(Log.l.info, "employeeData update: success!");
+                        Log.print(Log.l.info, "employeeData PRC_SaveUserAccountData: success!");
                     }, function (errorResponse) {
+                        err = errorResponse;
+                        Log.print(Log.l.error, "call PRC_SaveUserAccountData error");
                         AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                             AppData.setErrorMsg(that.binding, errorResponse);
                             if (typeof error === "function") {

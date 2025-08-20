@@ -272,24 +272,51 @@
                 Log.call(Log.l.trace, "GenDataUserInfo.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret;
+                var err = null;
                 var dataBenutzer = that.binding.dataBenutzer;
                 if (dataBenutzer && AppBar.modified && recordId) {
+                    AppBar.busy = true;
                     ret = GenDataUserInfo.benutzerView.update(function (response) {
-                            // called asynchronously if ok
-                            // force reload of userData for Present flag
-                            AppBar.modified = false;
-                            AppData.getUserData();
-                            complete(response);
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
+                        // called asynchronously if ok
+                        // force reload of userData for Present flag
+                        AppBar.modified = false;
+                        AppData.getUserData();
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        err = errorResponse;
+                        Log.print(Log.l.error, "call PRC_SaveUserAccountData error");
+                        AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataBenutzer);
-                    
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                    }, recordId, dataBenutzer).then(function () {
+                        AppBar.busy = false;
+                        if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
+                            // ignore that
+                        } else {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller &&
+                                typeof master.controller.loadData === "function") {
+                                master.controller.loadData(recordId).then(function () {
+                                    if (typeof complete === "function") {
+                                        complete(dataBenutzer);
+                                    }
+                                });
+                            } else {
+                                if (typeof complete === "function") {
+                                    complete(dataBenutzer);
+                                }
+                            }
+                        }
+                    });
                 } else {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete(dataBenutzer);
+                        if (typeof complete === "function") {
+                            complete(dataBenutzer);
+                        }
                     });
                 }
                 Log.ret(Log.l.trace);

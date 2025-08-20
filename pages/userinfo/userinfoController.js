@@ -8,8 +8,6 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/userinfo/userinfoService.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />
 
 (function () {
     "use strict";
@@ -184,45 +182,49 @@
             this.loadData = loadData;
 
             var saveData = function(complete, error) {
-                Log.call(Log.l.trace, "UserInfo.Controller.");
+                var recordId = getRecordId();
+                Log.call(Log.l.trace, "UserInfo.Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
+                var err = null;
                 var ret;
                 var dataBenutzer = that.binding.dataBenutzer;
-                if (dataBenutzer && AppBar.modified) {
-                    var recordId = getRecordId();
-                    if (recordId) {
-                        ret = UserInfo.benutzerView.update(function(response) {
-                            // called asynchronously if ok
-                            // force reload of userData for Present flag
-                            AppBar.modified = false;
-                            AppData.getUserData();
-                            complete(response);
-                        }, function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
+                if (dataBenutzer && AppBar.modified && recordId) {
+                    ret = UserInfo.benutzerView.update(function (response) {
+                        // called asynchronously if ok
+                        // force reload of userData for Present flag
+                        AppBar.modified = false;
+                        AppData.getUserData();
+                        complete(response);
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        err = errorResponse;
+                        AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, recordId, dataBenutzer);
-                    } else {
-                        dataBenutzer.BenutzerVIEWID = AppData.getRecordId("Mitarbeiter");
-                        ret = UserInfo.benutzerView.insert(function(json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            // dataBenutzer returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.setDataBenutzer(json.d);
-                                setRecordId(that.binding.dataBenutzer.BenutzerVIEWID);
-                                // force reload of userData for Present flag
-                                AppData.getUserData();
+                            if (typeof error === "function") {
+                                error(errorResponse);
                             }
-                            complete(json);
-                        }, function(errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            error(errorResponse);
-                        }, dataBenutzer);
-                    }
+                        });
+                    }, recordId, dataBenutzer).then(function () {
+                        AppBar.busy = false;
+                        if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
+                            // ignore that
+                        } else {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller &&
+                                typeof master.controller.loadData === "function") {
+                                master.controller.loadData(recordId).then(function () {
+                                    if (typeof complete === "function") {
+                                        complete(dataBenutzer);
+                                    }
+                                });
+                            } else {
+                                if (typeof complete === "function") {
+                                    complete(dataBenutzer);
+                                }
+                            }
+                        }
+                    });
                 } else {
                     ret = new WinJS.Promise.as().then(function() {
                         complete(dataBenutzer);

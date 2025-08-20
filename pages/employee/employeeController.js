@@ -699,6 +699,7 @@
                     // called asynchronously if ok
                     Log.print(Log.l.info, "employeeData update: success!");
                 }, function (errorResponse) {
+                    err = errorResponse;
                     AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                         AppData.setErrorMsg(that.binding, errorResponse);
                         if (typeof error === "function") {
