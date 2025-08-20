@@ -435,7 +435,6 @@
                                 pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
                             }, function (json) {
                                 Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : ""));
-                                Application.navigateById(Application.startPageId, event);
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
                                 AppBar.busy = false;
