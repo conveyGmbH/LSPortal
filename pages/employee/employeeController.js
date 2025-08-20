@@ -693,7 +693,8 @@
                     pFirstName: dataEmployee.Vorname,
                     pLastName: dataEmployee.Nachname,
                     pLogin: dataEmployee.Login,
-                    pPassword: dataEmployee.Password
+                    pPassword: dataEmployee.Password,
+                    pAPUserRoleID: dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string" ? parseInt(dataEmployee.INITAPUserRoleID) : dataEmployee.INITAPUserRoleID
                 }, function (json) {
                     // called asynchronously if ok
                     Log.print(Log.l.info, "employeeData update: success!");
