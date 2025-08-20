@@ -689,7 +689,7 @@
                         }
                     }).then(function () {
                         if (!err) {
-                            return DBInit.GlobalUserServersVIEW.select(function (json) {
+                            return Account.GlobalUserServersVIEW.select(function (json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
