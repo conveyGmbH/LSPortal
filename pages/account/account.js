@@ -24,8 +24,7 @@
             var commandList = [
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
-                { id: 'clickLogoff', label: getResourceText('account.logoff'), tooltip: getResourceText('account.logoff'), section: 'secondary' },
-                { id: 'clickChangeServer', label: getResourceText('account.changeServer'), tooltip: getResourceText('account.changeServer'), section: 'secondary' }
+                { id: 'clickLogoff', label: getResourceText('account.logoff'), tooltip: getResourceText('account.logoff'), section: 'secondary' }
             ];
             this.controller = new Account.Controller(element, commandList);
             if (this.controller.eventHandlers) {

@@ -255,7 +255,7 @@
                             return tfaVerify().then(function (tfaResult) {
                                 that.binding.showWaitCircle = true;
                                 // now wait 1s for the DB-USer to be changed....
-                                return WinJS.Promise.timeout(5000).then(function () {
+                                return WinJS.Promise.timeout(2000).then(function () {
                                     return WinJS.Promise.as(tfaResult);
                                 });
                             }) || WinJS.Promise.as();

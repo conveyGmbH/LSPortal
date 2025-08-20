@@ -60,6 +60,10 @@
             // TFA UI
             var tfaContainer = pageElement.querySelector("#tfa-container");
 
+            var prevLocationId = null;
+            if (AppHeader && AppHeader.controller && AppHeader.controller.binding) {
+                prevLocationId = AppHeader.controller.binding.LocationID;
+            }
             var prevLogin = AppData._persistentStates.odata.login;
             var prevPassword = AppData._persistentStates.odata.password;
             var prevHostName = AppData._persistentStates.odata.hostName;
@@ -103,17 +107,8 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    if (that.binding.doEdit && that.binding.count > 1) {
-                        AppData.call("PRC_ChangeLoginServer", {
-                            pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : ""));
-                            Application.navigateById(Application.startPageId, event);
-                        }, function (error) {
-                            Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
-                            AppData.setErrorMsg(that.binding, error);
-                        });
-                    } else {
+                    that.saveData(function (response) {
+                        // called asynchronously if ok
                         var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");
                         if (splitviewPaneWrapper && splitviewPaneWrapper.style) {
                             splitviewPaneWrapper.style.width = "";
@@ -124,7 +119,9 @@
                         } else {
                             Application.navigateById(Application.startPageId, event);
                         }
-                    }
+                    }, function (errorResponse) {
+                        // already handled
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
@@ -137,19 +134,6 @@
                         }
                     }
                     Application.navigateById("login", event);
-                    Log.ret(Log.l.trace);
-                },
-                clickChangeServer: function (event) {
-                    Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    AppData.call("PRC_ChangeLoginServer", {
-                        pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
-                    }, function (json) {
-                        Log.print(Log.l.info, "call PRC_ChangeLoginServer success! ");
-                        Application.navigateById(Application.startPageId, event);
-                    }, function (error) {
-                        Log.print(Log.l.error, "callPRC_ChangeLoginServer error");
-                        AppData.setErrorMsg(that.binding, error);
-                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -250,7 +234,7 @@
 
             var setServerList = function (results) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                if (initSprache && results) {
+                if (results) {
                     for (var i = 0; i < results.length; i++) {
                         var row = results[i];
                         if (row.IsActive === "1") {
@@ -268,7 +252,7 @@
             }
             var setLanguage = function (results) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                if (initSprache && results) {
+                if (results) {
                     for (var i = 0; i < results.length; i++) {
                         var row = results[i];
                         if (row.LanguageID === AppData.getLanguageId()) {
@@ -428,7 +412,10 @@
                     AppData._persistentStates.languageId = newLanguageId;
                     Application.pageframe.savePersistentStates();
                 }
-                if (!that.binding.doEdit && newLanguageId === prevLanguageId && prevPassword === that.binding.dataLogin.Password) {
+                if (!that.binding.doEdit &&
+                    newLanguageId === prevLanguageId &&
+                    prevPassword === that.binding.dataLogin.Password &&
+                    prevLocationId === that.binding.dataLogin.LocationID) {
                     ret = WinJS.Promise.as();
                     if (typeof complete === "function") {
                         complete({});
@@ -440,52 +427,93 @@
                     AppBar.busy = true;
                     that.binding.appSettings.odata.onlinePath = "odata_online";//AppData._persistentStatesDefaults.odata.onlinePath;
                     that.binding.appSettings.odata.registerPath = "odata_register";//AppData._persistentStatesDefaults.odata.registerPath;
-                    ret = Account.loginRequest.insert(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "loginRequest: success!");
-                        // loginData returns object already parsed from json file in response
-                        if (json && json.d && json.d.ODataLocation) {
-                            if (json.d.InactiveFlag) {
-                                AppBar.busy = false;
-                                err = { status: 503, statusText: getResourceText("account.inactive") };
-                                AppData.setErrorMsg(that.binding, err);
-                                if (typeof error === "function") {
-                                    error(err);
-                                }
-                            } else {
-                                hasTwoFactor = json.d.HasTwoFactor;
-                                var location = json.d.ODataLocation;
-                                //if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
-                                if (location !== "odata_online") {
-                                    that.binding.appSettings.odata.onlinePath = location + that.binding.appSettings.odata.onlinePath;
-                                    that.binding.appSettings.odata.registerPath = location + that.binding.appSettings.odata.registerPath;
-                                }
-                                Application.pageframe.savePersistentStates();
-                            }
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (prevLocationId === that.binding.dataLogin.LocationID || !that.binding.dataLogin.LocationID || !that.binding.count) {
+                            return WinJS.Promise.as();
                         } else {
-                            AppBar.busy = false;
-                            err = { status: 404, statusText: getResourceText("login.unknown") };
-                            AppData.setErrorMsg(that.binding, err);
-                            if (typeof error === "function") {
-                                error(err);
-                            }
+                            return AppData.call("PRC_ChangeLoginServer", {
+                                pNewLocationID: parseInt(that.binding.dataLogin.LocationID)
+                            }, function (json) {
+                                Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : ""));
+                                Application.navigateById(Application.startPageId, event);
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            }).then(function () {
+                                if (!err) {
+                                    // wait 2sec for User-change
+                                    that.binding.showWaitCircle = true;
+                                    return WinJS.Promise.timeout(2000).then(function() {
+                                        that.binding.showWaitCircle = false;
+                                    });
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            });
                         }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
-                        // ignore this error here for compatibility!
-                    }, {
-                        LoginName: that.binding.dataLogin.Login
+                    }).then(function () {
+                        if (!err) {
+                            return Account.loginRequest.insert(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "loginRequest: success!");
+                                // loginData returns object already parsed from json file in response
+                                if (json && json.d && json.d.ODataLocation) {
+                                    if (json.d.InactiveFlag) {
+                                        AppBar.busy = false;
+                                        err = { status: 503, statusText: getResourceText("account.inactive") };
+                                        AppData.setErrorMsg(that.binding, err);
+                                        if (typeof error === "function") {
+                                            error(err);
+                                        }
+                                    } else {
+                                        hasTwoFactor = json.d.HasTwoFactor;
+                                        var location = json.d.ODataLocation;
+                                        //if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                        if (location !== "odata_online") {
+                                            that.binding.appSettings.odata.onlinePath =
+                                                location + that.binding.appSettings.odata.onlinePath;
+                                            that.binding.appSettings.odata.registerPath =
+                                                location + that.binding.appSettings.odata.registerPath;
+                                        }
+                                        Application.pageframe.savePersistentStates();
+                                    }
+                                } else {
+                                    AppBar.busy = false;
+                                    err = { status: 404, statusText: getResourceText("login.unknown") };
+                                    AppData.setErrorMsg(that.binding, err);
+                                    if (typeof error === "function") {
+                                        error(err);
+                                    }
+                                }
+                            },
+                            function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.info, "loginRequest error: " + AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
+                                // ignore this error here for compatibility!
+                            },
+                            {
+                                LoginName: that.binding.dataLogin.Login
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     }).then(function () {
                         // nur aufrufen wenn in DB TFA eingetragen ist
                         // und Login  geändert wurde
-                        if (hasTwoFactor && (prevLogin !== that.binding.dataLogin.Login)) {
+                        if (!err && hasTwoFactor && (prevLogin !== that.binding.dataLogin.Login)) {
                             return tfaVerify().then(function (tfaResult) {
                                 that.binding.showWaitCircle = true;
                                 // now wait 5s for the DB-USer to be changed....
-                                return WinJS.Promise.timeout(5000).then(function () {
+                                return WinJS.Promise.timeout(2000).then(function () {
                                     return WinJS.Promise.as(tfaResult);
                                 });
                             }) || WinJS.Promise.as();
@@ -598,7 +626,6 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                                AppData.setErrorMsg(that.binding, errorResponse);
                             }, {
                                 VeranstaltungID: AppData.getRecordId("Veranstaltung"), //0
                                 MandantWide: 1, //0
