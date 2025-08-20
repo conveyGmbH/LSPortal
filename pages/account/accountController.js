@@ -117,6 +117,7 @@
                         if (!that.binding.doEdit && WinJS.Navigation.canGoBack === true) {
                             WinJS.Navigation.back(1).done();
                         } else {
+                            that.binding.doEdit = false;
                             Application.navigateById(Application.startPageId, event);
                         }
                     }, function (errorResponse) {
