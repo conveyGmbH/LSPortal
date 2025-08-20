@@ -413,10 +413,11 @@
                     AppData._persistentStates.languageId = newLanguageId;
                     Application.pageframe.savePersistentStates();
                 }
+                var newLocationId = parseInt(that.binding.dataLogin.LocationID);
                 if (!that.binding.doEdit &&
                     newLanguageId === prevLanguageId &&
                     prevPassword === that.binding.dataLogin.Password &&
-                    prevLocationId === that.binding.dataLogin.LocationID) {
+                    prevLocationId === newLocationId) {
                     ret = WinJS.Promise.as();
                     if (typeof complete === "function") {
                         complete({});
@@ -429,10 +430,9 @@
                     that.binding.appSettings.odata.onlinePath = "odata_online";//AppData._persistentStatesDefaults.odata.onlinePath;
                     that.binding.appSettings.odata.registerPath = "odata_register";//AppData._persistentStatesDefaults.odata.registerPath;
                     ret = new WinJS.Promise.as().then(function () {
-                        if (prevLocationId === that.binding.dataLogin.LocationID || !that.binding.dataLogin.LocationID || !that.binding.count) {
+                        if (prevLocationId === newLocationId || !newLocationId || !that.binding.count) {
                             return WinJS.Promise.as();
                         } else {
-                            var newLocationId = parseInt(that.binding.dataLogin.LocationID);
                             return AppData.call("PRC_ChangeLoginServer", {
                                 pNewLocationID: newLocationId
                             }, function (json) {
