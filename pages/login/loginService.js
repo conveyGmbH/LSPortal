@@ -6,6 +6,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "Login";
+
     WinJS.Namespace.define("Login", {
         _loginRequest: {
             get: function () {
@@ -14,7 +16,7 @@
         },
         loginRequest: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
+                Log.call(Log.l.trace, namespaceName + "loginView.");
                 var ret = Login._loginRequest.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -27,7 +29,7 @@
         },
         loginView: {
             insert: function (complete, error, viewResponse) {
-                Log.call(Log.l.trace, "loginView.");
+                Log.call(Log.l.trace, namespaceName + "loginView.");
                 var ret = Login._loginView.insert(complete, error, viewResponse);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -40,7 +42,7 @@
         },
         appListSpecView: {
             select: function (complete, error) {
-                Log.call(Log.l.trace, "appListSpecView.");
+                Log.call(Log.l.trace, namespaceName + "appListSpecView.");
                 var ret = Login._appListSpecView.select(complete, error);
 
                 // this will return a promise to controller
@@ -55,7 +57,7 @@
         },
         CR_VERANSTOPTION_ODataView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "CR_VERANSTOPTION_ODataView.");
+                Log.call(Log.l.trace, namespaceName + "CR_VERANSTOPTION_ODataView.");
                 var ret = Login._CR_VERANSTOPTION_View.select(complete,
                     error,
                     restriction,
@@ -63,6 +65,22 @@
                         ordered: true,
                         orderAttribute: "INITOptionTypeID"
                     });
+                Log.ret(Log.l.trace);
+                return ret;
+
+            }
+        },
+        _GlobalUserServersVIEW: {
+            get: function () {
+                return AppData.getFormatView("GlobalUserServers", 20581, false);
+            }
+        },
+        GlobalUserServersVIEW: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".GlobalUserServersVIEW.");
+                var ret = DBInit._GlobalUserServersVIEW.select(complete, error, restriction, {
+                    ordered: true
+                });
                 Log.ret(Log.l.trace);
                 return ret;
 

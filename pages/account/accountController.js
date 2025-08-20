@@ -255,6 +255,10 @@
                         var row = results[i];
                         if (row.IsActive === "1") {
                             Log.print(Log.l.info, "found LanguageId=" + row.LocationID);
+                            if (AppHeader && AppHeader.controller && AppHeader.controller.binding) {
+                                AppHeader.controller.binding.LocationID = row.LocationID;
+                                AppHeader.controller.binding.ServerName = row.LocationName;
+                            }
                             that.binding.dataLogin.LocationID = row.LocationID;
                             break;
                         }
@@ -517,6 +521,7 @@
                                     if (dataLogin.OK_Flag === "X" && dataLogin.MitarbeiterID) {
                                         AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                         AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
+                                        AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
                                         NavigationBar.enablePage("settings");
                                         NavigationBar.enablePage("info");
                                         response = json;
@@ -557,6 +562,14 @@
                                 }
                                 return WinJS.Promise.as();
                             }, dataLogin);
+                        }
+                    }).then(function () {
+                        if (!err) {
+                            AppData._curGetUserDataId = 0;
+                            AppData.getMessagesData();
+                            return AppData.getUserData();
+                        } else {
+                            return WinJS.Promise.as();
                         }
                     }).then(function () {
                         if (!err) {
@@ -643,14 +656,6 @@
                             });
                         } else {
                             that.binding.showWaitCircle = false;
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        if (!err) {
-                            AppData._curGetUserDataId = 0;
-                            AppData.getMessagesData();
-                            return AppData.getUserData();
-                        } else {
                             return WinJS.Promise.as();
                         }
                     }).then(function () {

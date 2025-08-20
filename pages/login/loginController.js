@@ -155,6 +155,24 @@
             }
             this.resultConverter = resultConverter;
 
+            var setServerList = function (results) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        var row = results[i];
+                        if (row.IsActive === "1") {
+                            Log.print(Log.l.info, "found LanguageId=" + row.LocationID);
+                            if (AppHeader && AppHeader.controller && AppHeader.controller.binding) {
+                                AppHeader.controller.binding.LocationID = row.LocationID;
+                                AppHeader.controller.binding.ServerName = row.LocationName;
+                            }
+                            break;
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+
             var tfaVerify = function () {
                 var ret = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -303,6 +321,14 @@
                         }
                     }).then(function () {
                         if (!err) {
+                            AppData._curGetUserDataId = 0;
+                            AppData.getMessagesData();
+                            return AppData.getUserData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        if (!err) {
                             // load color settings
                             AppData._persistentStates.hideQuestionnaire = false;
                             AppData._persistentStates.hideSketch = false;
@@ -386,9 +412,27 @@
                         }
                     }).then(function () {
                         if (!err) {
-                            AppData._curGetUserDataId = 0;
-                            AppData.getMessagesData();
-                            return AppData.getUserData();
+                            return DBInit.GlobalUserServersVIEW.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "GlobalUserServersVIEW: success!");
+                                if (json && json.d && json.d.results && json.d.results.length) {
+                                    that.binding.count = json.d.results.length;
+                                    if (that.binding.count > 1) {
+                                        that.binding.showServerList = true;
+                                    }
+                                    //that.nextDocUrl = Account.GlobalUserServersRT.getNextUrl(json);
+                                    var results = json.d.results;
+                                    setServerList(results);
+                                } else {
+                                    Log.print(Log.l.trace, "GlobalUserServersVIEW: no data found!");
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "Account.GlobalUserServersVIEW: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            }, null);
                         } else {
                             return WinJS.Promise.as();
                         }

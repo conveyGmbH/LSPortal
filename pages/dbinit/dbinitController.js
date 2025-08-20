@@ -19,7 +19,6 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
-                ServerName: "",
                 progress: {
                     percent: 0,
                     text: "",
@@ -74,9 +73,10 @@
                         var row = results[i];
                         if (row.IsActive === "1") {
                             Log.print(Log.l.info, "found LanguageId=" + row.LocationID);
-                            that.binding.LocationID = row.LocationID;
-                            that.binding.ServerName = row.LocationName;
-                            AppHeader.controller.binding.ServerName = that.binding.ServerName;
+                            if (AppHeader && AppHeader.controller && AppHeader.controller.binding) {
+                                AppHeader.controller.binding.LocationID = row.LocationID;
+                                AppHeader.controller.binding.ServerName = row.LocationName;
+                            }
                             break;
                         }
                     }
@@ -121,9 +121,13 @@
                             }
                         }
                     }).then(function () {
-                        AppData.getMessagesData();
-                        AppData._curGetUserDataId = 0;
-                        return AppData.getUserData();
+                        if (getStartPage() === Application.startPageId) {
+                            AppData.getMessagesData();
+                            AppData._curGetUserDataId = 0;
+                            return AppData.getUserData();
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     }).then(function () {
                         AppData._persistentStates.hideQuestionnaire = false;
                         AppData._persistentStates.hideSketch = false;
