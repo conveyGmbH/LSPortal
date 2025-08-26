@@ -276,58 +276,58 @@
                 },
                 clickMandantOption: function (event) {
                     Log.call(Log.l.trace, "Settings.Controller.");
-                    var toggle = event.currentTarget.winControl;
-                    if (that.binding.generalData.individualColors) {
-                        AppData.call("PRC_SETVERANSTOPTION",
-                            {
-                                pIsForMandant: that.binding.generalData.mandantOption ? 1 : 0,
-                                pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
-                                pOptionTypeID: 10,
-                                pValue: "0"
-                            },
-                            function (json) {
-                                Log.print(Log.l.info, "call success! ");
-                                that.binding.generalData.mandantOption = toggle.checked;
-                                that.loadData();
-                            },
-                            function (error) {
-                                Log.print(Log.l.error, "call error");
-                            });
-                    } else {
-                    that.binding.generalData.mandantOption = toggle.checked;
-                        WinJS.Promise.as().then(function () {
-                            return AppData.getOptions(function (json) {
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    if (typeof that.resultConverter === "function") {
-                                        that.resultConverter(item, index);
-                                    }
+                    if (event && event.currentTarget && event.currentTarget.winControl) {
+                        var toggle = event.currentTarget.winControl;
+                        that.binding.generalData.mandantOption = toggle.checked;
+                        if (that.binding.generalData.individualColors) {
+                            AppData.call("PRC_SETVERANSTOPTION",
+                                {
+                                    pIsForMandant: that.binding.generalData.mandantOption ? 1 : 0,
+                                    pVeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                                    pOptionTypeID: 10,
+                                    pValue: "0"
+                                },
+                                function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    that.binding.generalData.mandantOption = toggle.checked;
+                                    that.loadData();
+                                },
+                                function (error) {
+                                    Log.print(Log.l.error, "call error");
                                 });
-                                Application.pageframe.savePersistentStates();
-                            }, function (errorResponse) {
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, {
-                                    VeranstaltungID: AppData.getRecordId("Veranstaltung"), //AppData.getRecordId("Veranstaltung")
-                                    MandantWide: that.binding.generalData.mandantOption ? 1 : 0,
-                                    IsForApp: 0
-                                });
-                        }).then(function () {
-                            for (var i = 0; i < Application.navigationBarGroups.length; i++) {
-                                if (Application.navigationBarGroups[i].id === "events") {
-                                    if (!Application.navigationBarGroups[i].disabled) {
-                                        if (that.binding) {
-                                            that.binding.showSettingsFlag = true;
+                        } else {
+                            WinJS.Promise.as().then(function () {
+                                return AppData.getOptions(function (json) {
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        if (typeof that.resultConverter === "function") {
+                                            that.resultConverter(item, index);
                                         }
+                                    });
+                                    Application.pageframe.savePersistentStates();
+                                }, function (errorResponse) {
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                }, {
+                                        VeranstaltungID: AppData.getRecordId("Veranstaltung"), //AppData.getRecordId("Veranstaltung")
+                                        MandantWide: that.binding.generalData.mandantOption ? 1 : 0,
+                                        IsForApp: 0
+                                    });
+                            }).then(function () {
+                                for (var i = 0; i < Application.navigationBarGroups.length; i++) {
+                                    if (Application.navigationBarGroups[i].id === "events") {
+                                        if (!Application.navigationBarGroups[i].disabled) {
+                                            if (that.binding) {
+                                                that.binding.showSettingsFlag = true;
+                                            }
+                                        }
+                                        break;
                                     }
-                                    break;
                                 }
-                            }
-                            var colors = Colors.updateColors();
-                            return (colors && colors._loadCssPromise) || WinJS.Promise.as();
-                        });
+                                var colors = Colors.updateColors();
+                                return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                            });
+                        }
                     }
-
-                    //Application.pageframe.savePersistentStates();
                     Log.ret(Log.l.trace);
                 },
                 clickIndividualColors: function (event) {
@@ -570,14 +570,14 @@
                     }
                 } else if (property === "individualColors") {
                     if (that.binding && that.binding.generalData) {
+                        // check if option is for mandant or event
+                        if (item.CR_VERANSTOPTIONID > 100000000) {
+                            that.binding.generalData.mandantOption = true;
+                        } else {
+                            that.binding.generalData.mandantOption = false;
+                        }
                         if (item.LocalValue === "1") {
                             that.binding.generalData.individualColors = true;
-                            // check if option is for mandant or event
-                            if (item.CR_VERANSTOPTIONID > 100000000) {
-                                that.binding.generalData.mandantOption = true;
-                            } else {
-                                that.binding.generalData.mandantOption = false;
-                            }
                         } else if (that.binding.generalData.individualColors) {
                             that.binding.generalData.individualColors = false;
                             WinJS.Promise.timeout(0).then(function () {
