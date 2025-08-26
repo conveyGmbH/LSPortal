@@ -434,6 +434,11 @@
             var property = "";
             switch (item.INITOptionTypeID || item.OptionTypeID) {
                 case 10:
+                    if (item.CR_VERANSTOPTIONID > 100000000) {
+                        AppData._persistentStates.mandantOption = true;
+                    } else {
+                        AppData._persistentStates.mandantOption = false;
+                    }
                     item.colorPickerId = "individualColors";
                     property = item.colorPickerId;
                     if (item.LocalValue === "1") {
