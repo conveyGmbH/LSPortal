@@ -10,7 +10,7 @@
     WinJS.Namespace.define("ContactResultsEvents", {
         _contactView: {
             get: function () {
-                return AppData.getFormatView("KontaktReport", 0);
+                return AppData.getFormatView("Kontakt", 0);
             }
         },
         contactView: {
