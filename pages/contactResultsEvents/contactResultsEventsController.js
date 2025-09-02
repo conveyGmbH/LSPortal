@@ -57,9 +57,6 @@
 
             var resultConverter = function (item, index) {
                 item.fullName = "";
-                if (item.Anrede) {
-                    item.fullName += item.Anrede + " ";
-                }
                 if (item.Vorname) {
                     item.fullName += item.Vorname + " ";
                 }

@@ -20,14 +20,9 @@
                 Log.ret(Log.l.trace);
                 return ret;
             },
-            update: function (complete, error, recordId, viewResponse) {
-                Log.call(Log.l.trace, namespaceName + ".contactView.");
-                var ret = ContactResultsEvents._contactView.update(complete, error, recordId, viewResponse);
-                Log.ret(Log.l.trace);
-                return ret;
-            },
             defaultValue: {
-                
+                Vorname: "",
+                Name: ""
             }
         },
         _incidentView: {
