@@ -61,7 +61,14 @@
                                 that.binding.personId = curScope.item.PersonID;
                                 that.binding.personCategoryId = curScope.item.INITPersonKategorieID;
                             }
-                            AppBar.scope.loadData();
+                            var curPageId = Application.getPageId(nav.location);
+                            if ((curPageId === "genDataModDetails" ||
+                                curPageId === "genDataModHisto") &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else {
+                                Application.navigateById("genDataModDetails");
+                            }
                         }
                     });
                     Log.ret(Log.l.trace);

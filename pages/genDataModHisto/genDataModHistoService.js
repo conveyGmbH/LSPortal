@@ -21,7 +21,7 @@
             select: function (complete, error, restriction, options) {
                 if (!restriction) {
                     var master = Application.navigator.masterControl;
-                    var personId = master.controller && master.controller.binding && master.controller.binding.personId;
+                    var personId = master && master.controller && master.controller.binding && master.controller.binding.personId;
                     restriction = {
                         PersonID: personId || 0,
                         LanguageSpecID: AppData.getLanguageId()

@@ -591,13 +591,13 @@
 
             var getAddressId = function () {
                 var master = Application.navigator.masterControl;
-                return master.controller && master.controller.binding && master.controller.binding.addressId;
+                return master && master.controller && master.controller.binding && master.controller.binding.addressId;
             }
             that.getAddressId = getAddressId;
 
             var getPersonAddressId = function () {
                 var master = Application.navigator.masterControl;
-                return master.controller && master.controller.binding && master.controller.binding.personAddressId;
+                return master && master.controller && master.controller.binding && master.controller.binding.personAddressId;
             }
             that.getPersonAddressId = getPersonAddressId;
 
