@@ -22,7 +22,7 @@
             var restriction = AppData.getRestriction("Employee");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                restriction: (restriction && restriction.Vorname) ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
+                restriction: (restriction && restriction.Vorname) ? restriction : copyByValue(EmployeeGenPWList.employeePWView.defaultRestriction),
                 veranstaltungId: 0,
                 fairmandantId: 0,
                 firstentry: 0,
