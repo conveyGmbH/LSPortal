@@ -9,6 +9,7 @@
     WinJS.Namespace.define("MailingOptions", {
         _eventId: 0,
         _mailId: 0,
+        _connTypId: 0,
         _CR_VERANSTOPTION_View: {
             get: function () {
                 return AppData.getFormatView("CR_VERANSTOPTION", 20668, false);
@@ -27,6 +28,44 @@
                 Log.ret(Log.l.trace);
                 return ret;
 
+            }
+        },
+        _VAMailServerView: {
+            get: function () {
+                return AppData.getFormatView("VAMailServer", 20705);
+            }
+        },
+        _VAMailServerTable: {
+            get: function () {
+                return AppData.getFormatView("VAMailServer", 0);
+            }
+        },
+        VAMailServerView: {
+            select: function (complete, error, options) {
+                Log.call(Log.l.trace, "MailingOptions.");
+                var ret = MailingOptions._VAMailServerView.select(complete, error, options);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            update: function (complete, error, recordId, viewResponse) {
+                Log.call(Log.l.trace, "MailingOptions.");
+                var ret = MailingOptions._VAMailServerTable.update(complete, error, recordId, viewResponse);
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            insert: function (complete, error, restriction) {
+                Log.call(Log.l.trace, "MailingOptions.");
+                var ret = MailingOptions._VAMailServerTable.insert(complete, error, restriction);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            defaultValue: {
+                Mailserver: "",
+                Username: "",
+                Password: "",
+                Protocol: ""
             }
         }
     });

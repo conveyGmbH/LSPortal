@@ -56,6 +56,34 @@
                                 </div>
                             </div>
                         </div>-->
+                        <div class="line-separator"></div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.mailServerAddr'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.mailServerAddr'}"></span>
+                            <input id="mailServerAddr" class="input_field win-textbox" type="text" data-win-bind="value: connTypData.Mailserver Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.mailServerAddrplaceholder'}" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only_left" data-win-res="{textContent: 'mailing.mailServerProto'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.mailServerProto'}"></span>
+                            <select id="showconnTypCombo"
+                                    class="input_field win-dropdown"
+                                    data-win-control="WinJS.UI.Repeater"
+                                    data-win-bind="value: connTypData.Protocol Binding.Mode.twoway"
+                                    onchange="AppBar.handleEvent('change', 'clickChangeAppSetting', event)">
+                                <option data-win-bind="value: value; textContent: TITLE"></option>
+                            </select>
+                        </div>
+                        <div class="field_line field_line_odd">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.mailServerUser'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.mailServerUser'}"></span>
+                            <input id="mailServerUser" class="input_field win-textbox" type="text" data-win-bind="value: connTypData.Username Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.mailServerUserplaceholder'}" />
+                        </div>
+                        <div class="field_line field_line_even">
+                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'mailing.mailServerPassword'}"></span>
+                            <span class="label landscape_only" data-win-res="{textContent: 'mailing.mailServerPassword'}"></span>
+                            <input id="mailServerPassword" class="input_field win-textbox" type="password" data-win-bind="value: connTypData.Password Binding.Mode.twoway" data-win-bind-onevent="oninput" data-win-res="{placeholder: 'mailing.mailServerPasswordplaceholder'}" />
+                        </div>
+
                     </div>
                     <div class="page-content" data-win-bind="style.display: leadsuccessBasic Binding.Converter.toDisplay">
                         <div class="top">

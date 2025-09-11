@@ -16,6 +16,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "MailingOptions.Controller.");
             Application.Controller.apply(this, [pageElement, {
+                connTypData: getEmptyDefaultValue(MailingOptions.VAMailServerView.defaultValue),
                 isProductMailOn: AppData._persistentStates.productMailOn,
                 isNachbearbeitetFlagAutoSetToNull: AppData._persistentStates.nachbearbeitetFlagAutoSetToNull,
                 isThankMailOn: AppData._persistentStates.thankYouMailOn,
@@ -27,6 +28,18 @@
 
             var that = this;
 
+            this.verbindungsarten = new WinJS.Binding.List([
+                { value: "plain", TITLE: "Keine / None" },
+                { value: "ssl", TITLE: "SSL / TLS" },
+                { value: "starttls", TITLE: "STARTTLS" }
+            ]);
+
+            var setConnTypCombo = function () {
+                var connTypCombo = pageElement.querySelector("#showconnTypCombo");
+                connTypCombo.winControl.data = that.verbindungsarten;
+            }
+            this.setConnTypCombo = setConnTypCombo;
+
             var setEventId = function (value) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + value);
                 MailingOptions._eventId = value;
@@ -34,9 +47,24 @@
             }
             this.setEventId = setEventId;
 
+            var setconnTypId = function (value) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "VAMailServerVIEWID=" + value);
+                MailingOptions._connTypId = value;
+                Log.ret(Log.l.trace);
+            }
+            this.setconnTypId = setconnTypId;
+
+            var getConnTypId = function () {
+                var connTypId = null;
+                Log.call(Log.l.trace, "MailingOptions.Controller.");
+                connTypId = MailingOptions._connTypId;
+                return connTypId;
+            }
+            this.getConnTypId = getConnTypId;
+
             var getEventId = function () {
                 var eventId = null;
-                Log.call(Log.l.trace, "Reporting.Controller.");
+                Log.call(Log.l.trace, "MailingOptions.Controller.");
                 var master = Application.navigator.masterControl;
                 if (master && master.controller) {
                     eventId = master.controller.binding.eventId;
@@ -114,12 +142,99 @@
             };
             this.changeAppSetting = changeAppSetting;
 
+            var insertConnTyp = function () {
+                Log.call(Log.l.trace, "MailingOptions.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret = new WinJS.Promise.as().then(function () {
+                    return MailingOptions.VAMailServerView.insert(function (json) {
+                        AppBar.busy = false;
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.info, "VAMailServerView insert: success!");
+                        AppBar.modified = false;
+                        // ProduktView returns object already parsed from json file in response
+                        that.loadData();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error inserting ConnTyp");
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        }, { FairMandantID : AppData._userData.FairMandantID});
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.insertConnTyp = insertConnTyp;
+
+            var saveData = function (complete, error) {
+                Log.call(Log.l.trace, "Mailing.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var ret;
+                var err = null;
+                var connTypData = that.binding.connTypData;
+                if (connTypData && AppBar.modified && !AppBar.busy) {
+                    AppBar.busy = true;
+                    var recordId = getConnTypId();
+                    if (recordId) {
+                        ret = WinJS.Promise.as().then(function () {
+                            MailingOptions.VAMailServerView.update(function (response) {
+                                AppBar.busy = false;
+                                // called asynchronously if ok
+                                Log.print(Log.l.info, "dataMail update: success!");
+                                AppBar.modified = false;
+                                if (typeof complete === "function") {
+                                    complete(connTypData);
+                                }
+                            }, function (errorResponse) {
+                                AppBar.busy = false;
+                                err = errorResponse;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (typeof error === "function") {
+                                        error(errorResponse);
+                                    }
+                                });
+                                }, recordId, connTypData);
+                        });
+                    } else {
+                        ret = WinJS.Promise.as();
+                    }
+                } else if (AppBar.busy) {
+                    ret = WinJS.Promise.timeout(100).then(function () {
+                        return that.saveData(complete, error);
+                    });
+                } else {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (typeof complete === "function") {
+                            complete(connTypData);
+                        }
+                    });
+                }
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.saveData = saveData;
+
             this.eventHandlers = {
                 clickBack: function (event) {
                     Log.call(Log.l.trace, "MailingOptions.Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
                         WinJS.Navigation.back(1).done();
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickSave: function (event) {
+                    Log.call(Log.l.trace, "Mailing.Controller.");
+                    WinJS.Promise.as().then(function () {
+                            that.saveData(function (response) {
+                                Log.print(Log.l.trace, "saved");
+                                //AppBar.modified = true;
+                                that.loadData();
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "error saving");
+                            });
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -163,11 +278,46 @@
                     Log.ret(Log.l.trace);
                 }
             };
+            this.disableHandlers = {
+                clickBack: function () {
+                    if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickSave: function () {
+                    if (that.binding.connTypData && AppBar.modified && !AppBar.busy) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            };
+
             var loadData = function () {
                 Log.call(Log.l.trace, "MailingOptions.Controller.");
                 AppData.setErrorMsg(that.binding);
                 //that.binding.veranstOption = getEmptyDefaultValue(Event.CR_VERANSTOPTION_ODataView.defaultValue);
                 var ret = new WinJS.Promise.as().then(function () {
+                    return MailingOptions.VAMailServerView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "MailingOptions: success!");
+                        // CR_VERANSTOPTION_ODataView returns object already parsed from json file in response
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                            var results = json.d.results[0];
+                            that.setconnTypId(results.VAMailServerVIEWID);
+                            that.binding.connTypData = results;
+                        } else {
+                            that.insertConnTyp();
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    });
+                }).then(function () {
                     var recordId = getEventId();
                     if (recordId) {
                         return AppData.getOptions(function (json) {
@@ -210,6 +360,8 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
+                return that.setConnTypCombo();
+            }).then(function () {
                 return that.loadData();
             }).then(function () {
                 Log.print(Log.l.trace, "Data loaded");

@@ -21,7 +21,8 @@
             // TODO: Initialize the page here.
             // add page specific commands to AppBar
             var commandList = [
-                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" }
+                { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
+                { id: "clickSave", label: getResourceText("command.save"), tooltip: getResourceText("tooltip.save"), section: "primary", svg: "navigate_check" }//, key: WinJS.Utilities.Key.enter
             ];
 
             this.controller = new MailingOptions.Controller(element, commandList);
