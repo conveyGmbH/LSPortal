@@ -1024,7 +1024,12 @@
                 },
                 clickForward: function(event) {
                     Log.call(Log.l.trace, "Questionnaire.Controller.");
+                    saveData(function (response) {
+                        Log.print(Log.l.trace, "question saved");
                     Application.navigateById('sketch', event);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving question");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
