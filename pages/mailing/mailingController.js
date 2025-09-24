@@ -627,6 +627,13 @@
                 that.binding.sendTestMailShowFlag = 0;
                 that.binding.testMailShowPanelFlag = 0;
                 that.binding.testMailSuccessMsgFlag = 0;
+                var eventId = null;
+                var master = Application.navigator.masterControl;
+                if (master && master.controller && master.controller.binding && master.controller.binding.eventId) {
+                    eventId = parseInt(master.controller.binding.eventId);
+                } else {
+                    eventId = AppData.getRecordId("Veranstaltung");
+                }
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeData...");
@@ -701,6 +708,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
+                            VeranstaltungID: eventId,
                             SORTIERUNG: 1
                         });
                 }).then(function () {
