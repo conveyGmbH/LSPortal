@@ -161,10 +161,7 @@
                 if (typeof savedRestriction === "undefined") {
                     savedRestriction = ReportingColumnList.pdfExportParamView.defaultValue;
                 }
-                that.binding.restriction.NameField1ID = parseInt(savedRestriction.NameField1ID);
-                that.binding.restriction.NameField2ID = parseInt(savedRestriction.NameField2ID);
-                that.binding.restriction.NameField3ID = parseInt(savedRestriction.NameField3ID);
-                that.binding.restriction.NameField4ID = parseInt(savedRestriction.NameField4ID);
+                
                 if (savedRestriction && !AppBar.busy) { /*AppBar.modified &&*/
                     var recordId = savedRestriction.PDFExportParamVIEWID;
                     if (recordId) {
@@ -245,6 +242,19 @@
                 },
                 clickFileNameCombo: function (event) {
                     Log.call(Log.l.trace, "ReportingColumnList.Controller.");
+                    
+                    if (event.currentTarget.id === "InitExportField1") {
+                        that.binding.restriction.NameField1ID = parseInt(event.currentTarget.value);
+                    }
+                    if (event.currentTarget.id === "InitExportField2") {
+                        that.binding.restriction.NameField2ID = parseInt(event.currentTarget.value);
+                    }
+                    if (event.currentTarget.id === "InitExportField3") {
+                        that.binding.restriction.NameField3ID = parseInt(event.currentTarget.value);
+                    }
+                    if (event.currentTarget.id === "InitExportField4") {
+                        that.binding.restriction.NameField4ID = parseInt(event.currentTarget.value);
+                    }
                     that.saveData(function (response) { },
                         function (errorResponse) {
                             Log.print(Log.l.error, "error saving employee");
