@@ -243,6 +243,14 @@
                     }
                     Log.ret(Log.l.trace);
                 },
+                clickFileNameCombo: function (event) {
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
+                    that.saveData(function (response) { },
+                        function (errorResponse) {
+                            Log.print(Log.l.error, "error saving employee");
+                        });
+                    Log.ret(Log.l.trace);
+                },
                 clickSave: function (event) {
                     Log.call(Log.l.trace, "ReportingColumnList.Controller.");
                     //Application.navigateById("Reporting");
@@ -375,6 +383,18 @@
                 this.addRemovableEventListener(listView,
                     "loadingstatechanged",
                     this.eventHandlers.onLoadingStateChanged.bind(this));
+            }
+            if (exportFieldList1) {
+                this.addRemovableEventListener(exportFieldList1, "change", this.eventHandlers.clickFileNameCombo.bind(this));
+            }
+            if (exportFieldList2) {
+                this.addRemovableEventListener(exportFieldList2, "change", this.eventHandlers.clickFileNameCombo.bind(this));
+            }
+            if (exportFieldList3) {
+                this.addRemovableEventListener(exportFieldList3, "change", this.eventHandlers.clickFileNameCombo.bind(this));
+            }
+            if (exportFieldList4) {
+                this.addRemovableEventListener(exportFieldList4, "change", this.eventHandlers.clickFileNameCombo.bind(this));
             }
             
             var loadData = function () {
