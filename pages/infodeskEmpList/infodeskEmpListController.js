@@ -857,8 +857,10 @@
                 var restriction = AppData.getRestriction("SkillEntry");
                 if (restriction && restriction.VeranstaltungID) {
                     that.binding.eventId = restriction.VeranstaltungID;
+                } else if (AppData.getRecordId("Veranstaltung2")) {
+                    return that.setEventId(AppData.getRecordId("Veranstaltung2"));
                 } else {
-                    that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                    return that.setEventId(AppData.getRecordId("Veranstaltung"));
                 }
                 return that.selectRecordId(that.binding.employeeId);
             }).then(function () {

@@ -58,7 +58,11 @@
                 if (that.binding.eventId) {
                     eventId = that.binding.eventId;
                 } else {
-                    eventId = AppData.getRecordId("Veranstaltung");
+                    if (AppData.getRecordId("Veranstaltung2")) {
+                        eventId = AppData.getRecordId("Veranstaltung2");
+                    } else {
+                        eventId = AppData.getRecordId("Veranstaltung");
+                    }
                 }
                 Log.ret(Log.l.trace, eventId);
                 return eventId;
@@ -180,7 +184,8 @@
                     Log.call(Log.l.trace, "Search.Controller.");
                     if (event && event.currentTarget) {
                         //that.setEventId(event.currentTarget.value);
-                        that.binding.restriction.VeranstaltungID = parseInt(that.binding.eventId); //that.getEventId()
+                        that.binding.restriction.VeranstaltungID = parseInt(that.binding.eventId);
+                        AppData.setRecordId("Veranstaltung2", parseInt(that.binding.eventId));
                         that.loadData();
                     }
                     Log.ret(Log.l.trace);
@@ -339,6 +344,12 @@
                                 that.events = new WinJS.Binding.List(results);
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
+                                    var savedRestriction = AppData.getRestriction("Kontakt");
+                                    /*var reset = false;
+                                    if (savedRestriction && savedRestriction.VeranstaltungID && (AppData.getRecordId("Veranstaltung2") !== savedRestriction.VeranstaltungID)) {
+                                        reset = true;
+                                        AppData.setRestriction("Kontakt", {});
+                                    }*/
                                     if (that.getEventId()) {
                                         for (var i = 0; i < results.length; i++) {
                                             if (that.getEventId() === results[i].VeranstaltungVIEWID) {
@@ -491,6 +502,12 @@
                 }
                 if (that.binding.restriction.VeranstaltungID) {
                     that.binding.eventId = that.binding.restriction.VeranstaltungID;
+                } else {
+                    if (AppData.getRecordId("Veranstaltung2")) {
+                        that.binding.eventId = AppData.getRecordId("Veranstaltung2");
+                    } else {
+                        that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                    }
                 }
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showDateRestrictions();

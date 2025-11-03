@@ -552,6 +552,8 @@
                                         AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                         AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
                                         AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                        //reset Veranstaltung2
+                                        AppData.setRecordId("Veranstaltung2", null);
                                         NavigationBar.enablePage("settings");
                                         NavigationBar.enablePage("info");
                                         response = json;

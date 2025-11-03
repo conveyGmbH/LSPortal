@@ -33,7 +33,7 @@
                     eventId: 0,
                     leadsuccessBasic: !AppHeader.controller.binding.userData.SiteAdmin && AppData._persistentStates.leadsuccessBasic,
                     btnDateSort: ContactList._orderAttribute === "Erfassungsdatum" ?
-                        getResourceText(ContactList._orderDesc ? "contactList.btnDateDesc" : "contactList.btnDateAsc"):
+                        getResourceText(ContactList._orderDesc ? "contactList.btnDateDesc" : "contactList.btnDateAsc") :
                         getResourceText("contactList.btnDateSort"),
                     btnCompanySort: ContactList._orderAttribute === "Firmenname" ?
                         getResourceText(ContactList._orderDesc ? "contactList.btnCompanyDesc" : "contactList.btnCompanyAsc") :
@@ -124,6 +124,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.", "eventId=" + value);
                     ContactList._eventId = value;
                     that.binding.eventId = value;
+                    AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                     Log.ret(Log.l.trace);
                 }
                 this.setEventId = setEventId;
@@ -531,7 +532,7 @@
                     changeEventId: function (parameters) {
                         Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (event && event.currentTarget) {
-                            that.setEventId(event.currentTarget.value);
+                            that.setEventId(parseInt(event.currentTarget.value));
                             that.loadData();
                         }
                         Log.ret(Log.l.trace);
@@ -1013,6 +1014,8 @@
                     var restriction = AppData.getRestriction("Kontakt");
                     if (restriction && restriction.VeranstaltungID) {
                         return that.setEventId(restriction.VeranstaltungID);
+                    } else if (AppData.getRecordId("Veranstaltung2")) {
+                        return that.setEventId(AppData.getRecordId("Veranstaltung2"));
                     } else {
                         return that.setEventId(AppData.getRecordId("Veranstaltung"));
                     }

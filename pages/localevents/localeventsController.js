@@ -36,7 +36,7 @@
             var that = this;
 
             // ListView control
-            
+
             var progress = null;
             var counter = null;
             var layout = null;
@@ -270,11 +270,11 @@
                 item.nameInitial = item.VeranstaltungName.substr(0, 2);
                 item.nameInitialBkgColor = Colors.getColorFromNameInitial(item.nameInitial);
                 if (item.StartDatum) {
-                item.StartDatum = that.getDateObject(item.StartDatum);
+                    item.StartDatum = that.getDateObject(item.StartDatum);
                 }
                 if (item.EndDatum) {
-                item.EndDatum = that.getDateObject(item.EndDatum);
-            }
+                    item.EndDatum = that.getDateObject(item.EndDatum);
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -452,6 +452,7 @@
                                     that.actualSelectedItem = item.data;
                                     if (item.data && item.data.VeranstaltungVIEWID) {
                                         var newRecId = item.data.VeranstaltungVIEWID;
+                                        AppData.setRecordId("Veranstaltung2", newRecId);
                                         Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                         if (newRecId !== 0 && newRecId !== that.curRecId) {
                                             if (that.curRecId) {
@@ -645,48 +646,53 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
-                        AppData.setErrorMsg(that.binding);
-                        AppData.call("PRC_GetPortalEvents", {
-                            pSearchString: that.binding.searchString,
-                            pSortField: that.binding.sortField,
-                            pSortType: that.binding.sortType
-                        }, function (json) {
-                            Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
-                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_GetPortalEvents", {
+                        pSearchString: that.binding.searchString,
+                        pSortField: that.binding.sortField,
+                        pSortType: that.binding.sortType
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
+                        if (json && json.d && json.d.results && json.d.results.length > 0) {
                             var results = json.d.results;
-                                if (results[0].ResultCode === 0) {
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-                            that.binding.count = results.length;
-                            that.binding.fairmandantId = results[0].FairMandantID;
-                            that.binding.firstentry = results[0].VeranstaltungVIEWID;
+                            if (results[0].ResultCode === 0) {
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+                                that.binding.count = results.length;
+                                that.binding.fairmandantId = results[0].FairMandantID;
+                                that.binding.firstentry = results[0].VeranstaltungVIEWID;
 
-                            that.localeventsdata = new WinJS.Binding.List(results);
+                                that.localeventsdata = new WinJS.Binding.List(results);
 
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.localeventsdata.dataSource;
-                            }
-                                } else {
-                                    that.binding.count = 0;
-                                    that.nextUrl = null;
-                                    that.localeventsdata = null;
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = null;
-                                    }
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.localeventsdata.dataSource;
                                 }
-                            that.selectRecordId(AppData.getRecordId("Veranstaltung"));
+                            } else {
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.localeventsdata = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
+                            if (AppData.getRecordId("Veranstaltung2")) {
+                                that.selectRecordId(AppData.getRecordId("Veranstaltung2"));
+                            } else {
+                                that.selectRecordId(AppData.getRecordId("Veranstaltung"));
+                            }
+
                             Log.print(Log.l.trace, "Data loaded");
                         } else {
                             that.binding.count = 0;
@@ -707,13 +713,13 @@
                             that.loading = false;
                         }
 
-                            Log.ret(Log.l.trace);
+                        Log.ret(Log.l.trace);
                     }, function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_GetPortalEvents error");
-                            if (typeof error === "function") {
-                                error(errorResponse);
+                        Log.print(Log.l.error, "call PRC_GetPortalEvents error");
+                        if (typeof error === "function") {
+                            error(errorResponse);
                         }
-                        });
+                    });
                     Log.ret(Log.l.trace);
                 });
                 Log.ret(Log.l.trace);

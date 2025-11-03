@@ -290,6 +290,7 @@
                                         AppData._persistentStates.odata.login = that.binding.dataLogin.Login;
                                         AppData._persistentStates.odata.password = that.binding.dataLogin.Password;
                                         AppData.setRecordId("Mitarbeiter", dataLogin.MitarbeiterID);
+                                        AppData.setRecordId("Veranstaltung2", null);
                                         response = json;
                                     } else {
                                         that.binding.showWaitCircle = false;

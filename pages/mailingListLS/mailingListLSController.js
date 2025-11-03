@@ -463,7 +463,12 @@
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                //return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                if (AppData.getRecordId("Veranstaltung2")) {
+                    return that.setEventId(AppData.getRecordId("Veranstaltung2"));
+                } else {
+                    return that.setEventId(AppData.getRecordId("Veranstaltung"));
+                }
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

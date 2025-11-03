@@ -493,9 +493,6 @@
                                                 that.prevRecId = that.curRecId;
                                             }
                                             that.curRecId = newRecId;
-                                            //that.binding.eventId = newRecId;
-                                            // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
-                                            AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                             var lastPageId = Application.getPageId(Application.navigator._lastPage);
                                             if (lastPageId !== curPageId) {
                                                 Log.print(Log.l.trace, "Page navigation not completed");
@@ -506,6 +503,8 @@
                                                     updateBindings(item.data);
                                                     // called asynchronously if ok
                                                     that.binding.eventId = newRecId;
+                                                    // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                                    AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                                     if ((curPageId === "eventCopy" ||
                                                         curPageId === "contactResultsList" ||
                                                         //curPageId === "mandatory" ||
@@ -589,6 +588,8 @@
                                                 // current detail view has NO saveData() function - is list
                                                 updateBindings(item.data);
                                                 that.binding.eventId = newRecId;
+                                                // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
+                                                AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                                 if ((curPageId === "eventCopy" ||
                                                     //curPageId === "mandatory" ||
                                                     curPageId === "optQuestionList" ||
@@ -961,7 +962,13 @@
             this.loadData = loadData;
 
             // initially set selection to own eventId!
-            AppData.setRecordId("Veranstaltung2", AppData.getRecordId("Veranstaltung"));
+            if (AppData.getRecordId("Veranstaltung2")) {
+                that.binding.eventId = AppData.getRecordId("Veranstaltung2");
+                //AppData.setRecordId("Veranstaltung2", AppData.getRecordId("Veranstaltung"));
+            } else {
+                that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                AppData.setRecordId("Veranstaltung", AppData.getRecordId("Veranstaltung"));
+            }
 
             that.processAll().then(function () {
                 if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {

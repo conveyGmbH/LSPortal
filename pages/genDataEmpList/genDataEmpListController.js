@@ -533,7 +533,12 @@
                                 that.events = new WinJS.Binding.List(results);
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
-                                    that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                                    // Prüfen ob es Veranstaltung2 gesetzt ist?!
+                                    if (AppData.getRecordId("Veranstaltung2")) {
+                                        that.binding.eventId = AppData.getRecordId("Veranstaltung2");
+                                    } else {
+                                        that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                                    }
                                     AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                     restriction.VeranstaltungID = that.binding.eventId;
                                 }
