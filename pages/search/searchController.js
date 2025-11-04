@@ -8,7 +8,7 @@
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/search/searchService.js" />
 
-(function () { 
+(function () {
     "use strict";
     WinJS.Namespace.define("Search", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
@@ -31,7 +31,7 @@
             var eventsDropdown = pageElement.querySelector("#events");
             var erfasserID = pageElement.querySelector("#ErfasserIDSearch");
             //var erfasserIDname = document.getElementById("ErfasserIDSearch");
-            var erfassungsDatum = pageElement.querySelector("#Erfassungsdatum.win-datepicker");
+            var erfassungsDatum = pageElement.querySelector("#erfassungsdatum.win-datepicker");
             var modifiedTs = pageElement.querySelector("#modifiedTS.win-datepicker");
             var initLand = pageElement.querySelector("#InitLandSearch");
             var radios = pageElement.querySelectorAll('input[type="radio"]');
@@ -55,14 +55,10 @@
             var getEventId = function () {
                 var eventId = null;
                 Log.call(Log.l.trace, "Search.Controller.");
-                if (that.binding.eventId) {
-                    eventId = that.binding.eventId;
+                if (AppData.getRecordId("Veranstaltung2")) {
+                    eventId = AppData.getRecordId("Veranstaltung2");
                 } else {
-                    if (AppData.getRecordId("Veranstaltung2")) {
-                        eventId = AppData.getRecordId("Veranstaltung2");
-                    } else {
-                        eventId = AppData.getRecordId("Veranstaltung");
-                    }
+                    eventId = AppData.getRecordId("Veranstaltung");
                 }
                 Log.ret(Log.l.trace, eventId);
                 return eventId;
@@ -169,9 +165,9 @@
                 },
                 clickResetRestriction: function () {
                     Log.call(Log.l.trace, "Search.Controller.");
-                    that.binding.restriction = getEmptyDefaultValue(Search.defaultValue);
-                    if (Erfassungsdatum && Erfassungsdatum.winControl) {
-                        Erfassungsdatum.winControl.disabled = true;
+                    that.binding.restriction = getEmptyDefaultValue(Search.contactView.defaultValue);
+                    if (erfassungsdatum && erfassungsdatum.winControl) {
+                        erfassungsdatum.winControl.disabled = true;
                     }
                     if (modifiedTS && modifiedTS.winControl) {
                         modifiedTS.winControl.disabled = true;
@@ -344,12 +340,7 @@
                                 that.events = new WinJS.Binding.List(results);
                                 if (eventsDropdown && eventsDropdown.winControl) {
                                     eventsDropdown.winControl.data = that.events;
-                                    var savedRestriction = AppData.getRestriction("Kontakt");
-                                    /*var reset = false;
-                                    if (savedRestriction && savedRestriction.VeranstaltungID && (AppData.getRecordId("Veranstaltung2") !== savedRestriction.VeranstaltungID)) {
-                                        reset = true;
-                                        AppData.setRestriction("Kontakt", {});
-                                    }*/
+                                    that.binding.eventId = that.getEventId();
                                     if (that.getEventId()) {
                                         for (var i = 0; i < results.length; i++) {
                                             if (that.getEventId() === results[i].VeranstaltungVIEWID) {
@@ -382,6 +373,7 @@
                                 if (initLand && initLand.winControl) {
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
                                 }
+                                initLand.selectedIndex = Search.employeeView.defaultValue.index;
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -393,51 +385,51 @@
                             (!initLand.winControl.data || !initLand.winControl.data.length)) {
                             initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                         }
-                        //initLand.selectedIndex = 0;
+                        initLand.selectedIndex = 0;
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
                     //if (!that.employees || !that.employees.length) {
                     //var veranstaltungId = parseInt(that.binding.restriction.VeranstaltungID) || AppData.getRecordId("Veranstaltung");
-                        return Search.employeeView.select(function (json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
-                            Log.print(Log.l.trace, "Reporting: success!");
-                            // employeeView returns object already parsed from json file in response
-                            if (json && json.d) {
-                                that.nextUrl = Search.employeeView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                    that.employees.push(item);
-                                });
-                                if (erfasserID && erfasserID.winControl) {
-                                    erfasserID.winControl.data = that.employees;
-                                }
-                                erfasserID.selectedIndex = Search.employeeView.defaultValue.index;
-                                that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
-
-                            } else {
-                                that.nextUrl = null;
-                                that.employees = null;
-                            }
-
-                        }, function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        }, {
-                                VeranstaltungID: that.getEventId() /*AppData.getRecordId("Veranstaltung")*/
+                    return Search.employeeView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        that.employees = new WinJS.Binding.List([Search.employeeView.defaultValue]);
+                        Log.print(Log.l.trace, "Reporting: success!");
+                        // employeeView returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.nextUrl = Search.employeeView.getNextUrl(json);
+                            var results = json.d.results;
+                            results.forEach(function (item, index) {
+                                that.resultConverter(item, index);
+                                that.employees.push(item);
                             });
-                   // } else {
-                        /*if (erfasserID && erfasserID.winControl) {
-                            erfasserID.winControl.data = that.erfasserID;
+                            if (erfasserID && erfasserID.winControl) {
+                                erfasserID.winControl.data = that.employees;
+                            }
+                            erfasserID.selectedIndex = Search.employeeView.defaultValue.index;
+                            that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
+
+                        } else {
+                            that.nextUrl = null;
+                            that.employees = null;
                         }
-                        that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
-                        
+
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                            VeranstaltungID: that.getEventId() /*AppData.getRecordId("Veranstaltung")*/
+                        });
+                    // } else {
+                    /*if (erfasserID && erfasserID.winControl) {
+                        erfasserID.winControl.data = that.erfasserID;
                     }
-                    return WinJS.Promise.as();*/
+                    that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
+                    
+                }
+                return WinJS.Promise.as();*/
                 }).then(function () {
                     if (that.nextUrl !== null) {
                         that.getNextData();
@@ -453,7 +445,7 @@
                             radios[1].checked = true;
                         } else if (savedRestriction.SHOW_Visitenkarte === "NULL" && savedRestriction.SHOW_Barcode === "NULL") { // Manuelle Erfassng
                             radios[2].checked = true;
-                        }else { // Alle Kontakte
+                        } else { // Alle Kontakte
                             radios[3].checked = true;
                         }
                         if (savedRestriction.Nachbearbeitet === "NULL") {
@@ -465,6 +457,9 @@
                         }
                         if (savedRestriction.MitarbeiterID && typeof savedRestriction.MitarbeiterID === "string") {
                             that.binding.restriction.MitarbeiterID = parseInt(savedRestriction.MitarbeiterID);
+                        }
+                        if (savedRestriction.INITLandID && typeof savedRestriction.INITLandID === "string") {
+                            that.binding.restriction.INITLandID = parseInt(savedRestriction.INITLandID);
                         }
                     }
                     var defaultRestriction = Search.contactView.defaultValue;
@@ -492,14 +487,23 @@
             this.loadData = loadData;
 
             that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
-            }).then(function () {
-                var savedRestriction = AppData.getRestriction("Kontakt");
-                if (typeof savedRestriction === "object") {
-                    that.binding.restriction = savedRestriction;
+                var restriction = AppData.getRestriction("Kontakt");
+                if (typeof restriction === "object") {
+                    if (restriction &&
+                        restriction.VeranstaltungID === null) {
+                        that.binding.restriction = getEmptyDefaultValue(Search.contactView.defaultValue);
+                        if (erfassungsdatum && erfassungsdatum.winControl) {
+                            erfassungsdatum.winControl.disabled = true;
+                        }
+                        if (modifiedTS && modifiedTS.winControl) {
+                            modifiedTS.winControl.disabled = true;
+                        }
+                        AppData.setRestriction("Kontakt", that.binding.restriction);
+                    }
+                    that.binding.restriction = restriction;
                     copyMissingMembersByValue(that.binding.restriction, Search.contactView.defaultValue);
                 }
+
                 if (that.binding.restriction.VeranstaltungID) {
                     that.binding.eventId = that.binding.restriction.VeranstaltungID;
                 } else {
@@ -511,6 +515,9 @@
                 }
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showDateRestrictions();
+            }).then(function () {
+                Log.print(Log.l.trace, "Binding wireup page complete");
+                return that.loadData();
             }).then(function () {
                 AppBar.notifyModified = true;
                 Log.print(Log.l.trace, "Date restrictions shown");
