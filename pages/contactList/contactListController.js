@@ -533,6 +533,13 @@
                         Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (event && event.currentTarget) {
                             that.setEventId(parseInt(event.currentTarget.value));
+                            var restriction = AppData.getRestriction("Kontakt");
+                            if (typeof restriction === "object") {
+                                //always reset contact restriction when VeranstaltungID changed
+                                if (restriction && restriction.VeranstaltungID !== AppData.getRecordId("Veranstaltung2")) {
+                                    AppData.setRestriction("Kontakt", copyMissingMembersByValue({}, { VeranstaltungID: AppData.getRecordId("Veranstaltung2")}));
+                                }
+                            }
                             that.loadData();
                         }
                         Log.ret(Log.l.trace);
