@@ -262,6 +262,7 @@
                     if (that.binding.restriction.MitarbeiterID === 0) {
                         that.binding.restriction.MitarbeiterID = "";
                     }
+                    that.binding.restriction.VeranstaltungID = that.getEventId();
                     that.binding.restriction.bExact = false;
                     AppData.setRestriction('Kontakt', that.binding.restriction);
                     AppData.setRecordId("Kontakt", null);
@@ -472,7 +473,6 @@
                         }
                     }
                     that.binding.restriction = savedRestriction;
-
                     // always define date types
                     if (typeof that.binding.restriction.Erfassungsdatum === "undefined") {
                         that.binding.restriction.Erfassungsdatum = new Date();
@@ -489,8 +489,7 @@
             that.processAll().then(function () {
                 var restriction = AppData.getRestriction("Kontakt");
                 if (typeof restriction === "object") {
-                    if (restriction &&
-                        restriction.VeranstaltungID === null) {
+                    if (restriction && restriction.Veranstaltung !== AppData.getRecordId("Veranstaltung2")) {
                         that.binding.restriction = getEmptyDefaultValue(Search.contactView.defaultValue);
                         if (erfassungsdatum && erfassungsdatum.winControl) {
                             erfassungsdatum.winControl.disabled = true;
