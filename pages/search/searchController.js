@@ -489,7 +489,7 @@
             that.processAll().then(function () {
                 var restriction = AppData.getRestriction("Kontakt");
                 if (typeof restriction === "object") {
-                    if (restriction && restriction.Veranstaltung !== AppData.getRecordId("Veranstaltung2")) {
+                    if (restriction && restriction.VeranstaltungID !== AppData.getRecordId("Veranstaltung2")) {
                         that.binding.restriction = getEmptyDefaultValue(Search.contactView.defaultValue);
                         if (erfassungsdatum && erfassungsdatum.winControl) {
                             erfassungsdatum.winControl.disabled = true;
