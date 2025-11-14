@@ -72,13 +72,19 @@
 #contactList .win-headercontainer,
 #contactList .win-surface,
 #contactList .win-footercontainer {
-    min-width: 1766px;
+    min-width: 1796px;
 }
 
 .view-size-medium-small #contactList .win-headercontainer,
 .view-size-medium-small #contactList .win-surface,
 .view-size-medium-small #contactList .win-footercontainer {
     min-width: inherit;
+}
+
+.pagecontrol:not(.view-size-biggest) #contactList .win-headercontainer,
+.pagecontrol:not(.view-size-biggest) #contactList .win-surface,
+.pagecontrol:not(.view-size-biggest) #contactList .win-footercontainer {
+    width: 100% !important;
 }
 
 /* Styles used for the custom layout */
@@ -232,9 +238,17 @@
     padding: 8px;
 }
 
-    #contactList .list-field-small-fixed > span {
-        display: inline-block;
-        height: auto;
-        width: auto;
+#contactList .list-field-small-fixed > span {
+    display: inline-block;
+    height: auto;
+    width: auto;
 }
 
+#contactList .action-image-container,
+#contactList .incomplete-status-icon-container {
+    float: left;
+    margin-top: -4px;
+    margin-right: 8px;
+}
+#contactList .incomplete-status-icon {
+}

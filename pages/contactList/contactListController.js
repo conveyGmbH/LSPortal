@@ -206,7 +206,8 @@
 
                 var loadNextUrl = function (recordId) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
-                    if (that.contacts && that.nextUrl && listView) {
+                    if (that.contacts && that.nextUrl && listView &&
+                        (!recordId || recordId === that.binding.contactId)) {
                         AppBar.busy = true;
                         that.binding.loading = true;
                         AppData.setErrorMsg(that.binding);
@@ -255,8 +256,8 @@
                                     }, null, nextDocUrl);
                                 });
                             }
-                            if (recordId) {
-                                that.selectRecordId(recordId);
+                            if (recordId && recordId === that.binding.contactId) {
+                                that.selectRecordId();
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs
@@ -331,6 +332,9 @@
 
                 var selectRecordId = function (recordId) {
                     var contact;
+                    if (!recordId) {
+                        recordId = that.binding.contactId;
+                    }
                     Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                     var recordIdNotFound = true;
                     if (recordId && listView && listView.winControl && listView.winControl.selection && that.contacts) {
@@ -540,6 +544,27 @@
                                     AppData.setRestriction("Kontakt", copyMissingMembersByValue({}, { VeranstaltungID: AppData.getRecordId("Veranstaltung2")}));
                                 }
                             }
+                            that.binding.contactId = 0;
+                            AppData.setRecordId("Kontakt", that.binding.contactId);
+                            var curPageId = Application.getPageId(nav.location);
+                            if (curPageId === "contactResultsQuestion" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else if (curPageId === "contact" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else if (curPageId === "contact" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else if (curPageId === "contactResultsCriteria" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else if (curPageId === "contactResultsEvents" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else {
+                                Application.navigateById("contact");
+                            }
                             that.loadData();
                         }
                         Log.ret(Log.l.trace);
@@ -623,7 +648,7 @@
                                                     }
                                                 }, function (errorResponse) {
                                                     if (that.binding.contactId) {
-                                                        that.selectRecordId(that.binding.contactId);
+                                                        that.selectRecordId();
                                                     }
                                                 });
                                             } else {
@@ -722,6 +747,10 @@
                                 Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                     "barcode-qr": { useStrokeColor: false }
                                 });
+                                Colors.loadSVGImageElements(listView, "action-image", 20, Colors.textColor, "name", null, {
+                                    "barcode-qr": { useStrokeColor: false }
+                                });
+                                Colors.loadSVGImageElements(listView, "incomplete-status-icon", 20, Colors.pauseColor, "name");
                             } else if (listView.winControl.loadingState === "complete") {
                                 that.checkLoadingFinished();
                             }
@@ -966,7 +995,7 @@
                         }
                     }).then(function () {
                         if (that.binding.contactId) {
-                            that.selectRecordId(that.binding.contactId);
+                            that.selectRecordId();
                         }
                     });
                     if (!recordId) {
@@ -1001,7 +1030,8 @@
                                 nextRecordId = 0;
                             }
                             that.contacts.splice(index, 1);
-                            that.selectRecordId(nextRecordId);
+                            that.binding.contactId = nextRecordId;
+                            that.selectRecordId();
                         } else {
                             that.contacts.length = 0;
                             AppData.setRecordId("Kontakt", 0);
@@ -1035,9 +1065,9 @@
                 });
                 Log.ret(Log.l.trace);
             }, {
-                    nextUrl: null,
-                    loading: false,
-                    contact: null
-                })
+                nextUrl: null,
+                loading: false,
+                contact: null
+            })
         });
 })();
