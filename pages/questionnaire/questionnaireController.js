@@ -1564,7 +1564,7 @@
                         AppData.setErrorMsg(that.binding, { status: 404, statusText: "no data found" });
                         return WinJS.Promise.as();
                     } else {
-                        return Questionnaire.questionnaireView.select(function (json) {
+                        var questionnaireSelectPromise = Questionnaire.questionnaireView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "Questionnaire.questionnaireView: success!");
@@ -1600,12 +1600,14 @@
                                 }
                             }
                         }, function (errorResponse) {
+                            that.removeDisposablePromise(questionnaireSelectPromise);
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
                             KontaktID: contactId
                         });
+                        return that.addDisposablePromise(questionnaireSelectPromise);
                     }
                 }).then(function () {
                     if (recordId) {
