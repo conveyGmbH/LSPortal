@@ -375,7 +375,6 @@ section[role=main] {
 }
 
 .content-header {
-    height: 92px;
     /*
     width: calc(100% - 2px);
     height: calc(100% - 2px);
@@ -383,6 +382,7 @@ section[role=main] {
     border-width: 1px;
     border-color: gray;
     */
+    height: 92px;
     width: 100%;
     border: none;
 }
