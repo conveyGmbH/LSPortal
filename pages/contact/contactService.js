@@ -70,7 +70,8 @@
                 INITLandID: 0,
                 CreatorSiteID: "",
                 CreatorRecID: "",
-                Nachbearbeitet: 1
+                Nachbearbeitet: 1,
+                IsIncomplete: null
             }
         },
         _cardScanView: {

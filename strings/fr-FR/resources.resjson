@@ -297,6 +297,7 @@
     "contact.mrs"           : "Madame",
     "contact.useRestriction": "utiliser",
     "contact.comment3"      : "Commentaires et notes d'orientation",
+    "contact.mandatoryEmpty": "Champs obligatoires non remplis",
 
     "contactRemote.title"   : "Contact déjà téléchargé",
 

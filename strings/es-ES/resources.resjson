@@ -260,6 +260,7 @@
     "contact.mrs"           : "Frau",
     "contact.useRestriction": "Verwenden",
     "contact.comment3"      : "Kommentar und Notizen zu Interessenten",
+    "contact.mandatoryEmpty": "Mandatory fields not completely filled in",
 
     "contactRemote.title"   : "Bereits hochgeladener Kontakt",
 

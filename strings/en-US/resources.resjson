@@ -59,7 +59,7 @@
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Termin edit",
     "command.permuser"  : "Change to regular customer",
-    "command.upload"  : "Upload",
+    "command.upload"  : 3"Upload",
     "command.windowMaximized" : "Maximized",
     "command.windowRestored" : "Split",
     "command.newmod": "New",
@@ -297,6 +297,7 @@
     "contact.mrs"           : "Mrs",
     "contact.useRestriction": "use",
     "contact.comment3"      : "Comments and lead notes",
+    "contact.mandatoryEmpty": "Mandatory fields not completely filled in",
 
     "contactRemote.title"   : "Already uploaded Contact",
 

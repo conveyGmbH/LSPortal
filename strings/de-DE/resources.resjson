@@ -297,6 +297,8 @@
     "contact.mr"            : "Herr",
     "contact.mrs"           : "Frau",
     "contact.useRestriction": "Verwenden",
+    "contact.comment3"      : "Kommentar und Kontakt-Notizen",
+    "contact.mandatoryEmpty": "Pflichtfelder nicht vollständig ausgefüllt",
 
     "contactRemote.title"   : "Bereits hochgeladener Kontakt",
 

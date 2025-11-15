@@ -260,6 +260,7 @@
     "contact.mrs"           : "Mrs",
     "contact.useRestriction": "use",
     "contact.comment3"      : "Comments and lead notes",
+    "contact.mandatoryEmpty": "Mandatory fields not completely filled in",
 
     "contactRemote.title"   : "Already uploaded Contact",
 

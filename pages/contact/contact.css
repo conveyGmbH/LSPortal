@@ -5,3 +5,8 @@
 #contactController .label.group {
     white-space: normal;
 }
+
+#contactController .mandatory-empty-warning {
+    color: orange;
+    font-weight: bold;
+}

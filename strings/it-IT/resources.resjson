@@ -300,6 +300,7 @@
     "contact.mrs"           : "Sig.ra",
     "contact.useRestriction": "Utilizza",
     "contact.comment3"      : "Commenti e note guida",
+    "contact.mandatoryEmpty": "Campi obbligatori non compilati completamente",
 
     "contactRemote.title"   : "Contatto già caricato",
 
