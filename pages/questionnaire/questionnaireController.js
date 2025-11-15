@@ -694,7 +694,7 @@
                                         master.controller.selectRecordId(master.controller.binding.contactId);
                                     });
                                 }
-                                complete(response);
+                                complete({});
                             });
                     } else {
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
