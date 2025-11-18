@@ -83,6 +83,18 @@
             }
             this.showDateRestrictions = showDateRestrictions;
 
+            var showInCompleteRestrictions = function () {
+                return WinJS.Promise.as().then(function () {
+                    if (typeof that.binding.restriction.IsIncomplete == "undefined") {
+                        that.binding.restriction.IsIncomplete = false;
+                    }
+                    if (typeof that.binding.restriction.QuestionnaireIncomplete == "undefined") {
+                        that.binding.restriction.QuestionnaireIncomplete = false;
+                    }
+                });
+            }
+            this.showInCompleteRestrictions = showInCompleteRestrictions;
+
             var resultConverter = function (item, index) {
                 item.index = index;
                 item.fullName = (item.Vorname ? (item.Vorname + " ") : "") + (item.Nachname ? item.Nachname : "");
@@ -263,6 +275,10 @@
                         that.binding.restriction.MitarbeiterID = "";
                     }
                     that.binding.restriction.VeranstaltungID = that.getEventId();
+
+                    that.binding.restriction.IsIncomplete = that.binding.restriction.IsIncomplete ? 1 : null;
+                    that.binding.restriction.QuestionnaireIncomplete = that.binding.restriction.QuestionnaireIncomplete ? 1 : null;
+
                     that.binding.restriction.bExact = false;
                     AppData.setRestriction('Kontakt', that.binding.restriction);
                     AppData.setRecordId("Kontakt", null);
@@ -514,6 +530,8 @@
                 }
                 Log.print(Log.l.trace, "Data loaded");
                 return that.showDateRestrictions();
+            }).then(function () {
+                return that.showInCompleteRestrictions();
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

@@ -316,6 +316,9 @@
     "search.editedComplete" : "Ja",
     "search.notEditedComplete" : "Nein",
     "search.manuell"        : "Manually",
+    "search.filterIncomplete" : "Only Incomplete",
+    "search.incompleteContact" : "Contact Fields",
+    "search.incompleteQuestionnaire" : "Questionnaire",
 
     "listLocal.title"       : "List of local contacts",
     "listLocal.comment"     : "On this page, use the Back button to go back!",

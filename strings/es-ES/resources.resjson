@@ -316,6 +316,9 @@
     "search.editedComplete" : "Ja",
     "search.notEditedComplete" : "Nein",
     "search.manuell"        : "Manuell",
+    "search.filterIncomplete" : "Nur Unvollständige", 
+    "search.incompleteContact"            : "Kontaktfelder",
+    "search.incompleteQuestionnaire"            : "Fragebogen",
 
     "listLocal.title"       : "Liste lokaler Kontakte",
     "listLocal.comment"     : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",

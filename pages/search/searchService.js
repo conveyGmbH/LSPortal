@@ -39,7 +39,9 @@
                 useErfassungsdatum: false,
                 usemodifiedTS: false,
                 Erfassungsart: 0,
-                Bearbeitet: 0
+                Bearbeitet: 0,
+                IsIncomplete: null,
+                QuestionnaireIncomplete: null
             }
         },
         _Erfassungsart: 0,
