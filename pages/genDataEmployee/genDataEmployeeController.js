@@ -59,7 +59,7 @@
                 }
             }
 
-            var loadDataDelayed = function (searchString) {
+            var loadDataDelayed = function () {
                 if (that.loadDataDelayedPromise) {
                     that.loadDataDelayedPromise.cancel();
                     that.removeDisposablePromise(that.loadDataDelayedPromise);
@@ -473,7 +473,7 @@
                     var master = Application.navigator.masterControl;
                     if (master && master.controller &&
                         typeof master.controller.loadData === "function") {
-                        that.loadDataDelayed(master.controller.loadData());
+                        that.loadDataDelayed();
                     }
                     Log.ret(Log.l.trace);
                 },
