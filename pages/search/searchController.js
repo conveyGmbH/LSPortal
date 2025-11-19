@@ -352,6 +352,9 @@
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.disableFilterKontaktFelder = json.d.results.length === 0;
+                            if (that.binding.disableFilterKontaktFelder) {
+                                that.binding.restriction.IsIncomplete = false;
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -370,6 +373,9 @@
                         // select returns object already parsed from json file in response
                         if (json && json.d) {
                             that.binding.disableFilterFragebogenzeile = json.d.results.length === 0;
+                            if (that.binding.disableFilterFragebogenzeile) {
+                                that.binding.disableFilterFragebogenzeile = false;
+                            }
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs

@@ -42,8 +42,8 @@
                 usemodifiedTS: false,
                 Erfassungsart: 0,
                 Bearbeitet: 0,
-                IsIncomplete: null,
-                QuestionnaireIncomplete: null
+                IsIncomplete: false,
+                QuestionnaireIncomplete: false
             }
         },
         _Erfassungsart: 0,
