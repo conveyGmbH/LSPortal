@@ -374,7 +374,7 @@
                         if (json && json.d) {
                             that.binding.disableFilterFragebogenzeile = json.d.results.length === 0;
                             if (that.binding.disableFilterFragebogenzeile) {
-                                that.binding.disableFilterFragebogenzeile = false;
+                                that.binding.restriction.QuestionnaireIncomplete = false;
                             }
                         }
                     }, function (errorResponse) {
