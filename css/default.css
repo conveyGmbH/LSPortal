@@ -2014,6 +2014,10 @@ html.win-hoverable .win-itemcontainer.win-selectionstylefilled.win-container.win
     }
 }
 
+.listview .win-footercontainer {
+    opacity: 1 !important;
+}
+
 .wait-circle {
     position: absolute;
     width: 50px !important;

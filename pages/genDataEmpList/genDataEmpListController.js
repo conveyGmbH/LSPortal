@@ -35,6 +35,7 @@
             this.selectEmployeePromise = null;
             this.refreshNextPromise = null;
             this.licenceWarningSelected = false;
+            this.busy = false;
 
             var that = this;
 
@@ -194,7 +195,7 @@
                 Log.call(Log.l.trace, "GenDataEmpList.", "recordId=" + recordId);
                 if (that.employees && that.nextUrl && listView &&
                     (!recordId || recordId === that.binding.employeeId)) {
-                    AppBar.busy = true;
+                    that.busy = true;
                     that.binding.loading = true;
                     AppData.setErrorMsg(that.binding);
                     var nextUrl = that.nextUrl;
@@ -215,12 +216,12 @@
                         } else {
                             that.binding.loading = false;
                         }
-                        AppBar.busy = false;
+                        that.busy = false;
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        AppBar.busy = false;
+                        that.busy = false;
                         that.binding.loading = false;
                     }, null, nextUrl);
                 }
@@ -305,6 +306,19 @@
                 }
             }
             this.resultConverter = resultConverter;
+
+            var checkLoadingFinished = function () {
+                WinJS.Promise.timeout(10).then(function () {
+                    if (!that.busy) {
+                        that.binding.loading = false;
+                    } else {
+                        WinJS.Promise.timeout(100).then(function () {
+                            that.checkLoadingFinished();
+                        });
+                    }
+                });
+            }
+            this.checkLoadingFinished = checkLoadingFinished;
 
             // define handlers
             this.eventHandlers = {
@@ -469,6 +483,7 @@
             }
 
             var loadData = function (recordId) {
+                var prevLicenceWarning = that.binding.licenceWarning;
                 var jsonResponse = null;
                 Log.call(Log.l.trace, "GenDataEmpList.Controller.", "recordId=" + recordId + "prevID" + that.binding.employeeId);
                 if (that.selectEmployeePromise) {
@@ -506,7 +521,7 @@
                     }*/
                 }
                 if (!recordId) {
-                    AppBar.busy = true;
+                    that.busy = true;
                     that.binding.loading = true;
                 }
                 AppData.setErrorMsg(that.binding);
@@ -554,7 +569,7 @@
                                 eventId = restriction.VeranstaltungID;
                             }
                         }
-                        AppData.call("FCT_ExistsLicenceWarning", {
+                        return AppData.call("FCT_ExistsLicenceWarning", {
                             pVeranstaltungID: eventId
                         }, function (json) {
                             Log.print(Log.l.info, "call FCT_ExistsLicenceWarning: success! FCT_ExistsLicenceWarning=" +
@@ -569,7 +584,10 @@
                             Log.print(Log.l.error, "call FCT_ExistsLicenceWarning: error");
                             AppData.setErrorMsg(that.binding, errorResponse);
                         });       
+                    } else {
+                        return WinJS.Promise.as();
                     }
+                }).then(function () {
                     return GenDataEmpList.employeeView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -580,7 +598,7 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                        AppBar.busy = false;
+                        that.busy = false;
                         that.binding.loading = false;
                     }, restriction, recordId);
                 }).then(function () {
@@ -608,7 +626,7 @@
                             }
                             that.binding.loading = false;
                         }
-                        AppBar.busy = false;
+                        that.busy = false;
                     } else {
                         if (json && json.d) {
                             var employee = json.d;
@@ -621,15 +639,22 @@
                                 that.binding.locked = employee.Locked;
                                 /*#7573 Kommentar Nr.5 */
                                 //that.selectRecordId(recordId);
+                            } else {
+                                that.loadData();
                             }
-                        } else {
-                            that.loadData();
                         }
                     }
                     return WinJS.Promise.as();
                 }).then(function () {
                     if (that.binding.employeeId) {
                         that.selectRecordId();
+                    }
+                    var pageControl = pageElement.winControl;
+                    if (pageControl && pageControl.updateLayout && !pageControl.inResize &&
+                        prevLicenceWarning !== that.binding.licenceWarning) {
+                        pageControl.prevWidth = 0;
+                        pageControl.prevHeight = 0;
+                        pageControl.updateLayout.call(pageControl, pageElement);
                     }
                 });
                 if (!recordId) {

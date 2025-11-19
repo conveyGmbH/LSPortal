@@ -55,6 +55,7 @@
 
                 this.firstDocsIndex = 0;
                 this.firstContactsIndex = 0;
+                this.busy = false;
 
                 var that = this;
 
@@ -208,7 +209,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                     if (that.contacts && that.nextUrl && listView &&
                         (!recordId || recordId === that.binding.contactId)) {
-                        AppBar.busy = true;
+                        that.busy = true;
                         that.binding.loading = true;
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "calling select ContactList.contactView...");
@@ -229,7 +230,7 @@
                             } else {
                                 that.binding.loading = false;
                             }
-                            AppBar.busy = false;
+                            that.busy = false;
                             if (that.nextDocUrl) {
                                 that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function () {
                                     Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
@@ -264,7 +265,7 @@
                             // or server returns response with an error status.
                             Log.print(Log.l.error, "ContactList.contactView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            AppBar.busy = false;
+                            that.busy = false;
                             that.binding.loading = false;
                         }, null, nextUrl);
                     }
@@ -514,6 +515,19 @@
                     Log.ret(Log.l.u1);
                 }
                 this.imageRotate = imageRotate;
+
+                var checkLoadingFinished = function () {
+                    WinJS.Promise.timeout(10).then(function () {
+                        if (!that.busy) {
+                            that.binding.loading = false;
+                        } else {
+                            WinJS.Promise.timeout(100).then(function () {
+                                that.checkLoadingFinished();
+                            });
+                        }
+                    });
+                }
+                this.checkLoadingFinished = checkLoadingFinished;
 
                 // define handlers
                 this.eventHandlers = {
@@ -812,7 +826,7 @@
                             that.binding.doccount = 0;
                             that.nextDocUrl = null;
                         }
-                        AppBar.busy = true;
+                        that.busy = true;
                         that.binding.loading = true;
                     }
                     AppData.setErrorMsg(that.binding);
@@ -913,7 +927,7 @@
                                     }
                                     that.binding.loading = false;
                                 }
-                                AppBar.busy = false;
+                                that.busy = false;
                             } else {
                                 if (json && json.d) {
                                     var contact = json.d;
@@ -933,7 +947,7 @@
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             AppData.setErrorMsg(that.binding, errorResponse);
-                            AppBar.busy = false;
+                            that.busy = false;
                             that.binding.loading = false;
                         }, recordId || getRestriction());
                     }).then(function () {
