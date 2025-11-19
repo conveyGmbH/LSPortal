@@ -16,6 +16,8 @@
             Application.Controller.apply(this, [pageElement, {
                 eventId: 0,
                 restriction: getEmptyDefaultValue(Search.contactView.defaultValue),
+                disableFilterKontaktFelder: false,
+                disableFilterFragebogenzeile: false,
                 Erfassungsart0: Search.Erfassungsart0,
                 Erfassungsart1: Search.Erfassungsart1,
                 Erfassungsart2: Search.Erfassungsart2,
@@ -343,6 +345,47 @@
                 that.binding.messageText = null;
                 AppData.setErrorMsg(that.binding);
                 var ret = WinJS.Promise.as().then(function () {
+                    return Search.mandatoryView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Search.mandatoryView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.binding.disableFilterKontaktFelder = json.d.results.length === 0;
+                            if (that.binding.disableFilterKontaktFelder) {
+                                that.binding.restriction.IsIncomplete = false;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                            VeranstaltungID: that.getEventId(),
+                            FieldFlag: 1
+                        });
+                }).then(function () {
+                    // Fragebogenzeile
+                    return Search.fragebogenzeileView.select(function (json) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                        Log.print(Log.l.trace, "Search.fragebogenzeileView: success!");
+                        // select returns object already parsed from json file in response
+                        if (json && json.d) {
+                            that.binding.disableFilterFragebogenzeile = json.d.results.length === 0;
+                            if (that.binding.disableFilterFragebogenzeile) {
+                                that.binding.restriction.QuestionnaireIncomplete = false;
+                            }
+                        }
+                    }, function (errorResponse) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                            VeranstaltungID: that.getEventId(),
+                            PflichtFlag: 1
+                    });
+                }).then(function () {
                     if (!that.events) {
                         return Search.eventView.select(function (json) {
                             // this callback will be called asynchronously
@@ -439,14 +482,6 @@
                     }, {
                             VeranstaltungID: that.getEventId() /*AppData.getRecordId("Veranstaltung")*/
                         });
-                    // } else {
-                    /*if (erfasserID && erfasserID.winControl) {
-                        erfasserID.winControl.data = that.erfasserID;
-                    }
-                    that.binding.mitarbeiterId = Search.employeeView.defaultValue.MitarbeiterVIEWID;
-                    
-                }
-                return WinJS.Promise.as();*/
                 }).then(function () {
                     if (that.nextUrl !== null) {
                         that.getNextData();
