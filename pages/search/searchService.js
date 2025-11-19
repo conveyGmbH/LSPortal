@@ -6,6 +6,8 @@
 (function () {
     "use strict";
 
+    var namespaceName = "Search";
+
     WinJS.Namespace.define("Search", {
         _contactView: {
             get: function() {
@@ -14,7 +16,7 @@
         },
         contactView: {
             select: function(complete, error, restrictions) {
-                Log.call(Log.l.trace, "contactView.");
+                Log.call(Log.l.trace, namespaceName + "contactView.");
                 var ret = Search._contactView.get(complete, error, restrictions);
                 Log.ret(Log.l.trace);
                 return ret;
@@ -139,7 +141,7 @@
         },
         employeeView: {
             select: function (complete, error, restriction) {
-                Log.call(Log.l.trace, "Search.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.");
                 var ret = Search._employeeView.select(complete, error, restriction, {
                     ordered: true,
                     orderAttribute: "Nachname"
@@ -154,7 +156,7 @@
                 return ret;
             },
             selectNext: function (complete, error, response, nextUrl) {
-                Log.call(Log.l.trace, "Search.");
+                Log.call(Log.l.trace, namespaceName + ".employeeView.");
                 var ret = Search._employeeView.selectNext(complete, error, response, nextUrl);
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -176,7 +178,7 @@
         },
         eventView: {
             fetchNext: function (results, url, complete, error) {
-                Log.call(Log.l.trace, "Search.eventView.");
+                Log.call(Log.l.trace, namespaceName + ".eventView.");
                 var nextJson = null;
                 var ret = Search._eventView.selectNext(function (json) {
                     nextJson = json;
@@ -212,7 +214,7 @@
                 return ret;
             },
             fetchAll: function (json, complete, error) {
-                Log.call(Log.l.trace, "GenDataEmpList.eventView.", "");
+                Log.call(Log.l.trace, namespaceName + ".eventView.", "");
                 var ret;
                 var nextUrl = Search._eventView.getNextUrl(json);
                 if (nextUrl) {
@@ -227,7 +229,7 @@
                 return ret;
             },
             select: function (complete, error) {
-                Log.call(Log.l.trace, "Search.eventView.");
+                Log.call(Log.l.trace, namespaceName + ".eventView.");
                 var nextJson = null;
                 var ret = Search._eventView.select(function (json) {
                     nextJson = json;
@@ -252,6 +254,54 @@
             },
             defaultValue: {
                 Name: ""
+            }
+        },
+        _mandatoryView: {
+            get: function () {
+                return AppData.getFormatView("PflichtFelder", 0, false);
+            }
+        },
+        mandatoryView: {
+            select: function (complete, error, restriction) {
+                Log.call(Log.l.trace, namespaceName + ".mandatoryView.");
+                var ret = Search._mandatoryView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "PflichtFelderVIEWID"
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+
+            }
+        },
+        _fragebogenzeileView: {
+            get: function () {
+                return AppData.getFormatView("Fragebogenzeile", 0);
+            }
+        },
+        fragebogenzeileView: {
+            select: function (complete, error, restricion) {
+                Log.call(Log.l.trace, namespaceName + ".fragebogenzeileView.");
+                var ret = Search._fragebogenzeileView.select(complete, error, restricion,
+                    {
+                        ordered: true,
+                        orderAttribute: "SORTIERUNG",
+                        desc: true
+                    });
+                // this will return a promise to controller
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, namespaceName + ".fragebogenzeileView.");
+                var ret = Search._fragebogenzeileView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, namespaceName + ".fragebogenzeileView.");
+                var ret = Search._fragebogenzeileView.map;
+                Log.ret(Log.l.trace);
+                return ret;
             }
         }
     });
