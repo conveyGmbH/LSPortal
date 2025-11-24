@@ -59,7 +59,7 @@
     "command.mailTracking"  : "Mailtracking",
     "command.terminedit"  : "Termin edit",
     "command.permuser"  : "Change to regular customer",
-    "command.upload"  : 3"Upload",
+    "command.upload"  : "Upload",
     "command.windowMaximized" : "Maximized",
     "command.windowRestored" : "Split",
     "command.newmod": "New",
