@@ -901,7 +901,6 @@
                 that.binding.progress.showOther = true;
                 var exporter = new PDFExportXlsx.ExporterClass();
                 var dbView = Reporting.KontaktPDF;
-                //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
                 var fileName = "PDFExcel";
                 that.binding.restrictionPdf = {};
                 that.binding.restrictionExcel = {};

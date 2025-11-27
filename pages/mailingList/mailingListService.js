@@ -35,7 +35,7 @@
                 return ret;
             },
             getNextUrl: function (response) {
-                Log.call(Log.l.trace, "MailingList.xLReportView.");
+                Log.call(Log.l.trace, "MailingList.");
                 var ret = MailingList._VAMail.getNextUrl(response);
                 Log.ret(Log.l.trace);
                 return ret;

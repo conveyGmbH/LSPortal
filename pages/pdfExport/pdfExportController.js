@@ -159,7 +159,6 @@
                 Log.call(Log.l.trace, "Reporting.Controller.");
                 var exporter = new PDFExportXlsx.ExporterClass();
                 var dbView = PDFExport.KontaktPDF;
-                //var dbViewTitle = PDFExport.xLAuswertungViewNoQuestTitle;
                 var fileName = "PDFExcel";
                 if (!that.binding.restrictionExcel) {
                     that.binding.restrictionExcel = {};
