@@ -15,14 +15,14 @@
 
 .navigationbar-container {
     background-color: var(--Window);
-    color: ButtonText;
+    color: var(--ColorText);
     position: absolute;
     display: block;
     margin: 0;
     padding: 0;
 }
 .masterhost-container .pagecontrol {
-    background-color: transparent;
+    background-color: var(--ColorMasterHostBackground);
     /*
     border-right-style: solid;
     border-right-width: 2px;
@@ -30,17 +30,11 @@
     */
 }
 .masterhost-background {
-    background-color: transparent;
+    background-color: var(--ColorMasterHostBackground);
 }
 .contenthost-background {
-    background-color: transparent;
+    background-color: var(--ColorBackground);
 }
-/*
-.win-selectionstylefilled.win-listview .win-selected {
-    background-color: #e0e0e0;
-    color: HighlightText;
-}
-*/
 
 .navigationbar-container-horizontal {
     height: 48px;
@@ -358,7 +352,7 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     width: calc(100% - 16px);
 }
 .win-splitviewcommand-label {
-    color: var(--WindowText);
+    color: var(--ColorNavigation);
     font-size: 16px;
     margin-top: 16px;
     margin-bottom: 0;
@@ -407,7 +401,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 
 #navigationbar_horizontal .win-selected,
 #navigationbar_vertical .win-selected {
-    color: var(--WindowText);
+    color: var(--ColorNavigation);
 }
 #navigationbar_horizontal.win-listview {
     margin: 0;
@@ -765,7 +759,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     background-color: var(--ColorSignalRed);
 }
 .appHeader #menu1 .win-command#logoff:active {
-    background-color: var(--ColorNavigationDefault);
+    background-color: var(--ColorNavigation);
     transition: none;
 }
 .appHeader #menu1 .win-command#logoff:not(:hover):not(:active) .white-icon {
@@ -1005,7 +999,7 @@ user name and on-site / off-site button
 }
 
 .win-selected .onsite-offsite, .win-selected .list-symbol-addon {
-    border-color: #c66145;
+    border-color: var(--ColorNavigationSelected);
 }
 /*
 .onsite-offsite-symbol {

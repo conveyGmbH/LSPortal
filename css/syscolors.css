@@ -13,8 +13,16 @@
     --ColorSignalRed: #c23b22; /* Dark Pastel Red */
     --ColorSignalOrange: #ed9121; /* Carrot Orange */
     --ColorSignalGreen: #66b032; /* Green (Ryb) */
-    --ColorAccentDefault: #fe3600;
-    --ColorNavigationDefault: #d86141;
+    --ColorAccent: #fe3600;
+    --ColorSelectionBackground: var(--ColorAccent);
+    --ColorNavigation: #d86141;
+    --ColorNavigationSelected: var(--ColorNavigation);
+    --ColorText: var(--WindowText);
+    --ColorLabel: var(--ColorSignalGrey);
+    --ColorBackground: var(--Window);
+    --ColorMasterHostBackground: var(--Window);
+    --ColorTileText: var(--WindowText);
+    --ColorTileBackground: var(--Window);
 }
 
 /* Chrome & Safari (any version) */
