@@ -735,6 +735,7 @@
     "label.showAgain" : "Show again",
     "label.close" : "Close",
     "label.adminAppHelpText" : "Help text management",
+    "label.clientManagementEvents" : "Events",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1285,6 +1286,13 @@
     "clientmanagementlicenses.licensebtnLabel" : "Enter",
     "clientmanagementlicenses.licensetext" : "Ordering Info", 
     "clientmanagementlicenses.editlicensebtnLabel" : "Edit",
+
+    "clientManagementEvents.title" : "Events",
+    "clientManagementEvents.event" : "Event name",
+    "clientManagementEvents.startdate" : "Start date",
+    "clientManagementEvents.enddate" : "End date",
+    "clientManagementEvents.anzuser" : "Number of users",
+    "clientManagementEvents.anzkontakte" : "Number of contacts",
 
     "mailingtracking.title" : "Mailtracking",
     "mailingtracking.mailtype" : "Mailtyp",

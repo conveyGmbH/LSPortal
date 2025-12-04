@@ -268,6 +268,7 @@
         { id: "clientManagementSearchList", group: 14, disabled: false },
         { id: "clientManagement", group: 75, disabled: false },
         { id: "clientManagementLicenses", group: 75, disabled: false },
+        { id: "clientManagementEvents", group: 75, disabled: false },
         { id: "mailingTracking", group: 13, disabled: false },
         { id: "voucherAdministration", group: -16, disabled: false },
         { id: "resourcesAdministration", group: -17, disabled: false },

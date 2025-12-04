@@ -1,0 +1,47 @@
+﻿#clientManagementEventsList #startdate {
+    width: 100px;
+    text-align: center;
+}
+
+#clientManagementEventsList #enddate {
+    width: 100px;
+    text-align: center;
+}
+
+#clientManagementEventsList #event {
+    width: 400px;
+    text-align: left;
+}
+
+#clientManagementEventsList #anzuser {
+    width: 200px;
+    text-align: center;
+}
+
+#clientManagementEventsList #anzkontakte {
+    width: 200px;
+    text-align: center;
+}
+
+#clientManagementEventsList .win-itemscontainer {
+    padding-left: 20px;
+}
+
+#clientManagementEventsList .list-field-small-fixed {
+    width: 300px;
+    padding-left: 20px;
+}
+
+#clientManagementEventsList {
+    width: 100%;
+    height: auto;
+}
+
+    #clientManagementEventsList .list-header {
+        padding-left: 27px;
+        font-weight: bold;
+    }
+
+    #clientManagementEventsList .list-footer {
+        margin-left: 22px;
+    }
