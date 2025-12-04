@@ -8,6 +8,13 @@
     --MenuText: MenuText;
     --WindowText: WindowText;
     --Window: Window;
+    --ColorSignalBlue: #318ce7; /* Bleu de France */
+    --ColorSignalGrey: #808080; /* Grey */
+    --ColorSignalRed: #c23b22; /* Dark Pastel Red */
+    --ColorSignalOrange: #ed9121; /* Carrot Orange */
+    --ColorSignalGreen: #66b032; /* Green (Ryb) */
+    --ColorAccentDefault: #fe3600;
+    --ColorNavigationDefault: #d86141;
 }
 
 /* Chrome & Safari (any version) */

@@ -136,7 +136,7 @@
     margin-bottom: 5px;
 }
 .list-symbol-IDw {
-    color: forestgreen;
+    color: var(--ColorSignalGreen);
 }
 
 #esStaffAdministrationListController .contentarea {
@@ -145,14 +145,14 @@
 .reddot {
     height: 25px;
     width: 25px;
-    background-color: firebrick;
+    background-color: var(--ColorSignalRed);
     border-radius: 50%;
     display: inline-block;
 }
 .bluedot {
     height: 25px;
     width: 25px;
-    background-color: navy;
+    background-color: var(--ColorSignalBlue);
     border-radius: 50%;
     display: inline-block;
 }

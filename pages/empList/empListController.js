@@ -260,11 +260,11 @@
                 }
                 if (item.Locked) {
                     item.addonIcon = "delete";
-                    item.addonColor = "firebrick";
+                    item.addonColor = "var(--ColorSignalRed)";
                     item.addonIconTitle = item.ReasonLocked;
                 } else if (item.HasTwoFactor) {
                     item.addonIcon = "lock";
-                    item.addonColor = "forestgreen";
+                    item.addonColor = "var(--ColorSignalGreen)";
                     item.addonIconTitle = "2FA enabled";
                 } else {
                     item.addonIcon = "";

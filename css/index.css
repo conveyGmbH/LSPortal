@@ -762,10 +762,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     transition: none;
 }
 .appHeader #menu1 .win-command#logoff:hover {
-    background-color: firebrick;
+    background-color: var(--ColorSignalRed);
 }
 .appHeader #menu1 .win-command#logoff:active {
-    background-color: #C14E4E;
+    background-color: var(--ColorNavigationDefault);
     transition: none;
 }
 .appHeader #menu1 .win-command#logoff:not(:hover):not(:active) .white-icon {
@@ -780,7 +780,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     font-weight: bold;
 }
 .appHeader #menu1 .win-command#logoff:not(:hover):not(:active) .win-label {
-    color: firebrick !important;
+    color: var(--ColorSignalRed) !important;
 }
 .appHeader #menu1 .win-command#logoff:hover .win-label,
 .appHeader #menu1 .win-command#logoff:active .win-label {
@@ -846,32 +846,33 @@ event name
     right: 250px;
     top: 8px;
 }
-.publish-button .win-button:not(:hover) {
-    color: rgba(178,34,34,0.8);
-    background-color: #e6e6e6;
+.publish-button .win-button {
+    background-color: white;
 }
 .publish-button .win-button:hover,
 .publish-button .win-button:active {
-    color: firebrick;
-    background-color: #f2f2f2;
+    background-color: lightgrey;
+}
+.publish-button .win-button > span {
+    color: var(--ColorSignalRed);
 }
 /*
-    user name and on-site / off-site button
+user name and on-site / off-site button
 */
-.status-on-off {
-    margin: 0;
-    padding-top: 2px;
-    padding-right: 4px;
-    padding-bottom: 2px;
-    padding-left: 2px;
-    min-width: 60px;
-    max-width: 236px;
-    height: 48px;
-    visibility: hidden;
-    display: block;
-    position: absolute;
-    right: 0;
-}
+    .status-on-off {
+        margin: 0;
+        padding-top: 2px;
+        padding-right: 4px;
+        padding-bottom: 2px;
+        padding-left: 2px;
+        min-width: 60px;
+        max-width: 236px;
+        height: 48px;
+        visibility: hidden;
+        display: block;
+        position: absolute;
+        right: 0;
+    }
 
 .user-name-container {
     float: left;
@@ -962,7 +963,7 @@ event name
 }
 /*
 .cnv-ui-dark .addon-image {
-    background-color: lightgreen;
+    background-color: var(--ColorSignalGreen);
 }
 */
 .addon-image > svg {
@@ -1054,27 +1055,27 @@ event name
 }
 
 .statusNew {
-    background-color: navy;
+    background-color: var(--ColorSignalBlue);
     color: white;
 }
 
 .statusOn {
-    background-color: forestgreen;
+    background-color: var(--ColorSignalGreen);
     color: white;
 }
 
 .statusPause {
-    background-color: orange;
+    background-color: var(--ColorSignalOrange);
     color: white;
 }
 
 .statusOff {
-    background-color: firebrick;
+    background-color: var(--ColorSignalRed);
     color: white;
 }
 
 .statusUnknown {
-    background-color: grey;
+    background-color: var(--ColorSignalGrey);
     color: white;
 }
 

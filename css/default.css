@@ -604,17 +604,17 @@ select {
     text-align: center;
 }
 
-.servicelink { 
+.servicelink {
     font-size: 24px;
     line-height: 1.5;
-    color: #ea5a07;
+    color: var(--ColorNavigationDefault);
     text-decoration: none;
 }
 
-    .servicelink:hover {
-        color: var(--WindowText);
-        text-decoration: none;
-    }
+.servicelink:hover {
+    color: var(--WindowText);
+    text-decoration: none;
+}
 
 .view-size-small .top > .ccontainer,
 .view-size-small .footer > .ccontainer {
@@ -1209,13 +1209,13 @@ view-size-smallest .win-container {
     float: left;
     width:calc(100% - 65px); 
     height:100%;
-    color: gray
+    color: var(--ColorSignalGrey);
 }
 .list-compressed-red {
     float: left;
     width:calc(100% - 65px); 
     height:100%;
-    color: firebrick;
+    color: var(--ColorSignalRed);
 }
 .win-selected .list-compressed-red {
     background-color: whitesmoke;
@@ -1224,7 +1224,7 @@ view-size-smallest .win-container {
     float: left;
     width: calc(100% - 65px);
     height: 100%;
-    color: forestgreen
+    color: var(--ColorSignalGreen);
 }
 .list-compressed-title {
     min-height: 26px;

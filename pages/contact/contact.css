@@ -7,6 +7,6 @@
 }
 
 #contactController .mandatory-empty-warning {
-    color: orange;
+    color: var(--ColorSignalOrange);
     font-weight: bold;
 }

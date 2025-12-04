@@ -3,7 +3,7 @@
     background-color: transparent;
 }
 /*div.row-bkg:hover, div.row-bkg:active {
-    color: firebrick;
+    color: var(--ColorSignalRed);
 }*/
 #gendataskillentryList .listview {
     position: relative;

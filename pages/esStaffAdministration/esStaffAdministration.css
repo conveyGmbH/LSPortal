@@ -15,7 +15,7 @@
 }
 .text-lightcolorU {
     font-weight: bold;
-    color: firebrick;
+    color: var(--ColorSignalRed);
     text-align: center
 }
 #titlecombo {
@@ -35,7 +35,7 @@ input[type="email"]:disabled {
 */
 .warning {
     font-weight: bold;
-    color: firebrick;
+    color: var(--ColorSignalRed);
     text-align: center
 }
 .staffordered {

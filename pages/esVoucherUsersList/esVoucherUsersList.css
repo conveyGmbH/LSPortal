@@ -134,5 +134,5 @@
     width: 100%;
 }
 .list-symbol-IDw {
-    color: forestgreen;
+    color: var(--ColorSignalGreen);
 }

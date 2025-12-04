@@ -111,7 +111,7 @@
     width: calc(100% - 90px);
 }
 .empList .licence-warning-text {
-    color: firebrick;
+    color: var(--ColorSignalRed);
     font-weight: bold;
 }
 
