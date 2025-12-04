@@ -730,6 +730,7 @@
     "label.showAgain" : "Montrer à nouveau",
     "label.close" : "Fermer",
     "label.adminAppHelpText" : "Gestion des textes d'aide",
+    "label.clientManagementEvents" : "Événements",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1280,6 +1281,13 @@
     "clientmanagementlicenses.licensebtnLabel" : "Entrer",
     "clientmanagementlicenses.licensetext" : "Infos commande", 
     "clientmanagementlicenses.editlicensebtnLabel" : "Changement",
+
+    "clientManagementEvents.title" : "Événements",
+    "clientManagementEvents.event" : "Nom de l'événement",
+    "clientManagementEvents.startdate" : "Date de début",
+    "clientManagementEvents.enddate" : "Date de fin",
+    "clientManagementEvents.anzuser" : "Nombre d'utilisateurs",
+    "clientManagementEvents.anzkontakte" : "Nombre de contacts",
 
     "mailingtracking.title" : "Suivi du courrier",
     "mailingtracking.mailtype" : "Type de poste",
