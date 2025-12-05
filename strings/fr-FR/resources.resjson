@@ -921,8 +921,11 @@
     "skills.answercnt"      : "Réponses",
     "skills.questionDelete" : "Voulez-vous supprimer cet groupe de capacité?",
 
-    "skillentry.title"      : "entrer une capacité",
+    "skillentry.title"      : "Entrer une capacité",
     "skillentry.count"      : "Nombre",
+
+    "genDatSkillEntry.title"      : "Entrer une capacité",
+    "genDatSkillEntry.count"      : "Nombre",
 
     "appheader.notpublished": "Questionnaire non validé pour APP/s",
     "appheader.portal"      : "Portal",

@@ -11,83 +11,84 @@
     <div class="clientManagementEvents fragment">
         <div id="clientManagementEventsController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
-                    <div class="content-header">
-                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                        <div class="content-header-line win-type-caption">
-                            <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'clientManagementEvents.title'}"></span>
-                            <span class="date-field"></span>
-                        </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header">
-                            <div class="list-landscape-only">
-                                <div id="event" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.event'}"></div>
-                                <div id="startdate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.startdate'}"></div>
-                                <div id="enddate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.enddate'}"></div>
-                                <div id="anzuser" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.anzuser'}"></div>
-                                <div id="anzkontakte" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.anzkontakte'}"></div>
-                            </div>
-                        </div>
-                        <div class="list-footer">
-                            <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'clientmanagementlicenses.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clientManagementEventslist-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
-                            <div id="event" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: EventName"></div>
-                            <div id="startdate" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: StartDate"></div>
-                            <div id="enddate" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: EndDate"></div>
-                            <div id="anzuser" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: AnzUser"></div>
-                            <div id="anzkontakte" class="list-field-small-fixed win-type-ellipsis"
-                                 data-win-bind="textContent: AnzKontakte"></div>
-                        </div>
-                        <div class="list-portrait-only">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-compressed">
-                                    <!--list-localeventsList-->
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: EventName"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: StartDate"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: EndDate"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: AnzUser"></span>
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: AnzKontakte"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                    </div>
-                    <div id="clientManagementEventsList"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
+	            <div class="contentarea win-type-body">
+		            <div class="header-separator"></div>
+		            <div class="content-header">
+			            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+			            <div class="content-header-line win-type-caption">
+				            <span class="id-field"></span>
+				            <span class="caption-field" data-win-res="{textContent: 'clientManagementEvents.title'}"></span>
+				            <span class="date-field"></span>
+			            </div>
+		            </div>
+		            <div class="headerFooterPlaceholder">
+			            <div class="list-header">
+				            <div class="list-landscape-only">
+					            <div id="event" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.event'}"></div>
+					            <div id="startdate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.startdate'}"></div>
+					            <div id="enddate" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.enddate'}"></div>
+					            <div id="anzuser" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.anzuser'}"></div>
+					            <div id="anzkontakte" class="list-field-small-fixed win-type-ellipsis" data-win-res="{textContent: 'clientManagementEvents.anzkontakte'}"></div>
+				            </div>
+			            </div>
+			            <div class="list-footer">
+				            <div class="status">
+					            <progress class="win-progress-bar progress"></progress>
+					            <div class="counter">
+						            <span data-win-res="{textContent: 'clientmanagementlicenses.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+					            </div>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="clientManagementEventslist-template"
+		                 data-win-control="WinJS.Binding.Template" style="display: none">
+			            <div class="list-landscape-only">
+				            <div class="row-bkg-gray"
+				                 data-win-bind="style.display: index Binding.Converter.oddToDisplay"></div>
+				            <div id="event" class="list-field-small-fixed win-type-ellipsis"
+				                 data-win-bind="textContent: EventName"></div>
+				            <div id="startdate" class="list-field-small-fixed win-type-ellipsis"
+				                 data-win-bind="textContent: StartDate"></div>
+				            <div id="enddate" class="list-field-small-fixed win-type-ellipsis"
+				                 data-win-bind="textContent: EndDate"></div>
+				            <div id="anzuser" class="list-field-small-fixed win-type-ellipsis"
+				                 data-win-bind="textContent: AnzUser"></div>
+				            <div id="anzkontakte" class="list-field-small-fixed win-type-ellipsis"
+				                 data-win-bind="textContent: AnzKontakte"></div>
+			            </div>
+			            <div class="list-portrait-only">
+				            <div class="row-separator"></div>
+				            <div class="list-div-left">
+					            <div class="list-compressed">
+						            <!--list-localeventsList-->
+						            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+						                  data-win-bind="textContent: EventName"></span>
+						            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+						                  data-win-bind="textContent: StartDate"></span>
+						            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+						                  data-win-bind="textContent: EndDate"></span>
+						            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+						                  data-win-bind="textContent: AnzUser"></span>
+						            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+						                  data-win-bind="textContent: AnzKontakte"></span>
+					            </div>
+				            </div>
+			            </div>
+		            </div>
+		            <div>
+		            </div>
+		            <div id="clientManagementEventsList"
+		                 class="listview win-selectionstylefilled"
+		                 data-win-control="WinJS.UI.ListView"
+		                 data-win-options="{
                                 header : select('.list-header'),
                                 itemTemplate: select('.clientManagementEventslist-template'),
                                 input : select('.input'),
                                 edit : select('.edit'),
                                 footer: select('.list-footer')
                          }">
-                    </div>
-                </div>
+		            </div>
+	            </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
             </section>

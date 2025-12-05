@@ -926,6 +926,9 @@
     "skillentry.title"      : "Immetti ruolo",
     "skillentry.count"      : "Numero",
 
+    "genDatSkillEntry.title"      : "Immetti ruolo",
+    "genDatSkillEntry.count"      : "Numero",
+
     "appheader.notpublished": "Questionario non rilasciato per APP/i",
     "appheader.portal"      : "Portal",
 

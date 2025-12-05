@@ -929,6 +929,9 @@
     "skillentry.title"      : "Fähigkeit eintragen",
     "skillentry.count"      : "Anzahl",
 
+    "genDatSkillEntry.title"	:"Fähigkeit eintragen",
+    "genDatSkillEntry.count"      : "Anzahl",
+
     "appheader.notpublished": "Fragebogen nicht für APP/s freigegeben",
     "appheader.portal"      : "Portal",
 
@@ -1973,7 +1976,7 @@
     "adminAppHelpText.bodyText"			: "Hilfstext",
     "adminAppHelpText.htmlupload"			: "Html Datei upload",
 
-     "tfa.title": "Zwei-Faktor-Authentifizierung",
+    "tfa.title": "Zwei-Faktor-Authentifizierung",
     "tfa.loading": "Zwei-Faktor-Authentifizierung wird geladen...",
     "tfa.success": "Zwei-Faktor-Authentifizierung erfolgreich.",
     "tfa.error": "Zwei-Faktor-Authentifizierung fehlgeschlagen.",

@@ -928,6 +928,9 @@
     "skillentry.title"      : "Enter skill",
     "skillentry.count"      : "Count",
 
+    "genDatSkillEntry.title"      : "Enter skill",
+    "genDatSkillEntry.count"      : "Count",
+
     "appheader.notpublished": "Questionnaire not released for APP/s",
     "appheader.portal"      : "Portal",
 

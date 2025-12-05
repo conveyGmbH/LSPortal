@@ -11,187 +11,188 @@
     <div class="clientManagementSummarise fragment">
         <div id="clientManagementSummariseController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
-                    <div class="content-header">
-                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                        <div class="content-header-line win-type-caption">
-                            <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'clientManagementSearchList.title'}"></span>
-                            <span class="date-field"></span>
-                        </div>
-                        <div class="field_line">
-                            <div class="field_line field_line_odd">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientManagementSearchList.destination'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'clientManagementSearchList.destination'}"></span>
-                                <span class="mandantdestination" data-win-bind="textContent: Mandantziel"></span>
-                            </div>
-                            <div class="field_line field_line_even">
-                                <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientManagementSearchList.target'}"></span>
-                                <span class="label landscape_only" data-win-res="{textContent: 'clientManagementSearchList.target'}"></span>
-                                <span class="mandanttarget" data-win-bind="textContent: Mandantquelle"></span>
-                            </div>
-                        </div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientManagementSearchList.search'}"></span>
-                            <span class="label landscape_only" data-win-res="{textContent: 'clientManagementSearchList.search'}"></span>
-                            <input id="searchInput" class="input_field win-textbox" type="text"
-                                   data-win-bind="value: searchString Binding.Mode.twoway"
-                                   oninput="AppBar.handleEvent('change', 'changeSearchField', event)" />
-                        </div>
-                        <div class="line-separator"></div>
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'search.filter'}"></span>
-                            <div class="input_group">
-                                <label class="radio">
-                                    <input type="radio" name="Filter" value="0" class="win-checkbox"
-                                           data-win-bind="checked: Filter0">
-                                    <span data-win-res="{textContent: 'clientManagementSearchList.all'}"></span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="Filter" value="1" class="win-checkbox"
-                                           data-win-bind="checked: Filter1">
-                                    <span data-win-res="{textContent: 'clientManagementSearchList.contactdata'}"></span>
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" name="Filter" value="2" class="win-checkbox"
-                                           data-win-bind="checked: Filter2">
-                                    <span data-win-res="{textContent: 'clientManagementSearchList.fairs'}"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <span id="counter" data-win-res="{textContent: 'clientManagementSearchList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
-                        </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header contenthost-background">
-                            <div class="list-landscape-only list-header-columns">
-                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Name"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerfirmenname'}"></span>
-                                </div>
+	            <div class="contentarea win-type-body">
+		            <div class="header-separator"></div>
+		            <div class="content-header">
+			            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+			            <div class="content-header-line win-type-caption">
+				            <span class="id-field"></span>
+				            <span class="caption-field" data-win-res="{textContent: 'clientManagementSearchList.title'}"></span>
+				            <span class="date-field"></span>
+			            </div>
+			            <div class="field_line">
+				            <div class="field_line field_line_odd">
+					            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientManagementSearchList.destination'}"></span>
+					            <span class="label landscape_only" data-win-res="{textContent: 'clientManagementSearchList.destination'}"></span>
+					            <span class="mandantdestination" data-win-bind="textContent: Mandantziel"></span>
+				            </div>
+				            <div class="field_line field_line_even">
+					            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientManagementSearchList.target'}"></span>
+					            <span class="label landscape_only" data-win-res="{textContent: 'clientManagementSearchList.target'}"></span>
+					            <span class="mandanttarget" data-win-bind="textContent: Mandantquelle"></span>
+				            </div>
+			            </div>
+			            <div class="field_line field_line_odd">
+				            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'clientManagementSearchList.search'}"></span>
+				            <span class="label landscape_only" data-win-res="{textContent: 'clientManagementSearchList.search'}"></span>
+				            <input id="searchInput" class="input_field win-textbox" type="text"
+				                   data-win-bind="value: searchString Binding.Mode.twoway"
+				                   oninput="AppBar.handleEvent('change', 'changeSearchField', event)"/>
+			            </div>
+			            <div class="line-separator"></div>
+			            <div class="field_line field_line_odd">
+				            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'search.filter'}"></span>
+				            <div class="input_group">
+					            <label class="radio">
+						            <input type="radio" name="Filter" value="0" class="win-checkbox"
+						                   data-win-bind="checked: Filter0">
+						            <span data-win-res="{textContent: 'clientManagementSearchList.all'}"></span>
+					            </label>
+					            <label class="radio">
+						            <input type="radio" name="Filter" value="1" class="win-checkbox"
+						                   data-win-bind="checked: Filter1">
+						            <span data-win-res="{textContent: 'clientManagementSearchList.contactdata'}"></span>
+					            </label>
+					            <label class="radio">
+						            <input type="radio" name="Filter" value="2" class="win-checkbox"
+						                   data-win-bind="checked: Filter2">
+						            <span data-win-res="{textContent: 'clientManagementSearchList.fairs'}"></span>
+					            </label>
+				            </div>
+			            </div>
+			            <div class="field_line field_line_even">
+				            <span id="counter" data-win-res="{textContent: 'clientManagementSearchList.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+			            </div>
+		            </div>
+		            <div class="headerFooterPlaceholder">
+			            <div class="list-header contenthost-background">
+				            <div class="list-landscape-only list-header-columns">
+					            <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Name"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerfirmenname'}"></span>
+					            </div>
 
-                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="EMail"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headeremail'}"></span>
-                                </div>
+					            <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="EMail"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headeremail'}"></span>
+					            </div>
 
-                                <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Ansprechpartner"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headeransprechpartner'}"></span>
-                                </div>
+					            <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Ansprechpartner"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headeransprechpartner'}"></span>
+					            </div>
 
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Stadt"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerstadt'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Stadt"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerstadt'}"></span>
+					            </div>
 
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="LandName"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerland'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="LandName"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerland'}"></span>
+					            </div>
 
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="CustomerID"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headersap_nr'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="CustomerID"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headersap_nr'}"></span>
+					            </div>
 
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="DUNSNumber"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerduns'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="DUNSNumber"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerduns'}"></span>
+					            </div>
 
-                               <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="WebAdresse"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerwebadresse'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="WebAdresse"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerwebadresse'}"></span>
+					            </div>
 
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="FairMandantID"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerfairmandantid'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="FairMandantID"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerfairmandantid'}"></span>
+					            </div>
 
-                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="EventName"
-                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
-                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headereventname'}"></span>
-                                </div>
+					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="EventName"
+					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headereventname'}"></span>
+					            </div>
 
-                            </div>
-                        </div>
-                        <div class="list-footer">
-                            <div class="status">
-                                <div class="progress"
-                                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
-                                    <progress class="win-ring win-medium wait-circle"></progress>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-compact-only" data-win-bind="disabled: disabled">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
-                                      data-win-bind="textContent: nameInitial; style.backgroundColor: nameInitialBkgColor"></span>
-                            </div>
-                        </div>
-                        <div class="list-landscape-only" data-win-bind="disabled: disabled">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
-                            <div class="list-field-big-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Name"></span>
-                            </div>
+				            </div>
+			            </div>
+			            <div class="list-footer">
+				            <div class="status">
+					            <div class="progress"
+					                 data-win-bind="style.display: loading Binding.Converter.toDisplay">
+						            <progress class="win-ring win-medium wait-circle"></progress>
+					            </div>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="list-template"
+		                 data-win-control="WinJS.Binding.Template" style="display: none">
+			            <div class="list-compact-only" data-win-bind="disabled: disabled">
+				            <div class="row-separator"></div>
+				            <div class="list-div-left">
+					            <span id="nameInitialcircle" class="win-type-title win-type-ellipsis"
+					                  data-win-bind="textContent: nameInitial; style.backgroundColor: nameInitialBkgColor"></span>
+				            </div>
+			            </div>
+			            <div class="list-landscape-only" data-win-bind="disabled: disabled">
+				            <div class="row-bkg-gray"
+				                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+				            <div class="list-field-big-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: Name"></span>
+				            </div>
 
-                            <div class="list-field-big-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: EMail"></span>
-                            </div>
+				            <div class="list-field-big-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: EMail"></span>
+				            </div>
 
-                            <div class="list-field-big-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Ansprechpartner"></span>
-                            </div>
-                            
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: Stadt"></span>
-                            </div>
+				            <div class="list-field-big-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: Ansprechpartner"></span>
+				            </div>
 
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: LandName"></span>
-                            </div>
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: Stadt"></span>
+				            </div>
 
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: CustomerID"></span>
-                            </div>
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: LandName"></span>
+				            </div>
 
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: DUNSNumber"></span>
-                            </div>
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: CustomerID"></span>
+				            </div>
 
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: WebAdresse"></span>
-                            </div>
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: DUNSNumber"></span>
+				            </div>
 
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: FairMandantVIEWID"></span>
-                            </div>
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: WebAdresse"></span>
+				            </div>
 
-                            <div class="list-field-small-fixed">
-                                <span class="wrap-text" data-win-bind="textContent: EventName"></span>
-                            </div>
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: FairMandantVIEWID"></span>
+				            </div>
 
-                        </div>
-                    </div>
-                    <div id="clientManagementSummarise"
-                         class="listview win-selectionstylefilled cnv-autoresizecolumns"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
+				            <div class="list-field-small-fixed">
+					            <span class="wrap-text" data-win-bind="textContent: EventName"></span>
+				            </div>
+
+			            </div>
+		            </div>
+		            <div id="clientManagementSummarise"
+		                 class="listview win-selectionstylefilled cnv-autoresizecolumns"
+		                 data-win-control="WinJS.UI.ListView"
+		                 data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
                              itemTemplate: select('.list-template'),
                              header: select('.list-header'),
                              footer: select('.list-footer')
                          }">
-                    </div>
-                </div>
+		            </div>
+	            </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
             </section>

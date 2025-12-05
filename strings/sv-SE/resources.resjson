@@ -833,6 +833,9 @@
     "skillentry.title"      : "Enter skill",
     "skillentry.count"      : "Count",
 
+    "genDatSkillEntry.title"      : "Enter skill",
+    "genDatSkillEntry.count"      : "Count",
+
     "appheader.notpublished": "Not published",
     "appheader.portal"      : "Portal",
 

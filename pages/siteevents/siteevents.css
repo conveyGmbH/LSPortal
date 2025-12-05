@@ -30,10 +30,6 @@
     height: 70%;
 }
 
-.siteevents * {
-    box-sizing: border-box;
-}
-
 .siteevents table {
     text-align: left;
     position: relative;

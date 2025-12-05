@@ -11,48 +11,49 @@
     <div class="eventProducts fragment">
         <div id="seriesListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
-                    <div class="content-header">
-                        <div class="half-circle half-circle-textcolor">&nbsp;</div>
-                        <div class="content-header-line win-type-caption">
-                            <span class="id-field"></span>
-                            <span class="caption-field" data-win-res="{textContent: 'eventProducts.title'}"></span>
-                            <span class="date-field"></span>
-                        </div>
-                    </div>
-                    <div class="field_line" data-win-bind="style.display: productsshowflag Binding.Converter.toDisplay">
-                        <div class="field_line field_line_odd">
-                            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventProducts.productcombotitle'}"></span>
-                            <span class="label win-type-caption landscape_only" data-win-res="{textContent: 'eventProducts.productcombotitle'}"></span>
-                            <select id="productTyp"
-                                    class="input_field win-dropdown"
-                                    data-win-control="WinJS.UI.Repeater"
-                                    data-win-bind="value: ProductID">
-                                <option data-win-bind="value: ProductID; textContent: ProductTitle"></option>
-                            </select>
-                        </div>
-                        <div class="field_line field_line_even">
-                            <button class="list-button-left win-button" id="btn_add_product" data-win-res="{textContent: 'eventProducts.productaddbtntitle'}" onclick="AppBar.handleEvent('onclick', 'clickAddNewProduct', event)"></button>
-                        </div>
-                    </div>
-                    <div class="field_line scroll-line">
-                        <table id="tableId">
-                            <thead class="table-header">
-                                <tr>
-                                    <!--<th data-win-bind="value: dataMailingHeaderValue.ProductID; textContent: dataMailingHeaderText.ProductID"></th>-->
-                                    <th id="0" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-res="{textContent: 'eventProducts.ProductTitle'}"></th>
-                                    <th id="1" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-res="{textContent: 'eventProducts.ProductInfo'}"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
-                                <tr data-win-bind="value: ProductID">
-                                    <td data-win-bind="textContent: ProductTitle"></td>
-                                    <td data-win-bind="textContent: ProductInfo"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+	            <div class="contentarea win-type-body">
+		            <div class="header-separator"></div>
+		            <div class="content-header">
+			            <div class="half-circle half-circle-textcolor">&nbsp;</div>
+			            <div class="content-header-line win-type-caption">
+				            <span class="id-field"></span>
+				            <span class="caption-field" data-win-res="{textContent: 'eventProducts.title'}"></span>
+				            <span class="date-field"></span>
+			            </div>
+		            </div>
+		            <div class="field_line" data-win-bind="style.display: productsshowflag Binding.Converter.toDisplay">
+			            <div class="field_line field_line_odd">
+				            <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'eventProducts.productcombotitle'}"></span>
+				            <span class="label win-type-caption landscape_only" data-win-res="{textContent: 'eventProducts.productcombotitle'}"></span>
+				            <select id="productTyp"
+				                    class="input_field win-dropdown"
+				                    data-win-control="WinJS.UI.Repeater"
+				                    data-win-bind="value: ProductID">
+					            <option data-win-bind="value: ProductID; textContent: ProductTitle"></option>
+				            </select>
+			            </div>
+			            <div class="field_line field_line_even">
+				            <button class="list-button-left win-button" id="btn_add_product" data-win-res="{textContent: 'eventProducts.productaddbtntitle'}" onclick="AppBar.handleEvent('onclick', 'clickAddNewProduct', event)"></button>
+			            </div>
+		            </div>
+		            <div class="field_line scroll-line">
+			            <table id="tableId">
+				            <thead class="table-header">
+				            <tr>
+					            <!--<th data-win-bind="value: dataMailingHeaderValue.ProductID; textContent: dataMailingHeaderText.ProductID"></th>-->
+					            <th id="0" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-res="{textContent: 'eventProducts.ProductTitle'}"></th>
+					            <th id="1" onclick="AppBar.handleEvent('click', 'clickSortTable', event)" data-win-res="{textContent: 'eventProducts.ProductInfo'}"></th>
+				            </tr>
+				            </thead>
+				            <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
+				            <tr data-win-bind="value: ProductID">
+					            <td data-win-bind="textContent: ProductTitle"></td>
+					            <td data-win-bind="textContent: ProductInfo"></td>
+				            </tr>
+				            </tbody>
+			            </table>
+		            </div>
+	            </div>
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
             </section>

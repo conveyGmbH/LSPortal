@@ -11,84 +11,85 @@
     <div class="clientManagementList fragment">
         <div id="clientManagementListController" class="data-container">
             <section aria-label="Main content" role="main" class="animationElement">
-                <div class="contentarea win-type-body">
-                    <div class="content-header">
-                        <div class="field_line field_line_odd">
-	                        <div class="win-type-subtitle master-list-header-title">
-		                        <span data-win-res="{textContent: 'clientmanagementlist.title'}"></span>
-	                        </div>
-                        </div>
-                    </div>
-                    <div class="clientManagementList-template"
-                         data-win-control="WinJS.Binding.Template" style="display: none">
-                        <div class="list-compact-only" data-win-bind="disabled: disabled">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <span class="win-type-title win-type-ellipsis"
-                                      data-win-bind="textContent: nameInitial; style.backgroundColor: nameInitialBkgColor"></span>
-                            </div>
-                        </div>
-                        <div class="list-landscape-only">
-                            <div class="row-bkg-gray"
-                                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
-                            <div class="list-field-big-60 win-type-ellipsis"
-                                 data-win-bind="textContent: Name"></div>
-                            <div class="list-field-small-relative-30 win-type-ellipsis"
-                                 data-win-bind="textContent: Ansprechpartner"></div>
-                            <div class="list-field-small-relative-30 win-type-ellipsis"
-                                 data-win-bind="textContent: EMail"></div>
+	            <div class="contentarea win-type-body">
+		            <div class="header-separator"></div>
+		            <div class="content-header">
+			            <div class="field_line field_line_odd">
+				            <div class="win-type-subtitle master-list-header-title">
+					            <span data-win-res="{textContent: 'clientmanagementlist.title'}"></span>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="clientManagementList-template"
+		                 data-win-control="WinJS.Binding.Template" style="display: none">
+			            <div class="list-compact-only" data-win-bind="disabled: disabled">
+				            <div class="row-separator"></div>
+				            <div class="list-div-left">
+					            <span class="win-type-title win-type-ellipsis"
+					                  data-win-bind="textContent: nameInitial; style.backgroundColor: nameInitialBkgColor"></span>
+				            </div>
+			            </div>
+			            <div class="list-landscape-only">
+				            <div class="row-bkg-gray"
+				                 data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
+				            <div class="list-field-big-60 win-type-ellipsis"
+				                 data-win-bind="textContent: Name"></div>
+				            <div class="list-field-small-relative-30 win-type-ellipsis"
+				                 data-win-bind="textContent: Ansprechpartner"></div>
+				            <div class="list-field-small-relative-30 win-type-ellipsis"
+				                 data-win-bind="textContent: EMail"></div>
 
-                        </div>
-                        <div class="list-portrait-only" data-win-bind="disabled: disabled">
-                            <div class="row-separator"></div>
-                            <div class="list-div-left">
-                                <div class="list-symbol-ID">
-                                    <div data-win-bind="name: recordIcon" class="action-image"></div>
-                                </div>
-                                <div class="list-compressed">
-                                    <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: Name"></span>
-                                    <span class="list-compressed-title win-type-ellipsis"
-                                          data-win-bind="textContent: Ansprechpartner"></span>
-                                    <span class="list-compressed-title win-type-ellipsis"
-                                          data-win-bind="textContent: EMail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="headerFooterPlaceholder">
-                        <div class="list-header masterhost-background">
-                            <div class="list-landscape-only">
-                                <div class="list-field-big-60 win-type-ellipsis"
-                                     data-win-res="{textContent: 'clientmanagement.companyname'}"></div>
-                                <div class="list-field-small-relative-30 win-type-ellipsis"
-                                     data-win-res="{textContent: 'clientmanagement.contactperson'}"></div>
-                                <div class="list-field-small-relative-30 win-type-ellipsis"
-                                     data-win-res="{textContent: 'clientmanagement.email'}"></div>
-                            </div>
-                        </div>
-                        <div class="list-footer">
-                            <div class="status">
-                                <progress class="win-progress-bar progress"></progress>
-                                <div class="counter">
-                                    <span data-win-res="{textContent: 'clientmanagementlist.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="clientManagementList"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
+			            </div>
+			            <div class="list-portrait-only" data-win-bind="disabled: disabled">
+				            <div class="row-separator"></div>
+				            <div class="list-div-left">
+					            <div class="list-symbol-ID">
+						            <div data-win-bind="name: recordIcon" class="action-image"></div>
+					            </div>
+					            <div class="list-compressed">
+						            <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
+						                  data-win-bind="textContent: Name"></span>
+						            <span class="list-compressed-title win-type-ellipsis"
+						                  data-win-bind="textContent: Ansprechpartner"></span>
+						            <span class="list-compressed-title win-type-ellipsis"
+						                  data-win-bind="textContent: EMail"></span>
+					            </div>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="headerFooterPlaceholder">
+			            <div class="list-header masterhost-background">
+				            <div class="list-landscape-only">
+					            <div class="list-field-big-60 win-type-ellipsis"
+					                 data-win-res="{textContent: 'clientmanagement.companyname'}"></div>
+					            <div class="list-field-small-relative-30 win-type-ellipsis"
+					                 data-win-res="{textContent: 'clientmanagement.contactperson'}"></div>
+					            <div class="list-field-small-relative-30 win-type-ellipsis"
+					                 data-win-res="{textContent: 'clientmanagement.email'}"></div>
+				            </div>
+			            </div>
+			            <div class="list-footer">
+				            <div class="status">
+					            <progress class="win-progress-bar progress"></progress>
+					            <div class="counter">
+						            <span data-win-res="{textContent: 'clientmanagementlist.count'}"></span><span>: </span><span data-win-bind="textContent: count"></span>
+					            </div>
+				            </div>
+			            </div>
+		            </div>
+		            <div id="clientManagementList"
+		                 class="listview win-selectionstylefilled"
+		                 data-win-control="WinJS.UI.ListView"
+		                 data-win-options="{
                              layout : { type: WinJS.UI.ListLayout },
                              itemTemplate: select('.clientManagementList-template'),
                              header: select('.list-header'),
                              footer: select('.list-footer')
                          }">
-                    </div>
-                    <div class="error-message"
-                         data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
-                </div>
+		            </div>
+		            <div class="error-message"
+		                 data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
+	            </div>
             </section>
         </div>
     </div>

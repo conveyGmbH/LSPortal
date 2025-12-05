@@ -836,6 +836,9 @@
     "skillentry.title"      : "Fähigkeit eintragen",
     "skillentry.count"      : "Anzahl",
 
+    "genDatSkillEntry.title"	:"Fähigkeit eintragen",
+    "genDatSkillEntry.count"      : "Anzahl",
+
     "appheader.notpublished": "Nicht publiziert",
     "appheader.portal"      : "Portal",
 

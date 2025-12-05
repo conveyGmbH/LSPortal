@@ -3,9 +3,9 @@
     overflow-y: auto;
 }
 
-.eventProducts * {
+/*.eventProducts * {
     box-sizing: border-box;
-}
+}*/
 
 .eventProducts table {
     border-collapse: collapse;
