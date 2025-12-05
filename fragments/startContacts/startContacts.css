@@ -1,4 +1,4 @@
-﻿.gridtitlecontacts {
+﻿.startContacts .gridtitlecontacts {
     display: flex;
     height: 30px;
     padding-left: 5px;
@@ -6,11 +6,11 @@
     border-bottom: 1px solid lightgray;
     font-weight: bold;
 }
-#gridtitlecontactstext {
+.startContacts #gridtitlecontactstext {
     font-size: 18px;
     margin-left: 10px;
 }
-.startContact-circle-container {
+.startContacts .startContact-circle-container {
     float: left;
     margin-top: 50px;
     margin-bottom: 29px;
@@ -22,50 +22,50 @@
     border: 1px solid rgba(0, 0, 0, 0.4); /*rahmenfarbe*/
     text-align: center;
 }
-.startContact-numbers {
+.startContacts .startContact-numbers {
     margin-top: 7px;
 }
-.contacts-modified {
+.startContacts .contacts-modified {
     float: right;
     width: calc(30% - 15px); /*calc(37% - 1px)*/
 }
-.center {
+.startContacts .center {
     display: block;
     width: 100px;
     height: 5px;
     margin: auto;
     margin-top: 42px;
 }
-#anzkontakte {
+.startContacts #anzkontakte {
     font-weight: bolder;
     font-size: 40px;
     margin-top: 1px;
 }
-#summary {
+.startContacts #summary {
     margin-top: 38px;
     font-size: 20px;
     font-weight: bolder;
 }
-#gridtitlecontacts {
+.startContacts #gridtitlecontacts {
     margin-top: 15px;
     font-size: 20px;
     font-weight: bolder;
 }
-.barcode-container {
+.startContacts .barcode-container {
     float: left;
     margin-top: 13px;
     width: 95px;
     text-align: center;
     font-weight: bolder;
 }
-.businesscards-container {
+.startContacts .businesscards-container {
     float: left;
     margin-top: 20px;
     width: 95px;
     text-align: center;
     font-weight: bolder;
 }
-.manually-container {
+.startContacts .manually-container {
     float: left;
     margin-top: 20px;
     width: 95px;
@@ -75,103 +75,103 @@
 .view-size-medium {
     
 }
-.view-size-small .contacts-modified {
+.view-size-small .startContacts  .contacts-modified {
     float: left;
     width: calc(100% - 1px);
 }
-.view-size-small .barcode-container {
+.view-size-small .startContacts  .barcode-container {
     width: 33.3%;
     margin-top: 0px;
 }
-.view-size-small .businesscards-container {
+.view-size-small .startContacts  .businesscards-container {
     width: 33.3%;
     margin-top: 0px;
 }
-.view-size-small .manually-container {
+.view-size-small .startContacts  .manually-container {
     width: 33.3%;
     margin-top: 0px;
 }
-.view-size-small .startContact-circle-container {
+.view-size-small .startContacts  .startContact-circle-container {
     margin-top: 20px;
     margin-bottom: 15px;
     margin-left: 25%;
 }
-.view-size-medium .contacts-modified {
+.view-size-medium .startContacts.contacts-modified {
     float: left;
     width: calc(100% - 1px);
 }
 
-.view-size-medium .barcode-container {
+.view-size-medium .startContacts.barcode-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-medium .businesscards-container {
+.view-size-medium .startContacts.businesscards-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-medium .manually-container {
+.view-size-medium .startContacts.manually-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-medium .startContact-circle-container {
+.view-size-medium .startContacts.startContact-circle-container {
     margin-top: 20px;
     margin-bottom: 15px;
     margin-left: 25%;
 }
 
-.view-size-bigger .contacts-modified {
+.view-size-bigger .startContacts .contacts-modified {
     float: left;
     width: calc(100% - 1px);
 }
 
-.view-size-bigger .barcode-container {
+.view-size-bigger .startContacts .barcode-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-bigger .businesscards-container {
+.view-size-bigger .startContacts .businesscards-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-bigger .manually-container {
+.view-size-bigger .startContacts .manually-container {
     width: 33.3%;
     margin-top: 0px;
 }
 
-.view-size-bigger .startContact-circle-container {
+.view-size-bigger .startContacts .startContact-circle-container {
     margin-top: 20px;
     margin-bottom: 15px;
     margin-left: calc(50% - 101px);
 }
-.highlight:hover {
+.startContacts .highlight:hover {
     background-color: #d3d3d3;
 }
 @media only screen and (max-width: 1360px) {
-    .contacts-modified {
+    .startContacts .contacts-modified {
         float: left;
         width: calc(100% - 1px);
     }
 
-    .barcode-container {
+    .startContacts .barcode-container {
         width: 33.3%;
         margin-top: 0px;
     }
 
-    .businesscards-container {
+    .startContacts .businesscards-container {
         width: 33.3%;
         margin-top: 0px;
     }
 
-    .manually-container {
+    .startContacts .manually-container {
         width: 33.3%;
         margin-top: 0px;
     }
 
-    .startContact-circle-container {
+    .startContacts .startContact-circle-container {
         margin-top: 20px;
         margin-bottom: 15px;
         margin-left: calc(50% - 101px);

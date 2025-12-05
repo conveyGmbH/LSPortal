@@ -19,7 +19,7 @@
 
     WinJS.Namespace.define("ClientManagementEvents", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
-            Log.call(Log.l.trace, "ClientManagementEvents.Controller.");
+            Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
                 eventsID: null
@@ -29,6 +29,7 @@
             this.eventsId = null;
 
             var that = this;
+            var progress = null;
             var counter = null;
             var layout = null;
 
@@ -78,7 +79,7 @@
             this.resultConverter = resultConverter;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "LocalEvents.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
                     for (var i = 0; i < that.events.length; i++) {
                         var events = that.events.getAt(i);
@@ -116,7 +117,7 @@
             this.scopeFromRecordId = scopeFromRecordId;
 
             var changeEvent = function () {
-                Log.call(Log.l.trace, "LocalEvents.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 AppData.call("PRC_ChangeUserVeranstaltung", {
                     pNewVeranstaltungID: that.eventsId,
@@ -143,7 +144,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChange: function (event) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName +  ".Controller.");
                     that.changeEvent();
                     Log.ret(Log.l.trace);
                 },
@@ -153,7 +154,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         var listControl = listView.winControl;
                         AppBar.busy = true;
@@ -175,8 +176,13 @@
                     Application.navigateById("publish", event);
                     Log.ret(Log.l.trace);
                 },
+                onItemInvoked: function (eventInfo) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    Application.showDetail();
+                    Log.ret(Log.l.trace);
+                },
                 onLoadingStateChanged: function (eventInfo) {
-                    Log.call(Log.l.trace, "LocalEvents.Controller.");
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (listView && listView.winControl) {
                         Log.print(Log.l.trace, "loadingState=" + listView.winControl.loadingState);
                         // single list selection
@@ -265,32 +271,33 @@
                 clickGotoPublish: function () {
                     return true;
                 },
-                clickChange: function () {
+                clickChange: function() {
                     if (that.eventsId && AppData.generalData.eventId !== that.eventsId) {
                         return false;
                     } else {
                         return true;
                     }
                 }
-            };
+            }
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView, "click", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
             var loadData = function () {
-                Log.call(Log.l.trace, "ClientManagementEvents.Controller.");
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.loading = true;
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    Log.call(Log.l.trace, "ClientManagementEvents.Controller.");
+                    Log.print(Log.l.info, "calling PRC_GetExhibitorEvents...");
                     var fmid = that.getFairMandantId();
                     if (!fmid) {
-                        Log.call(Log.l.trace, "No FairMandantID found!");
-
+                        Log.print(Log.l.info, "No FairMandantID found!");
+                        return WinJS.Promise.as();
                     } else {
                         return AppData.call("PRC_GetExhibitorEvents",
                             {
@@ -314,14 +321,13 @@
                                     AppBar.busy = true;
                                     //that.addBodyRowHandlers();
                                 } else {
-                                    Log.call(Log.l.trace, "No FairMandantID found!");
+                                    Log.print(Log.l.info, "No FairMandantID found!");
                                 }
                             },
                             function (error) {
                                 Log.print(Log.l.error, "call error");
                             });
                     }
-                    Log.ret(Log.l.trace);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

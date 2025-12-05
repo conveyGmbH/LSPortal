@@ -243,6 +243,11 @@
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
+                onItemInvoked: function (eventInfo) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    Application.showDetail();
+                    Log.ret(Log.l.trace);
+                },
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
@@ -364,7 +369,8 @@
 
             // register ListView event handler
             if (listView) {
-                this.addRemovableEventListener(listView, "click", this.eventHandlers.onSelectionChanged.bind(this));
+                this.addRemovableEventListener(listView, "iteminvoked", this.eventHandlers.onItemInvoked.bind(this));
+                this.addRemovableEventListener(listView, "selectionchanged", this.eventHandlers.onSelectionChanged.bind(this));
                 this.addRemovableEventListener(listView, "loadingstatechanged", this.eventHandlers.onLoadingStateChanged.bind(this));
                 this.addRemovableEventListener(listView, "footervisibilitychanged", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
