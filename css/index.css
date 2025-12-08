@@ -457,16 +457,29 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     top: 43px;
     left: 0;
     width: 0;
+    z-index: 2;
 }
 #navigationbar_vertical .win-selectionbackground {
     width: 4px;
     top: 4px;
     bottom: 4px;
     left: 0;
+    z-index: 2;
+}
+
+#navigationbar_horizontal .navigationbar-signal-bkg,
+#navigationbar_vertical .navigationbar-signal-bkg {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    opacity: 0.2;
 }
 
 .pane-submenu {
-
 }
 .pane-submenu .win-splitviewcommand-button-content {
     padding-left: 56px;

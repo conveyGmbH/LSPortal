@@ -96,6 +96,23 @@
     margin-left: 0;
 }
 
+#contactList .signal-bkg {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    opacity: 0.15;
+}
+#contactList .warning-icon {
+    position: relative;
+    top: -4px;
+}
+#contactList .warning-icon::after {
+    content: "\26A0";
+}
 
 #contactList .win-container {
     margin: 0;

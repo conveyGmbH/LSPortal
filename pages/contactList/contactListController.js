@@ -41,7 +41,9 @@
                     btnNameSort: ContactList._orderAttribute === "Name" ?
                         getResourceText(ContactList._orderDesc ? "contactList.btnNameDesc" : "contactList.btnNameAsc") :
                         getResourceText("contactList.btnNameSort"),
-                    showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents
+                    showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
+                    IsIncomplete: null,
+                    QuestionnaireIncomplete: null
                 }, commandList, true]);
                 this.nextUrl = null;
                 this.nextDocUrl = null;
@@ -168,6 +170,29 @@
                         NavigationBar.enablePage("sketch");
                     } else {
                         NavigationBar.disablePage("sketch");
+                    }
+                    Log.ret(Log.l.trace);
+                };
+
+                var updateIncompleteStates = function (data) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.", "IsIncomplete=" + (data && data.IsIncomplete) + " QuestionnaireIncomplete=" + (data && data.QuestionnaireIncomplete));
+                    if (data) {
+                        if (that.binding.IsIncomplete !== data.IsIncomplete) {
+                            that.binding.IsIncomplete = data.IsIncomplete;
+                            // add warning-background-color
+                            NavigationBar.changeNavigationBarSignalBkgColor("contact", data.IsIncomplete ? Colors.orange : "");
+                            // add warning-symbol
+                            var contactLabel = getResourceText("label.contact");
+                            NavigationBar.changeNavigationBarLabel("contact", data.IsIncomplete ? contactLabel + " &#x26A0;" : contactLabel);
+                        }
+                        if (that.binding.QuestionnaireIncomplete !== data.QuestionnaireIncomplete) {
+                            that.binding.QuestionnaireIncomplete = data.QuestionnaireIncomplete;
+                            // add warning-background-color
+                            NavigationBar.changeNavigationBarSignalBkgColor("questionnaire", data.QuestionnaireIncomplete ? Colors.orange : "");
+                            // add warning-symbol
+                            var questionnaireLabel = getResourceText("label.questionnaire");
+                            NavigationBar.changeNavigationBarLabel("questionnaire", data.QuestionnaireIncomplete ? questionnaireLabel + " &#x26A0;" : questionnaireLabel);
+                        }
                     }
                     Log.ret(Log.l.trace);
                 };
@@ -343,6 +368,7 @@
                             contact = that.contacts.getAt(i);
                             if (contact && typeof contact === "object" && contact.KontaktVIEWID === recordId) {
                                 AppData.setRecordId("Kontakt", recordId);
+                                updateIncompleteStates(contact);
                                 listView.winControl.selection.set(i);
                                 that.scrollToRecordId(recordId);
                                 recordIdNotFound = false;
@@ -432,6 +458,11 @@
                         item.svgSource = "";
                     } else {
                         item.svgSource = "manuel_Portal";
+                    }
+                    if (item.IsIncomplete || item.QuestionnaireIncomplete) {
+                        item.signalBkgColor = Colors.orange;
+                    } else {
+                        item.signalBkgColor = "";
                     }
                 }
                 this.resultConverter = resultConverter;
@@ -560,6 +591,7 @@
                             }
                             that.binding.contactId = 0;
                             AppData.setRecordId("Kontakt", that.binding.contactId);
+                            updateIncompleteStates({ IsIncomplete: null, QuestionnaireIncomplete: null});
                             var curPageId = Application.getPageId(nav.location);
                             if (curPageId === "contactResultsQuestion" &&
                                 typeof AppBar.scope.loadData === "function") {
@@ -630,6 +662,7 @@
                                         if (item.data &&
                                             item.data.KontaktVIEWID &&
                                             item.data.KontaktVIEWID !== that.binding.contactId) {
+                                            updateIncompleteStates(item.data);
                                             if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
                                                 // current detail view has saveData() function
@@ -764,7 +797,7 @@
                                 Colors.loadSVGImageElements(listView, "action-image", 20, Colors.textColor, "name", null, {
                                     "barcode-qr": { useStrokeColor: false }
                                 });
-                                Colors.loadSVGImageElements(listView, "incomplete-status-icon", 20, Colors.pauseColor, "name");
+                                Colors.loadSVGImageElements(listView, "incomplete-status-icon", 20, Colors.textColor, "name");
                             } else if (listView.winControl.loadingState === "complete") {
                                 that.checkLoadingFinished();
                             }
@@ -1049,6 +1082,7 @@
                         } else {
                             that.contacts.length = 0;
                             AppData.setRecordId("Kontakt", 0);
+                            updateIncompleteStates({ IsIncomplete: null, QuestionnaireIncomplete: null });
                             handlePageEnable(null);
                             // "leeren" Kontakt laden
                             AppBar.scope.loadData();
