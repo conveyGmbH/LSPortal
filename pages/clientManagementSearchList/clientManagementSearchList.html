@@ -83,6 +83,11 @@
                                     <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headereventcount'}"></span>
                                 </div>
 
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="EventList"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headereventlist'}"></span>
+                                </div>
+
                                 <div class="list-field-big-fixed bkgcolor-hoverable bkgcolor-activatable" id="Strasse"
                                      onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
                                     <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerstraße'}"></span>
@@ -164,6 +169,10 @@
 
                             <div class="list-field-small-fixed">
                                 <span class="wrap-text" data-win-bind="textContent: EventCount"></span>
+                            </div>
+
+                            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: EventList"></span>
                             </div>
 
                             <div class="list-field-big-fixed">
