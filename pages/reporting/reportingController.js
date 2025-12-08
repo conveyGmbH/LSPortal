@@ -1172,6 +1172,7 @@
                         collapsibleDiv.textContent = getResourceText("reporting.filterup");
                         collapsibleDiv.appendChild(selectedValues); // Keep selected values visible
                     } else {
+                        that.binding.restriction.INITLandID = "-1";
                         content.style.maxHeight = content.scrollHeight + "px";
                         collapsibleDiv.textContent = getResourceText("reporting.filterdown");
                         collapsibleDiv.appendChild(selectedValues); // Keep selected values visible
@@ -1343,7 +1344,7 @@
                         var toggle = event.currentTarget.winControl;
                         that.binding.showFilter = toggle.checked;
                         if (!that.binding.showFilter) {
-                            that.binding.restriction.INITLandID = null;
+                            that.binding.restriction.INITLandID = "-1";
                             that.binding.restriction.MitarbeiterVIEWID = null;
                             that.binding.restriction.Erfassungsdatum = "null";
                             that.binding.restriction.ErfassungsdatumValue = null;
@@ -1557,6 +1558,7 @@
                                     initLand.winControl.data = that.initLand;
                                 }
                                 initLand.selectedIndex = 0;
+                                that.binding.restriction.INITLandID = "-1";
                             }
                         },
                             function (errorResponse) {
