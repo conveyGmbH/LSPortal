@@ -346,20 +346,33 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
     width: calc(100% - 40px);
 }
 
+.win-selected .win-splitviewcommand-button-content {
+    border-left-color: var(--ColorNavigation);
+}
+
 .win-splitviewcommand-button-content {
-    padding-left: 12px;
+    border-left: solid 4px transparent;
+    padding-left: 8px;
     padding-right: 12px;
     width: calc(100% - 16px);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    height: 40px;
 }
 .win-splitviewcommand-label {
     color: var(--ColorNavigation);
     font-size: 16px;
-    margin-top: 16px;
+    margin-top: 12px;
     margin-bottom: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.win-splitviewcommand-icon {
+    margin-top: 10px;
+}
+
 .win-splitviewcommand.submenu-collapsed .win-splitviewcommand-icon,
 .win-splitviewcommand.submenu-expanded .win-splitviewcommand-icon {
     margin-right: 3px;
@@ -509,14 +522,14 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 .pane-submenu-header-text {
     margin: 0 6px;
-    padding-top: 12px;
+    padding-top: 16px;
     padding-bottom: 0;
     padding-right: 0;
     height: 36px;
     display: inherit;
 }
 .pane-submenu-list .win-container {
-    margin: 4px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
     width: 100%;
 }
