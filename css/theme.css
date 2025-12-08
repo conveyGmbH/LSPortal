@@ -15,13 +15,14 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .cnv-ui-dark .row-bkg-gray {
     opacity: 0.2;
 }
+/*
 .masterhost-container .pagecontrol {
     background-color: #fcfcfc;
 }
 .cnv-ui-dark .masterhost-container .pagecontrol {
     background-color: #101010;
 }
-
+*/
 .list-container,
 .win-selectionstylefilled .win-container:hover .row-bkg {
     background-color: rgba(32,32,32,0.1);
