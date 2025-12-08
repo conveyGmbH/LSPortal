@@ -106,7 +106,7 @@
     background-color: transparent;
     opacity: 0.15;
 }
-#contactList .warning-icon {
+#contactList .list-portrait-only .warning-icon {
     position: relative;
     top: -4px;
 }
@@ -264,8 +264,8 @@
 #contactList .action-image-container,
 #contactList .incomplete-status-icon-container {
     float: left;
-    margin-top: -4px;
-    margin-right: 8px;
+    margin-top: -2px;
+    margin-right: 4px;
 }
 #contactList .incomplete-status-icon {
 }
