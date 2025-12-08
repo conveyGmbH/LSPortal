@@ -2033,3 +2033,6 @@ html.win-hoverable .win-itemcontainer.win-selectionstylefilled.win-container.win
     transform: translate(-50%, -50%);
     z-index: 9999;
 }
+.win-button, .win-textarea, .win-textbox {
+    line-height: normal;
+}
