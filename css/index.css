@@ -1175,3 +1175,11 @@ user name and on-site / off-site button
     position: absolute;
     left: 0;
 }
+
+button .win-label, 
+button[aria-checked=true]:enabled .win-commandimage, 
+button[aria-checked=true]:enabled .win-label, 
+button[aria-checked=true]:enabled:hover:active .win-commandimage.win-commandimage {
+    color: var(--ColorLabel);
+}
+
