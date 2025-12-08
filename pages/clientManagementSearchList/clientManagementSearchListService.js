@@ -142,7 +142,28 @@
                     }
                     Log.print(Log.l.info, "calling select _fairMandantView... restriction=" +
                         (restriction ? JSON.stringify(restriction) : ""));
-                    ret = ClientManagementSearchList._fairMandantView.select(complete, error, restriction, options);
+                    ret = AppData.call("PRC_GetMandantList", {
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_GetMandantList: success!");
+                        // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
+                        ClientManagementSearchList._prevRestriction = restriction;
+                        ClientManagementSearchList._prevJson = json;
+                        if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                            ClientManagementSearchList._orderAttribute) {
+
+                            Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
+                            json.d.results.sort(ClientManagementSearchList.fairMandantView.compare);
+                            ClientManagementSearchList._prevFilterOption = ClientManagementSearchList._FilterOption;
+                        }
+                        if (typeof complete === "function") {
+                            complete(json);
+                        }
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_GetMandantList: error");
+                        if (typeof error === "function") {
+                            error(errorResponse);
+                        }
+                    });
                 }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
