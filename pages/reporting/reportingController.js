@@ -690,6 +690,9 @@
                 that.binding.progress.showOther = false;
                 var reportingRestriction = that.setRestriction();
                 // ExportXlsx.restriction = that.getRestriction();
+                if (reportingRestriction.Land === null) {
+                    reportingRestriction.Land = "0";
+                }
                 var evId = that.getEventId();
                 var exportselectionId = exportselection;
                 if (exportselectionId) {
