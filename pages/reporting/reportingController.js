@@ -267,9 +267,6 @@
 
             var setRestriction = function () {
                 var reportingRestriction = {};
-                if (that.binding.restriction.INITLandID === "null" || that.binding.restriction.INITLandID === "0") {
-                    that.binding.restriction.INITLandID = null;
-                }
                 reportingRestriction.Land = that.binding.restriction.INITLandID ? that.binding.restriction.INITLandID : null;
                 if (that.binding.restriction.MitarbeiterVIEWID === "null") {
                     that.binding.restriction.MitarbeiterVIEWID = null;
@@ -690,9 +687,6 @@
                 that.binding.progress.showOther = false;
                 var reportingRestriction = that.setRestriction();
                 // ExportXlsx.restriction = that.getRestriction();
-                if (reportingRestriction.Land === null) {
-                    reportingRestriction.Land = "0";
-                }
                 var evId = that.getEventId();
                 var exportselectionId = exportselection;
                 if (exportselectionId) {
