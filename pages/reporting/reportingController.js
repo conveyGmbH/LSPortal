@@ -703,21 +703,6 @@
                         psyncRun: 1
                     }, function (json) {
                         Log.print(Log.l.info, "call success!");
-                        if (that.binding.restriction.INITLandID === null)
-                            that.binding.restriction.INITLandID = 0;
-                        /*if (that.binding.restriction.INITLandID &&
-                            typeof that.binding.restriction.INITLandID === "string") {
-                            that.binding.restriction.INITLandID = parseInt(that.binding.restriction.INITLandID);
-                        } else {
-                            that.binding.restriction.INITLandID = null;
-                        }
-                        if (that.binding.restriction.MitarbeiterVIEWID &&
-                            typeof that.binding.restriction.MitarbeiterVIEWID === "string") {
-                            that.binding.restriction.MitarbeiterVIEWID =
-                                parseInt(that.binding.restriction.MitarbeiterVIEWID);
-                        } else {
-                            that.binding.restriction.MitarbeiterVIEWID = null;
-                        }*/
                         if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 0) {
                             that.exportDbExcel(json.d.results[0].DOC3ExportPdfID);
                         } else if (json && json.d.results[0].DOC3ExportPdfID && json.d.results[0].DownloadFlag === 1) {
@@ -1167,12 +1152,10 @@
                     if (content.style.maxHeight) {
                         content.style.maxHeight = null;
                         collapsibleDiv.textContent = getResourceText("reporting.filterup");
-                        collapsibleDiv.appendChild(selectedValues); // Keep selected values visible
                     } else {
                         that.binding.restriction.INITLandID = "-1";
                         content.style.maxHeight = content.scrollHeight + "px";
                         collapsibleDiv.textContent = getResourceText("reporting.filterdown");
-                        collapsibleDiv.appendChild(selectedValues); // Keep selected values visible
                     }
                 },
                 clickOk: function (event) {
