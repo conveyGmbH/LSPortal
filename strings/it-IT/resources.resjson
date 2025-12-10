@@ -1881,6 +1881,7 @@
     "genDataEmployee.alertatSymbol" : "Massimo un carattere @ consentito!",
     "genDataEmployee.deleteMitarbeiter" : "Elimina",
     "genDataEmployee.cancel" : "Annulla",
+    "genDataEmployee.InactiveUser" : "Nota: Il numero massimo di licenze è stato raggiunto. Per l’evento attuale, il seguente numero di dipendenti è stato impostato come inattivo: ",
 
     "eventProducts.title"			: "Caratteristiche",
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",

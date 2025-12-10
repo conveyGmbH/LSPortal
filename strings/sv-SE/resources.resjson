@@ -1532,6 +1532,7 @@
     "genDataEmployee.alertatSymbol" : "Maximum one @ character allowed!",
     "genDataEmployee.deleteMitarbeiter" : "Delete",
     "genDataEmployee.cancel" : "Cancel",
+    "genDataEmployee.InactiveUser" : "Note: The maximum number of licenses has been reached. For the current event, the following number of employees has been set to inactive: ",
 
     "adminAppHelpTextList.title"			: "Pages",
     "adminAppHelpTextList.inactive"     : "Inactive",

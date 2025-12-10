@@ -1904,6 +1904,7 @@
     "genDataEmployee.alertatSymbol" : "Maximal ein @ Zeichen erlaubt!",
     "genDataEmployee.deleteMitarbeiter" : "Löschen",
     "genDataEmployee.cancel" : "Abbrechen",
+	"genDataEmployee.InactiveUser" : "Hinweis: Die maximale Anzahl Lizenzen ist erreicht worden. Bei der aktuellen Veranstaltung ist folgende Anzahl Mitarbeiter auf Inaktiv gesetzt: ",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",
