@@ -1272,7 +1272,7 @@
                     Log.call(Log.l.trace, "Reporting.Controller.");
                     for (var i = 0; i < that.initLand.length; i++) {
                         var initLand = that.initLand.getAt(i);
-                        if (event.currentTarget.value !== "0") {
+                        if (event.currentTarget.value !== "undefined") {
                             if (initLand.INITLandID === parseInt(event.currentTarget.value)) {
                                 selectedLand.textContent = getResourceText("reporting.countrylabel") + initLand.TITLE;
                                 selectedLand.style.display = "block";
