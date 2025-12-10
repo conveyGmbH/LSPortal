@@ -88,3 +88,12 @@
 .genDataEmployee .id-field {
     width: 250px;
 }
+
+#employeeController .mandatory-empty-warning {
+    color: var(--ColorSignalOrange);
+    font-weight: bold;
+}
+
+#employeeController .content-header-line {
+    height: auto;
+}

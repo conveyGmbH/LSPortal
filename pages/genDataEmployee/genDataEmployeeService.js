@@ -53,6 +53,7 @@
                 Password: "",
                 VeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                 INITAPUserRoleID: 3,
+                errorLicenseExceeded: false,
                 Password2: ""
             },
             defaultRestriction: {

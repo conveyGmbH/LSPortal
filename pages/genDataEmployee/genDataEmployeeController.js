@@ -211,9 +211,15 @@
                 } else {
                     that.binding.AnzMandantLizenz = 0;
                 }
-                // alert box licence
-                if (that.binding.AnzAktiveLizenz > that.binding.AnzMandantLizenz) {
-                    alert(getResourceText("genDataEmployee.exceededLicence"));
+                if (result && result.AnzInaktiveBenutzer) {
+                    that.binding.AnzInaktiveBenutzer = result.AnzInaktiveBenutzer;
+                } else {
+                    that.binding.AnzInaktiveBenutzer = 0;
+                }
+                // show warning inactiveUser and license exceeded
+                if (that.binding.AnzAktiveLizenz >= that.binding.AnzMandantLizenz && that.binding.AnzInaktiveBenutzer > 0) {
+                    //alert(getResourceText("genDataEmployee.exceededLicence"));
+                    that.binding.dataEmployee.errorLicenseExceeded = true;
                 }
                 // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
                 // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
@@ -270,7 +276,7 @@
                     var newEmployeeId = null;
                     that.saveData(function (response) {
                         AppBar.busy = true;
-                        Log.print(Log.l.trace, "eployee saved");
+                        Log.print(Log.l.trace, "employee saved");
                         //var newEmployee = getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue);
                         var newEmployee = copyByValue(GenDataEmployee.employeeView.defaultValue);
                         // could be changed since load of service
@@ -914,7 +920,6 @@
             var saveData = function (complete, error) {
                 var errorMessage;
                 var err = null;
-                var errorLicenseExceeded = false;
                 Log.call(Log.l.trace, "GenDataEmployee.Controller.");
                 AppData.setErrorMsg(that.binding);
                 var recordId = getRecordId();
@@ -979,54 +984,7 @@
                         if (json && json.d && json.d.results.length > 0) {
                             var result = json.d.results[0];
                             if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
-                                errorLicenseExceeded = true;
-                                confirmModal(null,
-                                    "ResultCode: " + result.ResultCode + " " + result.ResultMessage,
-                                    getResourceText("genDataEmployee.deleteMitarbeiter"),
-                                    getResourceText("genDataEmployee.cancel"),
-                                    function (result) {
-                                        if (result) {
-                                            Log.print(Log.l.trace, "clickDelete: user choice OK");
-                                            AppBar.busy = false;
-                                            deleteData(function (response) {
-                                                /* Mitarbeiter Liste neu laden und Selektion auf neue Zeile setzen */
-                                                var master = Application.navigator.masterControl;
-                                                if (master &&
-                                                    master.controller &&
-                                                    typeof master.controller.loadData === "function" &&
-                                                    master.controller.binding) {
-                                                    //var prevSelIdx = master.controller.binding.selIdx;
-                                                    master.controller.loadData();
-                                                }
-                                            }, function (errorResponse) {
-                                                // delete ERROR
-                                                var message = null;
-                                                Log.print(Log.l.error,
-                                                    "error status=" +
-                                                    errorResponse.status +
-                                                    " statusText=" +
-                                                    errorResponse.statusText);
-                                                if (errorResponse.data && errorResponse.data.error) {
-                                                    Log.print(Log.l.error,
-                                                        "error code=" + errorResponse.data.error.code);
-                                                    if (errorResponse.data.error.message) {
-                                                        Log.print(Log.l.error,
-                                                            "error message=" +
-                                                            errorResponse.data.error.message.value);
-                                                        message = errorResponse.data.error.message.value;
-                                                    }
-                                                }
-                                                if (!message) {
-                                                    message = getResourceText("error.delete");
-                                                }
-                                                alert(message);
-                                            });
-                                        } else {
-                                            if (typeof error === "function") {
-                                                error();
-                                            }
-                                        }
-                                    });
+                                that.binding.dataEmployee.errorLicenseExceeded = true;
                             }
                         }
                     }, function (errorResponse) {
@@ -1040,7 +998,7 @@
                         });
                     });
                 }).then(function () {
-                    if (err || errorLicenseExceeded) {
+                    if (err) {
                         return WinJS.Promise.as();
                     }
                     return AppData.call("PRC_SaveUserAccountData", {
@@ -1064,7 +1022,7 @@
                         });
                     });
                 }).then(function () {
-                    if (err || errorLicenseExceeded) {
+                    if (err) {
                         return WinJS.Promise.as();
                     } else if (AppData.getRecordId("Mitarbeiter") === recordId) {
                         AppData._persistentStates.privacyPolicyFlag = false;
@@ -1097,7 +1055,7 @@
                     }
                 }).then(function () {
                     AppBar.busy = false;
-                    if (err || AppData.getRecordId("Mitarbeiter") === recordId || errorLicenseExceeded) {
+                    if (err || AppData.getRecordId("Mitarbeiter") === recordId) {
                         // ignore that
                     } else {
                         var master = Application.navigator.masterControl;
