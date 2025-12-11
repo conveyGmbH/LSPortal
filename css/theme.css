@@ -116,7 +116,7 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .cnv-ui-dark .rootsplitview-tablet #navigationbar_vertical.win-listview {
     border-left-color: #525252;
 }
-.win-splitviewcommand.pane-submenu-expanded {
+.cnv-ui-dark .win-splitviewcommand.pane-submenu-expanded {
     background-color: #525252;
 }
 
