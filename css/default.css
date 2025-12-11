@@ -68,7 +68,7 @@ label {
     visibility: hidden;
 }
 .titlearea-bkg {
-    color: #ffffff;
+    color: var(--ColorTitleArea);
     background-color: var(--ColorNavigation);
 }
 

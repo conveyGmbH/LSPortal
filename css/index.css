@@ -1195,3 +1195,6 @@ button[aria-checked=true]:enabled:hover:active .win-commandimage.win-commandimag
     color: var(--ColorLabel);
 }
 
+button.win-splitviewpanetoggle {
+    color: var(--ColorTitleArea) !important;
+}

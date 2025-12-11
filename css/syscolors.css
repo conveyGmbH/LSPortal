@@ -23,6 +23,7 @@
     --ColorMasterHostBackground: var(--Window);
     --ColorTileText: var(--WindowText);
     --ColorTileBackground: var(--Window);
+    --ColorTitleArea: #ffffff;
 }
 
 /* Chrome & Safari (any version) */
