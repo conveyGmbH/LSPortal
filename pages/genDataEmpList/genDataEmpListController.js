@@ -185,6 +185,15 @@
                                 AppBar.scope.loadData(that.binding.employeeId);
                             }
                         }
+                    } else {
+                        //#8512 Mitarbeiter auf der Detail Page neuladen weil User hängt an neue Veranstaltung - die Anzahl der Lizenzen (aktive und gesamt) eine andere ist als die vorherige Veranstaltung.
+                        var curPageId = Application.getPageId(nav.location);
+                        if ((curPageId === "genDataEmployee" ||
+                                curPageId === "genDataSkillEntry" ||
+                                curPageId === "genDataUserInfo") &&
+                            typeof AppBar.scope.loadData === "function") {
+                            AppBar.scope.loadData(that.binding.employeeId);
+                        }
                     }
                 }
                 Log.ret(Log.l.trace);
