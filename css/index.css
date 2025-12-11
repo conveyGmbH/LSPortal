@@ -581,8 +581,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .pane-submenu-text {
-    margin: 0;
-    padding-top: 9px;
+    margin: 12px 0 0 0;
     padding-bottom: 0;
     padding-right: 0;
     height: 36px;
@@ -610,6 +609,7 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
 }
 
 .pane-submenu-inner-text {
+    font-size: 14px;
 }
 .navigationbar-inner-text {
     white-space: nowrap;
