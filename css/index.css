@@ -322,13 +322,14 @@ html.win-hoverable .cnv-ui-dark .navigationbar-container-horizontal .win-navbutt
 .pane-submenu-list {
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 100%;
-    /*
+    width: calc(100% - 2px);
+    border-left-color: gray;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: gray;
     border-right-style: solid;
     border-right-width: 1px;
-    border-right-color: #e6e6e6;
-    */
 }
 
 .pane-submenu-list .win-disabled .win-item {
@@ -527,6 +528,10 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     height: 36px;
     display: inherit;
 }
+.pane-submenu-list.win-listview .win-vertical .win-footercontainer {
+    min-height: 0 !important;
+}
+
 .pane-submenu-list .win-container {
     margin: 0 !important;
     padding: 0 !important;

@@ -84,6 +84,10 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
     background-color: #101010;
 }
 
+.pane-submenu-list {
+    border-right-color: #e6e6e6;
+}
+.pane-submenu-list,
 .win-appbar-top .win-appbar-actionarea,
 .win-appbar-top .win-appbar-actionarea,
 .rootsplitview-full .pagecontrol > div > div > section[role="main"],
@@ -94,6 +98,14 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .rootsplitview-tablet #navigationbar_vertical.win-listview {
     border-left-color: #e6e6e6;
 }
+.win-splitviewcommand.pane-submenu-expanded {
+    background-color: #e6e6e6;
+}
+
+.cnv-ui-dark .pane-submenu-list {
+    border-right-color: #525252;
+}
+.cnv-ui-dark .pane-submenu-list,
 .cnv-ui-dark .win-appbar-top .win-appbar-actionarea,
 .cnv-ui-dark .win-appbar-top .win-appbar-actionarea,
 .cnv-ui-dark .rootsplitview-full .pagecontrol > div > div > section[role="main"],
@@ -103,6 +115,9 @@ body.cnv-ui-dark, body.cnv-ui-dark * {
 .cnv-ui-dark .rootsplitview-full #navigationbar_vertical.win-listview,
 .cnv-ui-dark .rootsplitview-tablet #navigationbar_vertical.win-listview {
     border-left-color: #525252;
+}
+.win-splitviewcommand.pane-submenu-expanded {
+    background-color: #525252;
 }
 
 #navigationbar_horizontal.win-listview {
