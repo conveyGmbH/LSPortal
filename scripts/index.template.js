@@ -289,7 +289,8 @@
         { id: "eventProducts", group: 46, disabled: false },
         { id: "siteeventsImport", group: 13, disabled: false },
         { id: "clientManagementSummarise", group: 75, disabled: false },
-        { id: "adminAppHelpText", group: 76, disabled: false }
+        { id: "adminAppHelpText", group: 76, disabled: false },
+        { id: "crmSettings", group: 2, disabled: false }
     ];
 
 
@@ -335,6 +336,7 @@
         { id: "publish", master: "eventList" },
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },
+        { id: "crmSettings", master: "eventList" },
         //{ id: "genDataSettings", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
         { id: "start", master: "eventList" },
