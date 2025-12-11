@@ -1980,6 +1980,7 @@
     "adminAppHelpText.htmlupload"			: "Html Datei upload",
 
 	"crmSettings.title" : "CRM Export Einstellungen",
+    "crmSettings.inactiveMessage" : "CRM Export ist nicht aktiviert",
 
     "tfa.title": "Zwei-Faktor-Authentifizierung",
     "tfa.loading": "Zwei-Faktor-Authentifizierung wird geladen...",

@@ -1953,6 +1953,7 @@
     "adminAppHelpText.htmlupload"			: "Télécharger le fichier html",
 
     "crmSettings.title" : "Paramètres d'exportation CRM",
+    "crmSettings.inactiveMessage" : "L'exportation CRM n'est pas activée",
 
     "tfa.title": "Authentification à Deux Facteurs",
     "tfa.loading": "Chargement de l'authentification à deux facteurs...",

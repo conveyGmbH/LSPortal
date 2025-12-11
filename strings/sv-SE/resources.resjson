@@ -1547,6 +1547,7 @@
     "adminAppHelpText.htmlupload"			: "Html file upload",
 
     "crmSettings.title" : "CRM Export Settings",
+    "crmSettings.inactiveMessage" : "CRM Export isn't activated",
 
 
     "tfa.title": "Two-Factor Authentication",
