@@ -517,7 +517,9 @@
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                         }
                                                         AppBar.scope.loadData();
-                                                    } else if ((curPageId === "event" || curPageId === "genDataSettings") &&
+                                                    } else if ((curPageId === "event" ||
+                                                        curPageId === "genDataSettings" ||
+                                                        curPageId === "crmSettings") &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
                                                     }else if (curPageId === "eventProducts" &&
@@ -577,6 +579,7 @@
                                                         curPageId === "optQuestionList" ||
                                                         curPageId === "questionList" ||
                                                         curPageId === "event" ||
+                                                        curPageId === "crmSettings" ||
                                                         curPageId === "contactResultsList" ||
                                                         curPageId === "reporting" ||
                                                         curPageId === "reportingColumnList" ||
@@ -602,7 +605,9 @@
                                                         AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
                                                     }
                                                     AppBar.scope.loadData();
-                                                } else if ((curPageId === "event" || curPageId === "genDataSettings") &&
+                                                } else if ((curPageId === "event" ||
+                                                    curPageId === "genDataSettings" ||
+                                                    curPageId === "crmSettings") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 }

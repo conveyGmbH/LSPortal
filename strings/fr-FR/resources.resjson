@@ -197,6 +197,7 @@
     "tooltip.forceVersionUpdate" : "forcer la mise à jour",
     "tooltip.changetolsmain" : "Passer à LSMain",
     "tooltip.addLicences" : "Autres licences",
+    "tooltip.crmSettings" : "Paramètres d'exportation CRM",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -731,6 +732,7 @@
     "label.close" : "Fermer",
     "label.adminAppHelpText" : "Gestion des textes d'aide",
     "label.clientManagementEvents" : "Événements",
+    "label.crmSettings" : "Paramètres CRM",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -1950,6 +1952,7 @@
     "adminAppHelpText.bodyText"			: "Texte d'aide",
     "adminAppHelpText.htmlupload"			: "Télécharger le fichier html",
 
+    "crmSettings.title" : "Paramètres d'exportation CRM",
 
     "tfa.title": "Authentification à Deux Facteurs",
     "tfa.loading": "Chargement de l'authentification à deux facteurs...",
