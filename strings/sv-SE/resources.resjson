@@ -161,6 +161,7 @@
     "tooltip.hideHelpText"  : "Hide help text",
     "tooltip.forceVersionUpdate" : "Force update",
     "tooltip.crmSettings" : "CRM Export Settings",
+    "tooltip.contactCrmExport" : "Contact CRM Export",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -669,6 +670,7 @@
     "label.showNoMore" : "Don't show anymore",
     "label.close" : "Close",
     "label.crmSettings" : "CRM Settings",
+    "label.contactCrmExport" : "CRM Export",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1549,6 +1551,8 @@
     "crmSettings.title" : "CRM Export Settings",
     "crmSettings.inactiveMessage" : "CRM Export isn't activated",
 
+    "contactCrmExport.title" : "Contact CRM Export",
+    "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",

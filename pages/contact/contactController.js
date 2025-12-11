@@ -1133,6 +1133,8 @@
                                 loadInitSelection();
                                 that.checkOnPdf();
                                 that.getAudioData();
+                            } else {
+                                that.setDataContact(getEmptyDefaultValue(Contact.contactView.defaultValue));
                             }
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "select contactView: error!");

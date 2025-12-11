@@ -593,13 +593,19 @@
                             AppData.setRecordId("Kontakt", that.binding.contactId);
                             updateIncompleteStates({ IsIncomplete: null, QuestionnaireIncomplete: null});
                             var curPageId = Application.getPageId(nav.location);
-                            if (curPageId === "contactResultsQuestion" &&
+                            if (curPageId === "contactResultsEdit" &&
                                 typeof AppBar.scope.loadData === "function") {
                                 AppBar.scope.loadData();
                             } else if (curPageId === "contact" &&
                                 typeof AppBar.scope.loadData === "function") {
                                 AppBar.scope.loadData();
-                            } else if (curPageId === "contact" &&
+                            } else if (curPageId === "contactCrmExport" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else if (curPageId === "contactResultsQuestion" &&
+                                typeof AppBar.scope.loadData === "function") {
+                                AppBar.scope.loadData();
+                            } else if (curPageId === "contactResultsAttach" &&
                                 typeof AppBar.scope.loadData === "function") {
                                 AppBar.scope.loadData();
                             } else if (curPageId === "contactResultsCriteria" &&
@@ -674,8 +680,10 @@
                                                     if (curPageId === "contactResultsEdit" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
-                                                    }
-                                                    else if (curPageId === "contact" &&
+                                                    } else if (curPageId === "contact" &&
+                                                        typeof AppBar.scope.loadData === "function") {
+                                                        AppBar.scope.loadData();
+                                                    } else if (curPageId === "contactCrmExport" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "contactResultsQuestion" &&
@@ -703,13 +711,19 @@
                                                 that.binding.contactId = item.data.KontaktVIEWID;
                                                 AppData.setRecordId("Kontakt", that.binding.contactId);
                                                 handlePageEnable(item.data);
-                                                if (curPageId === "contactResultsQuestion" &&
+                                                if (curPageId === "contactResultsEdit" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else if (curPageId === "contact" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
-                                                } else if (curPageId === "contact" &&
+                                                } else if (curPageId === "contactCrmExport" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                } else if (curPageId === "contactResultsQuestion" &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                } else if (curPageId === "contactResultsAttach" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else if (curPageId === "contactResultsCriteria" &&

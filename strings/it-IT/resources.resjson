@@ -198,6 +198,7 @@
     "tooltip.changetolsmain" : "Passare a LSMain",
     "tooltip.addLicences" : "Altre licenze",
     "tooltip.crmSettings" : "Impostazioni di esportazione CRM",
+    "tooltip.contactCrmExport" : "Esportazione di contatto",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -733,6 +734,7 @@
     "label.adminAppHelpText" : "Gestione del testo di aiuto",
     "label.clientManagementEvents" : "Eventi",
     "label.crmSettings" : "Impostazioni CRM",
+    "label.contactCrmExport" : "Esportazione CRM",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -1952,6 +1954,9 @@
 
     "crmSettings.title" : "Impostazioni di esportazione CRM",
     "crmSettings.inactiveMessage" : "L'esportazione CRM non è attivata",
+
+    "contactCrmExport.title" : "Esportazione CRM di contatto",
+    "contactCrmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
 
     "tfa.title": "Autenticazione a due fattori",
     "tfa.loading": "Caricamento dell'autenticazione a due fattori in corso...",

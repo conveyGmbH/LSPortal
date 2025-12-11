@@ -198,6 +198,7 @@
     "tooltip.changetolsmain" : "Switch to LSMain",
     "tooltip.addLicences" : "Add Licences",
     "tooltip.crmSettings" : "CRM Export Settings",
+    "tooltip.contactCrmExport" : "Contact CRM Export",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -738,6 +739,7 @@
     "label.adminAppHelpText" : "Help text management",
     "label.clientManagementEvents" : "Events",
     "label.crmSettings" : "CRM Settings",
+    "label.contactCrmExport" : "CRM Export",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -1978,6 +1980,9 @@
 
     "crmSettings.title" : "CRM Export Settings",
     "crmSettings.inactiveMessage" : "CRM Export isn't activated",
+
+    "contactCrmExport.title" : "Contact CRM Export",
+    "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",
