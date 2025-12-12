@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/colors.js" />
 /// <reference path="~/www/lib/convey/scripts/colorPicker.js" />
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
+/// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/strings.js"/>
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/settings/settingsService.js" />
@@ -45,35 +46,15 @@
                 }
             }
 
-            var checkColorLimit = function (color, isBkg) {
-                if (Colors.isDarkTheme) {
-                    var rgbColor = Colors.hex2rgb(color);
-                    var hsvColor = Colors.rgb2hsv(rgbColor);
-                    if (isBkg && hsvColor.v < 50 ||
-                        !isBkg && hsvColor.v > 50) {
-                        rgbColor = Colors.hsv2rgb(
-                            hsvColor.h,
-                            hsvColor.s,
-                            100 - hsvColor.v
-                        );
-                        color = Colors.rgb2hex(rgbColor.r, rgbColor.g, rgbColor.b);
-                    }
-                }
-                return color;
-            };
             var createColorPicker = function (colorProperty) {
                 Log.call(Log.l.trace, "Settings.Controller.");
-                var color = Colors[colorProperty];
-                switch (colorProperty) {
-                    case "backgroundColor":
-                        color = checkColorLimit(color, true);
-                        break;
-                    case "navigationColor":
-                        color = checkColorLimit(color, false);
-                        break;
-                    case "dashboardColor":
-                        color = checkColorLimit(color, false);
-                        break;
+                var color = null;
+                if (Colors._colorsClass) {
+                    var initialColorKey = "_" + colorProperty + "Initial";
+                    color = Colors._colorsClass[initialColorKey];
+                }
+                if (!color) {
+                    color = Colors[colorProperty];
                 }
                 if (that.binding && that.binding.generalData &&
                     that.binding.generalData.colorSettings) {
@@ -118,11 +99,9 @@
                             break;
                         case "backgroundColor":
                             pOptionTypeId = 12;
-                            color = checkColorLimit(color, true);
                             break;
                         case "navigationColor":
                             pOptionTypeId = 13;
-                            color = checkColorLimit(color, false);
                             break;
                         case "textColor":
                             pOptionTypeId = 14;
@@ -138,7 +117,6 @@
                             break;
                         case "dashboardColor":
                             pOptionTypeId = 46;
-                            color = checkColorLimit(color, false);
                             break;
                         default:
                         // defaultvalues
