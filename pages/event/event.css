@@ -48,7 +48,7 @@
     width: auto;
     min-height: 26px;
     height: 100%;
-    white-space: break-spaces;
+    /* white-space: break-spaces; */
 }
 .event #exportLanguageCombo {
     margin-top: 10px;
