@@ -1,4 +1,4 @@
-// controller for page: info
+// controller for page: crmSettings
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -7,6 +7,7 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/crmSettings/crmSettingsService.js" />
+/// <reference path="~/www/lib/SalesforceLeadLib/scripts/salesforceLeadLib.js" />
 
 (function () {
     "use strict";
@@ -23,6 +24,19 @@
             var fieldMappingsContainer = pageElement.querySelector("#fieldmappings-container");
 
             var that = this;
+
+            // initialize salesforceLeadLib call
+
+            this.dispose = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+
+                if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
+                    // Clear Field Mapping UI when leaving page
+                    SalesforceLeadLib.clear(fieldMappingsContainer);
+                }
+                Log.ret(Log.l.trace);
+
+            }
 
             var getRecordId = function () {
                 var recordId = null;
@@ -91,6 +105,37 @@
                         that.binding.eventId = null;
                     });
                 }).then(function () {
+                    // Initialize and open Field Mapping UI (Mentis: #8513)
+                    if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
+                        Log.print(Log.l.info, "Initializing SalesforceLeadLib...");
+
+                        // Initialize with Portal Admin credentials
+                        var serverUrl = AppData.getBaseURL(AppData.appSettings.odata.onlinePort);
+                        var apiName = AppData.getOnlinePath();
+                        var user = AppData.getOnlineLogin();
+                        var password = AppData.getOnlinePassword();
+
+                        Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
+
+                        SalesforceLeadLib.init(serverUrl, apiName, user, password);
+
+                        // Open Field Mapping UI with UUID eventId (async, no need to wait)
+                        if (that.binding.eventId) {
+                            Log.print(Log.l.info, "Opening Field Mapping for eventId (UUID): " + that.binding.eventId);
+
+                            // Call openFieldMapping and handle promise properly
+                            SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, that.binding.eventId).then(
+                                function() {
+                                    Log.print(Log.l.info, "Field Mapping UI opened successfully");
+                                },
+                                function(error) {
+                                    Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
+                                }
+                            );
+                        } else {
+                            Log.print(Log.l.error, "No eventId available for Field Mapping");
+                        }
+                    }
                     AppBar.triggerDisableHandlers();
                 });
                 Log.ret(Log.l.trace);

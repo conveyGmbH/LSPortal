@@ -1,0 +1,58 @@
+/* SalesforceLeadLib - CSS Styles for LSPortal Integration */
+
+/* Note: Most styles are injected via JavaScript in the library */
+/* This file contains additional portal-specific overrides */
+
+.field-mapping-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.field-mapping-container h2 {
+    color: #1f2937;
+}
+
+.field-mapping-container p {
+    color: #6b7280;
+}
+
+.crm-test-export-container,
+.crm-export-container {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Loading state */
+.loading-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 112, 210, 0.3);
+    border-radius: 50%;
+    border-top-color: #0070d2;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error message styling */
+.error-message {
+    color: #c23934;
+    background-color: #fef0ef;
+    border: 1px solid #fdc5c1;
+    padding: 12px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* Success message styling */
+.success-message {
+    color: #027e46;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 12px;
+    border-radius: 5px;
+    margin: 10px 0;
+}

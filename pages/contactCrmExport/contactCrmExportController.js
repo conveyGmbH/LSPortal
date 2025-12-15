@@ -20,10 +20,22 @@
                 dataContact: getEmptyDefaultValue(ContactCrmExport.contactView.defaultValue),
                 contactId: null
             }, commandList]);
+            
 
             var crmExportContainer = pageElement.querySelector("#crmexport-container");
 
             var that = this;
+
+            // dispose method hits called whenever the user navigates away from this page
+            this.dispose = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+
+                if (crmExportContainer && salesforceLeadLib && typeof salesforceLeadLib.clear === "function") {
+                    // Call Clear method from salesforceLeadLib
+                    salesforceLeadLib.clear(crmExportContainer);
+                }
+                Log.ret(Log.l.trace);
+            }
 
             var getRecordId = function () {
                 var recordId = null;
