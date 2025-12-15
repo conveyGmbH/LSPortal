@@ -557,6 +557,7 @@
                                     }
                                     AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                     restriction.VeranstaltungID = that.binding.eventId;
+                                    AppData.setRestriction("Employee", restriction);
                                 }
                             }
                         },
