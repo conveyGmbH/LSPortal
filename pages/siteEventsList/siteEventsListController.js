@@ -23,7 +23,9 @@
                 eventText: getResourceText("siteEventsList.event"),
                 eventTypID: 0,
                 searchString: "",
-                prevEventTerminId: AppData.getRecordId("VeranstaltungTermin")
+                prevEventTerminId: AppData.getRecordId("VeranstaltungTermin"),
+                preveventTypID: AppData.getRecordId("EventTypID"),
+                preveventSearchString: AppData.getRecordId("EventSearchString")
             }, commandList, true]);
             this.nextUrl = null;
 
@@ -69,8 +71,12 @@
                 ];
                 if (eventTypDropdown && eventTypDropdown.winControl) {
                     eventTypDropdown.winControl.data = new WinJS.Binding.List(exhibitorCategory);
+                    if (that.binding.preveventTypID) {
+                        eventTypDropdown.selectedIndex = that.binding.preveventTypID;
+                    } else {
                     eventTypDropdown.selectedIndex = 0;
                 }
+            }
             }
             this.creatingEventsCategory = creatingEventsCategory;
 
@@ -147,6 +153,50 @@
             }
             this.loadNextUrl = loadNextUrl;
 
+            var scopeFromRecordId = function (recordId) {
+                var i;
+                Log.call(Log.l.trace, SiteEventsList + ".Controller.", "recordId=" + recordId);
+                var item = null;
+                for (i = 0; i < that.eventdatasets.length; i++) {
+                    var clients = that.eventdatasets.getAt(i);
+                    if (clients && typeof clients === "object" &&
+                        clients.VeranstaltungTerminVIEWID === recordId) {
+                        item = clients;
+                        break;
+                    }
+                }
+                if (item) {
+                    Log.ret(Log.l.trace, "i=" + i);
+                    return { index: i, item: item };
+                } else {
+                    Log.ret(Log.l.trace, "not found");
+                    return null;
+                }
+            };
+            this.scopeFromRecordId = scopeFromRecordId;
+            
+            var scrollToRecordId = function (recordId) {
+                Log.call(Log.l.trace, "Questionnaire.Controller.", "recordId=" + recordId);
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else {
+                    if (recordId && listView && listView.winControl) {
+                        for (var i = 0; i < that.eventdatasets.length; i++) {
+                            var events = that.eventdatasets.getAt(i);
+                            if (events && typeof events === "object" &&
+                                events.VeranstaltungTerminVIEWID === recordId) {
+                                listView.winControl.indexOfFirstVisible = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId = scrollToRecordId;
+
             var selectRecordId = function (recordId) {
                 Log.call(Log.l.trace, "SiteEventsList.Controller.", "recordId=" + recordId);
                 if (recordId && listView && listView.winControl && listView.winControl.selection) {
@@ -157,6 +207,7 @@
                             listView.winControl.selection.set(i);
                             AppData.setRecordId("VeranstaltungTermin", recordId);
                             that.binding.eventId = recordId;
+                            that.scrollToRecordId(recordId);
                             break;
                         }
                     }
@@ -178,6 +229,49 @@
                 return ret;
             };
             this.getDateObject = getDateObject;
+
+            var setComboBoxEventTypId = function() {
+                Log.call(Log.l.trace, "SiteEventsList.Controller.", "preveventTypID=" + that.binding.preveventTypID);
+                var searchString = AppData.getRecordId("EventSearchString");
+                var eventTypId = AppData.getRecordId("EventTypID");
+                if (!searchString) {
+                    that.binding.preveventSearchString = searchString;
+                }
+                if (!eventTypId) {
+                    that.binding.preveventTypID = eventTypId;
+                }
+                if (eventTypId || eventTypId === 0 || searchString) {
+                    return AppData.call("PRC_GetEventList",
+                        {
+                            pSearchString: that.binding.preveventSearchString,
+                            pTerminTyp: parseInt(that.binding.preveventTypID)
+                        },
+                        function (json) {
+                            Log.print(Log.l.info, "call success! ");
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
+                                });
+
+                                that.binding.count = results.length;
+                                that.eventdatasets = new WinJS.Binding.List(results);
+
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                }
+                                that.selectRecordId(that.binding.prevEventTerminId);
+                            } else {
+
+                            }
+                        },
+                        function (error) {
+                            Log.print(Log.l.error, "call error");
+                        });
+                }
+            }
+            this.setComboBoxEventTypId = setComboBoxEventTypId;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -204,10 +298,12 @@
                 onSelectionDropDownChanged: function(event) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
                     var target = event.currentTarget || event.target;
+                    AppData.setRecordId("EventTypID", target.value);
                     if (target) {
                         that.binding.eventTypID = parseInt(target.value);
                     }
                     if (that.binding.eventTypID === 0 && that.binding.searchString === '') {
+                        AppData.setRecordId("EventTypID", 0);
                     that.loadData();
                     } else {
                         return AppData.call("PRC_GetEventList",
@@ -246,8 +342,12 @@
                     if (that.binding.eventTypID === null) {
                         that.binding.eventTypID = 0;
                     }
+                    if (searchInput.value === "") {
+                        AppData.setRecordId("EventSearchString", "");
+                    }
                     if (event.keyCode === 13) {
                         if (searchInput.value) {
+                            AppData.setRecordId("EventSearchString", searchInput.value);
                             AppData.call("PRC_GetEventList",
                             {
                                 pSearchString: searchInput.value,
@@ -444,6 +544,9 @@
                 AppData.setErrorMsg(that.binding);
 
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (that.binding.preveventTypID) {
+                        that.setComboBoxEventTypId();
+                    } else {
                     return SiteEventsList.VeranstaltungView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -472,6 +575,7 @@
                             var recordId;
                             if (that.binding.prevEventTerminId) {
                                 recordId = that.binding.prevEventTerminId;
+                                    that.selectRecordId(recordId);
                             } else {
                                 recordId = AppData.getRecordId("VeranstaltungTermin");
                                 AppData.setRecordId("VeranstaltungTermin", recordId);
@@ -519,6 +623,11 @@
                         }
                         that.loading = false;
                         }, { IsLocal: 1});
+                    }
+                }).then(function () {
+                    if (that.binding.preveventSearchString) {
+                        searchInput.value = that.binding.preveventSearchString;
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
