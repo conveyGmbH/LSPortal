@@ -47,6 +47,8 @@
             this.img = null;
             var that = this;
 
+            var delayedSaveDataPromise = null;
+
             // select combo
             var initAnrede = pageElement.querySelector("#InitAnredeFeld");
             var initLand = pageElement.querySelector("#InitLandFeld");
@@ -666,12 +668,8 @@
                 }
                 if (item.FieldFlag) {
                     if (inputfield) {
-                        if (Colors.isDarkTheme) {
-                            WinJS.Utilities.removeClass(inputfield, "lightthemeMandatory");
-                            WinJS.Utilities.addClass(inputfield, "darkthemeMandatory");
-                        } else {
-                            WinJS.Utilities.removeClass(inputfield, "darkthemeMandatory");
-                            WinJS.Utilities.addClass(inputfield, "lightthemeMandatory");
+                        if (!WinJS.Utilities.hasClass(inputfield, "bkgcolor-mandatory")) {
+                            WinJS.Utilities.addClass(inputfield, "bkgcolor-mandatory");
                         }
                     }
                 }
@@ -679,27 +677,40 @@
             this.resultMandatoryConverter = resultMandatoryConverter;
 
             var removeMandatory = function () {
-                var mandatoryFields = pageElement.querySelectorAll(".lightthemeMandatory, .darkthemeMandatory");
+                var mandatoryFields = pageElement.querySelectorAll(".bkgcolor-mandatory");
                 if (mandatoryFields) for (var i = 0; i < mandatoryFields.length; i++) {
                     var mandatoryField = mandatoryFields[i];
                     if (mandatoryField) {
-                        WinJS.Utilities.removeClass(mandatoryField, "emptyMandatory");
-                        WinJS.Utilities.removeClass(mandatoryField, "lightthemeMandatory");
-                        WinJS.Utilities.removeClass(mandatoryField, "darkthemeMandatory");
+                        if (WinJS.Utilities.hasClass(inputfield, "empty-mandatory")) {
+                            WinJS.Utilities.removeClass(inputfield, "empty-mandatory");
+                        }
+                        if (WinJS.Utilities.hasClass(inputfield, "bkgcolor-mandatory")) {
+                            WinJS.Utilities.removeClass(inputfield, "bkgcolor-mandatory");
+                        }
                     }
                 }
             };
             this.removeMandatory = removeMandatory;
 
             var handleValueChanged = function () {
-                var mandatoryFields = pageElement.querySelectorAll(".lightthemeMandatory, .darkthemeMandatory");
+                var mandatoryFields = pageElement.querySelectorAll(".bkgcolor-mandatory");
                 if (mandatoryFields) for (var i = 0; i < mandatoryFields.length; i++) {
                     var mandatoryField = mandatoryFields[i];
                     if (mandatoryField) {
+                        var valueHasChanged = false;
                         if (mandatoryField.value) {
-                            WinJS.Utilities.removeClass(mandatoryField, "emptyMandatory");
+                            if (WinJS.Utilities.hasClass(mandatoryField, "empty-mandatory")) {
+                                WinJS.Utilities.removeClass(mandatoryField, "empty-mandatory");
+                                valueHasChanged = true;
+                            }
                         } else {
-                            WinJS.Utilities.addClass(mandatoryField, "emptyMandatory");
+                            if (!WinJS.Utilities.hasClass(mandatoryField, "empty-mandatory")) {
+                                WinJS.Utilities.addClass(mandatoryField, "empty-mandatory");
+                                valueHasChanged = true;
+                            }
+                        }
+                        if (valueHasChanged && AppBar.notifyModified) {
+                            that.delayedSaveData();
                         }
                     }
                 }
@@ -1398,6 +1409,16 @@
                 return ret;
             }
             this.saveData = saveData;
+
+            var delayedSaveData = function () {
+                if (delayedSaveDataPromise) {
+                    delayedSaveDataPromise.cancel();
+                }
+                delayedSaveDataPromise = WinJS.Promise.timeout(50).then(function() {
+                    that.saveData();
+                });
+            }
+            this.delayedSaveData = delayedSaveData;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");

@@ -325,15 +325,15 @@
                 if (item.PflichtFeld) {
                     if (item.CurrentQuestionIncomplete) {
                         if (Colors.isDarkTheme) {
-                            item["mandatoryColor"] = "#8b4513";
+                            item["mandatoryColor"] = "var(--ColorDarkMandatoryEmpty)";
                         } else {
-                            item["mandatoryColor"] = "lightsalmon";
+                            item["mandatoryColor"] = "var(--ColorMandatoryEmpty)";
                         }
                     } else {
                         if (Colors.isDarkTheme) {
-                            item["mandatoryColor"] = "rgba(139,69,19,0.2)";
+                            item["mandatoryColor"] = "var(--ColorDarkMandatory)";
                         } else {
-                            item["mandatoryColor"] = "rgba(255,160,122,0.2)";
+                            item["mandatoryColor"] = "var(--ColorMandatory)";
                         }
                     }
                 } else {

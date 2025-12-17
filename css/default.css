@@ -1862,26 +1862,6 @@ view-size-smallest .win-container {
     display: none;
 }
 
-.lightthemeMandatory {
-    background-color: rgba(255,160,122,0.2);
-}
-.lightthemeMandatory.emptyMandatory {
-    background-color: lightsalmon;
-}
-
-.darkthemeMandatory {
-    background-color: rgba(139,69,19,0.2);
-}
-.darkthemeMandatory.emptyMandatory {
-    background-color: #8b4513;
-}
-.bkgcolor-hoverable:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-.bkgcolor-activatable.bkgcolor-hoverable:hover:active, .bkgcolor-activatable:active {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #000000;
-}
 .use-border-radius {
     border-radius: 0;
     padding: 0;
