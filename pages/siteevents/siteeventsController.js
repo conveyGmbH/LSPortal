@@ -945,7 +945,7 @@
                     }
                 },
                 clickChange: function () {
-                    if (that.eventChangeId && AppData.generalData.eventId !== that.eventChangeId) {
+                    if (that.eventChangeId && AppData.generalData.fairMandantVeranstID !== that.eventChangeId) {
                         return false;
                     } else {
                         return true;
@@ -955,7 +955,7 @@
                     return false;
                 },
                 clickDelete: function () {
-                    if (!that.reorderId || that.binding.active === 1 || AppData.generalData.eventId === that.reorderId || AppBar.busy) {
+                    if (!that.reorderId || that.binding.active === 1 || AppData.generalData.fairMandantVeranstID === that.reorderId || AppBar.busy) {
                         return true;
                     } else {
                         return false;

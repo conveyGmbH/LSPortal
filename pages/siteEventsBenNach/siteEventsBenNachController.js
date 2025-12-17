@@ -201,7 +201,7 @@
                         }
                     },
                     clickChange: function () {
-                        if (AppData.generalData.eventId !== that.getRecordId()) {
+                        if (AppData.generalData.fairMandantVeranstID !== that.getRecordId()) {
                             return false;
                         } else {
                             return true;

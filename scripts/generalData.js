@@ -216,9 +216,13 @@
                             Log.print(Log.l.info, "set my VeranstaltungID=" + AppData._userData.VeranstaltungID);
                             AppData.setRecordId("Veranstaltung", AppData._userData.VeranstaltungID);
                             Log.print(Log.l.info, "set my FairMandantID=" + AppData._userData.FairMandantID);
-                            if (!AppData.getRecordId("FairMandant")) {
                                 AppData.setRecordId("FairMandant", AppData._userData.FairMandantID);
+                            //17.12.2025 Merke FairmandantVeranstId unter anderem für die Austellerliste
+                            if (AppData._userData.FairMandantVeranstID > 0) {
+                                AppData._userData.FairMandantVeranstID = -AppData._userData.FairMandantVeranstID;
                             }
+                            AppData.setRecordId("FairMandantVeranst", AppData._userData.FairMandantVeranstID);
+                            
                             if (!AppData.generalUserView.isLocal) {
                                 AppData._userData.AnzLokaleKontakte = AppData._userData.AnzVersendeteKontakte;
                             }
@@ -779,6 +783,7 @@
                     return (AppData.getContactDateString() + " " + AppData.getContactTimeString());
                 })();
                 data.eventId = AppData._userData.VeranstaltungID;
+                data.fairMandantVeranstID = AppData._userData.FairMandantVeranstID;
                 data.eventName = AppData._userData.VeranstaltungName;
                 data.userName = AppData._userData.Login;
                 data.userPresent = AppData._userData.Present;
