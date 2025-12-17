@@ -21,11 +21,22 @@
                 eventId: null
             }, commandList]);
 
-            var fieldMappingsContainer = pageElement.querySelector("#fieldmappings-container");
-
             var that = this;
 
-            // initialize salesforceLeadLib call
+            var fieldMappingsContainer = pageElement.querySelector("#fieldmappings-container");
+            if (fieldMappingsContainer && SalesforceLeadLib) {
+                // initialize salesforceLeadLib call
+                Log.print(Log.l.info, "Initializing SalesforceLeadLib...");
+
+                // Initialize with Portal Admin credentials
+                var serverUrl = AppData.getBaseURL(AppData.appSettings.odata.onlinePort);
+                var apiName = AppData.getOnlinePath();
+                var user = AppData.getOnlineLogin();
+                var password = AppData.getOnlinePassword();
+
+                Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
+                SalesforceLeadLib.init(serverUrl, apiName, user, password);
+            }
 
             this.dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -107,18 +118,6 @@
                 }).then(function () {
                     // Initialize and open Field Mapping UI (Mentis: #8513)
                     if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
-                        Log.print(Log.l.info, "Initializing SalesforceLeadLib...");
-
-                        // Initialize with Portal Admin credentials
-                        var serverUrl = AppData.getBaseURL(AppData.appSettings.odata.onlinePort);
-                        var apiName = AppData.getOnlinePath();
-                        var user = AppData.getOnlineLogin();
-                        var password = AppData.getOnlinePassword();
-
-                        Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
-
-                        SalesforceLeadLib.init(serverUrl, apiName, user, password);
-
                         // Open Field Mapping UI with UUID eventId (async, no need to wait)
                         if (that.binding.eventId) {
                             Log.print(Log.l.info, "Opening Field Mapping for eventId (UUID): " + that.binding.eventId);

@@ -25,12 +25,15 @@
 
             var crmExportContainer = pageElement.querySelector("#crmexport-container");
             if (crmExportContainer && SalesforceLeadLib) {
+                Log.print(Log.l.info, "Initializing SalesforceLeadLib...");
+
                 // Initialize with Portal Admin credentials
                 var serverUrl = AppData.getBaseURL(AppData.appSettings.odata.onlinePort);
                 var apiName = AppData.getOnlinePath();
                 var user = AppData.getOnlineLogin();
                 var password = AppData.getOnlinePassword();
 
+                Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
                 SalesforceLeadLib.init(serverUrl, apiName, user, password);
             }
 
