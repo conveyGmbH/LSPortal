@@ -532,7 +532,7 @@
             this.checkForHideQuestion = checkForHideQuestion;
 
             var checkForSelectionQuestion = function (selIdx) {
-                if (that.selectQuestionIdxs && that.questions) {
+                if (that.questions) {
                     var curScope = null;
                     var question = that.questions.getAt(selIdx);
                     if (question && typeof question === "object" &&
