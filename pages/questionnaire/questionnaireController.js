@@ -543,7 +543,8 @@
                             var newRecord = that.getFieldEntries(selIdx, curScope.type);
                             if (that.mergeRecord(curScope, newRecord) || that.showHideModified) {
                                 Log.print(Log.l.trace, "handle changes of item[" + selIdx + "]");
-                                if (typeof that.selectQuestionIdxs[selIdx] === "object") {
+                                if (that.selectQuestionIdxs &&
+                                    typeof that.selectQuestionIdxs[selIdx] === "object") {
                                     var optionQuestionIdxs = that.selectQuestionIdxs[selIdx];
                                     for (var i = 0; i < optionQuestionIdxs.length; i++) {
                                         var idx = optionQuestionIdxs[i];
