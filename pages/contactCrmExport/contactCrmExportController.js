@@ -143,6 +143,27 @@
                     }
                 }).then(function () {
                     AppBar.triggerDisableHandlers();
+
+                    // Initialize Salesforce Lead Library and open CRM Export
+                    if (that.binding.contactId && crmExportContainer) {
+                        // Initialize with Portal Admin credentials
+                        var serverUrl = AppData.getBaseURL(AppData.appSettings.odata.onlinePort);
+                        var apiName = AppData.getOnlinePath();
+                        var user = AppData.getOnlineLogin();
+                        var password = AppData.getOnlinePassword();
+
+                        SalesforceLeadLib.init(serverUrl, apiName, user, password);
+
+                        // Open CRM Export UI with contactId
+                        SalesforceLeadLib.openCrmExport(crmExportContainer, that.binding.contactId).then(
+                            function () {
+                                Log.print(Log.l.info, "CRM Export UI opened successfully");
+                            },
+                            function (error) {
+                                Log.print(Log.l.error, "Failed to open CRM Export UI: " + error.message);
+                            }
+                        );
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
