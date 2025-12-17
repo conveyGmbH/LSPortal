@@ -10,9 +10,6 @@
 /// <reference path="~/www/lib/convey/scripts/pageController.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/pages/questionnaire/questionnaireService.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />
-/// <reference path="~/plugins/cordova-plugin-device/www/device.js" />
 
 (function () {
     "use strict";
@@ -43,6 +40,8 @@
             }
 
             var that = this;
+
+            var delayedSaveDataPromise = null;
 
             // ListView control
             var listView = pageElement.querySelector("#listQuestionnaire.listview");
@@ -288,7 +287,7 @@
                                 }
                             } else {
                                 var checked = keyValue + "CHECKED";
-                                if (item[keyValue] !== null) {
+                                if (item[keyValue] && item[keyValue] !== "null") {
                                     if (item[keyValue] === item.SSANTWORT) {
                                         item[checked] = true;
                                     } else {
@@ -537,26 +536,80 @@
                     var curScope = null;
                     var question = that.questions.getAt(selIdx);
                     if (question && typeof question === "object" &&
-                        typeof that.selectQuestionIdxs[selIdx] === "object") {
+                        (typeof that.selectQuestionIdxs[selIdx] === "object" || question.PflichtFeld)) {
                         curScope = copyByValue(question);
-                    }
-                    if (curScope) {
-                        var newRecord = that.getFieldEntries(selIdx, curScope.type);
-                        if (that.mergeRecord(curScope, newRecord) || that.showHideModified) {
-                            Log.print(Log.l.trace, "handle changes of item[" + selIdx + "]");
-                            var optionQuestionIdxs = that.selectQuestionIdxs[selIdx];
-                            for (var i = 0; i < optionQuestionIdxs.length; i++) {
-                                var idx = optionQuestionIdxs[i];
-                                var item = that.questions.getAt(idx);
-                                var selQuestionIdx = item.SelektierteFrageIdx > 0 ? item.SelektierteFrageIdx - 1 : -1;
-                                if (!item.PflichtFeld &&
-                                    selQuestionIdx === selIdx &&
-                                    selQuestionIdx !== idx) {
-                                    var hideQuestion = getHideQuestion(curScope, item.SelektierteAntwortIdx);
-                                    if (hideQuestion !== item.hideQuestion) {
-                                        item.hideQuestion = hideQuestion;
-                                        that.questions.setAt(idx, item);
-                                        that.showHideModified = true;
+                        if (curScope) {
+                            var newRecord = that.getFieldEntries(selIdx, curScope.type);
+                            if (that.mergeRecord(curScope, newRecord) || that.showHideModified) {
+                                Log.print(Log.l.trace, "handle changes of item[" + selIdx + "]");
+                                if (typeof that.selectQuestionIdxs[selIdx] === "object") {
+                                    var optionQuestionIdxs = that.selectQuestionIdxs[selIdx];
+                                    for (var i = 0; i < optionQuestionIdxs.length; i++) {
+                                        var idx = optionQuestionIdxs[i];
+                                        var item = that.questions.getAt(idx);
+                                        var selQuestionIdx = item.SelektierteFrageIdx > 0 ? item.SelektierteFrageIdx - 1 : -1;
+                                        if (!item.PflichtFeld &&
+                                            selQuestionIdx === selIdx &&
+                                            selQuestionIdx !== idx) {
+                                            var hideQuestion = getHideQuestion(curScope, item.SelektierteAntwortIdx);
+                                            if (hideQuestion !== item.hideQuestion) {
+                                                item.hideQuestion = hideQuestion;
+                                                that.questions.setAt(idx, item);
+                                                that.showHideModified = true;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (question.PflichtFeld) {
+                                    var newValues =
+                                        (newRecord.SSANTWORT ? newRecord.SSANTWORT : "") +
+                                        (newRecord.MSANTWORT01 ? newRecord.MSANTWORT01 : "") +
+                                        (newRecord.MSANTWORT02 ? newRecord.MSANTWORT02 : "") +
+                                        (newRecord.MSANTWORT03 ? newRecord.MSANTWORT03 : "") +
+                                        (newRecord.MSANTWORT04 ? newRecord.MSANTWORT04 : "") +
+                                        (newRecord.MSANTWORT05 ? newRecord.MSANTWORT05 : "") +
+                                        (newRecord.MSANTWORT06 ? newRecord.MSANTWORT06 : "") +
+                                        (newRecord.MSANTWORT07 ? newRecord.MSANTWORT07 : "") +
+                                        (newRecord.MSANTWORT08 ? newRecord.MSANTWORT08 : "") +
+                                        (newRecord.MSANTWORT09 ? newRecord.MSANTWORT09 : "") +
+                                        (newRecord.MSANTWORT10 ? newRecord.MSANTWORT10 : "") +
+                                        (newRecord.MSANTWORT11 ? newRecord.MSANTWORT11 : "") +
+                                        (newRecord.MSANTWORT12 ? newRecord.MSANTWORT12 : "") +
+                                        (newRecord.Freitext ? newRecord.Freitext : "") +
+                                        (newRecord.MsAntwort13 ? newRecord.MsAntwort13 : "") +
+                                        (newRecord.MsAntwort14 ? newRecord.MsAntwort14 : "") +
+                                        (newRecord.MsAntwort15 ? newRecord.MsAntwort15 : "") +
+                                        (newRecord.MsAntwort16 ? newRecord.MsAntwort16 : "") +
+                                        (newRecord.MsAntwort17 ? newRecord.MsAntwort17 : "") +
+                                        (newRecord.MsAntwort18 ? newRecord.MsAntwort18 : "") +
+                                        (newRecord.MsAntwort19 ? newRecord.MsAntwort19 : "") +
+                                        (newRecord.MsAntwort20 ? newRecord.MsAntwort20 : "") +
+                                        (newRecord.MsAntwort21 ? newRecord.MsAntwort21 : "") +
+                                        (newRecord.MsAntwort22 ? newRecord.MsAntwort22 : "") +
+                                        (newRecord.MsAntwort23 ? newRecord.MsAntwort23 : "") +
+                                        (newRecord.MsAntwort24 ? newRecord.MsAntwort24 : "") +
+                                        (newRecord.MsAntwort25 ? newRecord.MsAntwort25 : "") +
+                                        (newRecord.MsAntwort26 ? newRecord.MsAntwort26 : "") +
+                                        (newRecord.MsAntwort27 ? newRecord.MsAntwort27 : "") +
+                                        (newRecord.MsAntwort28 ? newRecord.MsAntwort28 : "") +
+                                        (newRecord.MsAntwort29 ? newRecord.MsAntwort29 : "") +
+                                        (newRecord.MsAntwort30 ? newRecord.MsAntwort30 : "") +
+                                        (newRecord.MrAntwort01 ? newRecord.MrAntwort01 : "") +
+                                        (newRecord.MrAntwort02 ? newRecord.MrAntwort02 : "") +
+                                        (newRecord.MrAntwort03 ? newRecord.MrAntwort03 : "") +
+                                        (newRecord.MrAntwort04 ? newRecord.MrAntwort04 : "") +
+                                        (newRecord.MrAntwort05 ? newRecord.MrAntwort05 : "") +
+                                        (newRecord.MrAntwort06 ? newRecord.MrAntwort06 : "") +
+                                        (newRecord.MrAntwort07 ? newRecord.MrAntwort07 : "") +
+                                        (newRecord.MrAntwort08 ? newRecord.MrAntwort08 : "") +
+                                        (newRecord.MrAntwort09 ? newRecord.MrAntwort09 : "") +
+                                        (newRecord.MrAntwort10 ? newRecord.MrAntwort10 : "") +
+                                        (newRecord.MrAntwort11 ? newRecord.MrAntwort11 : "") +
+                                        (newRecord.MrAntwort12 ? newRecord.MrAntwort12 : "") +
+                                        (newRecord.RRANTWORT ? newRecord.RRANTWORT : "");
+                                    if (question.CurrentQuestionIncomplete && newValues ||
+                                        !question.CurrentQuestionIncomplete && !newValues) {
+                                        that.delayedSaveData();
                                     }
                                 }
                             }
@@ -630,13 +683,13 @@
                             }
                         } else if (type === "combo") {
                             field = element.querySelector(".win-dropdown");
-                            if (field && field.value !== "null") {
-                                ret["SSANTWORT"] = field.value;
+                            if (field) {
+                                ret["SSANTWORT"] = (field.value && field.value !== "null") ? field.value : null;
                             }
                         }
                         field = element.querySelector("textarea");
-                        if (field && field.value !== "null") {
-                            ret["Freitext"] = field.value;
+                        if (field) {
+                            ret["Freitext"] = field.value ? field.value : null;
                         }
                     }
                 }
@@ -1634,6 +1687,10 @@
                             } else {
                                 AppData._persistentStates.showConfirmQuestion = false;
                             }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
                         }, {
                             VeranstaltungID: AppData.getRecordId("Veranstaltung"),
                             MandantWide: 1,
@@ -1641,13 +1698,23 @@
                         });
                     }
                 }).then(function () {
-                    AppBar.triggerDisableHandlers();
+                    AppBar.notifyModified = true;
                     return WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
             };
             this.loadData = loadData;
+
+            var delayedSaveData = function () {
+                if (delayedSaveDataPromise) {
+                    delayedSaveDataPromise.cancel();
+                }
+                delayedSaveDataPromise = WinJS.Promise.timeout(50).then(function () {
+                    that.saveData();
+                });
+            }
+            this.delayedSaveData = delayedSaveData;
 
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
