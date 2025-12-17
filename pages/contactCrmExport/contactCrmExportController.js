@@ -27,7 +27,7 @@
             var that = this;
 
             // dispose method hits called whenever the user navigates away from this page
-            this.dispose = function () {
+            this.Dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
 
                 if (crmExportContainer && salesforceLeadLib && typeof salesforceLeadLib.clear === "function") {
