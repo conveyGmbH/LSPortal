@@ -658,15 +658,15 @@
             this.getOffset = getOffset;
 
             var resultMandatoryConverter = function (item, index) {
-                var inputfield = null;
-                if (item.AttributeName === "AnredeID") {
-                    inputfield = initAnrede;
-                } else if (item.AttributeName === "LandID") {
-                    inputfield = initLand;
-                } else {
-                    inputfield = pageElement.querySelector("input[name=" + item.AttributeName + "]");
-                }
-                if (item.FieldFlag) {
+                if (item && item.FieldFlag) {
+                    var inputfield = null;
+                    if (item.AttributeName === "AnredeID") {
+                        inputfield = initAnrede;
+                    } else if (item.AttributeName === "LandID") {
+                        inputfield = initLand;
+                    } else {
+                        inputfield = pageElement.querySelector("input[name=" + item.AttributeName + "]");
+                    }
                     if (inputfield) {
                         if (!WinJS.Utilities.hasClass(inputfield, "bkgcolor-mandatory")) {
                             WinJS.Utilities.addClass(inputfield, "bkgcolor-mandatory");
@@ -681,11 +681,11 @@
                 if (mandatoryFields) for (var i = 0; i < mandatoryFields.length; i++) {
                     var mandatoryField = mandatoryFields[i];
                     if (mandatoryField) {
-                        if (WinJS.Utilities.hasClass(inputfield, "empty-mandatory")) {
-                            WinJS.Utilities.removeClass(inputfield, "empty-mandatory");
+                        if (WinJS.Utilities.hasClass(mandatoryField, "empty-mandatory")) {
+                            WinJS.Utilities.removeClass(mandatoryField, "empty-mandatory");
                         }
-                        if (WinJS.Utilities.hasClass(inputfield, "bkgcolor-mandatory")) {
-                            WinJS.Utilities.removeClass(inputfield, "bkgcolor-mandatory");
+                        if (WinJS.Utilities.hasClass(mandatoryField, "bkgcolor-mandatory")) {
+                            WinJS.Utilities.removeClass(mandatoryField, "bkgcolor-mandatory");
                         }
                     }
                 }
