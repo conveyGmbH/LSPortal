@@ -536,7 +536,8 @@
                     var curScope = null;
                     var question = that.questions.getAt(selIdx);
                     if (question && typeof question === "object" &&
-                        (typeof that.selectQuestionIdxs[selIdx] === "object" || question.PflichtFeld)) {
+                        (that.selectQuestionIdxs &&
+                         typeof that.selectQuestionIdxs[selIdx] === "object" || question.PflichtFeld)) {
                         curScope = copyByValue(question);
                         if (curScope) {
                             var newRecord = that.getFieldEntries(selIdx, curScope.type);
@@ -1440,7 +1441,7 @@
                     Log.ret(Log.l.trace);
                 },
                 onModified: function (event) {
-                    if (that.selectQuestionIdxs && event && event.currentTarget &&
+                    if (event && event.currentTarget &&
                         listView && listView.winControl) {
                         var element = event.currentTarget.parentElement;
                         while (element && element !== listView) {
