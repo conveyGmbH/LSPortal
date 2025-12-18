@@ -79,6 +79,7 @@
 .view-size-medium-small #contactList .win-surface,
 .view-size-medium-small #contactList .win-footercontainer {
     min-width: inherit;
+    width: 100% !important;
 }
 
 .pagecontrol:not(.view-size-biggest) #contactList .win-headercontainer,

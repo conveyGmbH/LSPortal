@@ -439,7 +439,7 @@
                     if (item.SHOW_Barcode || item.IMPORT_CARDSCANID && !item.SHOW_Visitenkarte) {
                         item.svgSource = "barcode-qr"; //item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode"
                     } else if (!item.SHOW_Barcode && item.IMPORT_CARDSCANID && item.SHOW_Visitenkarte) {
-                        item.svgSource = "";
+                        item.svgSource = item.OvwContentDOCCNT3 ? "" : "document_empty_landscape";
                     } else {
                         item.svgSource = "manuel_Portal";
                     }
@@ -474,9 +474,11 @@
                                 }
                                 contact.showDoc = (contact.IMPORT_CARDSCANID || contact.SHOW_Barcode) ? true : false;
                                 if (contact.SHOW_Barcode || contact.IMPORT_CARDSCANID && !contact.SHOW_Visitenkarte) {
-                                    contact.svgSource = "barcode-qr"; //contact.IMPORT_CARDSCANID ? "barcode-qr" : "barcode"
+                                    contact.svgSource = "barcode-qr";
+                                } else if (!contact.SHOW_Barcode && contact.IMPORT_CARDSCANID && contact.SHOW_Visitenkarte) {
+                                    contact.svgSource = contact.OvwContentDOCCNT3 ? "" : "document_empty_landscape";
                                 } else {
-                                    contact.svgSource = "";
+                                    contact.svgSource = "manuel_Portal";
                                 }
                                 //var indexOfFirstVisible = -1;
                                 //if (listView && listView.winControl) {
@@ -533,13 +535,13 @@
 
                 var checkForDocs = function () {
                     if (that.loadNextCount > 0) {
-                        if (that.refreshDocPromise) {
+                        if (that.refreshDocPromise || that.refreshNextDocPromise) {
                             WinJS.Promise.timeout(50).then(function () {
                                 that.checkForDocs();
                             });
                         } else if (that.nextDocUrl) {
                             that.loadNextCount--;
-                            that.refreshNextDocPromise = WinJS.Promise.timeout(50).then(function () {
+                            that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function () {
                                 Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
                                 var nextDocUrl = that.nextDocUrl;
                                 that.nextDocUrl = null;
@@ -558,19 +560,19 @@
                                         if (that.loadNextCount > 0) {
                                             WinJS.Promise.timeout(50).then(function () {
                                                 that.checkForDocs();
-                                            })
+                                            });
                                         }
                                     }
+                                    that.refreshNextDocPromise = null;
                                 }, function (errorResponse) {
                                     // called asynchronously if an error occurs
                                     // or server returns response with an error status.
                                     Log.print(Log.l.error, "ContactList.contactDocView: error!");
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                     that.loadNextCount = 0;
+                                    that.refreshNextDocPromise = null;
                                 }, null, nextDocUrl);
                             });
-                        } else {
-                            that.loadNextCount = 0;
                         }
                     }
                 }
@@ -1061,7 +1063,7 @@
                             });
                         }
                         if (!recordId) {
-                            that.refreshDocPromise = WinJS.Promise.timeout(50).then(function () {
+                            that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
                                 return ContactList.contactDocView.select(function (json) {
                                     // this callback will be called asynchronously
                                     // when the response is available

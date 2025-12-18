@@ -935,7 +935,7 @@ button.win-button span.win-type-title {
     width: calc(50% - 5px);
 }
 .view-size-medium .input_half_left{
-    width: calc(50% - 5px)%;
+    width: calc(50% - 5px);
 }
 .view-size-medium .input_half_right{
     width: calc(50% - 5px);
@@ -1326,7 +1326,7 @@ view-size-smallest .win-container {
     float: right;
     width: 240px;
     margin-bottom: 16px;
-    max-height: 160px;
+    height: 160px;
 }
 
 .list-compressed-doc {
@@ -1796,7 +1796,7 @@ view-size-smallest .win-container {
 }
 .view-size-small .list-compressed-doc-container {
     width: 180px;
-    max-height: 100px;
+    height: 100px;
 }
 
 .view-size-small .list-compressed-content,
