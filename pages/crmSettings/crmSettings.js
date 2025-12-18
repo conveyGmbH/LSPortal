@@ -34,10 +34,29 @@
         canUnload: function (complete, error) {
             var that = this;
             Log.call(Log.l.trace, pageName + ".");
-            var ret = WinJS.Promise.as().then(function (response) {
+
+            // Save field mappings before unloading if modified
+            var eventId = that.controller && that.controller.binding && that.controller.binding.eventId;
+
+            var ret = WinJS.Promise.as().then(function () {
+                if (eventId && SalesforceLeadLib && typeof SalesforceLeadLib.saveFieldMapping === "function") {
+                    Log.print(Log.l.info, "Saving field mappings before unload...");
+                    return SalesforceLeadLib.saveFieldMapping(eventId).then(function (saved) {
+                        if (saved) {
+                            Log.print(Log.l.info, "Field mappings saved successfully");
+                        }
+                        return WinJS.Promise.as();
+                    }, function (err) {
+                        Log.print(Log.l.error, "Failed to save field mappings: " + (err && err.message || err));
+                        return WinJS.Promise.as(); // Continue even if save fails
+                    });
+                }
+                return WinJS.Promise.as();
+            }).then(function (response) {
                 // do any page state completion
                 complete(response);
             });
+
             Log.ret(Log.l.trace);
             return ret;
         },
