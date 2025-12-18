@@ -539,7 +539,7 @@
                             });
                         } else if (that.nextDocUrl) {
                             that.loadNextCount--;
-                            that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function () {
+                            that.refreshNextDocPromise = WinJS.Promise.timeout(50).then(function () {
                                 Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
                                 var nextDocUrl = that.nextDocUrl;
                                 that.nextDocUrl = null;
