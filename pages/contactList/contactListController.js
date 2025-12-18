@@ -536,7 +536,7 @@
                         if (that.refreshDocPromise) {
                             WinJS.Promise.timeout(50).then(function () {
                                 that.checkForDocs();
-                            })
+                            });
                         } else if (that.nextDocUrl) {
                             that.loadNextCount--;
                             that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function () {
