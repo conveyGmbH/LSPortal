@@ -375,7 +375,7 @@
     // new contact function select feature:
     Application.prevNavigateNewId = "newContact";
     // some more default page navigation handling
-    Application.navigateByIdOverride = function (id, event) {
+    Application.navigateByIdOverride = function (id, event, noNavigate) {
         Log.call(Log.l.trace, "Application.", "id=" + id);
         if (id === "dashBoard") {
             id = "start";
@@ -386,7 +386,9 @@
         } else if (id === "serviceevents") {
             id = "questionList";
         } else if (id === "contacts") {
-            AppData.setRestriction("Kontakt", {});
+            if (!noNavigate) {
+                AppData.setRestriction("Kontakt", {});
+            }
             id = "contact";
         } else if (id === "newAccount" || id === "userinfo") {
             id = "account";

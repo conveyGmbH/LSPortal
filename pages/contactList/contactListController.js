@@ -1092,6 +1092,8 @@
                         }
                         if (that.binding.contactId) {
                             that.selectRecordId();
+                        } else {
+                            updateIncompleteStates({ IsIncomplete: null, QuestionnaireIncomplete: null });
                         }
                     });
                     if (!recordId) {
