@@ -15,6 +15,22 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
 }
+/*style for iphones/ipad without physical home button need space for appbar*/
+#appbar.win-appbar-bottom {
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+}
+.appbar-padder-bottom {
+    display: none;
+}
+.appbar-padder-bottom.appbar-bottom-visible {
+    bottom: 0;
+    height: constant(safe-area-inset-bottom);
+    height: env(safe-area-inset-bottom);
+    width: 100%;
+    display: block;
+    position: fixed;
+}
 label {
     cursor: pointer;
 }
@@ -138,16 +154,38 @@ label {
 
 .tile-backgroundcolor {
     background-color: var(--ColorTileBackground);
+}
+.tile-header.tile-backgroundcolor {
+    background-color: var(--ColorTileBackground);
     border-top-style: solid;
     border-top-width: 2px;
     border-top-color: var(--ColorNavigation);
 }
 .tile-navigationcolor {
     background-color: var(--ColorNavigation);
+}
+.tile-header.tile-navigationcolor {
+    background-color: var(--ColorNavigation);
     border-top-style: solid;
     border-top-width: 2px;
     border-top-color: #f0f0f0;
 }
+
+.tile-backgroundcolor .tile-separator-left {
+    border-left-color: var(--WindowText);
+}
+.tile-backgroundcolor .tile-separator-right {
+    border-right-color: var(--WindowText);
+}
+
+.tile-navigationcolor .tile-separator-left {
+    border-left-color: #f0f0f0;
+}
+.tile-navigationcolor .tile-separator-right {
+    border-right-color: #f0f0f0;
+}
+
+
 .tile-button-color {
     color: var(--WindowText);
     background-color: transparent;
@@ -890,6 +928,18 @@ button.win-button span.win-type-title {
     margin-top: 0;
     margin-right: 4px;
 }
+.view-size-small .input_half_left{
+    width: calc(50% - 5px);
+}
+.view-size-small .input_half_right{
+    width: calc(50% - 5px);
+}
+.view-size-medium .input_half_left{
+    width: calc(50% - 5px)%;
+}
+.view-size-medium .input_half_right{
+    width: calc(50% - 5px);
+}
 .input_half_left {
     min-height: 32px;
     float: left;
@@ -1197,7 +1247,14 @@ view-size-smallest .win-container {
 .list-symbol-ID {
     width:44px;
     float:left;
-    height:60px;
+    height:100%;
+}
+.list-id-field {
+    display: block;
+    position: relative;
+    left: 0;
+    top: -6px;
+    opacity: 0.6;
 }
 
 .list-compressed {
@@ -1307,6 +1364,9 @@ view-size-smallest .win-container {
     is now signalled by additional class: view-size-bigger
 */
 
+.view-size-bigger .list-only-small-screen {
+    display:block;
+}
 .view-size-bigger .list-landscape-only {
     display:none;
 }
@@ -1337,7 +1397,7 @@ view-size-smallest .win-container {
 }
 .view-size-medium .error-message {
     left: 18px;
-    width: calc(100% - 18px);
+    width: calc(100% - 45px);
 }
 .view-size-medium .row-separator {
     margin-top: -8px;

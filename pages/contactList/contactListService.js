@@ -305,8 +305,8 @@
                     /*if (restriction && !restriction.VeranstaltungID) {
                         restriction.VeranstaltungID = parseInt(ContactList._eventId);
                     }*/
-                    var contactRestriction = {};
-                    copyMissingMembersByValue(contactRestriction, restriction);
+                    var contactDocRestriction = {};
+                    copyMissingMembersByValue(contactDocRestriction, restriction);
                     contactDocRestriction.VeranstaltungID = ContactList._eventId;
                     //restriction.VeranstaltungID = ContactList._eventId;
                     if (ContactList._orderAttribute) {
@@ -317,7 +317,7 @@
                         }
                     }
                     Log.print(Log.l.info, "calling select _contactResultsView... restriction=" +
-                        (contactDocRestriction ? JSON.stringify(contactDocRestriction) : ""));
+                        JSON.stringify(contactDocRestriction));
                     ret = ContactList._contactDocView.select(complete, error, contactDocRestriction, options);
                 }
                 // this will return a promise to controller

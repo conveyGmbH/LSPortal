@@ -654,11 +654,13 @@ html.win-hoverable .win-disabled .win-splitviewcommand-button:hover.win-pressed 
     box-shadow: rgba(0, 0, 0, 0.133) 1.0px 1.6px 3.6px 0.6px, rgba(0, 0, 0, 0.11) 0.4px 0.6px 0.9px 0px;
     */
 }
+.win-contentdialog .win-contentdialog-commands > button {
+    white-space: normal;
+}
 #confirmText {
     margin-top: 16px;
     white-space: pre-wrap;
 }
-
 
 /* Flyout buttons */
 #alertFlyout {
@@ -942,6 +944,7 @@ user name and on-site / off-site button
     border-radius: 50%;
     padding: 0;
     overflow: hidden;
+    z-index: 9900;
 }
 
 .user-image {
@@ -949,6 +952,7 @@ user name and on-site / off-site button
     position: relative;
     left: 0;
     top: 6px;
+    z-index: 9900;
 }
 
 .user-photo {
@@ -958,51 +962,7 @@ user name and on-site / off-site button
     top: -32px;
     width: auto;
     height: 40px;
-}
-
-.list-symbol-addon {
-    display: inline-block;
-    position: relative;
-    left: 0px;
-    bottom: 25px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #e6e6e6;
-    overflow: hidden;
-}
-
-.addon-image {
-    display: inline-block;
-    position: absolute;
-    background-color: transparent;
-    width: 100%;
-    height: 100%;
-}
-
-.cnv-ui-dark .list-symbol-addon {
-    border-color: #101010;
-}
-/*
-.cnv-ui-dark .addon-image {
-    background-color: var(--ColorSignalGreen);
-}
-*/
-.addon-image > svg {
-    display: inline-block;
-    position: absolute;
-    left: 2px;
-    top: 2px;
-}
-
-.list-id-field {
-    display: block;
-    position: relative;
-    left: 0;
-    top: -6px;
-    opacity: 0.6;
+    z-index: 9900;
 }
 
 .onsite-offsite {
@@ -1169,6 +1129,16 @@ user name and on-site / off-site button
         font-size: 10px;
     }
 }
+/*Zebra Device TC20*/
+/*@media (max-width:320px) {
+    .event-line {
+        width: calc(100% - 180px);
+        display: inline-block;
+        position: absolute;
+        top: 13px;
+        left: 0;
+    }
+}*/
 
 .win-commandingsurface .win-commandingsurface-actionarea {
     border-top-color: gray;

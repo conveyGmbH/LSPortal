@@ -49,12 +49,14 @@
                 this.nextDocUrl = null;
                 this.contacts = null;
                 this.docs = null;
+                this.veranstaltungViewPromise = null;
                 this.refreshPromise = null;
                 this.refreshDocPromise = null;
                 this.refreshNextPromise = null;
                 this.refreshNextDocPromise = null;
                 this.refreshWaitTimeMs = 30000;
 
+                this.loadNextCount = 0;
                 this.firstDocsIndex = 0;
                 this.firstContactsIndex = 0;
                 this.busy = false;
@@ -92,6 +94,11 @@
                         Log.print(Log.l.trace, "cancel previous next doc refresh Promise");
                         that.refreshNextDocPromise.cancel();
                         that.refreshNextDocPromise = null;
+                    }
+                    if (that.veranstaltungViewPromise) {
+                        Log.print(Log.l.trace, "cancel previous select veranstaltungView");
+                        that.veranstaltungViewPromise.cancel();
+                        that.veranstaltungViewPromise = null;
                     }
                     Log.ret(Log.l.trace);
                 }
@@ -256,32 +263,8 @@
                                 that.binding.loading = false;
                             }
                             that.busy = false;
-                            if (that.nextDocUrl) {
-                                that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function () {
-                                    Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
-                                    var nextDocUrl = that.nextDocUrl;
-                                    that.nextDocUrl = null;
-                                    ContactList.contactDocView.selectNext(function (jsonDoc) {
-                                        // this callback will be called asynchronously
-                                        // when the response is available
-                                        Log.print(Log.l.trace, "ContactList.contactDocView: success!");
-                                        // startContact returns object already parsed from json file in response
-                                        if (jsonDoc && jsonDoc.d) {
-                                            that.nextDocUrl = ContactList.contactDocView.getNextUrl(jsonDoc);
-                                            var resultsDoc = jsonDoc.d.results;
-                                            resultsDoc.forEach(function (item, index) {
-                                                that.resultDocConverter(item, that.binding.doccount);
-                                                that.binding.doccount = that.docs.push(item);
-                                            });
-                                        }
-                                    }, function (errorResponse) {
-                                        // called asynchronously if an error occurs
-                                        // or server returns response with an error status.
-                                        Log.print(Log.l.error, "ContactList.contactDocView: error!");
-                                        AppData.setErrorMsg(that.binding, errorResponse);
-                                    }, null, nextDocUrl);
-                                });
-                            }
+                            that.loadNextCount++;
+                            that.checkForDocs();
                             if (recordId && recordId === that.binding.contactId) {
                                 that.selectRecordId();
                             }
@@ -335,7 +318,7 @@
                             var scope = that.scopeFromRecordId(recordId);
                             if (scope && scope.index >= 0) {
                                 listView && listView.winControl.ensureVisible(scope.index);
-                                WinJS.Promise.timeout(50).then(function () {
+                                /*WinJS.Promise.timeout(50).then(function () {
                                     var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
                                     var elementOfFirstVisible = listView.winControl.elementFromIndex(indexOfFirstVisible);
                                     var element = listView.winControl.elementFromIndex(scope.index);
@@ -348,7 +331,7 @@
                                             listView.winControl.indexOfFirstVisible = scope.index;
                                         }
                                     }
-                                });
+                                });*/
                             }
                         }
                     }
@@ -369,8 +352,9 @@
                             if (contact && typeof contact === "object" && contact.KontaktVIEWID === recordId) {
                                 AppData.setRecordId("Kontakt", recordId);
                                 updateIncompleteStates(contact);
-                                listView.winControl.selection.set(i);
-                                that.scrollToRecordId(recordId);
+                                listView.winControl.selection.set(i).done(function () {
+                                    that.scrollToRecordId(recordId);
+                                });
                                 recordIdNotFound = false;
                                 handlePageEnable(contact);
                                 break;
@@ -494,14 +478,14 @@
                                 } else {
                                     contact.svgSource = "";
                                 }
-                                var indexOfFirstVisible = -1;
-                                if (listView && listView.winControl) {
-                                    indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
-                                }
+                                //var indexOfFirstVisible = -1;
+                                //if (listView && listView.winControl) {
+                                //    indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                                //}
                                 that.contacts.setAt(i, contact);
-                                if (indexOfFirstVisible >= 0 && listView && listView.winControl) {
-                                    listView.winControl.indexOfFirstVisible = indexOfFirstVisible;
-                                }
+                                //if (indexOfFirstVisible >= 0 && listView && listView.winControl) {
+                                //    listView.winControl.indexOfFirstVisible = indexOfFirstVisible;
+                                //}
                                 that.firstContactsIndex = i + 1;
                                 that.firstDocsIndex = index + 1;
                                 break;
@@ -546,6 +530,51 @@
                     Log.ret(Log.l.u1);
                 }
                 this.imageRotate = imageRotate;
+
+                var checkForDocs = function () {
+                    if (that.loadNextCount > 0) {
+                        if (that.refreshDocPromise) {
+                            WinJS.Promise.timeout(50).then(function () {
+                                that.checkForDocs();
+                            })
+                        } else if (that.nextDocUrl) {
+                            that.loadNextCount--;
+                            that.refreshNextDocPromise = WinJS.Promise.timeout(250).then(function () {
+                                Log.print(Log.l.trace, "calling select ContactList.contactDocView...");
+                                var nextDocUrl = that.nextDocUrl;
+                                that.nextDocUrl = null;
+                                ContactList.contactDocView.selectNext(function (jsonDoc) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "ContactList.contactDocView: success!");
+                                    // startContact returns object already parsed from json file in response
+                                    if (jsonDoc && jsonDoc.d) {
+                                        that.nextDocUrl = ContactList.contactDocView.getNextUrl(jsonDoc);
+                                        var resultsDoc = jsonDoc.d.results;
+                                        resultsDoc.forEach(function (item, index) {
+                                            that.resultDocConverter(item, that.binding.doccount);
+                                            that.binding.doccount = that.docs.push(item);
+                                        });
+                                        if (that.loadNextCount > 0) {
+                                            WinJS.Promise.timeout(50).then(function () {
+                                                that.checkForDocs();
+                                            })
+                                        }
+                                    }
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    Log.print(Log.l.error, "ContactList.contactDocView: error!");
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    that.loadNextCount = 0;
+                                }, null, nextDocUrl);
+                            });
+                        } else {
+                            that.loadNextCount = 0;
+                        }
+                    }
+                }
+                this.checkForDocs = checkForDocs;
 
                 var checkLoadingFinished = function () {
                     WinJS.Promise.timeout(10).then(function () {
@@ -944,6 +973,7 @@
                             Log.print(Log.l.info, "contactView: success!");
                             // startContact returns object already parsed from json file in response
                             if (!recordId) {
+                                that.loadNextCount = 0;
                                 that.firstDocsIndex = 0;
                                 that.firstContactsIndex = 0;
                                 that.binding.doccount = 0;
@@ -1002,34 +1032,36 @@
                             that.binding.noctcount = 0;
                             that.binding.noeccount = 0;
                             that.binding.nouccount = 0;
-                            return WinJS.Promise.as();
                         } else {
-                            return ContactList.veranstaltungView.select(function (json) {
-                                // this callback will be called asynchronously
-                                // when the response is available
-                                Log.print(Log.l.trace, "veranstaltungView: success!");
-                                // startContact returns object already parsed from json file in response
-                                if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                    var results = json.d.results[0];
-                                    that.binding.noctcount = results.AnzKontakte;
-                                    that.binding.noeccount = results.AnzEditierteKontakte;
-                                    that.binding.nouccount = results.AnzNichtEditierteKontakte;
-                                } else {
-                                    that.binding.noctcount = 0;
-                                    that.binding.noeccount = 0;
-                                    that.binding.nouccount = 0;
-                                    Log.print(Log.l.trace, "veranstaltungView: no data found!");
-                                }
-                            }, function (errorResponse) {
-                                // called asynchronously if an error occurs
-                                // or server returns response with an error status.
-                                Log.print(Log.l.error, "ContactList.veranstaltungView: error!");
-                                AppData.setErrorMsg(that.binding, errorResponse);
+                            that.veranstaltungViewPromise = WinJS.Promise.timeout(50).then(function () {
+                                return ContactList.veranstaltungView.select(function (json) {
+                                    // this callback will be called asynchronously
+                                    // when the response is available
+                                    Log.print(Log.l.trace, "veranstaltungView: success!");
+                                    // startContact returns object already parsed from json file in response
+                                    if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                        var results = json.d.results[0];
+                                        that.binding.noctcount = results.AnzKontakte;
+                                        that.binding.noeccount = results.AnzEditierteKontakte;
+                                        that.binding.nouccount = results.AnzNichtEditierteKontakte;
+                                    } else {
+                                        that.binding.noctcount = 0;
+                                        that.binding.noeccount = 0;
+                                        that.binding.nouccount = 0;
+                                        Log.print(Log.l.trace, "veranstaltungView: no data found!");
+                                    }
+                                    that.veranstaltungViewPromise = null;
+                                }, function (errorResponse) {
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    Log.print(Log.l.error, "ContactList.veranstaltungView: error!");
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    that.veranstaltungViewPromise = null;
+                                });
                             });
                         }
-                    }).then(function () {
                         if (!recordId) {
-                            that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
+                            that.refreshDocPromise = WinJS.Promise.timeout(50).then(function () {
                                 return ContactList.contactDocView.select(function (json) {
                                     // this callback will be called asynchronously
                                     // when the response is available
@@ -1046,15 +1078,16 @@
                                     } else {
                                         Log.print(Log.l.trace, "contactDocView: no data found!");
                                     }
+                                    that.refreshDocPromise = null;
                                 }, function (errorResponse) {
                                     // called asynchronously if an error occurs
                                     // or server returns response with an error status.
                                     Log.print(Log.l.error, "ContactList.contactDocView: error!");
                                     AppData.setErrorMsg(that.binding, errorResponse);
+                                    that.refreshDocPromise = null;
                                 }, getRestriction());
                             });
                         }
-                    }).then(function () {
                         if (that.binding.contactId) {
                             that.selectRecordId();
                         }
