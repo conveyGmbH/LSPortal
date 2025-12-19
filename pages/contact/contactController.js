@@ -374,7 +374,6 @@
                         }
                     }
                 }
-                AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
             }
 
@@ -426,7 +425,6 @@
                 }
                 AppBar.modified = false;
                 AppBar.notifyModified = prevNotifyModified;
-                AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
             }
             this.setDataContact = setDataContact;
@@ -1265,6 +1263,7 @@
                 AppData.setErrorMsg(that.binding);
                 var ret;
                 var err = null;
+                var doReload = false;
                 var dataContact = that.binding.dataContact;
                 var dataContactNote = that.binding.dataContactNote;
                 // set Nachbearbeitet empty!
@@ -1296,6 +1295,7 @@
                                     return Contact.contactNoteView.update(function (response) {
                                         // called asynchronously if ok
                                         Log.print(Log.l.info, "sketchData update: success!");
+                                        doReload = true;
                                     }, function (errorResponse) {
                                         AppBar.busy = false;
                                         // called asynchronously if an error occurs
@@ -1310,6 +1310,7 @@
                                         // this callback will be called asynchronously
                                         // when the response is available
                                         Log.print(Log.l.trace, "sketchData insert: success!");
+                                        doReload = true;
                                     }, function (errorResponse) {
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
@@ -1324,6 +1325,7 @@
                                     AppBar.busy = false;
                                     // called asynchronously if ok
                                     Log.print(Log.l.info, "update contactView: success!");
+                                    doReload = true;
                                     AppBar.modified = false;
                                 }, function (errorResponse) {
                                     AppBar.busy = false;
@@ -1340,9 +1342,8 @@
                                 if (!err) {
                                     if (typeof complete === "function") {
                                         complete(that.binding.dataContact);
-                                        return WinJS.Promise.as();
-                                    } else {
-                                        return that.loadData().then(function () {
+                                    } else if (doReload) {
+                                        that.loadData().then(function () {
                                             var master = Application.navigator.masterControl;
                                             if (master && master.controller && master.controller.binding) {
                                                 master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
@@ -1352,8 +1353,6 @@
                                             }
                                         });
                                     }
-                                } else {
-                                    return WinJS.Promise.as();
                                 }
                             });
                         } else {
@@ -1366,6 +1365,7 @@
                                 // this callback will be called asynchronously
                                 // when the response is available
                                 Log.print(Log.l.info, "insert contactData: success!");
+                                doReload = true;
                                 AppBar.modified = false;
                                 // contactData returns object already parsed from json file in response
                                 if (json && json.d) {
@@ -1405,9 +1405,7 @@
                                         // this callback will be called asynchronously
                                         // when the response is available
                                         Log.print(Log.l.trace, "sketchData insert: success!");
-                                        if (typeof complete === "function") {
-                                            complete(json);
-                                        }
+                                        doReload = true;
                                     }, function (errorResponse) {
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
@@ -1423,9 +1421,8 @@
                                 if (!err) {
                                     if (typeof complete === "function") {
                                         complete(that.binding.dataContact);
-                                        return WinJS.Promise.as();
-                                    } else {
-                                        return that.loadData().then(function () {
+                                    } else if (doReload) {
+                                        that.loadData().then(function () {
                                             var master = Application.navigator.masterControl;
                                             if (master && master.controller && master.controller.binding) {
                                                 master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
@@ -1435,8 +1432,6 @@
                                             }
                                         });
                                     }
-                                } else {
-                                    return WinJS.Promise.as();
                                 }
                             });
                         }
@@ -1459,7 +1454,10 @@
                 }
                 delayedSaveDataPromise = WinJS.Promise.timeout(50).then(function() {
                     that.saveData();
+                    that.removeDisposablePromise(delayedSaveDataPromise);
+                    delayedSaveDataPromise = null;
                 });
+                that.addDisposablePromise(delayedSaveDataPromise);
             }
             this.delayedSaveData = delayedSaveData;
 
