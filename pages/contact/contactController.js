@@ -709,6 +709,8 @@
                         }
                         if (valueHasChanged && AppBar.notifyModified) {
                             that.delayedSaveData();
+                        } else if (delayedSaveDataPromise) {
+                            that.delayedSaveData();
                         }
                     }
                 }
@@ -1452,7 +1454,7 @@
                 if (delayedSaveDataPromise) {
                     delayedSaveDataPromise.cancel();
                 }
-                delayedSaveDataPromise = WinJS.Promise.timeout(50).then(function() {
+                delayedSaveDataPromise = WinJS.Promise.timeout(150).then(function() {
                     that.saveData();
                     that.removeDisposablePromise(delayedSaveDataPromise);
                     delayedSaveDataPromise = null;
