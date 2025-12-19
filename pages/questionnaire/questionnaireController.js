@@ -612,6 +612,8 @@
                                     if (question.CurrentQuestionIncomplete && newValues ||
                                         !question.CurrentQuestionIncomplete && !newValues) {
                                         that.delayedSaveData();
+                                    } else if (delayedSaveDataPromise) {
+                                        that.delayedSaveData();
                                     }
                                 }
                             }
@@ -743,9 +745,12 @@
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = Questionnaire.questionnaireView.update(function (response) {
                                 // called asynchronously if ok
+                                AppBar.modified = false;
                             }, function (errorResponse) {
                                 AppData.setErrorMsg(that.binding, errorResponse);
-                                error(errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
                             }, recordId, curScope).then(function () {
                                 return that.loadData(recordId);
                             }).then(function () {
@@ -757,7 +762,9 @@
                                         master.controller.selectRecordId(master.controller.binding.contactId);
                                     });
                                 }
-                                complete({});
+                                if (typeof complete === "function") {
+                                    complete({});
+                                }
                             });
                     } else {
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
@@ -766,7 +773,9 @@
                 }
                 if (!ret) {
                     ret = new WinJS.Promise.as().then(function () {
-                        complete({});
+                        if (typeof complete === "function") {
+                            complete({});
+                        }
                     });
                 }
                 Log.ret(Log.l.u1, ret);
@@ -1445,13 +1454,25 @@
                     if (event && event.currentTarget &&
                         listView && listView.winControl) {
                         var element = event.currentTarget.parentElement;
+                        var i = -1;
                         while (element && element !== listView) {
                             if (element.className === "questionnaire-row") {
-                                var i = listView.winControl.indexOfElement(element.parentElement);
-                                that.checkForSelectionQuestion(i);
+                                i = listView.winControl.indexOfElement(element.parentElement);
                                 break;
                             }
                             element = element.parentElement;
+                        }
+                        if (i >= 0) {
+                            var selIdxs = listView.winControl.selection && listView.winControl.selection.getIndices();
+                            var promise;
+                            if (!selIdxs || selIdxs.indexOf(i) < 0) {
+                                promise = listView.winControl.selection.set(i);
+                            } else {
+                                promise = WinJS.Promise.as();
+                            }
+                            promise.then(function () {
+                                that.checkForSelectionQuestion(i);
+                            });
                         }
                     }
                 },
@@ -1699,9 +1720,6 @@
                             IsForApp: 0
                         });
                     }
-                }).then(function () {
-                    AppBar.notifyModified = true;
-                    return WinJS.Promise.as();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -1712,9 +1730,12 @@
                 if (delayedSaveDataPromise) {
                     delayedSaveDataPromise.cancel();
                 }
-                delayedSaveDataPromise = WinJS.Promise.timeout(50).then(function () {
+                delayedSaveDataPromise = WinJS.Promise.timeout(150).then(function () {
                     that.saveData();
+                    that.removeDisposablePromise(delayedSaveDataPromise);
+                    delayedSaveDataPromise = null;
                 });
+                that.addDisposablePromise(delayedSaveDataPromise);
             }
             this.delayedSaveData = delayedSaveData;
 
