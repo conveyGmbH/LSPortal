@@ -659,17 +659,17 @@
 
             var resultMandatoryConverter = function (item, index) {
                 if (item && item.FieldFlag) {
-                    var inputfield = null;
+                    var inputField = null;
                     if (item.AttributeName === "AnredeID") {
-                        inputfield = initAnrede;
+                        inputField = initAnrede;
                     } else if (item.AttributeName === "LandID") {
-                        inputfield = initLand;
+                        inputField = initLand;
                     } else {
-                        inputfield = pageElement.querySelector("input[name=" + item.AttributeName + "]");
+                        inputField = pageElement.querySelector("input[name=" + item.AttributeName + "]");
                     }
-                    if (inputfield) {
-                        if (!WinJS.Utilities.hasClass(inputfield, "bkgcolor-mandatory")) {
-                            WinJS.Utilities.addClass(inputfield, "bkgcolor-mandatory");
+                    if (inputField) {
+                        if (!WinJS.Utilities.hasClass(inputField, "bkgcolor-mandatory")) {
+                            WinJS.Utilities.addClass(inputField, "bkgcolor-mandatory");
                         }
                     }
                 }
@@ -1048,13 +1048,14 @@
             this.loadInitSelection = loadInitSelection;
 
             var loadData = function () {
+                var promises = [];
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     if (!AppData.initAnredeView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initAnredeView...");
                         //@nedra:25.09.2015: load the list of INITAnrede for Combobox
-                        return AppData.initAnredeView.select(function (json) {
+                        var initAnredeSelectPromise = AppData.initAnredeView.select(function(json) {
                             Log.print(Log.l.trace, "initAnredeView: success!");
                             if (json && json.d && json.d.results) {
                                 // Now, we call WinJS.Binding.List to get the bindable list
@@ -1062,23 +1063,26 @@
                                     initAnrede.winControl.data = new WinJS.Binding.List(json.d.results);
                                 }
                             }
-                        }, function (errorResponse) {
+                            that.removeDisposablePromise(initAnredeSelectPromise);
+                        },
+                        function(errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             Log.print(Log.l.error, "initAnredeView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            that.removeDisposablePromise(initAnredeSelectPromise);
                         });
+                        promises.push(that.addDisposablePromise(initAnredeSelectPromise));
                     } else {
                         if (initAnrede && initAnrede.winControl &&
                             (!initAnrede.winControl.data || !initAnrede.winControl.data.length)) {
                             initAnrede.winControl.data = new WinJS.Binding.List(AppData.initAnredeView.getResults());
                         }
                     }
-                }).then(function () {
                     if (!AppData.initLandView.getResults().length) {
                         Log.print(Log.l.trace, "calling select initLandView...");
                         //@nedra:25.09.2015: load the list of INITLand for Combobox
-                        return AppData.initLandView.select(function (json) {
+                        var initLandSelectPromise = AppData.initLandView.select(function(json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "initLandView: success!");
@@ -1088,21 +1092,24 @@
                                     initLand.winControl.data = new WinJS.Binding.List(json.d.results);
                                 }
                             }
-                        }, function (errorResponse) {
+                            that.removeDisposablePromise(initLandSelectPromise);
+                        },
+                        function(errorResponse) {
                             // called asynchronously if an error occurs
                             // or server returns response with an error status.
                             Log.print(Log.l.error, "initLandView: error!");
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            that.removeDisposablePromise(initLandSelectPromise);
                         });
+                        promises.push(that.addDisposablePromise(initLandSelectPromise));
                     } else {
                         if (initLand && initLand.winControl &&
                             (!initLand.winControl.data || !initLand.winControl.data.length)) {
                             initLand.winControl.data = new WinJS.Binding.List(AppData.initLandView.getResults());
                         }
                     }
-                }).then(function () {
                     Log.print(Log.l.trace, "calling select mandatoryView...");
-                    return Contact.mandatoryView.select(function (json) {
+                    var contactMandatorySelectPromise = Contact.mandatoryView.select(function(json) {
                         // this callback will be called asynchronously
                         // when the response is available
                         Log.print(Log.l.trace, "mandatoryView: success!");
@@ -1111,19 +1118,24 @@
                             //that.nextUrl = MandatoryList.mandatoryView.getNextUrl(json);
                             that.removeMandatory();
                             var results = json.d.results;
-                            results.forEach(function (item, index) {
+                            results.forEach(function(item, index) {
                                 that.resultMandatoryConverter(item, index);
                             });
                         }
-                    }, function (errorResponse) {
+                        that.removeDisposablePromise(contactMandatorySelectPromise);
+                    },
+                    function(errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         Log.print(Log.l.error, "mandatoryView: error!");
                         AppData.setErrorMsg(that.binding, errorResponse);
+                        that.removeDisposablePromise(contactMandatorySelectPromise);
                     }, {
                         VeranstaltungID: getEventId(),
                         LanguageSpecID: AppData.getLanguageId()
                     });
+                    promises.push(that.addDisposablePromise(contactMandatorySelectPromise));
+                    return WinJS.Promise.join(promises);
                 }).then(function () {
                     var recordId = getRecordId();
                     if (recordId) {
@@ -1141,9 +1153,6 @@
                                     AppData._photoData = null;
                                     AppData.setRecordId("DOC1IMPORT_CARDSCAN", json.d.DOC1Import_CardscanID);
                                 }
-                                loadInitSelection();
-                                that.checkOnPdf();
-                                that.getAudioData();
                             } else {
                                 that.setDataContact(getEmptyDefaultValue(Contact.contactView.defaultValue));
                             }
@@ -1162,24 +1171,32 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (getPhotoData()) {
-                        showPhoto();
-                        return WinJS.Promise.as();
-                    } else {
-                        var importCardscanId = AppData.getRecordId("DOC1IMPORT_CARDSCAN");
-                        if (importCardscanId) {
-                            Log.print(Log.l.trace, "calling select cardScanView...");
-                            return Contact.cardScanView.select(function (json) {
-                                AppData.setErrorMsg(that.binding);
-                                Log.print(Log.l.trace, "select cardScanView: success!");
-                                if (json && json.d) {
-                                    var docContent = json.d.DocContentDOCCNT1;
-                                    if (docContent) {
-                                        var sub = docContent.search("\r\n\r\n");
-                                        if (sub >= 0) {
-                                            var data = docContent.substr(sub + 4);
-                                            if (data && data !== "null") {
-                                                AppData._photoData = data;
+                    promises = [];
+                    var recordId = getRecordId();
+                    if (recordId) {
+                        promises.push(loadInitSelection());
+                        promises.push(that.checkOnPdf());
+                        promises.push(that.getAudioData());
+                        if (getPhotoData()) {
+                            showPhoto();
+                        } else {
+                            var importCardscanId = AppData.getRecordId("DOC1IMPORT_CARDSCAN");
+                            if (importCardscanId) {
+                                Log.print(Log.l.trace, "calling select cardScanView...");
+                                var cardscanSelectPromise = Contact.cardScanView.select(function(json) {
+                                    AppData.setErrorMsg(that.binding);
+                                    Log.print(Log.l.trace, "select cardScanView: success!");
+                                    if (json && json.d) {
+                                        var docContent = json.d.DocContentDOCCNT1;
+                                        if (docContent) {
+                                            var sub = docContent.search("\r\n\r\n");
+                                            if (sub >= 0) {
+                                                var data = docContent.substr(sub + 4);
+                                                if (data && data !== "null") {
+                                                    AppData._photoData = data;
+                                                } else {
+                                                    AppData._photoData = null;
+                                                }
                                             } else {
                                                 AppData._photoData = null;
                                             }
@@ -1189,31 +1206,26 @@
                                     } else {
                                         AppData._photoData = null;
                                     }
-                                } else {
+                                    showPhoto();
+                                    that.removeDisposablePromise(cardscanSelectPromise);
+                                },
+                                function(errorResponse) {
+                                    Log.print(Log.l.error, "select cardScanView: error!");
                                     AppData._photoData = null;
-                                }
-                                showPhoto();
-                            }, function (errorResponse) {
-                                Log.print(Log.l.error, "select cardScanView: error!");
+                                    showPhoto();
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    that.removeDisposablePromise(cardscanSelectPromise);
+                                }, importCardscanId);
+                                promises.push(that.addDisposablePromise(cardscanSelectPromise));
+                            } else {
+                                Log.print(Log.l.trace, "no cardScanView importCardscanId selected");
                                 AppData._photoData = null;
                                 showPhoto();
-                                AppData.setErrorMsg(that.binding, errorResponse);
-                            }, importCardscanId);
-                        } else {
-                            Log.print(Log.l.trace, "no cardScanView importCardscanId selected");
-                            AppData._photoData = null;
-                            showPhoto();
-                            return WinJS.Promise.as();
+                            }
                         }
-                    }
-                }).then(function () {
-                    // Kommentar (neues Feld aus KontaktNotiz)
-                    var recordId = getRecordId();
-                    if (recordId) {
-                        //load of format relation record data
-                        Log.print(Log.l.trace, "calling select contactView...");
-                        var contactNoteSelectPromise = Contact.contactNoteView.select(function (json) {
-                            that.removeDisposablePromise(contactNoteSelectPromise);
+                        // Kommentar (neues Feld aus KontaktNotiz)
+                        Log.print(Log.l.trace, "calling select contactNoteView...");
+                        var contactNoteSelectPromise = Contact.contactNoteView.select(function(json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "contactView: success!");
                             if (json && json.d && json.d.results && json.d.results.length > 0) {
@@ -1223,15 +1235,18 @@
                                 that.binding.dataContactNote =
                                     getEmptyDefaultValue(Contact.contactNoteView.defaultValue);
                             }
-                        }, function (errorResponse) {
                             that.removeDisposablePromise(contactNoteSelectPromise);
+                        },
+                        function(errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
+                            that.removeDisposablePromise(contactNoteSelectPromise);
                         }, {
-                                KontaktID: recordId,
-                                DocGroup: 3,
-                                DocFormat: 4025
-                            });
-                        return that.addDisposablePromise(contactNoteSelectPromise);
+                            KontaktID: recordId,
+                            DocGroup: 3,
+                            DocFormat: 4025
+                        });
+                        promises.push(that.addDisposablePromise(contactNoteSelectPromise));
+                        return WinJS.Promise.join(promises);
                     } else {
                         return WinJS.Promise.as();
                     }
@@ -1251,6 +1266,7 @@
                 var ret;
                 var err = null;
                 var dataContact = that.binding.dataContact;
+                var dataContactNote = that.binding.dataContactNote;
                 // set Nachbearbeitet empty!
                 if (dataContact.complete) {
                     dataContact.Nachbearbeitet = null;
@@ -1268,38 +1284,32 @@
                         if (recordId) {
                             Log.print(Log.l.trace, "calling update contactView recordId=" + recordId);
                             ret = new WinJS.Promise.as().then(function () {
-                                // AppData.generalData.setRecordId("Kontakt", recordId);
-                                var tmpKontaktid = AppData.generalData.getRecordId("Kontakt");
                                 var dataSketch = {
-                                    KontaktID: that.binding.dataContact.KontaktID || AppData.getRecordId("Kontakt"),
+                                    KontaktID: dataContact.KontaktID || AppData.getRecordId("Kontakt"),
                                     Titel: "Kommentar/Comment",
                                     DocGroup: 3,
                                     DocFormat: 4025,
                                     ExecAppTypeID: 2,
-                                    Quelltext: that.binding.dataContactNote.Quelltext || ""
+                                    Quelltext: dataContactNote.Quelltext || ""
                                 };
-                                if (that.binding.dataContactNote.KontaktNotizVIEWID) {
+                                if (dataContactNote.KontaktNotizVIEWID) {
                                     return Contact.contactNoteView.update(function (response) {
                                         // called asynchronously if ok
-                                        Log.print(Log.l.info, "contactData update: success!");
-                                        if (typeof complete === "function") {
-                                            complete(response);
-                                        }
-                                        return WinJS.Promise.as();
+                                        Log.print(Log.l.info, "sketchData update: success!");
                                     }, function (errorResponse) {
                                         AppBar.busy = false;
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
                                         AppData.setErrorMsg(that.binding, errorResponse);
-                                        error(errorResponse);
-                                    }, that.binding.dataContactNote.KontaktNotizVIEWID, dataSketch);
+                                        if (typeof error === "function") {
+                                            error(errorResponse);
+                                        }
+                                    }, dataContactNote.KontaktNotizVIEWID, dataSketch);
                                 } else {
                                     return Contact.contactNoteView.insert(function (json) {
                                         // this callback will be called asynchronously
                                         // when the response is available
                                         Log.print(Log.l.trace, "sketchData insert: success!");
-                                        // contactData returns object already parsed from json file in response
-                                        Log.print(Log.l.info, "contactData update: success!");
                                     }, function (errorResponse) {
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
@@ -1315,6 +1325,19 @@
                                     // called asynchronously if ok
                                     Log.print(Log.l.info, "update contactView: success!");
                                     AppBar.modified = false;
+                                }, function (errorResponse) {
+                                    AppBar.busy = false;
+                                    err = errorResponse;
+                                    // called asynchronously if an error occurs
+                                    // or server returns response with an error status.
+                                    Log.print(Log.l.info, "update contactView: success!");
+                                    AppData.setErrorMsg(that.binding, errorResponse);
+                                    if (typeof error === "function") {
+                                        error(errorResponse);
+                                    }
+                                }, recordId, dataContact);
+                            }).then(function () {
+                                if (!err) {
                                     if (typeof complete === "function") {
                                         complete(that.binding.dataContact);
                                         return WinJS.Promise.as();
@@ -1329,26 +1352,9 @@
                                             }
                                         });
                                     }
-                                }, function (errorResponse) {
-                                    AppBar.busy = false;
-                                    err = errorResponse;
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    Log.print(Log.l.info, "update contactView: success!");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    if (typeof error === "function") {
-                                        error(errorResponse);
-                                    }
-                                }, recordId, dataContact).then(function () {
-                                    if (!err) {
-                                        var master = Application.navigator.masterControl;
-                                        if (master && master.controller) {
-                                            return master.controller.loadData(recordId);
-                                        }
-                                    } else {
-                                        return WinJS.Promise.as();
-                                    }
-                                });
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
                             });
                         } else {
                             dataContact.HostName = (window.device && window.device.uuid);
@@ -1372,22 +1378,12 @@
                                     }
                                     AppData.getUserData();
                                     AppBar.busy = false;
-                                    if (typeof complete === "function") {
-                                        complete(json);
-                                    } else {
-                                        var master = Application.navigator.masterControl;
-                                        if (master && master.controller && master.controller.binding) {
-                                            master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
-                                            master.controller.loadData().then(function () {
-                                                master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
-                                            });
-                                        }
-                                    }
                                 } else {
                                     Log.print(Log.l.error, "insert contactData returned no data");
                                 }
                             }, function (errorResponse) {
                                 AppBar.busy = false;
+                                err = errorResponse;
                                 // called asynchronously if an error occurs
                                 // or server returns response with an error status.
                                 Log.print(Log.l.error, "insert contactData: error!");
@@ -1395,7 +1391,54 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                            }, dataContact);
+                            }, dataContact).then(function() {
+                                if (!err && dataContactNote.Quelltext) {
+                                    var dataSketch = {
+                                        KontaktID: getRecordId(),
+                                        Titel: "Kommentar/Comment",
+                                        DocGroup: 3,
+                                        DocFormat: 4025,
+                                        ExecAppTypeID: 2,
+                                        Quelltext: dataContactNote.Quelltext || ""
+                                    };
+                                    return Contact.contactNoteView.insert(function (json) {
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        Log.print(Log.l.trace, "sketchData insert: success!");
+                                        if (typeof complete === "function") {
+                                            complete(json);
+                                        }
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        if (typeof error === "function") {
+                                            error(errorResponse);
+                                        }
+                                    }, dataSketch);
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            }).then(function () {
+                                if (!err) {
+                                    if (typeof complete === "function") {
+                                        complete(that.binding.dataContact);
+                                        return WinJS.Promise.as();
+                                    } else {
+                                        return that.loadData().then(function () {
+                                            var master = Application.navigator.masterControl;
+                                            if (master && master.controller && master.controller.binding) {
+                                                master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                                master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                                    master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                                });
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            });
                         }
                     }
                 } else {
