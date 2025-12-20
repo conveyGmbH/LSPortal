@@ -360,8 +360,15 @@
                                 break;
                             }
                         }
-                        if (recordIdNotFound && that.nextUrl) {
-                            that.loadNextUrl(recordId);
+                        if (recordIdNotFound) {
+                            if (that.nextUrl) {
+                                that.loadNextUrl(recordId);
+                            } else if (AppBar.scope &&
+                                typeof AppBar.scope.loadData === "function") {
+                                that.binding.contactId = 0;
+                                AppData.setRecordId("Kontakt", that.binding.contactId);
+                                AppBar.scope.loadData();
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
