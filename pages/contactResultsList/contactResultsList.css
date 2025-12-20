@@ -105,7 +105,7 @@
 #contactResultsList .win-item,
 #contactResultsList .list-header,
 #contactResultsList .list-footer {
-    width: 100%;
+    width: calc(100% - 52px);
     padding-left: 26px;
     padding-right: 26px;
     padding-top: 0;
@@ -165,7 +165,7 @@
 .view-size-medium #contactResultsList .win-item,
 .view-size-medium #contactResultsList .list-header,
 .view-size-medium #contactResultsList .list-footer {
-    width: auto;
+    width: calc(100% - 36px);
     padding-left: 18px;
     padding-right: 18px;
 }
@@ -193,6 +193,7 @@
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
+    width: calc(100% - 20px);
 }
 
 #konanz {
@@ -234,10 +235,6 @@
     min-width: 300px;
 }
 
-#contactResultsList {
-    margin-left: 10px;
-    width: 99% !important;
-}
 .fieldlinecounter {
     text-align: right;
 }

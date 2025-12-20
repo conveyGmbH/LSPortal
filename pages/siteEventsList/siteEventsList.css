@@ -45,17 +45,19 @@
 #siteEventsList .list-header {
     padding-left: 26px;
     padding-right: 26px;
-    width: auto;
+    width: calc(100% - 52px);
 }
 .view-size-medium #siteEventsList .win-item,
 .view-size-medium #siteEventsList .list-header {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 .view-size-small #siteEventsList .win-item,
 .view-size-small #siteEventsList .list-header {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 .siteEventsList .content-header .master-list-header {
     margin-top: 16px;

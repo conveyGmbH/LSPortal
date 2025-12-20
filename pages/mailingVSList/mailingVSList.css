@@ -50,7 +50,7 @@
 #mailingvslist .list-header {
     padding-left: 26px;
     padding-right: 26px;
-    width: auto;
+    width: calc(100% - 52px);
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -59,12 +59,14 @@
 .view-size-medium #mailingvslist .list-header {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #mailingvslist .win-item,
 .view-size-small #mailingvslist .list-header {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 
 .view-size-smallest #mailingvslist .win-headercontainer {

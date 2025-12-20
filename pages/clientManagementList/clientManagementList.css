@@ -45,19 +45,21 @@
 #clientManagementList .list-header {
     padding-left: 26px;
     padding-right: 26px;
-    width: auto;
+    width: calc(100% - 52px);
 }
 
 .view-size-medium #clientManagementList .win-item,
 .view-size-medium #clientManagementList .list-header {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #clientManagementList .win-item,
 .view-size-small #clientManagementList .list-header {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 
 .clientManagementList .content-header .master-list-header {

@@ -48,7 +48,7 @@
     padding-left: 26px;
     padding-right: 26px;
     min-height: 40px;
-    width: auto;
+    width: calc(100% - 52px);
     padding-top: 4px;
     padding-bottom: 4px;
 }
@@ -57,12 +57,14 @@
 .view-size-medium #seriesList .list-header {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #seriesList .win-item,
 .view-size-small #seriesList .list-header {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 
 .view-size-smallest #seriesList .win-item,
