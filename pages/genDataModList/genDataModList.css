@@ -44,7 +44,7 @@
 */
 #genDataModList .win-item,
 .genDataModList .list-header-columns {
-    width: calc(100% - 56px);
+    width: calc(100% - 52px);
     padding-left: 26px;
     padding-right: 26px;
     padding-top: 2px;

@@ -91,6 +91,7 @@
     width: auto;
     padding-top: 2px;
     padding-bottom: 2px;
+    width: calc(100% - 52px);
 }
 
 .view-size-medium #genDataEmpList .win-item,
@@ -98,6 +99,7 @@
 .view-size-medium #genDataEmpList .list-footer {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #genDataEmpList .win-item,
@@ -105,6 +107,7 @@
 .view-size-small #genDataEmpList .list-footer {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 .genDataEmpList .content-header .master-list-header {
     margin-top: 16px;

@@ -139,12 +139,12 @@
     border-top-style: solid;
     border-top-color: gray;
     border-top-width: 1px;
+    width: calc(100% - 52px);
 }
 
-
- #contactList .row-bkg{
-     display:inline-block;
- }
+#contactList .row-bkg{
+    display:inline-block;
+}
 
 .contactList .list-button-left {
     min-width: 100px;
@@ -200,10 +200,11 @@
     width: auto;
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-medium-small #contactList .win-item,
-.view-size-medium-small .contactList .list-header,
+.view-size-medium-small #contactList .list-header,
 .view-size-medium-small #contactList .list-footer {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -219,12 +220,13 @@
     }
 */
 .view-size-small #contactList .win-item,
-.view-size-small .contactList .list-header,
+.view-size-small #contactList .list-header,
 .view-size-small #contactList .list-footer {
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
+    width: calc(100% - 20px);
 }
 
 #konanz {

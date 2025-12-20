@@ -74,6 +74,7 @@
     width: auto;
     padding-top: 2px;
     padding-bottom: 2px;
+    width: calc(100% - 52px);
 }
 
 .view-size-medium #employeeList .win-item,
@@ -81,6 +82,7 @@
 .view-size-medium #employeeList .list-footer {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #employeeList .win-item,
@@ -88,6 +90,7 @@
 .view-size-small #employeeList .list-footer {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 
 .empList .content-header .master-list-header {

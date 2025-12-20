@@ -53,18 +53,21 @@
     width: auto;
     padding-top: 4px;
     padding-bottom: 4px;
+    width: calc(100% - 52px);
 }
 
 .view-size-medium #eventList .win-item,
 .view-size-medium #eventList .list-header {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #eventList .win-item,
 .view-size-small #eventList .list-header {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 
 .eventList .content-header .master-list-header {

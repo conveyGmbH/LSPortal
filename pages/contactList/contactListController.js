@@ -819,22 +819,6 @@
                                     }
                                 }
                                 that.fitColumnWidthToContent();
-                                //set list-order column
-                                var headerListFields = listView.querySelectorAll(".list-header-columns > div");
-                                if (headerListFields) for (i = 0; i < headerListFields.length; i++) {
-                                    if (headerListFields[i].id === ContactList._orderAttribute) {
-                                        if (ContactList._orderDesc) {
-                                            WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
-                                            WinJS.Utilities.addClass(headerListFields[i], "order-desc");
-                                        } else {
-                                            WinJS.Utilities.addClass(headerListFields[i], "order-asc");
-                                            WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
-                                        }
-                                    } else {
-                                        WinJS.Utilities.removeClass(headerListFields[i], "order-asc");
-                                        WinJS.Utilities.removeClass(headerListFields[i], "order-desc");
-                                    }
-                                }
                                 // load SVG images
                                 Colors.loadSVGImageElements(listView, "action-image-right", 40, Colors.textColor, "name", null, {
                                     "barcode-qr": { useStrokeColor: false }
