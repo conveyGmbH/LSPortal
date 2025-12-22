@@ -505,7 +505,7 @@
                                 fairMandantVeranstID = currentEvent.FairMandantVeranstID;
                             }
                         }
-                        AppData.setRecordId("VeranstaltungAnlage", fairMandantVeranstID);
+                        AppData.setRecordId("VeranstaltungAnlage", -fairMandantVeranstID);
                     } else {
                         delete that.binding.restriction.VeranstaltungID;
                         AppData.setRecordId("Veranstaltung2", 0);
