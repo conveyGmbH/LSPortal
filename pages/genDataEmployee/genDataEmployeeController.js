@@ -698,8 +698,8 @@
                 },
                 clickReorder: function (event) {
                     Log.call(Log.l.trace, "SiteEvents.Controller.");
-                    var eventId = AppData.getRecordId("Veranstaltung2");
-                    AppData.setRecordId("VeranstaltungAnlage", eventId);
+                    /*var eventId = AppData.getRecordId("Veranstaltung2");
+                    AppData.setRecordId("VeranstaltungAnlage", eventId);*/
                     Application.navigateById("siteEventsBenNach", event);
                     Log.ret(Log.l.trace);
                 }
