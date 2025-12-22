@@ -1885,6 +1885,7 @@
     "genDataEmployee.deleteMitarbeiter" : "Supprimer",
     "genDataEmployee.cancel" : "Annuler",
     "genDataEmployee.InactiveUser" : "Remarque: Le nombre maximal de licences a été atteint. Pour l’événement en cours, le nombre suivant d’employés a été mis en inactif: ",
+    "genDataEmployee.createInactiveUser" : "Veuillez noter : le nombre maximum d'utilisateurs actifs pour cet événement a déjà été atteint. Le nouvel utilisateur a donc été créé comme inactif. Pour activer cet utilisateur, veuillez désactiver un autre utilisateur ou en déplacer un vers un autre événement. Tant que l'utilisateur est inactif, il ne pourra pas enregistrer de contacts.",
 
     "eventProducts.title"			: "Fonctionnalités",
     "eventProducts.ProductTitle"			: "Nom du Fonctionnalité",

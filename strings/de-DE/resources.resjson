@@ -1908,6 +1908,7 @@
     "genDataEmployee.deleteMitarbeiter" : "Löschen",
     "genDataEmployee.cancel" : "Abbrechen",
 	"genDataEmployee.InactiveUser" : "Hinweis: Die maximale Anzahl Lizenzen ist erreicht worden. Bei der aktuellen Veranstaltung ist folgende Anzahl Mitarbeiter auf Inaktiv gesetzt: ",
+    "genDataEmployee.createInactiveUser" : "Bitte beachten: Die maximale Anzahl an aktiven Usern für diese Veranstaltung wurde bereits erreicht. Der neue User wurde daher als inaktiv angelegt. Um diesen User aktivieren zu können, deaktivieren Sie bitte einen bestehenden User oder verschieben Sie einen User auf eine andere Veranstaltun Solange der User inaktiv ist, kann er keine Kontakte erfassen.",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",

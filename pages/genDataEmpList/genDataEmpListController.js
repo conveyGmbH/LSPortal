@@ -543,7 +543,8 @@
                             // eventView returns object already parsed from json file in response
                             if (json && json.d && json.d.results.length > 0) {
                                 var results = [{
-                                    VeranstaltungVIEWID: "",
+                                    VeranstaltungVIEWID: 0,
+                                    FairMandantVeranstID: 0,
                                     Name: ""
                                 }].concat(json.d.results);
                                 that.events = new WinJS.Binding.List(results);
@@ -558,6 +559,15 @@
                                     AppData.setRecordId("Veranstaltung2", that.binding.eventId);
                                     restriction.VeranstaltungID = that.binding.eventId;
                                     AppData.setRestriction("Employee", restriction);
+                                    var fairMandantVeranstID = null;
+                                    for (var i = 0; i < that.events.length; i++) {
+                                        var event = that.events.getAt(i);
+                                        if (that.binding.eventId === event.VeranstaltungVIEWID) {
+                                            fairMandantVeranstID = event.FairMandantVeranstID;
+                                            break;
+                                        }
+                                    }
+                                    AppData.setRecordId("VeranstaltungAnlage", -fairMandantVeranstID);
                                 }
                             }
                         },

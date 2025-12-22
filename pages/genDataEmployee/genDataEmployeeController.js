@@ -489,8 +489,23 @@
                         that.binding.restriction.VeranstaltungID = event.target.value;
                         // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
                         AppData.setRecordId("Veranstaltung2",
-                            (typeof that.binding.restriction.VeranstaltungID === "string") ?
-                                parseInt(that.binding.restriction.VeranstaltungID) : that.binding.restriction.VeranstaltungID);
+                            (typeof that.binding.restriction.VeranstaltungID === "string")
+                            ? parseInt(that.binding.restriction.VeranstaltungID)
+                            : that.binding.restriction.VeranstaltungID);
+
+                        var fairMandantVeranstID = null;
+                        var master = Application.navigator.masterControl;
+                        var events = [];
+                        if (master && master.controller && master.controller.events) {
+                            events = master.controller.events;
+                        }
+                        for (var i = 0; i < events.length - 1; i++) {
+                            var currentEvent = events.getAt(i);
+                            if (AppData.getRecordId("Veranstaltung2") === currentEvent.VeranstaltungVIEWID) {
+                                fairMandantVeranstID = currentEvent.FairMandantVeranstID;
+                            }
+                        }
+                        AppData.setRecordId("VeranstaltungAnlage", fairMandantVeranstID);
                     } else {
                         delete that.binding.restriction.VeranstaltungID;
                         AppData.setRecordId("Veranstaltung2", 0);
@@ -1009,8 +1024,7 @@
                             var result = json.d.results[0];
                             if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
                                 that.binding.dataEmployee.errorLicenseExceeded = true;
-                                var anzInaktiveBenutzerNeu = that.binding.AnzInaktiveBenutzer + 1;
-                                confirmModal(null, getResourceText("genDataEmployee.InactiveUser") + anzInaktiveBenutzerNeu, getResourceText("genDataEmployee.chooseEventOk"), null, function (result) {
+                                confirmModal(null, getResourceText("genDataEmployee.createInactiveUser"), getResourceText("genDataEmployee.chooseEventOk"), null, function (result) {
                                     if (result) {
                                         Log.print(Log.l.trace, "click confirmModal: user choice OK");
                                     }
