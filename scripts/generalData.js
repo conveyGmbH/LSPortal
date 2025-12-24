@@ -11,6 +11,50 @@
 
 (function () {
     "use strict";
+    // default values
+    var userDataDefault = {
+        VeranstaltungID: 0,
+        VeranstaltungName: "",
+        DatenschutzText: "",
+        Login: "",
+        Present: 0,
+        PublishFlag: null,
+        AnzLokaleKontakte: 0,
+        AnzVersendeteKontakte: 0,
+        TimeZoneAdjustment: 0,
+        VeranstaltungTyp: 0,
+        SiteAdmin: null,
+        IsCustomerAdmin: null,
+        IsMidiAdmin: null
+    };
+    var contactDataDefault = {
+        Titel: "",
+        Vorname: "",
+        Vorname2: "",
+        Name: "",
+        Firmenname: "",
+        Position: "",
+        Branche: "",
+        AbteilungText: "",
+        Strasse: "",
+        PLZ: "",
+        Stadt: "",
+        TelefonFestnetz: "",
+        TelefonMobil: "",
+        Fax: "",
+        EMail: "",
+        Bemerkungen: "",
+        WebAdresse: "",
+        Freitext1: "",
+        Freitext3: "",
+        HostName: (window.device && window.device.uuid),
+        INITAnredeID: 0,
+        INITLandID: 0,
+        CreatorSiteID: "",
+        CreatorRecID: "",
+        Nachbearbeitet: 1,
+        IsIncomplete: null
+    };
 
     WinJS.Namespace.define("AppData", {
         _generalUserView: {
@@ -62,14 +106,18 @@
         },
         _curGetUserDataId: 0,
         _curGetContactDataId: 0,
-        _contactData: {},
-        _userData: {
-            VeranstaltungName: "",
-            Login: "",
-            Present: 0,
-            PublishFlag: 0,
-            VeranstaltungTyp: 0
+        _contactDataDefault: {
+            get: function () {
+                return getEmptyDefaultValue(contactDataDefault);
+            }
         },
+        _userDataDefault: {
+            get: function () {
+                return getEmptyDefaultValue(userDataDefault);
+            }
+        },
+        _contactData: contactDataDefault,
+        _userData: userDataDefault,
         _userMessagesData: {
             MessagesCounter: 0
         },
@@ -456,6 +504,11 @@
                             promise.then(function () {
                                 AppBar.loadIcons();
                                 NavigationBar.groups = Application.navigationBarGroups;
+                                if (AppHeader &&
+                                    AppHeader.controller &&
+                                    typeof AppHeader.controller.reloadMenu === "function") {
+                                    AppHeader.controller.reloadMenu();
+                                }
                             });
                         });
                     }
@@ -717,6 +770,11 @@
                 case "navigationColor":
                     AppBar.loadIcons();
                     NavigationBar.groups = Application.navigationBarGroups;
+                    if (AppHeader &&
+                        AppHeader.controller &&
+                        typeof AppHeader.controller.reloadMenu === "function") {
+                        AppHeader.controller.reloadMenu();
+                    }
                     break;
             }
             Log.ret(Log.l.u1);

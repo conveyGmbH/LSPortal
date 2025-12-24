@@ -156,8 +156,8 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var employeeId = AppData.getRecordId("Mitarbeiter");
-                var ret = new WinJS.Promise.as()/*.then(function () {
-                    if (employeeId) {
+                var ret = new WinJS.Promise.as().then(function () {
+                /*    if (employeeId) {
                         return AppHeader.GlobalUserServersVIEW.select(function(json) {
                                 // this callback will be called asynchronously
                                 // when the response is available
@@ -182,7 +182,16 @@
                     } else {
                         return WinJS.Promise.as();
                     }
-                })*/.then(function () {
+                }).then(function () {*/
+                    that.setLogo();
+                    that.binding.userData = AppData._userData;
+                    that.binding.genDataFlag = AppData._userData && AppData._userData.IsCustomerAdmin || AppData._userData.IsMidiAdmin;
+                    that.binding.isSiteAdmin = AppData._userData.SiteAdmin ? true : false;
+                    that.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
+                    that.binding.showNameInHeader = !!AppData._persistentStates.showNameInHeader;
+                    that.binding.publishFlag = that.getPublishFlag();
+                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.IsCustomerAdmin || that.binding.userData.IsMidiAdmin;
+                    that.binding.isSiteAdmin = that.binding.userData && that.binding.userData.SiteAdmin;
                     if (that.binding.errorFlag) {
                         return WinJS.Promise.as();
                     }
@@ -220,13 +229,9 @@
                             // ignore that
                         }, employeeId);
                     } else {
+                        that.binding.photoData = "";
                         return WinJS.Promise.as();
                     }
-                }).then(function () {
-                    that.setLogo();
-                    that.binding.publishFlag = that.getPublishFlag();
-                    that.binding.genDataFlag = that.binding.userData && that.binding.userData.IsCustomerAdmin || that.binding.userData.IsMidiAdmin;
-                    that.binding.isSiteAdmin = that.binding.userData && that.binding.userData.SiteAdmin;
                 });
                 Log.ret(Log.l.trace);
                 return ret;

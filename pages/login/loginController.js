@@ -31,9 +31,9 @@
             AppData._persistentStates.visitorFlowInterval = null;
             AppData._persistentStates.allRestrictions = {};
             AppData._persistentStates.allRecIds = {};
-            AppData._userData = {};
+            AppData._userData = AppData._userDataDefault;
             AppData._userRemoteData = {};
-            AppData._contactData = {};
+            AppData._contactData = AppData._contactDataDefault;
             AppData._photoData = null;
             AppData._barcodeType = null;
             AppData._barcodeRequest = null;
@@ -93,6 +93,12 @@
                 },
                 clickAccount: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
+                    Application.navigateById("newAccount", event, true);
+                    Log.ret(Log.l.trace);
+                },
+                clickChangeUserState: function (event) {
+                    Log.call(Log.l.trace, "Login.Controller.");
+                    //ignore that here!
                     Application.navigateById("newAccount", event, true);
                     Log.ret(Log.l.trace);
                 },
@@ -363,6 +369,15 @@
                             }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                            }).then(function () {
+                                AppBar.loadIcons();
+                                NavigationBar.groups = Application.navigationBarGroups;
+                                if (AppHeader &&
+                                    AppHeader.controller &&
+                                    typeof AppHeader.controller.reloadMenu === "function") {
+                                    AppHeader.controller.reloadMenu();
+                                }
+                                return WinJS.Promise.as();
                             });
                         } else {
                             return WinJS.Promise.as();
@@ -465,6 +480,13 @@
                 Application.pageframe.savePersistentStates();
                 return (colors && colors._loadCssPromise) || WinJS.Promise.timeout(0);
             }).then(function () {
+                AppBar.loadIcons();
+                NavigationBar.groups = Application.navigationBarGroups;
+                if (AppHeader &&
+                    AppHeader.controller &&
+                    typeof AppHeader.controller.reloadMenu === "function") {
+                    AppHeader.controller.reloadMenu();
+                }
                 Log.print(Log.l.trace, "Appheader refresh complete");
                 Application.pageframe.hideSplashScreen();
                 if (AppData.prevLogin && AppData.prevPassword) {

@@ -637,6 +637,15 @@
                             }).then(function () {
                                 var colors = Colors.updateColors();
                                 return (colors && colors._loadCssPromise) || WinJS.Promise.as();
+                            }).then(function () {
+                                AppBar.loadIcons();
+                                NavigationBar.groups = Application.navigationBarGroups;
+                                if (AppHeader &&
+                                    AppHeader.controller &&
+                                    typeof AppHeader.controller.reloadMenu === "function") {
+                                    AppHeader.controller.reloadMenu();
+                                }
+                                return WinJS.Promise.as();
                             });
                         } else {
                             that.binding.showWaitCircle = false;
