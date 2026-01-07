@@ -993,6 +993,34 @@
                     if (err) {
                         return WinJS.Promise.as();
                     }
+                    return AppData.call("PRC_CheckMAChange", {
+                        pMAID: dataEmployee.MitarbeiterVIEWID,
+                        pNewAPUserRoleID: dataEmployee.INITAPUserRoleID,
+                        pNewLoginName: dataEmployee.Login
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_CheckMAChange success! ");
+                        if (json && json.d && json.d.results.length > 0) {
+                            var result = json.d.results[0];
+                            if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
+                                that.binding.dataEmployee.errorLicenseExceeded = true;
+                                return confirmModal(null, getResourceText("genDataEmployee.createInactiveUser"), getResourceText("genDataEmployee.chooseEventOk"), null, function (result) {
+                                    if (result) {
+                                        Log.print(Log.l.trace, "click confirmModal: user choice OK");
+                                    }
+                                });
+                            }
+                        }
+                    }, function (errorResponse) {
+                        err = errorResponse;
+                        Log.print(Log.l.error, "call PRC_CheckMAChange error");
+                        AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                    });
+                }).then(function () {
                     return AppData.call("PRC_SaveUserAccountData", {
                         pMitarbeiterID: dataEmployee.MitarbeiterVIEWID,
                         pFirstName: dataEmployee.Vorname,
@@ -1006,34 +1034,6 @@
                     }, function (errorResponse) {
                         err = errorResponse;
                         Log.print(Log.l.error, "call PRC_SaveUserAccountData error");
-                        AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        });
-                    });
-                }).then(function () {
-                    return AppData.call("PRC_CheckMAChange", {
-                        pMAID: dataEmployee.MitarbeiterVIEWID,
-                        pNewAPUserRoleID: dataEmployee.INITAPUserRoleID,
-                        pNewLoginName: dataEmployee.Login
-                    }, function (json) {
-                        Log.print(Log.l.info, "call PRC_CheckMAChange success! ");
-                        if (json && json.d && json.d.results.length > 0) {
-                            var result = json.d.results[0];
-                            if (result && result.ResultCode && result.ResultCode && result.ResultCode === 1395 && result.ResultMessage) {
-                                that.binding.dataEmployee.errorLicenseExceeded = true;
-                                confirmModal(null, getResourceText("genDataEmployee.createInactiveUser"), getResourceText("genDataEmployee.chooseEventOk"), null, function (result) {
-                                    if (result) {
-                                        Log.print(Log.l.trace, "click confirmModal: user choice OK");
-                                    }
-                                });
-                            }
-                        }
-                    }, function (errorResponse) {
-                        err = errorResponse;
-                        Log.print(Log.l.error, "call PRC_CheckMAChange error");
                         AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {
                             AppData.setErrorMsg(that.binding, errorResponse);
                             if (typeof error === "function") {
