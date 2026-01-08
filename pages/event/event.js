@@ -25,8 +25,7 @@
                 { id: "clickExportQrcode", label: getResourceText("command.userPwExport"), tooltip: getResourceText("tooltip.export"), section: "primary", svg: "arrow_barrier_down" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check", key: WinJS.Utilities.Key.enter },
                 { id: "clickDelete", label: getResourceText("command.delete"), tooltip: getResourceText("tooltip.deleteevent"), section: "primary", svg: "garbage_can" },
-                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" },
-                { id: "clickChange", label: getResourceText("command.eventFavourite"), tooltip: getResourceText("tooltip.eventFavourite"), section: "primary", svg: "star2" }
+                { id: "clickNew", label: getResourceText("command.new"), tooltip: getResourceText("tooltip.newevent"), section: "primary", svg: "plus" }
             ];
             if (!AppHeader.controller.binding.userData.SiteAdmin &&
                 AppData._persistentStates.leadsuccessBasic) {
