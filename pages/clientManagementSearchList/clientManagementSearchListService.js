@@ -142,7 +142,15 @@
                     }
                     Log.print(Log.l.info, "calling select _fairMandantView... restriction=" +
                         (restriction ? JSON.stringify(restriction) : ""));
-                    ret = AppData.call("PRC_GetMandantList", {
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (!ClientManagementSearchList._fairMandantView.attribSpecs) {
+                            Log.print(Log.l.info, "dummy select on View to get attribSpecs");
+                            return ClientManagementSearchList._fairMandantView.selectById(function () { }, function () { }, 0);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        return AppData.call("PRC_GetMandantList", {
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_GetMandantList: success!");
                         // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
@@ -164,6 +172,7 @@
                             error(errorResponse);
                         }
                     });
+                    }); 
                 }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
