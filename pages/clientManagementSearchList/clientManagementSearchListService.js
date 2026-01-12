@@ -128,7 +128,9 @@
                             });
                         });
                     }
-                } else {
+                }
+
+                /*else {
                     ClientManagementSearchList._prevRestriction = "";
                     if (!restriction) {
                         restriction = {};
@@ -172,8 +174,7 @@
                             error(errorResponse);
                         }
                     });
-                    }); 
-                }
+                }*/
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
