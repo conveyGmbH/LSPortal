@@ -7,9 +7,6 @@
 /// <reference path="~/www/lib/hammer/scripts/hammer.js" />
 /// <reference path="~/www/scripts/generalData.js" />
 /// <reference path="~/www/fragments/imgSketch/imgSketchService.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/CameraConstants.js" />
-/// <reference path="~/plugins/cordova-plugin-camera/www/Camera.js" />
-/// <reference path="~/plugins/cordova-plugin-device/www/device.js" />
 
 (function () {
     "use strict";
