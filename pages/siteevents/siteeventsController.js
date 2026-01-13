@@ -14,6 +14,8 @@
 
 (function () {
     "use strict";
+    var namespaceName = "SiteEvents";
+
     WinJS.Namespace.define("SiteEvents", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, "SiteEvents.Controller.");
@@ -58,6 +60,19 @@
 
             var timer = null;
             this._selectPromise = null;
+
+            /*var setSelIndex = function (index) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
+                if (that.siteeventsdata && that.siteeventsdata.length > 0) {
+                    if (index >= that.siteeventsdata.length) {
+                        index = that.siteeventsdata.length - 1;
+                    }
+                    that.binding.selIdx = index;
+                    tableBody.winControl.selection.set(index);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setSelIndex = setSelIndex;*/
 
             this.dispose = function () {
                 if (tableBody && tableBody.winControl) {
@@ -300,7 +315,7 @@
                         that.addBodyRowHandlers();
                         that.addHeaderRowHandlers();
                         if (recordId) {
-                            that.selectRecordId(recordId);
+                            //that.selectRecordId2(recordId);
                         }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
@@ -589,6 +604,7 @@
                                             that.isConvertable = that.siteeventsdataraw[i].CanConvert;
                                             that.binding.active = that.siteeventsdataraw[i].Aktiv;
                                             AppData.setRecordId("VeranstaltungTermin", that.siteeventsdataraw[i].VeranstaltungTerminID);
+                                            AppData.setRecordId("PRC_GetExhibitorList", newRecId);
                                             Log.print(Log.l.trace, "newRecId:" + newRecId + " curRecId:" + that.curRecId);
                                             if (newRecId !== 0 && newRecId !== that.curRecId) {
                                                 if (that.curRecId) {
@@ -1027,6 +1043,57 @@
                 this.addRemovableEventListener(contentArea, "scroll", this.eventHandlers.onFooterVisibilityChanged.bind(this));
             }
 
+            var scrollToRecordId2 = function (recordId) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
+                if (that.loading) {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId2(recordId);
+                    });
+                } else {
+                    if (recordId && tableBody && tableBody.winControl && that.siteeventsdata) {
+                        for (var i = 0; i < that.siteeventsdata.length; i++) {
+                            var events = that.siteeventsdata.getAt(i);
+                            if (events && typeof events === "object" &&
+                                events.VeranstaltungVIEWID === recordId) {
+                                tableBody.winControl.indexOfFirstVisible = i - 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId2 = scrollToRecordId2;
+
+            var selectRecordId2 = function (recordId) {
+                var eventdataset;
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
+                var recordIdNotFound = true;
+                if (recordId && tableBody && tableBody.winControl &&  that.siteeventsdata) {
+                    for (var i = 0; i < that.siteeventsdata.length; i++) {
+                        eventdataset = that.siteeventsdata.getAt(i);
+                        if (eventdataset &&
+                            typeof eventdataset === "object" &&
+                            eventdataset.VeranstaltungVIEWID === recordId) {
+                            tableBody.winControl.selection.set(i).done(function () {
+                                WinJS.Promise.timeout(50).then(function () {
+                                    that.scrollToRecordId2(recordId);
+                                });
+                            });
+                            recordIdNotFound = false;
+                            setSelIndex(i);
+                            tableBody.winControl.selection.set(i);
+                            break;
+                        }
+                    }
+                    if (recordIdNotFound) {
+                        that.loadNextUrl(recordId);
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.selectRecordId2 = selectRecordId2;
+
             var loadData = function (vid, sortIdx, sortType) {
                 Log.call(Log.l.trace, "LocalEvents.Controller.");
                 that.endeMailingTracking(false);
@@ -1056,6 +1123,7 @@
                         pIsPortal: that.binding.isPortal
                     }, function (json) {
                         Log.print(Log.l.info, "call success! ");
+                        //that.loading = false;
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "LocalEvent: success!");
                         // employeeView returns object already parsed from json file in response
@@ -1071,6 +1139,23 @@
                             if (tableBody.winControl) {
                                 // add ListView dataSource
                                 tableBody.winControl.data = that.siteeventsdata;
+                                //tableBody.winControl.itemDataSource = that.siteeventsdata.dataSource;
+                            }
+                            var recordId = AppData.getRecordId("PRC_GetExhibitorList");
+                            if (recordId) {
+                                WinJS.Promise.timeout(0).then(function () {
+                                    //that.selectRecordId2(recordId);
+                                    var rows = document.querySelectorAll("tr.row");
+
+                                    rows.forEach((row) => {
+                                        if (row && row.value === recordId)
+                                            row.click();
+                                            row.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "nearest"
+                                            });
+                                   });
+                                });
                             }
                             Log.print(Log.l.trace, "Data loaded");
                             that.addBodyRowHandlers();
