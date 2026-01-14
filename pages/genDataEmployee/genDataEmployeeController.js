@@ -216,14 +216,19 @@
                 } else {
                     that.binding.AnzInaktiveBenutzer = 0;
                 }
-                // neues Flag UserIsActive -> wenn user bereits eingelogt ist dann sollte das Feld Login und Passwort static sein 
-                // wenn user den Ändern will dann klicke explizit auf das icon für Ändern user und bestätige die Alertbox 
-                // -> result.HatKontakte ist dirty Trick um festzustellen ob normale Admin oder nicht
-                //|| AppHeader.controller.binding.userData.HasLocalEvents 
-                // show warning inactiveUser and license exceeded
-                if (that.binding.AnzAktiveLizenz >= that.binding.AnzMandantLizenz && that.binding.AnzInaktiveBenutzer > 0) {
+                that.binding.dataEmployee.errorLicenseExceededText = "";
+                if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz) {
+                    that.binding.dataEmployee.errorLicenseExceeded = true;
+                    that.binding.dataEmployee.errorLicenseExceededText = getResourceText("genDataEmployee.licenseLimitReach1");
+                }
+                if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz && that.binding.AnzInaktiveBenutzer > 0) {
                     //alert(getResourceText("genDataEmployee.exceededLicence"));
                     that.binding.dataEmployee.errorLicenseExceeded = true;
+                    that.binding.dataEmployee.errorLicenseExceededText = that.binding.dataEmployee.errorLicenseExceededText + " " + that.binding.AnzInaktiveBenutzer + " " + getResourceText("genDataEmployee.licenseLimitReach2");
+                }
+                if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz) {
+                    that.binding.dataEmployee.errorLicenseExceeded = true;
+                    that.binding.dataEmployee.errorLicenseExceededText = that.binding.dataEmployee.errorLicenseExceededText + " " + getResourceText("genDataEmployee.licenseLimitReach3");
                 }
                 that.binding.allowEditLogin = !getHasTwoFactor() &&
                     (AppHeader.controller.binding.userData.SiteAdmin ||
@@ -1030,15 +1035,26 @@
                                     }
                                 });
                             }*/
-                            if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz || (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz && that.binding.AnzInaktiveBenutzer > 0)) {
+                            that.binding.dataEmployee.errorLicenseExceededText = "";
+                            if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz) {
+                                that.binding.dataEmployee.errorLicenseExceeded = true;
+                                that.binding.dataEmployee.errorLicenseExceededText = getResourceText("genDataEmployee.licenseLimitReach1");
+                            }
+                            if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz && that.binding.AnzInaktiveBenutzer > 0) {
                                 //alert(getResourceText("genDataEmployee.exceededLicence"));
                                 that.binding.dataEmployee.errorLicenseExceeded = true;
+                                that.binding.dataEmployee.errorLicenseExceededText = that.binding.dataEmployee.errorLicenseExceededText + that.binding.AnzInaktiveBenutzer + getResourceText("genDataEmployee.licenseLimitReach2");
                                 return confirmModal(null, getResourceText("genDataEmployee.createInactiveUser"), getResourceText("genDataEmployee.chooseEventOk"), null, function (result) {
                                     if (result) {
                                         Log.print(Log.l.trace, "click confirmModal: user choice OK");
                                     }
                                 });
                             }
+                            if (that.binding.AnzAktiveLizenz === that.binding.AnzMandantLizenz) {
+                                that.binding.dataEmployee.errorLicenseExceeded = true;
+                                that.binding.dataEmployee.errorLicenseExceededText = that.binding.dataEmployee.errorLicenseExceededText + getResourceText("genDataEmployee.licenseLimitReach3");
+                            }
+
                         }
                     }, function (errorResponse) {
                         err = errorResponse;
