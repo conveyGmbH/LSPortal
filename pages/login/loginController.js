@@ -30,7 +30,21 @@
             AppData._persistentStates.odata.dbSiteId = null;
             AppData._persistentStates.visitorFlowInterval = null;
             AppData._persistentStates.allRestrictions = {};
-            AppData._persistentStates.allRecIds = {};
+            var allRecIds = {};
+            // #8650 Merke ID von Terminliste und Ausstellerliste
+            if (AppData._persistentStates.allRecIds &&
+                AppData._persistentStates.allRecIds.PRC_GetExhibitorList) {
+                allRecIds.PRC_GetExhibitorList = AppData._persistentStates.allRecIds.PRC_GetExhibitorList;
+            }
+            if (AppData._persistentStates.allRecIds &&
+                AppData._persistentStates.allRecIds.VeranstaltungTermin) {
+                allRecIds.VeranstaltungTermin = AppData._persistentStates.allRecIds.VeranstaltungTermin;
+            }
+            if (typeof AppData._persistentStates.allRecIds === "undefined") {
+                AppData._persistentStates.allRecIds = {};
+            } else {
+                AppData._persistentStates.allRecIds = allRecIds;
+            }
             AppData._userData = AppData._userDataDefault;
             AppData._userRemoteData = {};
             AppData._contactData = AppData._contactDataDefault;
