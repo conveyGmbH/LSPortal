@@ -352,18 +352,15 @@
 
                                     that.binding.count = results.length;
                                     that.eventdatasets = new WinJS.Binding.List(results);
-                                    //that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
-                                    var recordId = AppData.getRecordId("VeranstaltungTermin");
-                                    if (recordId) {
-                                        WinJS.Promise.timeout(0).then(function () {
-                                            that.selectRecordId(recordId);
-                                        });
-                                    } else {
-                                        that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
-                                    }
                                     if (listView.winControl) {
                                         // add ListView dataSource
                                         listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                    }
+                                    var recordId = AppData.getRecordId("VeranstaltungTermin");
+                                    if (recordId) {
+                                        that.selectRecordId(recordId);
+                                    } else {
+                                        that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
                                     }
                                 }
                             },
