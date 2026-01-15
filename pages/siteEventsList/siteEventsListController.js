@@ -337,6 +337,9 @@
                         AppData.setRecordId("EventTypID", 0);
                         that.loadData();
                     } else {
+                        if (that.nextUrl) {
+                            that.nextUrl = null;
+                        }
                         return AppData.call("PRC_GetEventList",
                             {
                                 pSearchString: that.binding.searchString,
@@ -381,6 +384,9 @@
                     if (event.keyCode === 13) {
                         if (searchInput.value) {
                             AppData.setRecordId("EventSearchString", searchInput.value);
+                            if (that.nextUrl) {
+                                that.nextUrl = null;
+                            }
                             AppData.call("PRC_GetEventList",
                                 {
                                     pSearchString: searchInput.value,
