@@ -1884,6 +1884,9 @@
     "genDataEmployee.cancel" : "Annulla",
     "genDataEmployee.InactiveUser" : "Nota: Il numero massimo di licenze è stato raggiunto. Per l’evento attuale, il seguente numero di dipendenti è stato impostato come inattivo: ",
     "genDataEmployee.createInactiveUser" : "Attenzione: È già stato raggiunto il numero massimo di utenti attivi per questo evento. Il nuovo utente è stato quindi creato come inattivo. Per attivare questo utente, si prega di disattivare un altro utente oppure di spostarne uno su un altro evento. Finché l’utente è inattivo, non potrà acquisire contatti.",
+    "genDataEmployee.licenseLimitReach1" : "Limite utenti raggiunto\nÈ stato raggiunto il numero massimo di utenti per questo evento.",
+    "genDataEmployee.licenseLimitReach2" : "gli utenti sono attualmente inattivi.",
+    "genDataEmployee.licenseLimitReach3" : "Per attivare utenti aggiuntivi, aggiungere ulteriori licenze oppure disattivare un utente attivo. Tutti gli utenti appena creati o assegnati rimarranno inattivi fino a quando non saranno disponibili delle licenze.",
 
     "eventProducts.title"			: "Caratteristiche",
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",
