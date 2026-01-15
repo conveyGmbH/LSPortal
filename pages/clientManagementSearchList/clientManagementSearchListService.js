@@ -11,7 +11,8 @@
     WinJS.Namespace.define("ClientManagementSearchList", {
         _eventId: 0,
         _orderAttribute: "Name",
-        _orderDesc: true,
+        _orderDesc: 1,
+        _firstRowNumber: 1,
         _prevRestriction: "",
         _prevJson: null,
         _collator: null,
@@ -129,8 +130,7 @@
                         });
                     }
                 }
-
-                /*else {
+                else {
                     ClientManagementSearchList._prevRestriction = "";
                     if (!restriction) {
                         restriction = {};
@@ -144,15 +144,10 @@
                     }
                     Log.print(Log.l.info, "calling select _fairMandantView... restriction=" +
                         (restriction ? JSON.stringify(restriction) : ""));
-                    ret = new WinJS.Promise.as().then(function () {
-                        if (!ClientManagementSearchList._fairMandantView.attribSpecs) {
-                            Log.print(Log.l.info, "dummy select on View to get attribSpecs");
-                            return ClientManagementSearchList._fairMandantView.selectById(function () { }, function () { }, 0);
-                        } else {
-                            return WinJS.Promise.as();
-                        }
-                    }).then(function () {
-                        return AppData.call("PRC_GetMandantList", {
+                    ret = AppData.call("PRC_GetMandantList", {
+                        pFirstRowNum: ClientManagementSearchList._firstRowNumber,
+                        pOrderAttribute: ClientManagementSearchList._orderAttribute,
+                        pOrderDesc: ClientManagementSearchList._orderDesc
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_GetMandantList: success!");
                         // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
@@ -174,7 +169,7 @@
                             error(errorResponse);
                         }
                     });
-                }*/
+                }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
                 return ret;
