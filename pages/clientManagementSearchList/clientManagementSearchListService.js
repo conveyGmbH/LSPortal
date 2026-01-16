@@ -85,9 +85,13 @@
                         Log.print(Log.l.info, "re-use previous PRC_GetMandantList results!");
                         var json = ClientManagementSearchList._prevJson;
                         ret = new WinJS.Promise.as().then(function () {
-                            if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                            if (json &&
+                                json.d &&
+                                json.d.results &&
+                                json.d.results.length > 0 &&
                                 ClientManagementSearchList._orderAttribute) {
-                                Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
+                                Log.print(Log.l.info,
+                                    "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
                                 json.d.results.sort(ClientManagementSearchList.fairMandantView.compare);
                             }
                             if (typeof complete === "function") {
@@ -99,29 +103,39 @@
                         ret = new WinJS.Promise.as().then(function() {
                             if (!ClientManagementSearchList._fairMandantView.attribSpecs) {
                                 Log.print(Log.l.info, "dummy select on View to get attribSpecs");
-                                return ClientManagementSearchList._fairMandantView.selectById(function() {}, function() {}, 0);
+                                return ClientManagementSearchList._fairMandantView.selectById(function () { },
+                                    function () { },
+                                    0);
                             } else {
                                 return WinJS.Promise.as();
                             }
                         }).then(function() {
-                            return AppData.call("PRC_GetMandantList", {
+                            return AppData.call("PRC_GetMandantList",
+                                {
                                 pSearchString: restriction,
                                 pSearchOptions: ClientManagementSearchList._FilterOption
-                            }, function (json) {
+                                },
+                                function (json) {
                                 Log.print(Log.l.info, "call PRC_GetMandantList: success!");
                                 // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
                                 ClientManagementSearchList._prevRestriction = restriction;
                                 ClientManagementSearchList._prevJson = json;
-                                if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                    if (json &&
+                                        json.d &&
+                                        json.d.results &&
+                                        json.d.results.length > 0 &&
                                     ClientManagementSearchList._orderAttribute) {
-                                    Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
+                                        Log.print(Log.l.info,
+                                            "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
                                     json.d.results.sort(ClientManagementSearchList.fairMandantView.compare);
-                                    ClientManagementSearchList._prevFilterOption = ClientManagementSearchList._FilterOption;
+                                        ClientManagementSearchList._prevFilterOption =
+                                            ClientManagementSearchList._FilterOption;
                                 }
                                 if (typeof complete === "function") {
                                     complete(json);
                                 }
-                            }, function (errorResponse) {
+                                },
+                                function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_GetMandantList: error");
                                 if (typeof error === "function") {
                                     error(errorResponse);
@@ -129,8 +143,7 @@
                             });
                         });
                     }
-                }
-                else {
+                } else {
                     ClientManagementSearchList._prevRestriction = "";
                     if (!restriction) {
                         restriction = {};
@@ -142,18 +155,32 @@
                             desc: ClientManagementSearchList._orderDesc
                         }
                     }
-                    Log.print(Log.l.info, "calling select _fairMandantView... restriction=" +
-                        (restriction ? JSON.stringify(restriction) : ""));
-                    ret = AppData.call("PRC_GetMandantList", {
+                    Log.print(Log.l.info, "calling select _fairMandantView... restriction=" + (restriction ? JSON.stringify(restriction) : ""));
+                    ret = new WinJS.Promise.as().then(function () {
+                        if (!ClientManagementSearchList._fairMandantView.attribSpecs) {
+                            Log.print(Log.l.info, "dummy select on View to get attribSpecs");
+                            return ClientManagementSearchList._fairMandantView.selectById(function () { },
+                                function () { },
+                                0);
+                        } else {
+                            return WinJS.Promise.as();
+                        }
+                    }).then(function () {
+                        return AppData.call("PRC_GetMandantList",
+                            {
                         pFirstRowNum: ClientManagementSearchList._firstRowNumber,
                         pOrderAttribute: ClientManagementSearchList._orderAttribute,
                         pOrderDesc: ClientManagementSearchList._orderDesc
-                    }, function (json) {
+                            },
+                            function (json) {
                         Log.print(Log.l.info, "call PRC_GetMandantList: success!");
                         // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
                         ClientManagementSearchList._prevRestriction = restriction;
                         ClientManagementSearchList._prevJson = json;
-                        if (json && json.d && json.d.results && json.d.results.length > 0 &&
+                                if (json &&
+                                    json.d &&
+                                    json.d.results &&
+                                    json.d.results.length > 0 &&
                             ClientManagementSearchList._orderAttribute) {
 
                             Log.print(Log.l.info, "call sort orderAttribute=" + ClientManagementSearchList._orderAttribute);
@@ -168,6 +195,7 @@
                         if (typeof error === "function") {
                             error(errorResponse);
                         }
+                    });
                     });
                 }
                 // this will return a promise to controller
