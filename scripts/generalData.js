@@ -6,7 +6,6 @@
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
 /// <reference path="~/www/lib/convey/scripts/dbinit.js" />
-/// <reference path="~/plugins/cordova-plugin-device/www/device.js" />
 /// <reference path="~/www/pages/appHeader/appHeaderController.js" />
 
 (function () {

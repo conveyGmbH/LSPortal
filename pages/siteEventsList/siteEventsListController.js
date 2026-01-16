@@ -12,6 +12,7 @@
     "use strict";
 
     var nav = WinJS.Navigation;
+    var namespaceName = "SiteEventsList";
 
     WinJS.Namespace.define("SiteEventsList", {
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
@@ -23,7 +24,6 @@
                 eventText: getResourceText("siteEventsList.event"),
                 eventTypID: 0,
                 searchString: "",
-                prevEventTerminId: AppData.getRecordId("VeranstaltungTermin"),
                 preveventTypID: AppData.getRecordId("EventTypID"),
                 preveventSearchString: AppData.getRecordId("EventSearchString")
             }, commandList, true]);
@@ -42,6 +42,19 @@
 
             var maxLeadingPages = 0;
             var maxTrailingPages = 0;
+
+            var setSelIndex = function (index) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "index=" + index);
+                if (that.eventdataset && that.eventdataset.length > 0) {
+                    if (index >= that.eventdataset.length) {
+                        index = that.eventdataset.length - 1;
+                    }
+                    that.binding.selIdx = index;
+                    listView.winControl.selection.set(index);
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.setSelIndex = setSelIndex;
 
             this.dispose = function () {
                 if (listView && listView.winControl) {
@@ -74,9 +87,9 @@
                     if (that.binding.preveventTypID) {
                         eventTypDropdown.selectedIndex = that.binding.preveventTypID;
                     } else {
-                    eventTypDropdown.selectedIndex = 0;
+                        eventTypDropdown.selectedIndex = 0;
+                    }
                 }
-            }
             }
             this.creatingEventsCategory = creatingEventsCategory;
 
@@ -89,7 +102,7 @@
             };
             this.background = background;
 
-            var loadNextUrl = function () {
+            var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, "SiteEventsList.Controller.");
                 progress = listView.querySelector(".list-footer .progress");
                 counter = listView.querySelector(".list-footer .counter");
@@ -124,7 +137,9 @@
                         if (counter && counter.style) {
                             counter.style.display = "inline";
                         }
-                        that.loading = false;
+                        if (recordId) {
+                            that.selectRecordId(recordId);
+                        }
                     }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
@@ -174,20 +189,20 @@
                 }
             };
             this.scopeFromRecordId = scopeFromRecordId;
-            
+
             var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, "Questionnaire.Controller.", "recordId=" + recordId);
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.loading) {
                     WinJS.Promise.timeout(50).then(function () {
                         that.scrollToRecordId(recordId);
                     });
                 } else {
-                    if (recordId && listView && listView.winControl) {
+                    if (recordId && listView && listView.winControl && that.eventdatasets) {
                         for (var i = 0; i < that.eventdatasets.length; i++) {
                             var events = that.eventdatasets.getAt(i);
                             if (events && typeof events === "object" &&
                                 events.VeranstaltungTerminVIEWID === recordId) {
-                                listView.winControl.indexOfFirstVisible = i;
+                                listView.winControl.indexOfFirstVisible = i - 1;
                                 break;
                             }
                         }
@@ -198,18 +213,28 @@
             this.scrollToRecordId = scrollToRecordId;
 
             var selectRecordId = function (recordId) {
-                Log.call(Log.l.trace, "SiteEventsList.Controller.", "recordId=" + recordId);
-                if (recordId && listView && listView.winControl && listView.winControl.selection) {
+                var eventdataset;
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
+                var recordIdNotFound = true;
+                if (recordId && listView && listView.winControl && listView.winControl.selection && that.eventdatasets) {
                     for (var i = 0; i < that.eventdatasets.length; i++) {
-                        var eventdataset = that.eventdatasets.getAt(i);
-                        if (eventdataset && typeof eventdataset === "object" &&
+                        eventdataset = that.eventdatasets.getAt(i);
+                        if (eventdataset &&
+                            typeof eventdataset === "object" &&
                             eventdataset.VeranstaltungTerminVIEWID === recordId) {
+                            listView.winControl.selection.set(i).done(function () {
+                                WinJS.Promise.timeout(50).then(function () {
+                                    that.scrollToRecordId(recordId);
+                                });
+                            });
+                            recordIdNotFound = false;
+                            setSelIndex(i);
                             listView.winControl.selection.set(i);
-                            AppData.setRecordId("VeranstaltungTermin", recordId);
-                            that.binding.eventId = recordId;
-                            that.scrollToRecordId(recordId);
                             break;
                         }
+                    }
+                    if (recordIdNotFound) {
+                        that.loadNextUrl(recordId);
                     }
                 }
                 Log.ret(Log.l.trace);
@@ -230,7 +255,7 @@
             };
             this.getDateObject = getDateObject;
 
-            var setComboBoxEventTypId = function() {
+            var setComboBoxEventTypId = function () {
                 Log.call(Log.l.trace, "SiteEventsList.Controller.", "preveventTypID=" + that.binding.preveventTypID);
                 var searchString = AppData.getRecordId("EventSearchString");
                 var eventTypId = AppData.getRecordId("EventTypID");
@@ -261,9 +286,15 @@
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = that.eventdatasets.dataSource;
                                 }
-                                that.selectRecordId(that.binding.prevEventTerminId);
-                            } else {
-
+                                // that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+                                var recordId = AppData.getRecordId("VeranstaltungTermin");
+                                if (recordId) {
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        that.selectRecordId(recordId);
+                                    });
+                                } else {
+                                    that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+                                }
                             }
                         },
                         function (error) {
@@ -295,7 +326,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSelectionDropDownChanged: function(event) {
+                onSelectionDropDownChanged: function (event) {
                     Log.call(Log.l.trace, "SiteEventsList.Controller.");
                     var target = event.currentTarget || event.target;
                     AppData.setRecordId("EventTypID", target.value);
@@ -304,8 +335,11 @@
                     }
                     if (that.binding.eventTypID === 0 && that.binding.searchString === '') {
                         AppData.setRecordId("EventTypID", 0);
-                    that.loadData();
+                        that.loadData();
                     } else {
+                        if (that.nextUrl) {
+                            that.nextUrl = null;
+                        }
                         return AppData.call("PRC_GetEventList",
                             {
                                 pSearchString: that.binding.searchString,
@@ -321,14 +355,16 @@
 
                                     that.binding.count = results.length;
                                     that.eventdatasets = new WinJS.Binding.List(results);
-                                    that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
-
                                     if (listView.winControl) {
                                         // add ListView dataSource
                                         listView.winControl.itemDataSource = that.eventdatasets.dataSource;
                                     }
-                                } else {
-
+                                    var recordId = AppData.getRecordId("VeranstaltungTermin");
+                                    if (recordId) {
+                                        that.selectRecordId(recordId);
+                                    } else {
+                                        that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+                                    }
                                 }
                             },
                             function (error) {
@@ -348,38 +384,41 @@
                     if (event.keyCode === 13) {
                         if (searchInput.value) {
                             AppData.setRecordId("EventSearchString", searchInput.value);
+                            if (that.nextUrl) {
+                                that.nextUrl = null;
+                            }
                             AppData.call("PRC_GetEventList",
-                            {
-                                pSearchString: searchInput.value,
-                                pTerminTyp: parseInt(that.binding.eventTypID)
-                            },
-                            function(json) {
-                                Log.print(Log.l.info, "call success! ");
-                                if (json && json.d && json.d.results.length > 0) {
-                                    var results = json.d.results;
-                                    results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
-                                    });
+                                {
+                                    pSearchString: searchInput.value,
+                                    pTerminTyp: parseInt(that.binding.eventTypID)
+                                },
+                                function (json) {
+                                    Log.print(Log.l.info, "call success! ");
+                                    if (json && json.d && json.d.results.length > 0) {
+                                        var results = json.d.results;
+                                        results.forEach(function (item, index) {
+                                            that.resultConverter(item, index);
+                                        });
 
-                                    that.binding.count = results.length;
-                                    that.eventdatasets = new WinJS.Binding.List(results);
-                                    that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+                                        that.binding.count = results.length;
+                                        that.eventdatasets = new WinJS.Binding.List(results);
+                                        that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
 
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                        if (listView.winControl) {
+                                            // add ListView dataSource
+                                            listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                        }
+                                    } else {
+
                                     }
-                                } else {
-
-                                }
-                            },
-                            function(error) {
-                                Log.print(Log.l.error, "call error");
-                            });
-                    } else {
+                                },
+                                function (error) {
+                                    Log.print(Log.l.error, "call error");
+                                });
+                        } else {
                             Log.print(Log.l.error, "searchString empty!");
-                        that.loadData();
-                    }
+                            that.loadData();
+                        }
                     }
 
                 },
@@ -405,10 +444,10 @@
                                             }
                                             if (AppBar.scope._element &&
                                                 AppBar.scope._element.id === "siteeventsController") {
-                                            if (typeof AppBar.scope.loadData === "function") {
-                                                AppBar.scope.loadData();
-                                                AppBar.scope.binding.searchString = "";
-                                                AppBar.scope.searchStringData = "";
+                                                if (typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                    AppBar.scope.binding.searchString = "";
+                                                    AppBar.scope.searchStringData = "";
                                                 }
                                             }
                                         } else {
@@ -547,58 +586,60 @@
                     if (that.binding.preveventTypID) {
                         that.setComboBoxEventTypId();
                     } else {
-                    return SiteEventsList.VeranstaltungView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        AppData.setErrorMsg(that.binding);
-                        Log.print(Log.l.trace, "SiteEventsList: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (json && json.d && json.d.results && json.d.results.length > 0) {
-                            that.nextUrl = SiteEventsList.VeranstaltungView.getNextUrl(json);
-                            var results = json.d.results;
-                            results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                            });
-
-                            that.binding.count = results.length;
-                            that.eventdatasets = new WinJS.Binding.List(results);
-                            that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
-
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = that.eventdatasets.dataSource;
-                            }
-                            Log.print(Log.l.trace, "Data loaded");
-                            if (that.binding.selIdx >= json.d.results.length) {
-                                that.binding.selIdx = json.d.results.length - 1;
-                            }
-                            var recordId;
-                            if (that.binding.prevEventTerminId) {
-                                recordId = that.binding.prevEventTerminId;
-                                    that.selectRecordId(recordId);
-                            } else {
-                                recordId = AppData.getRecordId("VeranstaltungTermin");
-                                AppData.setRecordId("VeranstaltungTermin", recordId);
-                            }
-                            if (recordId) {
-                                WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(recordId);
+                        return SiteEventsList.VeranstaltungView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            AppData.setErrorMsg(that.binding);
+                            Log.print(Log.l.trace, "SiteEventsList: success!");
+                            // employeeView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                that.nextUrl = SiteEventsList.VeranstaltungView.getNextUrl(json);
+                                var results = json.d.results;
+                                results.forEach(function (item, index) {
+                                    that.resultConverter(item, index);
                                 });
+
+                                that.binding.count = results.length;
+                                that.eventdatasets = new WinJS.Binding.List(results);
+
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = that.eventdatasets.dataSource;
+                                }
+                                Log.print(Log.l.trace, "Data loaded");
+                                if (that.binding.selIdx >= json.d.results.length) {
+                                    that.binding.selIdx = json.d.results.length - 1;
+                                }
+                                var recordId = AppData.getRecordId("VeranstaltungTermin");
+                                if (recordId) {
+                                    WinJS.Promise.timeout(0).then(function () {
+                                        that.selectRecordId(recordId);
+                                    });
+                                } else {
+                                    that.selectRecordId(results[0].VeranstaltungTerminVIEWID);
+                                }
                             } else {
-                                AppData.setRecordId("VeranstaltungTermin", json.d.results[0].VeranstaltungTerminID);
-                                recordId = AppData.getRecordId("VeranstaltungTermin");
-                                WinJS.Promise.timeout(0).then(function () {
-                                    that.selectRecordId(recordId);
-                                });
+                                that.binding.count = 0;
+                                that.nextUrl = null;
+                                that.eventdatasets = null;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                }
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
                             }
-                        } else {
-                            that.binding.count = 0;
-                            that.nextUrl = null;
-                            that.eventdatasets = null;
-                            if (listView.winControl) {
-                                // add ListView dataSource
-                                listView.winControl.itemDataSource = null;
-                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
                             progress = listView.querySelector(".list-footer .progress");
                             counter = listView.querySelector(".list-footer .counter");
                             if (progress && progress.style) {
@@ -608,21 +649,7 @@
                                 counter.style.display = "inline";
                             }
                             that.loading = false;
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                        }, { IsLocal: 1});
+                        }, { IsLocal: 1 });
                     }
                 }).then(function () {
                     if (that.binding.preveventSearchString) {

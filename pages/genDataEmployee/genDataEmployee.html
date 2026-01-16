@@ -28,8 +28,7 @@
                         <div class="line-separator"></div>
                         <div class="win-type-body text-lightcolorU" data-win-bind="innerHTML: noLicenceText; style.display: noLicence Binding.Converter.toDisplay"></div>
                         <div class="content-header-line" data-win-bind="style.display: dataEmployee.errorLicenseExceeded Binding.Converter.toDisplay">
-	                        <span class="mandatory-empty-warning" data-win-res="{textContent: 'genDataEmployee.InactiveUser'}"></span>
-	                        <span class="mandatory-empty-warning" data-win-bind="textContent: dataEmployee.AnzInaktiveBenutzer"></span>
+                            <span class="mandatory-empty-warning" data-win-bind="textContent: dataEmployee.errorLicenseExceededText"></span>
                         </div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.firstname'}"></span>

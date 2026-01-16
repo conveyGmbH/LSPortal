@@ -91,6 +91,7 @@
 
 #employeeController .mandatory-empty-warning {
     color: var(--ColorSignalOrange);
+    white-space: pre-line;
     font-weight: bold;
 }
 

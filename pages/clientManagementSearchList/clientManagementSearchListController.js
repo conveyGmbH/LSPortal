@@ -212,7 +212,7 @@
                             ClientManagementSearchList._orderDesc = !ClientManagementSearchList._orderDesc;
                         } else {
                             ClientManagementSearchList._orderAttribute = event.currentTarget.id;
-                            ClientManagementSearchList._orderDesc = false;
+                            ClientManagementSearchList._orderDesc = 0;
                         }
                         if (that.loadDataDelayedPromise) {
                             that.loadDataDelayedPromise.cancel();

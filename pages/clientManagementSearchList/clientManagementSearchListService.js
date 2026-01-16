@@ -11,7 +11,8 @@
     WinJS.Namespace.define("ClientManagementSearchList", {
         _eventId: 0,
         _orderAttribute: "Name",
-        _orderDesc: true,
+        _orderDesc: 1,
+        _firstRowNumber: 1,
         _prevRestriction: "",
         _prevJson: null,
         _collator: null,
@@ -128,7 +129,8 @@
                             });
                         });
                     }
-                } else {
+                }
+                else {
                     ClientManagementSearchList._prevRestriction = "";
                     if (!restriction) {
                         restriction = {};
@@ -143,6 +145,9 @@
                     Log.print(Log.l.info, "calling select _fairMandantView... restriction=" +
                         (restriction ? JSON.stringify(restriction) : ""));
                     ret = AppData.call("PRC_GetMandantList", {
+                        pFirstRowNum: ClientManagementSearchList._firstRowNumber,
+                        pOrderAttribute: ClientManagementSearchList._orderAttribute,
+                        pOrderDesc: ClientManagementSearchList._orderDesc
                     }, function (json) {
                         Log.print(Log.l.info, "call PRC_GetMandantList: success!");
                         // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
