@@ -1,34 +1,31 @@
 /* SalesforceLeadLib - CSS Styles for LSPortal Integration */
+/* Dark Mode Support using .cnv-ui-dark class and portal CSS classes */
 
-/* Note: Most styles are injected via JavaScript in the library */
-/* This file contains additional portal-specific overrides */
-
-.field-mapping-container {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-.field-mapping-container h2 {
-    color: #1f2937;
-}
-
-.field-mapping-container p {
-    color: #6b7280;
-}
-
+/* ============================================
+   BASE CONTAINER STYLES
+   ============================================ */
+.field-mapping-container,
 .crm-test-export-container,
 .crm-export-container {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Loading state */
+/* ============================================
+   LOADING INDICATOR
+   ============================================ */
 .loading-indicator {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 3px solid rgba(0, 112, 210, 0.3);
+    border: 3px solid #e5e7eb;
     border-radius: 50%;
-    border-top-color: #0070d2;
+    border-top-color: var(--accent-color, #0070d2);
     animation: spin 1s linear infinite;
+}
+
+.cnv-ui-dark .loading-indicator {
+    border-color: #525252;
+    border-top-color: var(--accent-color, #0070d2);
 }
 
 @keyframes spin {
@@ -37,7 +34,9 @@
     }
 }
 
-/* Error message styling */
+/* ============================================
+   MESSAGE STYLES WITH DARK MODE
+   ============================================ */
 .error-message {
     color: #c23934;
     background-color: #fef0ef;
@@ -47,7 +46,12 @@
     margin: 10px 0;
 }
 
-/* Success message styling */
+.cnv-ui-dark .error-message {
+    background-color: rgba(194, 57, 52, 0.15);
+    border-color: rgba(194, 57, 52, 0.3);
+    color: #fca5a5;
+}
+
 .success-message {
     color: #027e46;
     background-color: #ecfdf5;
@@ -55,4 +59,68 @@
     padding: 12px;
     border-radius: 5px;
     margin: 10px 0;
+}
+
+.cnv-ui-dark .success-message {
+    background-color: rgba(2, 126, 70, 0.15);
+    border-color: rgba(2, 126, 70, 0.3);
+    color: #6ee7b7;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES FOR INLINE STYLES
+   These use !important to override inline styles
+   ============================================ */
+
+/* Background overrides */
+.cnv-ui-dark [style*="background-color: rgb(249, 250, 251)"],
+.cnv-ui-dark [style*="background-color: #f9fafb"],
+.cnv-ui-dark [style*="background: #f9fafb"] {
+    background-color: var(--box-bkg, #1f2937) !important;
+    background: var(--box-bkg, #1f2937) !important;
+}
+
+.cnv-ui-dark [style*="background-color: #ffffff"],
+.cnv-ui-dark [style*="background-color: white"],
+.cnv-ui-dark [style*="background: white"] {
+    background-color: var(--Window, #111827) !important;
+    background: var(--Window, #111827) !important;
+}
+
+/* Text color overrides */
+.cnv-ui-dark [style*="color: #1f2937"] {
+    color: var(--WindowText, #f9fafb) !important;
+}
+
+.cnv-ui-dark [style*="color: #6b7280"] {
+    color: #d1d5db !important;
+}
+
+.cnv-ui-dark [style*="color: #374151"] {
+    color: var(--WindowText, #e5e7eb) !important;
+}
+
+/* Border overrides */
+.cnv-ui-dark [style*="border-color: #e5e7eb"],
+.cnv-ui-dark [style*="border: 1px solid #e5e7eb"] {
+    border-color: #525252 !important;
+}
+
+.cnv-ui-dark [style*="border: 1px solid #d1d5db"] {
+    border-color: #525252 !important;
+}
+
+.cnv-ui-dark [style*="border-bottom: 1px solid #e5e7eb"] {
+    border-bottom-color: #525252 !important;
+}
+
+.cnv-ui-dark [style*="border-bottom: 2px solid #e5e7eb"] {
+    border-bottom-color: #525252 !important;
+}
+
+/* Input field overrides */
+.cnv-ui-dark [style*="background: #f3f4f6"],
+.cnv-ui-dark [style*="background-color: #f3f4f6"] {
+    background-color: #374151 !important;
+    background: #374151 !important;
 }

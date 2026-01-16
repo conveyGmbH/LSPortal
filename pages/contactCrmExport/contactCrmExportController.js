@@ -71,7 +71,7 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (WinJS.Navigation.canGoBack === true) {
-                        WinJS.Navigation.back(1).done( /* Your success and error handlers */);
+                        WinJS.Navigation.back(1).done( /* Success and error handlers */);
                     } else {
                         Application.navigateById("event");
                     }
@@ -156,16 +156,38 @@
                     AppBar.triggerDisableHandlers();
 
                     // Initialize Salesforce Lead Library and open CRM Export
-                    if (that.binding.contactId && crmExportContainer) {
-                        // Open CRM Export UI with contactId
-                        SalesforceLeadLib.openCrmExport(crmExportContainer, that.binding.contactId).then(
-                            function () {
-                                Log.print(Log.l.info, "CRM Export UI opened successfully");
-                            },
-                            function (error) {
-                                Log.print(Log.l.error, "Failed to open CRM Export UI: " + error.message);
-                            }
-                        );
+                    if (crmExportContainer) {
+
+                        if(!that.binding.contactId) {
+                            
+                            that.binding.dataContact.KontaktVIEWID = -1; // Dummy value for test mode
+
+                            setTimeout(function() {
+                                var contentRecord = crmExportContainer.parentElement;
+                                if (contentRecord) {
+                                    contentRecord.style.setProperty('display', 'block', 'important');
+                                    // Hide the "CRM Export isn't activated" message
+                                    var inactiveMessage = contentRecord.querySelector('.field_line_full');
+                                    if (inactiveMessage) {
+                                        inactiveMessage.style.setProperty('display', 'none', 'important');
+                                    }
+                                }
+                                crmExportContainer.style.setProperty('display', 'block', 'important');
+                            }, 0);
+
+                            // Open CRM Test Export UI
+                            SalesforceLeadLib.openCrmTestExport(crmExportContainer, AppData.getRecordId("Veranstaltung2"))
+                        }else{
+                            // Open CRM Export UI with contactId
+                            SalesforceLeadLib.openCrmExport(crmExportContainer, that.binding.contactId).then(
+                                function () {
+                                    Log.print(Log.l.info, "CRM Export UI opened successfully");
+                                },
+                                function (error) {
+                                    Log.print(Log.l.error, "Failed to open CRM Export UI: " + error.message);
+                                }
+                            );
+                        }
                     }
                 });
                 Log.ret(Log.l.trace);
