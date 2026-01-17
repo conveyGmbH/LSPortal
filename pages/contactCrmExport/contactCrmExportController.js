@@ -159,7 +159,7 @@
                     if (crmExportContainer) {
 
                         if(!that.binding.contactId) {
-                            
+
                             that.binding.dataContact.KontaktVIEWID = -1; // Dummy value for test mode
 
                             setTimeout(function() {
