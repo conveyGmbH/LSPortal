@@ -1166,7 +1166,7 @@
     "siteevents.freeolockappuser"   : "Freigeg./gesperrt",
     "siteevents.numContacts"   : "Kontakte",
     "siteevents.placeholder"   : "Ausstellersuche",
-    "siteevents.eventdelete"   : "Möchten Sie die Veranstaltung wirklich löschen?",
+    "siteevents.eventdelete"   : "Möchten Sie diesen Aussteller wirklich löschen?",
     "siteevents.successmsg"   : "Csv-Datei erfolgreich hochgeladen",
     "siteevents.errormsg"   : "Csv-Datei konnte nicht hochgeladen werden",
     "siteevents.uploadbtn"   : "Hochladen",

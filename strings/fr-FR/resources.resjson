@@ -1162,7 +1162,7 @@
     "siteevents.freeolockappuser"   : "unlock. / lock. appareils",
     "siteevents.numContacts"   : "Contacts",
     "siteevents.placeholder"   : "Recherche exposants",
-    "siteevents.eventdelete"   : "Voulez-vous vraiment supprimer l'événement?",
+    "siteevents.eventdelete"   : "Voulez-vous vraiment supprimer cet exposant ?",
     "siteevents.successmsg"   : "Fichier Csv téléchargé avec succès",
     "siteevents.errormsg"   : "Le fichier Csv n'a pas pu être téléchargé",
     "siteevents.uploadbtn"   : "Télécharger",
