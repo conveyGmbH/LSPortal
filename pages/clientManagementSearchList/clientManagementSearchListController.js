@@ -11,9 +11,9 @@
     "use strict";
 
     var nav = WinJS.Navigation;
-    var namespaceName = "clientManagementSearchList";
+    var namespaceName = "ClientManagementSearchList";
 
-    WinJS.Namespace.define("ClientManagementSearchList", {
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             // ListView control
@@ -58,42 +58,6 @@
                 }
             }
             this.getFilter = getFilter;
-
-            var scrollToRecordId = function (recordId) {
-                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
-                if (that.binding.loading ||
-                    listView && listView.winControl && listView.winControl.loadingState !== "complete") {
-                    WinJS.Promise.timeout(50).then(function () {
-                        that.scrollToRecordId(recordId);
-                    });
-                } else if (listView && listView.winControl) {
-                    var scope = that.scopeFromRecordId(recordId);
-                    if (!scope && recordId && that.nextUrl) {
-                        that.loadNext().then(function() {
-                            that.scrollToRecordId(recordId);
-                        });
-                    } else if (scope && scope.index >= 0) {
-                        listView && listView.winControl.ensureVisible(scope.index);
-                        WinJS.Promise.timeout(50).then(function() {
-                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
-                            var elementOfFirstVisible = listView.winControl.elementFromIndex(indexOfFirstVisible);
-                            var element = listView.winControl.elementFromIndex(scope.index);
-                            var height = listView.clientHeight;
-                            if (element && elementOfFirstVisible) {
-                                var offsetDiff = element.offsetTop - elementOfFirstVisible.offsetTop;
-                                if (offsetDiff > height - element.clientHeight) {
-                                    listView.winControl.scrollPosition += offsetDiff - (height - element.clientHeight);
-                                } else if (offsetDiff < 0) {
-                                    listView.winControl.indexOfFirstVisible = scope.index;
-                                }
-                            }
-                            that.selectRecordId(recordId);
-                        });
-                    }
-                }
-                Log.ret(Log.l.trace);
-            }
-            this.scrollToRecordId = scrollToRecordId;
 
             var resultConverter = function (item, index) {
                 item.index = index;
@@ -280,17 +244,6 @@
                                 "barcode-qr": { useStrokeColor: false }
                             });
                         } else if (listView.winControl.loadingState === "complete") {
-                            if (that.loading) {
-                                var progress = listView.querySelector(".list-footer .progress");
-                                var counter = listView.querySelector(".list-footer .counter");
-                                if (progress && progress.style) {
-                                    progress.style.display = "none";
-                                }
-                                if (counter && counter.style) {
-                                    counter.style.display = "inline";
-                                }
-                                that.loading = false;
-                            }
                         }
                     }
                     that.loadingStateChanged(eventInfo);
