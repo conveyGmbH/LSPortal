@@ -20,7 +20,7 @@
                 dataContact: getEmptyDefaultValue(ContactCrmExport.contactView.defaultValue),
                 contactId: null
             }, commandList]);
-            
+
             var that = this;
 
             var crmExportContainer = pageElement.querySelector("#crmexport-container");
