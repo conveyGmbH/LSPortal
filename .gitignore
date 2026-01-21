@@ -29,6 +29,8 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 .vs/
 .vscode/
+.mcp.json
+*.code-workspace
 #Nuget packages folder
 packages/
 # convey

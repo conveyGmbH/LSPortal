@@ -52,7 +52,7 @@
 
             }
 
-            var getRecordId = function () {
+           var getRecordId = function () {
                 var recordId = null;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 var master = Application.navigator.masterControl;
