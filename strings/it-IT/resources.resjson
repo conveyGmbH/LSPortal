@@ -1161,7 +1161,7 @@
     "siteevents.freeolockappuser"   : "unlock. / lock. Dispositivi",
     "siteevents.numContacts"   : "Contatti",
     "siteevents.placeholder"   : "Ricerca Espositori",
-    "siteevents.eventdelete"   : "Vuoi veramente cancellare l'evento?",
+    "siteevents.eventdelete"   : "Vuoi veramente cancellare questo espositore?",
     "siteevents.successmsg"   : "File Csv caricato con successo",
     "siteevents.errormsg"   : "Non è stato possibile caricare il file Csv",
     "siteevents.uploadbtn"   : "Carica",
