@@ -1173,18 +1173,34 @@
             this.redrawCharts = redrawCharts;
 
             var drawPremiumCharts = function () {
-                that.createIndustriesYearChart1();
-                that.createIndustriesYearChart2();
-                that.createIndustriesYearChart3();
-                that.createIndustriesYearChart4();
+				if(industriesYearChartDataRaw1 && industriesYearChartDataRaw1.length > 0) {
+					that.createIndustriesYearChart1();
+				}
+				if(industriesYearChartDataRaw2 && industriesYearChartDataRaw2.length > 0) {
+					that.createIndustriesYearChart2();
+				}
+				if(industriesYearChartDataRaw3 && industriesYearChartDataRaw3.length > 0) {
+					that.createIndustriesYearChart3();
+				}
+				if(industriesYearChartDataRaw4 && industriesYearChartDataRaw4.length > 0) {
+					that.createIndustriesYearChart4();
+				}
             }
             this.drawPremiumCharts = drawPremiumCharts;
 
             var drawSupremeCharts = function () {
-                that.createIndustriesYearChart5();
-                that.createIndustriesYearChart6();
-                that.createIndustriesYearChart7();
-                that.createIndustriesYearChart8();
+				if(industriesYearChartDataRaw5 && industriesYearChartDataRaw5.length > 0) {
+					that.createIndustriesYearChart5();
+				}
+				if(industriesYearChartDataRaw6 && industriesYearChartDataRaw6.length > 0) {
+					that.createIndustriesYearChart6();
+				}
+				if(industriesYearChartDataRaw7 && industriesYearChartDataRaw7.length > 0) {
+					that.createIndustriesYearChart7();
+				}
+				if(industriesYearChartDataRaw8 && industriesYearChartDataRaw8.length > 0) {
+					that.createIndustriesYearChart8();
+				}
             }
             this.drawSupremeCharts = drawSupremeCharts;
 
