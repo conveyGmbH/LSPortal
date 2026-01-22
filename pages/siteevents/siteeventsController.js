@@ -1146,14 +1146,14 @@
                                 WinJS.Promise.timeout(0).then(function () {
                                     //that.selectRecordId2(recordId);
                                     var rows = document.querySelectorAll("tr.row");
-
-                                    rows.forEach((row) => {
-                                        if (row && row.value === recordId)
+                                    rows.forEach((row, index) => {
+                                        if (row && row.value === recordId) {
                                             row.click();
                                             row.scrollIntoView({
                                                 behavior: "smooth",
                                                 block: "nearest"
                                             });
+                                        }
                                    });
                                 });
                             }
