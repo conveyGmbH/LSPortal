@@ -84,6 +84,11 @@
 
 					            <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Stadt"
 					                 onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
+                                    <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerstandname'}"></span>
+                                </div>
+
+                                <div class="list-field-small-fixed bkgcolor-hoverable bkgcolor-activatable" id="Stadt"
+                                     onclick="AppBar.handleEvent('click', 'clickOrderBy', event)">
 						            <span class="wrap-text" data-win-res="{textContent: 'clientManagementSearchList.headerstadt'}"></span>
 					            </div>
 
@@ -153,6 +158,10 @@
 				            </div>
 
 				            <div class="list-field-small-fixed">
+                                <span class="wrap-text" data-win-bind="textContent: StandName"></span>
+                            </div>
+
+                            <div class="list-field-small-fixed">
 					            <span class="wrap-text" data-win-bind="textContent: Stadt"></span>
 				            </div>
 
