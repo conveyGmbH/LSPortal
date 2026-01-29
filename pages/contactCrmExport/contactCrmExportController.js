@@ -186,7 +186,8 @@
 
                                 if (eventUUID) {
                                     // Open CRM Test Export UI with event UUID
-                                    SalesforceLeadLib.openCrmTestExport(crmExportContainer, eventUUID).then(
+                                    // skipLeadDataCall=true since we know there are no contacts (instant display)
+                                    SalesforceLeadLib.openCrmTestExport(crmExportContainer, eventUUID, { skipLeadDataCall: true }).then(
                                         function () {
                                             Log.print(Log.l.info, "CRM Test Export UI opened successfully");
                                         },
@@ -197,12 +198,12 @@
                                 } else {
                                     // Fallback: localStorage-only mode with numeric recordId
                                     Log.print(Log.l.warn, "No event UUID, using localStorage-only mode");
-                                    SalesforceLeadLib.openCrmTestExport(crmExportContainer, null, { recordId: eventRecordId });
+                                    SalesforceLeadLib.openCrmTestExport(crmExportContainer, null, { recordId: eventRecordId, skipLeadDataCall: true });
                                 }
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "FCT_GetUniqueRecordID error: " + JSON.stringify(errorResponse));
                                 // Fallback: try with numeric recordId
-                                SalesforceLeadLib.openCrmTestExport(crmExportContainer, null, { recordId: eventRecordId });
+                                SalesforceLeadLib.openCrmTestExport(crmExportContainer, null, { recordId: eventRecordId, skipLeadDataCall: true });
                             });
                         }else{
                             // Open CRM Export UI with contactId
