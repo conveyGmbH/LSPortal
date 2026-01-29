@@ -1943,6 +1943,8 @@
     "clientManagementSearchList.all"			: "TTuttiout ",
     "clientManagementSearchList.contactdata"			: "Dati di contatto",
     "clientManagementSearchList.fairs"			: "Fiere",
+	"clientManagementSearchList.destination"			: "Cliente selezionato",
+    "clientManagementSearchList.target"			: "Cliente da aggiungere",
 
     "clientManagementSummarise.join"			: "Unisci",
     "clientManagementSummarise.jointxt"			: "Vuoi davvero unire questi due clienti?",

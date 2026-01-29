@@ -1968,8 +1968,8 @@
     "clientManagementSearchList.all"			: "Alle",
     "clientManagementSearchList.contactdata"			: "Kontaktdaten",
     "clientManagementSearchList.fairs"			: "Messen",
-    "clientManagementSearchList.destination"			: "Zielmandant",
-    "clientManagementSearchList.target"			: "Bisheriger Mandant",
+    "clientManagementSearchList.destination"			: "Ausgewählte Mandant",
+    "clientManagementSearchList.target"			: "Hinzuzufügender Mandant",
 		
     "reportingdownload.title"			: "Export Download",
 

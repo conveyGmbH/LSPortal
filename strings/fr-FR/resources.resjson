@@ -1946,6 +1946,8 @@
     "clientManagementSearchList.all"			: "Tout ",
     "clientManagementSearchList.contactdata"			: "Données de contact",
     "clientManagementSearchList.fairs"			: "Salons",
+	"clientManagementSearchList.destination"			: "Client sélectionné",
+    "clientManagementSearchList.target"			: " Client à ajouter",
 
     "clientManagementSummarise.join"			: "Fusionner",
     "clientManagementSummarise.jointxt"			: "Voulez-vous vraiment fusionner ces deux mandants ?",

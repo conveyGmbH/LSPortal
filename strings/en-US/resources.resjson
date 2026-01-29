@@ -1967,8 +1967,8 @@
     "clientManagementSearchList.all"			: "All",
     "clientManagementSearchList.contactdata"			: "Contactdata",
     "clientManagementSearchList.fairs"			: "Fairs",
-    "clientManagementSearchList.destination"			: "Target client",
-    "clientManagementSearchList.target"			: "Old client",
+    "clientManagementSearchList.destination"			: "selected Client",
+    "clientManagementSearchList.target"			: "Client to add",
 
     "clientManagementSummarise.join"			: "Join",
     "clientManagementSummarise.jointxt"			: "Do you really want to join these two clients?",
