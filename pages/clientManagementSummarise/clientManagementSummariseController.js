@@ -17,7 +17,7 @@
     var nav = WinJS.Navigation;
     var namespaceName = "ClientManagementSummarise";
 
-    WinJS.Namespace.define("ClientManagementSummarise", {
+    WinJS.Namespace.define(namespaceName, {
         Controller: WinJS.Class.derive(Application.RecordsetController, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             // ListView control
@@ -101,15 +101,29 @@
             }
             this.scrollToRecordId = scrollToRecordId;
 
+            var getMandantzielData = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.call("PRC_GetMandantList", {
+                    pFairMandantVIEWID: AppData.getRecordId("FairMandant")
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppData.setRecordId("FairMandant", json.d.results[0].FairMandantID);
+                    if (json.d.results[0].FairMandantID) {
+                        that.binding.Mandantziel = json.d.results[0].Name;
+                        that.binding.MandantzielID = json.d.results[0].FairMandantVIEWID;
+                    } else {
+                        Log.print(Log.l.trace, "No new FairMandantVIEWID found!");
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
+                Log.ret(Log.l.trace);
+                
+            }
+            this.getMandantzielData = getMandantzielData;
+
             var resultConverter = function (item, index) {
                 item.index = index;
-				/* Ted 20240719: Das sollte umgebaut werden! Hier wird davon ausgegangen dass der
-				   auf der ersten Liste ausgewählte "Master"-Datensatz auch in dieser Liste vorhanden
-				   ist, die aber von einer ganz anderen Tabelle kommt... Mantis#8010 */
-                if (item.FairMandantID === AppData.getRecordId("FairMandant")) {
-                    that.binding.Mandantziel = item.Name;
-                    that.binding.MandantzielID = item.FairMandantID;
-                }
                 if (!item.Firmenname) { item.Firmenname = ""; }
                 if (!item.EMail) { item.EMail = ""; }
                 if (!item.Ansprechpartner) { item.Ansprechpartner = ""; }
@@ -163,31 +177,32 @@
                 },
                 clickJoin: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    var confirmText = getResourceText("clientManagementSummarise.jointxt");
-                    var confirmTitle = getResourceText("clientManagementSummarise.join");
-                    var confirmFirst = getResourceText("flyout.ok");
-                    var confirmSecond = getResourceText("flyout.cancel");
-                    //confirm(confirmTitle, function (result) {
-                    confirmModal(confirmTitle, confirmText, confirmFirst, confirmSecond, function (result) {
-                        if (result) {
-                            Log.print(Log.l.trace, "clickDelete: user choice OK");
-                            var ret;
-                            var recordId = that.binding.MandantquelleID;
-                            if (recordId) {
-                                ret = AppData.call("PRC_JoinToMandant", {
-									/* Ted 20240719: pTargetFairMandantID soll gleich der ID des "Master"-Datensatzes sein.
-									   Am besten hier direkt die gespeicherte Datensatz-ID verwenden... */
+                    var recordId = that.binding.MandantquelleID;
+                    if (!recordId) {
+                        Log.print(Log.l.error, "clickJoin: no record selected");
+                    } else {
+                        var confirmText = getResourceText("clientManagementSummarise.jointxt");
+                        var confirmTitle = getResourceText("clientManagementSummarise.join");
+                        var confirmFirst = getResourceText("flyout.ok");
+                        var confirmSecond = getResourceText("flyout.cancel");
+                        //confirm(confirmTitle, function (result) {
+                        confirmModal(confirmTitle, confirmText, confirmFirst, confirmSecond, function (result) {
+                            if (result) {
+                                Log.print(Log.l.trace, "clickDelete: user choice OK");
+                                AppData.call("PRC_JoinToMandant", {
+                                    /* Ted 20240719: pTargetFairMandantID soll gleich der ID des "Master"-Datensatzes sein.
+                                       Am besten hier direkt die gespeicherte Datensatz-ID verwenden... */
                                     pTargetFairMandantID: AppData.getRecordId("FairMandant"),
                                     pFairMandantVeranstID: that.binding.MandantquelleID
                                 }, function (json) {
                                     Log.print(Log.l.info, "call success! ");
                                     if (json && json.d && json.d.results.length > 0) {
                                         var results = json.d.results[0];
-										if (results.ResultCode != 0) {
-											Log.print(Log.l.error, "PRC_JoinToMandant returns error "+
-											          results.ResultCode+" / "+results.ResultMessage);
-											AppData.setErrorMsg(that.binding, results.ResultMessage);
-										}
+                                        if (results.ResultCode != 0) {
+                                            Log.print(Log.l.error, "PRC_JoinToMandant returns error " +
+                                                results.ResultCode + " / " + results.ResultMessage);
+                                            AppData.setErrorMsg(that.binding, results.ResultMessage);
+                                        }
                                         that.binding.Mandantquelle = "";
                                         that.binding.MandantquelleID = null;
                                         that.loadData();
@@ -204,16 +219,10 @@
                                     }
                                 });
                             } else {
-                                var err = { status: 0, statusText: "no mandant selected" };
-                                error(err);
-                                ret = WinJS.Promise.as();
+                                Log.print(Log.l.trace, "clickJoin: user choice CANCEL");
                             }
-                            Log.ret(Log.l.trace);
-                            return ret;
-                        } else {
-                            Log.print(Log.l.trace, "clickDelete: user choice CANCEL");
-                        }
-                    });
+                        });
+                    }
                     Log.ret(Log.l.trace);
                 },
                 changeSearchField: function (event) {
@@ -376,6 +385,8 @@
             }
             
             that.processAll().then(function () {
+                return that.getMandantzielData();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(that.binding.searchString);
             }).then(function () {
