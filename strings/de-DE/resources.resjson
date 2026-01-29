@@ -1964,6 +1964,7 @@
     "clientManagementSearchList.headernumlicenses"			: "Max. Userzahl",
     "clientManagementSearchList.headereventcount"			: "Veranstaltungen Anzahl",
     "clientManagementSearchList.headereventlist"			: "Veranstaltungen",
+	"clientManagementSearchList.headerstandname"			: "Standname",
     "clientManagementSearchList.all"			: "Alle",
     "clientManagementSearchList.contactdata"			: "Kontaktdaten",
     "clientManagementSearchList.fairs"			: "Messen",

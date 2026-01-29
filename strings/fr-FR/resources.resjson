@@ -1941,6 +1941,8 @@
     "clientManagementSearchList.headernumlicenses"			: "Max. Utilisateur",
     "clientManagementSearchList.headereventcount"			: "Nombre d'événements",
     "clientManagementSearchList.headereventlist"			: "Événements",
+	"clientManagementSearchList.headerstandname"			: "Nom du stand",
+
     "clientManagementSearchList.all"			: "Tout ",
     "clientManagementSearchList.contactdata"			: "Données de contact",
     "clientManagementSearchList.fairs"			: "Salons",

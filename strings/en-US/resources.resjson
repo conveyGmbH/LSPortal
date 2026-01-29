@@ -1963,6 +1963,7 @@
     "clientManagementSearchList.headernumlicenses"			: "Max. Users",
     "clientManagementSearchList.headereventcount"			: "Events Count",
     "clientManagementSearchList.headereventlist"			: "Events",
+	"clientManagementSearchList.headerstandname"			: "Stand name",
     "clientManagementSearchList.all"			: "All",
     "clientManagementSearchList.contactdata"			: "Contactdata",
     "clientManagementSearchList.fairs"			: "Fairs",

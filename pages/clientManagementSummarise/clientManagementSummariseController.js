@@ -65,15 +65,65 @@
             }
             this.getFilter = getFilter;
 
+            var scrollToRecordId = function (recordId) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
+                if (that.binding.loading ||
+                    listView && listView.winControl && listView.winControl.loadingState !== "complete") {
+                    WinJS.Promise.timeout(50).then(function () {
+                        that.scrollToRecordId(recordId);
+                    });
+                } else if (listView && listView.winControl) {
+                    var scope = that.scopeFromRecordId(recordId);
+                    if (!scope && recordId && that.nextUrl) {
+                        that.loadNext().then(function () {
+                            that.scrollToRecordId(recordId);
+                        });
+                    } else if (scope && scope.index >= 0) {
+                        listView && listView.winControl.ensureVisible(scope.index);
+                        WinJS.Promise.timeout(50).then(function() {
+                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                            var elementOfFirstVisible = listView.winControl.elementFromIndex(indexOfFirstVisible);
+                            var element = listView.winControl.elementFromIndex(scope.index);
+                            var height = listView.clientHeight;
+                            if (element && elementOfFirstVisible) {
+                                var offsetDiff = element.offsetTop - elementOfFirstVisible.offsetTop;
+                                if (offsetDiff > height - element.clientHeight) {
+                                    listView.winControl.scrollPosition += offsetDiff - (height - element.clientHeight);
+                                } else if (offsetDiff < 0) {
+                                    listView.winControl.indexOfFirstVisible = scope.index;
+                                }
+                            }
+                            that.selectRecordId(recordId);
+                        });
+                    }
+                }
+                Log.ret(Log.l.trace);
+            }
+            this.scrollToRecordId = scrollToRecordId;
+
+            var getMandantzielData = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                AppData.call("PRC_GetMandantList", {
+                    pFairMandantVIEWID: AppData.getRecordId("FairMandant")
+                }, function (json) {
+                    Log.print(Log.l.info, "call success! ");
+                    AppData.setRecordId("FairMandant", json.d.results[0].FairMandantID);
+                    if (json.d.results[0].FairMandantID) {
+                        that.binding.Mandantziel = json.d.results[0].Name;
+                        that.binding.MandantzielID = json.d.results[0].FairMandantVIEWID;
+                    } else {
+                        Log.print(Log.l.trace, "No new FairMandantVIEWID found!");
+                    }
+                }, function (error) {
+                    Log.print(Log.l.error, "call error");
+                });
+                Log.ret(Log.l.trace);
+                
+            }
+            this.getMandantzielData = getMandantzielData;
+
             var resultConverter = function (item, index) {
                 item.index = index;
-				/* Ted 20240719: Das sollte umgebaut werden! Hier wird davon ausgegangen dass der
-				   auf der ersten Liste ausgewählte "Master"-Datensatz auch in dieser Liste vorhanden
-				   ist, die aber von einer ganz anderen Tabelle kommt... Mantis#8010 */
-                if (item.FairMandantID === AppData.getRecordId("FairMandant")) {
-                    that.binding.Mandantziel = item.Name;
-                    that.binding.MandantzielID = item.FairMandantID;
-                }
                 if (!item.Firmenname) { item.Firmenname = ""; }
                 if (!item.EMail) { item.EMail = ""; }
                 if (!item.Ansprechpartner) { item.Ansprechpartner = ""; }
@@ -265,6 +315,17 @@
                                 "barcode-qr": { useStrokeColor: false }
                             });
                         } else if (listView.winControl.loadingState === "complete") {
+                            if (that.loading) {
+                                var progress = listView.querySelector(".list-footer .progress");
+                                var counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                            }
                         }
                     }
                     that.loadingStateChanged(eventInfo);
@@ -324,6 +385,8 @@
             }
             
             that.processAll().then(function () {
+                return that.getMandantzielData();
+            }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(that.binding.searchString);
             }).then(function () {
