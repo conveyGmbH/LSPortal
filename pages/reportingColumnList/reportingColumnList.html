@@ -21,22 +21,23 @@
                             <span class="date-field"></span>
                         </div>
                     </div>
-                        <div class="field_line optionTextContainer">
-                            <div id="optionText" data-win-res="{textContent: 'reportingColumnList.optionText'}"></div>
-                        </div>
-                        <div class="line-separator"></div>
+                    <div class="field_line optionTextContainer">
+                        <div id="optionText" data-win-res="{textContent: 'reportingColumnList.optionText'}"></div>
+                    </div>
+                    <div class="line-separator"></div>
                     <div class="reportingColumnList-template"
-                             data-win-control="WinJS.Binding.Template" style="display: none">
+                         data-win-control="WinJS.Binding.Template" style="display: none">
                         <!-- win-surface win-itemscontainer-->
                         <div class="list-role-item">
-                                <label class="list-role-field">
-                                    <input type="checkbox" class="win-checkbox" value="1"
-                                           data-win-bind="checked: FieldFlag" />
-                                    <span data-win-bind="textContent: ExcelFeldTITLE"></span>
-                                </label>
-                            </div>
+                            <label class="list-role-field">
+                                <input type="checkbox" class="win-checkbox" value="1"
+                                       data-win-bind="checked: FieldFlag" 
+                                       onchange="AppBar.handleEvent('change', 'clickFieldFlag', event)"/>
+                                <span data-win-bind="textContent: ExcelFeldTITLE"></span>
+                            </label>
                         </div>
-                        <div id="reportingColumnList"
+                    </div>
+                    <div id="reportingColumnList"
                          class="listview win-selectionstylefilled"
                          data-win-control="WinJS.UI.ListView"
                          data-win-options="{
@@ -96,7 +97,7 @@
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'pdfExport.seperator'}"></span>
-                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Separator Binding.Mode.twoway"/>
+                            <input class="input_field win-textbox" type="text" data-win-bind="value: restriction.Separator Binding.Mode.twoway" />
                         </div>
                         <div class="field_line field_line_even">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'pdfExport.samplename'}"></span>

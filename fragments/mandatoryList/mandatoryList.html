@@ -17,7 +17,8 @@
                     <div class="list-mandcon-item">
                         <label class="list-mandcon-field">
                             <input type="checkbox" class="win-checkbox" value="1"
-                                   data-win-bind="checked: FieldFlag"/>
+                                   data-win-bind="checked: FieldFlag"
+                                   onchange="AppBar.handleEvent('change', 'clickFieldFlag', event)"/>
                             <span data-win-bind="textContent: PflichtFeldTITLE"></span>
                         </label>
                     </div>

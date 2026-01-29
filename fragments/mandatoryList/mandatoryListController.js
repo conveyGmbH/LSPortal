@@ -125,6 +125,7 @@
                 if (!recordId) {
                     // called via canUnload
                     recordId = that.curRecId;
+                    that.curRecId = 0;
                 }
                 that.prevRecId = 0;
                 if (recordId) {
@@ -236,6 +237,17 @@
                             }
                         }
                     }
+                    Log.ret(Log.l.trace);
+                },
+                clickFieldFlag: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppBar.modified = true;
+                    that.saveData(function (response) {
+                        Log.print(Log.l.info, "success" + response);
+                        //that.saveFragment();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee" + errorResponse);
+                    });
                     Log.ret(Log.l.trace);
                 }
             }

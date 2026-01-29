@@ -220,7 +220,7 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Contact.Controller.");
                     that.saveData(function (response) {
-                        Log.print(Log.l.error, "success" + response);
+                        Log.print(Log.l.info, "success" + response);
                         that.saveFragment();
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee" + errorResponse);
@@ -240,13 +240,20 @@
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
-                    Log.call(Log.l.trace, "Event.Controller.");
+                    Log.call(Log.l.trace, "Mandatory.Controller.");
                     Application.navigateById("userinfo", event);
                     Log.ret(Log.l.trace);
                 },
                 clickReqManCb: function (event) {
                     Log.call(Log.l.trace, "Mandatory.Controller.");
+                    AppBar.modified = true;
                     that.validateCb();
+                    that.saveData(function (response) {
+                        Log.print(Log.l.info, "success" + response);
+                        //that.saveFragment();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee" + errorResponse);
+                    });
                     Log.ret(Log.l.trace);
                 },
                 onSelectionChanged: function (eventInfo) {

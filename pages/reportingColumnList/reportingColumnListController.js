@@ -353,7 +353,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickTopButton: function (event) {
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
                     var anchor = document.getElementById("menuButton");
                     var menu = document.getElementById("menu1").winControl;
                     var placement = "bottom";
@@ -361,7 +361,7 @@
                     Log.ret(Log.l.trace);
                 },
                 clickLogoff: function (event) {
-                    Log.call(Log.l.trace, "Account.Controller.");
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
                     AppData._persistentStates.privacyPolicyFlag = false;
                     if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
                         AppHeader.controller.binding.userData = {};
@@ -370,6 +370,17 @@
                         }
                     }
                     Application.navigateById("login", event);
+                    Log.ret(Log.l.trace);
+                },
+                clickFieldFlag: function (event) {
+                    Log.call(Log.l.trace, "ReportingColumnList.Controller.");
+                    AppBar.modified = true;
+                    that.saveData(function (response) {
+                        Log.print(Log.l.info, "success" + response);
+                        //that.saveFragment();
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "error saving employee" + errorResponse);
+                    });
                     Log.ret(Log.l.trace);
                 }
             }
@@ -441,7 +452,7 @@
                         });
                 }).then(function () {
                     return ReportingColumnList.pdfExportView.select(function (json) {
-                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        Log.print(Log.l.trace, "ReportingColumnList.pdfExportView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
@@ -486,7 +497,7 @@
                     that.binding.restriction.NameField4ID = parseInt(savedRestriction.NameField4ID);
                 }).then(function () {
                     return ReportingColumnList.pdfExportParamsView.select(function (json) {
-                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        Log.print(Log.l.trace, "ReportingColumnList.pdfExportParamsView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
@@ -505,7 +516,7 @@
                     });
                 }).then(function () {
                     return ReportingColumnList.pdfExportParamView.select(function (json) {
-                        Log.print(Log.l.trace, "Mailing.FragebogenzeileView: success!");
+                        Log.print(Log.l.trace, "ReportingColumnList.pdfExportParamView: success!");
                         // select returns object already parsed from json file in response
                         if (json && json.d && json.d.results) {
                             var results = json.d.results;
