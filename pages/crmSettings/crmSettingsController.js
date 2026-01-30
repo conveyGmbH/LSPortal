@@ -102,6 +102,39 @@
 
             AppData.setErrorMsg(this.binding);
 
+            var saveData = function(complete, error) {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                // Save field mappings before unloading if modified
+                var eventId = that.controller && that.controller.binding && that.controller.binding.eventId;
+
+                var ret = WinJS.Promise.as().then(function () {
+                    if (eventId && SalesforceLeadLib && typeof SalesforceLeadLib.saveFieldMapping === "function") {
+                        Log.print(Log.l.info, "Saving field mappings before unload...");
+                        return SalesforceLeadLib.saveFieldMapping(eventId).then(function (saved) {
+                            if (saved) {
+                                Log.print(Log.l.info, "Field mappings saved successfully");
+                            }
+                            return WinJS.Promise.as();
+                        }, function (err) {
+                            Log.print(Log.l.error, "Failed to save field mappings: " + (err && err.message || err));
+                            if (typeof error === "function") {
+                                error(err);
+                            }
+                            return WinJS.Promise.as(); // Continue even if save fails
+                        });
+                    }
+                    return WinJS.Promise.as();
+                }).then(function (response) {
+                    // do any page state completion
+                    if (typeof complete === "function") {
+                        complete(response);
+                    }
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            };
+            this.saveData = saveData;
+
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 console.log('CrmSettings loadData called, getRecordId():', getRecordId());
@@ -146,6 +179,7 @@
                                 function() {
                                     Log.print(Log.l.info, "Field Mapping UI opened successfully");
                                     console.log('Field Mapping UI opened successfully');
+                                    AppBar.modified = true;
                                 },
                                 function(error) {
                                     Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
@@ -155,6 +189,7 @@
                             Log.print(Log.l.info, "Opening Field Mapping in localStorage mode for recordId: " + recordId);
                             SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, null, { recordId: recordId }).then(function() {
                                     Log.print(Log.l.info, "Field Mapping UI opened successfully (localStorage mode)");
+                                    AppBar.modified = true;
                                 },
                                 function(error) {
                                     Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
