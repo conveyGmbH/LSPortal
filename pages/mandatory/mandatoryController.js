@@ -557,7 +557,7 @@
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, {
-                            VeranstaltungID: AppData.getRecordId("Veranstaltung"),
+                            VeranstaltungID: that.getEventId(),
                             MandantWide: 1,
                             IsForApp: 0
                         });
