@@ -971,6 +971,9 @@
             }
 
             that.processAll().then(function () {
+                /*Disable first and then enable if option is premium or FN*/
+                NavigationBar.disablePage("startPremium");
+                NavigationBar.disablePage("dashboardFN");
                 if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 1) {
                     NavigationBar.changeNavigationBarLabel("startPremium", getResourceText("label.startPremium")); //getResourceText()
                 } else if (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 2) {
