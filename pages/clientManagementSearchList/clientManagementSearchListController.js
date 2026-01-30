@@ -194,7 +194,7 @@
                 onSelectionChanged: function (eventInfo) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
-                        AppData.setRecordId("FairMandant", that.curRecId);
+                        AppData.setRecordId("FairMandant2", that.curRecId);
                     });
                     Log.ret(Log.l.trace);
                 },

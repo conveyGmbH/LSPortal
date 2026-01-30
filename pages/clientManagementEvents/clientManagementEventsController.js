@@ -336,7 +336,7 @@
             
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.setFairMandantId(AppData.getRecordId("FairMandant"));
+                return that.setFairMandantId(AppData.getRecordId("FairMandant2"));
             }).then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData();

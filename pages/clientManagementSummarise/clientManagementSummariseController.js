@@ -47,6 +47,14 @@
                 ClientManagementSummarise._collator = null;
             }
             
+            var getRecordId = function () {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.binding.recordID = AppData.getRecordId("FairMandant2");
+                Log.ret(Log.l.trace, that.binding.recordID);
+                return that.binding.recordID;
+            }
+            this.getRecordId = getRecordId;
+
             var getFilter = function() {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 for (var i = 0; i < radios.length; i++) {
@@ -104,10 +112,9 @@
             var getMandantzielData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.call("PRC_GetMandantList", {
-                    pFairMandantVIEWID: AppData.getRecordId("FairMandant")
+                    pFairMandantVIEWID: that.getRecordId()
                 }, function (json) {
                     Log.print(Log.l.info, "call success! ");
-                    AppData.setRecordId("FairMandant", json.d.results[0].FairMandantID);
                     if (json.d.results[0].FairMandantID) {
                         that.binding.Mandantziel = json.d.results[0].Name;
                         that.binding.MandantzielID = json.d.results[0].FairMandantVIEWID;
@@ -150,7 +157,6 @@
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_CreateFairMandant success! ");
                     AppBar.busy = false;
-                    AppData.setRecordId("FairMandant", json.d.results[0].FairMandantID);
                     if (json.d.results[0].FairMandantID) {
                         Application.navigateById("clientManagement");
                     } else {
@@ -178,6 +184,7 @@
                 clickJoin: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     var recordId = that.binding.MandantquelleID;
+                    var Mandantziel = that.binding.MandantzielID;
                     if (!recordId) {
                         Log.print(Log.l.error, "clickJoin: no record selected");
                     } else {
@@ -192,7 +199,7 @@
                                 AppData.call("PRC_JoinToMandant", {
                                     /* Ted 20240719: pTargetFairMandantID soll gleich der ID des "Master"-Datensatzes sein.
                                        Am besten hier direkt die gespeicherte Datensatz-ID verwenden... */
-                                    pTargetFairMandantID: AppData.getRecordId("FairMandant"),
+                                    pTargetFairMandantID: that.binding.MandantzielID,
                                     pFairMandantVeranstID: that.binding.MandantquelleID
                                 }, function (json) {
                                     Log.print(Log.l.info, "call success! ");

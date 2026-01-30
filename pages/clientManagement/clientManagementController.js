@@ -36,7 +36,7 @@
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
-                that.binding.recordID = AppData.getRecordId("FairMandant");
+                that.binding.recordID = AppData.getRecordId("FairMandant2");
                 Log.ret(Log.l.trace, that.binding.recordID);
                 return that.binding.recordID;
             }
