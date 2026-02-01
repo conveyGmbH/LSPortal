@@ -105,7 +105,8 @@
             var saveData = function(complete, error) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 // Save field mappings before unloading if modified
-                var eventId = that.controller && that.controller.binding && that.controller.binding.eventId;
+                // Get eventId from the current binding (UUID from FCT_GetUniqueRecordID)
+                var eventId = that.binding && that.binding.eventId;
 
                 var ret = WinJS.Promise.as().then(function () {
                     if (eventId && SalesforceLeadLib && typeof SalesforceLeadLib.saveFieldMapping === "function") {
@@ -138,6 +139,15 @@
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 console.log('CrmSettings loadData called, getRecordId():', getRecordId());
+
+                // IMPORTANT: Clear container IMMEDIATELY to show loading state
+                // This prevents showing stale data from previous event
+                if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
+                    SalesforceLeadLib.clear(fieldMappingsContainer);
+                    // Show loading indicator immediately
+                    fieldMappingsContainer.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; min-height: 300px;"><div style="width: 48px; height: 48px; border: 4px solid #e5e7eb; border-top-color: var(--accent-color, #2563eb); border-radius: 50%; animation: spin 0.8s linear infinite;"></div><p class="text-textcolor" style="margin-top: 16px; font-size: 16px;">Loading fields...</p><style>@keyframes spin { to { transform: rotate(360deg); } }</style></div>';
+                }
+
                 var ret = new WinJS.Promise.as().then(function() {
                     return AppData.call("FCT_GetUniqueRecordID", {
                         pRelationName: "Veranstaltung",
@@ -175,11 +185,11 @@
                             // Event has contacts with UUID - use normal mode with API persistence
                             Log.print(Log.l.info, "Opening Field Mapping for eventId: " + eventId);
                             console.log('Calling SalesforceLeadLib.openFieldMapping with eventId:', eventId);
-                            SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, eventId).then(
+                            return SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, eventId).then(
                                 function() {
                                     Log.print(Log.l.info, "Field Mapping UI opened successfully");
                                     console.log('Field Mapping UI opened successfully');
-                                    AppBar.modified = true;
+                                    AppBar.modified = false; // Reset modified flag after loading new event
                                 },
                                 function(error) {
                                     Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
@@ -187,9 +197,9 @@
                             );
                         } else if (recordId) {
                             Log.print(Log.l.info, "Opening Field Mapping in localStorage mode for recordId: " + recordId);
-                            SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, null, { recordId: recordId }).then(function() {
+                            return SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, null, { recordId: recordId }).then(function() {
                                     Log.print(Log.l.info, "Field Mapping UI opened successfully (localStorage mode)");
-                                    AppBar.modified = true;
+                                    AppBar.modified = false; // Reset modified flag after loading new event
                                 },
                                 function(error) {
                                     Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
@@ -200,6 +210,7 @@
                             console.warn('No eventId or recordId available for Field Mapping');
                         }
                     }
+                }).then(function() {
                     AppBar.triggerDisableHandlers();
                 });
                 Log.ret(Log.l.trace);
