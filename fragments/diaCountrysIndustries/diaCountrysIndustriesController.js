@@ -571,9 +571,11 @@
                 if (item.LandID === 0) {
                     item.Land = "-";
                 }
-                countryIndustriesLabels.push(item.Qualifier);
-                var splitQualifier = item.Qualifier.split(" ");
+                //countryIndustriesLabels.push(item.Qualifier);
+                var splitQualifier = null;
                 if (item.Qualifier) {
+                countryIndustriesLabels.push(item.Qualifier);
+                    splitQualifier = item.Qualifier.split(" ");
                     countryIndustriesLabelsMultiline.push(splitQualifier);
                 }
                 if (item.NumHits) {
@@ -825,6 +827,9 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
+                    }, {
+                        VeranstaltungID: that.getEventId(),
+                        LanguageSpecID: that.langSet()
                     });
                 }).then(function () {
                     return DiaCountrysIndustries.veranstaltungView.select(function (json) {
@@ -834,9 +839,9 @@
                             results.forEach(function (item, index) {
                                 that.resultConverterPremium(item, index);
                             });
-                            daydrop.min = that.formatDate(results[0].Startdatum);
+                            /*daydrop.min = that.formatDate(results[0].Startdatum);
                             daydrop.max = that.formatDate(results[0].Enddatum);
-                            daydrop.value = '';
+                            daydrop.value = '';*/
                             Log.print(Log.l.trace, "reportLand: success!");
                         }
                     }, function (errorResponse) {
