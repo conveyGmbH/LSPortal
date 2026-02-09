@@ -109,9 +109,7 @@
                     /*if (restriction && !restriction.VeranstaltungID) {
                         restriction.VeranstaltungID = parseInt(ContactList._eventId);
                     }*/
-                    var contactRestriction = {};
-                    copyMissingMembersByValue(contactRestriction, restriction);
-                    contactRestriction.VeranstaltungID = ContactList._eventId;
+                    restriction.VeranstaltungID = ContactList._eventId;
                     if (ContactList._orderAttribute) {
                         options = {
                         ordered: true,
@@ -120,8 +118,8 @@
                         }
                     }
                     Log.print(Log.l.info, "calling select _contactView... restriction=" +
-                        (contactRestriction ? JSON.stringify(contactRestriction) : ""));
-                    ret = ContactList._contactView.select(complete, error, contactRestriction, options);
+                        (restriction ? JSON.stringify(restriction) : ""));
+                    ret = ContactList._contactView.select(complete, error, restriction, options);
                 }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
@@ -305,9 +303,7 @@
                     /*if (restriction && !restriction.VeranstaltungID) {
                         restriction.VeranstaltungID = parseInt(ContactList._eventId);
                     }*/
-                    var contactDocRestriction = {};
-                    copyMissingMembersByValue(contactDocRestriction, restriction);
-                    contactDocRestriction.VeranstaltungID = ContactList._eventId;
+                    restriction.VeranstaltungID = ContactList._eventId;
                     //restriction.VeranstaltungID = ContactList._eventId;
                     if (ContactList._orderAttribute) {
                         options = {
@@ -317,8 +313,8 @@
                         }
                     }
                     Log.print(Log.l.info, "calling select _contactResultsView... restriction=" +
-                        JSON.stringify(contactDocRestriction));
-                    ret = ContactList._contactDocView.select(complete, error, contactDocRestriction, options);
+                        JSON.stringify(restriction));
+                    ret = ContactList._contactDocView.select(complete, error, restriction, options);
                 }
                 // this will return a promise to controller
                 Log.ret(Log.l.trace);
