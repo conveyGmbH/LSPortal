@@ -1,4 +1,4 @@
-// controller for page: info
+﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -447,7 +447,7 @@
                         if (restriction.btn_textContent) {
                             btnName.textContent = restriction.btn_textContent;
                         }
-                        btnFirstName.textContent = getResourceText("esStaffAdministration.firstName");
+                        btnFirstName.textContent = getResourceText("esStaffAdministration.firstname");
                         btnCompany.textContent = getResourceText("esStaffAdministration.company");
                     }
                 }
@@ -456,7 +456,7 @@
                         if (restriction.btn_textContent) {
                             //btnName.textContent = restriction.btn_textContent;
                         }
-                        btnFirstName.textContent = getResourceText("esStaffAdministration.firstName");
+                        btnFirstName.textContent = getResourceText("esStaffAdministration.firstname");
                     }
                     if(btnName) {
                         if (restriction.btn_textContent) {

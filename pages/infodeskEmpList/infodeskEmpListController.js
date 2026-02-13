@@ -19,7 +19,7 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(InfodeskEmpList.defaultValue),
-                btnFirstNameText: getResourceText("employee.firstName"),
+                btnFirstNameText: getResourceText("employee.firstname"),
                 btnNameText: getResourceText("employee.name"),
                 btnEmployeeLicenceText: getResourceText("employee.licence"),
                 mitarbeiterText: getResourceText("infodesk.employee"),

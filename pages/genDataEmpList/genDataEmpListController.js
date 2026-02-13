@@ -25,7 +25,7 @@
                 hasTwoFactor: null,
                 locked: null,
                 licenceWarning: false,
-                btnFirstNameText: getResourceText("employee.firstName"),
+                btnFirstNameText: getResourceText("employee.firstname"),
                 btnNameText: getResourceText("employee.name"),
                 btnEmployeeLicenceText: getResourceText("employee.licence")
             }, commandList, true]);
@@ -513,7 +513,7 @@
                     that.binding.btnNameText = getResourceText("employee.name");
                     that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
                 } else if (restriction.OrderAttribute === "SortNachname") {
-                    that.binding.btnFirstNameText = getResourceText("employee.firstName");
+                    that.binding.btnFirstNameText = getResourceText("employee.firstname");
                     if (restriction.OrderDesc) {
                         that.binding.btnNameText = getResourceText("employee.nameDesc");
                     } else {
@@ -521,7 +521,7 @@
                     }
                     that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
                 } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
-                    that.binding.btnFirstNameText = getResourceText("employee.firstName");
+                    that.binding.btnFirstNameText = getResourceText("employee.firstname");
                     that.binding.btnNameText = getResourceText("employee.name");
                     /*if (restriction.OrderDesc) {
                         that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceDesc");
