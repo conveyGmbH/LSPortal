@@ -950,6 +950,8 @@
     "mailingoptions.productMail"            : "Produktmail: Nur ein E-Mailversand pro E-Mail",
     "mailingoptions.thankYouMail"            : "Dankesmail: Nur ein E-Mailversand pro E-Mail",
     "mailingoptions.nachbearbeitetFlagAutoSetToNull"            : "Produktmail: Bearbeiteten Haken automatisch auf leer setzen",
+    "mailingoptions.mailingOptionSubTitleText" : "Eigenen Mailserver verwenden (optional)", 
+    "mailingoptions.mailingOptionText"  : "Diese Einstellungen sind nur erforderlich, wenn Sie E-Mails von einer Absenderadresse mit Ihrer eigenen Firmen-Domain über Ihren eigenen Mailserver versenden möchten. \n Wenn Sie die Felder leer lassen, werden alle E-Mails automatisch über den LeadSuccess-Server mit einer @convey.de Adresse versendet, wie auf der vorherigen Seite konfiguriert. \n Bitte stellen Sie bei Nutzung Ihres eigenen Servers sicher, dass das Konto existiert und die Zugangsdaten korrekt sind.",
 
     "productlist.title"     : "Produktauswahl",
     "productlist.comment"   : "Verwenden Sie die Zurück-Schaltfläche auf dieser Seite um zurück zu gehen!",
@@ -1557,7 +1559,7 @@
 
     "adminAppHelpTextList.title"			: "Seiten",
     "adminAppHelpTextList.inactive"     : "Inaktiv",
-
+    "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Seitenhilfstext",
     "adminAppHelpText.titledata"			: "Titel",
     "adminAppHelpText.subTitle"			: "Titelbeschreibungstext",

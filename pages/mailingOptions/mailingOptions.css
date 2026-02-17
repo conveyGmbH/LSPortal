@@ -1,18 +1,29 @@
-﻿.toggle-switch-parent {
+﻿#mailingOptionsController .toggle-switch-parent {
     height: 50px;
 }
 
-#nachbearbeitetFlagAutoSetToNull .win-toggleswitch-header,
-#thankMail .win-toggleswitch-header,
-#productMail .win-toggleswitch-header {
+#mailingOptionsController #nachbearbeitetFlagAutoSetToNull .win-toggleswitch-header,
+#mailingOptionsController #thankMail .win-toggleswitch-header,
+#mailingOptionsController #productMail .win-toggleswitch-header {
     display: none;
 }
 
 @media (max-width:899px) {
-    .toggle-switch-parent {
+    #mailingOptionsController  .toggle-switch-parent {
         margin-bottom: 8px;
     }
 }
-.fields-container {
+#mailingOptionsController  .fields-container {
     width: 100%;
+}
+
+#mailingOptionsController .content-header-line {
+    height: auto;
+}
+
+#mailingOptionsController .mailingOption-text {
+    display: block;
+    margin-bottom: 10px;
+    white-space: pre-line;
+    font-weight: bold;
 }

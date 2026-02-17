@@ -946,6 +946,8 @@
     "mailingoptions.productMail"            : "Product mail: \n Only one mail shipment per mail",
     "mailingoptions.thankYouMail"            : "Thank you mail: \n Only one mail shipment per mail",
     "mailingoptions.nachbearbeitetFlagAutoSetToNull"            : "Product Mail: \n Editing Flag automatically set to empty",
+    "mailingoptions.mailingOptionSubTitleText" : "Use your own mail server (optional)",
+    "mailingoptions.mailingOptionText"  : "You only need to enter these settings if you want to send emails from a sender-email-address with your own company domain through your own mailserver. \n If you leave this empty, all emails will automatically be sent via the LeadSuccess server using a @convey.de address, as configured on the previous page. \n When using your own server, please make sure the account exists and the login details are correct.",
 
     "productlist.title"     : "Product selection",
     "productlist.comment"   : "On this page, use the buttons to go to additional pages!",
@@ -1542,7 +1544,7 @@
 
     "adminAppHelpTextList.title"			: "Pages",
     "adminAppHelpTextList.inactive"     : "Inactive",
-
+    "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Page help text",
     "adminAppHelpText.titledata"			: "Title",
     "adminAppHelpText.subTitle"			: "Title description text",
