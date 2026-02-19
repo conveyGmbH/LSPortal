@@ -1065,6 +1065,8 @@
     "mailingoptions.productMail"            : "Mail produit: \n Un seul livraison de courrier par e-mail",
     "mailingoptions.thankYouMail"            : "Merci courrier: \n Un seul livraison de courrier par e-mail",
     "mailingoptions.nachbearbeitetFlagAutoSetToNull"            : "Produktmail: \n Modification de l'indicateur défini automatiquement à vide",
+    "mailingoptions.mailingOptionSubTitleText" : "Utiliser votre propre serveur mail (optionnel)", 
+    "mailingoptions.mailingOptionText"  : "Renseignez ces paramètres uniquement si vous souhaitez envoyer des e-mails depuis une adresse d’expéditeur avec votre propre domaine d’entreprise via votre serveur mail. \n Si vous laissez ces champs vides, tous les e-mails seront envoyés automatiquement via le serveur LeadSuccess avec une adresse @convey.de, comme configuré sur la page précédente. \n Lorsque vous utilisez votre propre serveur, veuillez vous assurer que le compte existe et que les identifiants sont corrects.",
 
     "productlist.title"     : "Sélection de produits",
     "productlist.comment"   : "Utilisez le bouton Retour sur cette page pour y retourner!",
@@ -1952,7 +1954,7 @@
 	
     "adminAppHelpTextList.title"			: "Pages",
     "adminAppHelpTextList.inactive"     : "Inactif",
-
+    "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Texte auxiliaire de la page",
     "adminAppHelpText.titledata"			: "Titre",
     "adminAppHelpText.subTitle"			: "Texte de description du titre",

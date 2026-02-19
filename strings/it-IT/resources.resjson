@@ -1064,6 +1064,8 @@
     "mailingoptions.productMail"            : "Posta elettronica del prodotto: \n Solo una spedizione e-mail",
     "mailingoptions.thankYouMail"            : "Grazie posta elettronica: \n Solo una spedizione e-mail",
     "mailingoptions.nachbearbeitetFlagAutoSetToNull"            : "Posta elettronica del prodotto: \n Modifica Flag automaticamente impostato su vuoto",
+    "mailingoptions.mailingOptionSubTitleText" : "Utilizzare il proprio server di posta (opzionale)", 
+    "mailingoptions.mailingOptionText"  : "Inserisci queste impostazioni solo se desideri inviare e-mail da un indirizzo mittente con il tuo dominio aziendale tramite il tuo server di posta. \n Se lasci i campi vuoti, tutte le e-mail verranno inviate automaticamente tramite il server LeadSuccess con un indirizzo @convey.de, come configurato nella pagina precedente.\n Quando utilizzi il tuo server, assicurati che l’account esista e che le credenziali siano corrette.",
 
     "productlist.title"     : "Selezione del prodotto",
     "productlist.comment"   : "Utilizzate il pulsante \"indietro\" su questa pagina per tornare alla pagina precedente!",
@@ -1949,7 +1951,7 @@
 	
     "adminAppHelpTextList.title"			: "Pagine",
     "adminAppHelpTextList.inactive"     : "Inattivo",
-
+    "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Testo di aiuto della pagina",
     "adminAppHelpText.titledata"			: "Titolo",
     "adminAppHelpText.subTitle"			: "Testo di descrizione del titolo",
