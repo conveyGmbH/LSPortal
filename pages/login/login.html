@@ -94,10 +94,9 @@
 	                        </div>
                             <div class="button_line">
                                 <div class="button-element" data-win-bind="style.display: hideLoginData Binding.Converter.toDisplayNone">
-                                    <button id="passworRecovery"
-                                            onclick="AppBar.handleEvent('click', 'clickPasswordRecovery', event)">
-                                        <span data-win-res="{textContent: 'login.passwordRecovery'}"></span>
-                                    </button>
+                                    <div id="passwordRecovery">
+                                        <span class="passwordRecovery-link" data-win-res="{textContent: 'login.passwordRecovery'}" onclick="AppBar.handleEvent('click', 'clickPasswordRecovery', event)"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="field_line field_line_full" id="tfa-container"></div>
