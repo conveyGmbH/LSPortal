@@ -240,7 +240,7 @@
 
                                 // Leeren Eintrag einfügen, falls nicht vorhanden
                                 results.unshift({
-                                    INITLandID: null,
+                                    LanguageID: 0,
                                     TITLE: ""
                                 });
 
