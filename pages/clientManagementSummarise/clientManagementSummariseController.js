@@ -205,14 +205,15 @@
                                     Log.print(Log.l.info, "call success! ");
                                     if (json && json.d && json.d.results.length > 0) {
                                         var results = json.d.results[0];
-                                        if (results.ResultCode != 0) {
+                                        if (results.ResultCode === 0) {
                                             Log.print(Log.l.error, "PRC_JoinToMandant returns error " +
                                                 results.ResultCode + " / " + results.ResultMessage);
                                             AppData.setErrorMsg(that.binding, results.ResultMessage);
-                                        }
+                                        } else {
                                         that.binding.Mandantquelle = "";
                                         that.binding.MandantquelleID = null;
                                         that.loadData();
+                                    }
                                     }
                                     AppBar.busy = false;
                                     AppBar.triggerDisableHandlers();
@@ -269,15 +270,9 @@
                     that.selectionChanged().then(function () {
                         var scope = that.scopeFromRecordId(that.curRecId);
                         if (scope) {
-                            if (scope.item.Name !== that.binding.Mandantziel) {
                                 AppBar.busy = true;
                                 that.binding.Mandantquelle = scope.item.Name;
                                 that.binding.MandantquelleID = scope.item.FairMandantVeranstID;
-                            } else {
-                                AppBar.busy = true;
-                                that.binding.Mandantquelle = "";
-                                that.binding.MandantquelleID = null;
-                            }
                         }
                          else {
                             Log.print(Log.l.trace, "No MandantID found!");
