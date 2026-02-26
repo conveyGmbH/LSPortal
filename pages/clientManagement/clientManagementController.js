@@ -240,7 +240,7 @@
 
                                 // Leeren Eintrag einfügen, falls nicht vorhanden
                                 results.unshift({
-                                    INITLandID: null,
+                                    LanguageID: 0,
                                     TITLE: ""
                                 });
 
@@ -326,6 +326,9 @@
                                 var results = json.d;
                                 that.showApiUser(results.APIUser);
                                 that.binding.dataClientManagement = results;
+                                if (that.binding.dataClientManagement.DefLanguageID === null) {
+                                    that.binding.dataClientManagement.DefLanguageID = 0;
+                                }
                             }
                         }, function (errorResponse) {
                             // called asynchronously if an error occurs

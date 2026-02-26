@@ -87,7 +87,7 @@
                 }, function (json) {
                     Log.print(Log.l.info, "call PRC_CreateFairMandant success! ");
                     AppBar.busy = false;
-                    AppData.setRecordId("FairMandant", json.d.results[0].FairMandantID);
+                    AppData.setRecordId("FairMandant2", json.d.results[0].FairMandantID);
                     if (json.d.results[0].FairMandantID) {
                         Application.navigateById("clientManagement");
                     } else {

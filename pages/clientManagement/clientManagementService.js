@@ -38,7 +38,7 @@
                 WebAdresse: "",
                 FairMandantID: "",
                 LocationID: "",
-                DefLanguageID: null
+                DefLanguageID: 0
             }
         },
         _initSpracheView: {
