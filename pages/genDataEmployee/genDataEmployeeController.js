@@ -389,7 +389,7 @@
                 clickAddLicences: function (event) {
                     var myFairMandantId = AppData._userData && AppData._userData.FairMandantID;
                     Log.call(Log.l.trace, "GenDataEmployee.Controller.", "reset myFairMandantId=" + myFairMandantId);
-                    AppData.setRecordId("FairMandant", myFairMandantId);
+                    AppData.setRecordId("FairMandant2", myFairMandantId);
                     Application.navigateById("clientManagement");
                     Log.ret(Log.l.trace);
                 },
