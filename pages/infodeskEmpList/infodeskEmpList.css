@@ -21,6 +21,11 @@
 .infodeskEmpList .content-header .field_line {
     min-height: 32px;
 }
+.pagecontrol:not(.view-size-medium) .infodeskEmpList #events {
+    width: calc(100% - 16px);
+    min-width: calc(100% - 16px);
+}
+
 
 .infodeskEmpList .list-header {
     font-weight: bold;
@@ -34,138 +39,60 @@
     /* Add any other styles you need for the header */
 }
 
+#infodeskEmployeeList .list-field-image-fixed {
+    text-align: left;
+    width: 120px;
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+/*
+#infodeskEmployeeList .list-field-image-fixed .action-image > svg {
+    width: 28px;
+    height: 28px;
+}
+*/
+
+#infodeskEmployeeList .list-field-small-fixed {
+    width: 140px;
+}
+
+#infodeskEmployeeList .list-field-big-variable {
+    text-align: left;
+    width: calc(40% - 120px);
+    display: inline-block;
+    position: relative;
+    top: 0;
+    min-height: 32px;
+    padding-top: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+/* Styles used for the custom layout */
+.listView .infodeskEmpListLayout {
+    position: static;
+}
+
+.listView .infodeskEmpListLayout .win-surface {
+    margin-left: 0;
+}
 
 #infodeskEmployeeList .win-container {
+    width: 100%;
+    height: auto;
     margin: 0;
-}
-#infodeskEmployeeList .win-item {
-    padding-left: 26px;
-    padding-right: 26px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    width: calc(100% - 52px);
+    border-radius: 0;
+    background-color: transparent;
 }
 
-.infodeskEmpList .list-div-left {
-    width: 100%;
-}
-
-.infodeskEmpList .list-symbol-IDw {
-    float: right;
-}
-
-.infodeskEmpList .list-compressed {
-    width: calc(100% - 50px);
-}
-
-/*
-    margins/paddings for bigger size screens 
-
-    @media (max-width:1099px) {
-    }
-
-    is now signalled by additional class: view-size-bigger
-*/
-
-.view-size-bigger #employeeList .win-item {
-    width: calc(100% - 52px);
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-.view-size-bigger .action-image{
-    width: 100%;
-    float: left;
-}
-/*
-    margins/paddings for middle sized screens 
-
-
-    is now signalled by additional class: view-size-medium
-
-    @media (max-width:899px) {
-    }
-*/
-
-
-.view-size-medium #employeeList .win-item {
-    padding-left: 18px;
-    padding-right: 18px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    width: calc(100% - 36px);
-}
-
-/*
-    margins/paddings for small sized screens 
-
-
-    is now signalled by additional class: view-size-small
-
-    @media (max-width:499px) {
-    }
-*/
-
-
-.view-size-small #employeeList .win-item {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    width: calc(100% - 20px);
-}
-
-/*.user-image-container {
-    display: block;
-    position: absolute;
-    top: 2px;
-    left: calc(100% - 40px);
-    background-color: gray;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    padding: 0;
-}
-.user-image {
-    display: block;
-    position: relative;
-    left: 0;
-    top: -14px;
-    z-index: 9900;
-}*/
-.user-photo-list {
-    display: inline;
-    position: absolute;
-    left: 25px;
-    top: 18px; /*12*/
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    z-index: 9901;
-}
-.infodeskEmpList .content-header .input_half_right {
-    min-height: 32px;
-    margin-right: 60px; 
-    float: right;
-    width: 200px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 0px;
-}
-
-/*.infodeskEmpList .list-div-left {
-    width: 100%;
-}
-
-.infodeskEmpList .contentarea {
-    overflow-y: hidden !important;
-}
-
-#infodeskEmployeeList .win-item {
-    width: calc(100% - 52px);
-    padding-left: 26px;
-    padding-right: 26px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+#infodeskEmployeeList .win-container.win-disabled {
+    opacity: 0.4;
 }
 
 #infodeskEmployeeList .win-item,
@@ -176,6 +103,7 @@
     width: auto;
     padding-top: 2px;
     padding-bottom: 2px;
+    width: calc(100% - 52px);
 }
 
 .view-size-medium #infodeskEmployeeList .win-item,
@@ -183,6 +111,7 @@
 .view-size-medium #infodeskEmployeeList .list-footer {
     padding-left: 18px;
     padding-right: 18px;
+    width: calc(100% - 36px);
 }
 
 .view-size-small #infodeskEmployeeList .win-item,
@@ -190,11 +119,34 @@
 .view-size-small #infodeskEmployeeList .list-footer {
     padding-left: 10px;
     padding-right: 10px;
+    width: calc(100% - 20px);
 }
 
-*/
 .infodeskEmpList .content-header .master-list-header {
     margin-top: 16px;
+}
+
+.infodeskEmpList .user-photo-list {
+    display: inline;
+    position: absolute;
+    left: 8px;
+    top: 10px; /*12*/
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    z-index: 9901;
+}
+.infodeskEmpList .list-landscape-only .user-photo-list {
+    left: 0;
+}
+.infodeskEmpList .content-header .input_half_right {
+    min-height: 32px;
+    margin-right: 60px;
+    float: right;
+    width: 200px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 0px;
 }
 
 .infodeskEmpList .sortButton {
@@ -208,4 +160,12 @@
     height: 18px;
     margin-top: 4px;
     margin-bottom: 2px;
+}
+
+.infodeskEmpList .list-div-left {
+    width: 100%;
+}
+
+.infodeskEmpList .list-symbol-ID {
+    height: 44px;
 }

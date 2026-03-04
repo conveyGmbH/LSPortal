@@ -57,12 +57,16 @@
                     <div class="headerFooterPlaceholder">
                         <div class="list-header masterhost-background">
                             <div class="list-landscape-only list-header-columns">
-	                            <div class="list-field-small-relative-15 win-type-ellipsis"
-	                                 data-win-res="{textContent: 'infodeskEmpList.firstname'}"></div>
-	                            <div class="list-field-small-relative-15 win-type-ellipsis"
-	                                 data-win-res="{textContent: 'infodeskEmpList.name'}"></div>
-	                            <div class="list-field-small-relative-30 win-type-ellipsis"
-	                                 data-win-res="{textContent: 'infodeskEmpList.login'}"></div>
+                                <div class="list-field-image-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'userinfo.presence'}"></div>
+                                <div class="list-field-small-relative-30 win-type-ellipsis"
+                                     data-win-res="{textContent: 'infodeskEmpList.firstName'}"></div>
+                                <div class="list-field-small-relative-30 win-type-ellipsis"
+                                     data-win-res="{textContent: 'infodeskEmpList.name'}"></div>
+                                <div class="list-field-small-relative-30 win-type-ellipsis"
+                                     data-win-res="{textContent: 'infodeskEmpList.login'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'infodesk.lastCall'}"></div>
                             </div>
                         </div>
                     </div>
@@ -78,12 +82,26 @@
                         <div class="list-landscape-only" data-win-bind="disabled: disabled">
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
-                            <div class="list-field-small-relative-15 win-type-ellipsis"
+                            <div class="list-field-image-fixed win-type-ellipsis">
+	                            <div class="list-symbol-ID">
+		                            <div id="user" class="action-image" data-win-bind="style.display: OvwContentDOCCNT3 Binding.Converter.toDisplayNone"></div>
+		                            <img class="user-photo-list" data-win-bind="src: OvwContentDOCCNT3; style.display: OvwContentDOCCNT3 Binding.Converter.toDisplay">
+		                            <div class="onsite-offsite win-type-caption">
+			                            <span class="onsite-offsite-symbol statusOn"
+			                                  data-win-bind="style.display: Present Binding.Converter.toDisplay; style.backgroundColor: onlineColor">&#xe10b;</span>
+			                            <span class="onsite-offsite-symbol statusOff"
+			                                  data-win-bind="style.display: Present Binding.Converter.toDisplayNone">&#xe108;</span>
+		                            </div>
+	                            </div>
+                            </div>
+                            <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Vorname"></div>
-                            <div class="list-field-small-relative-15 win-type-ellipsis"
+                            <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Nachname"></div>
                             <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Login"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: LastCallTS Binding.Converter.toDateString"></div>
                         </div>
                         <div class="list-portrait-only" data-win-bind="disabled: disabled">
 	                        <div class="row-separator"></div>

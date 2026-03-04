@@ -24,14 +24,14 @@
                 this._surface = this._site.surface;
 
                 // Add a CSS class to control the surface level layout
-                WinJS.Utilities.addClass(this._surface, "contactListLayout");
+                WinJS.Utilities.addClass(this._surface, "infodeskEmpListLayout");
 
                 return WinJS.UI.Orientation.vertical;
             },
 
             // Reset the layout to its initial state
             uninitialize: function () {
-                WinJS.Utilities.removeClass(this._surface, "contactListLayout");
+                WinJS.Utilities.removeClass(this._surface, "infodeskEmpListLayout");
                 this._site = null;
                 this._surface = null;
             }
