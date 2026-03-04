@@ -540,6 +540,7 @@
     "infodesk.phone"         : "Phone",
     "infodesk.mobile"        : "Mobile",
     "infodesk.comment"        : "Find employees and send or receive messages from them.",
+    "infodesk.lastCall"      : "most recent online",
 
     "infodeskEmpList.title" : "User accounts",
     "infodeskEmpList.count" : "Count",

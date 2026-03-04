@@ -400,15 +400,15 @@
                         item.title = results[curIndex].TITLE;
                     }
                 }
-                item.onlineColor = "gray";
+                item.onlineColor = Colors.unknownColor;
                 if (item.LastCallTS) {
                     var lastCallDate = getDateObject(item.LastCallTS);
                     if (lastCallDate) {
                         var lastCallMs = lastCallDate.getTime();
                         var diffMinutes = (Date.now() - lastCallMs) / 60000;
-                        if (diffMinutes > 15) {
-                            item.onlineColor = Colors.offColor;
-                        } else if (diffMinutes > 3) {
+                        if (diffMinutes > 30) {
+                            item.onlineColor = Colors.unknownColor;
+                        } else if (diffMinutes > 5) {
                             item.onlineColor = Colors.pauseColor;
                         } else {
                             item.onlineColor = Colors.onColor;

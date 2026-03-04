@@ -580,6 +580,7 @@
     "infodesk.phone"         : "Tel",
     "infodesk.mobile"        : "Cell",
     "infodesk.comment"        : "Trova dipendenti e invia o ricevi messaggi da loro.",
+    "infodesk.lastCall"      : "ultima connessione",
 
     "infodeskEmpList.title" : "Utenti",
     "infodeskEmpList.count" : "Numero",

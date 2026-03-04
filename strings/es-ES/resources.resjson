@@ -541,6 +541,7 @@
     "infodesk.phone"         : "Telefon",
     "infodesk.mobile"        : "Mobil",
     "infodesk.comment"        : "Mitarbeiter suchen und Mitteilungen an diese senden oder von diesen empfangen.",
+    "infodesk.lastCall"      : "most recent online",
 
     "infodeskEmpList.title" : "Letzte Nachricht",
     "infodeskEmpList.count" : "Anzahl",

@@ -135,8 +135,8 @@
                     imgTop = 0;
 
                     if (onOffSign && onOffSign.style) {
-                        onOffSign.style.marginLeft = - imgLeft - 50 + "px";
-                        onOffSign.style.marginTop = imgTop + "px";
+                        onOffSign.style.marginLeft = (-imgLeft - 30) + "px";
+                        onOffSign.style.marginTop = (imgTop - 20) + "px";
                     }
                     if (that.img.style) {
                         that.img.style.marginLeft = -imgLeft + "px";
@@ -260,6 +260,7 @@
                         }
                     }
                 }
+                that.binding.dataBenutzer.onlineColor = "";
                 //that.binding.dataBenutzer = newDataBenutzer;
                 AppBar.notifyModified = prevNotifyModified;
             };
@@ -959,6 +960,22 @@
                                 if (!that.binding.dataBenutzer.Vorname && !that.binding.dataBenutzer.Name) {
                                     that.binding.dataBenutzer.Vorname = json.d.Vorname;
                                     that.binding.dataBenutzer.Name = json.d.Nachname;
+                                }
+                                that.binding.dataBenutzer.onlineColor = Colors.unknownColor;
+                                that.binding.dataBenutzer.LastCallTS = json.d.LastCallTS;
+                                if (json.d.LastCallTS) {
+                                    var lastCallDate = getDateObject(json.d.LastCallTS);
+                                    if (lastCallDate) {
+                                        var lastCallMs = lastCallDate.getTime();
+                                        var diffMinutes = (Date.now() - lastCallMs) / 60000;
+                                        if (diffMinutes > 30) {
+                                            that.binding.dataBenutzer.onlineColor = Colors.unknownColor;
+                                        } else if (diffMinutes > 5) {
+                                            that.binding.dataBenutzer.onlineColor = Colors.pauseColor;
+                                        } else {
+                                            that.binding.dataBenutzer.onlineColor = Colors.onColor;
+                                        }
+                                    }
                                 }
                                 AppBar.notifyModified = prevNotifyModified;
                             }

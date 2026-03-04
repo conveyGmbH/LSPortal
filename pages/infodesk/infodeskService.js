@@ -163,7 +163,9 @@
                 Titel: "",
                 Position: "",
                 Present: 0,
-                EMail: ""
+                EMail: "",
+                onlineColor: "",
+                LastCallTS: ""
             }
         },
         _employeeView: {

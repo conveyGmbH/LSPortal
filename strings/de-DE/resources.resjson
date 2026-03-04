@@ -582,9 +582,10 @@
     "infodesk.email"         : "E-Mail",
     "infodesk.phone"         : "Telefon",
     "infodesk.mobile"        : "Mobil",
-    "infodesk.comment"        : "Mitarbeiter suchen und Mitteilungen an diese senden oder von diesen empfangen.",
+    "infodesk.comment"       : "Mitarbeiter suchen und Mitteilungen an diese senden oder von diesen empfangen.",
+	"infodesk.lastCall"      : "zuletzt online",
 
-    "infodeskEmpList.title" : "Letzte Nachricht",
+    "infodeskEmpList.title" : "Benutezrkonten",
     "infodeskEmpList.count" : "Anzahl",
 	"infodeskEmpList.name"  : "Name",
 	"infodeskEmpList.firstName" : "Vorname",

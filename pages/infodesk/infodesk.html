@@ -118,7 +118,7 @@
                                     <div class="win-itembox"></div>
                                     <div class="onsite-offsiteInfodeskList win-type-caption">
                                         <span class="onsite-offsite-symbol statusOn"
-                                              data-win-bind="style.display: dataBenutzer.Present Binding.Converter.toDisplay">&#xe10b;</span>
+                                              data-win-bind="style.display: dataBenutzer.Present Binding.Converter.toDisplay; style.backgroundColor: dataBenutzer.onlineColor">&#xe10b;</span>
                                         <span class="onsite-offsite-symbol statusOff"
                                               data-win-bind="style.display: dataBenutzer.Present Binding.Converter.toDisplayNone">&#xe108;</span>
                                     </div>
@@ -147,6 +147,10 @@
                                     <span class="label win-type-caption" data-win-bind="textContent: dataSkillEntry.thirdskill"></span>
                                 </div>
                                 <div class="line-separator"></div>
+                                <div class="field_line_odd_half">
+	                                <span class="label win-type-caption" data-win-res="{textContent: 'infodesk.lastCall'}"></span>
+	                                <span class="label win-type-caption" data-win-bind="textContent: dataBenutzer.LastCallTS Binding.Converter.toDateString"></span>
+                                </div>
                                 <div class="field_line_even_half" data-win-bind="style.display: messestandData.SkillType4 Binding.Converter.toDisplay">
                                     <span class="label win-type-caption" data-win-bind="textContent: dataSkillEntry.fourthskill"></span>
                                 </div>
