@@ -743,18 +743,57 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                                that.employees = new WinJS.Binding.List(results);
-                                if (listView && listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.employees.dataSource;
-                                    Log.print(Log.l.trace, "Data loaded");
+                                if (!that.employees) {
+                                    that.employees = new WinJS.Binding.List(results);
+                                    if (listView && listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.employees.dataSource;
+                                        Log.print(Log.l.trace, "Data loaded");
+                                    }
+                                } else {
+                                    var i;
+                                    var bChanged = false;
+                                    var newItem;
+                                    for (i = 0; i < that.employees.length && i < results.length; i++) {
+                                        var prevItem = that.employees.getAt(i);
+                                        newItem = results[i];
+                                        for (var prop in newItem) {
+                                            if (newItem.hasOwnProperty(prop)) {
+                                                if (newItem[prop] !== prevItem[prop]) {
+                                                    bChanged = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (bChanged) {
+                                            if (prevItem.SkillEntryVIEWID === newItem.SkillEntryVIEWID) {
+                                                that.employees.setAt(i, newItem);
+                                                bChanged = false;
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (i < that.employees.length) {
+                                        if (!that.nextskillentryUrl || bChanged) {
+                                            that.employees.splice(i, that.employees.length - i);
+                                        }
+                                    }
+                                    while (i < results.length) {
+                                        newItem = results[i++];
+                                        that.employees.push(newItem);
+                                    }
                                 }
                             } else {
                                 that.binding.count = 0;
                                 that.nextskillentryUrl = null;
-                                listView.winControl.itemDataSource = null;
                                 that.employees = null;
                                 AppBar.busy = false;
+                                if (listView.winControl) {
+                                    // add ListView dataSource
+                                    listView.winControl.itemDataSource = null;
+                                    Log.print(Log.l.trace, "no Data found");
+                                }
                                 that.binding.loading = false;
                             }
                         }, function (errorResponse) {
@@ -777,11 +816,47 @@
                                 results.forEach(function (item, index) {
                                     that.resultConverter(item, index);
                                 });
-                                that.employees = new WinJS.Binding.List(results);
+                                if (!that.employees) {
+                                    that.employees = new WinJS.Binding.List(results);
 
-                                if (listView && listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.employees.dataSource;
+                                    if (listView && listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.employees.dataSource;
+                                        Log.print(Log.l.trace, "Data loaded");
+                                    }
+                                } else {
+                                    var i;
+                                    var bChanged = false;
+                                    var newItem;
+                                    for (i = 0; i < that.employees.length && i < results.length; i++) {
+                                        var prevItem = that.employees.getAt(i);
+                                        newItem = results[i];
+                                        for (var prop in newItem) {
+                                            if (newItem.hasOwnProperty(prop)) {
+                                                if (newItem[prop] !== prevItem[prop]) {
+                                                    bChanged = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (bChanged) {
+                                            if (prevItem.MitarbeiterVIEWID === newItem.MitarbeiterVIEWID) {
+                                                that.employees.setAt(i, newItem);
+                                                bChanged = false;
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (i < that.employees.length) {
+                                        if (!that.nextUrl || bChanged) {
+                                            that.employees.splice(i, that.employees.length - i);
+                                        }
+                                    }
+                                    while (i < results.length) {
+                                        newItem = results[i++];
+                                        that.employees.push(newItem);
+                                    }
                                 }
                             } else {
                                 that.binding.count = 0;
@@ -791,6 +866,7 @@
                                 if (listView.winControl) {
                                     // add ListView dataSource
                                     listView.winControl.itemDataSource = null;
+                                    Log.print(Log.l.trace, "no Data found");
                                 }
                                 that.binding.loading = false;
                             }

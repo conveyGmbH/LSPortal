@@ -1280,6 +1280,8 @@
             }
             this.saveData = saveData;
 
+            that.eventHandlers.clickResetRestriction();
+
             that.processAll().then(function () {
                 Log.print(Log.l.trace, "Binding wireup page complete");
                 return that.loadData(getRecordId());// parameter übergeben ? getRecordId()
