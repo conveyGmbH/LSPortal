@@ -1056,6 +1056,39 @@
         toInputBorderName: WinJS.Binding.converter(function (value) {
             return (typeof Settings.getInputBorderName === "function" && Settings.getInputBorderName(value));
         }),
+        toOnlineColor: WinJS.Binding.converter(function (value) {
+            var ret;
+            if (value) {
+                var lastCallDate = getDateObject(value);
+                if (lastCallDate) {
+                    var lastCallMs = lastCallDate.getTime();
+                    var diffMinutes = (Date.now() - lastCallMs) / 60000;
+                    if (diffMinutes > 60) {
+                        ret = Colors.offColor;
+                    } else if (diffMinutes > 5) {
+                        ret = Colors.pauseColor;
+                    } else {
+                        ret = "";
+                    }
+                } else {
+                    ret = Colors.unknownColor;
+                }
+            } else {
+                ret = Colors.unknownColor;
+            }
+            return ret;
+        }),
+        toPresentIcon: WinJS.Binding.converter(function (value) {
+            var ret;
+            if (value === 1 || value === "1") {
+                ret = "&#xe10b;";
+            } else if (value === 0 || value === "0") {
+                ret = "&#xe0b8;";
+            } else {
+                ret = "&nbsp;";
+            }
+            return ret;
+        }),
         //@Hung:23.10.2020 convert the value(id) to icon
         /**
          * @member getIconFromID

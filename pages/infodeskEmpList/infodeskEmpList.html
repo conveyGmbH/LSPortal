@@ -66,6 +66,8 @@
                                 <div class="list-field-small-relative-30 win-type-ellipsis"
                                      data-win-res="{textContent: 'infodeskEmpList.login'}"></div>
                                 <div class="list-field-small-fixed win-type-ellipsis"
+                                     data-win-res="{textContent: 'search.deviceID'}"></div>
+                                <div class="list-field-small-fixed win-type-ellipsis"
                                      data-win-res="{textContent: 'infodesk.lastCall'}"></div>
                             </div>
                         </div>
@@ -83,16 +85,18 @@
                             <div class="row-bkg-gray"
                                  data-win-bind="style.display: index Binding.Converter.evenToDisplay"></div>
                             <div class="list-field-image-fixed win-type-ellipsis">
-	                            <div class="list-symbol-ID">
-		                            <div id="user" class="action-image" data-win-bind="style.display: OvwContentDOCCNT3 Binding.Converter.toDisplayNone"></div>
-		                            <img class="user-photo-list" data-win-bind="src: OvwContentDOCCNT3; style.display: OvwContentDOCCNT3 Binding.Converter.toDisplay">
-		                            <div class="onsite-offsite win-type-caption">
-			                            <span class="onsite-offsite-symbol statusOn"
-			                                  data-win-bind="style.display: Present Binding.Converter.toDisplay; style.backgroundColor: onlineColor">&#xe10b;</span>
-			                            <span class="onsite-offsite-symbol statusOff"
-			                                  data-win-bind="style.display: Present Binding.Converter.toDisplayNone">&#xe108;</span>
-		                            </div>
-	                            </div>
+                                <div class="list-symbol-ID">
+                                    <div id="user" class="action-image" data-win-bind="style.display: OvwContentDOCCNT3 Binding.Converter.toDisplayNone"></div>
+                                    <img class="user-photo-list" data-win-bind="src: OvwContentDOCCNT3; style.display: OvwContentDOCCNT3 Binding.Converter.toDisplay">
+                                    <div class="onsite-offsite win-type-caption">
+                                        <span class="onsite-offsite-symbol statusNew"
+                                              data-win-bind="style.display: showNew Binding.Converter.toDisplay; innerHTML: Present Binding.Converter.toPresentIcon"></span>
+                                        <span class="onsite-offsite-symbol statusOn"
+                                              data-win-bind="style.display: showNotNew Binding.Converter.toDisplay; innerHTML: Present Binding.Converter.toPresentIcon; style.backgroundColor: LastCallTS Binding.Converter.toOnlineColor"></span>
+                                        <span class="onsite-offsite-symbol statusOff"
+                                              data-win-bind="style.display: showNotPresent Binding.Converter.toDisplay; innerHTML: Present Binding.Converter.toPresentIcon"></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Vorname"></div>
@@ -100,6 +104,8 @@
                                  data-win-bind="textContent: Nachname"></div>
                             <div class="list-field-small-relative-30 win-type-ellipsis"
                                  data-win-bind="textContent: Login"></div>
+                            <div class="list-field-small-fixed win-type-ellipsis"
+                                 data-win-bind="textContent: DeviceID"></div>
                             <div class="list-field-small-fixed win-type-ellipsis"
                                  data-win-bind="textContent: LastCallTS Binding.Converter.toDateString"></div>
                         </div>
@@ -110,16 +116,22 @@
                                     <div id="user" class="action-image" data-win-bind="style.display: OvwContentDOCCNT3 Binding.Converter.toDisplayNone"></div>
                                     <img class="user-photo-list" data-win-bind="src: OvwContentDOCCNT3; style.display: OvwContentDOCCNT3 Binding.Converter.toDisplay">
                                     <div class="onsite-offsite win-type-caption">
-                                        <span class="onsite-offsite-symbol statusOn"
-                                              data-win-bind="style.display: Present Binding.Converter.toDisplay; style.backgroundColor: onlineColor">&#xe10b;</span>
+	                                    <span class="onsite-offsite-symbol statusNew"
+	                                          data-win-bind="style.display: showNew Binding.Converter.toDisplay; innerHTML: Present Binding.Converter.toPresentIcon"></span>
+	                                    <span class="onsite-offsite-symbol statusOn"
+	                                          data-win-bind="style.display: showNotNew Binding.Converter.toDisplay; innerHTML: Present Binding.Converter.toPresentIcon; style.backgroundColor: LastCallTS Binding.Converter.toOnlineColor"></span>
                                         <span class="onsite-offsite-symbol statusOff"
-                                              data-win-bind="style.display: Present Binding.Converter.toDisplayNone">&#xe108;</span>
+	                                          data-win-bind="style.display: showNotPresent Binding.Converter.toDisplay; innerHTML: Present Binding.Converter.toPresentIcon"></span>
                                     </div>
                                 </div>
                                 <div class="list-compressed">
-                                    <!--list-empList-->
+	                                <!--list-empList-->
+                                    <div class="list-compressed-title win-type-caption win-type-ellipsis">
+                                        <span data-win-bind="textContent: DeviceID; style.display: DeviceID Binding.Converter.toDisplay"></span>
+		                                <span data-win-bind="textContent: LastCallTS Binding.Converter.toDateString; style.display: LastCallTS Binding.Converter.toDisplay"></span>
+	                                </div>
                                     <span class="list-compressed-title win-type-subtitle win-type-ellipsis"
-                                          data-win-bind="textContent: fullName"></span>
+	                                      data-win-bind="textContent: fullName"></span>
                                     <span class="list-compressed-title win-type-ellipsis"
                                           data-win-bind="textContent: Login"></span>
                                     <span class="list-compressed-title win-type-subsubtitle win-type-ellipsis"

@@ -162,10 +162,8 @@
                 TelefonMobil: "",
                 Titel: "",
                 Position: "",
-                Present: 0,
-                EMail: "",
-                onlineColor: "",
-                LastCallTS: ""
+                Present: "",
+                EMail: ""
             }
         },
         _employeeView: {
@@ -185,7 +183,11 @@
                 MitarbeiterVIEWID: 0,
                 Doc1MitarbeiterID: 0,
                 Vorname: "",
-                Nachname: ""
+                Nachname: "",
+                FirstUsedTS: "",
+                LastUsedTS: "",
+                LastCallTS: "",
+                DeviceID: ""
             }
         },
         _userPhotoView: {

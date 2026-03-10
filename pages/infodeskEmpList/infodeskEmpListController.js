@@ -400,20 +400,13 @@
                         item.title = results[curIndex].TITLE;
                     }
                 }
-                item.onlineColor = Colors.unknownColor;
-                if (item.LastCallTS) {
-                    var lastCallDate = getDateObject(item.LastCallTS);
-                    if (lastCallDate) {
-                        var lastCallMs = lastCallDate.getTime();
-                        var diffMinutes = (Date.now() - lastCallMs) / 60000;
-                        if (diffMinutes > 30) {
-                            item.onlineColor = Colors.unknownColor;
-                        } else if (diffMinutes > 5) {
-                            item.onlineColor = Colors.pauseColor;
-                        } else {
-                            item.onlineColor = Colors.onColor;
-                        }
-                    }
+                item.showNotPresent = (item.Present === 0 || item.Present === "0");
+                if (item.showNotPresent) {
+                    item.showNew = false;
+                    item.showNotNew = false;
+                } else {
+                    item.showNew = !item.FirstUsedTS;
+                    item.showNotNew = !item.showNew;
                 }
                 item.OvwContentDOCCNT3 = "";
                 if (that.docs) {  //   && index >= that.firstEmployeesIndex

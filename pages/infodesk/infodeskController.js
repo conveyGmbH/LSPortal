@@ -31,7 +31,10 @@
                 imageUrl: "'../../images/" + getResourceText("general.leadsuccessbasicimage"),
                 mailUrl: "mailto:multimedia-shop@messefrankfurt.com",
                 sendMessage: "",
-                clickOkbool: false
+                clickOkbool: false,
+                showNew: false,
+                showNotNew: false,
+                showNotPresent: false
             }, commandList]);
 
             var prevMasterLoadPromise = null;
@@ -260,7 +263,11 @@
                         }
                     }
                 }
-                that.binding.dataBenutzer.onlineColor = "";
+                that.binding.showNotPresent = (newDataBenutzer.Present === 0 || newDataBenutzer.Present === "0");
+                if (that.binding.showNotPresent) {
+                    that.binding.showNew = false;
+                    that.binding.showNotNew = false;
+                }
                 //that.binding.dataBenutzer = newDataBenutzer;
                 AppBar.notifyModified = prevNotifyModified;
             };
@@ -955,29 +962,18 @@
                             if (json && json.d) {
                                 var prevNotifyModified = AppBar.notifyModified;
                                 AppBar.notifyModified = false;
-                                that.binding.dataEmployee.MitarbeiterVIEWID = json.d.MitarbeiterVIEWID;
-                                that.binding.dataEmployee.Doc1MitarbeiterID = json.d.DOC1MitarbeiterID;
+                                that.binding.dataEmployee = json.d;
                                 if (!that.binding.dataBenutzer.Vorname && !that.binding.dataBenutzer.Name) {
                                     that.binding.dataBenutzer.Vorname = json.d.Vorname;
                                     that.binding.dataBenutzer.Name = json.d.Nachname;
                                 }
-                                that.binding.dataBenutzer.onlineColor = Colors.unknownColor;
-                                that.binding.dataBenutzer.LastCallTS = json.d.LastCallTS;
-                                if (json.d.LastCallTS) {
-                                    var lastCallDate = getDateObject(json.d.LastCallTS);
-                                    if (lastCallDate) {
-                                        var lastCallMs = lastCallDate.getTime();
-                                        var diffMinutes = (Date.now() - lastCallMs) / 60000;
-                                        if (diffMinutes > 30) {
-                                            that.binding.dataBenutzer.onlineColor = Colors.unknownColor;
-                                        } else if (diffMinutes > 5) {
-                                            that.binding.dataBenutzer.onlineColor = Colors.pauseColor;
-                                        } else {
-                                            that.binding.dataBenutzer.onlineColor = Colors.onColor;
-                                        }
-                                    }
+                                if (!that.binding.showNotPresent) {
+                                    that.binding.showNew = !json.d.FirstUsedTS;
+                                    that.binding.showNotNew = !that.binding.showNew;
                                 }
                                 AppBar.notifyModified = prevNotifyModified;
+                            } else {
+                                that.binding.dataEmployee = getEmptyDefaultValue(Infodesk.employeeView.defaultValue);
                             }
                         }, function (errorResponse) {
                             AppData.setErrorMsg(that.binding, errorResponse);
@@ -1141,7 +1137,7 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (recordId && that.binding.dataEmployee.Doc1MitarbeiterID) {
+                    if (recordId && that.binding.dataEmployee.DOC1MitarbeiterID) {
                         AppData.setErrorMsg(that.binding);
                         Log.print(Log.l.trace, "calling select userPhotoView...");
                         return Infodesk.userPhotoView.select(function (json) {
@@ -1157,7 +1153,7 @@
                             } else {
                                 AppData.setErrorMsg(that.binding, errorResponse);
                             }
-                        }, that.binding.dataEmployee.Doc1MitarbeiterID);
+                        }, that.binding.dataEmployee.DOC1MitarbeiterID);
                     } else {
                         return WinJS.Promise.as();
                     }
