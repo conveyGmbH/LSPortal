@@ -12,7 +12,7 @@
         _kontaktanzahlView: {
             get: function () {
                 var ret = AppData.getFormatView("Veranstaltung", 20684);
-                ret.maxPageSize = 5;
+                ret.maxPageSize = 6;
                 return ret;
             }
         },
