@@ -161,7 +161,8 @@
     "tooltip.hideHelpText"  : "Hide help text",
     "tooltip.forceVersionUpdate" : "Force update",
     "tooltip.crmSettings" : "CRM Export Settings",
-    "tooltip.contactCrmExport" : "Contact CRM Export",
+    "tooltip.contactCrmExport" : "Contact CRM export",
+    "tooltip.crmExport" : "CRM batch export",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -591,8 +592,8 @@
     "label.event"           : "Event",
     "label.questiongroup"   : "Question groups",
     "label.employee"        : "User accounts",
-    "label.reporting"       : "Exports",
-    "label.reportingColumnList"       : "Options",
+    "label.reporting"       : "File Export",
+    "label.reportingColumnList"       : "File export options",
     "label.skills"          : "Skills",
     "label.skillentry"      : "Skill entries",
     "label.mailing"         : "Standard Mail",
@@ -672,6 +673,7 @@
     "label.close" : "Close",
     "label.crmSettings" : "CRM Settings",
     "label.contactCrmExport" : "CRM Export",
+    "label.crmExport" : "CRM Export",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -717,6 +719,14 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Enable manual entry in the app",
+    "event.exportOption" : "File Export settings",
+    "event.exportKontaktPDF" : "Please choose here the language of the labels for the PDF-Export\nPlease note: this must be selected/decided upon BEFORE the event. Alredy collected data will not be changed, except if you change something in the single contacts after changing the language",
+    "event.usedlicences" : "Users",
+    "event.anzkontakte" : "Contacts",
+    "event.labelChangeMsg1" : "Are you sure you want to make changes to an event created by the user ",
+    "event.labelChangeMsg2" : "? This event was not created by you.",
+    "event.labelDeleteMsg1" : "Do you want to delete the version of ",
+    "event.labelDeleteMsg2" : " ? ",
 
 	"optQuestionList.title"   : "Optional Questions/Answers",
     "optQuestionList.count"   : "Count",
@@ -761,7 +771,7 @@
     "questionList.textarea" : "Please enter your notes here ",
 	"questionList.comment" : "Individualize your questions and answers.",
 
-    "reporting.title"  : "Exports",
+    "reporting.title"  : "File Export",
     "reporting.titleExcel"  : "Excel Export",
     "reporting.titleOther"  : "Other exports",
     "reporting.with"        : "Excel export with title",
@@ -1558,6 +1568,9 @@
 
     "contactCrmExport.title" : "Contact CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
+
+    "crmExport.title" : "CRM batch Export",
+    "crmExport.inactiveMessage" : "CRM Export isn't activated",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",

@@ -199,6 +199,7 @@
     "tooltip.addLicences" : "Altre licenze",
     "tooltip.crmSettings" : "Impostazioni di esportazione CRM",
     "tooltip.contactCrmExport" : "Esportazione di contatto",
+    "tooltip.crmExport" : "Esportazione CRM batch",
 
     "home.title"            : "Start",
     "home.info"             : "Informazioni importanti",
@@ -631,8 +632,8 @@
     "label.event"           : "Evento",
     "label.questiongroup"   : "Gruppo domande",
     "label.employee"        : "Utenti",
-    "label.reporting"       : "Exports",
-    "label.reportingColumnList"       : "Opzioni",
+    "label.reporting"       : "Esportazione file",
+    "label.reportingColumnList"       : "Impostazioni di esportazione dei file",
     "label.skills"          : "Ruolo",
     "label.skillentry"      : "Immetti ruolo",
     "label.mailing"         : "Standard Mail",
@@ -736,6 +737,7 @@
     "label.clientManagementEvents" : "Eventi",
     "label.crmSettings" : "Impostazioni CRM",
     "label.contactCrmExport" : "Esportazione CRM",
+    "label.crmExport" : "Esportazione CRM",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annulla",
@@ -783,7 +785,7 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Abilitare la registrazione manuale nell'app",
-    "event.exportOption" : "Impostazioni di esportazione",
+    "event.exportOption" : "Impostazioni di esportazione file",
     "event.exportKontaktPDF" : "Scegliere qui la lingua delle etichette per l'esportazione in PDF\nAttenzione: questa scelta deve essere fatta prima dell'evento. I dati già raccolti non verranno modificati, a meno che non si modifichi qualcosa nei singoli contatti dopo aver cambiato la lingua.",
     "event.usedlicences" : "Utenti",
     "event.anzkontakte" : "Contatti",
@@ -1965,6 +1967,9 @@
 
     "contactCrmExport.title" : "Esportazione CRM di contatto",
     "contactCrmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
+
+    "crmExport.title" : "Esportazione in blocco CRM",
+    "crmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
 
     "tfa.title": "Autenticazione a due fattori",
     "tfa.loading": "Caricamento dell'autenticazione a due fattori in corso...",

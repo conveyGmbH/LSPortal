@@ -6,11 +6,11 @@
 /// <reference path="~/www/lib/convey/scripts/logging.js" />
 /// <reference path="~/www/lib/convey/scripts/navigator.js" />
 /// <reference path="~/www/lib/convey/scripts/appbar.js" />
-/// <reference path="~/www/pages/crmSettings/crmSettingsController.js" />
+/// <reference path="~/www/pages/crmExport/crmExportController.js" />
 
 (function () {
     "use strict";
-    var pageName = Application.getPagePath("crmSettings");
+    var pageName = Application.getPagePath("crmExport");
 
     WinJS.UI.Pages.define(pageName, {
         // This function is called whenever a user navigates to this page. It
@@ -23,7 +23,7 @@
                 { id: "clickBack", label: getResourceText("command.backward"), tooltip: getResourceText("tooltip.backward"), section: "primary", svg: "navigate_left" },
                 { id: "clickOk", label: getResourceText("command.ok"), tooltip: getResourceText("tooltip.ok"), section: "primary", svg: "navigate_check" }
             ];
-            this.controller = new CrmSettings.Controller(element, commandList);
+            this.controller = new CrmExport.Controller(element, commandList);
             if (this.controller.eventHandlers) {
                 // general event listener for hardware back button, too!
                 this.controller.addRemovableEventListener(document, "backbutton", this.controller.eventHandlers.clickBack.bind(this.controller));
@@ -35,11 +35,9 @@
             Log.call(Log.l.trace, pageName + ".");
             var ret;
             if (this.controller) {
-                ret = this.controller.saveData(function (response) {
-                    // called asynchronously if ok
-                    complete(response);
-                }, function (errorResponse) {
-                    error(errorResponse);
+                ret = WinJS.Promise.as().then(function () {
+                    // check for running export
+                    complete({});
                 });
             } else {
                 ret = WinJS.Promise.as().then(function () {

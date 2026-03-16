@@ -199,6 +199,7 @@
     "tooltip.addLicences" : "Weitere Lizenzen",
     "tooltip.crmSettings" : "CRM Export Einstellungen",
     "tooltip.contactCrmExport" : "Kontakt CRM Export",
+    "tooltip.crmExport" : "CRM batch export",
 
     "home.title"            : "Start",
 	"home.info"             : "Wichtige Hinweise",
@@ -634,8 +635,8 @@
     "label.event"           : "Veranstaltung",
     "label.questiongroup"   : "Fragengruppen",
     "label.employee"        : "Benutzerkonten",
-    "label.reporting"       : "Exporte",
-    "label.reportingColumnList"       : "Optionen",
+    "label.reporting"       : "Dateiexport",
+    "label.reportingColumnList"       : "Dateiexport Optionen",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
     "label.mailing"         : "Standard E-Mail",
@@ -741,6 +742,7 @@
     "label.clientManagementEvents" : "Veranstaltungen",
 	"label.crmSettings" : "CRM Einstellungen",
     "label.contactCrmExport" : "CRM Export",
+    "label.crmExport" : "CRM Export",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -788,7 +790,7 @@
 	"event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
 	"event.showHideManually" : "Manuelle Erfassung in der App ermöglichen",
-    "event.exportOption" : "Export Einstellungen",
+    "event.exportOption" : "Dateiexport Einstellungen",
     "event.exportKontaktPDF" : "Bitte wählen Sie hier die Sprache der Bezeichner für den PDF-Export\nBitte beachten Sie: dies muss VOR der Veranstaltung ausgewählt/entschieden werden. Bereits erfasste Daten werden nicht verändert, es sei denn, Sie ändern etwas in den einzelnen Kontakten, nachdem Sie die Sprache geändert haben",
     "event.usedlicences" : "Benutzer",
     "event.anzkontakte" : "Kontakte",
@@ -842,7 +844,7 @@
     "questionList.textarea" : "Bitte geben Sie hier Ihren Kommentar ein ",
     "questionList.comment" : "Individualisieren Sie Ihre Fragen und Antworten.",
 
-    "reporting.title"  : "Exporte",
+    "reporting.title"  : "Dateiexport",
 	"reporting.titleExcel"  : "Excel Export",
     "reporting.titleOther"  : "Andere Exporte",
     "reporting.with"        : "Excel Export mit Überschriften",
@@ -1993,6 +1995,9 @@
 
     "contactCrmExport.title" : "Kontakt CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export ist nicht aktiviert",
+
+    "crmExport.title" : "CRM Stapel-Export",
+    "crmExport.inactiveMessage" : "CRM Export ist nicht aktiviert",
 
     "tfa.title": "Zwei-Faktor-Authentifizierung",
     "tfa.loading": "Zwei-Faktor-Authentifizierung wird geladen...",

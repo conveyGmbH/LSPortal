@@ -162,6 +162,7 @@
     "tooltip.forceVersionUpdate" : "Update erzwingen",
     "tooltip.crmSettings" : "CRM Export Settings",
     "tooltip.contactCrmExport" : "Contact CRM Export",
+    "tooltip.crmExport" : "CRM batch export",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -592,8 +593,8 @@
     "label.event"           : "Veranstaltung",
     "label.questiongroup"   : "Fragengruppen",
     "label.employee"        : "Benutzerkonten",
-    "label.reporting"       : "Exporte",
-    "label.reportingColumnList"       : "Optionen",
+    "label.reporting"       : "Dateiexport",
+    "label.reportingColumnList"       : "Dateiexport Optionen",
     "label.skills"          : "Fähigkeiten",
     "label.skillentry"      : "Fähigkeit eintragen",
     "label.mailing"         : "Standard E-Mail",
@@ -675,6 +676,7 @@
     "label.close" : "Cerrar",
     "label.crmSettings" : "CRM Settings",
     "label.contactCrmExport" : "CRM Export",
+    "label.crmExport" : "CRM Export",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Abbrechen",
@@ -720,6 +722,14 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
 	"event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Manuelle Erfassung in der App ermöglichen",
+    "event.exportOption" : "Dateiexport Einstellungen",
+    "event.exportKontaktPDF" : "Bitte wählen Sie hier die Sprache der Bezeichner für den PDF-Export\nBitte beachten Sie: dies muss VOR der Veranstaltung ausgewählt/entschieden werden. Bereits erfasste Daten werden nicht verändert, es sei denn, Sie ändern etwas in den einzelnen Kontakten, nachdem Sie die Sprache geändert haben",
+    "event.usedlicences" : "Benutzer",
+    "event.anzkontakte" : "Kontakte",
+    "event.labelChangeMsg1" : "Sind Sie sicher, dass Sie Änderungen an einem Veranstaltungstermin vornehmen möchten, der von dem Benutzer ",
+    "event.labelChangeMsg2" : " erstellt wurde? Dieses Veranstaltungstermin wurde nicht von Ihnen erstellt.",
+    "event.labelDeleteMsg1" : "Wollen Sie den Stand von ",
+    "event.labelDeleteMsg2" : " löschen? ",
 
     "questiongroup.title"   : "Fragengruppen",
     "questiongroup.count"   : "Anzahl",
@@ -764,7 +774,7 @@
     "questionList.textarea" : "Bitte geben Sie hier Ihren Kommentar ein ",
     "questionList.comment" : "Individualisieren Sie Ihre Fragen und Antworten.",
 
-    "reporting.title"  : "Exporte",
+    "reporting.title"  : "Dateiexport",
 	"reporting.titleExcel"  : "Excel Export",
     "reporting.titleOther"  : "Andere Exporte",
     "reporting.with"        : "Excel Export mit Überschriften",
@@ -1573,6 +1583,9 @@
 
     "contactCrmExport.title" : "Contact CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
+
+    "crmExport.title" : "CRM batch export",
+    "crmExport.inactiveMessage" : "CRM Export isn't activated",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",

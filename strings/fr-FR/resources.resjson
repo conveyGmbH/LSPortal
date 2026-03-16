@@ -199,6 +199,7 @@
     "tooltip.addLicences" : "Autres licences",
     "tooltip.crmSettings" : "Paramètres d'exportation CRM",
     "tooltip.contactCrmExport" : "Exportation CRM du contact",
+    "tooltip.crmExport" : "Exportation CRM batch",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",
@@ -631,8 +632,8 @@
     "label.event"           : "Événement",
     "label.questiongroup"   : "Groupe de questions",
     "label.employee"        : "Comptes utilisateurs",
-    "label.reporting"       : "Exports",
-    "label.reportingColumnList"       : "Options",
+    "label.reporting"       : "Exportation de fichiers",
+    "label.reportingColumnList"       : "Paramètres d'exportation de fichiers",
     "label.skills"          : "Capacités",
     "label.skillentry"      : "entrer une capacité",
     "label.mailing"         : "Standard Mail",
@@ -736,6 +737,7 @@
     "label.clientManagementEvents" : "Événements",
     "label.crmSettings" : "Paramètres CRM",
     "label.contactCrmExport" : "Exportation CRM",
+    "label.crmExport" : "Exportation CRM",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",
@@ -783,7 +785,7 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Permettre la saisie manuelle dans l'app",
-    "event.exportOption" : "Paramètres d'exportation",
+    "event.exportOption" : "Paramètres d'exportation de fichiers",
     "event.exportKontaktPDF" : "Veuillez choisir ici la langue des étiquettes pour l'exportation au format PDF\nRemarque : ce choix doit être fait AVANT l'événement. Les données déjà collectées ne seront pas modifiées, sauf si vous changez quelque chose dans les contacts individuels après avoir changé la langue",
     "event.usedlicences" : "Utilisateur",
     "event.anzkontakte" : "Contacts",
@@ -837,7 +839,7 @@
     "questionList.textarea" : "S'il vous plaît entrer votre commentaire ici",
     "questionList.comment" : "Personnalisez vos questions et réponses.",
 
-    "reporting.title"  : "Exportations",
+    "reporting.title"  : "Exportation de fichiers",
     "reporting.titleExcel"  : "Excel Export",
 	"reporting.titleOther"  : "Autres exportations",
     "reporting.with"        : "Excel export with title",
@@ -1968,6 +1970,9 @@
 
     "contactCrmExport.title" : "Exportation CRM du contact",
     "contactCrmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
+
+    "crmExport.title" : "Exportation groupée CRM",
+    "crmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
 
     "tfa.title": "Authentification à Deux Facteurs",
     "tfa.loading": "Chargement de l'authentification à deux facteurs...",

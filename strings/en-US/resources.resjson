@@ -199,6 +199,7 @@
     "tooltip.addLicences" : "Add Licences",
     "tooltip.crmSettings" : "CRM Export Settings",
     "tooltip.contactCrmExport" : "Contact CRM Export",
+    "tooltip.crmExport" : "CRM batch export",
 
     "home.title"            : "Start",
     "home.info"             : "Important information",
@@ -634,8 +635,8 @@
     "label.event"           : "Event",
     "label.questiongroup"   : "Question groups",
     "label.employee"        : "User accounts",
-    "label.reporting"       : "Exports",
-    "label.reportingColumnList"       : "Options",
+    "label.reporting"       : "File Export",
+    "label.reportingColumnList"       : "File export options",
     "label.skills"          : "Skills",
     "label.skillentry"      : "Skill entries",
     "label.mailing"         : "Standard Mail",
@@ -741,6 +742,7 @@
     "label.clientManagementEvents" : "Events",
     "label.crmSettings" : "CRM Settings",
     "label.contactCrmExport" : "CRM Export",
+    "label.crmExport" : "CRM Export",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -788,7 +790,7 @@
     "event.visitorFlowInterval" : "VisitorFlow Interval",
     "event.leadsuccessBasic" : "LeadSuccess Basic",
     "event.showHideManually" : "Enable manual entry in the app",
-    "event.exportOption" : "Export settings",
+    "event.exportOption" : "File Export settings",
     "event.exportKontaktPDF" : "Please choose here the language of the labels for the PDF-Export\nPlease note: this must be selected/decided upon BEFORE the event. Alredy collected data will not be changed, except if you change something in the single contacts after changing the language",
 	"event.usedlicences" : "Users",
     "event.anzkontakte" : "Contacts",
@@ -1990,6 +1992,9 @@
 
     "contactCrmExport.title" : "Contact CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
+
+    "crmExport.title" : "CRM batch export",
+    "crmExport.inactiveMessage" : "CRM Export isn't activated",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",
