@@ -185,8 +185,9 @@
         //{ id: "dashBoard", group: 19, svg: "dashboard", disabled: true },
         //Exports
         { id: "exportGrp", group: 34, svg: "export", disabled: true, popup: true },
-        { id: "reporting", group: 8, svg: "download", disabled: true, predecGroup: 34 },
-        { id: "reportingColumnList", group: 35, svg: "export_settings", disabled: true, predecGroup: 34 },
+        { id: "reporting", group: 8, svg: "folder_document", disabled: true, predecGroup: 34 },
+        { id: "crmExport", group: 64, svg: "server_cloud", disabled: true, predecGroup: 34 },
+        //{ id: "reportingColumnList", group: 35, svg: "export_settings", disabled: true, predecGroup: 34 },
         //Infodesk
         { id: "infodesk", group: 9, svg: "about", disabled: true },
         //Options
@@ -291,7 +292,8 @@
         { id: "siteeventsImport", group: 13, disabled: false },
         { id: "clientManagementSummarise", group: 75, disabled: false },
         { id: "adminAppHelpText", group: 76, disabled: false },
-        { id: "crmSettings", group: 2, disabled: false }
+        { id: "crmExport", group: 64, disabled: false },
+        { id: "crmSettings", group: 64, disabled: false }
     ];
 
 
@@ -338,6 +340,7 @@
         { id: "publish", master: "eventList" },
         { id: "event", master: "eventList" },
         { id: "eventCopy", master: "eventList" },
+        { id: "crmExport", master: "eventList" },
         { id: "crmSettings", master: "eventList" },
         //{ id: "genDataSettings", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
