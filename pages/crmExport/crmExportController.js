@@ -115,24 +115,39 @@
                 }
 
                 var ret = new WinJS.Promise.as().then(function() {
-                    console.log('Opening Field Mapping, eventId:', that.binding.eventId);
+                    return AppData.call("FCT_GetUniqueRecordID", {
+                        pRelationName: "Veranstaltung",
+                        pRecordID: getRecordId()
+                    }, function (json) {
+                        Log.print(Log.l.info, "call FCT_GetUniqueRecordID: success! FCT_GetUniqueRecordID=" +
+                            (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
+                        that.binding.eventId =
+                            (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID);
+                        console.log('FCT_GetUniqueRecordID success, eventId:', that.binding.eventId);
+                    }, function (errorResponse) {
+                        Log.print(Log.l.error, "call FCT_GetUniqueRecordID: error");
+                        console.error('FCT_GetUniqueRecordID error:', errorResponse);
+                        AppData.setErrorMsg(that.binding, errorResponse);
+                        that.binding.eventId = null;
+                    });
+                }).then(function () {
+                    console.log('Opening CRM Export - LS_LeadReport list, eventId:', that.binding.eventId);
                     // Initialize and open Field Mapping UI (Mentis: #8513)
                     if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
                         // Use UUID if available, for events without contacts use null (localStorage only mode)
                         var eventId = that.binding.eventId;
 
-                        // Force display the container (since binding hides it when eventId is null)
-                        crmExportContainer.style.setProperty('display', 'block', 'important');
-
-                        // Hide the inactive message
-                        var inactiveMessage = crmExportContainer.parentElement.querySelector('.field_line_full');
-                        if (inactiveMessage) {
-                            inactiveMessage.style.setProperty('display', 'none', 'important');
-                        }
-
                         if (eventId) {
                             // Event has contacts with UUID - use normal mode with API persistence
                             Log.print(Log.l.info, "Opening LS_LeadReport list for eventId: " + eventId);
+                            // Force display the container (since binding hides it when eventId is null)
+                            crmExportContainer.style.setProperty('display', 'block', 'important');
+
+                            // Hide the inactive message
+                            var inactiveMessage = crmExportContainer.parentElement.querySelector('.field_line_full');
+                            if (inactiveMessage) {
+                                inactiveMessage.style.setProperty('display', 'none', 'important');
+                            }
                         } else {
                             Log.print(Log.l.error, "No eventId or recordId available for Field Mapping");
                             console.warn('No eventId or recordId available for Field Mapping');
