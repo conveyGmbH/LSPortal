@@ -131,26 +131,23 @@
                         that.binding.eventId = null;
                     });
                 }).then(function () {
-                    console.log('Opening CRM Export - LS_LeadReport list, eventId:', that.binding.eventId);
-                    // Initialize and open Field Mapping UI (Mentis: #8513)
-                    if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
-                        // Use UUID if available, for events without contacts use null (localStorage only mode)
+                    Log.print(Log.l.trace, namespaceName + ".Controller. eventId=" + that.binding.eventId);
+                    if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.renderContactList === "function") {
                         var eventId = that.binding.eventId;
-
                         if (eventId) {
-                            // Event has contacts with UUID - use normal mode with API persistence
-                            Log.print(Log.l.info, "Opening LS_LeadReport list for eventId: " + eventId);
-                            // Force display the container (since binding hides it when eventId is null)
+                            // Force display the container (binding hides it when eventId is null)
                             crmExportContainer.style.setProperty('display', 'block', 'important');
-
                             // Hide the inactive message
                             var inactiveMessage = crmExportContainer.parentElement.querySelector('.field_line_full');
                             if (inactiveMessage) {
                                 inactiveMessage.style.setProperty('display', 'none', 'important');
                             }
+                            // Render contact list with batch transfer UI
+                            SalesforceLeadLib.renderContactList(crmExportContainer, eventId).catch(function (err) {
+                                Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + err.message);
+                            });
                         } else {
-                            Log.print(Log.l.error, "No eventId or recordId available for Field Mapping");
-                            console.warn('No eventId or recordId available for Field Mapping');
+                            Log.print(Log.l.error, namespaceName + ".Controller. No eventId available for CRM Export");
                         }
                     }
                 }).then(function() {
