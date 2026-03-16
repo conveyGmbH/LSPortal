@@ -43,5 +43,15 @@ Web.config
 
 # Claude Code
 CLAUDE.md
-
 .claude/
+
+# Other AI/IDE tools
+.cursor/
+*.cursor*
+.windsurfrules
+.superdesign/
+
+# Documentation PDFs and Markdown docs
+*.pdf
+*.md
+docs/dev/
