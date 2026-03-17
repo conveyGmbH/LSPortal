@@ -110,8 +110,6 @@
                 // This prevents showing stale data from previous event
                 if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
                     SalesforceLeadLib.clear(crmExportContainer);
-                    // Show loading indicator immediately
-                    crmExportContainer.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; min-height: 300px;"><div style="width: 48px; height: 48px; border: 4px solid #e5e7eb; border-top-color: var(--accent-color, #2563eb); border-radius: 50%; animation: spin 0.8s linear infinite;"></div><p class="text-textcolor" style="margin-top: 16px; font-size: 16px;">Loading fields...</p><style>@keyframes spin { to { transform: rotate(360deg); } }</style></div>';
                 }
 
                 var ret = new WinJS.Promise.as().then(function() {
@@ -135,20 +133,15 @@
                     if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.renderContactList === "function") {
                         var eventId = that.binding.eventId;
                         if (eventId) {
-                            // Force display the container (binding hides it when eventId is null)
-                            crmExportContainer.style.setProperty('display', 'block', 'important');
-                            // Hide the inactive message
-                            var inactiveMessage = crmExportContainer.parentElement.querySelector('.field_line_full');
-                            if (inactiveMessage) {
-                                inactiveMessage.style.setProperty('display', 'none', 'important');
-                            }
                             // Render contact list with batch transfer UI
                             SalesforceLeadLib.renderContactList(crmExportContainer, eventId).catch(function (err) {
                                 Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + err.message);
                             });
                         } else {
-                            Log.print(Log.l.error, namespaceName + ".Controller. No eventId available for CRM Export");
+                            Log.print(Log.l.info, namespaceName + ".Controller. No eventId available for CRM Export");
                         }
+                    } else {
+                        Log.print(Log.l.error, namespaceName + ".Controller. No SalesforceLeadLib available for CRM Export");
                     }
                 }).then(function() {
                     AppBar.triggerDisableHandlers();
