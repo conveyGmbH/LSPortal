@@ -35,7 +35,9 @@
 .contenthost-background {
     background-color: var(--ColorBackground);
 }
-
+#contenthost .pagecontrol:not(.view-size-medium) .cnv-autoresizecolumns .win-viewport {
+    touch-action: pan-x pan-y !important;
+}
 .navigationbar-container-horizontal {
     height: 48px;
     z-index: -10000;
