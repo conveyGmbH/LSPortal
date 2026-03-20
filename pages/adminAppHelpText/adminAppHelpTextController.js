@@ -262,6 +262,17 @@
                     that.binding.appHelpTextFlags.pForceVersionUpdate = 1;
                     that.showAppHelpText();
                     Log.ret(Log.l.trace);
+                },
+                changeSearchField: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppBar.modified = false;
+                    //that.saveRestriction();
+                    var master = Application.navigator.masterControl;
+                    if (master && master.controller) {
+                        master.controller.binding.searchString = event.target.value;
+                        master.controller.loadData();
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 

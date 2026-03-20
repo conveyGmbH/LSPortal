@@ -1981,6 +1981,7 @@
 
     "adminAppHelpTextList.title"			: "Seiten",
     "adminAppHelpTextList.inactive"     : "Inaktiv",
+	"adminAppHelpTextList.searchtxt"    : "Suche",
 
     "adminAppHelpText.title"			: "Seitenhilfstext",
 	"adminAppHelpText.pageTitledata"    : "Anwendungsname",

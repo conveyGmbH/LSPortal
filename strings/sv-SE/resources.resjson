@@ -1555,6 +1555,8 @@
 
     "adminAppHelpTextList.title"			: "Pages",
     "adminAppHelpTextList.inactive"     : "Inactive",
+    "adminAppHelpTextList.searchtxt"    : "Search",
+
     "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Page help text",
     "adminAppHelpText.titledata"			: "Title",

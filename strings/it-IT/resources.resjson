@@ -1954,6 +1954,8 @@
 	
     "adminAppHelpTextList.title"			: "Pagine",
     "adminAppHelpTextList.inactive"     : "Inattivo",
+    "adminAppHelpTextList.searchtxt"    : "Ricerca",
+
     "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Testo di aiuto della pagina",
     "adminAppHelpText.titledata"			: "Titolo",

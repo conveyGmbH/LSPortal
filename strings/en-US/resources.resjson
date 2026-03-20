@@ -1978,6 +1978,7 @@
 
     "adminAppHelpTextList.title"			: "Pages",
     "adminAppHelpTextList.inactive"     : "Inactive",
+    "adminAppHelpTextList.searchtxt"    : "Search",
 
     "adminAppHelpText.title"			: "Page help text",
     "adminAppHelpText.titledata"			: "Title",

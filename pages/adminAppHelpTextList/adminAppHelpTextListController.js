@@ -18,6 +18,7 @@
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
+                searchString: "",
                 count: 0,
                 recordId: 0,
                 languageId: 0
@@ -59,7 +60,7 @@
                 Log.ret(Log.l.trace);
             }
             this.setSelIndex = setSelIndex;
-            
+
             var loadNextUrl = function (recordId) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 if (that.pages && that.nextUrl && listView) {
@@ -205,7 +206,7 @@
                             var selectionCount = listControl.selection.count();
                             if (selectionCount === 1) {
                                 // Only one item is selected, show the page
-                                listControl.selection.getItems().done(function(items) {
+                                listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
                                     if (item.data &&
                                         item.data.LangAppHelpTextVIEWID !== that.binding.recordId) {
@@ -228,7 +229,7 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                onSelectionChangedInitSprache: function(event) {
+                onSelectionChangedInitSprache: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (event && event.target) {
                         var value = event.target.value;
@@ -443,6 +444,87 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
+                    if (that.binding.searchString.length === 0) {
+                        return WinJS.Promise.as();
+                    }
+                    return AppData.call("PRC_FindAppHelpText",
+                        {
+                            pSuchString: that.binding.searchString,
+                            pLanguageSpecID: typeof that.binding.languageId === "string" ? parseInt(that.binding.languageId) : that.binding.languageId
+                        },
+                        function (json) {
+                            Log.print(Log.l.info,
+                                "call PRC_FindAppHelpText success! json=" + (json ? JSON.stringify(json) : ""));
+                            if (!recordId) {
+                                if (json && json.d && json.d.results.length > 0) {
+                                    that.binding.count = json.d.results.length;
+                                    that.nextUrl = AdminAppHelpTextList.appHelpTextView.getNextUrl(json);
+                                    var results = json.d.results;
+                                    results.forEach(function (item, index) {
+                                        that.resultConverter(item, index);
+                                    });
+                                    that.pages = new WinJS.Binding.List(results);
+
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = that.pages.dataSource;
+                                    }
+                                    that.selectRecordId(json.d.results[0].LangAppHelpTextVIEWID);
+                                } else {
+                                    that.binding.count = 0;
+                                    that.nextUrl = null;
+                                    that.pages = null;
+                                    if (listView.winControl) {
+                                        // add ListView dataSource
+                                        listView.winControl.itemDataSource = null;
+                                    }
+                                    progress = listView.querySelector(".list-footer .progress");
+                                    counter = listView.querySelector(".list-footer .counter");
+                                    if (progress && progress.style) {
+                                        progress.style.display = "none";
+                                    }
+                                    if (counter && counter.style) {
+                                        counter.style.display = "inline";
+                                    }
+                                    that.loading = false;
+                                }
+                            } else {
+                                if (json && json.d && that.pages) {
+                                    var scope = that.scopeFromRecordId(recordId);
+                                    if (scope) {
+                                        var prevNotifyModified = AppBar.notifyModified;
+                                        AppBar.notifyModified = false;
+                                        var item = json.d;
+                                        that.resultConverter(item, scope.index);
+                                        that.pages.setAt(scope.index, item);
+                                        AppBar.notifyModified = prevNotifyModified;
+                                    }
+                                }
+                            }
+                        },
+                        function (errorResponse) {
+                            Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
+                            progress = listView.querySelector(".list-footer .progress");
+                            counter = listView.querySelector(".list-footer .counter");
+                            if (progress && progress.style) {
+                                progress.style.display = "none";
+                            }
+                            if (counter && counter.style) {
+                                counter.style.display = "inline";
+                            }
+                            that.loading = false;
+                            //AppBar.busy = false;
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                            if (typeof error === "function") {
+                                error(errorResponse);
+                            }
+                        });
+                }).then(function () {
+                    if (that.binding.searchString && that.binding.searchString.length > 0) {
+                        return WinJS.Promise.as();
+                    }
                     return AdminAppHelpTextList.appHelpTextView.select(function (json) {
                         // this callback will be called asynchronously
                         // when the response is available
@@ -508,7 +590,7 @@
                             counter.style.display = "inline";
                         }
                         that.loading = false;
-                        }, { LanguageSpecID: parseInt(that.binding.languageId) }, recordId);
+                    }, { LanguageSpecID: parseInt(that.binding.languageId) }, recordId);
                 });
                 Log.ret(Log.l.trace);
                 return ret;

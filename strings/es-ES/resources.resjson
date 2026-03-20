@@ -1570,6 +1570,8 @@
 
     "adminAppHelpTextList.title"			: "Seiten",
     "adminAppHelpTextList.inactive"     : "Inaktiv",
+    "adminAppHelpTextList.searchtxt"    : "Suche",
+
     "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Seitenhilfstext",
     "adminAppHelpText.titledata"			: "Titel",
