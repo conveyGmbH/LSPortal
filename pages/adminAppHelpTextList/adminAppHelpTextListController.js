@@ -444,115 +444,64 @@
                         return WinJS.Promise.as();
                     }
                 }).then(function () {
-                    if (that.binding.searchString.length === 0) {
-                        return WinJS.Promise.as();
-                    }
-                    return AppData.call("PRC_FindAppHelpText",
-                        {
-                            pSuchString: that.binding.searchString,
-                            pLanguageSpecID: typeof that.binding.languageId === "string" ? parseInt(that.binding.languageId) : that.binding.languageId
-                        },
-                        function (json) {
-                            Log.print(Log.l.info,
-                                "call PRC_FindAppHelpText success! json=" + (json ? JSON.stringify(json) : ""));
-                            if (!recordId) {
-                                if (json && json.d && json.d.results.length > 0) {
-                                    that.binding.count = json.d.results.length;
-                                    that.nextUrl = AdminAppHelpTextList.appHelpTextView.getNextUrl(json);
-                                    var results = json.d.results;
-                                    results.forEach(function (item, index) {
-                                        that.resultConverter(item, index);
-                                    });
-                                    that.pages = new WinJS.Binding.List(results);
+                    if (that.binding.searchString.length === 0 || recordId) {
+                        return AdminAppHelpTextList.appHelpTextView.select(function(json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "select fairMandantView: success!");
+                                // employeeView returns object already parsed from json file in response
+                                if (!recordId) {
+                                    if (json && json.d && json.d.results.length > 0) {
+                                        that.binding.count = json.d.results.length;
+                                        that.nextUrl = AdminAppHelpTextList.appHelpTextView.getNextUrl(json);
+                                        var results = json.d.results;
+                                        results.forEach(function(item, index) {
+                                            that.resultConverter(item, index);
+                                        });
+                                        that.pages = new WinJS.Binding.List(results);
 
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = that.pages.dataSource;
+                                        if (listView.winControl) {
+                                            // add ListView dataSource
+                                            listView.winControl.itemDataSource = that.pages.dataSource;
+                                        }
+                                        that.selectRecordId(json.d.results[0].LangAppHelpTextVIEWID);
+                                    } else {
+                                        that.binding.count = 0;
+                                        that.nextUrl = null;
+                                        that.pages = null;
+                                        if (listView.winControl) {
+                                            // add ListView dataSource
+                                            listView.winControl.itemDataSource = null;
+                                        }
+                                        progress = listView.querySelector(".list-footer .progress");
+                                        counter = listView.querySelector(".list-footer .counter");
+                                        if (progress && progress.style) {
+                                            progress.style.display = "none";
+                                        }
+                                        if (counter && counter.style) {
+                                            counter.style.display = "inline";
+                                        }
+                                        that.loading = false;
                                     }
-                                    that.selectRecordId(json.d.results[0].LangAppHelpTextVIEWID);
                                 } else {
-                                    that.binding.count = 0;
-                                    that.nextUrl = null;
-                                    that.pages = null;
-                                    if (listView.winControl) {
-                                        // add ListView dataSource
-                                        listView.winControl.itemDataSource = null;
-                                    }
-                                    progress = listView.querySelector(".list-footer .progress");
-                                    counter = listView.querySelector(".list-footer .counter");
-                                    if (progress && progress.style) {
-                                        progress.style.display = "none";
-                                    }
-                                    if (counter && counter.style) {
-                                        counter.style.display = "inline";
-                                    }
-                                    that.loading = false;
-                                }
-                            } else {
-                                if (json && json.d && that.pages) {
-                                    var scope = that.scopeFromRecordId(recordId);
-                                    if (scope) {
-                                        var prevNotifyModified = AppBar.notifyModified;
-                                        AppBar.notifyModified = false;
-                                        var item = json.d;
-                                        that.resultConverter(item, scope.index);
-                                        that.pages.setAt(scope.index, item);
-                                        AppBar.notifyModified = prevNotifyModified;
+                                    if (json && json.d && that.pages) {
+                                        var scope = that.scopeFromRecordId(recordId);
+                                        if (scope) {
+                                            var prevNotifyModified = AppBar.notifyModified;
+                                            AppBar.notifyModified = false;
+                                            var item = json.d;
+                                            that.resultConverter(item, scope.index);
+                                            that.pages.setAt(scope.index, item);
+                                            AppBar.notifyModified = prevNotifyModified;
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        function (errorResponse) {
-                            Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
-                            progress = listView.querySelector(".list-footer .progress");
-                            counter = listView.querySelector(".list-footer .counter");
-                            if (progress && progress.style) {
-                                progress.style.display = "none";
-                            }
-                            if (counter && counter.style) {
-                                counter.style.display = "inline";
-                            }
-                            that.loading = false;
-                            //AppBar.busy = false;
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                            if (typeof error === "function") {
-                                error(errorResponse);
-                            }
-                        });
-                }).then(function () {
-                    if (that.binding.searchString && that.binding.searchString.length > 0) {
-                        return WinJS.Promise.as();
-                    }
-                    return AdminAppHelpTextList.appHelpTextView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "select fairMandantView: success!");
-                        // employeeView returns object already parsed from json file in response
-                        if (!recordId) {
-                            if (json && json.d && json.d.results.length > 0) {
-                                that.binding.count = json.d.results.length;
-                                that.nextUrl = AdminAppHelpTextList.appHelpTextView.getNextUrl(json);
-                                var results = json.d.results;
-                                results.forEach(function (item, index) {
-                                    that.resultConverter(item, index);
-                                });
-                                that.pages = new WinJS.Binding.List(results);
-
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.pages.dataSource;
-                                }
-                                that.selectRecordId(json.d.results[0].LangAppHelpTextVIEWID);
-                            } else {
-                                that.binding.count = 0;
-                                that.nextUrl = null;
-                                that.pages = null;
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = null;
-                                }
+                            },
+                            function(errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                Log.print(Log.l.error, "select fairMandantView: error!");
+                                AppData.setErrorMsg(that.binding, errorResponse);
                                 progress = listView.querySelector(".list-footer .progress");
                                 counter = listView.querySelector(".list-footer .counter");
                                 if (progress && progress.style) {
@@ -562,35 +511,82 @@
                                     counter.style.display = "inline";
                                 }
                                 that.loading = false;
-                            }
-                        } else {
-                            if (json && json.d && that.pages) {
-                                var scope = that.scopeFromRecordId(recordId);
-                                if (scope) {
-                                    var prevNotifyModified = AppBar.notifyModified;
-                                    AppBar.notifyModified = false;
-                                    var item = json.d;
-                                    that.resultConverter(item, scope.index);
-                                    that.pages.setAt(scope.index, item);
-                                    AppBar.notifyModified = prevNotifyModified;
+                            }, { LanguageSpecID: parseInt(that.binding.languageId) }, recordId);
+                    } else {
+                        return AppData.call("PRC_FindAppHelpText",
+                            {
+                                pSuchString: that.binding.searchString,
+                                pLanguageSpecID: typeof that.binding.languageId === "string" ? parseInt(that.binding.languageId) : that.binding.languageId
+                            },
+                            function (json) {
+                                Log.print(Log.l.info,
+                                    "call PRC_FindAppHelpText success! json=" + (json ? JSON.stringify(json) : ""));
+                                if (!recordId) {
+                                    if (json && json.d && json.d.results.length > 0) {
+                                        that.binding.count = json.d.results.length;
+                                        that.nextUrl = AdminAppHelpTextList.appHelpTextView.getNextUrl(json);
+                                        var results = json.d.results;
+                                        results.forEach(function (item, index) {
+                                            that.resultConverter(item, index);
+                                        });
+                                        that.pages = new WinJS.Binding.List(results);
+
+                                        if (listView.winControl) {
+                                            // add ListView dataSource
+                                            listView.winControl.itemDataSource = that.pages.dataSource;
+                                        }
+                                        that.selectRecordId(json.d.results[0].LangAppHelpTextVIEWID);
+                                    } else {
+                                        that.binding.count = 0;
+                                        that.nextUrl = null;
+                                        that.pages = null;
+                                        if (listView.winControl) {
+                                            // add ListView dataSource
+                                            listView.winControl.itemDataSource = null;
+                                        }
+                                        progress = listView.querySelector(".list-footer .progress");
+                                        counter = listView.querySelector(".list-footer .counter");
+                                        if (progress && progress.style) {
+                                            progress.style.display = "none";
+                                        }
+                                        if (counter && counter.style) {
+                                            counter.style.display = "inline";
+                                        }
+                                        that.loading = false;
+                                    }
+                                } else {
+                                    if (json && json.d && that.pages) {
+                                        var scope = that.scopeFromRecordId(recordId);
+                                        if (scope) {
+                                            var prevNotifyModified = AppBar.notifyModified;
+                                            AppBar.notifyModified = false;
+                                            var item = json.d;
+                                            that.resultConverter(item, scope.index);
+                                            that.pages.setAt(scope.index, item);
+                                            AppBar.notifyModified = prevNotifyModified;
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        Log.print(Log.l.error, "select fairMandantView: error!");
-                        AppData.setErrorMsg(that.binding, errorResponse);
-                        progress = listView.querySelector(".list-footer .progress");
-                        counter = listView.querySelector(".list-footer .counter");
-                        if (progress && progress.style) {
-                            progress.style.display = "none";
-                        }
-                        if (counter && counter.style) {
-                            counter.style.display = "inline";
-                        }
-                        that.loading = false;
-                    }, { LanguageSpecID: parseInt(that.binding.languageId) }, recordId);
+                            }, function (errorResponse) {
+                                Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
+                                progress = listView.querySelector(".list-footer .progress");
+                                counter = listView.querySelector(".list-footer .counter");
+                                if (progress && progress.style) {
+                                    progress.style.display = "none";
+                                }
+                                if (counter && counter.style) {
+                                    counter.style.display = "inline";
+                                }
+                                that.loading = false;
+                                //AppBar.busy = false;
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                                if (typeof error === "function") {
+                                    error(errorResponse);
+                                }
+                            });
+                    }
                 });
                 Log.ret(Log.l.trace);
                 return ret;
