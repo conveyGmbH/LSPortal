@@ -224,14 +224,12 @@
                 var curPageId = Application.getPageId(Application.navigator._lastPage);
                 var onLoginPage = curPageId === "dbinit" || curPageId === "login" || curPageId === "account";
                 if (errorResponse.status === 401 && !onLoginPage) {
+                    AppData.cancelPromises();
                     // user is not authorized to access this service
                     AppBar.scope.binding.generalData.notAuthorizedUser = true;
                     //var errorMessage = getResourceText("general.unauthorizedUser");
                     AppBar.scope.binding.generalData.oDataErrorMsg = getResourceText("general.unauthorizedUser") + "\n\nError: " + (errorResponse && errorResponse.statusText);
                     alert(AppBar.scope.binding.generalData.oDataErrorMsg);
-                }
-                AppData.cancelPromises();
-                if (!onLoginPage) {
                     WinJS.Promise.timeout(0).then(function () {
                         Application.navigateById("login");
                     });
