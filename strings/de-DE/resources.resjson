@@ -301,6 +301,13 @@
     "contact.mrs"           : "Frau",
     "contact.useRestriction": "Verwenden",
     "contact.mandatoryEmpty": "Pflichtfelder nicht vollständig ausgefüllt",
+    "contact.ocrStatus"          : "OCR Status",
+    "contact.ocrStatus_ocr_todo" : "OCR Ausstehend",
+    "contact.ocrStatus_ocr_done" : "Remapping Ausstehend",
+    "contact.ocrStatus_bci_todo" : "KI-Verarbeitung Ausstehend",
+    "contact.ocrStatus_bci_done" : "Verarbeitung Abgeschlossen",
+    "contact.ocrStatus_ocr_error": "OCR Fehler",
+    "contact.ocrStatus_bci_error": "KI-Verarbeitung Fehler",
 
     "contactRemote.title"   : "Bereits hochgeladener Kontakt",
 

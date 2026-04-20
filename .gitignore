@@ -50,6 +50,7 @@ CLAUDE.md
 *.cursor*
 .windsurfrules
 .superdesign/
+.DS_Store
 
 # Documentation PDFs and Markdown docs
 *.pdf

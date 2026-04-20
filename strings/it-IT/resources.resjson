@@ -301,6 +301,13 @@
     "contact.useRestriction": "Utilizza",
     "contact.comment3"      : "Commenti e note guida",
     "contact.mandatoryEmpty": "Campi obbligatori non compilati completamente",
+    "contact.ocrStatus"          : "OCR Processing Status",
+    "contact.ocrStatus_ocr_todo" : "OCR pending",
+    "contact.ocrStatus_ocr_done" : "Remap pending",
+    "contact.ocrStatus_bci_todo" : "AI Reprocessing pending",
+    "contact.ocrStatus_bci_done" : "Processing complete",
+    "contact.ocrStatus_ocr_error": "OCR Error",
+    "contact.ocrStatus_bci_error": "AI Error",
 
     "contactRemote.title"   : "Contatto già caricato",
 

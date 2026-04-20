@@ -412,6 +412,29 @@
                 } else {
                     item.complete = 1;
                 }
+                switch (item.OCRStatus) {
+                    case 'OCR_TODO':
+                        item.OCRDisplay = getResourceText('contact.ocrStatus_ocr_todo');
+                        break;
+                    case 'OCR_DONE':
+                        item.OCRDisplay = getResourceText('contact.ocrStatus_ocr_done');
+                        break;
+                    case 'BCI_TODO':
+                        item.OCRDisplay = getResourceText('contact.ocrStatus_bci_todo');
+                        break;
+                    case 'BCI_DONE':
+                        item.OCRDisplay = getResourceText('contact.ocrStatus_bci_done');
+                        break;
+                    case 'OCR_ERROR':
+                        item.OCRDisplay = getResourceText('contact.ocrStatus_ocr_error');
+                        break;
+                    case 'BCI_ERROR':
+                        item.OCRDisplay = getResourceText('contact.ocrStatus_bci_error');
+                        break;
+                    default:
+                        item.OCRDisplay = item.OCRStatus;
+                        break;
+                }
                 item.Mitarbeiter_Fullname = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") + (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
                 item.Bearbeiter_Fullname = (item.Bearbeiter_Vorname ? (item.Bearbeiter_Vorname + " ") : "") + (item.Bearbeiter_Nachname ? item.Bearbeiter_Nachname : "");
             }
