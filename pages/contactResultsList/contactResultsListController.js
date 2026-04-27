@@ -272,6 +272,7 @@
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.selectionChanged().then(function () {
                         AppData.setRecordId("Kontakt", that.curRecId);
+                        ContactResultsList._selectedContactId = that.curRecId;
                         that.binding.btnFlag = true;
                         AppBar.modified = true;
                     });
@@ -322,6 +323,9 @@
                                 "barcode-qr": { useStrokeColor: false }
                             });
                         } else if (listView.winControl.loadingState === "complete") {
+                            if (!that.curRecId && ContactResultsList._selectedContactId) {
+                                that.selectRecordId(ContactResultsList._selectedContactId);
+                            }
                         }
                     }
                     that.loadingStateChanged(eventInfo);
