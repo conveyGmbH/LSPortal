@@ -405,7 +405,7 @@
                     item.showNew = false;
                     item.showNotNew = false;
                 } else {
-                    item.showNew = !item.FirstUsedTS;
+                    item.showNew = item.LastCallTS && !item.FirstUsedTS;
                     item.showNotNew = !item.showNew;
                 }
                 item.OvwContentDOCCNT3 = "";
