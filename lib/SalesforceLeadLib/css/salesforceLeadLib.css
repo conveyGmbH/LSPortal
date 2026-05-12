@@ -12,6 +12,49 @@
     animation: dialogFadeIn 0.2s ease-out;
 }
 
+.sf-lib-dialog.cnv-ui-dark {
+    background: var(--Window, #111827) !important;
+    color: var(--WindowText, #f9fafb) !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark [style*="background: var(--Window, white)"],
+.sf-lib-dialog.cnv-ui-dark [style*="background-color: white"],
+.sf-lib-dialog.cnv-ui-dark [style*="background: white"] {
+    background: var(--Window, #111827) !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark [style*="background: var(--box-bkg, #f9fafb)"],
+.sf-lib-dialog.cnv-ui-dark [style*="background: #f9fafb"] {
+    background: var(--box-bkg, #1f2937) !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark [style*="color: #374151"],
+.sf-lib-dialog.cnv-ui-dark [style*="color: var(--WindowText, #374151)"] {
+    color: var(--WindowText, #e5e7eb) !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark [style*="color: #1f2937"],
+.sf-lib-dialog.cnv-ui-dark [style*="color: var(--WindowText, #1f2937)"] {
+    color: var(--WindowText, #f9fafb) !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark [style*="color: #6b7280"],
+.sf-lib-dialog.cnv-ui-dark [style*="color: var(--WindowText, #6b7280)"] {
+    color: #d1d5db !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark [style*="border: 1px solid #d1d5db"],
+.sf-lib-dialog.cnv-ui-dark [style*="border: 1px solid #e5e7eb"],
+.sf-lib-dialog.cnv-ui-dark [style*="border-top: 1px solid #e5e7eb"] {
+    border-color: #525252 !important;
+}
+
+.sf-lib-dialog.cnv-ui-dark input {
+    background: var(--Window, #111827) !important;
+    color: var(--WindowText, #f9fafb) !important;
+    border-color: #525252 !important;
+}
+
 @keyframes dialogFadeIn {
     from {
         opacity: 0;
