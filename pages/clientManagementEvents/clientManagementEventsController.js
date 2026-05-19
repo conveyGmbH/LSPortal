@@ -119,7 +119,7 @@
             var changeEvent = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.setErrorMsg(that.binding);
-                AppData.call("PRC_ChangeUserVeranstaltung", {
+                AppData.call("PRC_ChangeSiteVeranstaltung", {
                     pNewVeranstaltungID: that.eventsId,
                     pLoginName: AppData._persistentStates.odata.login
                 }, function (json) {
@@ -164,7 +164,12 @@
                                 // Only one item is selected, show the page
                                 listControl.selection.getItems().done(function (items) {
                                     var item = items[0];
+                                    if (item.data.FairMandantVeranstID) {
+                                        that.eventsId = -item.data.FairMandantVeranstID;
+                                    } else {
                                     that.eventsId = item.data.VeranstaltungID;
+                                    }
+                                    AppBar.triggerDisableHandlers();
                                 });
                             }
                         }
@@ -272,7 +277,7 @@
                     return true;
                 },
                 clickChange: function() {
-                    if (that.eventsId && AppData.generalData.eventId !== that.eventsId) {
+                    if (that.eventsId && AppData.generalData.fairMandantVeranstID !== that.eventsId) {
                         return false;
                     } else {
                         return true;
@@ -312,7 +317,7 @@
                                     });
                                     that.events = new WinJS.Binding.List(results);
                                     that.binding.count = results.length;
-                                    that.eventsId = results[0].VeranstaltungID;
+                                    that.eventsId = -results[0].FairMandantVeranstID;
                                     if (listView.winControl) {
                                         // add ListView dataSource
                                         listView.winControl.itemDataSource = that.events.dataSource;
