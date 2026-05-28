@@ -167,6 +167,7 @@
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
+        { id: "contactResultsEvents", group: 6, svg: "myEvent", disabled: true, predecGroup: 29 },
         //Dashboards #8177
         //{ id: "dashBoard", group: 15, svg: "dashboard", disabled: true, popup: true },
         { id: "start", group: 15, svg: "dashboard", disabled: true},
@@ -279,7 +280,7 @@
         { id: "visitorFlowDashboard", group: -20, disabled: true },
         { id: "visitorFlowEntExt", group: -22, disabled: true },
         { id: "contactResultsList", group: 29, disabled: true },
-        //{ id: "contactResultsEvents", group: 68, disabled: false },
+        { id: "contactResultsEvents", group: 68, disabled: false },
         { id: "contactResultsEdit", group: 68, disabled: false },
         //{ id: "contactResultsCriteria", group: 68, disabled: false },
         { id: "contactResultsQuestion", group: 68, disabled: false },
