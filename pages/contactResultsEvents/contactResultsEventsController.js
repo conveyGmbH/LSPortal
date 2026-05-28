@@ -70,6 +70,7 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 that.resultConverter(data);
                 that.binding.dataContact = data;
+                AppBar.triggerDisableHandlers();
                 Log.ret(Log.l.trace);
             }
             this.setDataContact = setDataContact;
@@ -185,9 +186,26 @@
                     }
                     Log.ret(Log.l.trace);
                 },
-                clickOk: function (event) {
+                clickConfirm: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.saveData();
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_ConfirmContact", {
+                        pKontaktID: that.binding.dataContact && that.binding.dataContact.KontaktVIEWID
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        that.loadData().then(function () {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                    master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                });
+                            }
+                        });
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
+
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -225,6 +243,15 @@
             this.disableHandlers = {
                 clickBack: function () {
                     if (WinJS.Navigation.canGoBack === true) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                clickConfirm: function() {
+                    if (that.binding.dataContact &&
+                        that.binding.dataContact.KontaktVIEWID &&
+                        that.binding.dataContact.ConfirmStatus === 3) {
                         return false;
                     } else {
                         return true;

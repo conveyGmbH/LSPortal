@@ -447,6 +447,8 @@
                         item.svgSource = "barcode-qr"; //item.IMPORT_CARDSCANID ? "barcode-qr" : "barcode"
                     } else if (!item.SHOW_Barcode && item.IMPORT_CARDSCANID && item.SHOW_Visitenkarte) {
                         item.svgSource = item.OvwContentDOCCNT3 ? "" : "document_empty_landscape";
+                    } else if (item.ConfirmStatus === 3) {
+                        item.svgSource = "key3";
                     } else {
                         item.svgSource = "manuel_Portal";
                     }

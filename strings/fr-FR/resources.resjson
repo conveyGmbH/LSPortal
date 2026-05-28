@@ -92,6 +92,7 @@
     "command.eventFavourite" : "Favourite",
     "command.testmailopen"  : "Tester l’e-mail",
     "command.addLicences"  : "Autres licences",
+    "command.confirmRegistration" : "Confirmer",
 
     "tooltip.backward"      : "Page précédente",
     "tooltip.edit"          : "Modifier le contact en cours",
@@ -200,6 +201,7 @@
     "tooltip.crmSettings" : "Paramètres d'exportation CRM",
     "tooltip.contactCrmExport" : "Exportation CRM du contact",
     "tooltip.crmExport" : "Exportation CRM batch",
+    "tooltip.confirmRegistration" : "Confirmer l'inscription et envoyer un e-mail",
 
     "home.title"            : "Start",
     "home.info"             : "Instructions importantes",

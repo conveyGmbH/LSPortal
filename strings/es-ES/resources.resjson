@@ -74,6 +74,7 @@
     "command.forceVersionUpdate" : "Update erzwingen",
     "command.eventFavourite" : "Favourite",
     "command.testmailopen"  : "E-Mail testen",
+    "command.confirmRegistration" : "Confirm",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -163,6 +164,7 @@
     "tooltip.crmSettings" : "CRM Export Settings",
     "tooltip.contactCrmExport" : "Contact CRM Export",
     "tooltip.crmExport" : "CRM batch export",
+    "tooltip.confirmRegistration" : "Confirm registration and send email",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
