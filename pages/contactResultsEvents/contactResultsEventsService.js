@@ -33,7 +33,11 @@
         incidentView: {
             select: function (complete, error, restriction) {
                 Log.call(Log.l.trace, namespaceName + ".incidentView.", "restriction=" + (restriction ? JSON.stringify(restriction) : ""));
-                var ret = ContactResultsEvents._incidentView.select(complete, error, restriction);
+                var ret = ContactResultsEvents._incidentView.select(complete, error, restriction, {
+                    ordered: true,
+                    orderAttribute: "IncidentVIEWID",
+                    desc: true
+                });
                 Log.ret(Log.l.trace);
                 return ret;
             }
