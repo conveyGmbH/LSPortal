@@ -249,12 +249,14 @@
                 clickShow: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.appHelpTextFlags.pShow = 1;
+                    that.binding.appHelpTextFlags.pForceVersionUpdate = 0;
                     that.showAppHelpText();
                     Log.ret(Log.l.trace);
                 },
                 clickHide: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.binding.appHelpTextFlags.pShow = 0;
+                    that.binding.appHelpTextFlags.pForceVersionUpdate = 0;
                     that.showAppHelpText();
                     Log.ret(Log.l.trace);
                 },
