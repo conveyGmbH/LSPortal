@@ -1972,6 +1972,7 @@
 
     "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Texte auxiliaire de la page",
+    "adminAppHelpText.status"			: "Status",
     "adminAppHelpText.titledata"			: "Titre",
     "adminAppHelpText.subTitle"			: "Texte de description du titre",
     "adminAppHelpText.mediaURL"			: "URL du média",

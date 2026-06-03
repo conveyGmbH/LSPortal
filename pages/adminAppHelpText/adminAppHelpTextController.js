@@ -203,7 +203,9 @@
                 },
                 clickOk: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
-                    that.saveData();
+                    that.saveData(function() {
+                        that.loadData();
+                    });
                     Log.ret(Log.l.trace);
                 },
                 blockEnterKey: function (event) {

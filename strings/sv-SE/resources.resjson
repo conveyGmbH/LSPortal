@@ -1613,6 +1613,7 @@
 
     "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.title"			: "Page help text",
+    "adminAppHelpText.status"			: "Status",
     "adminAppHelpText.titledata"			: "Title",
     "adminAppHelpText.subTitle"			: "Title description text",
     "adminAppHelpText.mediaURL"			: "Media url",

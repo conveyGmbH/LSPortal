@@ -517,8 +517,7 @@
                             {
                                 pSuchString: that.binding.searchString,
                                 pLanguageSpecID: typeof that.binding.languageId === "string" ? parseInt(that.binding.languageId) : that.binding.languageId
-                            },
-                            function (json) {
+                            }, function (json) {
                                 Log.print(Log.l.info,
                                     "call PRC_FindAppHelpText success! json=" + (json ? JSON.stringify(json) : ""));
                                 if (!recordId) {

@@ -1997,6 +1997,7 @@
     "adminAppHelpText.title"			: "Seitenhilfstext",
 	"adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.titledata"			: "Titel",
+	"adminAppHelpText.status"			: "Status",
     "adminAppHelpText.subTitle"			: "Titelbeschreibungstext",
     "adminAppHelpText.mediaURL"			: "Medien-Url",
     "adminAppHelpText.bodyText"			: "Hilfstext",

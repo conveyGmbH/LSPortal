@@ -1993,6 +1993,7 @@
 
     "adminAppHelpText.title"			: "Page help text",
     "adminAppHelpText.titledata"			: "Title",
+    "adminAppHelpText.status"			: "Status",
     "adminAppHelpText.pageTitledata"    : "Anwendungsname",
     "adminAppHelpText.subTitle"			: "Title description text",
     "adminAppHelpText.mediaURL"			: "Media url",
