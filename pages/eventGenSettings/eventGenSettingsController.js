@@ -271,6 +271,20 @@
                             that.binding.dataEvent.RequireReg = null;
                         }
                         break;
+                    case "confirmRegistration":
+                        if (checked) {
+                            that.binding.dataEvent.ConfirmRegistration = 1;
+                        } else {
+                            that.binding.dataEvent.ConfirmRegistration = null;
+                        }
+                        break;
+                    case "noNewRegistration":
+                        if (checked) {
+                            that.binding.dataEvent.NoNewRegistration = 1;
+                        } else {
+                            that.binding.dataEvent.NoNewRegistration = null;
+                        }
+                        break;
                     case "acceptRec":
                         if (checked) {
                             that.binding.dataEvent.AcceptRec = 1;

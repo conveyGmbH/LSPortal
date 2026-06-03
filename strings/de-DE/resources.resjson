@@ -1653,6 +1653,8 @@
     "eventGenSettings.listremovedate"			: "Anzeigeendedatum",
     "eventGenSettings.listremovetime"			: "Anzeigeendezeit",
 	"eventGenSettings.requirereg"			: "Registrierungsplicht",
+    "eventGenSettings.confirmRegistration"	: "Registrierung freischalten",
+    "eventGenSettings.noNewRegistration"	: "Keine Neuregistrierung",
     "eventGenSettings.acceptreg"			: "Gültig für ganze Serie",
     "eventGenSettings.welcomemessage"			: "Willkommensnachricht",
     "eventGenSettings.logouturl"			: "Link Logout-Seite",

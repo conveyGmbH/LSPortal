@@ -1672,6 +1672,8 @@
     "eventGenSettings.listremovedate"			: "Afficher la date de fin",
     "eventGenSettings.listremovetime"			: "Afficher l'heure de fin",
     "eventGenSettings.requirereg"			: "Enregistrement obligatoire",
+    "eventGenSettings.confirmRegistration"	: "Autoriser l'enregistrement",
+    "eventGenSettings.noNewRegistration"	: "Pas de nouvelle enregistrement",
     "eventGenSettings.acceptreg"			: "Enregistrement valable pour l'ensemble de la série",
     "eventGenSettings.welcomemessage"			: "Message de bienvenue",
     "eventGenSettings.logouturl"			: "Lien page de déconnexion",

@@ -135,6 +135,22 @@
                                          onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
                                     </div>
                                 </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.confirmRegistration'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+	                                <div id="confirmRegistration" class="input_field_toggle"
+	                                     data-win-control="WinJS.UI.ToggleSwitch"
+	                                     data-win-bind="winControl.checked: dataEvent.ConfirmRegistration; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+	                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+	                                </div>
+                                </div>
+                                <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.noNewRegistration'}"></span>
+                                <div class="input_field_toggle_parent toggle-switch-parent">
+	                                <div id="noNewRegistration" class="input_field_toggle"
+	                                     data-win-control="WinJS.UI.ToggleSwitch"
+	                                     data-win-bind="winControl.checked: dataEvent.NoNewRegistration; winControl.labelOn: generalData.on; winControl.labelOff: generalData.off"
+	                                     onclick="AppBar.handleEvent('click', 'clickChangeAppSetting', event)">
+	                                </div>
+                                </div>
                                 <span class="label landscape_only toggle" data-win-res="{textContent: 'eventGenSettings.acceptreg'}"></span>
                                 <div class="input_field_toggle_parent toggle-switch-parent">
                                     <div id="acceptRec" class="input_field_toggle"

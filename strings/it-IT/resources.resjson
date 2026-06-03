@@ -1670,6 +1670,8 @@
     "eventGenSettings.listremovedate"			: "Visualizza la data di fine",
     "eventGenSettings.listremovetime"			: "Visualizza l'ora di fine",
     "eventGenSettings.requirereg"			: "Registrazione obbligatoria",
+    "eventGenSettings.confirmRegistration"	: "Autorizza la registrazione",
+    "eventGenSettings.noNewRegistration"	: "Non consentire nuove registrazioni",
     "eventGenSettings.acceptreg"			: "Registrazione valida per tutta la serie",
     "eventGenSettings.welcomemessage"			: "Messaggio di benvenuto",
     "eventGenSettings.logouturl"			: "Link pagina di logout",

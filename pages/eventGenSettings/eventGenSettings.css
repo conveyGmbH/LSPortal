@@ -9,6 +9,12 @@
 #requireReg .win-toggleswitch-header {
     display: none;
 }
+#confirmRegistration .win-toggleswitch-header {
+    display: none;
+}
+#noNewRegistration .win-toggleswitch-header {
+    display: none;
+}
 #acceptRec .win-toggleswitch-header {
     display: none;
 }

@@ -1676,6 +1676,8 @@
     "eventGenSettings.listremovedate"			: "Display end date",
     "eventGenSettings.listremovetime"			: "Display end time",
     "eventGenSettings.requirereg"			: "Mandatory registration",
+    "eventGenSettings.confirmRegistration"	: "Confirm registration",
+    "eventGenSettings.noNewRegistration"	: "No new registration",
     "eventGenSettings.acceptreg"			: "Registration valid for whole series",
     "eventGenSettings.welcomemessage"			: "Welcome message",
     "eventGenSettings.logouturl"			: "Logout page link",
