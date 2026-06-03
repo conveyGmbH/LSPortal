@@ -342,6 +342,8 @@
                                 var result = json.d;
                                 that.binding.pageLandId = result.LangAppHelpTextVIEWID;
                                 that.binding.pageData = result;
+                                that.binding.pageData.VersionText =
+                                    that.binding.pageData.Version ? "V. " + that.binding.pageData.Version : getResourceText("adminAppHelpTextList.inactive");
                                 Log.print(Log.l.trace, "Data loaded");
                             }
                         }, function (errorResponse) {
