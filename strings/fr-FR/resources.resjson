@@ -1980,13 +1980,18 @@
     "adminAppHelpText.htmlupload"			: "Télécharger le fichier html",
 
     "crmSettings.title" : "Paramètres d'exportation CRM",
-    "crmSettings.inactiveMessage" : "L'exportation CRM n'est pas activée",
+    "crmSettings.inactiveTitle" : "Module CRM non activé",
+    "crmSettings.inactiveMessage" : "L'intégration Salesforce n'est pas activée pour ce client.",
+    "crmSettings.inactiveHint" : "Ce module est activé dès l'achat du package Salesforce. Pour toute information, contactez votre interlocuteur LeadSuccess.",
 
     "contactCrmExport.title" : "Exportation CRM du contact",
     "contactCrmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
 
     "crmExport.title" : "Exportation groupée CRM",
-    "crmExport.inactiveMessage" : "L'exportation CRM n'est pas activée",
+    "crmExport.inactiveTitle" : "Module CRM non activé",
+    "crmExport.inactiveMessage" : "L'intégration Salesforce n'est pas activée pour ce client.",
+    "crmExport.inactiveHint" : "Ce module est activé dès l'achat du package Salesforce. Pour toute information, contactez votre interlocuteur LeadSuccess.",
+    "crmExport.connectFirst" : "Veuillez d'abord vous connecter à Salesforce",
 
     "tfa.title": "Authentification à Deux Facteurs",
     "tfa.loading": "Chargement de l'authentification à deux facteurs...",

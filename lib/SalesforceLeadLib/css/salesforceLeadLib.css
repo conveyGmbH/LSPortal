@@ -2,6 +2,40 @@
 /* Dark Mode Support using .cnv-ui-dark class and portal CSS classes */
 
 /* ============================================
+   THEME VARIABLE BRIDGE  (fixes light/dark inconsistency)
+   The library was written against custom variables that the portal theme
+   engine does NOT define (--accent-color, --box-bkg, --text-color,
+   --label-color, --sf-border). With no value they fell back to hard-coded
+   greys that ignored the active theme — which is why the UI broke when
+   switching dark <-> light. Here we MAP those names onto the portal's real,
+   theme-aware variables (defined in css/syscolors.css and updated at runtime
+   by lib/convey/scripts/colors.js), so every existing var(--accent-color),
+   var(--box-bkg)… reference now follows the current theme automatically.
+
+   Canonical portal variables:
+     --ColorAccent          accent / action colour
+     --Window               page background
+     --ColorTileBackground  surface / card background  (paired w/ tile text)
+     --ColorTileText        text that contrasts the tile background
+     --WindowText           primary page text
+     --ColorText            primary text (= WindowText)
+     --ColorLabel           secondary / label text
+   ============================================ */
+:root {
+    --accent-color: var(--ColorAccent, #0070d2);
+    --box-bkg: var(--ColorTileBackground, #f9fafb);
+    --text-color: var(--ColorTileText, #1f2937);
+    --label-color: var(--ColorLabel, #6b7280);
+    --sf-border: rgba(128, 128, 128, 0.25);
+}
+/* Dark theme: keep the same canonical sources; only --box-bkg needs a
+   readable dark surface when the portal's tile background is very light. */
+body.cnv-ui-dark {
+    --box-bkg: var(--ColorTileBackground, #1f2937);
+    --sf-border: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
    MODAL OVERFLOW FIX
    The portal's default.css sets overflow:hidden on html/body which
    clips position:fixed modals in some WebView environments.

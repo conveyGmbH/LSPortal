@@ -1977,13 +1977,18 @@
     "adminAppHelpText.htmlupload"			: "Caricamento file Html",
 
     "crmSettings.title" : "Impostazioni di esportazione CRM",
-    "crmSettings.inactiveMessage" : "L'esportazione CRM non è attivata",
+    "crmSettings.inactiveTitle" : "Modulo CRM non attivato",
+    "crmSettings.inactiveMessage" : "L'integrazione con Salesforce non è abilitata per questo cliente.",
+    "crmSettings.inactiveHint" : "Questo modulo viene attivato dopo l'acquisto del pacchetto Salesforce. Per maggiori informazioni, contatti il suo referente LeadSuccess.",
 
     "contactCrmExport.title" : "Esportazione CRM di contatto",
     "contactCrmExport.inactiveMessage" : "L'esportazione CRM non è attivata",
 
     "crmExport.title" : "Esportazione in blocco CRM",
-    "crmExport.inactiveMessage" : "L'esportazione CRM non è attivata",
+    "crmExport.inactiveTitle" : "Modulo CRM non attivato",
+    "crmExport.inactiveMessage" : "L'integrazione con Salesforce non è abilitata per questo cliente.",
+    "crmExport.inactiveHint" : "Questo modulo viene attivato dopo l'acquisto del pacchetto Salesforce. Per maggiori informazioni, contatti il suo referente LeadSuccess.",
+    "crmExport.connectFirst" : "Connettiti prima a Salesforce",
 
     "tfa.title": "Autenticazione a due fattori",
     "tfa.loading": "Caricamento dell'autenticazione a due fattori in corso...",

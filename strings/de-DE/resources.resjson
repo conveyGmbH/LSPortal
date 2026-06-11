@@ -2004,13 +2004,18 @@
     "adminAppHelpText.htmlupload"			: "Html Datei upload",
 
 	"crmSettings.title" : "CRM Export Einstellungen",
-    "crmSettings.inactiveMessage" : "CRM Export ist nicht aktiviert",
+    "crmSettings.inactiveTitle" : "CRM-Modul nicht aktiviert",
+    "crmSettings.inactiveMessage" : "Die Salesforce-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
+    "crmSettings.inactiveHint" : "Dieses Modul wird aktiviert, sobald das Salesforce-Paket gebucht wurde. Bei Interesse wenden Sie sich bitte an Ihren LeadSuccess-Ansprechpartner.",
 
     "contactCrmExport.title" : "Kontakt CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export ist nicht aktiviert",
 
     "crmExport.title" : "CRM Stapel-Export",
-    "crmExport.inactiveMessage" : "CRM Export ist nicht aktiviert",
+    "crmExport.inactiveTitle" : "CRM-Modul nicht aktiviert",
+    "crmExport.inactiveMessage" : "Die Salesforce-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
+    "crmExport.inactiveHint" : "Dieses Modul wird aktiviert, sobald das Salesforce-Paket gebucht wurde. Bei Interesse wenden Sie sich bitte an Ihren LeadSuccess-Ansprechpartner.",
+    "crmExport.connectFirst" : "Bitte zuerst mit Salesforce verbinden",
 
     "tfa.title": "Zwei-Faktor-Authentifizierung",
     "tfa.loading": "Zwei-Faktor-Authentifizierung wird geladen...",

@@ -1636,13 +1636,18 @@
     "adminAppHelpText.htmlupload"			: "Html Datei upload",
 
     "crmSettings.title" : "CRM Export Settings",
-    "crmSettings.inactiveMessage" : "CRM Export isn't activated",
+    "crmSettings.inactiveTitle" : "Módulo CRM no activado",
+    "crmSettings.inactiveMessage" : "La integración con Salesforce no está habilitada para este cliente.",
+    "crmSettings.inactiveHint" : "Este módulo se activa una vez adquirido el paquete de Salesforce. Para más información, póngase en contacto con su representante de LeadSuccess.",
 
     "contactCrmExport.title" : "Contact CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
 
     "crmExport.title" : "CRM batch export",
-    "crmExport.inactiveMessage" : "CRM Export isn't activated",
+    "crmExport.inactiveTitle" : "Módulo CRM no activado",
+    "crmExport.inactiveMessage" : "La integración con Salesforce no está habilitada para este cliente.",
+    "crmExport.inactiveHint" : "Este módulo se activa una vez adquirido el paquete de Salesforce. Para más información, póngase en contacto con su representante de LeadSuccess.",
+    "crmExport.connectFirst" : "Conéctese primero a Salesforce",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",

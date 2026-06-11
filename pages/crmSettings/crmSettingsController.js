@@ -168,21 +168,15 @@
                     console.log('Opening Field Mapping, eventId:', that.binding.eventId);
                     // Initialize and open Field Mapping UI (Mentis: #8513)
                     if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
-                        // Use UUID if available, for events without contacts use null (localStorage only mode)
                         var eventId = that.binding.eventId;
-                        var recordId = getRecordId();
 
-                        // Force display the container (since binding hides it when eventId is null)
-                        fieldMappingsContainer.style.setProperty('display', 'block', 'important');
-
-                        // Hide the inactive message
-                        var inactiveMessage = fieldMappingsContainer.parentElement.querySelector('.field_line_full');
-                        if (inactiveMessage) {
-                            inactiveMessage.style.setProperty('display', 'none', 'important');
-                        }
-
+                        // Only show the Field Mapping UI when a UUID eventId exists, i.e. when
+                        // the mandant has an active SF-API-User. Without it we must behave exactly
+                        // like CRM Export: leave the binding to show the "module not activated"
+                        // message and open nothing. (Previously this page force-displayed the
+                        // container and fell back to a localStorage-only mode on recordId, which
+                        // made Settings show the UI while Export correctly showed the notice.)
                         if (eventId) {
-                            // Event has contacts with UUID - use normal mode with API persistence
                             Log.print(Log.l.info, "Opening Field Mapping for eventId: " + eventId);
                             console.log('Calling SalesforceLeadLib.openFieldMapping with eventId:', eventId);
                             return SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, eventId).then(
@@ -195,19 +189,9 @@
                                     Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
                                 }
                             );
-                        } else if (recordId) {
-                            Log.print(Log.l.info, "Opening Field Mapping in localStorage mode for recordId: " + recordId);
-                            return SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, null, { recordId: recordId }).then(function() {
-                                    Log.print(Log.l.info, "Field Mapping UI opened successfully (localStorage mode)");
-                                    AppBar.modified = false; // Reset modified flag after loading new event
-                                },
-                                function(error) {
-                                    Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
-                                }
-                            );
                         } else {
-                            Log.print(Log.l.error, "No eventId or recordId available for Field Mapping");
-                            console.warn('No eventId or recordId available for Field Mapping');
+                            Log.print(Log.l.info, "No eventId (no SF-API-User) — showing inactive message, no UI");
+                            console.log('No eventId — CRM module not activated for this mandant');
                         }
                     }
                 }).then(function() {
