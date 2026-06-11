@@ -2,6 +2,17 @@
 /* Dark Mode Support using .cnv-ui-dark class and portal CSS classes */
 
 /* ============================================
+   MODAL OVERFLOW FIX
+   The portal's default.css sets overflow:hidden on html/body which
+   clips position:fixed modals in some WebView environments.
+   Adding sf-modal-open class to body while a modal is active lifts this clip.
+   ============================================ */
+body.sf-modal-open,
+html.sf-modal-open body {
+    overflow: visible !important;
+}
+
+/* ============================================
    NATIVE DIALOG STYLES
    ============================================ */
 .sf-lib-dialog::backdrop {
