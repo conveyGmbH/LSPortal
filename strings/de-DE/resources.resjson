@@ -2016,6 +2016,7 @@
     "crmExport.inactiveMessage" : "Die Salesforce-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
     "crmExport.inactiveHint" : "Dieses Modul wird aktiviert, sobald das Salesforce-Paket gebucht wurde. Bei Interesse wenden Sie sich bitte an Ihren LeadSuccess-Ansprechpartner.",
     "crmExport.connectFirst" : "Bitte zuerst mit Salesforce verbinden",
+    "crmExport.filterPartialWarning" : "Es werden nur die geladenen Kontakte gefiltert — scrollen Sie nach unten, um weitere zu laden und einzubeziehen.",
 
     "tfa.title": "Zwei-Faktor-Authentifizierung",
     "tfa.loading": "Zwei-Faktor-Authentifizierung wird geladen...",

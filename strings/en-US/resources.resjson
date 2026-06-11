@@ -2013,6 +2013,7 @@
     "crmExport.inactiveMessage" : "The Salesforce integration is not enabled for this client.",
     "crmExport.inactiveHint" : "This module is activated once the Salesforce package has been purchased. Please contact your LeadSuccess representative for more information.",
     "crmExport.connectFirst" : "Please connect to Salesforce first",
+    "crmExport.filterPartialWarning" : "Filtering only the loaded contacts — scroll down to load and include more.",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",

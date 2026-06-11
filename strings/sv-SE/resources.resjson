@@ -1633,6 +1633,7 @@
     "crmExport.inactiveMessage" : "Salesforce-integrationen är inte aktiverad för den här kunden.",
     "crmExport.inactiveHint" : "Modulen aktiveras när Salesforce-paketet har köpts. Kontakta din LeadSuccess-kontakt för mer information.",
     "crmExport.connectFirst" : "Anslut till Salesforce först",
+    "crmExport.filterPartialWarning" : "Filtrerar endast de laddade kontakterna — skrolla nedåt för att ladda och inkludera fler.",
 
     "tfa.title": "Two-Factor Authentication",
     "tfa.loading": "Loading Two-Factor Authentication...",
