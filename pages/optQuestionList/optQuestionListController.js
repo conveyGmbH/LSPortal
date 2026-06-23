@@ -231,9 +231,9 @@
                                         AppBar.busy = false;
                                         Log.print(Log.l.trace, "question saved");
                                     }, function (errorResponse) {
-                                            AppBar.busy = false;
-                                            Log.print(Log.l.error, "error saving question");
-                                        });
+                                        AppBar.busy = false;
+                                        Log.print(Log.l.error, "error saving question");
+                                    });
                                 }
                             }
                         }
@@ -496,11 +496,30 @@
             this.baseSaveData = this.saveData;
             var saveData = function (complete, error) {
                 Log.call(Log.l.trace, "OptQuestionList.Controller.");
+                var saveResponse = null;
                 var ret = that.baseSaveData(function (result) {
+                    saveResponse = result;
                     if (typeof complete === "function") {
                         complete(result);
                     }
-                }, error);
+                }, error).then(function () {
+                    if (saveResponse) {
+                        return AppData.getUserData();
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
+                    if (saveResponse) {
+                        var master = Application.navigator.masterControl;
+                        if (master && master.controller) {
+                            master.controller.loadData(that.getEventId());
+                        }
+                        //that.checkingQuestionnaireBarcodePdf();
+                        if (typeof complete === "function") {
+                            complete(saveResponse);
+                        }
+                    }
+                });;
                 Log.ret(Log.l.trace);
                 return ret;
             }

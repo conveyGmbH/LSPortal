@@ -588,12 +588,11 @@
                     if (curScope && curScope.item) {
                         var newRecord = that.getFieldEntries(curScope.index);
                         if (that.mergeRecord(curScope.item, newRecord) || AppBar.modified) {
+                            var saveResponse = null;
                             Log.print(Log.l.trace, "save changes of recordId:" + recordId);
                             ret = Mandatory.manquestView.update(function (response) {
                                 Log.print(Log.l.info, "Mandatory.Controller. update: success!");
-                                AppData.getUserData();
-                                // called asynchronously if ok
-                                AppData.getUserData();
+                                saveResponse = response;
                                 AppBar.modified = false;
                                 that.validateCb();
                                 if (typeof complete === "function") {
@@ -604,7 +603,24 @@
                                 if (typeof error === "function") {
                                     error(errorResponse);
                                 }
-                            }, recordId, curScope.item);
+                            }, recordId, curScope.item).then(function () {
+                                if (saveResponse) {
+                                    return AppData.getUserData();
+                                } else {
+                                    return WinJS.Promise.as();
+                                }
+                            }).then(function () {
+                                if (saveResponse) {
+                                    var master = Application.navigator.masterControl;
+                                    if (master && master.controller) {
+                                        master.controller.loadData(that.getEventId());
+                                    }
+                                    //that.checkingQuestionnaireBarcodePdf();
+                                    if (typeof complete === "function") {
+                                        complete(saveResponse);
+                                    }
+                                }
+                            });
                         } else {
                             Log.print(Log.l.trace, "no changes in recordId:" + recordId);
                         }
