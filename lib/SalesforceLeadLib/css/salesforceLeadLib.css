@@ -191,6 +191,13 @@ body.cnv-ui-dark .sf-btn--danger {
 .sf-btn--danger-outline:hover:not(:disabled) {
     background: var(--sf-error-bg);
 }
+.sf-btn--success {
+    background: #059669;
+    color: #ffffff;
+}
+.sf-btn--success:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
 .sf-btn--ghost {
     background: transparent;
     color: var(--sf-text-2);
@@ -1167,6 +1174,64 @@ body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-sticky, body:not(.cnv-ui-d
 }
 .sf-cl-btn-connect:hover { filter: brightness(0.92); }
 .sf-cl-filter-hint { font-size: 12px; color: var(--sf-warning); padding: 2px 4px 8px; }
+
+/* ---- Single lead export (contactCrmExport / crmExport test) ---- */
+.sf-export-root {
+    max-width: 1400px; margin: 0 auto; padding: 20px;
+    font-family: var(--sf-font); min-height: 100vh; box-sizing: border-box;
+}
+.sf-export-card {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    box-shadow: var(--sf-shadow-1);
+}
+.sf-export-banner {
+    border-radius: var(--sf-radius-sm);
+    padding: 12px 16px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    background: var(--sf-surface-tile);
+    border: 1px solid var(--sf-border);
+}
+.sf-export-banner__icon { font-size: 20px; color: var(--sf-text-2); }
+.sf-export-banner__title { font-weight: 600; font-size: 14px; color: var(--sf-text); }
+.sf-export-banner__meta { font-size: 12px; color: var(--sf-text-2); }
+.sf-export-banner--success { background: var(--sf-success-bg); border-color: transparent; }
+.sf-export-banner--success .sf-export-banner__icon,
+.sf-export-banner--success .sf-export-banner__title { color: var(--sf-success); }
+.sf-export-banner--error { background: var(--sf-error-bg); border-color: transparent; }
+.sf-export-banner--error .sf-export-banner__icon,
+.sf-export-banner--error .sf-export-banner__title { color: var(--sf-error); }
+.sf-export-banner--warning { background: var(--sf-warning-bg); border-color: transparent; }
+.sf-export-banner--warning .sf-export-banner__icon,
+.sf-export-banner--warning .sf-export-banner__title { color: var(--sf-warning); }
+.sf-export-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.sf-export-table th {
+    text-align: left; padding: 12px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--sf-text-2);
+    background: var(--sf-surface-tile);
+    border-bottom: 1px solid var(--sf-border-strong);
+}
+.sf-export-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--sf-border);
+    color: var(--sf-text);
+    vertical-align: top;
+}
+.sf-field-card {
+    background: var(--sf-surface-tile);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-sm);
+    padding: 16px;
+}
+.sf-attach-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-sm);
+    background: var(--sf-surface-tile);
+}
 
 /* ============================================
    5. LEGACY BRIDGE — everything below this point predates the token layer
