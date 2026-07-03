@@ -1,6 +1,93 @@
 /* SalesforceLeadLib - CSS Styles for LSPortal Integration */
 /* Dark Mode Support using .cnv-ui-dark class and portal CSS classes */
 
+/* File layout:
+   1. TOKENS          design tokens (light + dark), mapped onto portal vars
+   2. BASE            scoped resets, focus-visible, reduced-motion
+   3. COMPONENTS      .sf-btn .sf-card .sf-tile .sf-pill .sf-toggle .sf-input
+                      .sf-table .sf-modal .sf-toast .sf-skeleton .sf-empty .sf-tabs
+   4. VIEWS           .sf-fieldmap-* .sf-cl-* .sf-export-*
+   5. LEGACY BRIDGE   old variable names + [style*=] dark hacks — shrinks as
+                      views migrate to the token classes, deleted last. */
+
+/* ============================================
+   1. TOKENS
+   Semantic tokens for the modern UI. Portal-derived tokens reference the
+   runtime variables from css/syscolors.css via var() (never copied) so they
+   follow the tenant accent and the light/dark toggle automatically.
+   --sf-accent-rgb is refreshed at runtime by injectCSS() from the computed
+   --ColorAccent (no color-mix() — old WebViews).
+   ============================================ */
+:root {
+    --sf-font: "Open Sans", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+    --sf-bg: var(--ColorBackground, #ffffff);
+    --sf-surface: var(--Window, #ffffff);
+    --sf-surface-2: rgba(127, 127, 127, 0.07);
+    --sf-surface-tile: var(--ColorTileBackground, #f8f9fb);
+    --sf-text: var(--ColorText, #111827);
+    --sf-text-2: var(--ColorLabel, #5b6472);
+    --sf-text-muted: #6b7280;
+    --sf-border: rgba(127, 127, 127, 0.22);
+    --sf-border-strong: rgba(127, 127, 127, 0.38);
+    --sf-accent: var(--ColorAccent, #fe3600);
+    --sf-accent-rgb: 254, 54, 0;
+    --sf-accent-soft: rgba(var(--sf-accent-rgb), 0.10);
+    --sf-success: #15803d;
+    --sf-success-bg: rgba(22, 163, 74, 0.10);
+    --sf-error: #dc2626;
+    --sf-error-bg: rgba(239, 68, 68, 0.09);
+    --sf-warning: #b45309;
+    --sf-warning-bg: rgba(217, 119, 6, 0.10);
+    --sf-info: #2563eb;
+    --sf-info-bg: rgba(59, 130, 246, 0.09);
+    --sf-shadow-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+    --sf-shadow-2: 0 4px 12px rgba(16, 24, 40, 0.10);
+    --sf-shadow-3: 0 12px 32px rgba(16, 24, 40, 0.18);
+    --sf-radius-sm: 6px;
+    --sf-radius-md: 10px;
+    --sf-radius-lg: 14px;
+    --sf-radius-pill: 999px;
+    --sf-dur-1: 150ms;
+    --sf-dur-2: 250ms;
+    --sf-ease: cubic-bezier(0.2, 0.8, 0.4, 1);
+    --sf-focus-ring: 0 0 0 3px rgba(var(--sf-accent-rgb), 0.35);
+}
+
+body.cnv-ui-dark {
+    --sf-surface-2: rgba(255, 255, 255, 0.05);
+    --sf-text-muted: #8b93a1;
+    --sf-border: rgba(255, 255, 255, 0.14);
+    --sf-border-strong: rgba(255, 255, 255, 0.26);
+    --sf-accent-soft: rgba(var(--sf-accent-rgb), 0.18);
+    --sf-success: #4ade80;
+    --sf-success-bg: rgba(74, 222, 128, 0.12);
+    --sf-error: #f87171;
+    --sf-error-bg: rgba(248, 113, 113, 0.13);
+    --sf-warning: #fbbf24;
+    --sf-warning-bg: rgba(251, 191, 36, 0.13);
+    --sf-info: #60a5fa;
+    --sf-info-bg: rgba(96, 165, 250, 0.13);
+    --sf-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --sf-shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+    --sf-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.65);
+    --sf-focus-ring: 0 0 0 3px rgba(var(--sf-accent-rgb), 0.45);
+}
+
+/* ============================================
+   2. BASE
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --sf-dur-1: 0ms;
+        --sf-dur-2: 0ms;
+    }
+}
+
+/* ============================================
+   5. LEGACY BRIDGE — everything below this point predates the token layer
+   and is removed progressively as the views migrate.
+   ============================================ */
+
 /* ============================================
    THEME VARIABLE BRIDGE  (fixes light/dark inconsistency)
    The library was written against custom variables that the portal theme
@@ -26,13 +113,12 @@
     --box-bkg: var(--ColorTileBackground, #f9fafb);
     --text-color: var(--ColorTileText, #1f2937);
     --label-color: var(--ColorLabel, #6b7280);
-    --sf-border: rgba(128, 128, 128, 0.25);
+    /* --sf-border now owned by the token layer (section 1) */
 }
 /* Dark theme: keep the same canonical sources; only --box-bkg needs a
    readable dark surface when the portal's tile background is very light. */
 body.cnv-ui-dark {
     --box-bkg: var(--ColorTileBackground, #1f2937);
-    --sf-border: rgba(255, 255, 255, 0.15);
 }
 
 /* ============================================
