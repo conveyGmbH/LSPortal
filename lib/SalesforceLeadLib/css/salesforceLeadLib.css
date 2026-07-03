@@ -43,6 +43,8 @@
     --sf-shadow-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
     --sf-shadow-2: 0 4px 12px rgba(16, 24, 40, 0.10);
     --sf-shadow-3: 0 12px 32px rgba(16, 24, 40, 0.18);
+    --sf-table-header-bg: #1f2937;
+    --sf-table-header-text: #f9fafb;
     --sf-radius-sm: 6px;
     --sf-radius-md: 10px;
     --sf-radius-lg: 14px;
@@ -70,6 +72,8 @@ body.cnv-ui-dark {
     --sf-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.5);
     --sf-shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
     --sf-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.65);
+    --sf-table-header-bg: #111827;
+    --sf-table-header-text: #e5e7eb;
     --sf-focus-ring: 0 0 0 3px rgba(var(--sf-accent-rgb), 0.45);
 }
 
@@ -942,6 +946,227 @@ dialog.sf-lib-dialog.sf-dialog {
 .sf-fieldmap-card__muted {
     color: var(--sf-text-2);
 }
+
+/* ---- Batch export / contact list (crmExport) ----
+   Moved from the inline <style> block in renderContactList; class names are
+   unchanged (the view JS binds to them), values are tokenized. */
+.sf-cl-wrap { display: flex; flex-direction: column; height: 100%; padding: 0 16px; box-sizing: border-box; overflow: hidden; font-family: var(--sf-font); }
+.sf-cl-toolbar { display: flex; align-items: center; gap: 8px; padding: 10px 0; flex-wrap: wrap; }
+
+/* All toolbar buttons share one height so Batch/Refresh/toggle and the
+   connect/disconnect/status card line up. */
+.sf-cl-btn {
+    height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-sm);
+    font-family: var(--sf-font); font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1px solid transparent;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-sizing: border-box; gap: 8px;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                filter var(--sf-dur-1) var(--sf-ease),
+                border-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-batch { background: var(--sf-accent); color: #fff; }
+.sf-cl-btn-batch:hover:not(:disabled) { filter: brightness(0.92); }
+.sf-cl-btn-batch:disabled { opacity: 0.45; cursor: not-allowed; }
+.sf-cl-btn-refresh { background: transparent; color: var(--sf-text); border-color: var(--sf-border-strong); }
+.sf-cl-btn-refresh:hover { background: var(--sf-surface-2); }
+.sf-cl-btn-toggle { background: var(--sf-accent); color: #fff; width: 38px; height: 38px; padding: 0; }
+.sf-cl-btn-toggle:hover { filter: brightness(0.92); }
+.sf-cl-btn-toggle svg { transition: transform var(--sf-dur-2) var(--sf-ease); }
+.sf-cl-btn-toggle.active svg { transform: rotate(45deg); }
+.sf-cl-count { font-size: 12px; color: var(--sf-text-2); }
+
+/* Filter bar: neutral translucent surface; inputs read like normal fields
+   in both light and dark. */
+.sf-cl-filter-bar {
+    display: none; flex-wrap: wrap; gap: 12px; padding: 12px 14px;
+    background: var(--sf-surface-2);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    margin-bottom: 8px; align-items: flex-end;
+}
+.sf-cl-filter-bar.sf-cl-filter-visible { display: flex; }
+.sf-cl-fg { position: relative; flex: 1; min-width: 130px; }
+.sf-cl-fg input {
+    width: 100%; padding: 6px 8px;
+    border: 1px solid var(--sf-border-strong);
+    border-radius: var(--sf-radius-sm);
+    font-size: 13px; height: 38px; outline: none; box-sizing: border-box;
+    background: var(--sf-surface); color: var(--sf-text);
+    transition: border-color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-fg input:focus { border-color: var(--sf-accent); box-shadow: var(--sf-focus-ring); }
+.sf-cl-fg label {
+    position: absolute; top: 50%; left: 8px; transform: translateY(-50%);
+    background: var(--sf-surface); padding: 0 4px;
+    color: var(--sf-text-2); font-size: 13px;
+    transition: all var(--sf-dur-1) var(--sf-ease); pointer-events: none;
+}
+.sf-cl-fg input:focus + label,
+.sf-cl-fg input:not(:placeholder-shown) + label { top: 0; font-size: 11px; color: var(--sf-accent); }
+
+/* Date range group (Von/Bis) */
+.sf-cl-filter-group { display: flex; flex-direction: column; gap: 4px; }
+.sf-cl-filter-label { font-size: 11px; font-weight: 600; color: var(--sf-text-2); }
+.sf-cl-filter-group input[type=date] {
+    height: 38px; padding: 6px 8px;
+    border: 1px solid var(--sf-border-strong);
+    border-radius: var(--sf-radius-sm);
+    font-size: 13px; outline: none; box-sizing: border-box;
+    background: var(--sf-surface); color: var(--sf-text);
+}
+.sf-cl-filter-group input[type=date]:focus { border-color: var(--sf-accent); box-shadow: var(--sf-focus-ring); }
+.cnv-ui-dark .sf-cl-filter-group input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); }
+.sf-cl-filter-actions { display: flex; gap: 10px; align-self: flex-end; margin-left: auto; }
+.sf-cl-btn-apply {
+    background: var(--sf-accent); color: #fff; border: none; padding: 0 18px;
+    border-radius: var(--sf-radius-sm); font-size: 13px; font-weight: 600;
+    cursor: pointer; height: 38px;
+    transition: filter var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-apply:hover { filter: brightness(0.92); }
+.sf-cl-btn-reset {
+    background: transparent; color: var(--sf-text-2);
+    border: 1px solid var(--sf-border-strong); padding: 0 18px;
+    border-radius: var(--sf-radius-sm); font-size: 13px; font-weight: 600;
+    cursor: pointer; height: 38px;
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-reset:hover:not(:disabled) { background: var(--sf-surface-2); }
+.sf-cl-btn-reset:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Export status filter pills — active state keeps fixed solid status fills:
+   they are theme-independent mid-tones that hold white text in both modes. */
+.sf-cl-status-filter { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 4px 0; }
+.sf-cl-status-pill {
+    height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-pill);
+    font-family: var(--sf-font); font-size: 12px; font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--sf-border-strong);
+    background: transparent; color: var(--sf-text-2);
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease),
+                border-color var(--sf-dur-1) var(--sf-ease);
+    white-space: nowrap;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    box-sizing: border-box;
+}
+.sf-cl-status-pill:hover:not(.active) { background: var(--sf-surface-2); color: var(--sf-text); }
+.sf-cl-status-pill.active { background: #374151; color: #fff; border-color: #374151; }
+.sf-cl-status-pill.pill-success.active { background: #16a34a; border-color: #16a34a; }
+.sf-cl-status-pill.pill-failed.active { background: #dc2626; border-color: #dc2626; }
+.sf-cl-status-pill.pill-dup.active { background: #d97706; border-color: #d97706; }
+.sf-cl-status-pill.pill-empty.active { background: #6b7280; border-color: #6b7280; }
+.sf-cl-status-pill.pill-vollstaendig.active { background: #2563eb; border-color: #2563eb; }
+.sf-cl-status-pill.pill-unvollstaendig.active { background: #9333ea; border-color: #9333ea; }
+.sf-cl-status-pill.pill-complete-all.active { background: var(--sf-accent); border-color: var(--sf-accent); }
+#sf-cl-completeness-select {
+    height: 38px; font-size: 12px; font-weight: 600; padding: 0 10px;
+    border-radius: var(--sf-radius-sm);
+    border: 1px solid var(--sf-border-strong);
+    background: var(--sf-surface); color: var(--sf-text);
+    cursor: pointer; box-sizing: border-box; font-family: var(--sf-font);
+}
+
+/* Attachment badge */
+.sf-cl-attach-badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+    border-radius: var(--sf-radius-pill);
+    font-size: 12px; font-weight: 600;
+    background: var(--sf-surface-2); color: var(--sf-text-2);
+    border: 1px solid var(--sf-border);
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-attach-badge:hover { background: var(--sf-accent); color: #fff; border-color: var(--sf-accent); }
+
+/* Table */
+.sf-cl-table-wrap {
+    overflow-x: auto; overflow-y: auto; flex: 1; min-height: 0;
+    scrollbar-width: thin; position: relative;
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+}
+.sf-cl-table-wrap::-webkit-scrollbar { height: 8px; width: 8px; }
+.sf-cl-table-wrap::-webkit-scrollbar-track { background: var(--sf-surface-tile); }
+.sf-cl-table-wrap::-webkit-scrollbar-thumb { background: var(--sf-border-strong); border-radius: 4px; }
+.sf-cl-table { border-collapse: collapse; width: max-content; min-width: 100%; font-size: 13px; }
+.sf-cl-th {
+    background: var(--sf-table-header-bg); color: var(--sf-table-header-text);
+    padding: 9px 10px; text-align: left; white-space: nowrap;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
+    position: sticky; top: 0; z-index: 2;
+}
+.sf-cl-th-sticky { position: sticky; left: 0; z-index: 3; background: var(--sf-table-header-bg); }
+.sf-cl-td { padding: 7px 10px; border-bottom: 1px solid var(--sf-border); white-space: nowrap; vertical-align: middle; color: var(--sf-text); }
+.sf-cl-td-sticky { position: sticky; left: 0; z-index: 1; background: var(--sf-surface); }
+.sf-cl-td-first-data { background: var(--sf-surface); }
+.sf-cl-row:hover .sf-cl-td { background: var(--sf-surface-tile); }
+.sf-cl-row:hover .sf-cl-td-sticky, .sf-cl-row:hover .sf-cl-td-first-data { background: var(--sf-surface-tile); }
+/* Row tinting — light mode only (dark mode: dot badge is sufficient).
+   Sticky cells need stronger alpha: they overlay scrolled content. */
+body:not(.cnv-ui-dark) .sf-cl-row-success .sf-cl-td { background: rgba(220, 252, 231, 0.5); }
+body:not(.cnv-ui-dark) .sf-cl-row-success .sf-cl-td-sticky, body:not(.cnv-ui-dark) .sf-cl-row-success .sf-cl-td-first-data { background: rgba(220, 252, 231, 0.8); }
+body:not(.cnv-ui-dark) .sf-cl-row-failed .sf-cl-td { background: rgba(254, 226, 226, 0.5); }
+body:not(.cnv-ui-dark) .sf-cl-row-failed .sf-cl-td-sticky, body:not(.cnv-ui-dark) .sf-cl-row-failed .sf-cl-td-first-data { background: rgba(254, 226, 226, 0.8); }
+body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td { background: rgba(254, 243, 199, 0.5); }
+body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-sticky, body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-first-data { background: rgba(254, 243, 199, 0.8); }
+.sf-export-badge-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.dot-success { background: var(--sf-success); }
+.dot-failed { background: var(--sf-error); }
+.dot-duplicate { background: var(--sf-warning); }
+.sf-cl-empty { padding: 40px 20px; text-align: center; color: var(--sf-text-2); font-size: 14px; }
+
+/* Connection status card (same vocabulary as the settings chip) */
+.sf-cl-status-wrap { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.sf-cl-status-card {
+    display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-pill);
+    border: 1px solid var(--sf-border);
+    background: var(--sf-surface-tile);
+    box-sizing: border-box;
+    transition: background-color var(--sf-dur-2) var(--sf-ease),
+                border-color var(--sf-dur-2) var(--sf-ease);
+}
+.sf-cl-status-card.connected { border-color: transparent; background: var(--sf-success-bg); }
+.sf-cl-status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sf-warning); }
+.sf-cl-status-dot.connected { background: var(--sf-success); }
+.sf-cl-status-text { font-size: 13px; font-weight: 600; color: var(--sf-text); }
+.sf-cl-status-text.connected { color: var(--sf-success); }
+.sf-cl-user-section { display: none; align-items: center; gap: 8px; margin-left: 4px; padding-left: 12px; border-left: 1px solid var(--sf-border); }
+.sf-cl-user-section.visible { display: flex; }
+.sf-cl-user-avatar {
+    width: 24px; height: 24px; background: var(--sf-accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 10px;
+}
+.sf-cl-user-name { font-size: 13px; font-weight: 600; color: var(--sf-text); }
+.sf-cl-status-card.connected .sf-cl-user-name { color: var(--sf-success); }
+.sf-cl-btn-disconnect {
+    padding: 0 16px; height: 38px;
+    background: transparent; color: var(--sf-error);
+    font-family: var(--sf-font); font-size: 13px; font-weight: 600;
+    border: 1px solid var(--sf-error);
+    border-radius: var(--sf-radius-sm); cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-disconnect:hover { background: var(--sf-error-bg); }
+.sf-cl-btn-connect {
+    padding: 0 16px; height: 38px;
+    background: var(--sf-accent); color: #fff; border: none;
+    border-radius: var(--sf-radius-sm);
+    font-family: var(--sf-font); font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: filter var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-connect:hover { filter: brightness(0.92); }
+.sf-cl-filter-hint { font-size: 12px; color: var(--sf-warning); padding: 2px 4px 8px; }
 
 /* ============================================
    5. LEGACY BRIDGE — everything below this point predates the token layer
