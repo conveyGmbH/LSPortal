@@ -23,7 +23,10 @@
     --sf-bg: var(--ColorBackground, #ffffff);
     --sf-surface: var(--Window, #ffffff);
     --sf-surface-2: rgba(127, 127, 127, 0.07);
-    --sf-surface-tile: var(--ColorTileBackground, #f8f9fb);
+    /* Neutral inset surface. Deliberately NOT mapped onto --ColorTileBackground:
+       tenant tile colours can be vivid (e.g. a mandant blue), which swallowed
+       buttons and text on modal footers, KPI tiles and status cards. */
+    --sf-surface-tile: rgba(127, 127, 127, 0.06);
     --sf-text: var(--ColorText, #111827);
     --sf-text-2: var(--ColorLabel, #5b6472);
     --sf-text-muted: #6b7280;
@@ -57,6 +60,7 @@
 
 body.cnv-ui-dark {
     --sf-surface-2: rgba(255, 255, 255, 0.05);
+    --sf-surface-tile: rgba(255, 255, 255, 0.04);
     --sf-text-muted: #8b93a1;
     --sf-border: rgba(255, 255, 255, 0.14);
     --sf-border-strong: rgba(255, 255, 255, 0.26);
@@ -1061,7 +1065,17 @@ dialog.sf-lib-dialog.sf-dialog {
     display: inline-flex; align-items: center; justify-content: center; gap: 4px;
     box-sizing: border-box;
 }
-.sf-cl-status-pill:hover:not(.active) { background: var(--sf-surface-2); color: var(--sf-text); }
+/* Hover: preview each pill's status colour as a soft tint */
+.sf-cl-status-pill:hover:not(.active) {
+    background: var(--sf-surface-2);
+    color: var(--sf-text);
+    border-color: var(--sf-border-strong);
+    box-shadow: var(--sf-shadow-1);
+}
+.sf-cl-status-pill.pill-success:hover:not(.active) { background: var(--sf-success-bg); color: var(--sf-success); border-color: transparent; }
+.sf-cl-status-pill.pill-failed:hover:not(.active)  { background: var(--sf-error-bg);   color: var(--sf-error);   border-color: transparent; }
+.sf-cl-status-pill.pill-dup:hover:not(.active)     { background: var(--sf-warning-bg); color: var(--sf-warning); border-color: transparent; }
+.sf-cl-status-pill.pill-empty:hover:not(.active)   { background: var(--sf-surface-2);  color: var(--sf-text); }
 .sf-cl-status-pill.active { background: #374151; color: #fff; border-color: #374151; }
 .sf-cl-status-pill.pill-success.active { background: #16a34a; border-color: #16a34a; }
 .sf-cl-status-pill.pill-failed.active { background: #dc2626; border-color: #dc2626; }
@@ -1071,11 +1085,23 @@ dialog.sf-lib-dialog.sf-dialog {
 .sf-cl-status-pill.pill-unvollstaendig.active { background: #9333ea; border-color: #9333ea; }
 .sf-cl-status-pill.pill-complete-all.active { background: var(--sf-accent); border-color: var(--sf-accent); }
 #sf-cl-completeness-select {
-    height: 38px; font-size: 12px; font-weight: 600; padding: 0 10px;
+    height: 38px; font-size: 12px; font-weight: 600;
+    padding: 0 30px 0 12px;
     border-radius: var(--sf-radius-sm);
     border: 1px solid var(--sf-border-strong);
-    background: var(--sf-surface); color: var(--sf-text);
+    background-color: var(--sf-surface); color: var(--sf-text);
     cursor: pointer; box-sizing: border-box; font-family: var(--sf-font);
+    /* custom chevron: the native arrow renders inconsistently across WebViews */
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    transition: border-color var(--sf-dur-1) var(--sf-ease);
+}
+#sf-cl-completeness-select:hover { border-color: var(--sf-accent); }
+body.cnv-ui-dark #sf-cl-completeness-select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23a6adba' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 /* Attachment badge */
