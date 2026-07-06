@@ -709,6 +709,15 @@ dialog.sf-lib-dialog.sf-dialog {
     font-size: 11px;
     flex-shrink: 0;
 }
+/* Long error messages wrap onto their own line(s) instead of forcing a
+   horizontal scrollbar on the summary modal */
+.sf-result-row__msg {
+    flex: 1 1 100%;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.45;
+}
 .sf-stat {
     flex: 1;
     text-align: center;
@@ -745,12 +754,18 @@ dialog.sf-lib-dialog.sf-dialog {
     position: absolute;
     inset: 0;
     transform: translateX(-100%);
-    background: linear-gradient(90deg, transparent, rgba(127, 127, 127, 0.12), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
     animation: sf-shimmer 1.4s var(--sf-ease) infinite;
 }
+body.cnv-ui-dark .sf-skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+}
+/* Reduced motion: keep the shimmer (it signals "loading", it is not
+   decorative — many Windows machines have this flag on by default) but
+   slow it down so it stays gentle. */
 @media (prefers-reduced-motion: reduce) {
     .sf-skeleton::after {
-        animation: none;
+        animation-duration: 2.4s;
     }
 }
 
