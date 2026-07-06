@@ -13,6 +13,11 @@
     "use strict";
     var namespaceName = "CrmExport";
 
+    // Module-level memo (survives controller re-creation on every tab switch):
+    // recordId -> event UUID is immutable, so FCT_GetUniqueRecordID only needs
+    // one round-trip per event and session.
+    var eventIdByRecordId = {};
+
     WinJS.Namespace.define(namespaceName, {
 
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
@@ -113,18 +118,25 @@
                 }
 
                 var ret = new WinJS.Promise.as().then(function() {
+                    var recordId = getRecordId();
+                    // recordId -> UUID is immutable: serve the session memo when known
+                    if (recordId && eventIdByRecordId[recordId]) {
+                        that.binding.eventId = eventIdByRecordId[recordId];
+                        return WinJS.Promise.as();
+                    }
                     return AppData.call("FCT_GetUniqueRecordID", {
                         pRelationName: "Veranstaltung",
-                        pRecordID: getRecordId()
+                        pRecordID: recordId
                     }, function (json) {
                         Log.print(Log.l.info, "call FCT_GetUniqueRecordID: success! FCT_GetUniqueRecordID=" +
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
                         that.binding.eventId =
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID);
-                        console.log('FCT_GetUniqueRecordID success, eventId:', that.binding.eventId);
+                        if (recordId && that.binding.eventId) {
+                            eventIdByRecordId[recordId] = that.binding.eventId;
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call FCT_GetUniqueRecordID: error");
-                        console.error('FCT_GetUniqueRecordID error:', errorResponse);
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.eventId = null;
                     });
