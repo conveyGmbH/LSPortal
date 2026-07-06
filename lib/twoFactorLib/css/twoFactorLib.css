@@ -192,7 +192,8 @@ body.cnv-ui-dark {
     z-index: 9999;
 }
 
-/* main interface card */
+/* main interface card — full width like the pre-redesign layout, so the
+   Overview cards split the available screen like before */
 .tfa-main-interface {
     font-family: var(--tfa-font);
     background: var(--tfa-surface);
@@ -202,7 +203,8 @@ body.cnv-ui-dark {
     box-shadow: var(--tfa-shadow-1);
     padding: 24px;
     margin: 10px 0;
-    max-width: 860px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tfa-header h2 {
