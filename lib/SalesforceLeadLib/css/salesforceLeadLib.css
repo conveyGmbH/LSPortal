@@ -808,8 +808,10 @@ body.cnv-ui-dark .sf-skeleton::after {
     display: flex;
     flex-direction: column;
     height: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    /* Full width — the page previously wasted large side margins
+       (max-width 1200px centered) on wide screens */
+    width: 100%;
+    margin: 0;
     padding: 0 24px;
     box-sizing: border-box;
 }
@@ -971,6 +973,23 @@ body.cnv-ui-dark .sf-skeleton::after {
 }
 .sf-fieldmap-card__muted {
     color: var(--sf-text-2);
+}
+/* Edit/delete buttons on field cards: give them a resting surface so they
+   read as buttons (the bare ghost icon was nearly invisible) */
+.sf-fieldmap-card .sf-icon-btn {
+    background: var(--sf-surface-2);
+    border: 1px solid var(--sf-border);
+    color: var(--sf-text-2);
+    flex-shrink: 0;
+}
+.sf-fieldmap-card .sf-icon-btn:hover {
+    background: var(--sf-accent-soft);
+    border-color: transparent;
+    color: var(--sf-accent);
+}
+.sf-fieldmap-card .delete-custom-field-btn:hover {
+    background: var(--sf-error-bg);
+    color: var(--sf-error);
 }
 
 /* ---- Batch export / contact list (crmExport) ----
