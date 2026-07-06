@@ -600,6 +600,9 @@ dialog.sf-lib-dialog.sf-dialog {
     font-family: var(--sf-font);
     overflow: hidden;
 }
+dialog.sf-lib-dialog.sf-dialog--sm {
+    max-width: 420px;
+}
 
 /* ---- toast ---- */
 .sf-toast-container {
