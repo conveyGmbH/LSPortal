@@ -364,11 +364,7 @@
 
                         function setDBPassword(dbPassword) {
                             that.binding.dataLogin.Password = dbPassword;
-                            // Return the promise so twoFactorLib can WAIT for the
-                            // portal re-login to complete before continuing — the
-                            // follow-up OData calls need the refreshed credentials
-                            // (otherwise they 401 with the stale token password).
-                            return that.saveData().then(function() {
+                            that.saveData().then(function() {
                                 prevPassword = AppData._persistentStates.odata.password;
                             });
                         },
