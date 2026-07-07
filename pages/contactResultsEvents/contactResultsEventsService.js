@@ -25,6 +25,31 @@
                 Name: ""
             }
         },
+        eventView: {
+            select: function (complete, error, contactId) {
+                Log.call(Log.l.trace, namespaceName + "eventView.", "contactId=" + contactId);
+                return AppData.call("PRC_GetCopyToVAList", {
+                    pKontaktID: contactId
+                }, function (json) {
+                    Log.print(Log.l.info, "call PRC_GetCopyToVAList: success!");
+                    // procedure call returns complete results set, but no nextUrl- and no orderBy-support!
+                    if (typeof complete === "function") {
+                        complete(json);
+                    }
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "call PRC_GetCopyToVAList: error");
+                    if (typeof error === "function") {
+                        error(errorResponse);
+                    }
+                });
+            },
+            defaultValue: {
+                VeranstaltungID: 0,
+                Name: "",
+                LiveStartTS: "",
+                LiveEndTS: ""
+            }
+        },
         _incidentView: {
             get: function () {
                 return AppData.getFormatView("Incident", 20621);

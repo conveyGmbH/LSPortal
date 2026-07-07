@@ -75,6 +75,7 @@
     "command.eventFavourite" : "Favourite",
     "command.testmailopen"  : "E-Mail testen",
     "command.confirmRegistration" : "Confirm",
+    "command.copyToVA" : "Register to event",
 
     "tooltip.backward"      : "Zurück blättern",
     "tooltip.edit"          : "Aktuellen Datensatz bearbeiten",
@@ -165,6 +166,7 @@
     "tooltip.contactCrmExport" : "Contact CRM Export",
     "tooltip.crmExport" : "CRM batch export",
     "tooltip.confirmRegistration" : "Confirm registration and send email",
+    "tooltip.copyToVA" : "Register current contact also to the selected event",
 
     "home.title"            : "Start",
     "home.info"             : "Wichtige Hinweise",
@@ -1403,6 +1405,7 @@
     "contactResultsEvents.ereignisdetails"			: "Ereignis-Details",
     "contactResultsEvents.creator"			: "Erfasser",
     "contactResultsEvents.event"			: "Veranstaltung",
+    "contactResultsEvents.copyToEvent"			: "Register to event",
 
 	"eventResourceAdministration.eventTextPlaceholder"  : "Geben Sie hier ein: ",
 

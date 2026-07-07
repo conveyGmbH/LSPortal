@@ -18,14 +18,24 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                dataContact: null
+                dataContact: null,
+                showEventCombo: false,
+                copyToEventId: 0
             }, commandList]);
+            this.events = null;
 
             var that = this;
 
+            var eventsDropdown = pageElement.querySelector("#events");
             var table = pageElement.querySelector("#tableId");
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
+
+            this.dispose = function () {
+                if (that.events) {
+                    that.events = null;
+                }
+            }
 
             var getRecordId = function () {
                 Log.call(Log.l.trace, "ContactResultsEvents.Controller.");
@@ -205,7 +215,29 @@
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                     });
-
+                    Log.ret(Log.l.trace);
+                },
+                clickCopyToVA: function (event) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    AppData.setErrorMsg(that.binding);
+                    AppData.call("PRC_CopyToVA", {
+                        pKontaktID: that.binding.dataContact && that.binding.dataContact.KontaktVIEWID,
+                        pDestVAID: that.binding.copyToEventId
+                    }, function (json) {
+                        Log.print(Log.l.info, "call success! ");
+                        that.binding.copyToEventId = 0;
+                        that.loadData().then(function () {
+                            var master = Application.navigator.masterControl;
+                            if (master && master.controller && master.controller.binding) {
+                                master.controller.binding.contactId = that.binding.dataContact.KontaktVIEWID;
+                                master.controller.loadData(master.controller.binding.contactId).then(function () {
+                                    master.controller.selectRecordId(that.binding.dataContact.KontaktVIEWID);
+                                });
+                            }
+                        });
+                    }, function (error) {
+                        Log.print(Log.l.error, "call error");
+                    });
                     Log.ret(Log.l.trace);
                 },
                 clickChangeUserState: function (event) {
@@ -237,6 +269,14 @@
                     }
                     Application.navigateById("login", event);
                     Log.ret(Log.l.trace);
+                },
+                changeEventId: function (parameters) {
+                    Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    if (event && event.currentTarget) {
+                        that.binding.copyToEventId = parseInt(event.currentTarget.value);
+                        AppBar.triggerDisableHandlers();
+                    }
+                    Log.ret(Log.l.trace);
                 }
             };
 
@@ -257,10 +297,17 @@
                         return true;
                     }
                 },
+                clickCopyToVA: function () {
+                    return !that.binding.copyToEventId;
+                },
                 clickGotoPublish: function () {
                     return true;
                 }
             };
+
+            if (eventsDropdown) {
+                this.addRemovableEventListener(eventsDropdown, "change", this.eventHandlers.changeEventId.bind(this));
+            }
 
             var addContactTableItem = function (item, index) {
                 item.index = index;
@@ -286,7 +333,7 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     if (recordId) {
                         Log.print(Log.l.trace, "calling select contactView... recordId=" + recordId);
-                        return ContactResultsEvents.contactView.select(function (json) {
+                        var contactViewPromise = ContactResultsEvents.contactView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "select contactView: success!");
                             if (json && json.d) {
@@ -298,25 +345,20 @@
                             Log.print(Log.l.error, "select contactView: error!");
                             //AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId); 
-                    } else {
-                        return WinJS.Promise.as();
-                    }
-                }).then(function () {
-                    if (recordId) {
                         Log.print(Log.l.trace, "calling select incidentView...");
-                        return ContactResultsEvents.incidentView.select(function(json) {
+                        var incidentViewPromise = ContactResultsEvents.incidentView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "select incidentView: success!");
                             if (json && json.d && json.d.results) {
                                 var results = json.d.results;
-                                results.forEach(function(item, index) {
+                                results.forEach(function (item, index) {
                                     that.addContactTableItem(item, index);
                                 });
                                 that.resizableGrid();
                                 that.loadIcons();
                             }
                         },
-                        function(errorResponse) {
+                        function (errorResponse) {
                             Log.print(Log.l.error, "select incidentView: error!");
                             //AppData.setErrorMsg(that.binding, errorResponse);
                         },
@@ -325,6 +367,34 @@
                             LanguageSpecID: AppData.getLanguageId(),
                             VeranstaltungID: AppData.getRecordId("KontaktEventID")
                         });
+                        var eventViewPromise = ContactResultsEvents.eventView.select(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "eventView: success!");
+                            // eventView returns object already parsed from json file in response
+                            if (json && json.d && json.d.results.length > 0) {
+                                var results = json.d.results;
+                                that.events = new WinJS.Binding.List(results);
+                                that.events.push(ContactResultsEvents.eventView.defaultValue);
+                                if (eventsDropdown && eventsDropdown.winControl) {
+                                    eventsDropdown.winControl.data = that.events;
+                                    eventsDropdown.selectedIndex = -1;
+                                }
+                                that.binding.showEventCombo = true;
+                            } else {
+                                that.binding.showEventCombo = false;
+                            }
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            AppData.setErrorMsg(that.binding, errorResponse);
+                        }, recordId);
+                        var js = {
+                            doc: contactViewPromise,
+                            text: incidentViewPromise,
+                            layout: eventViewPromise
+                        }
+                        return WinJS.Promise.join(js);
                     } else {
                         return WinJS.Promise.as();
                     }

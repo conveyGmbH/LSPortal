@@ -61,6 +61,8 @@
                 this.firstContactsIndex = 0;
                 this.busy = false;
 
+                this.events = null;
+
                 var that = this;
 
                 var eventsDropdown = pageElement.querySelector("#events");
@@ -116,6 +118,9 @@
                     }
                     if (that.docs) {
                         that.docs = null;
+                    }
+                    if (that.events) {
+                        that.events = null;
                     }
                     listView = null;
                 }
