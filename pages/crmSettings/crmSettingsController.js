@@ -13,6 +13,11 @@
     "use strict";
     var namespaceName = "CrmSettings";
 
+    // Module-level memo (survives controller re-creation on every tab switch):
+    // recordId -> event UUID is immutable, so FCT_GetUniqueRecordID only needs
+    // one round-trip per event and session.
+    var eventIdByRecordId = {};
+
     WinJS.Namespace.define(namespaceName, {
 
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
@@ -144,23 +149,38 @@
                 // This prevents showing stale data from previous event
                 if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
                     SalesforceLeadLib.clear(fieldMappingsContainer);
-                    // Show loading indicator immediately
-                    fieldMappingsContainer.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; min-height: 300px;"><div style="width: 48px; height: 48px; border: 4px solid #e5e7eb; border-top-color: var(--accent-color, #2563eb); border-radius: 50%; animation: spin 0.8s linear infinite;"></div><p class="text-textcolor" style="margin-top: 16px; font-size: 16px;">Loading fields...</p><style>@keyframes spin { to { transform: rotate(360deg); } }</style></div>';
+                    // Skeleton placeholder (token-styled, light+dark) until
+                    // openFieldMapping renders its own full skeleton page
+                    fieldMappingsContainer.innerHTML =
+                        '<div class="sf-fieldmap-root" aria-busy="true">' +
+                        '<div class="sf-fieldmap-stats" style="margin-top: 20px;">' +
+                        '<div class="sf-skeleton" style="height: 82px;"></div>' +
+                        '<div class="sf-skeleton" style="height: 82px;"></div>' +
+                        '<div class="sf-skeleton" style="height: 82px;"></div>' +
+                        '<div class="sf-skeleton" style="height: 82px;"></div>' +
+                        '</div></div>';
                 }
 
                 var ret = new WinJS.Promise.as().then(function() {
+                    var recordId = getRecordId();
+                    // recordId -> UUID is immutable: serve the session memo when known
+                    if (recordId && eventIdByRecordId[recordId]) {
+                        that.binding.eventId = eventIdByRecordId[recordId];
+                        return WinJS.Promise.as();
+                    }
                     return AppData.call("FCT_GetUniqueRecordID", {
                         pRelationName: "Veranstaltung",
-                        pRecordID: getRecordId()
+                        pRecordID: recordId
                     }, function (json) {
                         Log.print(Log.l.info, "call FCT_GetUniqueRecordID: success! FCT_GetUniqueRecordID=" +
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
                         that.binding.eventId =
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID);
-                        console.log('FCT_GetUniqueRecordID success, eventId:', that.binding.eventId);
+                        if (recordId && that.binding.eventId) {
+                            eventIdByRecordId[recordId] = that.binding.eventId;
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "call FCT_GetUniqueRecordID: error");
-                        console.error('FCT_GetUniqueRecordID error:', errorResponse);
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.eventId = null;
                     });

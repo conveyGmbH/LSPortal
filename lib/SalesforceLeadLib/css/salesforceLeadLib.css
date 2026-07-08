@@ -1,39 +1,1309 @@
 /* SalesforceLeadLib - CSS Styles for LSPortal Integration */
 /* Dark Mode Support using .cnv-ui-dark class and portal CSS classes */
 
-/* ============================================
-   THEME VARIABLE BRIDGE  (fixes light/dark inconsistency)
-   The library was written against custom variables that the portal theme
-   engine does NOT define (--accent-color, --box-bkg, --text-color,
-   --label-color, --sf-border). With no value they fell back to hard-coded
-   greys that ignored the active theme — which is why the UI broke when
-   switching dark <-> light. Here we MAP those names onto the portal's real,
-   theme-aware variables (defined in css/syscolors.css and updated at runtime
-   by lib/convey/scripts/colors.js), so every existing var(--accent-color),
-   var(--box-bkg)… reference now follows the current theme automatically.
+/* File layout:
+   1. TOKENS          design tokens (light + dark), mapped onto portal vars
+   2. BASE            scoped resets, focus-visible, reduced-motion
+   3. COMPONENTS      .sf-btn .sf-card .sf-tile .sf-pill .sf-toggle .sf-input
+                      .sf-table .sf-modal .sf-toast .sf-skeleton .sf-empty .sf-tabs
+   4. VIEWS           .sf-fieldmap-* .sf-cl-* .sf-export-*
+   5. LEGACY BRIDGE   old variable names + [style*=] dark hacks — shrinks as
+                      views migrate to the token classes, deleted last. */
 
-   Canonical portal variables:
-     --ColorAccent          accent / action colour
-     --Window               page background
-     --ColorTileBackground  surface / card background  (paired w/ tile text)
-     --ColorTileText        text that contrasts the tile background
-     --WindowText           primary page text
-     --ColorText            primary text (= WindowText)
-     --ColorLabel           secondary / label text
+/* ============================================
+   1. TOKENS
+   Semantic tokens for the modern UI. Portal-derived tokens reference the
+   runtime variables from css/syscolors.css via var() (never copied) so they
+   follow the tenant accent and the light/dark toggle automatically.
+   --sf-accent-rgb is refreshed at runtime by injectCSS() from the computed
+   --ColorAccent (no color-mix() — old WebViews).
    ============================================ */
 :root {
-    --accent-color: var(--ColorAccent, #0070d2);
-    --box-bkg: var(--ColorTileBackground, #f9fafb);
-    --text-color: var(--ColorTileText, #1f2937);
-    --label-color: var(--ColorLabel, #6b7280);
-    --sf-border: rgba(128, 128, 128, 0.25);
+    --sf-font: "Open Sans", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+    --sf-bg: var(--ColorBackground, #ffffff);
+    --sf-surface: var(--Window, #ffffff);
+    --sf-surface-2: rgba(127, 127, 127, 0.07);
+    /* Neutral inset surface. Deliberately NOT mapped onto --ColorTileBackground:
+       tenant tile colours can be vivid (e.g. a mandant blue), which swallowed
+       buttons and text on modal footers, KPI tiles and status cards. */
+    --sf-surface-tile: rgba(127, 127, 127, 0.06);
+    --sf-text: var(--ColorText, #111827);
+    --sf-text-2: var(--ColorLabel, #5b6472);
+    --sf-text-muted: #6b7280;
+    --sf-border: rgba(127, 127, 127, 0.22);
+    --sf-border-strong: rgba(127, 127, 127, 0.38);
+    --sf-accent: var(--ColorAccent, #fe3600);
+    --sf-accent-rgb: 254, 54, 0;
+    --sf-accent-soft: rgba(var(--sf-accent-rgb), 0.10);
+    --sf-success: #15803d;
+    --sf-success-bg: rgba(22, 163, 74, 0.10);
+    --sf-error: #dc2626;
+    --sf-error-bg: rgba(239, 68, 68, 0.09);
+    --sf-warning: #b45309;
+    --sf-warning-bg: rgba(217, 119, 6, 0.10);
+    --sf-info: #2563eb;
+    --sf-info-bg: rgba(59, 130, 246, 0.09);
+    --sf-shadow-1: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+    --sf-shadow-2: 0 4px 12px rgba(16, 24, 40, 0.10);
+    --sf-shadow-3: 0 12px 32px rgba(16, 24, 40, 0.18);
+    --sf-table-header-bg: #1f2937;
+    --sf-table-header-text: #f9fafb;
+    --sf-radius-sm: 6px;
+    --sf-radius-md: 10px;
+    --sf-radius-lg: 14px;
+    --sf-radius-pill: 999px;
+    --sf-dur-1: 150ms;
+    --sf-dur-2: 250ms;
+    --sf-ease: cubic-bezier(0.2, 0.8, 0.4, 1);
+    --sf-focus-ring: 0 0 0 3px rgba(var(--sf-accent-rgb), 0.35);
 }
-/* Dark theme: keep the same canonical sources; only --box-bkg needs a
-   readable dark surface when the portal's tile background is very light. */
+
 body.cnv-ui-dark {
-    --box-bkg: var(--ColorTileBackground, #1f2937);
-    --sf-border: rgba(255, 255, 255, 0.15);
+    --sf-surface-2: rgba(255, 255, 255, 0.05);
+    --sf-surface-tile: rgba(255, 255, 255, 0.04);
+    --sf-text-muted: #8b93a1;
+    --sf-border: rgba(255, 255, 255, 0.14);
+    --sf-border-strong: rgba(255, 255, 255, 0.26);
+    --sf-accent-soft: rgba(var(--sf-accent-rgb), 0.18);
+    --sf-success: #4ade80;
+    --sf-success-bg: rgba(74, 222, 128, 0.12);
+    --sf-error: #f87171;
+    --sf-error-bg: rgba(248, 113, 113, 0.13);
+    --sf-warning: #fbbf24;
+    --sf-warning-bg: rgba(251, 191, 36, 0.13);
+    --sf-info: #60a5fa;
+    --sf-info-bg: rgba(96, 165, 250, 0.13);
+    --sf-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --sf-shadow-2: 0 4px 16px rgba(0, 0, 0, 0.55);
+    --sf-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.65);
+    --sf-table-header-bg: #111827;
+    --sf-table-header-text: #e5e7eb;
+    --sf-focus-ring: 0 0 0 3px rgba(var(--sf-accent-rgb), 0.45);
 }
+
+/* ============================================
+   2. BASE
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --sf-dur-1: 0ms;
+        --sf-dur-2: 0ms;
+    }
+}
+
+/* ============================================
+   3. COMPONENTS — shared building blocks (modern SaaS vocabulary).
+   All classes are sf- prefixed and additive: they affect nothing until a
+   template opts in.
+   ============================================ */
+
+/* ---- animations ---- */
+@keyframes sf-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes sf-scale-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes sf-toast-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes sf-toast-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes sf-spin {
+    to { transform: rotate(360deg); }
+}
+@keyframes sf-shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+}
+
+/* ---- focus ---- */
+.sf-btn:focus-visible,
+.sf-input:focus-visible,
+.sf-textarea:focus-visible,
+.sf-select:focus-visible,
+.sf-toggle input:focus-visible + .sf-toggle__track,
+.sf-pill:focus-visible,
+.sf-tabs__tab:focus-visible,
+.sf-icon-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--sf-focus-ring);
+}
+
+/* ---- buttons ---- */
+.sf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border: 1px solid transparent;
+    border-radius: var(--sf-radius-sm);
+    font-family: var(--sf-font);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                border-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease),
+                filter var(--sf-dur-1) var(--sf-ease);
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+}
+.sf-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.sf-btn--primary {
+    background: var(--sf-accent);
+    color: #ffffff;
+}
+.sf-btn--primary:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+.sf-btn--secondary {
+    background: transparent;
+    border-color: var(--sf-border-strong);
+    color: var(--sf-text);
+}
+.sf-btn--secondary:hover:not(:disabled) {
+    background: var(--sf-surface-2);
+}
+.sf-btn--danger {
+    background: var(--sf-error);
+    color: #ffffff;
+}
+body.cnv-ui-dark .sf-btn--danger {
+    color: #111827;
+}
+.sf-btn--danger:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+.sf-btn--danger-outline {
+    background: transparent;
+    border-color: var(--sf-error);
+    color: var(--sf-error);
+}
+.sf-btn--danger-outline:hover:not(:disabled) {
+    background: var(--sf-error-bg);
+}
+.sf-btn--success {
+    background: #059669;
+    color: #ffffff;
+}
+.sf-btn--success:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+.sf-btn--ghost {
+    background: transparent;
+    color: var(--sf-text-2);
+}
+.sf-btn--ghost:hover:not(:disabled) {
+    background: var(--sf-surface-2);
+    color: var(--sf-text);
+}
+.sf-btn--sm {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+.sf-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: var(--sf-radius-sm);
+    background: transparent;
+    color: var(--sf-text-2);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-icon-btn:hover {
+    background: var(--sf-surface-2);
+    color: var(--sf-text);
+}
+.sf-icon-btn--on-color {
+    color: rgba(255, 255, 255, 0.85);
+}
+.sf-icon-btn--on-color:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+/* ---- cards & tiles ---- */
+.sf-card {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    box-shadow: var(--sf-shadow-1);
+}
+.sf-card--hover {
+    transition: box-shadow var(--sf-dur-1) var(--sf-ease),
+                border-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-card--hover:hover {
+    box-shadow: var(--sf-shadow-2);
+    border-color: var(--sf-border-strong);
+}
+.sf-tile {
+    background: var(--sf-surface-tile);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    padding: 16px 20px;
+}
+.sf-tile__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--sf-text-2);
+    margin: 0 0 4px 0;
+}
+.sf-tile__value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--sf-text);
+    line-height: 1.1;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+}
+.sf-tile__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--sf-radius-sm);
+    background: var(--sf-accent-soft);
+    color: var(--sf-accent);
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* ---- status pills & dots ---- */
+.sf-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: var(--sf-radius-pill);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+.sf-pill--success { background: var(--sf-success-bg); color: var(--sf-success); }
+.sf-pill--error   { background: var(--sf-error-bg);   color: var(--sf-error); }
+.sf-pill--warning { background: var(--sf-warning-bg); color: var(--sf-warning); }
+.sf-pill--info    { background: var(--sf-info-bg);    color: var(--sf-info); }
+.sf-pill--neutral { background: var(--sf-surface-2);  color: var(--sf-text-2); }
+.sf-pill--accent  { background: var(--sf-accent-soft); color: var(--sf-accent); }
+.sf-pill--xs {
+    font-size: 10px;
+    padding: 2px 7px;
+    letter-spacing: 0.03em;
+}
+.sf-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.sf-dot--success { background: var(--sf-success); }
+.sf-dot--error   { background: var(--sf-error); }
+.sf-dot--warning { background: var(--sf-warning); }
+.sf-dot--info    { background: var(--sf-info); }
+.sf-dot--neutral { background: var(--sf-text-muted); }
+
+/* ---- status icon badge (modal headers) ---- */
+.sf-icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+.sf-icon-badge--success { background: var(--sf-success-bg); color: var(--sf-success); }
+.sf-icon-badge--error   { background: var(--sf-error-bg);   color: var(--sf-error); }
+.sf-icon-badge--warning { background: var(--sf-warning-bg); color: var(--sf-warning); }
+.sf-icon-badge--info    { background: var(--sf-info-bg);    color: var(--sf-info); }
+.sf-icon-badge--accent  { background: var(--sf-accent-soft); color: var(--sf-accent); }
+
+/* ---- inputs ---- */
+.sf-field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sf-text);
+    margin-bottom: 6px;
+}
+.sf-input,
+.sf-textarea,
+.sf-select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--sf-border-strong);
+    border-radius: var(--sf-radius-sm);
+    font-family: var(--sf-font);
+    font-size: 14px;
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    box-sizing: border-box;
+    transition: border-color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease);
+}
+.sf-input::placeholder,
+.sf-textarea::placeholder {
+    color: var(--sf-text-muted);
+}
+.sf-input:focus,
+.sf-textarea:focus,
+.sf-select:focus {
+    outline: none;
+    border-color: var(--sf-accent);
+    box-shadow: var(--sf-focus-ring);
+}
+.sf-input[readonly] {
+    background: var(--sf-surface-2);
+    color: var(--sf-text-2);
+}
+.sf-input--error {
+    border-color: var(--sf-error) !important;
+}
+.sf-textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+.sf-field-hint {
+    font-size: 12px;
+    color: var(--sf-text-2);
+    margin: 6px 0 0 0;
+    line-height: 1.45;
+}
+.sf-field-error {
+    font-size: 12px;
+    color: var(--sf-error);
+    margin: 6px 0 0 0;
+    display: none;
+}
+
+/* ---- toggle switch ---- */
+.sf-toggle {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.sf-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+.sf-toggle__track {
+    position: absolute;
+    inset: 0;
+    background: var(--sf-border-strong);
+    border-radius: var(--sf-radius-pill);
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-toggle__track::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 2px;
+    top: 2px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.2);
+    transition: transform var(--sf-dur-1) var(--sf-ease);
+}
+.sf-toggle input:checked + .sf-toggle__track {
+    background: var(--sf-accent);
+}
+.sf-toggle input:checked + .sf-toggle__track::before {
+    transform: translateX(16px);
+}
+.sf-toggle input:disabled + .sf-toggle__track {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ---- segmented tabs ---- */
+.sf-tabs {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    background: var(--sf-surface-2);
+    border-radius: var(--sf-radius-pill);
+}
+.sf-tabs__tab {
+    padding: 6px 14px;
+    border: none;
+    border-radius: var(--sf-radius-pill);
+    background: transparent;
+    color: var(--sf-text-2);
+    font-family: var(--sf-font);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease);
+    white-space: nowrap;
+}
+.sf-tabs__tab:hover {
+    color: var(--sf-text);
+}
+.sf-tabs__tab[aria-selected="true"],
+.sf-tabs__tab.is-active {
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    box-shadow: var(--sf-shadow-1);
+}
+
+/* ---- table ---- */
+.sf-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+    color: var(--sf-text);
+}
+.sf-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--sf-surface);
+    box-shadow: inset 0 -1px 0 var(--sf-border-strong);
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--sf-text-2);
+    padding: 10px 12px;
+    white-space: nowrap;
+}
+.sf-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--sf-border);
+    vertical-align: middle;
+}
+.sf-table tbody tr {
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-table tbody tr:hover {
+    background: var(--sf-surface-2);
+}
+.sf-table tbody tr.is-success { background: var(--sf-success-bg); }
+.sf-table tbody tr.is-error   { background: var(--sf-error-bg); }
+.sf-table tbody tr.is-warning { background: var(--sf-warning-bg); }
+
+/* ---- modal (div-overlay flavour) ---- */
+.sf-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10000;
+    animation: sf-fade-in var(--sf-dur-2) var(--sf-ease);
+}
+.sf-modal {
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    border-radius: var(--sf-radius-lg);
+    box-shadow: var(--sf-shadow-3);
+    width: 100%;
+    max-width: 560px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: sf-scale-in var(--sf-dur-2) var(--sf-ease);
+    font-family: var(--sf-font);
+}
+.sf-modal--sm { max-width: 420px; }
+.sf-modal__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--sf-border);
+}
+.sf-modal__title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--sf-text);
+    flex: 1;
+    min-width: 0;
+}
+.sf-modal__subtitle {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: var(--sf-text-2);
+}
+.sf-modal__body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.sf-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-top: 1px solid var(--sf-border);
+    background: var(--sf-surface-tile);
+}
+.sf-modal__footer--split {
+    justify-content: space-between;
+}
+
+/* native <dialog> flavour reuses the same inner classes */
+dialog.sf-lib-dialog.sf-dialog {
+    border: none;
+    border-radius: var(--sf-radius-lg);
+    padding: 0;
+    max-width: 520px;
+    width: 90%;
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    box-shadow: var(--sf-shadow-3);
+    font-family: var(--sf-font);
+    overflow: hidden;
+}
+dialog.sf-lib-dialog.sf-dialog--sm {
+    max-width: 420px;
+}
+
+/* ---- toast ---- */
+.sf-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10005;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    pointer-events: none;
+}
+.sf-toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 280px;
+    max-width: 460px;
+    padding: 12px 16px;
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    border: 1px solid var(--sf-border);
+    border-left-width: 3px;
+    border-radius: var(--sf-radius-sm);
+    box-shadow: var(--sf-shadow-2);
+    font-family: var(--sf-font);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+    animation: sf-toast-in var(--sf-dur-2) var(--sf-ease);
+    pointer-events: auto;
+}
+.sf-toast.is-leaving {
+    animation: sf-toast-out var(--sf-dur-2) var(--sf-ease) forwards;
+}
+.sf-toast__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    margin-top: 1px;
+}
+.sf-toast--success { border-left-color: var(--sf-success); }
+.sf-toast--success .sf-toast__icon { color: var(--sf-success); }
+.sf-toast--error   { border-left-color: var(--sf-error); }
+.sf-toast--error .sf-toast__icon   { color: var(--sf-error); }
+.sf-toast--warning { border-left-color: var(--sf-warning); }
+.sf-toast--warning .sf-toast__icon { color: var(--sf-warning); }
+.sf-toast--info    { border-left-color: var(--sf-info); }
+.sf-toast--info .sf-toast__icon    { color: var(--sf-info); }
+
+/* ---- spinner & progress ---- */
+.sf-spinner {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 3px solid var(--sf-border);
+    border-top-color: var(--sf-accent);
+    border-radius: 50%;
+    animation: sf-spin 0.8s linear infinite;
+}
+.sf-spinner--lg {
+    width: 44px;
+    height: 44px;
+    border-width: 4px;
+}
+.sf-progress {
+    background: var(--sf-surface-2);
+    border-radius: var(--sf-radius-pill);
+    height: 8px;
+    overflow: hidden;
+}
+.sf-progress__bar {
+    background: var(--sf-accent);
+    height: 100%;
+    width: 0%;
+    border-radius: var(--sf-radius-pill);
+    transition: width var(--sf-dur-2) var(--sf-ease);
+}
+
+/* ---- batch result rows & stats ---- */
+.sf-result-list {
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-sm);
+    overflow-y: auto;
+}
+.sf-result-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--sf-border);
+    font-size: 13px;
+}
+.sf-result-row:last-child {
+    border-bottom: none;
+}
+.sf-result-row__name {
+    flex: 1;
+    min-width: 0;
+    color: var(--sf-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sf-result-row__meta {
+    color: var(--sf-text-2);
+    font-size: 11px;
+    flex-shrink: 0;
+}
+/* Long error messages wrap onto their own line(s) instead of forcing a
+   horizontal scrollbar on the summary modal */
+.sf-result-row__msg {
+    flex: 1 1 100%;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.45;
+}
+.sf-stat {
+    flex: 1;
+    text-align: center;
+    padding: 14px 8px;
+}
+.sf-stat + .sf-stat {
+    border-left: 1px solid var(--sf-border);
+}
+.sf-stat__value {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+.sf-stat__label {
+    font-size: 12px;
+    color: var(--sf-text-2);
+    margin-top: 2px;
+}
+.sf-stat--success .sf-stat__value { color: var(--sf-success); }
+.sf-stat--error .sf-stat__value   { color: var(--sf-error); }
+.sf-stat--warning .sf-stat__value { color: var(--sf-warning); }
+.sf-stat--neutral .sf-stat__value { color: var(--sf-text-muted); }
+
+/* ---- skeleton ---- */
+.sf-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--sf-surface-2);
+    border-radius: var(--sf-radius-sm);
+}
+.sf-skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: sf-shimmer 1.4s var(--sf-ease) infinite;
+}
+body.cnv-ui-dark .sf-skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+}
+/* Reduced motion: keep the shimmer (it signals "loading", it is not
+   decorative — many Windows machines have this flag on by default) but
+   slow it down so it stays gentle. */
+@media (prefers-reduced-motion: reduce) {
+    .sf-skeleton::after {
+        animation-duration: 2.4s;
+    }
+}
+
+/* ---- empty state ---- */
+.sf-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--sf-text-2);
+}
+.sf-empty__icon {
+    font-size: 36px;
+    opacity: 0.45;
+    margin-bottom: 12px;
+}
+.sf-empty__title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sf-text);
+    margin: 0 0 4px 0;
+}
+.sf-empty__hint {
+    font-size: 13px;
+    margin: 0;
+    max-width: 360px;
+    line-height: 1.5;
+}
+
+/* ============================================
+   4. VIEWS — view-specific styles migrate here from the inline <style>
+   blocks (.sf-fieldmap-*, .sf-cl-*, .sf-export-*).
+   ============================================ */
+
+/* ---- Field Configurator (crmSettings) ---- */
+.sf-fieldmap-root {
+    font-family: var(--sf-font);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Full width — the page previously wasted large side margins
+       (max-width 1200px centered) on wide screens */
+    width: 100%;
+    margin: 0;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+.sf-fieldmap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 20px 0 16px;
+}
+.sf-fieldmap-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sf-text);
+    margin: 0;
+}
+.sf-fieldmap-header .sf-fieldmap-desc {
+    font-size: 13px;
+    color: var(--sf-text-2);
+    margin: 6px 0 0;
+    max-width: 560px;
+    line-height: 1.5;
+}
+.sf-fieldmap-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* connection chip (shared look for settings/export headers) */
+.sf-connection-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: var(--sf-surface-tile);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-pill);
+    transition: background-color var(--sf-dur-2) var(--sf-ease),
+                border-color var(--sf-dur-2) var(--sf-ease);
+}
+.sf-connection-chip__text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sf-text);
+    white-space: nowrap;
+}
+.sf-connection-chip.is-connected {
+    background: var(--sf-success-bg);
+    border-color: transparent;
+}
+.sf-connection-chip.is-connected .sf-connection-chip__text {
+    color: var(--sf-success);
+}
+.sf-connection-chip.is-failed .sf-connection-chip__text {
+    color: var(--sf-warning);
+}
+.sf-connection-chip__user {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-left: 4px;
+    padding-left: 12px;
+    border-left: 1px solid var(--sf-border);
+}
+.sf-avatar {
+    width: 24px;
+    height: 24px;
+    background: var(--sf-accent);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+/* KPI tiles row */
+.sf-fieldmap-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* search */
+.sf-fieldmap-search {
+    position: relative;
+    max-width: 400px;
+    margin-bottom: 16px;
+}
+.sf-fieldmap-search .sf-input {
+    padding-left: 38px;
+}
+.sf-fieldmap-search__icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sf-text-muted);
+    pointer-events: none;
+    font-size: 13px;
+}
+
+/* field cards grid */
+.sf-fieldmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 12px;
+    margin-top: 4px;
+}
+.sf-fieldmap-card {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    border-left: 3px solid var(--sf-border-strong);
+    border-radius: var(--sf-radius-sm);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease),
+                background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-fieldmap-card:hover {
+    box-shadow: var(--sf-shadow-1);
+    border-color: var(--sf-border-strong);
+}
+.sf-fieldmap-card.active {
+    border-left-color: var(--sf-success);
+}
+.sf-fieldmap-card.required {
+    border-left-color: var(--sf-warning);
+    background: var(--sf-warning-bg);
+}
+.sf-fieldmap-card.user-custom-field {
+    border-left-color: var(--sf-accent);
+    background: var(--sf-accent-soft);
+    align-items: flex-start;
+}
+.sf-fieldmap-card__name {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--sf-text);
+    text-align: left;
+}
+.sf-fieldmap-card__mapping {
+    font-size: 12px;
+    margin-top: 2px;
+    text-align: left;
+    color: var(--sf-accent);
+    font-weight: 500;
+}
+.sf-fieldmap-card__muted {
+    color: var(--sf-text-2);
+}
+/* Edit/delete buttons on field cards: give them a resting surface so they
+   read as buttons (the bare ghost icon was nearly invisible) */
+.sf-fieldmap-card .sf-icon-btn {
+    background: var(--sf-surface-2);
+    border: 1px solid var(--sf-border);
+    color: var(--sf-text-2);
+    flex-shrink: 0;
+}
+.sf-fieldmap-card .sf-icon-btn:hover {
+    background: var(--sf-accent-soft);
+    border-color: transparent;
+    color: var(--sf-accent);
+}
+.sf-fieldmap-card .delete-custom-field-btn:hover {
+    background: var(--sf-error-bg);
+    color: var(--sf-error);
+}
+
+/* ---- Batch export / contact list (crmExport) ----
+   Moved from the inline <style> block in renderContactList; class names are
+   unchanged (the view JS binds to them), values are tokenized. */
+.sf-cl-wrap { display: flex; flex-direction: column; height: 100%; padding: 0 16px; box-sizing: border-box; overflow: hidden; font-family: var(--sf-font); }
+.sf-cl-toolbar { display: flex; align-items: center; gap: 8px; padding: 10px 0; flex-wrap: wrap; }
+
+/* All toolbar buttons share one height so Batch/Refresh/toggle and the
+   connect/disconnect/status card line up. */
+.sf-cl-btn {
+    height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-sm);
+    font-family: var(--sf-font); font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1px solid transparent;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-sizing: border-box; gap: 8px;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                filter var(--sf-dur-1) var(--sf-ease),
+                border-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-batch { background: var(--sf-accent); color: #fff; }
+.sf-cl-btn-batch:hover:not(:disabled) { filter: brightness(0.92); }
+.sf-cl-btn-batch:disabled { opacity: 0.45; cursor: not-allowed; }
+.sf-cl-btn-refresh { background: transparent; color: var(--sf-text); border-color: var(--sf-border-strong); }
+.sf-cl-btn-refresh:hover { background: var(--sf-surface-2); }
+.sf-cl-btn-toggle { background: var(--sf-accent); color: #fff; width: 38px; height: 38px; padding: 0; }
+.sf-cl-btn-toggle:hover { filter: brightness(0.92); }
+.sf-cl-btn-toggle svg { transition: transform var(--sf-dur-2) var(--sf-ease); }
+.sf-cl-btn-toggle.active svg { transform: rotate(45deg); }
+.sf-cl-count { font-size: 12px; color: var(--sf-text-2); }
+
+/* Filter bar: neutral translucent surface; inputs read like normal fields
+   in both light and dark. */
+.sf-cl-filter-bar {
+    display: none; flex-wrap: wrap; gap: 12px; padding: 12px 14px;
+    background: var(--sf-surface-2);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    margin-bottom: 8px; align-items: flex-end;
+}
+.sf-cl-filter-bar.sf-cl-filter-visible { display: flex; }
+.sf-cl-fg { position: relative; flex: 1; min-width: 130px; }
+.sf-cl-fg input {
+    width: 100%; padding: 6px 8px;
+    border: 1px solid var(--sf-border-strong);
+    border-radius: var(--sf-radius-sm);
+    font-size: 13px; height: 38px; outline: none; box-sizing: border-box;
+    background: var(--sf-surface); color: var(--sf-text);
+    transition: border-color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-fg input:focus { border-color: var(--sf-accent); box-shadow: var(--sf-focus-ring); }
+.sf-cl-fg label {
+    position: absolute; top: 50%; left: 8px; transform: translateY(-50%);
+    background: var(--sf-surface); padding: 0 4px;
+    color: var(--sf-text-2); font-size: 13px;
+    transition: all var(--sf-dur-1) var(--sf-ease); pointer-events: none;
+}
+.sf-cl-fg input:focus + label,
+.sf-cl-fg input:not(:placeholder-shown) + label { top: 0; font-size: 11px; color: var(--sf-accent); }
+
+/* Date range group (Von/Bis) */
+.sf-cl-filter-group { display: flex; flex-direction: column; gap: 4px; }
+.sf-cl-filter-label { font-size: 11px; font-weight: 600; color: var(--sf-text-2); }
+.sf-cl-filter-group input[type=date] {
+    height: 38px; padding: 6px 8px;
+    border: 1px solid var(--sf-border-strong);
+    border-radius: var(--sf-radius-sm);
+    font-size: 13px; outline: none; box-sizing: border-box;
+    background: var(--sf-surface); color: var(--sf-text);
+}
+.sf-cl-filter-group input[type=date]:focus { border-color: var(--sf-accent); box-shadow: var(--sf-focus-ring); }
+.cnv-ui-dark .sf-cl-filter-group input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); }
+.sf-cl-filter-actions { display: flex; gap: 10px; align-self: flex-end; margin-left: auto; }
+.sf-cl-btn-apply {
+    background: var(--sf-accent); color: #fff; border: none; padding: 0 18px;
+    border-radius: var(--sf-radius-sm); font-size: 13px; font-weight: 600;
+    cursor: pointer; height: 38px;
+    transition: filter var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-apply:hover { filter: brightness(0.92); }
+.sf-cl-btn-reset {
+    background: transparent; color: var(--sf-text-2);
+    border: 1px solid var(--sf-border-strong); padding: 0 18px;
+    border-radius: var(--sf-radius-sm); font-size: 13px; font-weight: 600;
+    cursor: pointer; height: 38px;
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-reset:hover:not(:disabled) { background: var(--sf-surface-2); }
+.sf-cl-btn-reset:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Export status filter pills — active state keeps fixed solid status fills:
+   they are theme-independent mid-tones that hold white text in both modes. */
+.sf-cl-status-filter { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 4px 0; }
+.sf-cl-status-pill {
+    height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-pill);
+    font-family: var(--sf-font); font-size: 12px; font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--sf-border-strong);
+    background: transparent; color: var(--sf-text-2);
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease),
+                border-color var(--sf-dur-1) var(--sf-ease);
+    white-space: nowrap;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    box-sizing: border-box;
+}
+/* Hover: preview each pill's status colour as a soft tint */
+.sf-cl-status-pill:hover:not(.active) {
+    background: var(--sf-surface-2);
+    color: var(--sf-text);
+    border-color: var(--sf-border-strong);
+    box-shadow: var(--sf-shadow-1);
+}
+.sf-cl-status-pill.pill-success:hover:not(.active) { background: var(--sf-success-bg); color: var(--sf-success); border-color: transparent; }
+.sf-cl-status-pill.pill-failed:hover:not(.active)  { background: var(--sf-error-bg);   color: var(--sf-error);   border-color: transparent; }
+.sf-cl-status-pill.pill-dup:hover:not(.active)     { background: var(--sf-warning-bg); color: var(--sf-warning); border-color: transparent; }
+.sf-cl-status-pill.pill-empty:hover:not(.active)   { background: var(--sf-surface-2);  color: var(--sf-text); }
+.sf-cl-status-pill.active { background: #374151; color: #fff; border-color: #374151; }
+.sf-cl-status-pill.pill-success.active { background: #16a34a; border-color: #16a34a; }
+.sf-cl-status-pill.pill-failed.active { background: #dc2626; border-color: #dc2626; }
+.sf-cl-status-pill.pill-dup.active { background: #d97706; border-color: #d97706; }
+.sf-cl-status-pill.pill-empty.active { background: #6b7280; border-color: #6b7280; }
+.sf-cl-status-pill.pill-vollstaendig.active { background: #2563eb; border-color: #2563eb; }
+.sf-cl-status-pill.pill-unvollstaendig.active { background: #9333ea; border-color: #9333ea; }
+.sf-cl-status-pill.pill-complete-all.active { background: var(--sf-accent); border-color: var(--sf-accent); }
+#sf-cl-completeness-select {
+    height: 38px; font-size: 12px; font-weight: 600;
+    padding: 0 30px 0 12px;
+    border-radius: var(--sf-radius-sm);
+    border: 1px solid var(--sf-border-strong);
+    background-color: var(--sf-surface); color: var(--sf-text);
+    cursor: pointer; box-sizing: border-box; font-family: var(--sf-font);
+    /* custom chevron: the native arrow renders inconsistently across WebViews */
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    transition: border-color var(--sf-dur-1) var(--sf-ease);
+}
+#sf-cl-completeness-select:hover { border-color: var(--sf-accent); }
+body.cnv-ui-dark #sf-cl-completeness-select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23a6adba' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Attachment badge */
+.sf-cl-attach-badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+    border-radius: var(--sf-radius-pill);
+    font-size: 12px; font-weight: 600;
+    background: var(--sf-surface-2); color: var(--sf-text-2);
+    border: 1px solid var(--sf-border);
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-attach-badge:hover { background: var(--sf-accent); color: #fff; border-color: var(--sf-accent); }
+
+/* Table */
+.sf-cl-table-wrap {
+    overflow-x: auto; overflow-y: auto; flex: 1; min-height: 0;
+    scrollbar-width: thin; position: relative;
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+}
+.sf-cl-table-wrap::-webkit-scrollbar { height: 8px; width: 8px; }
+.sf-cl-table-wrap::-webkit-scrollbar-track { background: var(--sf-surface-tile); }
+.sf-cl-table-wrap::-webkit-scrollbar-thumb { background: var(--sf-border-strong); border-radius: 4px; }
+.sf-cl-table { border-collapse: collapse; width: max-content; min-width: 100%; font-size: 13px; }
+.sf-cl-th {
+    background: var(--sf-table-header-bg); color: var(--sf-table-header-text);
+    padding: 9px 10px; text-align: left; white-space: nowrap;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
+    position: sticky; top: 0; z-index: 2;
+}
+.sf-cl-th-sticky { position: sticky; left: 0; z-index: 3; background: var(--sf-table-header-bg); }
+.sf-cl-td { padding: 7px 10px; border-bottom: 1px solid var(--sf-border); white-space: nowrap; vertical-align: middle; color: var(--sf-text); }
+.sf-cl-td-sticky { position: sticky; left: 0; z-index: 1; background: var(--sf-surface); }
+.sf-cl-td-first-data { background: var(--sf-surface); }
+.sf-cl-row:hover .sf-cl-td { background: var(--sf-surface-tile); }
+.sf-cl-row:hover .sf-cl-td-sticky, .sf-cl-row:hover .sf-cl-td-first-data { background: var(--sf-surface-tile); }
+/* Row tinting — light mode only (dark mode: dot badge is sufficient).
+   Sticky cells need stronger alpha: they overlay scrolled content. */
+body:not(.cnv-ui-dark) .sf-cl-row-success .sf-cl-td { background: rgba(220, 252, 231, 0.5); }
+body:not(.cnv-ui-dark) .sf-cl-row-success .sf-cl-td-sticky, body:not(.cnv-ui-dark) .sf-cl-row-success .sf-cl-td-first-data { background: rgba(220, 252, 231, 0.8); }
+body:not(.cnv-ui-dark) .sf-cl-row-failed .sf-cl-td { background: rgba(254, 226, 226, 0.5); }
+body:not(.cnv-ui-dark) .sf-cl-row-failed .sf-cl-td-sticky, body:not(.cnv-ui-dark) .sf-cl-row-failed .sf-cl-td-first-data { background: rgba(254, 226, 226, 0.8); }
+body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td { background: rgba(254, 243, 199, 0.5); }
+body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-sticky, body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-first-data { background: rgba(254, 243, 199, 0.8); }
+.sf-export-badge-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.dot-success { background: var(--sf-success); }
+.dot-failed { background: var(--sf-error); }
+.dot-duplicate { background: var(--sf-warning); }
+.sf-cl-empty { padding: 40px 20px; text-align: center; color: var(--sf-text-2); font-size: 14px; }
+
+/* Connection status card (same vocabulary as the settings chip) */
+.sf-cl-status-wrap { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.sf-cl-status-card {
+    display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-pill);
+    border: 1px solid var(--sf-border);
+    background: var(--sf-surface-tile);
+    box-sizing: border-box;
+    transition: background-color var(--sf-dur-2) var(--sf-ease),
+                border-color var(--sf-dur-2) var(--sf-ease);
+}
+.sf-cl-status-card.connected { border-color: transparent; background: var(--sf-success-bg); }
+.sf-cl-status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sf-warning); }
+.sf-cl-status-dot.connected { background: var(--sf-success); }
+.sf-cl-status-text { font-size: 13px; font-weight: 600; color: var(--sf-text); }
+.sf-cl-status-text.connected { color: var(--sf-success); }
+.sf-cl-user-section { display: none; align-items: center; gap: 8px; margin-left: 4px; padding-left: 12px; border-left: 1px solid var(--sf-border); }
+.sf-cl-user-section.visible { display: flex; }
+.sf-cl-user-avatar {
+    width: 24px; height: 24px; background: var(--sf-accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 10px;
+}
+.sf-cl-user-name { font-size: 13px; font-weight: 600; color: var(--sf-text); }
+.sf-cl-status-card.connected .sf-cl-user-name { color: var(--sf-success); }
+.sf-cl-btn-disconnect {
+    padding: 0 16px; height: 38px;
+    background: transparent; color: var(--sf-error);
+    font-family: var(--sf-font); font-size: 13px; font-weight: 600;
+    border: 1px solid var(--sf-error);
+    border-radius: var(--sf-radius-sm); cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-disconnect:hover { background: var(--sf-error-bg); }
+.sf-cl-btn-connect {
+    padding: 0 16px; height: 38px;
+    background: var(--sf-accent); color: #fff; border: none;
+    border-radius: var(--sf-radius-sm);
+    font-family: var(--sf-font); font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: filter var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-btn-connect:hover { filter: brightness(0.92); }
+.sf-cl-filter-hint { font-size: 12px; color: var(--sf-warning); padding: 2px 4px 8px; }
+
+/* ---- Single lead export (contactCrmExport / crmExport test) ---- */
+.sf-export-root {
+    max-width: 1400px; margin: 0 auto; padding: 20px;
+    font-family: var(--sf-font); min-height: 100vh; box-sizing: border-box;
+}
+.sf-export-card {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    box-shadow: var(--sf-shadow-1);
+}
+.sf-export-banner {
+    border-radius: var(--sf-radius-sm);
+    padding: 12px 16px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    background: var(--sf-surface-tile);
+    border: 1px solid var(--sf-border);
+}
+.sf-export-banner__icon { font-size: 20px; color: var(--sf-text-2); }
+.sf-export-banner__title { font-weight: 600; font-size: 14px; color: var(--sf-text); }
+.sf-export-banner__meta { font-size: 12px; color: var(--sf-text-2); }
+.sf-export-banner--success { background: var(--sf-success-bg); border-color: transparent; }
+.sf-export-banner--success .sf-export-banner__icon,
+.sf-export-banner--success .sf-export-banner__title { color: var(--sf-success); }
+.sf-export-banner--error { background: var(--sf-error-bg); border-color: transparent; }
+.sf-export-banner--error .sf-export-banner__icon,
+.sf-export-banner--error .sf-export-banner__title { color: var(--sf-error); }
+.sf-export-banner--warning { background: var(--sf-warning-bg); border-color: transparent; }
+.sf-export-banner--warning .sf-export-banner__icon,
+.sf-export-banner--warning .sf-export-banner__title { color: var(--sf-warning); }
+.sf-export-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.sf-export-table th {
+    text-align: left; padding: 12px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--sf-text-2);
+    background: var(--sf-surface-tile);
+    border-bottom: 1px solid var(--sf-border-strong);
+}
+.sf-export-table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--sf-border);
+    color: var(--sf-text);
+    vertical-align: top;
+}
+.sf-field-card {
+    background: var(--sf-surface-tile);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-sm);
+    padding: 16px;
+}
+.sf-attach-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-sm);
+    background: var(--sf-surface-tile);
+}
+
+/* ============================================
+   5. SHARED PAGE HELPERS — rules that predate the token layer but are still
+   load-bearing: body.sf-modal-open, the native-dialog base, and the
+   .error-message/.success-message cards that many portal pages reuse.
+   The old variable bridge (--accent-color, --box-bkg, …) and the
+   [style*=…] dark-mode hacks were removed once the views migrated to
+   token classes.
+   ============================================ */
 
 /* ============================================
    MODAL OVERFLOW FIX
@@ -62,44 +1332,6 @@ html.sf-modal-open body {
     color: var(--WindowText, #f9fafb) !important;
 }
 
-.sf-lib-dialog.cnv-ui-dark [style*="background: var(--Window, white)"],
-.sf-lib-dialog.cnv-ui-dark [style*="background-color: white"],
-.sf-lib-dialog.cnv-ui-dark [style*="background: white"] {
-    background: var(--Window, #111827) !important;
-}
-
-.sf-lib-dialog.cnv-ui-dark [style*="background: var(--box-bkg, #f9fafb)"],
-.sf-lib-dialog.cnv-ui-dark [style*="background: #f9fafb"] {
-    background: var(--box-bkg, #1f2937) !important;
-}
-
-.sf-lib-dialog.cnv-ui-dark [style*="color: #374151"],
-.sf-lib-dialog.cnv-ui-dark [style*="color: var(--WindowText, #374151)"] {
-    color: var(--WindowText, #e5e7eb) !important;
-}
-
-.sf-lib-dialog.cnv-ui-dark [style*="color: #1f2937"],
-.sf-lib-dialog.cnv-ui-dark [style*="color: var(--WindowText, #1f2937)"] {
-    color: var(--WindowText, #f9fafb) !important;
-}
-
-.sf-lib-dialog.cnv-ui-dark [style*="color: #6b7280"],
-.sf-lib-dialog.cnv-ui-dark [style*="color: var(--WindowText, #6b7280)"] {
-    color: #d1d5db !important;
-}
-
-.sf-lib-dialog.cnv-ui-dark [style*="border: 1px solid #d1d5db"],
-.sf-lib-dialog.cnv-ui-dark [style*="border: 1px solid #e5e7eb"],
-.sf-lib-dialog.cnv-ui-dark [style*="border-top: 1px solid #e5e7eb"] {
-    border-color: #525252 !important;
-}
-
-.sf-lib-dialog.cnv-ui-dark input {
-    background: var(--Window, #111827) !important;
-    color: var(--WindowText, #f9fafb) !important;
-    border-color: #525252 !important;
-}
-
 @keyframes dialogFadeIn {
     from {
         opacity: 0;
@@ -117,35 +1349,12 @@ html.sf-modal-open body {
 .field-mapping-container,
 .crm-test-export-container,
 .crm-export-container {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-/* ============================================
-   LOADING INDICATOR
-   ============================================ */
-.loading-indicator {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid #e5e7eb;
-    border-radius: 50%;
-    border-top-color: var(--accent-color, #0070d2);
-    animation: spin 1s linear infinite;
-}
-
-.cnv-ui-dark .loading-indicator {
-    border-color: #525252;
-    border-top-color: var(--accent-color, #0070d2);
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    font-family: var(--sf-font);
 }
 
 /* ============================================
    MESSAGE STYLES WITH DARK MODE
+   (reused by many portal pages via class name — keep global)
    ============================================ */
 .error-message {
     color: #c23934;
@@ -177,60 +1386,6 @@ html.sf-modal-open body {
     color: #6ee7b7;
 }
 
-/* ============================================
-   DARK MODE OVERRIDES FOR INLINE STYLES
-   These use !important to override inline styles
-   ============================================ */
-
-/* Background overrides */
-.cnv-ui-dark [style*="background-color: rgb(249, 250, 251)"],
-.cnv-ui-dark [style*="background-color: #f9fafb"],
-.cnv-ui-dark [style*="background: #f9fafb"] {
-    background-color: var(--box-bkg, #1f2937) !important;
-    background: var(--box-bkg, #1f2937) !important;
-}
-
-.cnv-ui-dark [style*="background-color: #ffffff"],
-.cnv-ui-dark [style*="background-color: white"],
-.cnv-ui-dark [style*="background: white"] {
-    background-color: var(--Window, #111827) !important;
-    background: var(--Window, #111827) !important;
-}
-
-/* Text color overrides */
-.cnv-ui-dark [style*="color: #1f2937"] {
-    color: var(--WindowText, #f9fafb) !important;
-}
-
-.cnv-ui-dark [style*="color: #6b7280"] {
-    color: #d1d5db !important;
-}
-
-.cnv-ui-dark [style*="color: #374151"] {
-    color: var(--WindowText, #e5e7eb) !important;
-}
-
-/* Border overrides */
-.cnv-ui-dark [style*="border-color: #e5e7eb"],
-.cnv-ui-dark [style*="border: 1px solid #e5e7eb"] {
-    border-color: #525252 !important;
-}
-
-.cnv-ui-dark [style*="border: 1px solid #d1d5db"] {
-    border-color: #525252 !important;
-}
-
-.cnv-ui-dark [style*="border-bottom: 1px solid #e5e7eb"] {
-    border-bottom-color: #525252 !important;
-}
-
-.cnv-ui-dark [style*="border-bottom: 2px solid #e5e7eb"] {
-    border-bottom-color: #525252 !important;
-}
-
-/* Input field overrides */
-.cnv-ui-dark [style*="background: #f3f4f6"],
-.cnv-ui-dark [style*="background-color: #f3f4f6"] {
-    background-color: #374151 !important;
-    background: #374151 !important;
-}
+/* [style*=…] dark-mode overrides removed — every migrated view now styles
+   through token classes, so there are no hardcoded inline colors left to
+   patch. */

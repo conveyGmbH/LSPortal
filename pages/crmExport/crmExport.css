@@ -2,10 +2,9 @@
    CRM Export — "module not activated" message
    Shown when the event/mandant has no SF-API-User (no eventId UUID).
 
-   Colours come from the portal's predefined theme classes set on the HTML
-   (tile-backgroundcolor, text-tile-textcolor, label-color) so the card always
-   matches the user's "Optionen" colours and the active light/dark theme.
-   This file only owns LAYOUT — no hard-coded colours.
+   Neutral surface + theme text vars (NOT the mandant tile colour: vivid
+   tenant tiles made the card text unreadable). Follows light/dark via
+   --Window/--ColorText/--ColorLabel; the icon disc uses the tenant accent.
    ============================================ */
 .crm-inactive-wrap {
     display: flex;
@@ -22,9 +21,10 @@
     width: 100%;
     text-align: center;
     padding: 40px 32px;
-    border-radius: 16px;
-    border: 1px solid rgba(128, 128, 128, 0.25);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 14px;
+    background: var(--Window, #ffffff);
+    border: 1px solid rgba(128, 128, 128, 0.22);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
 }
 
 .crm-inactive-icon {
@@ -35,9 +35,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Neutral tinted disc (theme-independent grey wash); the SVG inside is
-       monochrome and inherits its colour from .text-tile-textcolor. */
-    background-color: rgba(128, 128, 128, 0.15);
+    background-color: rgba(128, 128, 128, 0.12);
+    color: var(--ColorAccent, #fe3600);
 }
 
 .crm-inactive-icon svg {
@@ -49,16 +48,19 @@
     margin: 0 0 12px;
     font-size: 20px;
     font-weight: 700;
+    color: var(--ColorText, #111827);
 }
 
 .crm-inactive-text {
     margin: 0 0 8px;
     font-size: 15px;
     line-height: 1.55;
+    color: var(--ColorText, #374151);
 }
 
 .crm-inactive-hint {
     margin: 16px 0 0;
     font-size: 13px;
     line-height: 1.5;
+    color: var(--ColorLabel, #6b7280);
 }
