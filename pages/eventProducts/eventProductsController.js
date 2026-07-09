@@ -413,8 +413,8 @@
                     } else {
                         return AppData.call("PRC_GetAssignedProducts",
                             {
-                                pVeranstaltungID: vaid,
-                                pLanguageSpecID: that.getVeranstaltungId()
+                                pVeranstaltungID: that.getVeranstaltungId(),
+                                pLanguageSpecID: AppData.getLanguageId()
                             },
                             function (json) {
                                 Log.print(Log.l.info, "call success! ");
