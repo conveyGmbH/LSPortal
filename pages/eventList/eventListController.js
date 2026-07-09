@@ -556,6 +556,7 @@
                                                         typeof AppBar.scope.loadData === "function") {
                                                         if (typeof AppBar.scope.setEventId === "function") {
                                                             AppBar.scope.setEventId(that.binding.eventId); /*setEventId rausnehmen*/
+                                                            AppBar.scope.loadData();
                                                         }
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "reporting" &&
@@ -607,6 +608,11 @@
                                                     curPageId === "crmSettings" ||
                                                     curPageId === "crmExport") &&
                                                     typeof AppBar.scope.loadData === "function") {
+                                                    AppBar.scope.loadData();
+                                                }
+                                                if ((curPageId === "eventProducts") &&
+                                                    typeof AppBar.scope.loadData === "function") {
+                                                   AppBar.scope.setVeranstaltungId(that.binding.eventId);
                                                     AppBar.scope.loadData();
                                                 }
                                                 if ((curPageId === "reporting" ||

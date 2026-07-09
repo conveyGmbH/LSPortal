@@ -414,7 +414,7 @@
                         return AppData.call("PRC_GetAssignedProducts",
                             {
                                 pVeranstaltungID: vaid,
-                                pLanguageSpecID: AppData.getLanguageId()
+                                pLanguageSpecID: that.getVeranstaltungId()
                             },
                             function (json) {
                                 Log.print(Log.l.info, "call success! ");
@@ -440,6 +440,8 @@
                             });
                     }
                     Log.ret(Log.l.trace);
+                }).then(function () {
+                    that.creatingProductsCategory();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
