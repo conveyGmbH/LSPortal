@@ -212,8 +212,9 @@
                                 });
                             }
                         });
-                    }, function (error) {
+                    }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
                 },
@@ -235,8 +236,9 @@
                                 });
                             }
                         });
-                    }, function (error) {
+                    }, function (errorResponse) {
                         Log.print(Log.l.error, "call error");
+                        AppData.setErrorMsg(that.binding, errorResponse);
                     });
                     Log.ret(Log.l.trace);
                 },
