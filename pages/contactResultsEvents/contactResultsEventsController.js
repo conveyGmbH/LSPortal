@@ -23,6 +23,9 @@
                 copyToEventId: 0
             }, commandList]);
             this.events = null;
+            this.contactViewPromise = null;
+            this.incidentViewPromise = null;
+            this.eventViewPromise = null;
 
             var that = this;
 
@@ -31,7 +34,22 @@
             var tableHeader = pageElement.querySelector(".table-header");
             var tableBody = pageElement.querySelector(".table-body");
 
+            this.cancelPromises = function() {
+                if (that.contactViewPromise) {
+                    that.contactViewPromise.cancel();
+                    that.contactViewPromise = null;
+                }
+                if (that.incidentViewPromise) {
+                    that.incidentViewPromise.cancel();
+                    that.incidentViewPromise = null;
+                }
+                if (that.eventViewPromise) {
+                    that.eventViewPromise.cancel();
+                    that.eventViewPromise = null;
+                }
+            }
             this.dispose = function () {
+                that.cancelPromises();
                 if (that.events) {
                     that.events = null;
                 }
@@ -328,14 +346,15 @@
             this.addContactTableItem = addContactTableItem;
 
             var loadData = function () {
-                var recordId = getRecordId();
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                that.cancelPromises();
                 tableBody.winControl.data = null;
-                Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
+                    var recordId = getRecordId();
                     if (recordId) {
                         Log.print(Log.l.trace, "calling select contactView... recordId=" + recordId);
-                        var contactViewPromise = ContactResultsEvents.contactView.select(function (json) {
+                        that.contactViewPromise = ContactResultsEvents.contactView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "select contactView: success!");
                             if (json && json.d) {
@@ -348,7 +367,7 @@
                             //AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId); 
                         Log.print(Log.l.trace, "calling select incidentView...");
-                        var incidentViewPromise = ContactResultsEvents.incidentView.select(function (json) {
+                        that.incidentViewPromise = ContactResultsEvents.incidentView.select(function (json) {
                             AppData.setErrorMsg(that.binding);
                             Log.print(Log.l.trace, "select incidentView: success!");
                             if (json && json.d && json.d.results) {
@@ -369,7 +388,7 @@
                             LanguageSpecID: AppData.getLanguageId(),
                             VeranstaltungID: AppData.getRecordId("KontaktEventID")
                         });
-                        var eventViewPromise = ContactResultsEvents.eventView.select(function (json) {
+                        that.eventViewPromise = ContactResultsEvents.eventView.select(function (json) {
                             // this callback will be called asynchronously
                             // when the response is available
                             Log.print(Log.l.trace, "eventView: success!");
@@ -392,14 +411,18 @@
                             AppData.setErrorMsg(that.binding, errorResponse);
                         }, recordId);
                         var js = {
-                            doc: contactViewPromise,
-                            text: incidentViewPromise,
-                            layout: eventViewPromise
+                            doc: that.contactViewPromise,
+                            text: that.incidentViewPromise,
+                            layout: that.eventViewPromise
                         }
                         return WinJS.Promise.join(js);
                     } else {
                         return WinJS.Promise.as();
                     }
+                }).then(function () {
+                    that.contactViewPromise = null;
+                    that.incidentViewPromise = null;
+                    that.eventViewPromise = null;
                 });
                 Log.ret(Log.l.trace);
                 return ret;
