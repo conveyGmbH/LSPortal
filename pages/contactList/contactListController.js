@@ -647,15 +647,6 @@
                             } else if (curPageId === "contactCrmExport" &&
                                 typeof AppBar.scope.loadData === "function") {
                                 AppBar.scope.loadData();
-                            } else if (curPageId === "contactResultsQuestion" &&
-                                typeof AppBar.scope.loadData === "function") {
-                                AppBar.scope.loadData();
-                            } else if (curPageId === "contactResultsAttach" &&
-                                typeof AppBar.scope.loadData === "function") {
-                                AppBar.scope.loadData();
-                            } else if (curPageId === "contactResultsCriteria" &&
-                                typeof AppBar.scope.loadData === "function") {
-                                AppBar.scope.loadData();
                             } else if (curPageId === "contactResultsEvents" &&
                                 typeof AppBar.scope.loadData === "function") {
                                 AppBar.scope.loadData();
@@ -731,15 +722,6 @@
                                                     } else if (curPageId === "contactCrmExport" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
-                                                    } else if (curPageId === "contactResultsQuestion" &&
-                                                        typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.loadData();
-                                                    } else if (curPageId === "contactResultsAttach" &&
-                                                        typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.loadData();
-                                                    } else if (curPageId === "contactResultsCriteria" &&
-                                                        typeof AppBar.scope.loadData === "function") {
-                                                        AppBar.scope.loadData();
                                                     } else if (curPageId === "contactResultsEvents" &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
@@ -763,15 +745,6 @@
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else if (curPageId === "contactCrmExport" &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData();
-                                                } else if (curPageId === "contactResultsQuestion" &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData();
-                                                } else if (curPageId === "contactResultsAttach" &&
-                                                    typeof AppBar.scope.loadData === "function") {
-                                                    AppBar.scope.loadData();
-                                                } else if (curPageId === "contactResultsCriteria" &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 } else if (curPageId === "contactResultsEvents" &&

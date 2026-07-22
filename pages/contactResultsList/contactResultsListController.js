@@ -162,16 +162,16 @@
             var handlePageEnable = function (contact) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + (contact && contact.KontaktVIEWID));
                 if (AppData._persistentStates.hideQuestionnaire) {
-                    NavigationBar.disablePage("contactResultsQuestion");
+                    NavigationBar.disablePage("questionnaire");
                 } else if (contact && contact.SHOW_Zeilenantwort) {
-                    NavigationBar.enablePage("contactResultsQuestion");
+                    NavigationBar.enablePage("questionnaire");
                 } else {
-                    NavigationBar.disablePage("contactResultsQuestion");
+                    NavigationBar.disablePage("questionnaire");
                 }
                 if (contact && contact.SHOW_KontaktNotiz) {
-                    NavigationBar.enablePage("contactResultsAttach");
+                    NavigationBar.enablePage("sketch");
                 } else {
-                    NavigationBar.disablePage("contactResultsAttach");
+                    NavigationBar.disablePage("sketch");
                 }
                 Log.ret(Log.l.trace);
             };
@@ -230,11 +230,7 @@
                             handlePageEnable(scope.item);
                         }
                         AppData.setRecordId("Kontakt", that.curRecId);
-                        if (that.getEventId()) {
-                            Application.navigateById("contact"); 
-                        } else {
-                            Application.navigateById("contact");
-                        }
+                        Application.navigateById("contact"); 
                     });
                 },
                 changeSearchField: function (event) {
@@ -285,7 +281,8 @@
                         if (scope) {
                             handlePageEnable(scope.item);
                         }
-                        Application.navigateById("contactResultsEdit");
+                        AppData.setRecordId("Kontakt", that.curRecId);
+                        Application.navigateById("contact");
                     } else {
                         Log.print(Log.l.trace, "No record selected!");
                     }
