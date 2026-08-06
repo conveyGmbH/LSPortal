@@ -72,6 +72,12 @@
 
             var that = this;
 
+            // Mandanten-/Veranstaltungs-Wechsel: stiller Re-Login mit bereits per 2FA
+            // verifiziertem DB-Passwort. In diesem Fall darf der 2FA-Code NICHT erneut
+            // abgefragt werden (gleicher Login). Vgl. accountController.js.
+            var eventSwitchRelogin = false;
+            var eventSwitchLogin = null;
+
             // TFA UI
             var tfaContainer = pageElement.querySelector("#tfa-container");
 
@@ -271,7 +277,9 @@
                         LoginName: that.binding.dataLogin.Login
                     }).then(function () {
                         // nur aufrufen wenn in DB TFA eingetragen ist
-                        if (hasTwoFactor) {
+                        // NICHT bei stillem Re-Login nach Veranstaltungswechsel mit gleichem
+                        // Login: das DB-Passwort ist bereits 2FA-verifiziert. Vgl. accountController.js
+                        if (hasTwoFactor && !(eventSwitchRelogin && eventSwitchLogin === that.binding.dataLogin.Login)) {
                             return tfaVerify().then(function (tfaResult) {
                                 that.binding.showWaitCircle = true;
                                 // now wait 1s for the DB-USer to be changed....
@@ -467,6 +475,10 @@
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
+                        // 2FA-Skip-Flag zurücksetzen: ein späterer manueller Login soll
+                        // wieder 2FA abfragen.
+                        eventSwitchRelogin = false;
+                        eventSwitchLogin = null;
                         if (!err) {
                             that.binding.showWaitCircle = false;
                             complete(response);
@@ -511,6 +523,9 @@
                     that.binding.dataLogin.privacyPolicyFlag = true;
                     that.binding.dataLogin.privacyPolicydisabled = true;
                     that.binding.isPrivacyPolicyFlag = true;
+                    // Stiller Re-Login (gleicher Login) -> 2FA-Abfrage überspringen
+                    eventSwitchRelogin = true;
+                    eventSwitchLogin = AppData.prevLogin;
                     AppData.prevLogin = null;
                     AppData.prevPassword = null;
                     AppBar.modified = true;
