@@ -18,17 +18,34 @@
     // one round-trip per event and session.
     var eventIdByRecordId = {};
 
+    // WinJS's navigator appends the new page fragment before removing the old
+    // one, so an old controller's uncancelled loadData() chain can still be
+    // resolving while a new controller is already checking eventId. Guarding
+    // this way (rather than trying to thread WinJS.Promise.cancel() through
+    // the singleton SalesforceLeadLib's internals) is the cheap, reliable fix:
+    // any .then() from a superseded loadData() call becomes a no-op the
+    // instant a newer loadData() starts or the controller is disposed.
+
     WinJS.Namespace.define(namespaceName, {
 
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
 
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
-                    eventId: null
+                    eventId: null,
+                    // Tri-state gate for the "module not activated" card: stays false
+                    // during initial load so the card doesn't flash before the eventId
+                    // is resolved. Set true only once we've confirmed there is none.
+                    showInactive: false
                 }, commandList
             ]);
 
             var that = this;
+
+            // Bumped by dispose() and every loadData() call. Captured by
+            // closure at the top of loadData(); any .then() callback checks
+            // isCurrent() before touching bindings or SalesforceLeadLib.
+            var loadGeneration = 0;
 
             var fieldMappingsContainer = pageElement.querySelector("#fieldmappings-container");
 
@@ -48,6 +65,11 @@
 
             this.dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+
+                // Invalidate any in-flight loadData() chain: every remaining
+                // .then() callback's isCurrent() check will now fail, so it
+                // becomes a no-op instead of mutating a torn-down page.
+                loadGeneration++;
 
                 if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
                     // Clear Field Mapping UI when leaving page
@@ -145,6 +167,13 @@
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 console.log('CrmSettings loadData called, getRecordId():', getRecordId());
 
+                // Captured by closure: if a newer loadData() call (or dispose())
+                // bumps loadGeneration before this chain's .then() callbacks run,
+                // isCurrent() goes false and they become no-ops instead of
+                // painting a stale field configurator over whatever is now on screen.
+                var myGeneration = ++loadGeneration;
+                function isCurrent() { return myGeneration === loadGeneration; }
+
                 // IMPORTANT: Clear container IMMEDIATELY to show loading state
                 // This prevents showing stale data from previous event
                 if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
@@ -172,6 +201,7 @@
                         pRelationName: "Veranstaltung",
                         pRecordID: recordId
                     }, function (json) {
+                        if (!isCurrent()) { return; }
                         Log.print(Log.l.info, "call FCT_GetUniqueRecordID: success! FCT_GetUniqueRecordID=" +
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
                         that.binding.eventId =
@@ -180,11 +210,13 @@
                             eventIdByRecordId[recordId] = that.binding.eventId;
                         }
                     }, function (errorResponse) {
+                        if (!isCurrent()) { return; }
                         Log.print(Log.l.error, "call FCT_GetUniqueRecordID: error");
                         AppData.setErrorMsg(that.binding, errorResponse);
                         that.binding.eventId = null;
                     });
                 }).then(function () {
+                    if (!isCurrent()) { return; }
                     console.log('Opening Field Mapping, eventId:', that.binding.eventId);
                     // Initialize and open Field Mapping UI (Mentis: #8513)
                     if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
@@ -197,24 +229,31 @@
                         // container and fell back to a localStorage-only mode on recordId, which
                         // made Settings show the UI while Export correctly showed the notice.)
                         if (eventId) {
+                            // Resolved and active: keep the inactive card hidden.
+                            that.binding.showInactive = false;
                             Log.print(Log.l.info, "Opening Field Mapping for eventId: " + eventId);
                             console.log('Calling SalesforceLeadLib.openFieldMapping with eventId:', eventId);
                             return SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, eventId).then(
                                 function() {
+                                    if (!isCurrent()) { return; }
                                     Log.print(Log.l.info, "Field Mapping UI opened successfully");
                                     console.log('Field Mapping UI opened successfully');
                                     AppBar.modified = false; // Reset modified flag after loading new event
                                 },
                                 function(error) {
+                                    if (!isCurrent()) { return; }
                                     Log.print(Log.l.error, "Failed to open Field Mapping UI: " + error.message);
                                 }
                             );
                         } else {
+                            // Resolution finished with no eventId: now it's genuinely inactive.
+                            that.binding.showInactive = true;
                             Log.print(Log.l.info, "No eventId (no SF-API-User) — showing inactive message, no UI");
                             console.log('No eventId — CRM module not activated for this mandant');
                         }
                     }
                 }).then(function() {
+                    if (!isCurrent()) { return; }
                     AppBar.triggerDisableHandlers();
                 });
                 Log.ret(Log.l.trace);
