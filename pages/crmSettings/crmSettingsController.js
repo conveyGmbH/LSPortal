@@ -60,6 +60,16 @@
 
                 Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
                 SalesforceLeadLib.init(serverUrl, apiName, user, password);
+                // Every registered provider lib needs the same Portal Admin
+                // credentials to read LS_LeadReport/LS_FieldMappings — init()
+                // them all here rather than only when a controller happens to
+                // switch to that provider.
+                if (window.HubspotLeadLib) {
+                    HubspotLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.CrmProviders && CrmProviders.LeadReportSource) {
+                    CrmProviders.LeadReportSource.init(serverUrl, apiName, user, password);
+                }
             }
 
             this.dispose = function () {
