@@ -754,6 +754,7 @@
     "label.crmSettings" : "CRM Settings",
     "label.contactCrmExport" : "CRM Export",
     "label.crmExport" : "CRM Export",
+    "label.crmConnections" : "CRM Connections",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",
@@ -2007,6 +2008,15 @@
     "crmSettings.inactiveTitle" : "CRM module not activated",
     "crmSettings.inactiveMessage" : "The Salesforce integration is not enabled for this client.",
     "crmSettings.inactiveHint" : "This module is activated once the Salesforce package has been purchased. Please contact your LeadSuccess representative for more information.",
+    "crmSettings.noProviderTitle" : "No CRM connected yet",
+    "crmSettings.noProviderMessage" : "Your license includes CRM integration, but no CRM has been connected yet.",
+    "crmSettings.noProviderHint" : "Go to CRM Connections to choose and connect a CRM before configuring field mappings.",
+    "crmSettings.noProviderCta" : "Go to CRM Connections",
+
+    "crmConnections.title" : "CRM connections",
+    "crmConnections.inactiveTitle" : "CRM module not activated",
+    "crmConnections.inactiveMessage" : "CRM integrations are not enabled for this client.",
+    "crmConnections.inactiveHint" : "This module is activated once a CRM package has been purchased. Please contact your LeadSuccess representative for more information.",
 
     "contactCrmExport.title" : "Contact CRM Export",
     "contactCrmExport.inactiveMessage" : "CRM Export isn't activated",
@@ -2015,6 +2025,10 @@
     "crmExport.inactiveTitle" : "CRM module not activated",
     "crmExport.inactiveMessage" : "The Salesforce integration is not enabled for this client.",
     "crmExport.inactiveHint" : "This module is activated once the Salesforce package has been purchased. Please contact your LeadSuccess representative for more information.",
+    "crmExport.noProviderTitle" : "No CRM connected yet",
+    "crmExport.noProviderMessage" : "Your license includes CRM integration, but no CRM has been connected yet.",
+    "crmExport.noProviderHint" : "Go to CRM Connections to choose and connect a CRM before exporting leads.",
+    "crmExport.noProviderCta" : "Go to CRM Connections",
     "crmExport.connectFirst" : "Please connect to Salesforce first",
     "crmExport.filterPartialWarning" : "Filtering only the loaded contacts — scroll down to load and include more.",
 

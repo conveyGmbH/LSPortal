@@ -30,7 +30,7 @@
                     <div class="content-record">
                         <div class="line-separator"></div>
                         <div class="list-header" id="fieldmappings-container"
-                             data-win-bind="style.display: eventId Binding.Converter.toDisplay"></div>
+                             data-win-bind="style.display: showProviderUI Binding.Converter.toDisplay"></div>
                         <div class="crm-inactive-wrap"
                              data-win-bind="style.display: showInactive Binding.Converter.toDisplay">
                             <div class="crm-inactive-card">
@@ -43,6 +43,23 @@
                                 <h2 class="crm-inactive-title" data-win-res="{textContent: 'crmSettings.inactiveTitle'}"></h2>
                                 <p class="crm-inactive-text" data-win-res="{textContent: 'crmSettings.inactiveMessage'}"></p>
                                 <p class="crm-inactive-hint" data-win-res="{textContent: 'crmSettings.inactiveHint'}"></p>
+                            </div>
+                        </div>
+                        <div class="crm-inactive-wrap"
+                             data-win-bind="style.display: showNoProvider Binding.Converter.toDisplay">
+                            <div class="crm-inactive-card">
+                                <div class="crm-inactive-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="9"/>
+                                        <path d="M9 12h6M12 9v6"/>
+                                    </svg>
+                                </div>
+                                <h2 class="crm-inactive-title" data-win-res="{textContent: 'crmSettings.noProviderTitle'}"></h2>
+                                <p class="crm-inactive-text" data-win-res="{textContent: 'crmSettings.noProviderMessage'}"></p>
+                                <p class="crm-inactive-hint" data-win-res="{textContent: 'crmSettings.noProviderHint'}"></p>
+                                <button class="sf-btn sf-btn--primary crm-noprovider-cta"
+                                        data-win-res="{textContent: 'crmSettings.noProviderCta'}"
+                                        style="margin-top: 16px;"></button>
                             </div>
                         </div>
                     </div>

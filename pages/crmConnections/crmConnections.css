@@ -1,0 +1,337 @@
+/* ============================================
+   CRM Connections — provider catalog
+   Reuses SalesforceLeadLib's --sf-* design tokens and .sf-btn/.sf-card/
+   .sf-modal component classes (lib/SalesforceLeadLib/css/salesforceLeadLib.css)
+   rather than a parallel design system, so this screen stays visually
+   consistent with CRM Export/Settings.
+
+   The "module not activated" card below (.crm-inactive-*) is the same
+   markup/styling as crmSettings.css — kept in sync deliberately.
+   ============================================ */
+.crm-inactive-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    width: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.crm-inactive-card {
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    padding: 40px 32px;
+    border-radius: 14px;
+    background: var(--Window, #ffffff);
+    border: 1px solid rgba(128, 128, 128, 0.22);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+}
+
+.crm-inactive-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.12);
+    color: var(--ColorAccent, #fe3600);
+}
+
+.crm-inactive-icon svg {
+    width: 38px;
+    height: 38px;
+}
+
+.crm-inactive-title {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ColorText, #111827);
+}
+
+.crm-inactive-text {
+    margin: 0 0 8px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ColorText, #374151);
+}
+
+.crm-inactive-hint {
+    margin: 16px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ColorLabel, #6b7280);
+}
+
+/* ============================================
+   Catalog
+   ============================================ */
+.crm-conn-container {
+    padding: 8px 24px 24px;
+    font-family: var(--sf-font);
+    max-width: 1180px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.crm-conn-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.crm-conn-count {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sf-text);
+}
+
+.crm-conn-hint {
+    font-size: 13px;
+    color: var(--sf-text-2);
+}
+
+.crm-conn-filterbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.crm-conn-search {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 340px;
+}
+
+.crm-conn-search i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sf-text-muted);
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.crm-conn-search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px 8px 32px;
+    border-radius: var(--sf-radius-sm);
+    border: 1px solid var(--sf-border);
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    font-size: 13.5px;
+    font-family: var(--sf-font);
+}
+
+.crm-conn-search-input:focus {
+    outline: none;
+    border-color: var(--sf-accent);
+    box-shadow: var(--sf-focus-ring);
+}
+
+.crm-conn-search-input::placeholder {
+    color: var(--sf-text-muted);
+}
+
+.crm-conn-tabs {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border-radius: var(--sf-radius-pill);
+    background: var(--sf-surface-2);
+    gap: 2px;
+}
+
+.crm-conn-tab {
+    border: none;
+    background: transparent;
+    color: var(--sf-text-2);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--sf-font);
+    padding: 6px 14px;
+    border-radius: var(--sf-radius-pill);
+    cursor: pointer;
+    transition: background var(--sf-dur-1) var(--sf-ease), color var(--sf-dur-1) var(--sf-ease);
+}
+
+.crm-conn-tab:hover {
+    color: var(--sf-text);
+}
+
+.crm-conn-tab--active {
+    background: var(--sf-surface);
+    color: var(--sf-text);
+    box-shadow: var(--sf-shadow-1);
+}
+
+.crm-conn-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--sf-text-2);
+    font-size: 14px;
+}
+
+.crm-conn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.crm-conn-card {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-lg);
+    padding: 18px;
+    box-shadow: var(--sf-shadow-1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color var(--sf-dur-1) var(--sf-ease), box-shadow var(--sf-dur-1) var(--sf-ease);
+}
+
+.crm-conn-card--active {
+    border-color: var(--sf-success);
+    box-shadow: 0 0 0 1px var(--sf-success), var(--sf-shadow-1);
+}
+
+.crm-conn-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.crm-conn-avatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: var(--sf-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    background: var(--sf-accent-soft);
+    color: var(--sf-accent);
+}
+
+.crm-conn-card-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.crm-conn-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.crm-conn-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sf-text);
+}
+
+.crm-conn-auth {
+    font-size: 12px;
+    color: var(--sf-text-2);
+}
+
+.crm-conn-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 9px;
+    border-radius: var(--sf-radius-pill);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.crm-conn-badge--popular {
+    background: var(--sf-accent-soft);
+    color: var(--sf-accent);
+}
+
+.crm-conn-badge--soon {
+    background: var(--sf-surface-2);
+    color: var(--sf-text-2);
+}
+
+.crm-conn-badge--connected {
+    background: var(--sf-success-bg);
+    color: var(--sf-success);
+}
+
+.crm-conn-desc {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--sf-text-2);
+    flex: 1;
+}
+
+.crm-conn-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    border-top: 1px solid var(--sf-border);
+}
+
+.crm-conn-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--sf-text-2);
+}
+
+.crm-conn-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sf-text-muted);
+}
+
+.crm-conn-status--connected .crm-conn-status-dot {
+    background: var(--sf-success);
+}
+
+.crm-conn-status--connected {
+    color: var(--sf-success);
+}
+
+.crm-conn-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.crm-conn-action {
+    font-size: 13px;
+    padding: 7px 14px;
+    white-space: nowrap;
+}
+
+.crm-conn-switch-overlay .sf-modal__footer [data-action="switch-confirm"] {
+    /* Destructive action gets the danger treatment, not the primary accent —
+       switching CRM has a real consequence (field mapping reconfiguration). */
+    font-weight: 700;
+}

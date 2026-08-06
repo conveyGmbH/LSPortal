@@ -35,7 +35,13 @@
                     // Tri-state gate for the "module not activated" card: stays false
                     // during initial load so the card doesn't flash before the eventId
                     // is resolved. Set true only once we've confirmed there is none.
-                    showInactive: false
+                    showInactive: false,
+                    // A license may include CRM integration (eventId resolves) while
+                    // the client hasn't connected any CRM yet on CRM Connections —
+                    // that's a distinct state from "no license at all" (showInactive)
+                    // and from "ready to show the batch export UI" (showProviderUI).
+                    showNoProvider: false,
+                    showProviderUI: false
                 }, commandList
             ]);
 
@@ -138,6 +144,32 @@
 
             AppData.setErrorMsg(this.binding);
 
+            var noProviderCtaBtn = pageElement.querySelector(".crm-noprovider-cta");
+            if (noProviderCtaBtn) {
+                noProviderCtaBtn.addEventListener("click", function () {
+                    Application.navigateById("crmConnections");
+                });
+            }
+
+            function renderProviderUI(adapter, eventId, isCurrent) {
+                if (!crmExportContainer) { return WinJS.Promise.as(); }
+                if (!adapter || typeof adapter.renderContactList !== "function") {
+                    // Connected, but this provider's lead-list rendering isn't wired
+                    // up yet (e.g. HubSpot before Phase 4/6 land) — say so plainly
+                    // rather than leaving the container blank.
+                    Log.print(Log.l.error, namespaceName + ".Controller. No renderContactList for provider " + (adapter && adapter.id));
+                    crmExportContainer.innerHTML =
+                        '<div class="sf-cl-empty" style="padding:40px 20px;text-align:center;color:var(--sf-text-2);">' +
+                        'Lead export for ' + (adapter && adapter.label ? adapter.label : "this CRM") +
+                        ' isn\'t available yet.</div>';
+                    return WinJS.Promise.as();
+                }
+                return Promise.resolve(adapter.renderContactList(crmExportContainer, eventId)).catch(function (err) {
+                    if (!isCurrent()) { return; }
+                    Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + (err && err.message));
+                });
+            }
+
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 console.log('CrmSettings loadData called, getRecordId():', getRecordId());
@@ -184,27 +216,55 @@
                 }).then(function () {
                     if (!isCurrent()) { return; }
                     Log.print(Log.l.trace, namespaceName + ".Controller. eventId=" + that.binding.eventId);
-                    var adapter = window.CrmProviders
-                        ? CrmProviders.getAdapter(CrmProviders.resolveActiveCrmProvider())
-                        : window.SalesforceLeadLib;
-                    if (crmExportContainer && adapter && typeof adapter.renderContactList === "function") {
-                        var eventId = that.binding.eventId;
-                        if (eventId) {
-                            // Resolved and active: keep the inactive card hidden.
-                            that.binding.showInactive = false;
-                            // Render contact list with batch transfer UI
-                            adapter.renderContactList(crmExportContainer, eventId).catch(function (err) {
-                                if (!isCurrent()) { return; }
-                                Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + err.message);
-                            });
-                        } else {
-                            // Resolution finished with no eventId: now it's genuinely inactive.
-                            that.binding.showInactive = true;
-                            Log.print(Log.l.info, namespaceName + ".Controller. No eventId available for CRM Export");
-                        }
-                    } else {
-                        Log.print(Log.l.error, namespaceName + ".Controller. No CRM adapter available for CRM Export");
+                    var eventId = that.binding.eventId;
+                    if (!eventId) {
+                        // No eventId: no CRM license at all for this mandant.
+                        that.binding.showInactive = true;
+                        that.binding.showNoProvider = false;
+                        that.binding.showProviderUI = false;
+                        Log.print(Log.l.info, namespaceName + ".Controller. No eventId available for CRM Export");
+                        return WinJS.Promise.as();
                     }
+                    that.binding.showInactive = false;
+
+                    var providerId = window.CrmProviders ? CrmProviders.resolveActiveCrmProvider() : "salesforce";
+                    var adapter = window.CrmProviders ? CrmProviders.getAdapter(providerId) : window.SalesforceLeadLib;
+
+                    // Existing Salesforce clients predate the CRM Connections catalog
+                    // and have never gone through an explicit connect/switch there —
+                    // skip the real checkConnection() gate for them so their current
+                    // behavior stays unchanged. Only a client who has explicitly used
+                    // CRM Connections (any provider, including re-picking Salesforce)
+                    // goes through the real connected/not-connected check.
+                    var skipConnectionGate = providerId === "salesforce" &&
+                        window.CrmProviders && !CrmProviders.hasExplicitProviderChoice();
+
+                    if (skipConnectionGate || !adapter || typeof adapter.checkConnection !== "function") {
+                        that.binding.showNoProvider = false;
+                        that.binding.showProviderUI = true;
+                        return renderProviderUI(adapter, eventId, isCurrent);
+                    }
+
+                    return Promise.resolve(adapter.checkConnection()).then(function (result) {
+                        if (!isCurrent()) { return; }
+                        if (result && result.connected) {
+                            // Licensed AND a CRM is connected: show the real batch export UI.
+                            that.binding.showNoProvider = false;
+                            that.binding.showProviderUI = true;
+                            return renderProviderUI(adapter, eventId, isCurrent);
+                        } else {
+                            // Licensed but no CRM connected yet: point the client at
+                            // CRM Connections instead of showing an empty/broken table.
+                            that.binding.showNoProvider = true;
+                            that.binding.showProviderUI = false;
+                            Log.print(Log.l.info, namespaceName + ".Controller. License present but no CRM connected");
+                        }
+                    }).catch(function (err) {
+                        if (!isCurrent()) { return; }
+                        Log.print(Log.l.error, namespaceName + ".Controller. checkConnection error: " + (err && err.message));
+                        that.binding.showNoProvider = true;
+                        that.binding.showProviderUI = false;
+                    });
                 }).then(function() {
                     if (!isCurrent()) { return; }
                     AppBar.triggerDisableHandlers();
