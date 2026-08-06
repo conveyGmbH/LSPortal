@@ -13,10 +13,9 @@
     "use strict";
     var namespaceName = "CrmExport";
 
-    // Module-level memo (survives controller re-creation on every tab switch):
-    // recordId -> event UUID is immutable, so FCT_GetUniqueRecordID only needs
-    // one round-trip per event and session.
-    var eventIdByRecordId = {};
+    // recordId -> event UUID memoization now lives in CrmProviders.resolveEventId/
+    // rememberEventId (lib/CrmProviders/scripts/crmProviderRegistry.js), shared
+    // with crmSettingsController.js instead of each controller keeping its own copy.
 
     // WinJS's navigator appends the new page fragment before removing the old
     // one, so an old controller's uncancelled loadData() chain can still be
@@ -149,8 +148,9 @@
                 var ret = new WinJS.Promise.as().then(function() {
                     var recordId = getRecordId();
                     // recordId -> UUID is immutable: serve the session memo when known
-                    if (recordId && eventIdByRecordId[recordId]) {
-                        that.binding.eventId = eventIdByRecordId[recordId];
+                    var memoized = window.CrmProviders && CrmProviders.resolveEventId(recordId);
+                    if (recordId && memoized) {
+                        that.binding.eventId = memoized;
                         return WinJS.Promise.as();
                     }
                     return AppData.call("FCT_GetUniqueRecordID", {
@@ -162,8 +162,8 @@
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
                         that.binding.eventId =
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID);
-                        if (recordId && that.binding.eventId) {
-                            eventIdByRecordId[recordId] = that.binding.eventId;
+                        if (window.CrmProviders) {
+                            CrmProviders.rememberEventId(recordId, that.binding.eventId);
                         }
                     }, function (errorResponse) {
                         if (!isCurrent()) { return; }
@@ -174,13 +174,16 @@
                 }).then(function () {
                     if (!isCurrent()) { return; }
                     Log.print(Log.l.trace, namespaceName + ".Controller. eventId=" + that.binding.eventId);
-                    if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.renderContactList === "function") {
+                    var adapter = window.CrmProviders
+                        ? CrmProviders.getAdapter(CrmProviders.resolveActiveCrmProvider())
+                        : window.SalesforceLeadLib;
+                    if (crmExportContainer && adapter && typeof adapter.renderContactList === "function") {
                         var eventId = that.binding.eventId;
                         if (eventId) {
                             // Resolved and active: keep the inactive card hidden.
                             that.binding.showInactive = false;
                             // Render contact list with batch transfer UI
-                            SalesforceLeadLib.renderContactList(crmExportContainer, eventId).catch(function (err) {
+                            adapter.renderContactList(crmExportContainer, eventId).catch(function (err) {
                                 if (!isCurrent()) { return; }
                                 Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + err.message);
                             });
@@ -190,7 +193,7 @@
                             Log.print(Log.l.info, namespaceName + ".Controller. No eventId available for CRM Export");
                         }
                     } else {
-                        Log.print(Log.l.error, namespaceName + ".Controller. No SalesforceLeadLib available for CRM Export");
+                        Log.print(Log.l.error, namespaceName + ".Controller. No CRM adapter available for CRM Export");
                     }
                 }).then(function() {
                     if (!isCurrent()) { return; }

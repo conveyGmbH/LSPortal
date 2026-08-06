@@ -99,6 +99,10 @@
     <!-- TwoFactorLib reference -->
     <script type="text/javascript" src="lib/twoFactorLib/scripts/twoFactorLib.js"></script>
 
+    <!-- CrmProviders reference (must load before any provider lib below, so
+         each provider's self-registration finds window.CrmProviders ready) -->
+    <script type="text/javascript" src="lib/CrmProviders/scripts/crmProviderRegistry.js"></script>
+
     <!-- SalesforceLeadLib reference -->
     <script type="text/javascript" src="lib/SalesforceLeadLib/scripts/salesforceLeadLib.js"></script>
 

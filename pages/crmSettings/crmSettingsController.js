@@ -13,10 +13,9 @@
     "use strict";
     var namespaceName = "CrmSettings";
 
-    // Module-level memo (survives controller re-creation on every tab switch):
-    // recordId -> event UUID is immutable, so FCT_GetUniqueRecordID only needs
-    // one round-trip per event and session.
-    var eventIdByRecordId = {};
+    // recordId -> event UUID memoization now lives in CrmProviders.resolveEventId/
+    // rememberEventId (lib/CrmProviders/scripts/crmProviderRegistry.js), shared
+    // with crmExportController.js instead of each controller keeping its own copy.
 
     // WinJS's navigator appends the new page fragment before removing the old
     // one, so an old controller's uncancelled loadData() chain can still be
@@ -136,9 +135,12 @@
                 var eventId = that.binding && that.binding.eventId;
 
                 var ret = WinJS.Promise.as().then(function () {
-                    if (eventId && SalesforceLeadLib && typeof SalesforceLeadLib.saveFieldMapping === "function") {
+                    var adapter = window.CrmProviders
+                        ? CrmProviders.getAdapter(CrmProviders.resolveActiveCrmProvider())
+                        : window.SalesforceLeadLib;
+                    if (eventId && adapter && typeof adapter.saveFieldMapping === "function") {
                         Log.print(Log.l.info, "Saving field mappings before unload...");
-                        return SalesforceLeadLib.saveFieldMapping(eventId).then(function (saved) {
+                        return adapter.saveFieldMapping(eventId).then(function (saved) {
                             if (saved) {
                                 Log.print(Log.l.info, "Field mappings saved successfully");
                             }
@@ -193,8 +195,9 @@
                 var ret = new WinJS.Promise.as().then(function() {
                     var recordId = getRecordId();
                     // recordId -> UUID is immutable: serve the session memo when known
-                    if (recordId && eventIdByRecordId[recordId]) {
-                        that.binding.eventId = eventIdByRecordId[recordId];
+                    var memoized = window.CrmProviders && CrmProviders.resolveEventId(recordId);
+                    if (recordId && memoized) {
+                        that.binding.eventId = memoized;
                         return WinJS.Promise.as();
                     }
                     return AppData.call("FCT_GetUniqueRecordID", {
@@ -206,8 +209,8 @@
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
                         that.binding.eventId =
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID);
-                        if (recordId && that.binding.eventId) {
-                            eventIdByRecordId[recordId] = that.binding.eventId;
+                        if (window.CrmProviders) {
+                            CrmProviders.rememberEventId(recordId, that.binding.eventId);
                         }
                     }, function (errorResponse) {
                         if (!isCurrent()) { return; }
@@ -218,8 +221,11 @@
                 }).then(function () {
                     if (!isCurrent()) { return; }
                     console.log('Opening Field Mapping, eventId:', that.binding.eventId);
+                    var adapter = window.CrmProviders
+                        ? CrmProviders.getAdapter(CrmProviders.resolveActiveCrmProvider())
+                        : window.SalesforceLeadLib;
                     // Initialize and open Field Mapping UI (Mentis: #8513)
-                    if (fieldMappingsContainer && SalesforceLeadLib && typeof SalesforceLeadLib.init === "function") {
+                    if (fieldMappingsContainer && adapter && typeof adapter.openFieldMapping === "function") {
                         var eventId = that.binding.eventId;
 
                         // Only show the Field Mapping UI when a UUID eventId exists, i.e. when
@@ -232,8 +238,8 @@
                             // Resolved and active: keep the inactive card hidden.
                             that.binding.showInactive = false;
                             Log.print(Log.l.info, "Opening Field Mapping for eventId: " + eventId);
-                            console.log('Calling SalesforceLeadLib.openFieldMapping with eventId:', eventId);
-                            return SalesforceLeadLib.openFieldMapping(fieldMappingsContainer, eventId).then(
+                            console.log('Calling openFieldMapping with eventId:', eventId);
+                            return adapter.openFieldMapping(fieldMappingsContainer, eventId).then(
                                 function() {
                                     if (!isCurrent()) { return; }
                                     Log.print(Log.l.info, "Field Mapping UI opened successfully");
