@@ -8,6 +8,18 @@
    The "module not activated" card below (.crm-inactive-*) is the same
    markup/styling as crmSettings.css — kept in sync deliberately.
    ============================================ */
+
+/* Force the page's ancestor chain to actually span full width — same
+   scoped-override pattern as eventCopy.css's ".eventCopy .content-record"
+   — content-record/contentarea have no width rule of their own anywhere in
+   this codebase, but something in the page shell still keeps this page's
+   content boxed instead of stretching, so pin it explicitly here. */
+.crmConnections .content-record,
+.crmConnections .contentarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .crm-inactive-wrap {
     display: flex;
     align-items: center;
@@ -73,8 +85,7 @@
 .crm-conn-container {
     padding: 8px 24px 24px;
     font-family: var(--sf-font);
-    max-width: 1180px;
-    margin: 0 auto;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -176,6 +187,41 @@
     box-shadow: var(--sf-shadow-1);
 }
 
+/* Two-column section layout matching LSPortalNext's SettingsCRMConnections
+   (settings-crmconnections.tsx): a fixed-width label on the left, content
+   filling the rest via flex — not a stacked title-then-grid, which left the
+   grid inheriting whatever passive width its block-level ancestor had
+   instead of being told to fill the remaining row. */
+.crm-conn-section-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+@media (min-width: 640px) {
+    .crm-conn-section-row {
+        flex-direction: row;
+        gap: 12px;
+    }
+}
+
+.crm-conn-section-label {
+    flex-shrink: 0;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sf-text-2);
+    padding-top: 2px;
+}
+
+@media (min-width: 640px) {
+    .crm-conn-section-label {
+        width: auto;
+    }
+}
+
 .crm-conn-empty {
     padding: 40px 20px;
     text-align: center;
@@ -184,8 +230,14 @@
 }
 
 .crm-conn-grid {
+    flex: 1;
+    min-width: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* auto-fit (not auto-fill): collapses empty tracks and hands their space
+       to the real cards instead of reserving invisible columns — with only
+       3 cards, auto-fill was leaving them bunched at 280px while the rest
+       of the row sat empty. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
 }
 
@@ -204,6 +256,18 @@
 .crm-conn-card--active {
     border-color: var(--sf-success);
     box-shadow: 0 0 0 1px var(--sf-success), var(--sf-shadow-1);
+}
+
+/* One CRM per licence: every card other than the active one is locked until
+   its connection is deleted — greyed out rather than offering a "switch"
+   action, since connecting a new CRM is never a one-click swap. */
+.crm-conn-card--locked {
+    opacity: 0.55;
+    filter: grayscale(0.4);
+}
+
+.crm-conn-card--locked:hover {
+    opacity: 0.7;
 }
 
 .crm-conn-card-head {
@@ -330,8 +394,8 @@
     white-space: nowrap;
 }
 
-.crm-conn-switch-overlay .sf-modal__footer [data-action="switch-confirm"] {
+.crm-conn-delete-overlay .sf-modal__footer [data-action="delete-confirm"] {
     /* Destructive action gets the danger treatment, not the primary accent —
-       switching CRM has a real consequence (field mapping reconfiguration). */
+       deleting a connection has a real consequence (field mapping reset). */
     font-weight: 700;
 }

@@ -10,6 +10,7 @@
 /// <reference path="~/www/lib/CrmProviders/scripts/crmProviderRegistry.js" />
 /// <reference path="~/www/lib/SalesforceLeadLib/scripts/salesforceLeadLib.js" />
 /// <reference path="~/www/lib/HubspotLeadLib/scripts/hubspotLeadLib.js" />
+/// <reference path="~/www/lib/DynamicsLeadLib/scripts/dynamicsLeadLib.js" />
 
 (function () {
     "use strict";
@@ -20,43 +21,21 @@
     // CrmProviders.getAdapter() for them, since getAdapter() silently falls
     // back to Salesforce for any unregistered id (correct for crmExport/
     // crmSettings, wrong here where an unregistered id genuinely means
-    // "not offered yet", not "use Salesforce instead"). Dynamics has no real
-    // backend/OAuth yet (see registerDynamicsStubAdapter below) but is shown
-    // as available rather than locked, per product decision — its connect()
-    // surfaces a clear "not yet available" message instead of doing nothing.
+    // "not offered yet", not "use Salesforce instead"). Dynamics now has a
+    // real adapter (DynamicsLeadLib, registered on script load) backed by
+    // dynamics-backend's centralized Azure AD app — same multi-tenant-app
+    // model as Salesforce/HubSpot.
     var CATALOG = [
-        { id: "salesforce", label: "Salesforce", initials: "SF", badge: "popular", description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
+        { id: "salesforce", label: "Salesforce", initials: "SF", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
         { id: "hubspot", label: "HubSpot", initials: "HS", badge: null, description: "Contacts & Deals pipeline mapping.", auth: "OAuth 2.0" },
         { id: "dynamics", label: "MS Dynamics 365", initials: "MD", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" }
     ];
-
-    // Minimal client-side stub — no backend, no OAuth. Registered so the
-    // catalog can treat Dynamics like any other adapter (no "soon" special
-    // case in the click handler) while being honest that connecting doesn't
-    // do anything real yet.
-    function registerDynamicsStubAdapter() {
-        if (!window.CrmProviders || typeof CrmProviders.registerAdapter !== "function") { return; }
-        if (CrmProviders.getAdapter("dynamics").id === "dynamics") { return; } // already registered
-        CrmProviders.registerAdapter({
-            id: "dynamics",
-            label: "MS Dynamics 365",
-            apiEndpointValue: "Dynamics365",
-            status: "available",
-            isConnected: function () { return false; },
-            checkConnection: function () { return Promise.resolve({ connected: false }); },
-            connect: function () {
-                return Promise.reject(new Error("MS Dynamics 365 support isn't available yet. Please contact your LeadSuccess representative for more information."));
-            },
-            disconnect: function () { return Promise.resolve(); }
-        });
-    }
 
     WinJS.Namespace.define(namespaceName, {
 
         Controller: WinJS.Class.derive(Application.Controller, function Controller(pageElement, commandList) {
 
             Log.call(Log.l.trace, namespaceName + ".Controller.");
-            registerDynamicsStubAdapter();
             Application.Controller.apply(this, [pageElement, {
                     eventId: null,
                     // Same tri-state gate as crmExport/crmSettings: stays false
@@ -69,6 +48,29 @@
             var that = this;
             var loadGeneration = 0;
             var catalogContainer = pageElement.querySelector("#crm-conn-container");
+
+            // Every registered provider lib needs Portal Admin credentials
+            // before checkConnection()/connect() can call its backend — same
+            // init() call as crmExport/crmSettingsController, needed here too
+            // since this page checks every adapter's connection status on
+            // load (see reload() below) without going through those pages.
+            if (window.SalesforceLeadLib) {
+                var serverUrl = AppData.getBaseURL(AppData.appSettings.odata.onlinePort);
+                var apiName = AppData.getOnlinePath();
+                var user = AppData.getOnlineLogin();
+                var password = AppData.getOnlinePassword();
+
+                SalesforceLeadLib.init(serverUrl, apiName, user, password);
+                if (window.HubspotLeadLib) {
+                    HubspotLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.DynamicsLeadLib) {
+                    DynamicsLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.CrmProviders && CrmProviders.LeadReportSource) {
+                    CrmProviders.LeadReportSource.init(serverUrl, apiName, user, password);
+                }
+            }
 
             this.dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
@@ -165,6 +167,11 @@
                     var status = statusById[entry.id] || { connected: false };
                     var isSoon = entry.badge === "soon";
                     var isActive = entry.id === activeProviderId && status.connected;
+                    // A client is licensed for exactly one CRM at a time: once any
+                    // provider is active, every other card is locked — connecting
+                    // a new one is only possible after deleting the current
+                    // connection, never a direct "switch" action.
+                    var isLockedByOther = !isSoon && activeProviderId && activeProviderId !== entry.id;
 
                     var actionHtml;
                     if (isSoon) {
@@ -172,17 +179,15 @@
                     } else if (isActive) {
                         actionHtml =
                             '<button class="sf-btn sf-btn--secondary crm-conn-action" data-action="manage" data-provider="' + entry.id + '">Manage</button>' +
-                            '<button class="sf-btn sf-btn--danger-outline crm-conn-action" data-action="disconnect" data-provider="' + entry.id + '">Disconnect</button>';
-                    } else if (activeProviderId && activeProviderId !== entry.id) {
-                        // A different provider is active: connecting here means
-                        // switching, which the confirm modal below warns about.
-                        actionHtml = '<button class="sf-btn sf-btn--primary crm-conn-action" data-action="switch" data-provider="' + entry.id + '"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Switch to ' + esc(entry.label) + '</button>';
+                            '<button class="sf-btn sf-btn--danger-outline crm-conn-action" data-action="disconnect" data-provider="' + entry.id + '">Delete connection</button>';
+                    } else if (isLockedByOther) {
+                        actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="Delete the current connection before connecting a different CRM"><i class="fa-solid fa-lock" aria-hidden="true"></i> Locked</button>';
                     } else {
                         actionHtml = '<button class="sf-btn sf-btn--primary crm-conn-action" data-action="connect" data-provider="' + entry.id + '"><i class="fa-solid fa-plus" aria-hidden="true"></i> Connect</button>';
                     }
 
                     return (
-                        '<div class="crm-conn-card' + (isActive ? " crm-conn-card--active" : "") + '" data-provider-card="' + entry.id + '">' +
+                        '<div class="crm-conn-card' + (isActive ? " crm-conn-card--active" : "") + (isLockedByOther ? " crm-conn-card--locked" : "") + '" data-provider-card="' + entry.id + '">' +
                             '<div class="crm-conn-card-head">' +
                                 '<div class="crm-conn-avatar">' + esc(entry.initials) + "</div>" +
                                 '<div class="crm-conn-card-title">' +
@@ -209,8 +214,8 @@
             }
 
             // Renders the full catalog shell (toolbar, search, filter tabs,
-            // grid, switch-confirm modal) from current connection/active
-            // state. Called on load and after any connect/disconnect/switch —
+            // grid, delete-confirm modal) from current connection/active
+            // state. Called on load and after any connect/disconnect —
             // filterState is preserved across these re-renders.
             function renderCatalog(statusById, activeProviderId) {
                 var connectedCount = CATALOG.filter(function (e) {
@@ -235,18 +240,21 @@
                             }).join("") +
                         "</div>" +
                     "</div>" +
-                    '<div class="crm-conn-grid"></div>' +
-                    // Confirmation modal for switching providers — hidden until
-                    // a "switch" action is clicked.
-                    '<div class="sf-modal-overlay crm-conn-switch-overlay" style="display:none;" role="presentation">' +
-                        '<div class="sf-modal sf-modal--sm" role="alertdialog" aria-modal="true" aria-labelledby="crm-conn-switch-title">' +
+                    '<div class="crm-conn-section-row">' +
+                        '<div class="crm-conn-section-label">Catalog</div>' +
+                        '<div class="crm-conn-grid"></div>' +
+                    "</div>" +
+                    // Confirmation modal for deleting the active connection —
+                    // hidden until a "disconnect" action is clicked.
+                    '<div class="sf-modal-overlay crm-conn-delete-overlay" style="display:none;" role="presentation">' +
+                        '<div class="sf-modal sf-modal--sm" role="alertdialog" aria-modal="true" aria-labelledby="crm-conn-delete-title">' +
                             '<div class="sf-modal__body" style="padding: 24px;">' +
-                                '<h3 class="sf-modal__title" id="crm-conn-switch-title">Switch CRM?</h3>' +
-                                '<p class="crm-conn-switch-text" style="margin: 12px 0 0; color: var(--sf-text-2);"></p>' +
+                                '<h3 class="sf-modal__title" id="crm-conn-delete-title">Delete connection?</h3>' +
+                                '<p class="crm-conn-delete-text" style="margin: 12px 0 0; color: var(--sf-text-2);"></p>' +
                             "</div>" +
                             '<div class="sf-modal__footer">' +
-                                '<button class="sf-btn sf-btn--secondary" data-action="switch-cancel">Cancel</button>' +
-                                '<button class="sf-btn sf-btn--danger" data-action="switch-confirm">Disconnect &amp; Continue</button>' +
+                                '<button class="sf-btn sf-btn--secondary" data-action="delete-cancel">Cancel</button>' +
+                                '<button class="sf-btn sf-btn--danger" data-action="delete-confirm">Delete connection</button>' +
                             "</div>" +
                         "</div>" +
                     "</div>";
@@ -271,15 +279,14 @@
                 });
             }
 
-            function showSwitchConfirm(fromLabel, toLabel, onConfirm) {
-                var overlay = catalogContainer.querySelector(".crm-conn-switch-overlay");
-                var text = overlay.querySelector(".crm-conn-switch-text");
-                text.textContent = "You're currently connected to " + fromLabel + ". Connecting to " + toLabel +
-                    " will disconnect " + fromLabel + " and you'll need to reconfigure your field mappings. Continue?";
+            function showDeleteConfirm(providerLabel, onConfirm) {
+                var overlay = catalogContainer.querySelector(".crm-conn-delete-overlay");
+                var text = overlay.querySelector(".crm-conn-delete-text");
+                text.textContent = "This will delete your " + providerLabel + " connection and you'll need to reconfigure your field mappings if you reconnect. Continue?";
                 overlay.style.display = "flex";
 
-                var cancelBtn = overlay.querySelector('[data-action="switch-cancel"]');
-                var confirmBtn = overlay.querySelector('[data-action="switch-confirm"]');
+                var cancelBtn = overlay.querySelector('[data-action="delete-cancel"]');
+                var confirmBtn = overlay.querySelector('[data-action="delete-confirm"]');
 
                 function cleanup() {
                     overlay.style.display = "none";
@@ -319,24 +326,12 @@
                                     SalesforceLeadLib.showAlertDialog("Not available", err && err.message);
                                 }
                             });
-                        } else if (action === "switch") {
-                            var fromEntry = CATALOG.filter(function (e) { return e.id === activeProviderId; })[0];
-                            var toEntry = CATALOG.filter(function (e) { return e.id === providerId; })[0];
-                            showSwitchConfirm(fromEntry ? fromEntry.label : activeProviderId, toEntry ? toEntry.label : providerId, function () {
-                                var fromAdapter = window.CrmProviders && CrmProviders.getAdapter(activeProviderId);
-                                (fromAdapter && fromAdapter.id === activeProviderId ? fromAdapter.disconnect() : WinJS.Promise.as())
-                                    .then(function () { return adapter.connect(); })
-                                    .then(function () {
-                                        CrmProviders.setActiveProvider(providerId);
-                                        return reload();
-                                    })
-                                    .catch(function (err) {
-                                        Log.print(Log.l.error, namespaceName + ".Controller. switch error: " + (err && err.message));
-                                    });
-                            });
                         } else if (action === "disconnect") {
-                            adapter.disconnect().then(function () {
-                                return reload();
+                            var entry = CATALOG.filter(function (e) { return e.id === providerId; })[0];
+                            showDeleteConfirm(entry ? entry.label : providerId, function () {
+                                adapter.disconnect().then(function () {
+                                    return reload();
+                                });
                             });
                         } else if (action === "manage") {
                             // Manage = jump to CRM Settings' Field Configurator

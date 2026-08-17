@@ -73,6 +73,9 @@
                 if (window.HubspotLeadLib) {
                     HubspotLeadLib.init(serverUrl, apiName, user, password);
                 }
+                if (window.DynamicsLeadLib) {
+                    DynamicsLeadLib.init(serverUrl, apiName, user, password);
+                }
                 if (window.CrmProviders && CrmProviders.LeadReportSource) {
                     CrmProviders.LeadReportSource.init(serverUrl, apiName, user, password);
                 }
