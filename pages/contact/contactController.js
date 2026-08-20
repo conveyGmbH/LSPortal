@@ -416,6 +416,10 @@
                 } else {
                     that.binding.showModified = true;
                 }
+                if (newDataContact.OCRStatus) {
+                    var statusKey = "contact.ocrStatus_" + newDataContact.OCRStatus.toLowerCase();
+                    newDataContact.OCRStatusDisplay = getResourceText(statusKey) || getResourceText("contact.ocrStatus_unknown");
+                }
                 if (textComment) {
                     if (that.binding.dataContact.Bemerkungen) {
                         WinJS.Utilities.addClass(textComment, "input_text_comment_big");
