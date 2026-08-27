@@ -2165,6 +2165,7 @@
     "sforce.title": "Transfer Lead to Salesforce",
     "sforce.statusDisconnected": "Disconnected",
     "sforce.statusConnected": "Connected",
+    "sforce.statusChecking": "Checking…",
     "sforce.btnConnect": "Connect to Salesforce",
     "sforce.btnDisconnect": "Disconnect",
     "sforce.leadInformation": "Lead Information",

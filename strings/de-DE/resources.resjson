@@ -2168,6 +2168,7 @@
     "sforce.title": "Lead an Salesforce übertragen",
     "sforce.statusDisconnected": "Nicht verbunden",
     "sforce.statusConnected": "Verbunden",
+    "sforce.statusChecking": "Wird geprüft…",
     "sforce.btnConnect": "Mit Salesforce verbinden",
     "sforce.btnDisconnect": "Trennen",
     "sforce.leadInformation": "Lead-Informationen",

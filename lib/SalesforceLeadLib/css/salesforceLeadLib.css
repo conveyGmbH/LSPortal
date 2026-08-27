@@ -327,6 +327,17 @@ body.cnv-ui-dark .sf-btn--danger {
 .sf-dot--warning { background: var(--sf-warning); }
 .sf-dot--info    { background: var(--sf-info); }
 .sf-dot--neutral { background: var(--sf-text-muted); }
+/* "Checking connection…" state — a gentle pulse distinguishes this from the
+   static neutral dot, so it doesn't read as a settled/disconnected state
+   while the async checkConnection() call is still in flight. */
+.sf-dot--pulse { animation: sf-dot-pulse 1.2s ease-in-out infinite; }
+@keyframes sf-dot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sf-dot--pulse { animation: none; }
+}
 
 /* ---- status icon badge (modal headers) ---- */
 .sf-icon-badge {
