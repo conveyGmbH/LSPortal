@@ -99,8 +99,21 @@
     <!-- TwoFactorLib reference -->
     <script type="text/javascript" src="lib/twoFactorLib/scripts/twoFactorLib.js"></script>
 
+    <!-- CrmProviders reference (must load before any provider lib below, so
+         each provider's self-registration finds window.CrmProviders ready) -->
+    <script type="text/javascript" src="lib/CrmProviders/scripts/crmProviderRegistry.js"></script>
+    <script type="text/javascript" src="lib/CrmProviders/scripts/oauthPopup.js"></script>
+    <script type="text/javascript" src="lib/CrmProviders/scripts/leadReportSource.js"></script>
+    <script type="text/javascript" src="lib/CrmProviders/scripts/fieldMappingService.js"></script>
+
     <!-- SalesforceLeadLib reference -->
     <script type="text/javascript" src="lib/SalesforceLeadLib/scripts/salesforceLeadLib.js"></script>
+
+    <!-- HubspotLeadLib reference -->
+    <script type="text/javascript" src="lib/HubspotLeadLib/scripts/hubspotLeadLib.js"></script>
+
+    <!-- DynamicsLeadLib reference -->
+    <script type="text/javascript" src="lib/DynamicsLeadLib/scripts/dynamicsLeadLib.js"></script>
 
     <!-- OpenXML references -->
     <script type="text/javascript" src="lib/OpenXml/scripts/linq.js"></script>

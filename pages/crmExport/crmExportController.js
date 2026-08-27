@@ -13,10 +13,9 @@
     "use strict";
     var namespaceName = "CrmExport";
 
-    // Module-level memo (survives controller re-creation on every tab switch):
-    // recordId -> event UUID is immutable, so FCT_GetUniqueRecordID only needs
-    // one round-trip per event and session.
-    var eventIdByRecordId = {};
+    // recordId -> event UUID memoization now lives in CrmProviders.resolveEventId/
+    // rememberEventId (lib/CrmProviders/scripts/crmProviderRegistry.js), shared
+    // with crmSettingsController.js instead of each controller keeping its own copy.
 
     // WinJS's navigator appends the new page fragment before removing the old
     // one, so an old controller's uncancelled loadData() chain can still be
@@ -33,10 +32,20 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                     eventId: null,
+                    // True only until loadData() settles one of the three
+                    // states below — shows a spinner instead of a blank
+                    // page between clicking the tab and eventId resolving.
+                    showLoading: true,
                     // Tri-state gate for the "module not activated" card: stays false
                     // during initial load so the card doesn't flash before the eventId
                     // is resolved. Set true only once we've confirmed there is none.
-                    showInactive: false
+                    showInactive: false,
+                    // A license may include CRM integration (eventId resolves) while
+                    // the client hasn't connected any CRM yet on CRM Connections —
+                    // that's a distinct state from "no license at all" (showInactive)
+                    // and from "ready to show the batch export UI" (showProviderUI).
+                    showNoProvider: false,
+                    showProviderUI: false
                 }, commandList
             ]);
 
@@ -61,6 +70,19 @@
 
                 Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
                 SalesforceLeadLib.init(serverUrl, apiName, user, password);
+                // Every registered provider lib needs the same Portal Admin
+                // credentials to read LS_LeadReport/LS_FieldMappings — init()
+                // them all here rather than only when a controller happens to
+                // switch to that provider.
+                if (window.HubspotLeadLib) {
+                    HubspotLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.DynamicsLeadLib) {
+                    DynamicsLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.CrmProviders && CrmProviders.LeadReportSource) {
+                    CrmProviders.LeadReportSource.init(serverUrl, apiName, user, password);
+                }
             }
 
             this.dispose = function () {
@@ -129,6 +151,32 @@
 
             AppData.setErrorMsg(this.binding);
 
+            var noProviderCtaBtn = pageElement.querySelector(".crm-noprovider-cta");
+            if (noProviderCtaBtn) {
+                noProviderCtaBtn.addEventListener("click", function () {
+                    Application.navigateById("crmConnections");
+                });
+            }
+
+            function renderProviderUI(adapter, eventId, isCurrent) {
+                if (!crmExportContainer) { return WinJS.Promise.as(); }
+                if (!adapter || typeof adapter.renderContactList !== "function") {
+                    // Connected, but this provider's lead-list rendering isn't wired
+                    // up yet (e.g. HubSpot before Phase 4/6 land) — say so plainly
+                    // rather than leaving the container blank.
+                    Log.print(Log.l.error, namespaceName + ".Controller. No renderContactList for provider " + (adapter && adapter.id));
+                    crmExportContainer.innerHTML =
+                        '<div class="sf-cl-empty" style="padding:40px 20px;text-align:center;color:var(--sf-text-2);">' +
+                        'Lead export for ' + (adapter && adapter.label ? adapter.label : "this CRM") +
+                        ' isn\'t available yet.</div>';
+                    return WinJS.Promise.as();
+                }
+                return Promise.resolve(adapter.renderContactList(crmExportContainer, eventId)).catch(function (err) {
+                    if (!isCurrent()) { return; }
+                    Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + (err && err.message));
+                });
+            }
+
             var loadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 console.log('CrmSettings loadData called, getRecordId():', getRecordId());
@@ -145,12 +193,17 @@
                 if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
                     SalesforceLeadLib.clear(crmExportContainer);
                 }
+                // Re-show the spinner for this fresh load (a prior load may
+                // have already flipped this to false) — cleared again once
+                // the tri-state gate below settles.
+                that.binding.showLoading = true;
 
                 var ret = new WinJS.Promise.as().then(function() {
                     var recordId = getRecordId();
                     // recordId -> UUID is immutable: serve the session memo when known
-                    if (recordId && eventIdByRecordId[recordId]) {
-                        that.binding.eventId = eventIdByRecordId[recordId];
+                    var memoized = window.CrmProviders && CrmProviders.resolveEventId(recordId);
+                    if (recordId && memoized) {
+                        that.binding.eventId = memoized;
                         return WinJS.Promise.as();
                     }
                     return AppData.call("FCT_GetUniqueRecordID", {
@@ -162,8 +215,8 @@
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID));
                         that.binding.eventId =
                             (json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID);
-                        if (recordId && that.binding.eventId) {
-                            eventIdByRecordId[recordId] = that.binding.eventId;
+                        if (window.CrmProviders) {
+                            CrmProviders.rememberEventId(recordId, that.binding.eventId);
                         }
                     }, function (errorResponse) {
                         if (!isCurrent()) { return; }
@@ -174,24 +227,59 @@
                 }).then(function () {
                     if (!isCurrent()) { return; }
                     Log.print(Log.l.trace, namespaceName + ".Controller. eventId=" + that.binding.eventId);
-                    if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.renderContactList === "function") {
-                        var eventId = that.binding.eventId;
-                        if (eventId) {
-                            // Resolved and active: keep the inactive card hidden.
-                            that.binding.showInactive = false;
-                            // Render contact list with batch transfer UI
-                            SalesforceLeadLib.renderContactList(crmExportContainer, eventId).catch(function (err) {
-                                if (!isCurrent()) { return; }
-                                Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + err.message);
-                            });
-                        } else {
-                            // Resolution finished with no eventId: now it's genuinely inactive.
-                            that.binding.showInactive = true;
-                            Log.print(Log.l.info, namespaceName + ".Controller. No eventId available for CRM Export");
-                        }
-                    } else {
-                        Log.print(Log.l.error, namespaceName + ".Controller. No SalesforceLeadLib available for CRM Export");
+                    // eventId is resolved (or definitively failed to resolve) —
+                    // one of the tri-state branches below is about to fire, so
+                    // the loading spinner is no longer needed.
+                    that.binding.showLoading = false;
+                    var eventId = that.binding.eventId;
+                    if (!eventId) {
+                        // No eventId: no CRM license at all for this mandant.
+                        that.binding.showInactive = true;
+                        that.binding.showNoProvider = false;
+                        that.binding.showProviderUI = false;
+                        Log.print(Log.l.info, namespaceName + ".Controller. No eventId available for CRM Export");
+                        return WinJS.Promise.as();
                     }
+                    that.binding.showInactive = false;
+
+                    var providerId = window.CrmProviders ? CrmProviders.resolveActiveCrmProvider() : "salesforce";
+                    var adapter = window.CrmProviders ? CrmProviders.getAdapter(providerId) : window.SalesforceLeadLib;
+
+                    // Existing Salesforce clients predate the CRM Connections catalog
+                    // and have never gone through an explicit connect/switch there —
+                    // skip the real checkConnection() gate for them so their current
+                    // behavior stays unchanged. Only a client who has explicitly used
+                    // CRM Connections (any provider, including re-picking Salesforce)
+                    // goes through the real connected/not-connected check.
+                    var skipConnectionGate = providerId === "salesforce" &&
+                        window.CrmProviders && !CrmProviders.hasExplicitProviderChoice();
+
+                    if (skipConnectionGate || !adapter || typeof adapter.checkConnection !== "function") {
+                        that.binding.showNoProvider = false;
+                        that.binding.showProviderUI = true;
+                        return renderProviderUI(adapter, eventId, isCurrent);
+                    }
+
+                    return Promise.resolve(adapter.checkConnection()).then(function (result) {
+                        if (!isCurrent()) { return; }
+                        if (result && result.connected) {
+                            // Licensed AND a CRM is connected: show the real batch export UI.
+                            that.binding.showNoProvider = false;
+                            that.binding.showProviderUI = true;
+                            return renderProviderUI(adapter, eventId, isCurrent);
+                        } else {
+                            // Licensed but no CRM connected yet: point the client at
+                            // CRM Connections instead of showing an empty/broken table.
+                            that.binding.showNoProvider = true;
+                            that.binding.showProviderUI = false;
+                            Log.print(Log.l.info, namespaceName + ".Controller. License present but no CRM connected");
+                        }
+                    }).catch(function (err) {
+                        if (!isCurrent()) { return; }
+                        Log.print(Log.l.error, namespaceName + ".Controller. checkConnection error: " + (err && err.message));
+                        that.binding.showNoProvider = true;
+                        that.binding.showProviderUI = false;
+                    });
                 }).then(function() {
                     if (!isCurrent()) { return; }
                     AppBar.triggerDisableHandlers();

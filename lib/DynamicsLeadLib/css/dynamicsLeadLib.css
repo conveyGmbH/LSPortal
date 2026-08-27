@@ -1,0 +1,9 @@
+/* DynamicsLeadLib - minimal additions on top of SalesforceLeadLib's shared
+   --sf-* tokens and .sf-* component classes (lib/SalesforceLeadLib/css/
+   salesforceLeadLib.css). Dynamics' UI is deliberately simple (see
+   dynamicsLeadLib.js) and reuses that stylesheet directly — this file only
+   covers the org-details prompt shown by DynamicsLeadLib.connect(). */
+
+.dyn-org-prompt-overlay {
+    z-index: 10000;
+}

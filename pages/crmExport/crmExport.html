@@ -6,9 +6,17 @@
     <link href="crmExport.css" rel="stylesheet" />
     <link href="../../lib/font-awesome/fontawesome-free-7.1.0-web/css/all.min.css" rel="stylesheet" />
     <link href="../../lib/SalesforceLeadLib/css/salesforceLeadLib.css" rel="stylesheet" />
+    <link href="../../lib/HubspotLeadLib/css/hubspotLeadLib.css" rel="stylesheet" />
+    <link href="../../lib/DynamicsLeadLib/css/dynamicsLeadLib.css" rel="stylesheet" />
 
     <script type="text/javascript" src="../../lib/SalesforceLeadLib/scripts/fakeDataGenerator.js"></script>
+    <script type="text/javascript" src="../../lib/CrmProviders/scripts/crmProviderRegistry.js"></script>
+    <script type="text/javascript" src="../../lib/CrmProviders/scripts/oauthPopup.js"></script>
+    <script type="text/javascript" src="../../lib/CrmProviders/scripts/leadReportSource.js"></script>
+    <script type="text/javascript" src="../../lib/CrmProviders/scripts/fieldMappingService.js"></script>
     <script type="text/javascript" src="../../lib/SalesforceLeadLib/scripts/salesforceLeadLib.js"></script>
+    <script type="text/javascript" src="../../lib/HubspotLeadLib/scripts/hubspotLeadLib.js"></script>
+    <script type="text/javascript" src="../../lib/DynamicsLeadLib/scripts/dynamicsLeadLib.js"></script>
     <script type="text/javascript" src="crmExportService.js"></script>
     <script type="text/javascript" src="crmExportController.js"></script>
     <script type="text/javascript" src="crmExport.js"></script>
@@ -29,8 +37,12 @@
                     </div>
                     <div class="content-record">
                         <div class="line-separator"></div>
+                        <div class="crm-page-loading"
+                             data-win-bind="style.display: showLoading Binding.Converter.toDisplay">
+                            <span class="sf-spinner sf-spinner--lg"></span>
+                        </div>
                         <div class="list-header" id="crmexport-container"
-                             data-win-bind="style.display: eventId Binding.Converter.toDisplay"></div>
+                             data-win-bind="style.display: showProviderUI Binding.Converter.toDisplay"></div>
                         <div class="crm-inactive-wrap"
                              data-win-bind="style.display: showInactive Binding.Converter.toDisplay">
                             <div class="crm-inactive-card">
@@ -43,6 +55,23 @@
                                 <h2 class="crm-inactive-title" data-win-res="{textContent: 'crmExport.inactiveTitle'}"></h2>
                                 <p class="crm-inactive-text" data-win-res="{textContent: 'crmExport.inactiveMessage'}"></p>
                                 <p class="crm-inactive-hint" data-win-res="{textContent: 'crmExport.inactiveHint'}"></p>
+                            </div>
+                        </div>
+                        <div class="crm-inactive-wrap"
+                             data-win-bind="style.display: showNoProvider Binding.Converter.toDisplay">
+                            <div class="crm-inactive-card">
+                                <div class="crm-inactive-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="9"/>
+                                        <path d="M9 12h6M12 9v6"/>
+                                    </svg>
+                                </div>
+                                <h2 class="crm-inactive-title" data-win-res="{textContent: 'crmExport.noProviderTitle'}"></h2>
+                                <p class="crm-inactive-text" data-win-res="{textContent: 'crmExport.noProviderMessage'}"></p>
+                                <p class="crm-inactive-hint" data-win-res="{textContent: 'crmExport.noProviderHint'}"></p>
+                                <button class="sf-btn sf-btn--primary crm-noprovider-cta"
+                                        data-win-res="{textContent: 'crmExport.noProviderCta'}"
+                                        style="margin-top: 16px;"></button>
                             </div>
                         </div>
                     </div>

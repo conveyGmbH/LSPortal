@@ -1,0 +1,12 @@
+/* HubspotLeadLib - minimal additions on top of SalesforceLeadLib's shared
+   --sf-* tokens and .sf-* component classes (lib/SalesforceLeadLib/css/
+   salesforceLeadLib.css). HubSpot's UI is deliberately simpler (see
+   hubspotLeadLib.js) and reuses that stylesheet directly — this file only
+   covers the handful of classes that stylesheet doesn't already define. */
+
+.sf-fieldmap-card__sub {
+    display: block;
+    font-size: 12px;
+    color: var(--sf-text-2);
+    margin-top: 2px;
+}

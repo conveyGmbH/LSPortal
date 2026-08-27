@@ -549,7 +549,8 @@
                                                     } else if ((curPageId === "event" ||
                                                         curPageId === "genDataSettings" ||
                                                         curPageId === "crmSettings" ||
-                                                        curPageId === "crmExport") &&
+                                                        curPageId === "crmExport" ||
+                                                        curPageId === "crmConnections") &&
                                                         typeof AppBar.scope.loadData === "function") {
                                                         AppBar.scope.loadData();
                                                     } else if (curPageId === "eventProducts" &&
@@ -578,6 +579,7 @@
                                                         curPageId === "event" ||
                                                         curPageId === "crmSettings" ||
                                                         curPageId === "crmExport" ||
+                                                        curPageId === "crmConnections" ||
                                                         curPageId === "contactResultsList" ||
                                                         curPageId === "reporting" ||
                                                         curPageId === "reportingColumnList" ||
@@ -606,7 +608,8 @@
                                                 } else if ((curPageId === "event" ||
                                                     curPageId === "genDataSettings" ||
                                                     curPageId === "crmSettings" ||
-                                                    curPageId === "crmExport") &&
+                                                    curPageId === "crmExport" ||
+                                                    curPageId === "crmConnections") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData();
                                                 }

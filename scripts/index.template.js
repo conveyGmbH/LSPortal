@@ -188,6 +188,7 @@
         { id: "exportGrp", group: 34, svg: "export", disabled: true, popup: true },
         { id: "reporting", group: 8, svg: "folder_document", disabled: true, predecGroup: 34 },
         { id: "crmExport", group: 64, svg: "server_cloud", disabled: true, predecGroup: 34 },
+        { id: "crmConnections", group: 64, svg: "server_cloud", disabled: true, predecGroup: 34 },
         //{ id: "reportingColumnList", group: 35, svg: "export_settings", disabled: true, predecGroup: 34 },
         //Infodesk
         { id: "infodesk", group: 9, svg: "about", disabled: true },
@@ -294,7 +295,8 @@
         { id: "clientManagementSummarise", group: 75, disabled: false },
         { id: "adminAppHelpText", group: 76, disabled: false },
         { id: "crmExport", group: 64, disabled: false },
-        { id: "crmSettings", group: 64, disabled: false }
+        { id: "crmSettings", group: 64, disabled: false },
+        { id: "crmConnections", group: 64, disabled: false }
     ];
 
 
@@ -343,6 +345,7 @@
         { id: "eventCopy", master: "eventList" },
         { id: "crmExport", master: "eventList" },
         { id: "crmSettings", master: "eventList" },
+        { id: "crmConnections", master: "eventList" },
         //{ id: "genDataSettings", master: "eventList" },
         { id: "siteeventsImport", master: "siteEventsList" },
         { id: "start", master: "eventList" },
