@@ -32,6 +32,10 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                     eventId: null,
+                    // True only until loadData() settles one of the three
+                    // states below — shows a spinner instead of a blank
+                    // page between clicking the tab and eventId resolving.
+                    showLoading: true,
                     // Tri-state gate for the "module not activated" card: stays false
                     // during initial load so the card doesn't flash before the eventId
                     // is resolved. Set true only once we've confirmed there is none.
@@ -189,6 +193,10 @@
                 if (crmExportContainer && SalesforceLeadLib && typeof SalesforceLeadLib.clear === "function") {
                     SalesforceLeadLib.clear(crmExportContainer);
                 }
+                // Re-show the spinner for this fresh load (a prior load may
+                // have already flipped this to false) — cleared again once
+                // the tri-state gate below settles.
+                that.binding.showLoading = true;
 
                 var ret = new WinJS.Promise.as().then(function() {
                     var recordId = getRecordId();
@@ -219,6 +227,10 @@
                 }).then(function () {
                     if (!isCurrent()) { return; }
                     Log.print(Log.l.trace, namespaceName + ".Controller. eventId=" + that.binding.eventId);
+                    // eventId is resolved (or definitively failed to resolve) —
+                    // one of the tri-state branches below is about to fire, so
+                    // the loading spinner is no longer needed.
+                    that.binding.showLoading = false;
                     var eventId = that.binding.eventId;
                     if (!eventId) {
                         // No eventId: no CRM license at all for this mandant.

@@ -745,6 +745,28 @@ dialog.sf-lib-dialog.sf-dialog--sm {
 .sf-stat--warning .sf-stat__value { color: var(--sf-warning); }
 .sf-stat--neutral .sf-stat__value { color: var(--sf-text-muted); }
 
+/* .sf-stat is a <button> in the batch summary modal (clickable to filter the
+   result list below by status) — reset the browser's default button chrome
+   and add hover/active affordance on top of the existing value/label styling. */
+.sf-stat--clickable {
+    border: none;
+    border-top: none;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    transition: background var(--sf-dur-1) var(--sf-ease);
+}
+.sf-stat--clickable:hover {
+    background: var(--sf-surface-2);
+}
+.sf-stat--clickable.sf-stat--active {
+    background: var(--sf-surface-2);
+}
+.sf-stat--clickable.sf-stat--active.sf-stat--success { box-shadow: inset 0 -3px 0 var(--sf-success); }
+.sf-stat--clickable.sf-stat--active.sf-stat--error { box-shadow: inset 0 -3px 0 var(--sf-error); }
+.sf-stat--clickable.sf-stat--active.sf-stat--warning { box-shadow: inset 0 -3px 0 var(--sf-warning); }
+.sf-stat--clickable.sf-stat--active.sf-stat--neutral { box-shadow: inset 0 -3px 0 var(--sf-text-muted); }
+
 /* ---- skeleton ---- */
 .sf-skeleton {
     position: relative;
@@ -1019,6 +1041,31 @@ body.cnv-ui-dark .sf-skeleton::after {
 .sf-cl-btn-batch:disabled { opacity: 0.45; cursor: not-allowed; }
 .sf-cl-btn-refresh { background: transparent; color: var(--sf-text); border-color: var(--sf-border-strong); }
 .sf-cl-btn-refresh:hover { background: var(--sf-surface-2); }
+/* "Check Duplicates" — secondary/outline treatment (not the primary accent
+   used by Start Batch Transfer) since it's a pre-flight helper, not the
+   main action. Only rendered when providerConfig.duplicateCheckAdapter is
+   set (HubSpot today). */
+.sf-cl-btn-dupcheck { background: transparent; color: var(--sf-text); border-color: var(--sf-border-strong); }
+.sf-cl-btn-dupcheck:hover:not(:disabled) { background: var(--sf-surface-2); }
+.sf-cl-btn-dupcheck:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* "Exclude already-in-{CRM}" bar — revealed only after a Check Duplicates
+   run finds at least one row to flag (see the click handler in
+   renderContactList). Same neutral surface as the filter bar for visual
+   consistency, but a distinct row so it doesn't get hidden behind the
+   filter-toggle button. */
+.sf-cl-dupcheck-bar {
+    display: none; align-items: center; gap: 10px; padding: 10px 14px;
+    background: var(--sf-surface-2);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-md);
+    margin-bottom: 8px;
+}
+.sf-cl-dupcheck-exclude {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--sf-text); cursor: pointer;
+}
+.sf-cl-dupcheck-exclude input[type=checkbox] { cursor: pointer; }
 .sf-cl-btn-toggle { background: var(--sf-accent); color: #fff; width: 38px; height: 38px; padding: 0; }
 .sf-cl-btn-toggle:hover { filter: brightness(0.92); }
 .sf-cl-btn-toggle svg { transition: transform var(--sf-dur-2) var(--sf-ease); }
@@ -1113,11 +1160,13 @@ body.cnv-ui-dark .sf-skeleton::after {
 .sf-cl-status-pill.pill-failed:hover:not(.active)  { background: var(--sf-error-bg);   color: var(--sf-error);   border-color: transparent; }
 .sf-cl-status-pill.pill-dup:hover:not(.active)     { background: var(--sf-warning-bg); color: var(--sf-warning); border-color: transparent; }
 .sf-cl-status-pill.pill-empty:hover:not(.active)   { background: var(--sf-surface-2);  color: var(--sf-text); }
+.sf-cl-status-pill.pill-alreadyin:hover:not(.active) { background: var(--sf-success-bg); color: var(--sf-success); border-color: transparent; }
 .sf-cl-status-pill.active { background: #374151; color: #fff; border-color: #374151; }
 .sf-cl-status-pill.pill-success.active { background: #16a34a; border-color: #16a34a; }
 .sf-cl-status-pill.pill-failed.active { background: #dc2626; border-color: #dc2626; }
 .sf-cl-status-pill.pill-dup.active { background: #d97706; border-color: #d97706; }
 .sf-cl-status-pill.pill-empty.active { background: #6b7280; border-color: #6b7280; }
+.sf-cl-status-pill.pill-alreadyin.active { background: #16a34a; border-color: #16a34a; }
 .sf-cl-status-pill.pill-vollstaendig.active { background: #2563eb; border-color: #2563eb; }
 .sf-cl-status-pill.pill-unvollstaendig.active { background: #9333ea; border-color: #9333ea; }
 .sf-cl-status-pill.pill-complete-all.active { background: var(--sf-accent); border-color: var(--sf-accent); }
@@ -1189,6 +1238,12 @@ body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-sticky, body:not(.cnv-ui-d
 .dot-success { background: var(--sf-success); }
 .dot-failed { background: var(--sf-error); }
 .dot-duplicate { background: var(--sf-warning); }
+/* Pre-flight "Check Duplicates" result dots (distinct from the post-transfer
+   success/failed/duplicate dots above) — synced = already the same lead in
+   the CRM (good/no-op), email-conflict = a different contact owns that
+   email (needs attention before transfer). */
+.dot-synced { background: var(--sf-success); }
+.dot-email-conflict { background: var(--sf-warning); }
 .sf-cl-empty { padding: 40px 20px; text-align: center; color: var(--sf-text-2); font-size: 14px; }
 
 /* Connection status card (same vocabulary as the settings chip) */
@@ -1237,6 +1292,20 @@ body:not(.cnv-ui-dark) .sf-cl-row-duplicate .sf-cl-td-sticky, body:not(.cnv-ui-d
 }
 .sf-cl-btn-connect:hover { filter: brightness(0.92); }
 .sf-cl-filter-hint { font-size: 12px; color: var(--sf-warning); padding: 2px 4px 8px; }
+
+/* CRM identity badge — shows which provider this page/table is currently
+   scoped to (Salesforce/HubSpot/Dynamics), same idea as the "— HubSpot"
+   suffix already shown in the Field Configurator's <h1>. */
+.sf-cl-crm-badge {
+    display: flex; align-items: center; gap: 7px;
+    height: 38px; padding: 0 14px;
+    border-radius: var(--sf-radius-pill);
+    border: 1px solid var(--sf-border);
+    background: var(--sf-surface-tile);
+    font-size: 13px; font-weight: 600; color: var(--sf-text);
+    box-sizing: border-box; flex-shrink: 0;
+}
+.sf-cl-crm-badge i { font-size: 14px; color: var(--sf-accent); }
 
 /* ---- Single lead export (contactCrmExport / crmExport test) ---- */
 .sf-export-root {

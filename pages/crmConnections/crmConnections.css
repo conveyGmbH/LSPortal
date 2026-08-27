@@ -30,6 +30,19 @@
     box-sizing: border-box;
 }
 
+/* Shown only while loadData() is resolving eventId — before showInactive/
+   the catalog has a determined value, so the page doesn't sit blank
+   between clicking the tab and that settling. Reuses .sf-spinner
+   (lib/SalesforceLeadLib/css/salesforceLeadLib.css, already loaded by this
+   page) rather than a separate spinner style. */
+.crm-page-loading {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    width: 100%;
+}
+
 .crm-inactive-card {
     max-width: 440px;
     width: 100%;

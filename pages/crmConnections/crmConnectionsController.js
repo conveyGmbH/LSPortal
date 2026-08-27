@@ -38,6 +38,10 @@
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             Application.Controller.apply(this, [pageElement, {
                     eventId: null,
+                    // True only until loadData() settles showInactive/the
+                    // catalog — shows a spinner instead of a blank page
+                    // between clicking the tab and eventId resolving.
+                    showLoading: true,
                     // Same tri-state gate as crmExport/crmSettings: stays false
                     // during initial load so the card doesn't flash before the
                     // eventId is resolved.
@@ -389,6 +393,10 @@
                 if (catalogContainer) {
                     catalogContainer.innerHTML = "";
                 }
+                // Re-show the spinner for this fresh load (a prior load may
+                // have already flipped this to false) — cleared again once
+                // showInactive/the catalog below settles.
+                that.binding.showLoading = true;
 
                 var ret = new WinJS.Promise.as().then(function () {
                     var recordId = getRecordId();
@@ -414,6 +422,10 @@
                     });
                 }).then(function () {
                     if (!isCurrent()) { return; }
+                    // eventId is resolved (or definitively failed to resolve) —
+                    // the branch below is about to fire, so the loading
+                    // spinner is no longer needed.
+                    that.binding.showLoading = false;
                     if (that.binding.eventId) {
                         that.binding.showInactive = false;
                         return reload().catch(function (err) {
