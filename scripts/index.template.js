@@ -188,7 +188,7 @@
         { id: "exportGrp", group: 34, svg: "export", disabled: true, popup: true },
         { id: "reporting", group: 8, svg: "folder_document", disabled: true, predecGroup: 34 },
         { id: "crmExport", group: 64, svg: "server_cloud", disabled: true, predecGroup: 34 },
-        { id: "crmConnections", group: 64, svg: "server_cloud", disabled: true, predecGroup: 34 },
+        //{ id: "crmConnections", group: 64, svg: "server_cloud", disabled: true, predecGroup: 34 },
         //{ id: "reportingColumnList", group: 35, svg: "export_settings", disabled: true, predecGroup: 34 },
         //Infodesk
         { id: "infodesk", group: 9, svg: "about", disabled: true },
