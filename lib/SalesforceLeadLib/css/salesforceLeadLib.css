@@ -732,6 +732,20 @@ dialog.sf-lib-dialog.sf-dialog--sm {
     overflow-wrap: anywhere;
     line-height: 1.45;
 }
+.sf-result-row__edit {
+    flex-shrink: 0;
+    background: none;
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius-sm);
+    color: var(--sf-text-2);
+    font-size: 12px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+.sf-result-row__edit:hover {
+    color: var(--sf-text);
+    border-color: var(--sf-text-2);
+}
 .sf-stat {
     flex: 1;
     text-align: center;
@@ -1213,6 +1227,18 @@ body.cnv-ui-dark #sf-cl-completeness-select {
                 color var(--sf-dur-1) var(--sf-ease);
 }
 .sf-cl-attach-badge:hover { background: var(--sf-accent); color: #fff; border-color: var(--sf-accent); }
+
+.sf-cl-edit-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: var(--sf-radius-sm);
+    background: var(--sf-surface-2); color: var(--sf-text-2);
+    border: 1px solid var(--sf-border);
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease),
+                color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-edit-btn:hover { background: var(--sf-accent); color: #fff; border-color: var(--sf-accent); }
 
 /* Table */
 .sf-cl-table-wrap {

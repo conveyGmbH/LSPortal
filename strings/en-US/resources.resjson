@@ -2248,6 +2248,7 @@
     "crmExport.exportValidOnly": "Export valid only",
     "crmExport.unknownLeadWithId": "Unknown Lead",
     "crmExport.noResultsForFilter": "No leads with this status.",
+    "crmExport.editContact": "Edit",
     "crmExport.filterAlreadyIn": "Already in {0}",
     "crmExport.dupCheckNoneFound": "No duplicates found among the {0} checked lead(s).",
     "crmExport.dupCheckSyncedCount": "{0} already in {1}",
