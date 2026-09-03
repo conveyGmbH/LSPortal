@@ -2216,6 +2216,9 @@
     "crmSettings.providerFieldName": "{0} Field Name",
     "crmSettings.exactFieldApiName": "Exact field API name in {0} (e.g. {1})",
     "crmSettings.fieldListNameHint": "Name shown in the field list (leave empty to use the {0} field name)",
+    "crmSettings.providerTargetField": "{0} target field",
+    "crmSettings.enterTargetFieldHint": "Enter the {0} field this maps to (e.g. {1}). Use {2} to remove the mapping and restore the original behavior.",
+    "crmSettings.resetToDefault": "Reset to default",
 
     "crmExport.batchTransferTitle": "Batch Transfer",
     "crmExport.batchTransferComplete": "Batch Transfer Complete",

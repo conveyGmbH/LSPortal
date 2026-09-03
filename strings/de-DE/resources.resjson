@@ -2219,6 +2219,9 @@
     "crmSettings.providerFieldName": "{0}-Feldname",
     "crmSettings.exactFieldApiName": "Exakter API-Feldname in {0} (z.B. {1})",
     "crmSettings.fieldListNameHint": "Name in der Feldliste (leer lassen, um den {0}-Feldnamen zu verwenden)",
+    "crmSettings.providerTargetField": "{0}-Zielfeld",
+    "crmSettings.enterTargetFieldHint": "Geben Sie das {0}-Feld ein, dem dies zugeordnet wird (z.B. {1}). Verwenden Sie {2}, um die Zuordnung zu entfernen und das ursprüngliche Verhalten wiederherzustellen.",
+    "crmSettings.resetToDefault": "Auf Standard zurücksetzen",
 
     "crmExport.batchTransferTitle": "Stapelübertragung",
     "crmExport.batchTransferComplete": "Stapelübertragung abgeschlossen",
