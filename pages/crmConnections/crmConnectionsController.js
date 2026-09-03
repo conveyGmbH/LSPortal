@@ -346,6 +346,44 @@
                 });
             }
 
+            // Shown in catalogContainer while reload()'s connection checks are
+            // in flight, so switching events doesn't flash an empty
+            // container between showLoading clearing and the real cards
+            // rendering (they overlap: connect() re-check calls also refresh
+            // rather than replace this, only the initial loadData() path
+            // shows it since renderCatalog's own innerHTML replaces it).
+            function renderCatalogSkeleton() {
+                catalogContainer.innerHTML =
+                    '<div class="crm-conn-toolbar">' +
+                        '<div class="sf-skeleton" style="height: 20px; width: 180px;"></div>' +
+                    "</div>" +
+                    '<div class="crm-conn-filterbar">' +
+                        '<div class="sf-skeleton" style="height: 38px; flex: 1; max-width: 320px;"></div>' +
+                        '<div class="sf-skeleton" style="height: 38px; width: 220px; border-radius: var(--sf-radius-pill);"></div>' +
+                    "</div>" +
+                    '<div class="crm-conn-grid" aria-busy="true" aria-label="Loading CRM connections">' +
+                        CATALOG.map(function () {
+                            return (
+                                '<div class="crm-conn-card">' +
+                                    '<div class="crm-conn-card-head">' +
+                                        '<div class="sf-skeleton" style="width: 40px; height: 40px; border-radius: var(--sf-radius-sm);"></div>' +
+                                        '<div style="flex: 1;">' +
+                                            '<div class="sf-skeleton" style="height: 16px; max-width: 120px; margin-bottom: 8px;"></div>' +
+                                            '<div class="sf-skeleton" style="height: 12px; max-width: 80px;"></div>' +
+                                        "</div>" +
+                                    "</div>" +
+                                    '<div class="sf-skeleton" style="height: 13px; margin: 12px 0 4px;"></div>' +
+                                    '<div class="sf-skeleton" style="height: 13px; max-width: 70%; margin-bottom: 16px;"></div>' +
+                                    '<div class="crm-conn-card-footer">' +
+                                        '<div class="sf-skeleton" style="height: 24px; width: 90px; border-radius: var(--sf-radius-pill);"></div>' +
+                                        '<div class="sf-skeleton" style="height: 34px; width: 90px;"></div>' +
+                                    "</div>" +
+                                "</div>"
+                            );
+                        }).join("") +
+                    "</div>";
+            }
+
             // Checks every registered CATALOG entry's connection status in
             // parallel and re-renders. "soon" entries are never checked (no
             // adapter registered for them). Every adapter method here
@@ -428,6 +466,7 @@
                     that.binding.showLoading = false;
                     if (that.binding.eventId) {
                         that.binding.showInactive = false;
+                        renderCatalogSkeleton();
                         return reload().catch(function (err) {
                             if (!isCurrent()) { return; }
                             Log.print(Log.l.error, namespaceName + ".Controller. reload error: " + (err && err.message));
