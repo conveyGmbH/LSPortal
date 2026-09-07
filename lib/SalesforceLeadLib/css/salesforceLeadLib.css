@@ -692,6 +692,17 @@ dialog.sf-lib-dialog.sf-dialog--sm {
     border-radius: var(--sf-radius-pill);
     transition: width var(--sf-dur-2) var(--sf-ease);
 }
+/* Indeterminate variant — used where there's no real per-item count to
+   report (e.g. Check Duplicates, a single batch request under the hood),
+   so a sweeping bar communicates "working" without implying a fake %. */
+.sf-progress--indeterminate .sf-progress__bar {
+    width: 40% !important;
+    animation: sf-progress-sweep 1.2s ease-in-out infinite;
+}
+@keyframes sf-progress-sweep {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+}
 
 /* ---- batch result rows & stats ---- */
 .sf-result-list {
@@ -1046,7 +1057,23 @@ body.cnv-ui-dark .sf-skeleton::after {
    Moved from the inline <style> block in renderContactList; class names are
    unchanged (the view JS binds to them), values are tokenized. */
 .sf-cl-wrap { display: flex; flex-direction: column; height: 100%; padding: 0 16px; box-sizing: border-box; overflow: hidden; font-family: var(--sf-font); }
-.sf-cl-toolbar { display: flex; align-items: center; gap: 8px; padding: 10px 0; flex-wrap: wrap; }
+
+/* Page header: icon + title + provider/status/user subline, Disconnect at the right. */
+.sf-cl-page-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0 16px; border-bottom: 1px solid var(--sf-border); margin-bottom: 14px; }
+.sf-cl-page-header__main { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.sf-cl-page-header__icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: var(--sf-radius-md);
+    background: var(--sf-accent); color: #fff; font-size: 17px;
+}
+.sf-cl-page-header__text { min-width: 0; }
+.sf-cl-page-header__title { margin: 0; font-size: 19px; font-weight: 700; color: var(--sf-text); line-height: 1.2; }
+.sf-cl-page-header__sub { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 13px; color: var(--sf-text-2); }
+.sf-cl-page-header__sub i { font-size: 13px; }
+.sf-cl-page-header__dot { color: var(--sf-border-strong); }
+
+.sf-cl-toolbar { display: flex; align-items: center; gap: 8px; padding: 0 0 14px; flex-wrap: wrap; }
 
 /* All toolbar buttons share one height so Batch/Refresh/toggle and the
    connect/disconnect/status card line up. */
@@ -1064,6 +1091,14 @@ body.cnv-ui-dark .sf-skeleton::after {
 .sf-cl-btn-batch { background: var(--sf-accent); color: #fff; }
 .sf-cl-btn-batch:hover:not(:disabled) { filter: brightness(0.92); }
 .sf-cl-btn-batch:disabled { opacity: 0.45; cursor: not-allowed; }
+.sf-cl-btn-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 22px; height: 22px; padding: 0 7px;
+    border-radius: var(--sf-radius-pill);
+    background: rgba(255, 255, 255, 0.25);
+    font-size: 15px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
 .sf-cl-btn-refresh { background: transparent; color: var(--sf-text); border-color: var(--sf-border-strong); }
 .sf-cl-btn-refresh:hover { background: var(--sf-surface-2); }
 /* "Check Duplicates" — secondary/outline treatment (not the primary accent
@@ -1087,10 +1122,11 @@ body.cnv-ui-dark .sf-skeleton::after {
     margin-bottom: 8px;
 }
 .sf-cl-dupcheck-exclude {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
     font-size: 13px; color: var(--sf-text); cursor: pointer;
 }
 .sf-cl-dupcheck-exclude input[type=checkbox] { cursor: pointer; }
+.sf-cl-dupcheck-exclude__icon { font-size: 13px; color: var(--sf-error); }
 .sf-cl-btn-toggle { background: var(--sf-accent); color: #fff; width: 38px; height: 38px; padding: 0; }
 .sf-cl-btn-toggle:hover { filter: brightness(0.92); }
 .sf-cl-btn-toggle svg { transition: transform var(--sf-dur-2) var(--sf-ease); }
@@ -1156,6 +1192,44 @@ body.cnv-ui-dark .sf-skeleton::after {
 }
 .sf-cl-btn-reset:hover:not(:disabled) { background: var(--sf-surface-2); }
 .sf-cl-btn-reset:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Export status filter cards — same click/filter behavior as the old pills,
+   just laid out as small stat cards with a sub-label, so each status reads
+   at a glance (value + name + what it means) instead of a bare pill count. */
+.sf-cl-stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 0 0 18px;
+}
+.sf-cl-stat-card {
+    display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px;
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: var(--sf-radius-md);
+    border: 1px solid var(--sf-border);
+    background: var(--sf-surface);
+    cursor: pointer;
+    font-family: var(--sf-font);
+    transition: border-color var(--sf-dur-1) var(--sf-ease),
+                box-shadow var(--sf-dur-1) var(--sf-ease);
+}
+.sf-cl-stat-card:hover { border-color: var(--sf-border-strong); box-shadow: var(--sf-shadow-1); }
+.sf-cl-stat-card__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sf-cl-stat-card__value { font-size: 20px; font-weight: 700; color: var(--sf-text); line-height: 1.1; flex-shrink: 0; }
+.sf-cl-stat-card__label { font-size: 12px; font-weight: 600; color: var(--sf-text); }
+.sf-cl-stat-card__sub { font-size: 11px; color: var(--sf-text-2); }
+.sf-cl-stat-card.active { border-color: var(--sf-accent); box-shadow: 0 0 0 1px var(--sf-accent) inset; }
+.sf-cl-stat-card.card-success .sf-cl-stat-card__value { color: var(--sf-success); }
+.sf-cl-stat-card.card-failed .sf-cl-stat-card__value { color: var(--sf-error); }
+.sf-cl-stat-card.card-dup .sf-cl-stat-card__value { color: var(--sf-warning); }
+.sf-cl-stat-card.card-alreadyin .sf-cl-stat-card__value { color: var(--sf-success); }
+.sf-cl-stat-card.card-emailconflict .sf-cl-stat-card__value { color: var(--sf-error); }
+.sf-cl-stat-card.card-success.active { border-color: var(--sf-success); box-shadow: 0 0 0 1px var(--sf-success) inset; }
+.sf-cl-stat-card.card-failed.active { border-color: var(--sf-error); box-shadow: 0 0 0 1px var(--sf-error) inset; }
+.sf-cl-stat-card.card-dup.active { border-color: var(--sf-warning); box-shadow: 0 0 0 1px var(--sf-warning) inset; }
+.sf-cl-stat-card.card-alreadyin.active { border-color: var(--sf-success); box-shadow: 0 0 0 1px var(--sf-success) inset; }
+.sf-cl-stat-card.card-emailconflict.active { border-color: var(--sf-error); box-shadow: 0 0 0 1px var(--sf-error) inset; }
 
 /* Export status filter pills — active state keeps fixed solid status fills:
    they are theme-independent mid-tones that hold white text in both modes. */
@@ -1241,6 +1315,8 @@ body.cnv-ui-dark #sf-cl-completeness-select {
                 color var(--sf-dur-1) var(--sf-ease);
 }
 .sf-cl-edit-btn:hover { background: var(--sf-accent); color: #fff; border-color: var(--sf-accent); }
+.sf-cl-edit-btn + .sf-cl-edit-btn { margin-left: 4px; }
+.sf-cl-retry-btn:hover { background: var(--sf-warning); border-color: var(--sf-warning); }
 
 /* Table */
 .sf-cl-table-wrap {
