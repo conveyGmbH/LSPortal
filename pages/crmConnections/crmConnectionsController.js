@@ -26,9 +26,9 @@
     // dynamics-backend's centralized Azure AD app — same multi-tenant-app
     // model as Salesforce/HubSpot.
     var CATALOG = [
-        { id: "salesforce", label: "Salesforce", initials: "SF", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
-        { id: "hubspot", label: "HubSpot", initials: "HS", badge: null, description: "Contacts & Deals pipeline mapping.", auth: "OAuth 2.0" },
-        { id: "dynamics", label: "MS Dynamics 365", initials: "MD", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" }
+        { id: "salesforce", label: "Salesforce", icon: "fa-brands fa-salesforce", iconColor: "#00a1e0", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0", tags: ["Bidirectional", "Leads/Contacts"] },
+        { id: "hubspot", label: "HubSpot", icon: "fa-brands fa-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts & Deals pipeline mapping.", auth: "OAuth 2.0", tags: ["Pipeline mapping", "Contacts", "Deals"] },
+        { id: "dynamics", label: "MS Dynamics 365", icon: "fa-solid fa-building", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0", tags: ["Sales sync", "Customer Insights"] }
     ];
 
     WinJS.Namespace.define(namespaceName, {
@@ -52,6 +52,25 @@
             var that = this;
             var loadGeneration = 0;
             var catalogContainer = pageElement.querySelector("#crm-conn-container");
+
+            // Custom page header (icon + title), same pattern/classes as
+            // CRM Export's renderContactList so both screens look like one
+            // product. No "System Online" style badge here — there's no
+            // real health-check backing one, so it stays honest and just
+            // shows the icon + title (the connected-count line below it
+            // already carries the real status).
+            function pageHeaderHtml() {
+                return (
+                    '<div class="sf-cl-page-header">' +
+                        '<div class="sf-cl-page-header__main">' +
+                            '<div class="sf-cl-page-header__icon"><i class="fa-solid fa-plug" aria-hidden="true"></i></div>' +
+                            '<div class="sf-cl-page-header__text">' +
+                                '<h1 class="sf-cl-page-header__title">CRM Connections</h1>' +
+                            "</div>" +
+                        "</div>" +
+                    "</div>"
+                );
+            }
 
             // Every registered provider lib needs Portal Admin credentials
             // before checkConnection()/connect() can call its backend — same
@@ -182,34 +201,44 @@
                         actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="Coming soon"><i class="fa-solid fa-lock" aria-hidden="true"></i> Soon</button>';
                     } else if (isActive) {
                         actionHtml =
-                            '<button class="sf-btn sf-btn--secondary crm-conn-action" data-action="manage" data-provider="' + entry.id + '">Manage</button>' +
-                            '<button class="sf-btn sf-btn--danger-outline crm-conn-action" data-action="disconnect" data-provider="' + entry.id + '">Delete connection</button>';
+                            '<button class="sf-btn sf-btn--secondary crm-conn-action crm-conn-action--manage" data-action="manage" data-provider="' + entry.id + '">Manage</button>' +
+                            '<button class="sf-btn sf-btn--danger-outline crm-conn-action crm-conn-action--delete" data-action="disconnect" data-provider="' + entry.id + '">Delete connection</button>';
                     } else if (isLockedByOther) {
                         actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="Delete the current connection before connecting a different CRM"><i class="fa-solid fa-lock" aria-hidden="true"></i> Locked</button>';
                     } else {
                         actionHtml = '<button class="sf-btn sf-btn--primary crm-conn-action" data-action="connect" data-provider="' + entry.id + '"><i class="fa-solid fa-plus" aria-hidden="true"></i> Connect</button>';
                     }
 
+                    var tagsHtml = (entry.tags || []).map(function (tag) {
+                        return '<span class="crm-conn-tag"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> ' + esc(tag) + "</span>";
+                    }).join("");
+
                     return (
                         '<div class="crm-conn-card' + (isActive ? " crm-conn-card--active" : "") + (isLockedByOther ? " crm-conn-card--locked" : "") + '" data-provider-card="' + entry.id + '">' +
+                            (isActive ? '<span class="crm-conn-badge crm-conn-badge--active">Active</span>' : "") +
                             '<div class="crm-conn-card-head">' +
-                                '<div class="crm-conn-avatar">' + esc(entry.initials) + "</div>" +
+                                '<div class="crm-conn-avatar"><i class="' + entry.icon + '" aria-hidden="true" style="color:' + entry.iconColor + ';"></i></div>' +
                                 '<div class="crm-conn-card-title">' +
                                     '<div class="crm-conn-name-row">' +
                                         "<span class=\"crm-conn-name\">" + esc(entry.label) + "</span>" +
-                                        (isActive ? '<span class="crm-conn-badge crm-conn-badge--connected">Connected</span>' : badgeHtml(entry)) +
+                                        badgeHtml(entry) +
                                     "</div>" +
-                                    '<div class="crm-conn-auth">' + esc(entry.auth) + "</div>" +
+                                    '<div class="crm-conn-auth">' +
+                                        (status.connected ? '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '"><span class="crm-conn-status-dot"></span>Connected · </span>' : "") +
+                                        esc(entry.auth) +
+                                    "</div>" +
                                 "</div>" +
                             "</div>" +
                             '<p class="crm-conn-desc">' + esc(entry.description) + "</p>" +
-                            '<div class="crm-conn-card-footer">' +
+                            (tagsHtml ? '<div class="crm-conn-tags">' + tagsHtml + "</div>" : "") +
+                            (isActive && status.userInfo ? '<div class="crm-conn-meta"><i class="fa-regular fa-user" aria-hidden="true"></i> ' + esc(status.userInfo) + "</div>" : "") +
+                            (!isActive ? '<div class="crm-conn-card-footer">' +
                                 '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '">' +
                                     '<span class="crm-conn-status-dot"></span>' +
                                     (status.connected ? "Connected" : "Not connected") +
                                 "</span>" +
-                                '<div class="crm-conn-actions">' + actionHtml + "</div>" +
-                            "</div>" +
+                            "</div>" : "") +
+                            '<div class="crm-conn-actions' + (isActive ? " crm-conn-actions--full" : "") + '">' + actionHtml + "</div>" +
                         "</div>"
                     );
                 }).join("");
@@ -227,27 +256,27 @@
                 }).length;
 
                 catalogContainer.innerHTML =
+                    pageHeaderHtml() +
                     '<div class="crm-conn-toolbar">' +
                         '<div class="crm-conn-count">' + connectedCount + " of " + CATALOG.length + " CRMs connected</div>" +
-                        '<div class="crm-conn-hint">One active CRM per licence — connecting a new one replaces the current.</div>' +
+                    "</div>" +
+                    '<div class="crm-conn-hint">' +
+                        '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>' +
+                        "<span>One active CRM per licence — connecting a new one replaces the current.</span>" +
                     "</div>" +
                     '<div class="crm-conn-filterbar">' +
                         '<div class="crm-conn-search">' +
                             '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>' +
                             '<input type="text" class="crm-conn-search-input" placeholder="Search a CRM..." value="' + esc(filterState.query) + '" aria-label="Search a CRM" />' +
                         "</div>" +
-                        '<div class="crm-conn-tabs" role="tablist">' +
+                        '<select class="crm-conn-filter-select" aria-label="Filter CRMs">' +
                             ["all", "connected", "available"].map(function (tab) {
                                 var tabLabel = tab === "all" ? "All" : tab === "connected" ? "Connected" : "Available";
-                                return '<button class="crm-conn-tab' + (filterState.tab === tab ? " crm-conn-tab--active" : "") +
-                                    '" role="tab" aria-selected="' + (filterState.tab === tab) + '" data-tab="' + tab + '">' + tabLabel + "</button>";
+                                return '<option value="' + tab + '"' + (filterState.tab === tab ? " selected" : "") + '>' + tabLabel + "</option>";
                             }).join("") +
-                        "</div>" +
+                        "</select>" +
                     "</div>" +
-                    '<div class="crm-conn-section-row">' +
-                        '<div class="crm-conn-section-label">Catalog</div>' +
-                        '<div class="crm-conn-grid"></div>' +
-                    "</div>" +
+                    '<div class="crm-conn-grid"></div>' +
                     // Confirmation modal for deleting the active connection —
                     // hidden until a "disconnect" action is clicked.
                     '<div class="sf-modal-overlay crm-conn-delete-overlay" style="display:none;" role="presentation">' +
@@ -271,16 +300,13 @@
                     renderCardsGrid(statusById, activeProviderId);
                 });
 
-                catalogContainer.querySelectorAll(".crm-conn-tab[data-tab]").forEach(function (tabBtn) {
-                    tabBtn.addEventListener("click", function () {
-                        filterState.tab = tabBtn.getAttribute("data-tab");
-                        catalogContainer.querySelectorAll(".crm-conn-tab").forEach(function (t) {
-                            t.classList.toggle("crm-conn-tab--active", t === tabBtn);
-                            t.setAttribute("aria-selected", String(t === tabBtn));
-                        });
+                var filterSelect = catalogContainer.querySelector(".crm-conn-filter-select");
+                if (filterSelect) {
+                    filterSelect.addEventListener("change", function () {
+                        filterState.tab = filterSelect.value;
                         renderCardsGrid(statusById, activeProviderId);
                     });
-                });
+                }
             }
 
             function showDeleteConfirm(providerLabel, onConfirm) {
@@ -354,6 +380,7 @@
             // shows it since renderCatalog's own innerHTML replaces it).
             function renderCatalogSkeleton() {
                 catalogContainer.innerHTML =
+                    pageHeaderHtml() +
                     '<div class="crm-conn-toolbar">' +
                         '<div class="sf-skeleton" style="height: 20px; width: 180px;"></div>' +
                     "</div>" +
@@ -397,9 +424,9 @@
                         return Promise.resolve({ id: entry.id, connected: false });
                     }
                     return Promise.resolve(adapter.checkConnection()).then(function (result) {
-                        return { id: entry.id, connected: !!(result && result.connected) };
+                        return { id: entry.id, connected: !!(result && result.connected), userInfo: (result && result.userInfo) || "" };
                     }).catch(function () {
-                        return { id: entry.id, connected: false };
+                        return { id: entry.id, connected: false, userInfo: "" };
                     });
                 });
 

@@ -9,6 +9,16 @@
    markup/styling as crmSettings.css — kept in sync deliberately.
    ============================================ */
 
+/* The page's own header (icon + title, built in renderCatalog/
+   renderCatalogSkeleton) replaces the app's shared WinJS page title —
+   showing both duplicated "CRM Connections" on screen. Hidden here only,
+   scoped to this page, not the shared style (see crmExport.css for the
+   same fix on that page). */
+.crmConnections .header-separator,
+.crmConnections .content-header {
+    display: none;
+}
+
 /* Force the page's ancestor chain to actually span full width — same
    scoped-override pattern as eventCopy.css's ".eventCopy .content-record"
    — content-record/contentarea have no width rule of their own anywhere in
@@ -117,9 +127,19 @@
 }
 
 .crm-conn-hint {
+    display: flex;
+    align-items: center;
+    gap: 9px;
     font-size: 13px;
-    color: var(--sf-text-2);
+    color: var(--sf-accent);
+    background: var(--sf-accent-soft);
+    border: 1px solid var(--sf-accent-soft);
+    border-radius: var(--sf-radius-md);
+    padding: 10px 14px;
+    margin-bottom: 18px;
 }
+
+.crm-conn-hint i { font-size: 14px; flex-shrink: 0; }
 
 .crm-conn-filterbar {
     display: flex;
@@ -168,71 +188,27 @@
     color: var(--sf-text-muted);
 }
 
-.crm-conn-tabs {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px;
-    border-radius: var(--sf-radius-pill);
-    background: var(--sf-surface-2);
-    gap: 2px;
-}
-
-.crm-conn-tab {
-    border: none;
-    background: transparent;
-    color: var(--sf-text-2);
-    font-size: 13px;
-    font-weight: 600;
-    font-family: var(--sf-font);
-    padding: 6px 14px;
-    border-radius: var(--sf-radius-pill);
-    cursor: pointer;
-    transition: background var(--sf-dur-1) var(--sf-ease), color var(--sf-dur-1) var(--sf-ease);
-}
-
-.crm-conn-tab:hover {
-    color: var(--sf-text);
-}
-
-.crm-conn-tab--active {
-    background: var(--sf-surface);
-    color: var(--sf-text);
-    box-shadow: var(--sf-shadow-1);
-}
-
-/* Two-column section layout matching LSPortalNext's SettingsCRMConnections
-   (settings-crmconnections.tsx): a fixed-width label on the left, content
-   filling the rest via flex — not a stacked title-then-grid, which left the
-   grid inheriting whatever passive width its block-level ancestor had
-   instead of being told to fill the remaining row. */
-.crm-conn-section-row {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-@media (min-width: 640px) {
-    .crm-conn-section-row {
-        flex-direction: row;
-        gap: 12px;
-    }
-}
-
-.crm-conn-section-label {
+.crm-conn-filter-select {
+    height: 38px; font-size: 13px; font-weight: 600;
+    padding: 0 30px 0 14px;
+    border-radius: var(--sf-radius-sm);
+    border: 1px solid var(--sf-border);
+    background-color: var(--sf-surface); color: var(--sf-text);
+    cursor: pointer; box-sizing: border-box; font-family: var(--sf-font);
     flex-shrink: 0;
-    width: 100%;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--sf-text-2);
-    padding-top: 2px;
+    margin-left: auto;
+    /* custom chevron: the native arrow renders inconsistently across WebViews
+       (same approach as #sf-cl-completeness-select in salesforceLeadLib.css) */
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    transition: border-color var(--sf-dur-1) var(--sf-ease);
 }
-
-@media (min-width: 640px) {
-    .crm-conn-section-label {
-        width: auto;
-    }
+.crm-conn-filter-select:hover { border-color: var(--sf-accent); }
+body.cnv-ui-dark .crm-conn-filter-select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23a6adba' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 .crm-conn-empty {
@@ -255,6 +231,7 @@
 }
 
 .crm-conn-card {
+    position: relative;
     background: var(--sf-surface);
     border: 1px solid var(--sf-border);
     border-radius: var(--sf-radius-lg);
@@ -355,6 +332,45 @@
     color: var(--sf-success);
 }
 
+.crm-conn-badge--active {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--sf-success-bg);
+    color: var(--sf-success);
+    padding: 2px 10px;
+}
+
+.crm-conn-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.crm-conn-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: var(--sf-radius-pill);
+    background: var(--sf-accent-soft);
+    color: var(--sf-accent);
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.crm-conn-tag i { font-size: 10px; }
+
+.crm-conn-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    color: var(--sf-text-2);
+    padding-top: 10px;
+    border-top: 1px solid var(--sf-border);
+}
+
 .crm-conn-desc {
     margin: 0;
     font-size: 13.5px;
@@ -400,6 +416,23 @@
     display: flex;
     gap: 8px;
 }
+
+/* Not-connected cards (Salesforce/Locked/Soon in the mockup) show a single
+   full-width action button instead of the connected card's left-aligned
+   status + right-aligned button pair. */
+.crm-conn-actions--full {
+    margin-top: auto;
+}
+
+.crm-conn-actions--full .crm-conn-action {
+    flex: 1;
+}
+
+/* Manage/Delete pair on the active card: Manage is the everyday action and
+   gets the bigger share; Delete connection is destructive and secondary, so
+   it stays narrower despite its longer label. */
+.crm-conn-action--manage { flex: 3; }
+.crm-conn-action--delete { flex: 2; }
 
 .crm-conn-action {
     font-size: 13px;
