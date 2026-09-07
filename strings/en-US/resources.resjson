@@ -2258,6 +2258,7 @@
     "crmExport.noResultsForFilter": "No leads with this status.",
     "crmExport.editContact": "Edit",
     "crmExport.filterAlreadyIn": "Already in {0}",
+    "crmExport.filterEmailConflict": "Email conflict",
     "crmExport.dupCheckNoneFound": "No duplicates found among the {0} checked lead(s).",
     "crmExport.dupCheckSyncedCount": "{0} already in {1}",
     "crmExport.dupCheckConflictCount": "{0} email conflict(s)",

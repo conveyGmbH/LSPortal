@@ -1186,12 +1186,14 @@ body.cnv-ui-dark .sf-skeleton::after {
 .sf-cl-status-pill.pill-dup:hover:not(.active)     { background: var(--sf-warning-bg); color: var(--sf-warning); border-color: transparent; }
 .sf-cl-status-pill.pill-empty:hover:not(.active)   { background: var(--sf-surface-2);  color: var(--sf-text); }
 .sf-cl-status-pill.pill-alreadyin:hover:not(.active) { background: var(--sf-success-bg); color: var(--sf-success); border-color: transparent; }
+.sf-cl-status-pill.pill-emailconflict:hover:not(.active) { background: var(--sf-error-bg); color: var(--sf-error); border-color: transparent; }
 .sf-cl-status-pill.active { background: #374151; color: #fff; border-color: #374151; }
 .sf-cl-status-pill.pill-success.active { background: #16a34a; border-color: #16a34a; }
 .sf-cl-status-pill.pill-failed.active { background: #dc2626; border-color: #dc2626; }
 .sf-cl-status-pill.pill-dup.active { background: #d97706; border-color: #d97706; }
 .sf-cl-status-pill.pill-empty.active { background: #6b7280; border-color: #6b7280; }
 .sf-cl-status-pill.pill-alreadyin.active { background: #16a34a; border-color: #16a34a; }
+.sf-cl-status-pill.pill-emailconflict.active { background: #dc2626; border-color: #dc2626; }
 .sf-cl-status-pill.pill-vollstaendig.active { background: #2563eb; border-color: #2563eb; }
 .sf-cl-status-pill.pill-unvollstaendig.active { background: #9333ea; border-color: #9333ea; }
 .sf-cl-status-pill.pill-complete-all.active { background: var(--sf-accent); border-color: var(--sf-accent); }
