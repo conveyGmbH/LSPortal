@@ -402,6 +402,12 @@
                 }
                 item.Mitarbeiter_Fullname = (item.Mitarbeiter_Vorname ? (item.Mitarbeiter_Vorname + " ") : "") + (item.Mitarbeiter_Nachname ? item.Mitarbeiter_Nachname : "");
                 item.Bearbeiter_Fullname = (item.Bearbeiter_Vorname ? (item.Bearbeiter_Vorname + " ") : "") + (item.Bearbeiter_Nachname ? item.Bearbeiter_Nachname : "");
+                if (item.OCRStatus) {
+                    var ocrKey = "contact.ocrStatus_" + item.OCRStatus.toLowerCase();
+                    item.OCRStatusDisplay = getResourceText(ocrKey) || getResourceText("contact.ocrStatus_unknown");
+                } else {
+                    item.OCRStatusDisplay = "";
+                }
             }
             this.resultConverter = resultConverter;
 
@@ -415,10 +421,6 @@
                     that.binding.showModified = false;
                 } else {
                     that.binding.showModified = true;
-                }
-                if (newDataContact.OCRStatus) {
-                    var statusKey = "contact.ocrStatus_" + newDataContact.OCRStatus.toLowerCase();
-                    newDataContact.OCRStatusDisplay = getResourceText(statusKey) || getResourceText("contact.ocrStatus_unknown");
                 }
                 if (textComment) {
                     if (that.binding.dataContact.Bemerkungen) {
