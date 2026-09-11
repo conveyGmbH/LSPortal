@@ -24,3 +24,21 @@
 .mailing #langMsgHelpText {
     font-size: 11px;
 }
+.mailing #firstQuestionDescription {
+    font-size: 11px;
+}
+.mailing #firstQuestionHeading {
+    font-size: 16px;
+    height: auto;
+}
+.mailing .field_line_firstquestion_heading {
+    min-height: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom-width: 0;
+}
+.mailing .field_line_firstquestion_description {
+    min-height: 0;
+    margin-top: 0;
+    padding-top: 0;
+}
