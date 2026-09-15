@@ -56,6 +56,7 @@
                 this.refreshNextDocPromise = null;
                 this.refreshWaitTimeMs = 30000;
 
+                this.selectedRecordexists = false;
                 this.loadNextCount = 0;
                 this.firstDocsIndex = 0;
                 this.firstContactsIndex = 0;
@@ -157,13 +158,13 @@
                 }
                 this.setSelIndex = setSelIndex;
 
-                var loadDataDelayed = function (searchString) {
+                var loadDataDelayed = function () {
                     if (that.loadDataDelayedPromise) {
                         that.loadDataDelayedPromise.cancel();
                         that.removeDisposablePromise(that.loadDataDelayedPromise);
                     }
                     that.loadDataDelayedPromise = WinJS.Promise.timeout(450).then(function () {
-                        that.loadData(searchString);
+                        that.loadData();
                     });
                     that.addDisposablePromise(that.loadDataDelayedPromise);
                 }
@@ -214,8 +215,7 @@
                     var restriction = AppData.getRestriction("Kontakt");
                     if (that.binding.searchString) {
                         restriction = that.binding.searchString;
-                    }
-                    if (!restriction) {
+                    } else if (!restriction) {
                         restriction = {};
                     } else {
                         if (!restriction.useErfassungsdatum &&
@@ -366,14 +366,43 @@
                             }
                         }
                         if (recordIdNotFound) {
-                            if (that.nextUrl) {
-                                that.loadNextUrl(recordId);
-                            } else if (AppBar.scope &&
-                                typeof AppBar.scope.loadData === "function") {
-                                that.binding.contactId = 0;
-                                AppData.setRecordId("Kontakt", that.binding.contactId);
-                                AppBar.scope.loadData();
-                            }
+                            WinJS.Promise.timeout(0).then(function () {
+                                var restriction = getRestriction();
+                                if (that.selectedRecordexists || !that.nextUrl || typeof restriction === "string") {
+                                    Log.print(Log.l.trace, "recordId=" + recordId + " not in PRC-result-set");
+                                    return WinJS.Promise.as();
+                                } else {
+                                    Log.print(Log.l.info, "check for recordId=" + recordId);
+                                    return ContactList.contactView.select(function (json) {
+                                        var eventId;
+                                        if (typeof ContactList._eventId === "string") {
+                                            eventId = parseInt(ContactList._eventId);
+                                        } else {
+                                            eventId = ContactList._eventId;
+                                        }
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        if (json && json.d && json.d.VeranstaltungID === eventId) {
+                                            Log.print(Log.l.info, "contactView: success! recordId=" + recordId);
+                                            that.selectedRecordexists = true;
+                                        }
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                    }, recordId);
+                                }
+                            }).then(function () {
+                                if (that.selectedRecordexists && that.nextUrl && typeof restriction !== "string") {
+                                    Log.print(Log.l.trace, "check nextUrl for recordId=" + recordId);
+                                    that.loadNextUrl(recordId);
+                                } else if (AppBar.scope &&
+                                    typeof AppBar.scope.loadData === "function") {
+                                    Log.print(Log.l.trace, "clear details page of recordId=" + recordId);
+                                    that.binding.contactId = 0;
+                                    AppData.setRecordId("Kontakt", that.binding.contactId);
+                                    AppBar.scope.loadData();
+                                }
+                            });
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -618,8 +647,7 @@
                         Log.call(Log.l.trace, namespaceName + ".Controller.");
                         if (event && event.currentTarget) {
                             that.binding.searchString = event.currentTarget.value;
-                            that.loadDataDelayed(that.binding.searchString);
-                            //that.loadData(that.binding.searchString);
+                            that.loadDataDelayed();
                         }
                         Log.ret(Log.l.trace);
                     },
@@ -866,6 +894,7 @@
                 }
 
                 var loadData = function (recordId) {
+                    var notFound = false;
                     Log.call(Log.l.info, namespaceName + ".Controller.", "recordId=" + recordId);
                     if (!recordId) {
                         if (that.events && AppData.initLandView.getResults().length) {
@@ -946,6 +975,7 @@
                             Log.print(Log.l.info, "contactView: success!");
                             // startContact returns object already parsed from json file in response
                             if (!recordId) {
+                                that.selectedRecordexists = false;
                                 that.loadNextCount = 0;
                                 that.firstDocsIndex = 0;
                                 that.firstContactsIndex = 0;
@@ -989,7 +1019,7 @@
                                         that.firstContactsIndex = firstContactsIndex;
                                         that.contacts.setAt(objectrec.index, contact);
                                     } else {
-                                        that.loadData();
+                                        notFound = true;
                                     }
                                 }
                             }
@@ -1001,39 +1031,41 @@
                             that.binding.loading = false;
                         }, recordId || getRestriction());
                     }).then(function () {
-                        if (!ContactList._eventId) {
-                            that.binding.noctcount = 0;
-                            that.binding.noeccount = 0;
-                            that.binding.nouccount = 0;
-                        } else {
-                            that.veranstaltungViewPromise = WinJS.Promise.timeout(50).then(function () {
-                                return ContactList.veranstaltungView.select(function (json) {
-                                    // this callback will be called asynchronously
-                                    // when the response is available
-                                    Log.print(Log.l.trace, "veranstaltungView: success!");
-                                    // startContact returns object already parsed from json file in response
-                                    if (json && json.d && json.d.results && json.d.results.length > 0) {
-                                        var results = json.d.results[0];
-                                        that.binding.noctcount = results.AnzKontakte;
-                                        that.binding.noeccount = results.AnzEditierteKontakte;
-                                        that.binding.nouccount = results.AnzNichtEditierteKontakte;
-                                    } else {
-                                        that.binding.noctcount = 0;
-                                        that.binding.noeccount = 0;
-                                        that.binding.nouccount = 0;
-                                        Log.print(Log.l.trace, "veranstaltungView: no data found!");
-                                    }
-                                    that.veranstaltungViewPromise = null;
-                                }, function (errorResponse) {
-                                    // called asynchronously if an error occurs
-                                    // or server returns response with an error status.
-                                    Log.print(Log.l.error, "ContactList.veranstaltungView: error!");
-                                    AppData.setErrorMsg(that.binding, errorResponse);
-                                    that.veranstaltungViewPromise = null;
+                        if (notFound) {
+                            return that.loadData();
+                        } else if (!recordId) {
+                            if (!ContactList._eventId) {
+                                that.binding.noctcount = 0;
+                                that.binding.noeccount = 0;
+                                that.binding.nouccount = 0;
+                            } else {
+                                that.veranstaltungViewPromise = WinJS.Promise.timeout(50).then(function () {
+                                    return ContactList.veranstaltungView.select(function (json) {
+                                        // this callback will be called asynchronously
+                                        // when the response is available
+                                        Log.print(Log.l.trace, "veranstaltungView: success!");
+                                        // startContact returns object already parsed from json file in response
+                                        if (json && json.d && json.d.results && json.d.results.length > 0) {
+                                            var results = json.d.results[0];
+                                            that.binding.noctcount = results.AnzKontakte;
+                                            that.binding.noeccount = results.AnzEditierteKontakte;
+                                            that.binding.nouccount = results.AnzNichtEditierteKontakte;
+                                        } else {
+                                            that.binding.noctcount = 0;
+                                            that.binding.noeccount = 0;
+                                            that.binding.nouccount = 0;
+                                            Log.print(Log.l.trace, "veranstaltungView: no data found!");
+                                        }
+                                        that.veranstaltungViewPromise = null;
+                                    }, function (errorResponse) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                        Log.print(Log.l.error, "ContactList.veranstaltungView: error!");
+                                        AppData.setErrorMsg(that.binding, errorResponse);
+                                        that.veranstaltungViewPromise = null;
+                                    });
                                 });
-                            });
-                        }
-                        if (!recordId) {
+                            }
                             that.refreshDocPromise = WinJS.Promise.timeout(250).then(function () {
                                 return ContactList.contactDocView.select(function (json) {
                                     // this callback will be called asynchronously
@@ -1060,16 +1092,19 @@
                                     that.refreshDocPromise = null;
                                 }, getRestriction());
                             });
-                        }
-                        if (that.binding.contactId) {
-                            that.selectRecordId();
+                            if (that.binding.contactId) {
+                                that.selectRecordId();
+                            } else {
+                                updateIncompleteStates({ IsIncomplete: null, QuestionnaireIncomplete: null });
+                            }
+                            return WinJS.Promise.as();
                         } else {
-                            updateIncompleteStates({ IsIncomplete: null, QuestionnaireIncomplete: null });
+                            return WinJS.Promise.as();
                         }
                     });
                     if (!recordId) {
                         that.refreshPromise = ret;
-                    }
+                    } 
                     Log.ret(Log.l.info);
                     return ret;
                 };

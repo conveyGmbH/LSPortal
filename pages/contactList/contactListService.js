@@ -32,7 +32,13 @@
             select: function (complete, error, restriction, options) {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".contactView.");
-                if (!ContactList._eventId) {
+                var eventId;
+                if (typeof ContactList._eventId === "string") {
+                    eventId = parseInt(ContactList._eventId);
+                } else {
+                    eventId = ContactList._eventId;
+                }
+                if (!eventId) {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete({});
@@ -75,7 +81,7 @@
                         }).then(function () {
                             return AppData.call("PRC_SearchKontaktListe", {
                                 pAttributeIdx: 0,
-                                pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
+                                pVeranstaltungId: eventId, // Für Alle suchen 0 eintragen!
                                 pSuchText: restriction
                             }, function (json) {
                                 Log.print(Log.l.info, "call PRC_SearchKontaktListe: success!");
@@ -106,10 +112,7 @@
                     if (!restriction) {
                         restriction = {};
                     }
-                    /*if (restriction && !restriction.VeranstaltungID) {
-                        restriction.VeranstaltungID = parseInt(ContactList._eventId);
-                    }*/
-                    restriction.VeranstaltungID = ContactList._eventId;
+                    restriction.VeranstaltungID = eventId;
                     if (ContactList._orderAttribute) {
                         options = {
                         ordered: true,
@@ -117,8 +120,7 @@
                             desc: ContactList._orderDesc
                         }
                     }
-                    Log.print(Log.l.info, "calling select _contactView... restriction=" +
-                        (restriction ? JSON.stringify(restriction) : ""));
+                    Log.print(Log.l.info, "calling select _contactView... restriction=" +JSON.stringify(restriction));
                     ret = ContactList._contactView.select(complete, error, restriction, options);
                 }
                 // this will return a promise to controller
@@ -240,7 +242,13 @@
             select: function (complete, error, restriction, options) {
                 var ret;
                 Log.call(Log.l.trace, namespaceName + ".contactDocView.");
-                if (!ContactList._eventId) {
+                var eventId;
+                if (typeof ContactList._eventId === "string") {
+                    eventId = parseInt(ContactList._eventId);
+                } else {
+                    eventId = ContactList._eventId;
+                }
+                if (!eventId) {
                     ret = new WinJS.Promise.as().then(function () {
                         if (typeof complete === "function") {
                             complete({});
@@ -272,7 +280,7 @@
                         Log.print(Log.l.info, "calling PRC_SearchKontaktListDocs...");
                         ret = AppData.call("PRC_SearchKontaktListDocs", {
                             pAttributeIdx: 0,
-                            pVeranstaltungId: parseInt(ContactList._eventId), // Für Alle suchen 0 eintragen!
+                            pVeranstaltungId: eventId, // Für Alle suchen 0 eintragen!
                             pSuchText: restriction
                         }, function (json) {
                             Log.print(Log.l.info, "call PRC_SearchKontaktListDocs: success!");
@@ -300,11 +308,7 @@
                     if (!restriction) {
                         restriction = {};
                     }
-                    /*if (restriction && !restriction.VeranstaltungID) {
-                        restriction.VeranstaltungID = parseInt(ContactList._eventId);
-                    }*/
-                    restriction.VeranstaltungID = ContactList._eventId;
-                    //restriction.VeranstaltungID = ContactList._eventId;
+                    restriction.VeranstaltungID = eventId;
                     if (ContactList._orderAttribute) {
                         options = {
                             ordered: true,
