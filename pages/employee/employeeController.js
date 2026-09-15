@@ -27,6 +27,7 @@
                 userStatus: null,
                 userLocked: null,
                 allowEditLogin: null,
+                passwordChanged: false,
                 noLicenceText: getResourceText("info.nolicenceemployee"),
                 disableLoginName: false,
                 disableLoginFirstPart: false,
@@ -295,8 +296,14 @@
                 clickOk: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     that.saveData(function (response) {
-                        Log.print(Log.l.trace, "employee saved");
-                        that.loadData();
+                        var recordId = getRecordId();
+                        if (AppData.getRecordId("Mitarbeiter") === recordId && that.binding.passwordChanged) {
+                            Log.print(Log.l.info, "ignore loaddata when password of logged user was changed");
+                            return WinJS.Promise.as();
+                        } else {
+                            Log.print(Log.l.trace, "employee saved");
+                            that.loadData();
+                        }
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -354,6 +361,7 @@
                 },
                 changePassword: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
+                    that.binding.passwordChanged = true;
                     if (AppBar.notifyModified) {
                         that.binding.dataEmployee.Password2 = "";
                     }
