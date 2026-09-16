@@ -57,3 +57,14 @@ CLAUDE.md
 *.md
 docs/dev/
 docs/private/
+
+# Local OData test data dumps (large, contain test contact data, never needed in repo)
+data_deimos.json
+data_lstest.json
+
+# Local mite time-tracking spreadsheets (personal, not project docs)
+docs/mite-*.xlsx
+
+# Customer-facing doc screenshots (binary, generated locally, not source)
+docu/screenshots/
+docu/*.png
