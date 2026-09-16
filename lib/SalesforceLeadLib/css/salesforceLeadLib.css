@@ -887,33 +887,36 @@ body.cnv-ui-dark .sf-skeleton::after {
     padding: 0 24px;
     box-sizing: border-box;
 }
-.sf-fieldmap-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    flex-wrap: wrap;
-    padding: 20px 0 16px;
-}
-.sf-fieldmap-header h1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--sf-text);
-    margin: 0;
-}
-.sf-fieldmap-header .sf-fieldmap-desc {
-    font-size: 13px;
-    color: var(--sf-text-2);
-    margin: 6px 0 0;
-    max-width: 560px;
-    line-height: 1.5;
-}
 .sf-fieldmap-actions {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
 }
+
+/* Info banner replacing the old plain "Field Configurator — {CRM}" <h1>/<p>
+   pair now that the page has its own icon+title header (.sf-cl-page-header,
+   shared with CRM Export/Connections) — same visual language as
+   .crm-conn-hint (pages/crmConnections/crmConnections.css). */
+.sf-fieldmap-info-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--sf-accent);
+    background: var(--sf-accent-soft);
+    border: 1px solid var(--sf-accent-soft);
+    border-radius: var(--sf-radius-md);
+    padding: 12px 14px;
+    margin: 16px 0;
+}
+.sf-fieldmap-info-banner i { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.sf-fieldmap-info-banner .sf-fieldmap-desc {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--sf-accent);
+}
+.sf-fieldmap-info-banner .sf-fieldmap-desc strong { font-weight: 700; }
 
 /* connection chip (shared look for settings/export headers) */
 .sf-connection-chip {
@@ -943,6 +946,13 @@ body.cnv-ui-dark .sf-skeleton::after {
 .sf-connection-chip.is-failed .sf-connection-chip__text {
     color: var(--sf-warning);
 }
+/* Field Configurator's page header (.sf-cl-page-header) uses this same text
+   class directly in the subline — not wrapped in a .sf-connection-chip — and
+   toggles .connected on the element itself (_refreshConnectionStatusInSettings),
+   same pattern as .sf-cl-status-text.connected on CRM Export. */
+.sf-connection-chip__text.connected {
+    color: var(--sf-success);
+}
 .sf-connection-chip__user {
     display: none;
     align-items: center;
@@ -966,18 +976,23 @@ body.cnv-ui-dark .sf-skeleton::after {
 }
 
 /* KPI tiles row */
-.sf-fieldmap-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px;
+/* search */
+.sf-fieldmap-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
     margin-bottom: 16px;
 }
-
-/* search */
+.sf-fieldmap-toolbar .sf-tabs {
+    margin-left: auto;
+    flex-wrap: wrap;
+}
 .sf-fieldmap-search {
     position: relative;
+    flex: 1;
+    min-width: 220px;
     max-width: 400px;
-    margin-bottom: 16px;
 }
 .sf-fieldmap-search .sf-input {
     padding-left: 38px;
@@ -992,42 +1007,106 @@ body.cnv-ui-dark .sf-skeleton::after {
     font-size: 13px;
 }
 
-/* field cards grid */
-.sf-fieldmap-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 12px;
+/* field table (replaces the old field-cards grid). Capped height + its own
+   scroll so the header row and first column can be sticky — needed once the
+   list runs past a couple dozen fields (a Salesforce/HubSpot object can
+   expose 100+ API fields). */
+.sf-fieldmap-table-wrap {
+    overflow: auto;
     margin-top: 4px;
-}
-.sf-fieldmap-card {
-    background: var(--sf-surface);
+    flex: 1;
+    min-height: 0;
     border: 1px solid var(--sf-border);
-    border-left: 3px solid var(--sf-border-strong);
-    border-radius: var(--sf-radius-sm);
-    padding: 10px 12px;
+    border-radius: var(--sf-radius-md);
+}
+.sf-fieldmap-footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    cursor: pointer;
-    transition: border-color var(--sf-dur-1) var(--sf-ease),
-                box-shadow var(--sf-dur-1) var(--sf-ease),
-                background-color var(--sf-dur-1) var(--sf-ease);
+    padding-top: 16px;
+    margin-top: 12px;
+    border-top: 1px solid var(--sf-border);
 }
-.sf-fieldmap-card:hover {
+.sf-fieldmap-footer__count {
+    font-size: 13px;
+    color: var(--sf-text-2);
+}
+.sf-fieldmap-footer__save {
+    padding: 0 22px;
+    height: 42px;
+    font-size: 14px;
     box-shadow: var(--sf-shadow-1);
+}
+.sf-fieldmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sf-font);
+}
+.sf-fieldmap-table thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sf-text-2);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--sf-border);
+    background: var(--sf-surface-2);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.sf-fieldmap-table__col-center { text-align: center; }
+.sf-fieldmap-table__col-actions { width: 1%; }
+.sf-fieldmap-row td.sf-fieldmap-table__col-actions {
+    white-space: nowrap;
+}
+/* Wrapper instead of display:flex directly on the <td> — flexing a table
+   cell drops it out of normal table layout and breaks row height/column
+   alignment (it made rows overlap the sticky header). */
+.sf-fieldmap-table__actions-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+/* First column (Field Name) stays visible while scrolling horizontally;
+   its header cell sits above the body's sticky column (z-index 2 vs 1) so
+   the shared top-left corner resolves to the header, not the row beneath it. */
+.sf-fieldmap-table__col-name {
+    position: sticky;
+    left: 0;
+    background: var(--sf-surface);
+    z-index: 1;
+}
+thead .sf-fieldmap-table__col-name { z-index: 2; }
+.sf-fieldmap-row {
+    border-bottom: 1px solid var(--sf-border);
+    cursor: pointer;
+    transition: background-color var(--sf-dur-1) var(--sf-ease);
+}
+.sf-fieldmap-row:hover { background: var(--sf-surface-2); }
+.sf-fieldmap-row:hover .sf-fieldmap-table__col-name { background: var(--sf-surface-2); }
+.sf-fieldmap-row.active { background: var(--sf-accent-soft); }
+.sf-fieldmap-row.active .sf-fieldmap-table__col-name { background: var(--sf-accent-soft); }
+.sf-fieldmap-row td {
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+.sf-fieldmap-table__dot-off { color: var(--sf-text-muted); font-size: 12px; }
+.sf-fieldmap-table__dot-required { color: var(--sf-warning); font-size: 13px; }
+.sf-fieldmap-table__dot-custom { color: var(--sf-accent); font-size: 13px; }
+.sf-fieldmap-row .sf-icon-btn {
+    background: var(--sf-surface-2);
+    border: 1px solid var(--sf-border);
+    color: var(--sf-text-2);
+    flex-shrink: 0;
+}
+.sf-fieldmap-row .sf-icon-btn:hover {
+    background: var(--sf-surface);
+    color: var(--sf-text);
     border-color: var(--sf-border-strong);
-}
-.sf-fieldmap-card.active {
-    border-left-color: var(--sf-success);
-}
-.sf-fieldmap-card.required {
-    border-left-color: var(--sf-warning);
-    background: var(--sf-warning-bg);
-}
-.sf-fieldmap-card.user-custom-field {
-    border-left-color: var(--sf-accent);
-    background: var(--sf-accent-soft);
-    align-items: flex-start;
 }
 .sf-fieldmap-card__name {
     font-size: 13px;
@@ -1048,18 +1127,12 @@ body.cnv-ui-dark .sf-skeleton::after {
 }
 /* Edit/delete buttons on field cards: give them a resting surface so they
    read as buttons (the bare ghost icon was nearly invisible) */
-.sf-fieldmap-card .sf-icon-btn {
-    background: var(--sf-surface-2);
-    border: 1px solid var(--sf-border);
-    color: var(--sf-text-2);
-    flex-shrink: 0;
-}
-.sf-fieldmap-card .sf-icon-btn:hover {
+.sf-fieldmap-row .sf-icon-btn:hover {
     background: var(--sf-accent-soft);
     border-color: transparent;
     color: var(--sf-accent);
 }
-.sf-fieldmap-card .delete-custom-field-btn:hover {
+.sf-fieldmap-row .delete-custom-field-btn:hover {
     background: var(--sf-error-bg);
     color: var(--sf-error);
 }
