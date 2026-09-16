@@ -1,3 +1,12 @@
+/* The page's own header (icon + title + provider/status/user line, built
+   inside renderContactList) replaces the app's shared WinJS page title —
+   showing both duplicated "CRM Batch Export" on screen. Hidden here only,
+   scoped to this page, not the shared style. */
+.crmExport .header-separator,
+.crmExport .content-header {
+    display: none;
+}
+
 /* ============================================
    CRM Export — "module not activated" message
    Shown when the event/mandant has no SF-API-User (no eventId UUID).

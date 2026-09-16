@@ -1,3 +1,12 @@
+/* The page's own header (icon + title, built in openFieldMapping via
+   .sf-cl-page-header) replaces the app's shared WinJS page title —
+   showing both duplicated "CRM Settings" on screen. Hidden here only,
+   scoped to this page (same fix as crmExport.css/crmConnections.css). */
+.crmSettings .header-separator,
+.crmSettings .content-header {
+    display: none;
+}
+
 /* ============================================
    CRM Settings — "module not activated" message
    Shown when the event/mandant has no SF-API-User (no eventId UUID).
