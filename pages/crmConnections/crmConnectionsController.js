@@ -26,9 +26,9 @@
     // dynamics-backend's centralized Azure AD app — same multi-tenant-app
     // model as Salesforce/HubSpot.
     var CATALOG = [
-        { id: "salesforce", label: "Salesforce", icon: "fa-brands fa-salesforce", iconColor: "#00a1e0", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0", tags: ["Bidirectional", "Leads/Contacts"] },
-        { id: "hubspot", label: "HubSpot", icon: "fa-brands fa-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts & Deals pipeline mapping.", auth: "OAuth 2.0", tags: ["Pipeline mapping", "Contacts", "Deals"] },
-        { id: "dynamics", label: "MS Dynamics 365", icon: "fa-solid fa-building", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0", tags: ["Sales sync", "Customer Insights"] }
+        { id: "salesforce", label: "Salesforce", icon: "fa-brands fa-salesforce", iconColor: "#00a1e0", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
+        { id: "hubspot", label: "HubSpot", icon: "fa-brands fa-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts & Deals pipeline mapping.", auth: "OAuth 2.0" },
+        { id: "dynamics", label: "MS Dynamics 365", icon: "fa-solid fa-building", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" }
     ];
 
     WinJS.Namespace.define(namespaceName, {
@@ -209,10 +209,6 @@
                         actionHtml = '<button class="sf-btn sf-btn--primary crm-conn-action" data-action="connect" data-provider="' + entry.id + '"><i class="fa-solid fa-plus" aria-hidden="true"></i> Connect</button>';
                     }
 
-                    var tagsHtml = (entry.tags || []).map(function (tag) {
-                        return '<span class="crm-conn-tag"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> ' + esc(tag) + "</span>";
-                    }).join("");
-
                     return (
                         '<div class="crm-conn-card' + (isActive ? " crm-conn-card--active" : "") + (isLockedByOther ? " crm-conn-card--locked" : "") + '" data-provider-card="' + entry.id + '">' +
                             (isActive ? '<span class="crm-conn-badge crm-conn-badge--active">Active</span>' : "") +
@@ -230,7 +226,6 @@
                                 "</div>" +
                             "</div>" +
                             '<p class="crm-conn-desc">' + esc(entry.description) + "</p>" +
-                            (tagsHtml ? '<div class="crm-conn-tags">' + tagsHtml + "</div>" : "") +
                             (isActive && status.userInfo ? '<div class="crm-conn-meta"><i class="fa-regular fa-user" aria-hidden="true"></i> ' + esc(status.userInfo) + "</div>" : "") +
                             (!isActive ? '<div class="crm-conn-card-footer">' +
                                 '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '">' +
