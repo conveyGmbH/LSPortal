@@ -455,8 +455,19 @@ body.cnv-ui-dark .sf-btn--danger {
     transform: translateX(16px);
 }
 .sf-toggle input:disabled + .sf-toggle__track {
-    opacity: 0.45;
     cursor: not-allowed;
+}
+/* Unchecked+disabled (no such case today, kept for completeness) fades the
+   track; checked+disabled (required fields — always on, can't be toggled
+   off) must stay visibly "on" (accent-colored), just slightly muted — a
+   plain opacity on the shared :disabled rule made required-field toggles
+   look OFF instead of ON-but-locked, since it dims the accent fill too. */
+.sf-toggle input:disabled:not(:checked) + .sf-toggle__track {
+    opacity: 0.45;
+}
+.sf-toggle input:checked:disabled + .sf-toggle__track {
+    background: var(--sf-accent);
+    opacity: 0.7;
 }
 
 /* ---- segmented tabs ---- */
