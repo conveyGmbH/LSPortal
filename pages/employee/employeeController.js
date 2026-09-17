@@ -300,6 +300,7 @@
                         if (AppData.getRecordId("Mitarbeiter") === recordId && that.binding.passwordChanged) {
                             Log.print(Log.l.info, "ignore loaddata when password of logged user was changed");
                             that.binding.passwordChanged = false;
+                            AppBar.modified = false;
                             return WinJS.Promise.as();
                         } else {
                             Log.print(Log.l.trace, "employee saved");
