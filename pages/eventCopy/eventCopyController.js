@@ -1,4 +1,4 @@
-// controller for page: info
+﻿// controller for page: info
 /// <reference path="~/www/lib/WinJS/scripts/base.js" />
 /// <reference path="~/www/lib/WinJS/scripts/ui.js" />
 /// <reference path="~/www/lib/convey/scripts/appSettings.js" />
@@ -264,8 +264,12 @@
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.print(Log.l.trace, "calling select questionView...");
-                    return EventCopy.VeranstaltungView.select(function (json) {
-                        Log.print(Log.l.trace, "questionView: success!");
+                    return AppData.call("PRC_GetPortalEvents", {
+                        pSearchString: "",
+                        pSortField: "Veranstaltungname",
+                        pSortType: "A"
+                    }, function (json) {
+                        Log.print(Log.l.info, "call PRC_GetPortalEvents success! ");
                         if (json && json.d && json.d.results) {
                             // store result for next use 
                             var results = json.d.results;
@@ -280,13 +284,13 @@
                                 eventTyp.winControl.data = new WinJS.Binding.List(that.binding.dataSrcEventCombo);
                             }
                         }
+                        Log.ret(Log.l.trace);
                     }, function (errorResponse) {
+                        Log.print(Log.l.error, "call PRC_GetPortalEvents error");
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    }, {
-
-                        });
+                    });
                 }).then(function () {
                     AppBar.notifyModified = true;
                     AppBar.triggerDisableHandlers();

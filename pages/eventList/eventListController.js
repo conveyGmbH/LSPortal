@@ -304,6 +304,9 @@
                     that.binding.showHideFilterBtn = true;
                     that.binding.publishFlag = true;
                 }
+                var standhall = item.StandHall ? item.StandHall : "";
+                var standNo = item.StandNO ? item.StandNO : "";
+                item.StandHallStandNo = standhall.concat(standNo);
             }
             this.resultConverter = resultConverter;
 

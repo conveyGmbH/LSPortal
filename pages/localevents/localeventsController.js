@@ -646,7 +646,6 @@
                 var ret = new WinJS.Promise.as().then(function () {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppData.setErrorMsg(that.binding);
-                    AppData.setErrorMsg(that.binding);
                     AppData.call("PRC_GetPortalEvents", {
                         pSearchString: that.binding.searchString,
                         pSortField: that.binding.sortField,

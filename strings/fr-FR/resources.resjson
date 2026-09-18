@@ -809,6 +809,7 @@
     "event.labelChangeMsg2" : "? Cet événement n'a pas été créé par vous.",
     "event.labelDeleteMsg1" : "Voulez-vous supprimer la version de ",
     "event.labelDeleteMsg2" : " ? ",
+    "event.hallandStand"    : "Hall d'exposition / Numéro de stand",
 
 	"optQuestionList.title"   : "En option Questions/Réponses",
     "optQuestionList.count"   : "Nombre",
