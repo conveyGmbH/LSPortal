@@ -8,6 +8,12 @@
 
     WinJS.Namespace.define("EventCopy", {
         _eventId: 0,
+        VeranstaltungView: {
+            defaultValue: {
+                VeranstaltungVIEWID: 0,
+                Name: ""
+            }
+        }
     });
 })();
 
