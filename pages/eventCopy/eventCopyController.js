@@ -246,7 +246,7 @@
                 item.index = index;
                 if (that.getEventId() === item.VeranstaltungVIEWID) {
                     that.binding.dataDestEventCombo.VeranstaltungVIEWID = item.VeranstaltungVIEWID;
-                    that.binding.dataDestEventCombo.Name = item.Name;
+                    that.binding.dataDestEventCombo.Name = item.VeranstaltungName;
                 }
             }
             this.resultConverter = resultConverter;
