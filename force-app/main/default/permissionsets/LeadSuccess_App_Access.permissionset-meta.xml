@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>LeadSuccess App Access</label>
+    <description>Makes the LeadSuccess Lightning App (and its Console dashboard) visible in the App Launcher. Assign to any user who should see the sync dashboard.</description>
+    <applicationVisibilities>
+        <application>LeadSuccess</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <tabSettings>
+        <tab>LeadSuccess</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <objectPermissions>
+        <object>Lead_Sync_Log__c</object>
+        <allowRead>true</allowRead>
+        <allowCreate>true</allowCreate>
+        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <viewAllRecords>true</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+    </objectPermissions>
+</PermissionSet>
