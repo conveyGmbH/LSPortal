@@ -32,10 +32,13 @@
                 disableLoginName: false,
                 disableLoginFirstPart: false,
                 disableDomain: false,
-                disablePassword: false
+                disablePassword: false,
+                disableRoles: !(AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin)
             }, commandList]);
 
             var that = this;
+
+            var roles = pageElement.querySelector("#roles");
 
             var prevMasterLoadPromise = null;
             var prevLogin = null;
@@ -631,6 +634,34 @@
                     return WinJS.Promise.as();
                 }
                 var ret = new WinJS.Promise.as().then(function () {
+                    if (roles && roles.winControl &&
+                        (!roles.winControl.data || !roles.winControl.data.length)) {
+                        function setRoles(results) {
+                            if (!results) {
+                                results = [];
+                            }
+                            var filteredResults = results.filter(function (item) {
+                                return (!item.NoDefault);
+                            });
+                            roles.winControl.data = new WinJS.Binding.List(filteredResults);
+                        }
+                        if (Employee.initAPUserRoleView.getResults().length) {
+                            Log.print(Log.l.trace, "initAPUserRoleView: from cache!");
+                            setRoles(Employee.initAPUserRoleView.getResults());
+                            return WinJS.Promise.as();
+                        } else {
+                            return Employee.initAPUserRoleView.select(function (json) {
+                                AppData.setErrorMsg(that.binding);
+                                Log.print(Log.l.trace, "initAPUserRoleView: success!");
+                                setRoles(json && json.d && json.d.results);
+                            }, function (errorResponse) {
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                        }
+                    } else {
+                        return WinJS.Promise.as();
+                    }
+                }).then(function () {
                     Log.print(Log.l.trace, "calling select employeeView...");
                     return Employee.employeeView.select(function (json) {
                         AppData.setErrorMsg(that.binding);

@@ -65,6 +65,30 @@
                 OrderAttribute: "Nachname",
                 OrderDesc: false
             }
+        },
+        _initAPUserRoleView: {
+            get: function () {
+                return AppData.getLgntInit("LGNTINITAPUserRole");
+            }
+        },
+        initAPUserRoleView: {
+            select: function (complete, error) {
+                var ret = Employee._initAPUserRoleView.select(complete, error);
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getResults: function () {
+                Log.call(Log.l.trace, namespaceName + ".initAPUserRoleView.");
+                var ret = Employee._initAPUserRoleView.results;
+                Log.ret(Log.l.trace);
+                return ret;
+            },
+            getMap: function () {
+                Log.call(Log.l.trace, namespaceName + ".initAPUserRoleView.");
+                var ret = Employee._initAPUserRoleView.map;
+                Log.ret(Log.l.trace);
+                return ret;
+            }
         }
     });
 })();
