@@ -20,7 +20,6 @@
             Application.Controller.apply(this, [pageElement, {
                 dataEmployee: getEmptyDefaultValue(GenDataEmployee.employeeView.defaultValue),
                 restriction: (restriction && restriction.Vorname)  ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
-                isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
                 setRoleCheckVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 disableRoles: !(AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin),
@@ -902,18 +901,6 @@
                     }, function (errorResponse) {
                         AppData.setErrorMsg(that.binding, errorResponse);
                     }, recordId);
-                    var empRolesPromise;
-                    var empRolesFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("empRoles"));
-                    if (empRolesFragmentControl && empRolesFragmentControl.controller) {
-                        empRolesPromise = empRolesFragmentControl.controller.loadData(recordId);
-                    } else {
-                        var parentElementempRoles = pageElement.querySelector("#emproleshost");
-                        if (parentElementempRoles) {
-                            empRolesPromise = Application.loadFragmentById(parentElementempRoles, "empRoles", { employeeId: recordId });
-                        } else {
-                            empRolesPromise = WinJS.Promise.as();
-                        }
-                    }
                     var genFragEventsPromise;
                     var genFragEventsFragmentControl = Application.navigator.getFragmentControlFromLocation(Application.getFragmentPath("genFragEvents"));
                     if (genFragEventsFragmentControl && genFragEventsFragmentControl.controller) {
@@ -928,7 +915,6 @@
                     }
                     var js = {
                         doc: employeePromise,
-                        text: empRolesPromise,
                         layout: genFragEventsPromise
                     }
                     return WinJS.Promise.join(js);
