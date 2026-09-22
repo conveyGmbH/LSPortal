@@ -1139,6 +1139,8 @@
     "localevents.headerenddatum"   : "Enddatum",
     "localevents.headerusedlicences"   : "Anzahl zugeordneter Users",
     "localevents.headeranzkontakte"   : "Anzahl Kontakte",
+    "localevents.headerstandhall"   : "Stand hall",
+    "localevents.headerstandnumber"   : "Stand number",
 
 	"eventList.btnFilterNotPublished" : "Fragebogen nicht für APP/s freigegeben", 
     "eventList.btnFilterAll" : "Alle",

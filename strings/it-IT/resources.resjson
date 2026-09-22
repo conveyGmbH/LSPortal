@@ -1133,6 +1133,8 @@
     "localevents.headerenddatum"   : "Data di fine",
     "localevents.headerusedlicences"   : "Numero di utenti assegnati",
     "localevents.headeranzkontakte"   : "Numero di contatti",
+    "localevents.headerstandhall"   : "Stand hall",
+    "localevents.headerstandnumber"   : "Stand number",
 
     "eventslist.title" : "Eventi",
     "eventslist.count"       : "Totale",

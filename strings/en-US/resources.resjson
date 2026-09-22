@@ -1139,6 +1139,8 @@
     "localevents.headerenddatum"   : "End date",
     "localevents.headerusedlicences"   : "Number of assigned users",
     "localevents.headeranzkontakte"   : "Number of contacts",
+    "localevents.headerstandhall"   : "Stand hall",
+    "localevents.headerstandnumber"   : "Stand number",
 
 	"eventList.btnFilterNotPublished" : "Questionnaire not released for APP/s", 
     "eventList.btnFilterAll" : "All",

@@ -1134,6 +1134,8 @@
     "localevents.headerenddatum"   : "Date de fin",
     "localevents.headerusedlicences"   : "Nombre d'utilisateurs affectés",
     "localevents.headeranzkontakte"   : "Nombre de contacts",
+    "localevents.headerstandhall"   : "Stand hall",
+    "localevents.headerstandnumber"   : "Stand number",
 
   	"eventList.btnFilterNotPublished" : "Questionnaire non validé pour APP/s", 
     "eventList.btnFilterAll" : "Tous",

@@ -1021,6 +1021,8 @@
 	"localevents.confirmCopyQuestionnaire2" : "Wird unwiderruflich ersetzt durch Fragebogen",
     "localevents.labelDelete"   : "Soll die Veranstaltung ",
     "localevents.eventDelete"   : "wirklich gelöscht werden?",
+    "localevents.headerstandhall"   : "Stand hall",
+    "localevents.headerstandnumber"   : "Stand number",
 
   	"eventList.btnFilterNotPublished" : "Fragebogen nicht für APP/s freigegeben", 
     "eventList.btnFilterAll" : "Alle",

@@ -275,6 +275,9 @@
                 if (item.EndDatum) {
                     item.EndDatum = that.getDateObject(item.EndDatum);
                 }
+                var standhall = item.StandHall ? item.StandHall : "";
+                var standNo = item.StandNO ? item.StandNO : "";
+                item.StandHallStandNo = standhall.concat(standNo);
             }
             this.resultConverter = resultConverter;
 
@@ -332,6 +335,15 @@
                                 that.binding.sortField = "AnzKontakte";
                                 LocalEvents._orderAttribute = "AnzKontakte";
                             }
+                            //Halle Stand
+                            if (event.currentTarget.id === "6") {
+                                that.binding.sortField = "StandHall";
+                                LocalEvents._orderAttribute = "StandHall";
+                            }
+                            if (event.currentTarget.id === "7") {
+                                that.binding.sortField = "StandNO";
+                                LocalEvents._orderAttribute = "StandNO";
+                            }
                             LocalEvents._orderDesc = !LocalEvents._orderDesc;
                             that.binding.sortType = "D";
                         } else {
@@ -354,6 +366,15 @@
                             if (event.currentTarget.id === "5") {
                                 that.binding.sortField = "AnzKontakte";
                                 LocalEvents._orderAttribute = "AnzKontakte";
+                            }
+                            //Halle Stand
+                            if (event.currentTarget.id === "6") {
+                                that.binding.sortField = "StandHall";
+                                LocalEvents._orderAttribute = "StandHall";
+                            }
+                            if (event.currentTarget.id === "7") {
+                                that.binding.sortField = "StandNO";
+                                LocalEvents._orderAttribute = "StandNO";
                             }
                             LocalEvents._orderAttribute = event.currentTarget.id;
                             LocalEvents._orderDesc = false;
