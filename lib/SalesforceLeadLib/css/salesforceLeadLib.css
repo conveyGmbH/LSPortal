@@ -918,6 +918,47 @@ body.cnv-ui-dark .sf-skeleton::after {
 }
 .sf-fieldmap-info-banner .sf-fieldmap-desc strong { font-weight: 700; }
 
+/* ---- toggle switch (e.g. Account+Contact transfer mode) ---- */
+.sf-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+.sf-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.sf-switch__slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--sf-border);
+    border-radius: var(--sf-radius-pill);
+    transition: background 0.15s ease;
+}
+.sf-switch__slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.15s ease;
+}
+.sf-switch input:checked + .sf-switch__slider {
+    background: var(--sf-accent);
+}
+.sf-switch input:checked + .sf-switch__slider::before {
+    transform: translateX(18px);
+}
+.sf-switch input:focus-visible + .sf-switch__slider {
+    box-shadow: var(--sf-focus-ring);
+}
+
 /* connection chip (shared look for settings/export headers) */
 .sf-connection-chip {
     display: inline-flex;

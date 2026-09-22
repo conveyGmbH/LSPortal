@@ -2196,6 +2196,8 @@
 
     "crmSettings.fieldConfigurator": "Field Configurator",
     "crmSettings.fieldConfiguratorDesc": "Configure which fields will be transferred to Salesforce for this event. Required fields (LastName, Company) are always included.",
+    "crmSettings.transferModeTitle": "Transfer as Account + Contact",
+    "crmSettings.transferModeDesc": "Group leads by company into a Salesforce Account, instead of one standalone Lead per lead. Leads from the same company are linked to the same Account.",
     "crmSettings.totalFields": "Total Fields",
     "crmSettings.activeFields": "Active Fields",
     "crmSettings.inactiveFields": "Inactive Fields",
