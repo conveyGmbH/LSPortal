@@ -22,7 +22,6 @@
                 restriction: (restriction && restriction.Vorname)  ? restriction : copyByValue(GenDataEmployee.employeeView.defaultRestriction),
                 isEmpRolesVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 isEmpRolesCustomVisible: AppHeader.controller.binding.userData.HasLocalEvents,
-                setRoleVisible: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
                 setRoleCheckVisible: AppHeader.controller.binding.userData.SiteAdmin,
                 disableRoles: !(AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.IsCustomerAdmin),
                 noLicence: null,
