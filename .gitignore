@@ -68,3 +68,9 @@ docs/mite-*.xlsx
 # Customer-facing doc screenshots (binary, generated locally, not source)
 docu/screenshots/
 docu/*.png
+
+# Salesforce CLI (SFDX) local auth/state — org credentials, never checked in
+.sf/
+.sfdx/
+.forceignore.local
+

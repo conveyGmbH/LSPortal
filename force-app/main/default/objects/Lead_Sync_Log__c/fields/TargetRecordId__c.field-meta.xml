@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TargetRecordId__c</fullName>
+    <label>Target Record Id</label>
+    <description>Id of the Lead (Lead mode) or Contact (Account+Contact mode) created/updated by this sync attempt. Empty when Status = Failed.</description>
+    <type>Text</type>
+    <length>18</length>
+</CustomField>

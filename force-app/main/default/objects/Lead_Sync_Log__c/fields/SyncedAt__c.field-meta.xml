@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SyncedAt__c</fullName>
+    <label>Synced At</label>
+    <description>When this sync attempt happened (set by the backend, not CreatedDate, so retries and backfills keep the real event time).</description>
+    <type>DateTime</type>
+    <required>true</required>
+</CustomField>
