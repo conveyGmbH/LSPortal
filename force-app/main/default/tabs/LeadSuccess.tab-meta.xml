@@ -2,5 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>LeadSuccess</label>
     <motif>Custom36: Sync</motif>
-    <flexiPage>LeadSuccess_Console</flexiPage>
+    <flexiPage>LeadSuccess</flexiPage>
 </CustomTab>

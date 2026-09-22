@@ -6,7 +6,7 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <navType>Standard</navType>
     <tabs>standard-home</tabs>
-    <tabs>LeadSuccess_Console</tabs>
+    <tabs>LeadSuccess</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>

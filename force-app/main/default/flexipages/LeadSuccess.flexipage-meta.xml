@@ -4,8 +4,8 @@
         <name>main</name>
         <itemInstances>
             <componentInstance>
-                <componentName>c:leadSuccessConsole</componentName>
-                <identifier>leadSuccessConsole_1</identifier>
+                <componentName>c:leadSuccess</componentName>
+                <identifier>leadSuccess_1</identifier>
             </componentInstance>
         </itemInstances>
         <type>Region</type>
