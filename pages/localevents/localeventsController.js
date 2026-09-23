@@ -277,7 +277,18 @@
                 }
                 var standhall = item.StandHall ? item.StandHall : "";
                 var standNo = item.StandNO ? item.StandNO : "";
-                item.StandHallStandNo = standhall.concat(standNo);
+                var standhallstandno = "";
+                if (standhall.length > 0 && standNo.length > 0) {
+                    standhallstandno = standhall + "/" + standNo;
+                } else {
+                    if (standhall.length > 0) {
+                        standhallstandno = standhall;
+                    }
+                    if (standNo.length > 0) {
+                        standhallstandno = standNo;
+                    }
+                }
+                item.standhallstandno = standhallstandno;
             }
             this.resultConverter = resultConverter;
 

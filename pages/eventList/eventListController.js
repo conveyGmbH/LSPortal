@@ -306,11 +306,22 @@
                 }
                 var standhall = item.StandHall ? item.StandHall : "";
                 var standNo = item.StandNO ? item.StandNO : "";
-                item.StandHallStandNo = standhall.concat(standNo);
+                var standhallstandno = "";
+                if (standhall.length > 0 && standNo.length > 0) {
+                    standhallstandno = standhall + "/" + standNo;
+                } else {
+                    if (standhall.length > 0) {
+                        standhallstandno = standhall;
+                    }
+                    if (standNo.length > 0) {
+                        standhallstandno = standNo;
+                    }
+                }
+                item.standhallstandno = standhallstandno;
             }
             this.resultConverter = resultConverter;
 
-            var updateBindings = function(data) {
+            var updateBindings = function (data) {
                 if (data && data.VeranstaltungVIEWID) {
                     that.binding.publishFlag = data.PublishFlag;
                     that.binding.prevModifiedUser = data.PrevModifierUser;
@@ -470,7 +481,7 @@
                                 }
                                 that.loading = false;
                             }
-                        } 
+                        }
                     }
                     Log.ret(Log.l.trace);
                 },
@@ -618,7 +629,7 @@
                                                 }
                                                 if ((curPageId === "eventProducts") &&
                                                     typeof AppBar.scope.loadData === "function") {
-                                                   AppBar.scope.setVeranstaltungId(that.binding.eventId);
+                                                    AppBar.scope.setVeranstaltungId(that.binding.eventId);
                                                     AppBar.scope.loadData();
                                                 }
                                                 if ((curPageId === "reporting" ||
