@@ -760,6 +760,7 @@
     "label.contactCrmExport" : "CRM Export",
     "label.crmExport" : "CRM Export",
     "label.crmConnections" : "CRM Connections",
+    "label.participantGrp"   : "Participant",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

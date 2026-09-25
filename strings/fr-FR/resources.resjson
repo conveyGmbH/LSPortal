@@ -754,6 +754,7 @@
     "label.crmSettings" : "Paramètres CRM",
     "label.contactCrmExport" : "Exportation CRM",
     "label.crmExport" : "Exportation CRM",
+    "label.participantGrp"   : "Participant",
 
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Annuler",

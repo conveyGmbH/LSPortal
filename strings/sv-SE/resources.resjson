@@ -690,6 +690,7 @@
     "label.crmSettings" : "CRM Settings",
     "label.contactCrmExport" : "CRM Export",
     "label.crmExport" : "CRM Export",
+    "label.participantGrp"   : "Participant",
     
     "flyout.ok"             : "OK",
     "flyout.cancel"         : "Cancel",

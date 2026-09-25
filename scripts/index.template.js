@@ -162,12 +162,15 @@
         { id: "questionList", group: 3, svg: "question_and_answer", disabled: true, predecGroup: 27 },
         { id: "optQuestionList", group: 82, svg: "question_and_answer", disabled: true, predecGroup: 27 },
         { id: "mandatory", group: 30, svg: "pflichtFelder", disabled: true, predecGroup: 27 },
+        //Participant group for livebridge!
+        { id: "participantGrp", group: 58, svg: "contact_Ereignis", disabled: true, popup: true },
+        { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 58 },
+        { id: "contactResultsEvents", group: 43, svg: "myEvent", disabled: true, predecGroup: 58 },
         //Contacts
         { id: "contactsEventsGrp", group: 29, svg: "contact_Ereignis", disabled: true, popup: true },
         { id: "contactResultsList", group: 42, svg: "calendar_1", disabled: true, predecGroup: 29 },
         { id: "search", group: 7, svg: "magnifying_glass", disabled: true, predecGroup: 29 },
         { id: "contacts", group: 6, svg: "businesspeople2", disabled: true, predecGroup: 29 },
-        { id: "contactResultsEvents", group: 43, svg: "myEvent", disabled: true, predecGroup: 29 },
         //Dashboards #8177
         //{ id: "dashBoard", group: 15, svg: "dashboard", disabled: true, popup: true },
         { id: "start", group: 15, svg: "dashboard", disabled: true},
@@ -310,6 +313,7 @@
         { id: "employee", master: "empList" },
         { id: "skillentry", master: "empList" },
         { id: "employeeVisitorFlow", master: "empList" },
+        { id: "employeeGenPWList", master: "empList" },
         { id: "infodesk", master: "infodeskEmpList" },
         { id: "mailingTypes", master: "siteEventsList" },
         { id: "mailingTemplate", master: "siteEventsList" },
@@ -352,6 +356,7 @@
         { id: "genDataEmployee", master: "genDataEmpList" },
         { id: "genDataUserInfo", master: "genDataEmpList" },
         { id: "genDataSkillEntry", master: "genDataEmpList" },
+        { id: "employeeVisitorFlow", master: "genDataEmpList" },
         { id: "employeeGenPWList", master: "genDataEmpList" },
         { id: "eventProducts", master: "eventList" }, 
         { id: "optQuestionList", master: "eventList" },
