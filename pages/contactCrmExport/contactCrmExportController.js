@@ -192,9 +192,10 @@
                                     WinJS.Resources.processAll(crmExportContainer);
                                 }
                             } else {
-                                // Event truly has no contacts - open test mode with fake data
-                                that.binding.dataContact.KontaktVIEWID = -1;
-
+                                // Event truly has no contacts - show the same
+                                // "nothing to show" placeholder as the
+                                // has-contacts-but-none-selected case above,
+                                // instead of fabricating fake demo data.
                                 setTimeout(function() {
                                     var contentRecord = crmExportContainer.parentElement;
                                     if (contentRecord) {
@@ -207,27 +208,19 @@
                                     crmExportContainer.style.setProperty('display', 'block', 'important');
                                 }, 0);
 
-                                var eventRecordId = AppData.getRecordId("Veranstaltung2");
-                                AppData.call("FCT_GetUniqueRecordID", {
-                                    pRelationName: "Veranstaltung",
-                                    pRecordID: eventRecordId
-                                }, function (json) {
-                                    var eventUUID = json && json.d && json.d.results && json.d.results.FCT_GetUniqueRecordID;
-                                    Log.print(Log.l.info, "FCT_GetUniqueRecordID for event: " + eventUUID);
+                                crmExportContainer.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;min-height:300px;color:#6b7280;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif;">' +
+                                    '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" style="margin-bottom:16px;">' +
+                                    '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>' +
+                                    '<circle cx="9" cy="7" r="4"></circle>' +
+                                    '<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>' +
+                                    '<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>' +
+                                    '</svg>' +
+                                    '<p style="font-size:16px;font-weight:600;margin:0 0 8px 0;color:#374151;" data-win-res="{textContent: \'crmExport.noContactsFound\'}">No contacts found.</p>' +
+                                    '</div>';
 
-                                    if (eventUUID) {
-                                        SalesforceLeadLib.openCrmTestExport(crmExportContainer, eventUUID, { skipLeadDataCall: true }).then(
-                                            function () { Log.print(Log.l.info, "CRM Test Export UI opened successfully"); },
-                                            function (error) { Log.print(Log.l.error, "Failed to open CRM Test Export UI: " + error.message); }
-                                        );
-                                    } else {
-                                        Log.print(Log.l.warn, "No event UUID, using localStorage-only mode");
-                                        SalesforceLeadLib.openCrmTestExport(crmExportContainer, null, { recordId: eventRecordId, skipLeadDataCall: true });
-                                    }
-                                }, function (errorResponse) {
-                                    Log.print(Log.l.error, "FCT_GetUniqueRecordID error: " + JSON.stringify(errorResponse));
-                                    SalesforceLeadLib.openCrmTestExport(crmExportContainer, null, { recordId: eventRecordId, skipLeadDataCall: true });
-                                });
+                                if (typeof WinJS !== 'undefined' && WinJS.Resources && WinJS.Resources.processAll) {
+                                    WinJS.Resources.processAll(crmExportContainer);
+                                }
                             }
                         }else{
                             // Open CRM Export UI with contactId
