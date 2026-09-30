@@ -201,7 +201,11 @@
                 onDblClick: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     if (that.curRecId) {
-                        Application.navigateById("clientManagement");
+                        if (AppData.getRecordId("FairMandantAssignMode")) {
+                            Application.navigateById("siteEventsNeuAus");
+                        } else {
+                            Application.navigateById("clientManagement");
+                        }
                     } else {
                         Log.print(Log.l.trace, "No record selected!");
                     }

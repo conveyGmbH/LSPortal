@@ -1,0 +1,4 @@
+# Salesforce CLI source-format ignore file
+**/jsconfig.json
+**/.eslintrc.json
+**/__tests__/**

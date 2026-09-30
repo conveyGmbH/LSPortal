@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RecordType__c</fullName>
+    <label>Record Type</label>
+    <description>Which Salesforce object shape this sync attempt targeted — not a Salesforce Record Type, just this log's own label for the transfer mode (see LSPortal's per-event "Account + Contact" toggle).</description>
+    <type>Picklist</type>
+    <required>true</required>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lead</fullName>
+                <default>true</default>
+                <label>Lead</label>
+            </value>
+            <value>
+                <fullName>Account + Contact</fullName>
+                <default>false</default>
+                <label>Account + Contact</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
