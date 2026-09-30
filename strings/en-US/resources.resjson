@@ -2329,6 +2329,7 @@
     "crmExport.viewAttachments": "View attachments",
     "crmExport.attachmentsFor": "Attachments for",
     "crmExport.attachmentsCount": "attachment(s)",
+    "crmExport.filesTransferred": "Files transferred",
     "crmExport.btnPreview": "Preview",
     "crmExport.unknownType": "Unknown type",
     "crmExport.demoData": "Demo Data",
