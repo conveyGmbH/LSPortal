@@ -1,7 +1,8 @@
 ﻿.startCountrys .contentarea {
     overflow-y: hidden;
 }
-.gridtitlecountries {
+
+.startCountrys .gridtitlecountries {
     display: flex;
     height: 30px;
     padding-left: 5px;
@@ -9,38 +10,43 @@
     border-bottom: 1px solid lightgray;
     font-weight: bold;
 }
-#gridtitlecountriestext {
+
+.startCountrys #gridtitlecountriestext {
     font-size: 18px;
     margin-left: 10px;
 }
-.worldbutton {
+
+.startCountrys .worldbutton {
     display: inline;
     top: 5px;
-    
     height: 25px;
     text-align: center;
     font-weight: 900;
     float: left;
 }
-.view-size-bigger .worldbutton {
+
+.startCountrys .worldbutton:hover {
+    cursor: pointer;
+    background-color: #d3d3d3;
+}
+
+.view-size-bigger .startCountrys .worldbutton {
     width: calc(15% - 1px);
 }
-.view-size-medium .worldbutton {
+
+.view-size-medium .startCountrys .worldbutton {
     width: calc(15% - 1px);
 }
-.view-size-medium-small #worldbuttoncontainer {
+
+.view-size-medium-small .startCountrys #worldbuttoncontainer {
     display: none;
     visibility: hidden;
 }
-.start-map-chart {
+
+.startCountrys .start-map-chart {
     height: 250px !important;
 }
-.datamap {
-   
-}
-#worldcontainer {
+
+.startCountrys #worldcontainer {
     position: relative;
-}
-.datamaps-hoverover {
-    margin-top: -50px;
 }
