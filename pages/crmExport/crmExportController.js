@@ -171,6 +171,16 @@
                         ' isn\'t available yet.</div>';
                     return WinJS.Promise.as();
                 }
+                // isCurrent() was previously only checked in the .catch() below,
+                // never before actually calling renderContactList. If an older
+                // loadData() chain reaches here after a newer one already started
+                // (see the WinJS navigation race documented at the top of this
+                // file), both calls ran renderContactList to completion, each
+                // wiring its own independent event delegation + allItems array
+                // onto the same crmExportContainer - the root cause of QA's A9
+                // (lead count intermittently doubling, status counters going
+                // stale/wrong). Bail out up front instead of racing.
+                if (!isCurrent()) { return WinJS.Promise.as(); }
                 return Promise.resolve(adapter.renderContactList(crmExportContainer, eventId)).catch(function (err) {
                     if (!isCurrent()) { return; }
                     Log.print(Log.l.error, namespaceName + ".Controller. renderContactList error: " + (err && err.message));
