@@ -193,7 +193,7 @@
                         if (that.countryChart) {
                             that.countryKeyData = {};
                             that.countryPercent = {};
-                            that.countryColors = {},
+                            that.countryColors = [],
                             //that.dataCountryTop10Data = {};
                             that.countryChartWidth = 0;
                             that.countryChartArray = [];
