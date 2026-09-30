@@ -186,55 +186,53 @@
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(pageBinding, errorResponse);
-                        }, { VeranstaltungVIEWID: eventId});
+                    }, { VeranstaltungVIEWID: eventId });
                 }).then(function () {
                     return StartTop10Countrys.reportLand.select(function (json) {
                         Log.print(Log.l.trace, "reportLand: success!");
+                        if (that.countryChart) {
+                            that.countryKeyData = {};
+                            that.countryPercent = {};
+                            that.countryColors = {},
+                            //that.dataCountryTop10Data = {};
+                            that.countryChartWidth = 0;
+                            that.countryChartArray = [];
+                            that.countryPercent = [];
+                            that.countrydata = [];
+                            that.countryChart.destroy();
+                        }
                         if (json && json.d && json.d.results) {
                             var color = Colors.dashboardColor;
-                            that.countryKeyData = {};
                             // store result for next use
                             var countryresult = json.d.results;
-                            if (json.d.results.length === 0) {
-                                 if (that.countryChart) {
-                                     that.countryKeyData = {};
-                                     that.countryPercent = {};
-                                     that.countryColors = {},
-                                     that.dataCountryTop10Data = {};
-                                     that.countryChartWidth = 0;
-                                     that.countryChartArray = [];
-                                     that.countryPercent = [];
-                                     that.countrydata = [];
-                                     that.countryChart.destroy();
-                                 }
-                            } else {
-                            for (var ci = 0; ci < countryresult.length; ci++) {
-                                if (countryresult[ci].Land === null) {
-                                    countryresult[ci].Land = getResourceText("reporting.nocountry");
+                            if (json.d.results.length > 0) {
+                                for (var ci = 0; ci < countryresult.length; ci++) {
+                                    if (countryresult[ci].Land === null) {
+                                        countryresult[ci].Land = getResourceText("reporting.nocountry");
+                                    }
+                                    if (countryresult[ci].Land) {
+                                        var percent = 100 * countryresult[ci].Anzahl / that.dataCountryTop10Data[0].AnzKontakte;
+                                        that.countryPercent[ci] = formatFloat(percent, 1) + "%";
+                                        var label = countryresult[ci].Land + " (" + that.countryPercent[ci] + ")";
+                                        that.countrydata[ci] = [label, percent, countryresult[ci].LandID];
+                                        that.countryColors[ci] = color;
+                                        var rgbColor = Colors.hex2rgb(color);
+                                        var hsvColor = Colors.rgb2hsv(rgbColor);
+                                        hsvColor.s *= 0.8;
+                                        hsvColor.v /= 0.8;
+                                        rgbColor = Colors.hsv2rgb(hsvColor);
+                                        color = Colors.rgb2hex(rgbColor);
+                                    }
                                 }
-                                if (countryresult[ci].Land) {
-                                    var percent = 100 * countryresult[ci].Anzahl / that.dataCountryTop10Data[0].AnzKontakte;
-                                    that.countryPercent[ci] = formatFloat(percent, 1) + "%";
-                                    var label = countryresult[ci].Land + " (" + that.countryPercent[ci] + ")";
-                                    that.countrydata[ci] = [label, percent, countryresult[ci].LandID];
-                                    that.countryColors[ci] = color;
-                                    var rgbColor = Colors.hex2rgb(color);
-                                    var hsvColor = Colors.rgb2hsv(rgbColor);
-                                    hsvColor.s *= 0.8;
-                                    hsvColor.v /= 0.8;
-                                    rgbColor = Colors.hsv2rgb(hsvColor);
-                                    color = Colors.rgb2hex(rgbColor);
-                                }
-                            }
-                            that.countryChartWidth = 0;
-                            that.showDonutChart("countryPie", true);
+                                that.countryChartWidth = 0;
+                                that.showDonutChart("countryPie", true);
                             }
                         }
-                    },  function (errorResponse) {
+                    }, function (errorResponse) {
                         // called asynchronously if an error occurs
                         // or server returns response with an error status.
                         AppData.setErrorMsg(pageBinding, errorResponse);
-                        }, { VeranstaltungID: eventId});
+                    }, { VeranstaltungID: eventId });
                 });
                 Log.ret(Log.l.trace);
                 return ret;
@@ -243,7 +241,7 @@
 
             // define handlers
             this.eventHandlers = {
-                
+
             };
 
             that.processAll().then(function () {
@@ -254,7 +252,7 @@
             });
             Log.ret(Log.l.trace);
         }, {
-            dataCountryTop10Data: {}
-        })
+                dataCountryTop10Data: {}
+            })
     });
 })();
