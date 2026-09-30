@@ -20,22 +20,7 @@
         Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.");
             var lang = AppData.getLanguageId();
-            var srcDatamaps;
-            switch (lang) {
-            case 1033:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
-                break;
-            case 1036:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
-                break;
-            case 1040:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.en.js";
-                break;
-            default:
-                srcDatamaps = "lib/datamaps/scripts/datamaps.world.de.js";
-            }
             Fragments.Controller.apply(this, [fragmentElement, {
-                scripts: [{ src: srcDatamaps, type: "text/javascript" }]
             }]);
 
 
@@ -168,19 +153,23 @@
                                             worldContainer.style.visibility = "hidden";
                                         }
                                     }
-                                    that.worldMap = new Datamap({
+                                    that.worldMap = DatamapsLang.create({
                                         element: worldContainer,
-                                        projection: 'mercator',
+                                        projection: "mercator",
                                         height: 250,
                                         width: 350,
                                         fills: fills,
-                                        // Array --> 'Countrykey' : { fillKey : 'Rate of importance'}
                                         data: that.countryKeyData,
                                         geographyConfig: {
-                                            popupOnHover: true, 
-                                            highlightOnHover: true,
+                                            borderColor: "#ffffff",
+                                            borderWidth: 0.5,
                                             highlightFillColor: Colors.dashboardColor,
-                                            highlightBorderColor: hiliBorderColor
+                                            highlightBorderColor: hiliBorderColor,
+                                            highlightBorderWidth: 1,
+                                            popupTemplate: function (geo, d) {
+                                                return '<div class="hoverinfo"><strong>' + geo.properties.name + "</strong><br>" +
+                                                    (d && d.Anzahl ? getResourceText("start.gridtitlecontacts") + ": " + d.Anzahl : getResourceText("start.gridtitlecontacts") + ": 0") + "</div>";
+                                            }
                                         },
                                         done: function (datamap) {
                                             var allSubunits = datamap.svg.selectAll('.datamaps-subunit');
@@ -218,7 +207,7 @@
                                                 }
                                             }
                                         }
-                                    });
+                                    }, lang);
                                 } catch (ex) {
                                     Log.print(Log.l.error, "exception occurred: " + ex.message);
                                     AppData.setErrorMsg(pageBinding, ex.message);
@@ -289,9 +278,11 @@
                                     color = Colors.rgb2hex(rgbColor);
                                 }
                                 var isoCode = countryresult[ci].Alpha3_ISOCode;
+                                var anzahl = countryresult[ci].Anzahl;
                                 if (isoCode) {
                                     that.countryKeyData[isoCode] = {
-                                        fillKey: "HIGH" + ci
+                                        fillKey: "HIGH" + ci,
+                                        Anzahl: anzahl
                                     }
                                 }
                             }
