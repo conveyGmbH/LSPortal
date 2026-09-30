@@ -28,6 +28,7 @@
 .startContacts .contacts-modified {
     float: right;
     width: calc(30% - 15px); /*calc(37% - 1px)*/
+    max-width: 189px;
 }
 .startContacts .center {
     display: block;
@@ -75,9 +76,10 @@
 .view-size-medium {
     
 }
-.view-size-small .startContacts  .contacts-modified {
+.view-size-small .startContacts .contacts-modified {
     float: left;
     width: calc(100% - 1px);
+    max-width: none;
 }
 .view-size-small .startContacts  .barcode-container {
     width: 33.3%;
@@ -96,7 +98,7 @@
     margin-bottom: 15px;
     margin-left: 25%;
 }
-.view-size-medium .startContacts.contacts-modified {
+.view-size-medium .startContacts .contacts-modified {
     float: left;
     width: calc(100% - 1px);
 }
@@ -125,6 +127,7 @@
 .view-size-bigger .startContacts .contacts-modified {
     float: left;
     width: calc(100% - 1px);
+    max-width: none;
 }
 
 .view-size-bigger .startContacts .barcode-container {
@@ -154,6 +157,7 @@
     .startContacts .contacts-modified {
         float: left;
         width: calc(100% - 1px);
+        max-width: none;
     }
 
     .startContacts .barcode-container {
