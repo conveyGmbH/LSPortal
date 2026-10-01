@@ -2200,6 +2200,8 @@
 
     "crmSettings.fieldConfigurator": "Feldkonfigurator",
     "crmSettings.fieldConfiguratorDesc": "Konfigurieren Sie, welche Felder für dieses Event an Salesforce übertragen werden. Pflichtfelder (LastName, Company) sind immer enthalten.",
+    "crmSettings.transferModeTitle": "Als Account + Contact übertragen",
+    "crmSettings.transferModeDesc": "Leads werden nach Firma zu einem Salesforce Account gruppiert, statt jeweils als einzelner Lead übertragen zu werden. Leads derselben Firma werden mit demselben Account verknüpft.",
     "crmSettings.totalFields": "Gesamtfelder",
     "crmSettings.activeFields": "Aktive Felder",
     "crmSettings.inactiveFields": "Inaktive Felder",
@@ -2332,6 +2334,7 @@
     "crmExport.viewAttachments": "Anhänge anzeigen",
     "crmExport.attachmentsFor": "Anhänge für",
     "crmExport.attachmentsCount": "Anhang/Anhänge",
+    "crmExport.filesTransferred": "Übertragene Dateien",
     "crmExport.btnPreview": "Vorschau",
     "crmExport.unknownType": "Unbekannter Typ",
     "crmExport.demoData": "Demodaten",

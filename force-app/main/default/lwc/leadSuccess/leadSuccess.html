@@ -1,0 +1,150 @@
+<template>
+    <lightning-card title="LeadSuccess" icon-name="standard:lead_list">
+
+        <!-- KPI row -->
+        <div class="kpi-row slds-p-horizontal_medium">
+            <template for:each={kpiCards} for:item="card">
+                <div key={card.key} class={card.cardClass}>
+                    <p class="kpi-card__label">{card.label}</p>
+                    <p class="kpi-card__value">{card.value}</p>
+                    <p class="kpi-card__sub">{card.sub}</p>
+                </div>
+            </template>
+        </div>
+
+        <div class="main-layout slds-p-around_medium">
+
+            <!-- Left: filters + table -->
+            <div class="main-layout__table">
+                <div class="toolbar">
+                    <lightning-input
+                        type="search"
+                        label="Search"
+                        variant="label-hidden"
+                        placeholder="Search company, contact, email..."
+                        onchange={handleSearchInput}
+                        class="toolbar__search"
+                    ></lightning-input>
+                    <div class="toolbar__filters">
+                        <template for:each={statusFilterOptions} for:item="opt">
+                            <lightning-button
+                                key={opt.value}
+                                label={opt.label}
+                                variant={opt.variant}
+                                data-status={opt.value}
+                                onclick={handleFilterClick}
+                                class="toolbar__filter-btn"
+                            ></lightning-button>
+                        </template>
+                    </div>
+                </div>
+
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col"><div class="slds-truncate">Company</div></th>
+                            <th scope="col"><div class="slds-truncate">Contact</div></th>
+                            <th scope="col"><div class="slds-truncate">Email</div></th>
+                            <th scope="col"><div class="slds-truncate">Record type</div></th>
+                            <th scope="col"><div class="slds-truncate">Status</div></th>
+                            <th scope="col"><div class="slds-truncate">Event</div></th>
+                            <th scope="col"><div class="slds-truncate">Synced</div></th>
+                            <th scope="col"><div class="slds-truncate">Actions</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={filteredLogs} for:item="log">
+                            <tr key={log.Id} data-id={log.Id} onclick={handleRowClick} class="data-row">
+                                <td><div class="slds-truncate">{log.CompanyName__c}</div></td>
+                                <td><div class="slds-truncate">{log.ContactName__c}</div></td>
+                                <td><div class="slds-truncate">{log.Email__c}</div></td>
+                                <td><span class={log.recordTypeBadgeClass}>{log.RecordType__c}</span></td>
+                                <td><span class={log.statusBadgeClass}>{log.Status__c}</span></td>
+                                <td><div class="slds-truncate">{log.EventName__c}</div></td>
+                                <td><lightning-formatted-date-time value={log.SyncedAt__c}></lightning-formatted-date-time></td>
+                                <td>
+                                    <template if:true={log.canRetry}>
+                                        <lightning-button-icon
+                                            icon-name="utility:refresh"
+                                            alternative-text="Retry sync"
+                                            title="Retry sync"
+                                            data-id={log.Id}
+                                            onclick={handleRetryClick}
+                                        ></lightning-button-icon>
+                                    </template>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <template if:true={filteredLogs.length}>
+                    <p class="slds-p-around_small slds-text-body_small slds-text-color_weak">
+                        Showing {filteredLogs.length} of {totalLeads}
+                    </p>
+                </template>
+
+                <!-- Leads by account (dedup visibility) -->
+                <div class="account-breakdown slds-m-top_medium">
+                    <div class="account-breakdown__header">
+                        <h3 class="slds-text-heading_small">Leads by account</h3>
+                        <span class="pill pill--neutral">{accountBreakdownSummary}</span>
+                    </div>
+                    <template for:each={accountBreakdown} for:item="row">
+                        <div key={row.company} class="account-breakdown__row">
+                            <span class="account-breakdown__name slds-truncate">{row.company}</span>
+                            <span class="account-breakdown__count">{row.count}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Right: deep dive panel -->
+            <template if:true={isDrawerOpen}>
+                <div class="deep-dive">
+                    <div class="deep-dive__header">
+                        <h3 class="slds-text-heading_small">Deep dive</h3>
+                        <lightning-button-icon
+                            icon-name="utility:close"
+                            alternative-text="Close"
+                            onclick={closeDrawer}
+                        ></lightning-button-icon>
+                    </div>
+
+                    <div class="deep-dive__identity">
+                        <p class="deep-dive__name">{selectedLog.ContactName__c}</p>
+                        <p class="deep-dive__company">{selectedLog.CompanyName__c}</p>
+                        <div class="deep-dive__badges">
+                            <span class={selectedLog.recordTypeBadgeClass}>{selectedLog.RecordType__c}</span>
+                            <span class={selectedLog.statusBadgeClass}>{selectedLog.Status__c}</span>
+                        </div>
+                    </div>
+
+                    <template if:true={selectedLog.ErrorMessage__c}>
+                        <div class="deep-dive__error">
+                            <p class="deep-dive__error-title">Salesforce rejected this record</p>
+                            <p class="deep-dive__error-message">{selectedLog.ErrorMessage__c}</p>
+                        </div>
+                    </template>
+
+                    <div class="deep-dive__fields">
+                        <p><span class="deep-dive__field-label">Email</span><br/>{selectedLog.Email__c}</p>
+                        <p><span class="deep-dive__field-label">Event</span><br/>{selectedLog.EventName__c}</p>
+                        <p><span class="deep-dive__field-label">LeadSuccess Id</span><br/>{selectedLog.LS_LeadId__c}</p>
+                        <p><span class="deep-dive__field-label">Target record</span><br/>{selectedLog.TargetRecordId__c}</p>
+                    </div>
+
+                    <div class="deep-dive__footer">
+                        <lightning-button label="Close" onclick={closeDrawer}></lightning-button>
+                        <lightning-button
+                            variant="brand"
+                            label="Retry sync"
+                            disabled={selectedLog.canRetry}
+                            onclick={handleDrawerRetry}
+                        ></lightning-button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,213 @@
+:host {
+    --ls-success: #2e844a;
+    --ls-error: #ea001e;
+    --ls-warning: #b96412;
+    --ls-accent: #0176d3;
+    --ls-neutral: #706e6b;
+    --ls-border: #dddbda;
+}
+
+/* ---- KPI row ---- */
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    padding-top: 12px;
+}
+
+.kpi-card {
+    border: 1px solid var(--ls-border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: #fff;
+}
+
+.kpi-card__label {
+    font-size: 12px;
+    color: #514f4d;
+    margin: 0;
+}
+
+.kpi-card__value {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 4px 0;
+    color: #181818;
+}
+
+.kpi-card__sub {
+    font-size: 11px;
+    color: #706e6b;
+    margin: 0;
+}
+
+.kpi-card.success .kpi-card__value { color: var(--ls-success); }
+.kpi-card.error .kpi-card__value { color: var(--ls-error); }
+.kpi-card.warning .kpi-card__value { color: var(--ls-warning); }
+.kpi-card.accent .kpi-card__value { color: var(--ls-accent); }
+
+/* ---- layout ---- */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.main-layout:has(.deep-dive) {
+    grid-template-columns: minmax(0, 1fr) 340px;
+}
+
+/* ---- toolbar ---- */
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.toolbar__search {
+    max-width: 320px;
+    flex: 1;
+}
+
+.toolbar__filters {
+    display: flex;
+    gap: 6px;
+}
+
+.toolbar__filter-btn {
+    --slds-c-button-radius-border: 999px;
+}
+
+/* ---- table rows ---- */
+.data-row {
+    cursor: pointer;
+}
+.data-row:hover {
+    background: #f3f3f3;
+}
+
+/* ---- badges ---- */
+.pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.pill--success { background: #e3f5e9; color: var(--ls-success); }
+.pill--error { background: #fde3e3; color: var(--ls-error); }
+.pill--warning { background: #fdf0e0; color: var(--ls-warning); }
+.pill--neutral { background: #f3f2f2; color: var(--ls-neutral); }
+.pill--accent { background: #e3f0fc; color: var(--ls-accent); }
+
+/* ---- leads-by-account breakdown ---- */
+.account-breakdown {
+    border: 1px solid var(--ls-border);
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.account-breakdown__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.account-breakdown__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #f3f2f2;
+    font-size: 13px;
+}
+.account-breakdown__row:last-child { border-bottom: none; }
+
+.account-breakdown__count {
+    font-weight: 700;
+    color: var(--ls-accent);
+}
+
+/* ---- deep dive panel ---- */
+.deep-dive {
+    border: 1px solid var(--ls-border);
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+    align-self: start;
+    position: sticky;
+    top: 8px;
+}
+
+.deep-dive__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.deep-dive__name {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.deep-dive__company {
+    font-size: 13px;
+    color: #514f4d;
+    margin: 2px 0 8px;
+}
+
+.deep-dive__badges {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.deep-dive__error {
+    background: #fde3e3;
+    border: 1px solid #f4b9be;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+
+.deep-dive__error-title {
+    font-weight: 700;
+    color: var(--ls-error);
+    margin: 0 0 4px;
+    font-size: 13px;
+}
+
+.deep-dive__error-message {
+    font-size: 12px;
+    font-family: monospace;
+    color: #5c1a1e;
+    margin: 0;
+    word-break: break-word;
+}
+
+.deep-dive__fields p {
+    font-size: 13px;
+    margin: 0 0 10px;
+}
+
+.deep-dive__field-label {
+    font-size: 11px;
+    color: #706e6b;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.deep-dive__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+    border-top: 1px solid var(--ls-border);
+    padding-top: 12px;
+}
