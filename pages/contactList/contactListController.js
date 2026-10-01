@@ -356,6 +356,13 @@
                             contact = that.contacts.getAt(i);
                             if (contact && typeof contact === "object" && contact.KontaktVIEWID === recordId) {
                                 AppData.setRecordId("Kontakt", recordId);
+                                // Found normally in an already-loaded page - consume the
+                                // external-navigation flag here too, or it would linger and
+                                // wrongly protect a LATER unrelated recordId that happens to
+                                // match it from the "not found" branch below.
+                                if (typeof AppData !== "undefined" && AppData._externalContactRecordId === recordId) {
+                                    AppData._externalContactRecordId = null;
+                                }
                                 updateIncompleteStates(contact);
                                 listView.winControl.selection.set(i).done(function () {
                                     that.scrollToRecordId(recordId);
@@ -366,43 +373,64 @@
                             }
                         }
                         if (recordIdNotFound) {
-                            WinJS.Promise.timeout(0).then(function () {
-                                var restriction = getRestriction();
-                                if (that.selectedRecordexists || !that.nextUrl || typeof restriction === "string") {
-                                    Log.print(Log.l.trace, "recordId=" + recordId + " not in PRC-result-set");
-                                    return WinJS.Promise.as();
-                                } else {
-                                    Log.print(Log.l.info, "check for recordId=" + recordId);
-                                    return ContactList.contactView.select(function (json) {
-                                        var eventId;
-                                        if (typeof ContactList._eventId === "string") {
-                                            eventId = parseInt(ContactList._eventId);
-                                        } else {
-                                            eventId = ContactList._eventId;
-                                        }
-                                        // this callback will be called asynchronously
-                                        // when the response is available
-                                        if (json && json.d && json.d.VeranstaltungID === eventId) {
-                                            Log.print(Log.l.info, "contactView: success! recordId=" + recordId);
-                                            that.selectedRecordexists = true;
-                                        }
-                                    }, function (errorResponse) {
-                                        // called asynchronously if an error occurs
-                                        // or server returns response with an error status.
-                                    }, recordId);
-                                }
-                            }).then(function () {
-                                if (that.selectedRecordexists && that.nextUrl && typeof restriction !== "string") {
-                                    Log.print(Log.l.trace, "check nextUrl for recordId=" + recordId);
-                                    that.loadNextUrl(recordId);
-                                } else if (AppBar.scope &&
-                                    typeof AppBar.scope.loadData === "function") {
-                                    Log.print(Log.l.trace, "clear details page of recordId=" + recordId);
-                                    that.binding.contactId = 0;
-                                    AppData.setRecordId("Kontakt", that.binding.contactId);
-                                    AppBar.scope.loadData();
-                                }
-                            });
+                            // Short-circuit BEFORE the "is this recordId even in this event's
+                            // result set" server check and the page-by-page loadNextUrl search
+                            // below, for a contact navigated to from another screen (e.g. CRM
+                            // Export's edit pencil): the detail page already loaded by its own
+                            // ID, so there's nothing to search FOR. Left unchecked, QA found
+                            // this ran loadNextUrl across ~115 requests / ~2480 contacts before
+                            // ever reaching the (until now unreachable in practice) "keep"
+                            // branch, and the automatic ~30s list refresh (refreshWaitTimeMs)
+                            // restarted that same search loop forever - or, if nextUrl ran out
+                            // first, left that.binding.loading stuck true (spinner forever,
+                            // Save/OK disabled) since neither exit path here reset it.
+                            if (typeof AppData !== "undefined" && AppData._externalContactRecordId === recordId) {
+                                Log.print(Log.l.trace, "keep externally-navigated detail page of recordId=" + recordId + " (skip search)");
+                                that.binding.loading = false;
+                            } else {
+                                WinJS.Promise.timeout(0).then(function () {
+                                    var restriction = getRestriction();
+                                    if (that.selectedRecordexists || !that.nextUrl || typeof restriction === "string") {
+                                        Log.print(Log.l.trace, "recordId=" + recordId + " not in PRC-result-set");
+                                        return WinJS.Promise.as();
+                                    } else {
+                                        Log.print(Log.l.info, "check for recordId=" + recordId);
+                                        return ContactList.contactView.select(function (json) {
+                                            var eventId;
+                                            if (typeof ContactList._eventId === "string") {
+                                                eventId = parseInt(ContactList._eventId);
+                                            } else {
+                                                eventId = ContactList._eventId;
+                                            }
+                                            // this callback will be called asynchronously
+                                            // when the response is available
+                                            if (json && json.d && json.d.VeranstaltungID === eventId) {
+                                                Log.print(Log.l.info, "contactView: success! recordId=" + recordId);
+                                                that.selectedRecordexists = true;
+                                            }
+                                        }, function (errorResponse) {
+                                            // called asynchronously if an error occurs
+                                            // or server returns response with an error status.
+                                        }, recordId);
+                                    }
+                                }).then(function () {
+                                    if (that.selectedRecordexists && that.nextUrl && typeof restriction !== "string") {
+                                        Log.print(Log.l.trace, "check nextUrl for recordId=" + recordId);
+                                        that.loadNextUrl(recordId);
+                                    } else if (AppBar.scope &&
+                                        typeof AppBar.scope.loadData === "function") {
+                                        Log.print(Log.l.trace, "clear details page of recordId=" + recordId);
+                                        that.binding.contactId = 0;
+                                        AppData.setRecordId("Kontakt", that.binding.contactId);
+                                        AppBar.scope.loadData();
+                                    } else {
+                                        // Neither branch ran (e.g. !that.nextUrl with no AppBar.scope) -
+                                        // without this, loading stays stuck true from the loadNextUrl
+                                        // call that got us here, same spinner-forever bug as above.
+                                        that.binding.loading = false;
+                                    }
+                                });
+                            }
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -732,6 +760,16 @@
                                         if (item.data &&
                                             item.data.KontaktVIEWID &&
                                             item.data.KontaktVIEWID !== that.binding.contactId) {
+                                            // The user is manually moving to a different contact -
+                                            // this is the point to drop any surviving
+                                            // _externalContactRecordId flag from an earlier
+                                            // CRM Export navigation, so it can't later misprotect
+                                            // an unrelated recordId (see selectRecordId's doc
+                                            // comment on why the flag isn't cleared automatically
+                                            // on every successful keep).
+                                            if (typeof AppData !== "undefined") {
+                                                AppData._externalContactRecordId = null;
+                                            }
                                             updateIncompleteStates(item.data);
                                             if (AppBar.scope && typeof AppBar.scope.saveData === "function") {
                                                 //=== "function" save wird nicht aufgerufen wenn selectionchange
