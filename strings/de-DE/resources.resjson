@@ -2336,6 +2336,8 @@
     "crmExport.attachmentsFor": "Anhänge für",
     "crmExport.attachmentsCount": "Anhang/Anhänge",
     "crmExport.filesTransferred": "Übertragene Dateien",
+    "crmExport.filesAlreadySynced": "Bereits synchronisiert - keine neue Notiz hinzugefügt",
+    "crmExport.filesAlreadySyncedShort": "Bereits synchronisiert",
     "crmExport.btnPreview": "Vorschau",
     "crmExport.unknownType": "Unbekannter Typ",
     "crmExport.demoData": "Demodaten",

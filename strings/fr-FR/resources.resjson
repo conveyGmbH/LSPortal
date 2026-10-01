@@ -2257,6 +2257,8 @@
     "crmExport.viewAttachments": "Voir les pièces jointes",
     "crmExport.attachmentsFor": "Pièces jointes pour",
     "crmExport.attachmentsCount": "pièce(s) jointe(s)",
+    "crmExport.filesAlreadySynced": "Déjà synchronisé, aucune nouvelle note ajoutée",
+    "crmExport.filesAlreadySyncedShort": "Déjà synchronisé",
     "crmExport.pageTitle": "Export groupé CRM",
     "crmExport.checkDuplicates": "Vérifier les doublons",
     "crmExport.checking": "Vérification…",
