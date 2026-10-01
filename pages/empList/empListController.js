@@ -463,11 +463,11 @@
                 } else if (restriction.OrderAttribute === "NichtLizenzierteApp") {
                     that.binding.btnFirstNameText = getResourceText("employee.firstname");
                     that.binding.btnNameText = getResourceText("employee.name");
-                    if (restriction.OrderDesc) {
+                    /*if (restriction.OrderDesc) {
                         that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceDesc");
                     } else {
                         that.binding.btnEmployeeLicenceText = getResourceText("employee.licenceAsc");
-                    }
+                    }*/
                 }
                 if (!recordId) {
                     that.busy = true;

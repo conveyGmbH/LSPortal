@@ -599,7 +599,7 @@
                         typeof master.controller.getOrderLicenceBtn === "function" &&
                         typeof master.controller.highlightorderLicenceBtn === "function") {
                         var orderLicenceButton = master.controller.getOrderLicenceBtn();
-                        if (orderLicenceButton && orderLicenceButton.style && orderLicenceButton.style.borderColor === Colors.offColor) {
+                        if (orderLicenceButton && that.binding.restriction.NichtLizenzierteApp) {
                             //that.binding.restriction.OrderDesc = true;
                             delete that.binding.restriction.NichtLizenzierteApp;
                             master.controller.highlightorderLicenceBtn(0);
