@@ -2210,6 +2210,7 @@
     "crmSettings.allFields": "Alle Felder",
     "crmSettings.required": "Pflichtfelder",
     "crmSettings.addCustomField": "Benutzerdefiniertes Feld hinzufügen",
+    "crmSettings.targetFieldMissingWarning": "Stellen Sie sicher, dass \"{0}\" als Eigenschaft in Ihrem HubSpot-Konto existiert, sonst zeigt jede Stapelübertragung für dieses Feld einen Fehler an, bis Sie diese Eigenschaft dort erstellen oder das Feld hier deaktivieren.",
     "crmSettings.loadingFields": "Felder werden geladen...",
     "crmSettings.pageTitle": "CRM-Exporteinstellungen",
     "crmSettings.colFieldName": "Feldname",

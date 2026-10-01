@@ -2177,6 +2177,7 @@
     "crmSettings.allFields": "Tous les champs",
     "crmSettings.required": "Obligatoires",
     "crmSettings.addCustomField": "Ajouter un champ personnalisé",
+    "crmSettings.targetFieldMissingWarning": "Assurez-vous que \"{0}\" existe bien comme propriété dans votre compte HubSpot, sinon chaque transfert par lot affichera une erreur pour ce champ tant que vous n'aurez pas créé cette propriété là-bas, ou désactivé ce champ ici.",
     "crmSettings.loadingFields": "Chargement des champs...",
     "crmSettings.save": "Enregistrer",
     "crmSettings.testAndTransfer": "Tester et transférer",

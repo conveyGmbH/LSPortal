@@ -2207,6 +2207,7 @@
     "crmSettings.allFields": "All Fields",
     "crmSettings.required": "Required",
     "crmSettings.addCustomField": "Add Custom Field",
+    "crmSettings.targetFieldMissingWarning": "Make sure \"{0}\" exists as a property in your HubSpot account, otherwise every batch transfer will show an error for this field until you create it there, or deactivate it here.",
     "crmSettings.loadingFields": "Loading fields...",
     "crmSettings.pageTitle": "CRM Export Settings",
     "crmSettings.colFieldName": "Field Name",
