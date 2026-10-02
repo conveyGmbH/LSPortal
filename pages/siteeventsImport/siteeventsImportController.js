@@ -22,10 +22,10 @@
                         newFileData: getEmptyDefaultValue(SiteeventsImport.doc3import_file.defaultValue),
                         dataSiteeventsImportHeaderValue: getEmptyDefaultValue(SiteeventsImport.Import_FileVIEW.defaultValue),
                         dataSiteeventsImportHeaderText: getEmptyDefaultValue(SiteeventsImport.Import_FileVIEW.defaultValue)
-            }, commandList]);
+                    }, commandList]);
 
                 var that = this;
-                
+
                 var fileinputbox = pageElement.querySelector(".fileinputbox");
                 var inputbox = pageElement.querySelector("#myFile");
                 var inputmsg = pageElement.querySelector("#inputmsg");
@@ -121,7 +121,7 @@
                 this.checkId = checkId;
 
                 var showMessage = function (msgText) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                     if (msgText === true) {
                         inputmsg.textContent = getResourceText("siteevents.successmsg");
                     } else if (msgText === false) {
@@ -129,7 +129,7 @@
                     } else {
                         inputmsg.textContent = "";
                     }
-                    Log.call(Log.l.trace, "Contact.Controller.");
+                    Log.ret(Log.l.trace);
                 }
                 this.showMessage = showMessage;
 
@@ -145,7 +145,7 @@
                 this.createCsvString = createCsvString;
 
                 var getCsvData = function (fileUploadId) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                     var newFileUploadData = that.binding.newFileData;
                     //Data for .csv
                     newFileUploadData.DOC3Import_FileVIEWID = fileUploadId;
@@ -153,12 +153,13 @@
                     newFileUploadData.szOriFileNameDOC1 = that.imageName;
                     newFileUploadData.DocContentDOCCNT1 = that.imageData;
                     newFileUploadData.ContentEncoding = 4096;
+                    Log.ret(Log.l.trace);
                     return newFileUploadData;
                 }
                 this.getCsvData = getCsvData;
 
                 var uploadCsvData = function (newFileUploadData) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                     AppData.setErrorMsg(that.binding);
                     newFileUploadData.DocContentDOCCNT1 = that.createCsvString(newFileUploadData.DocContentDOCCNT1);
                     AppBar.busy = true;
@@ -179,14 +180,14 @@
                         that.showMessage(false);
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    },
-                        newFileUploadData);
+                    }, newFileUploadData);
+                    Log.ret(Log.l.trace);
                     return ret;
                 }
                 this.uploadCsvData = uploadCsvData;
 
                 var uploadCsv = function (newFileUploadId) {
-                    Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                     AppData.setErrorMsg(that.binding);
                     AppBar.busy = true;
                     var ret = SiteeventsImport.importfileView.insert(function (json) {
@@ -206,8 +207,8 @@
                         Log.print(Log.l.error, "error inserting csv");
                         AppBar.busy = false;
                         AppData.setErrorMsg(that.binding, errorResponse);
-                    },
-                        newFileUploadId);
+                    }, newFileUploadId);
+                    Log.ret(Log.l.trace);
                     return ret;
                 }
                 this.uploadCsv = uploadCsv;
@@ -228,17 +229,18 @@
 
                 // define handlers
                 this.eventHandlers = {
-                    clickBack: function(event) {
+                    clickBack: function (event) {
                         Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                         if (!Application.showMaster() && WinJS.Navigation.canGoBack === true) {
                             WinJS.Navigation.back(1).done();
                         }
                         Log.ret(Log.l.trace);
                     },
-                    clickUploadCsv: function(event) {
-                        Log.call(Log.l.trace, "SiteEvents.Controller.");
+                    clickUploadCsv: function (event) {
+                        Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                         var files = pageElement.querySelector("#myFile").files;
-                        if (files[0].name.match(/\.(csv)/g) != null) {
+                        // fileextension checker case insensitiv
+                        if (files[0].name.match(/\.csv$/i) != null) {
                             var newFileUploadId = that.binding.newFileID;
                             newFileUploadId.INITImportfiletypeID = 1;
                             newFileUploadId.Import_Title = files[0].name;
@@ -250,29 +252,29 @@
                                 reader.addEventListener(
                                     "load",
                                     function () {
+                                        Log.print(Log.l.info, "Successful file load");
                                         that.imageData = reader.result;
-                                        Log.call(Log.l.trace, "SiteEvents.Controller.");
                                         that.uploadCsv(newFileUploadId);
                                     });
                                 reader.readAsDataURL(files[0]);
-                                Log.call(Log.l.trace, "SiteEvents.Controller.");
                             }
                         } else {
                             alert('Wrong file extension! File input is cleared.');
                             inputbox.value = null;
                         }
+                        Log.ret(Log.l.trace);
                     },
-                    clickChangeUserState: function(event) {
+                    clickChangeUserState: function (event) {
                         Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                         Application.navigateById("userinfo", event);
                         Log.ret(Log.l.trace);
                     },
-                    clickGotoPublish: function(event) {
+                    clickGotoPublish: function (event) {
                         Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                         Application.navigateById("publish", event);
                         Log.ret(Log.l.trace);
                     },
-                    clickTopButton: function(event) {
+                    clickTopButton: function (event) {
                         Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                         var anchor = document.getElementById("menuButton");
                         var menu = document.getElementById("menu1").winControl;
@@ -280,7 +282,7 @@
                         menu.show(anchor, placement);
                         Log.ret(Log.l.trace);
                     },
-                    clickLogoff: function(event) {
+                    clickLogoff: function (event) {
                         Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                         AppData._persistentStates.privacyPolicyFlag = false;
                         if (AppHeader && AppHeader.controller && AppHeader.controller.binding.userData) {
@@ -295,7 +297,7 @@
                 };
 
                 this.disableHandlers = {
-                    clickBack: function() {
+                    clickBack: function () {
                         if (WinJS.Navigation.canGoBack === true) {
                             return false;
                         } else {
@@ -303,7 +305,7 @@
                         }
                     }
                 };
-                
+
                 var loadData = function (vid) {
                     Log.call(Log.l.trace, "SiteeventsImport.Controller.");
                     that.loading = true;
@@ -383,12 +385,12 @@
                     return ret;
                 };
                 this.loadData = loadData;
-            
-            that.processAll().then(function () {
-                Log.print(Log.l.trace, "Binding wireup page complete");
-                return that.loadData();
-            });
-            Log.ret(Log.l.trace);
+
+                that.processAll().then(function () {
+                    Log.print(Log.l.trace, "Binding wireup page complete");
+                    return that.loadData();
+                });
+                Log.ret(Log.l.trace);
             }, {
                 vidID: AppData.getRecordId("VeranstaltungTermin"),
                 siteeventsimportdata: null
