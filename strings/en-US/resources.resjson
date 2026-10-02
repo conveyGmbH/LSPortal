@@ -2333,6 +2333,8 @@
     "crmExport.attachmentsFor": "Attachments for",
     "crmExport.attachmentsCount": "attachment(s)",
     "crmExport.filesTransferred": "Files transferred",
+    "crmExport.filesAlreadySynced": "Already synced - no new note added",
+    "crmExport.filesAlreadySyncedShort": "Already synced",
     "crmExport.btnPreview": "Preview",
     "crmExport.unknownType": "Unknown type",
     "crmExport.demoData": "Demo Data",

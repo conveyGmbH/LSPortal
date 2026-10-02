@@ -2232,6 +2232,8 @@
     "crmExport.viewAttachments": "Visualizza allegati",
     "crmExport.attachmentsFor": "Allegati per",
     "crmExport.attachmentsCount": "allegato/i",
+    "crmExport.filesAlreadySynced": "Già sincronizzato, nessuna nuova nota aggiunta",
+    "crmExport.filesAlreadySyncedShort": "Già sincronizzato",
     "crmExport.pageTitle": "Esportazione in blocco CRM",
     "crmExport.checkDuplicates": "Controlla duplicati",
     "crmExport.checking": "Controllo in corso…",
