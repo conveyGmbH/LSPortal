@@ -948,7 +948,15 @@
                 result = json && json.d && json.d.results && json.d.results[0];
             }, function (error) {
                 Log.print(Log.l.error, "call PRC_GetAppHelpText: error");
-            }, !AppData.getOnlineLogin(false) || !AppData.getOnlinePassword(false)).then(function () {
+            // Unconditionally anonymous (odata_register), same as PRC_GetLangText's
+            // dbinit call site - this fires on every page navigation including the
+            // very first one at bootstrap, before this session has (re-)authenticated.
+            // Stale login/password restored from a prior session in
+            // AppData._persistentStates used to make the old conditional expression
+            // here evaluate to "use odata_online with those stale creds", which 401s
+            // and triggers the browser's native Basic Auth popup, blocking the
+            // portal menu until dismissed.
+            }, true).then(function () {
                 return result;
             });
             Log.ret(Log.l.trace);

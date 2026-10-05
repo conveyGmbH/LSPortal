@@ -918,6 +918,13 @@ body.cnv-ui-dark .sf-skeleton::after {
 }
 .sf-fieldmap-info-banner .sf-fieldmap-desc strong { font-weight: 700; }
 
+.sf-fieldmap-info-banner--warning {
+    color: var(--sf-danger, #b42318);
+    background: var(--sf-danger-soft, #fef3f2);
+    border-color: var(--sf-danger-soft, #fef3f2);
+}
+.sf-fieldmap-info-banner--warning .sf-fieldmap-desc { color: var(--sf-danger, #b42318); }
+
 /* ---- toggle switch (e.g. Account+Contact transfer mode) ---- */
 .sf-switch {
     position: relative;
