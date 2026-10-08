@@ -35,6 +35,54 @@
 
                 Log.print(Log.l.info, "ServerUrl: " + serverUrl + ", ApiName: " + apiName + ", User: " + user);
                 SalesforceLeadLib.init(serverUrl, apiName, user, password);
+                // Non-Salesforce CRMs export this contact through their own
+                // provider lib (see openForActiveProvider below).
+                if (window.HubspotLeadLib) {
+                    HubspotLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.DynamicsLeadLib) {
+                    DynamicsLeadLib.init(serverUrl, apiName, user, password);
+                }
+                if (window.CrmProviders && CrmProviders.LeadReportSource) {
+                    CrmProviders.LeadReportSource.init(serverUrl, apiName, user, password);
+                }
+            }
+
+            // The active CRM's adapter. Every CRM shows its export grid limited
+            // to this one lead, so the lead goes to the CRM that is actually
+            // connected, with that CRM's field mapping, and the page looks the
+            // same whichever CRM it is. Null only when the registry isn't
+            // loaded; the legacy Salesforce view is then the fallback.
+            function activeProviderAdapter() {
+                if (!window.CrmProviders) { return null; }
+                var providerId = CrmProviders.resolveActiveCrmProvider();
+                var adapter = CrmProviders.getAdapter(providerId);
+                return (adapter && adapter.id === providerId && typeof adapter.renderContactList === "function") ? adapter : null;
+            }
+
+            function openForActiveProvider(adapter, contactId) {
+                crmExportContainer.innerHTML =
+                    '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;min-height:200px;">' +
+                        '<span class="sf-spinner sf-spinner--lg"></span>' +
+                    '</div>';
+                // The grid is scoped by event; the lead's own row carries it.
+                return SalesforceLeadLib._callPortalODataAPI("LS_LeadReportById?id='" + encodeURIComponent(contactId) + "'&$format=json")
+                    .then(function (response) {
+                        var lead = response && response.d && response.d.results && response.d.results[0];
+                        var eventId = lead && (lead.EventId || lead.VeranstaltungVIEWID);
+                        if (!eventId) {
+                            throw new Error("No lead data found for this contact");
+                        }
+                        return adapter.renderContactList(crmExportContainer, eventId, { leadId: contactId });
+                    })
+                    .catch(function (error) {
+                        Log.print(Log.l.error, "Failed to open " + adapter.label + " export: " + (error && error.message));
+                        var div = document.createElement("div");
+                        div.style.cssText = "padding:20px;color:#dc2626;";
+                        div.textContent = "Could not load this contact for " + adapter.label + ": " + ((error && error.message) || "unknown error");
+                        crmExportContainer.innerHTML = "";
+                        crmExportContainer.appendChild(div);
+                    });
             }
 
             // dispose method hits called whenever the user navigates away from this page
@@ -223,7 +271,11 @@
                                 }
                             }
                         }else{
-                            // Open CRM Export UI with contactId
+                            var activeAdapter = activeProviderAdapter();
+                            if (activeAdapter) {
+                                return openForActiveProvider(activeAdapter, that.binding.contactId);
+                            }
+                            // Fallback: legacy Salesforce single-contact view
                             SalesforceLeadLib.openCrmExport(crmExportContainer, that.binding.contactId).then(
                                 function () {
                                     Log.print(Log.l.info, "CRM Export UI opened successfully");
