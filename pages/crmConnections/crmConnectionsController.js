@@ -27,9 +27,13 @@
     // model as Salesforce/HubSpot.
     var CATALOG = [
         { id: "salesforce", label: "Salesforce", icon: "fa-brands fa-salesforce", iconColor: "#00a1e0", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
-        { id: "hubspot", label: "HubSpot", icon: "fa-brands fa-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts & Deals pipeline mapping.", auth: "OAuth 2.0" },
+        { id: "hubspot", label: "HubSpot", icon: "fa-brands fa-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts, notes & files sync.", auth: "OAuth 2.0" },
         { id: "dynamics", label: "MS Dynamics 365", icon: "fa-solid fa-building", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" }
     ];
+
+    // A cold provider backend (Dynamics measured at ~13 s) must not hold up
+    // the other cards: each status check gets its own deadline.
+    var STATUS_CHECK_TIMEOUT_MS = 8000;
 
     WinJS.Namespace.define(namespaceName, {
 
@@ -52,6 +56,10 @@
             var that = this;
             var loadGeneration = 0;
             var catalogContainer = pageElement.querySelector("#crm-conn-container");
+            // Last rendered status per provider, so a successful connect can
+            // update its own card right away without waiting on the others.
+            var lastStatusById = {};
+            var connectInFlight = false;
 
             // Custom page header (icon + title), same pattern/classes as
             // CRM Export's renderContactList so both screens look like one
@@ -95,9 +103,21 @@
                 }
             }
 
+            // Another page or browser tab connected/disconnected a CRM.
+            var unsubscribeConnectionChanged = window.CrmProviders && typeof CrmProviders.onConnectionChanged === "function"
+                ? CrmProviders.onConnectionChanged(function () {
+                    if (connectInFlight || !that.binding.eventId || !catalogContainer) { return; }
+                    reload().catch(function () { /* status stays as last rendered */ });
+                })
+                : null;
+
             this.dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 loadGeneration++;
+                if (unsubscribeConnectionChanged) {
+                    unsubscribeConnectionChanged();
+                    unsubscribeConnectionChanged = null;
+                }
                 if (catalogContainer) {
                     catalogContainer.innerHTML = "";
                 }
@@ -230,7 +250,7 @@
                             (!isActive ? '<div class="crm-conn-card-footer">' +
                                 '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '">' +
                                     '<span class="crm-conn-status-dot"></span>' +
-                                    (status.connected ? "Connected" : "Not connected") +
+                                    (status.connected ? "Connected" : status.unavailable ? "Status unavailable" : "Not connected") +
                                 "</span>" +
                             "</div>" : "") +
                             '<div class="crm-conn-actions' + (isActive ? " crm-conn-actions--full" : "") + '">' + actionHtml + "</div>" +
@@ -325,6 +345,32 @@
                 confirmBtn.addEventListener("click", onConfirmClick);
             }
 
+            function showAlert(title, message) {
+                if (window.SalesforceLeadLib && typeof SalesforceLeadLib.showBatchAlertModal === "function") {
+                    SalesforceLeadLib.showBatchAlertModal(message || "", { title: title });
+                } else {
+                    Log.print(Log.l.error, namespaceName + ".Controller. " + title + ": " + message);
+                }
+            }
+
+            function connectFailureMessage(label, error) {
+                if (error === "popup_blocked") {
+                    return "Your browser blocked the " + label + " sign-in window. Allow pop-ups for this site, then click Connect again.";
+                }
+                if (!error || error === "cancelled") {
+                    return "The " + label + " sign-in window was closed before the connection was authorized. Click Connect to try again.";
+                }
+                return label + " sign-in failed: " + error + ". Click Connect to try again.";
+            }
+
+            // connect() payloads carry the account as an object; checkConnection()
+            // already returns a display string.
+            function accountLabel(userInfo) {
+                if (!userInfo) { return ""; }
+                if (typeof userInfo === "string") { return userInfo; }
+                return userInfo.display_name || userInfo.email || userInfo.user || userInfo.username || userInfo.name || "";
+            }
+
             function attachCatalogListeners(statusById, activeProviderId) {
                 catalogContainer.querySelectorAll(".crm-conn-action[data-action]").forEach(function (btn) {
                     btn.addEventListener("click", function () {
@@ -338,24 +384,101 @@
                         }
 
                         if (action === "connect") {
+                            var connectEntry = CATALOG.filter(function (e) { return e.id === providerId; })[0];
+                            var connectLabel = connectEntry ? connectEntry.label : providerId;
+                            var cancelConnect = null;
+                            var userCancelled = false;
+                            var cancelBtn = null;
+                            var resetButton = function () {
+                                btn.disabled = false;
+                                btn.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Connect';
+                                if (cancelBtn && cancelBtn.parentNode) { cancelBtn.parentNode.removeChild(cancelBtn); }
+                                cancelBtn = null;
+                            };
                             btn.disabled = true;
                             btn.textContent = "Connecting…";
-                            adapter.connect().then(function () {
+                            connectInFlight = true;
+                            // Adapters that don't take options (Salesforce, Dynamics) ignore them.
+                            var connectOptions = {
+                                onCancelable: function (cancel) { cancelConnect = cancel; },
+                                // The popup looks closed but the provider may still be
+                                // finishing (see openOAuthPopup's pollResult): keep
+                                // waiting visibly, with a way out.
+                                onWaiting: function () {
+                                    btn.textContent = "Waiting for " + connectLabel + " authorization…";
+                                    if (cancelBtn || !btn.parentNode) { return; }
+                                    cancelBtn = document.createElement("button");
+                                    cancelBtn.type = "button";
+                                    cancelBtn.className = "sf-btn sf-btn--secondary crm-conn-action";
+                                    cancelBtn.textContent = "Cancel";
+                                    cancelBtn.addEventListener("click", function () {
+                                        userCancelled = true;
+                                        if (cancelConnect) { cancelConnect(); }
+                                    });
+                                    btn.parentNode.appendChild(cancelBtn);
+                                }
+                            };
+                            Promise.resolve(adapter.connect(connectOptions)).then(function (result) {
+                                // Popup closed without a message: the OAuth may still
+                                // have succeeded (the message can be lost, e.g. when the
+                                // provider's pages cut window.opener) and the backend
+                                // can resolve the connection from the stored orgId. Ask
+                                // the backend before calling it a cancel.
+                                if (result && result.success === false && result.error === "cancelled" &&
+                                    typeof adapter.checkConnection === "function") {
+                                    return Promise.resolve(adapter.checkConnection()).then(function (status) {
+                                        return status && status.connected
+                                            ? { success: true, userInfo: status.userInfo }
+                                            : result;
+                                    }, function () { return result; });
+                                }
+                                return result;
+                            }).then(function (result) {
+                                // HubSpot/Dynamics report { success:false } on cancel,
+                                // blocked popup or OAuth error. Salesforce resolves
+                                // undefined either way, so it keeps its previous path.
+                                if (result && result.success === false) {
+                                    resetButton();
+                                    if (!userCancelled) {
+                                        showAlert(connectLabel, connectFailureMessage(connectLabel, result.error));
+                                    }
+                                    return;
+                                }
                                 CrmProviders.setActiveProvider(providerId);
+                                if (CrmProviders.notifyConnectionChanged) {
+                                    CrmProviders.notifyConnectionChanged(providerId);
+                                }
+                                if (result && result.success === true) {
+                                    // Show the new connection immediately; the full
+                                    // reload below only confirms it.
+                                    var optimistic = {};
+                                    CATALOG.forEach(function (e) {
+                                        optimistic[e.id] = lastStatusById[e.id] || { id: e.id, connected: false, userInfo: "" };
+                                    });
+                                    optimistic[providerId] = { id: providerId, connected: true, userInfo: accountLabel(result.userInfo) };
+                                    renderCatalog(optimistic, providerId);
+                                }
                                 return reload();
                             }).catch(function (err) {
                                 Log.print(Log.l.error, namespaceName + ".Controller. connect error: " + (err && err.message));
-                                btn.disabled = false;
-                                btn.textContent = "Connect";
-                                if (window.SalesforceLeadLib && typeof SalesforceLeadLib.showAlertDialog === "function") {
-                                    SalesforceLeadLib.showAlertDialog("Not available", err && err.message);
-                                }
+                                resetButton();
+                                showAlert("Not available", err && err.message);
+                            }).then(function () {
+                                connectInFlight = false;
                             });
                         } else if (action === "disconnect") {
                             var entry = CATALOG.filter(function (e) { return e.id === providerId; })[0];
                             showDeleteConfirm(entry ? entry.label : providerId, function () {
-                                adapter.disconnect().then(function () {
+                                connectInFlight = true;
+                                Promise.resolve(adapter.disconnect()).then(function () {
+                                    if (CrmProviders.notifyConnectionChanged) {
+                                        CrmProviders.notifyConnectionChanged(providerId);
+                                    }
                                     return reload();
+                                }).catch(function (err) {
+                                    Log.print(Log.l.error, namespaceName + ".Controller. disconnect error: " + (err && err.message));
+                                }).then(function () {
+                                    connectInFlight = false;
                                 });
                             });
                         } else if (action === "manage") {
@@ -418,16 +541,26 @@
                     if (!adapter || adapter.id !== entry.id || typeof adapter.checkConnection !== "function") {
                         return Promise.resolve({ id: entry.id, connected: false });
                     }
-                    return Promise.resolve(adapter.checkConnection()).then(function (result) {
+                    var timedOut = new Promise(function (resolve) {
+                        setTimeout(function () {
+                            resolve({ id: entry.id, connected: false, userInfo: "", unavailable: true });
+                        }, STATUS_CHECK_TIMEOUT_MS);
+                    });
+                    var check = Promise.resolve(adapter.checkConnection()).then(function (result) {
                         return { id: entry.id, connected: !!(result && result.connected), userInfo: (result && result.userInfo) || "" };
                     }).catch(function () {
                         return { id: entry.id, connected: false, userInfo: "" };
                     });
+                    return Promise.race([check, timedOut]);
                 });
 
+                var myGeneration = loadGeneration;
                 return Promise.all(checks).then(function (results) {
+                    // Page disposed or event switched while checks were running.
+                    if (myGeneration !== loadGeneration || !catalogContainer) { return; }
                     var statusById = {};
                     results.forEach(function (r) { statusById[r.id] = r; });
+                    lastStatusById = statusById;
                     var activeProviderId = window.CrmProviders ? CrmProviders.resolveActiveCrmProvider() : "salesforce";
                     // Only treat the resolved provider as "active" if it's
                     // actually connected — resolveActiveCrmProvider() can return

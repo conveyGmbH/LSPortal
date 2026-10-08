@@ -85,8 +85,22 @@
                 }
             }
 
+            // A CRM was connected/disconnected from CRM Connections (this tab
+            // or another one): re-run the connection gate instead of keeping
+            // a stale "not connected" view until a manual reload.
+            var unsubscribeConnectionChanged = window.CrmProviders && typeof CrmProviders.onConnectionChanged === "function"
+                ? CrmProviders.onConnectionChanged(function () {
+                    if (typeof that.loadData === "function") { that.loadData(); }
+                })
+                : null;
+
             this.dispose = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
+
+                if (unsubscribeConnectionChanged) {
+                    unsubscribeConnectionChanged();
+                    unsubscribeConnectionChanged = null;
+                }
 
                 // Invalidate any in-flight loadData() chain: every remaining
                 // .then() callback's isCurrent() check will now fail, so it
