@@ -60,7 +60,12 @@
                 return (adapter && adapter.id === providerId && typeof adapter.renderContactList === "function") ? adapter : null;
             }
 
+            // Bumped on every open: a slower load for a previously selected
+            // contact must not paint over (and export) the current one.
+            var openSeq = 0;
+
             function openForActiveProvider(adapter, contactId) {
+                var mySeq = ++openSeq;
                 crmExportContainer.innerHTML =
                     '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;min-height:200px;">' +
                         '<span class="sf-spinner sf-spinner--lg"></span>' +
@@ -68,6 +73,7 @@
                 // The grid is scoped by event; the lead's own row carries it.
                 return SalesforceLeadLib._callPortalODataAPI("LS_LeadReportById?id='" + encodeURIComponent(contactId) + "'&$format=json")
                     .then(function (response) {
+                        if (mySeq !== openSeq) { return; }
                         var lead = response && response.d && response.d.results && response.d.results[0];
                         var eventId = lead && (lead.EventId || lead.VeranstaltungVIEWID);
                         if (!eventId) {
@@ -76,6 +82,7 @@
                         return adapter.renderContactList(crmExportContainer, eventId, { leadId: contactId });
                     })
                     .catch(function (error) {
+                        if (mySeq !== openSeq) { return; }
                         Log.print(Log.l.error, "Failed to open " + adapter.label + " export: " + (error && error.message));
                         var div = document.createElement("div");
                         div.style.cssText = "padding:20px;color:#dc2626;";
