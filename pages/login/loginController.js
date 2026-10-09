@@ -287,6 +287,11 @@
                                     return WinJS.Promise.as(tfaResult);
                                 });
                             }) || WinJS.Promise.as();
+                        } else if (eventSwitchRelogin) {
+                            // Stiller Re-Login nach Veranstaltungswechsel: auf den DB-User-Wechsel
+                            // von PRC_ChangeUserVeranstaltung warten (vorher nur im tfaVerify-Zweig).
+                            that.binding.showWaitCircle = true;
+                            return WinJS.Promise.timeout(2000);
                         } else {
                             return WinJS.Promise.as();
                         }
@@ -475,6 +480,19 @@
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
+                        // Stiller Re-Login fehlgeschlagen (z.B. 2FA-Token für die neue Veranstaltung
+                        // ungültig): Formular wieder anzeigen, Login vorbelegen, Passwort leeren.
+                        // Der normale Login fragt dann Passwort + 2FA-Code ab.
+                        if (err && eventSwitchRelogin) {
+                            that.binding.hideLoginData = false;
+                            that.binding.dataLogin.Login = eventSwitchLogin;
+                            that.binding.dataLogin.Password = "";
+                            that.binding.showWaitCircle = false;
+                            AppData.setErrorMsg(that.binding, getResourceText("login.reloginAfterEventSwitch"));
+                            AppBar.busy = false;
+                            AppBar.modified = true;
+                            AppBar.triggerDisableHandlers();
+                        }
                         // 2FA-Skip-Flag zurücksetzen: ein späterer manueller Login soll
                         // wieder 2FA abfragen.
                         eventSwitchRelogin = false;

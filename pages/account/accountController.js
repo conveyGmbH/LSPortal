@@ -43,7 +43,9 @@
                 },
                 showLanguages: false,
                 showServerList: false,
-                showWaitCircle: false
+                showWaitCircle: false,
+                eventName: (typeof AppHeader === "object" && AppHeader.controller && AppHeader.controller.binding &&
+                    AppHeader.controller.binding.userData && AppHeader.controller.binding.userData.VeranstaltungName) || ""
             }, commandList]);
 
             if (typeof navigator.globalization === "object") {
@@ -69,6 +71,9 @@
             var prevHostName = AppData._persistentStates.odata.hostName;
             var prevOnlinePort = AppData._persistentStates.odata.onlinePort;
             var prevOnlinePath = AppData._persistentStates.odata.onlinePath;
+            // 2FA: nach Serverwechsel ist das DB-Passwort (2FA-Token) evtl. ungültig.
+            // Dann Passwort neu eingeben lassen und 2FA-Code erneut abfragen.
+            var tfaReauthRequired = false;
             if (!prevLogin || !prevPassword || !prevHostName) {
                 // enable edit per default on empty settings
                 this.binding.doEdit = true;
@@ -402,7 +407,7 @@
             }
 
             var saveData = function (complete, error) {
-                var err = null, response = null, ret = null, hasTwoFactor = null;
+                var err = null, response = null, ret = null, hasTwoFactor = null, serverChanged = false;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (contentarea) {
                     contentarea.scrollTop = 0;
@@ -438,6 +443,7 @@
                             }, function (json) {
                                 Log.print(Log.l.info, "call PRC_ChangeLoginServer success! json=" + (json ? JSON.stringify(json) : "") + " newLocationId=" + newLocationId);
                                 prevLocationId = newLocationId;
+                                serverChanged = true;
                             }, function (errorResponse) {
                                 Log.print(Log.l.error, "call PRC_ChangeLoginServer error=" + error);
                                 AppBar.busy = false;
@@ -511,7 +517,7 @@
                     }).then(function () {
                         // nur aufrufen wenn in DB TFA eingetragen ist
                         // und Login  geändert wurde
-                        if (!err && hasTwoFactor && (prevLogin !== that.binding.dataLogin.Login)) {
+                        if (!err && hasTwoFactor && (prevLogin !== that.binding.dataLogin.Login || tfaReauthRequired)) {
                             return tfaVerify().then(function (tfaResult) {
                                 that.binding.showWaitCircle = true;
                                 // now wait 5s for the DB-USer to be changed....
@@ -726,10 +732,21 @@
                         }
                     }).then(function () {
                         if (!err) {
+                            tfaReauthRequired = false;
                             that.binding.showWaitCircle = false;
                             if (typeof complete === "function") {
                                 complete(response);
                             }
+                        } else if (hasTwoFactor && serverChanged) {
+                            // Login nach Serverwechsel mit 2FA-Token fehlgeschlagen:
+                            // Passwort neu eingeben, beim nächsten OK wird der 2FA-Code abgefragt.
+                            tfaReauthRequired = true;
+                            that.binding.doEdit = true;
+                            that.binding.dataLogin.Password = "";
+                            that.binding.showWaitCircle = false;
+                            AppBar.busy = false;
+                            AppData.setErrorMsg(that.binding, getResourceText("account.reloginAfterServerChange"));
+                            AppBar.triggerDisableHandlers();
                         }
                     });
                 }
