@@ -369,7 +369,17 @@
 
                         function setDBPassword(dbPassword) {
                             that.binding.dataLogin.Password = dbPassword;
-                            that.saveData().then(function() {
+                            // Das DB-Passwort wurde serverseitig schon geändert: sofort für alle
+                            // OData-Requests übernehmen (Authorization-Header aus odata.password).
+                            // Sonst bekommen parallele Requests (getUserData/getMessagesData-Polling)
+                            // mit dem alten Passwort 401 und Chrome zeigt den Basic-Auth-Dialog.
+                            AppData._persistentStates.odata.password = dbPassword;
+                            Application.pageframe.savePersistentStates();
+                            // DB-User-Wechsel abwarten, dann neu anmelden.
+                            // Farben/Theme und Menü NICHT neu laden (keepTheme)
+                            WinJS.Promise.timeout(1000).then(function () {
+                                return that.saveData(null, null, { keepTheme: true });
+                            }).then(function () {
                                 prevPassword = AppData._persistentStates.odata.password;
                             });
                         },
@@ -406,7 +416,8 @@
                 return ret;
             }
 
-            var saveData = function (complete, error) {
+            var saveData = function (complete, error, options) {
+                var keepTheme = !!(options && options.keepTheme);
                 var err = null, response = null, ret = null, hasTwoFactor = null, serverChanged = false;
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 if (contentarea) {
@@ -610,7 +621,10 @@
                             return WinJS.Promise.as();
                         }
                     }).then(function () {
-                        if (!err) {
+                        if (!err && keepTheme) {
+                            // 2FA-Token gespeichert: aktuelles Theme behalten
+                            return WinJS.Promise.as();
+                        } else if (!err) {
                             // load color settings
                             //AppData._persistentStates.hideQuestionnaire = false;
                             //AppData._persistentStates.hideSketch = false;
