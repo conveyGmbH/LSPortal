@@ -1650,7 +1650,7 @@
 
     "crmSettings.title" : "CRM Export Settings",
     "crmSettings.inactiveTitle" : "Módulo CRM no activado",
-    "crmSettings.inactiveMessage" : "La integración con Salesforce no está habilitada para este cliente.",
+    "crmSettings.inactiveMessage" : "La integración con el CRM no está habilitada para este cliente.",
     "crmSettings.inactiveHint" : "Este módulo se activa una vez adquirido el paquete de Salesforce. Para más información, póngase en contacto con su representante de LeadSuccess.",
     "crmSettings.noProviderTitle" : "Aún no hay ningún CRM conectado",
     "crmSettings.noProviderMessage" : "Su licencia incluye integración CRM, pero todavía no se ha conectado ningún CRM.",
@@ -1662,7 +1662,7 @@
 
     "crmExport.title" : "CRM batch export",
     "crmExport.inactiveTitle" : "Módulo CRM no activado",
-    "crmExport.inactiveMessage" : "La integración con Salesforce no está habilitada para este cliente.",
+    "crmExport.inactiveMessage" : "La integración con el CRM no está habilitada para este cliente.",
     "crmExport.inactiveHint" : "Este módulo se activa una vez adquirido el paquete de Salesforce. Para más información, póngase en contacto con su representante de LeadSuccess.",
     "crmExport.connectFirst" : "Conéctese primero a Salesforce",
     "crmExport.filterPartialWarning" : "Solo se filtran los contactos cargados — desplácese hacia abajo para cargar e incluir más.",

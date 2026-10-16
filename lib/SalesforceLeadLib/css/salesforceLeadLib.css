@@ -1038,6 +1038,8 @@ body.cnv-ui-dark .sf-skeleton::after {
     border: 0;
     min-width: 0;
 }
+/* Until the event's saved config is applied: no stale or empty choice can be clicked. */
+.sf-choices.is-loading { opacity: 0.55; pointer-events: none; }
 .sf-dup-sr-only {
     position: absolute;
     width: 1px;

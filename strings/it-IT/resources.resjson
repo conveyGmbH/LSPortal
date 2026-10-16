@@ -1991,7 +1991,7 @@
 
     "crmSettings.title" : "Impostazioni di esportazione CRM",
     "crmSettings.inactiveTitle" : "Modulo CRM non attivato",
-    "crmSettings.inactiveMessage" : "L'integrazione con Salesforce non è abilitata per questo cliente.",
+    "crmSettings.inactiveMessage" : "L'integrazione con il CRM non è abilitata per questo cliente.",
     "crmSettings.inactiveHint" : "Questo modulo viene attivato dopo l'acquisto del pacchetto Salesforce. Per maggiori informazioni, contatti il suo referente LeadSuccess.",
     "crmSettings.noProviderTitle" : "Nessun CRM ancora connesso",
     "crmSettings.noProviderMessage" : "La tua licenza include l'integrazione CRM, ma non è stato ancora connesso alcun CRM.",
@@ -2003,7 +2003,7 @@
 
     "crmExport.title" : "Esportazione in blocco CRM",
     "crmExport.inactiveTitle" : "Modulo CRM non attivato",
-    "crmExport.inactiveMessage" : "L'integrazione con Salesforce non è abilitata per questo cliente.",
+    "crmExport.inactiveMessage" : "L'integrazione con il CRM non è abilitata per questo cliente.",
     "crmExport.inactiveHint" : "Questo modulo viene attivato dopo l'acquisto del pacchetto Salesforce. Per maggiori informazioni, contatti il suo referente LeadSuccess.",
     "crmExport.connectFirst" : "Connettiti prima a Salesforce",
     "crmExport.filterPartialWarning" : "Vengono filtrati solo i contatti caricati — scorri verso il basso per caricarne e includerne altri.",

@@ -1635,7 +1635,7 @@
 
     "crmSettings.title" : "CRM Export Settings",
     "crmSettings.inactiveTitle" : "CRM-modulen är inte aktiverad",
-    "crmSettings.inactiveMessage" : "Salesforce-integrationen är inte aktiverad för den här kunden.",
+    "crmSettings.inactiveMessage" : "CRM-integrationen är inte aktiverad för den här kunden.",
     "crmSettings.inactiveHint" : "Modulen aktiveras när Salesforce-paketet har köpts. Kontakta din LeadSuccess-kontakt för mer information.",
     "crmSettings.noProviderTitle" : "Inget CRM anslutet ännu",
     "crmSettings.noProviderMessage" : "Din licens omfattar CRM-integration, men inget CRM har anslutits ännu.",
@@ -1647,7 +1647,7 @@
 
     "crmExport.title" : "CRM batch Export",
     "crmExport.inactiveTitle" : "CRM-modulen är inte aktiverad",
-    "crmExport.inactiveMessage" : "Salesforce-integrationen är inte aktiverad för den här kunden.",
+    "crmExport.inactiveMessage" : "CRM-integrationen är inte aktiverad för den här kunden.",
     "crmExport.inactiveHint" : "Modulen aktiveras när Salesforce-paketet har köpts. Kontakta din LeadSuccess-kontakt för mer information.",
     "crmExport.connectFirst" : "Anslut till Salesforce först",
     "crmExport.filterPartialWarning" : "Filtrerar endast de laddade kontakterna — skrolla nedåt för att ladda och inkludera fler.",

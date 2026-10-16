@@ -2016,7 +2016,7 @@
 
     "crmSettings.title" : "CRM Export Settings",
     "crmSettings.inactiveTitle" : "CRM module not activated",
-    "crmSettings.inactiveMessage" : "The Salesforce integration is not enabled for this client.",
+    "crmSettings.inactiveMessage" : "The CRM integration is not enabled for this client.",
     "crmSettings.inactiveHint" : "This module is activated once the Salesforce package has been purchased. Please contact your LeadSuccess representative for more information.",
     "crmSettings.noProviderTitle" : "No CRM connected yet",
     "crmSettings.noProviderMessage" : "Your license includes CRM integration, but no CRM has been connected yet.",
@@ -2033,7 +2033,7 @@
 
     "crmExport.title" : "CRM batch export",
     "crmExport.inactiveTitle" : "CRM module not activated",
-    "crmExport.inactiveMessage" : "The Salesforce integration is not enabled for this client.",
+    "crmExport.inactiveMessage" : "The CRM integration is not enabled for this client.",
     "crmExport.inactiveHint" : "This module is activated once the Salesforce package has been purchased. Please contact your LeadSuccess representative for more information.",
     "crmExport.noProviderTitle" : "No CRM connected yet",
     "crmExport.noProviderMessage" : "Your license includes CRM integration, but no CRM has been connected yet.",
@@ -2412,5 +2412,7 @@
     "crmExport.changesMultiMerged": "Multi-select merged",
     "crmExport.changesNone": "No field changed, note added",
     "crmExport.merged": "Merged",
-    "crmExport.mergedHint": "Merged into an existing record with the same e-mail"
+    "crmExport.mergedHint": "Merged into an existing record with the same e-mail",
+    "crmExport.changesNoneNoNote": "No field changed",
+    "crmExport.noChangesNoteExists": "No changes, note already present"
 }

@@ -2019,7 +2019,7 @@
 
 	"crmSettings.title" : "CRM Export Einstellungen",
     "crmSettings.inactiveTitle" : "CRM-Modul nicht aktiviert",
-    "crmSettings.inactiveMessage" : "Die Salesforce-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
+    "crmSettings.inactiveMessage" : "Die CRM-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
     "crmSettings.inactiveHint" : "Dieses Modul wird aktiviert, sobald das Salesforce-Paket gebucht wurde. Bei Interesse wenden Sie sich bitte an Ihren LeadSuccess-Ansprechpartner.",
     "crmSettings.noProviderTitle" : "Noch kein CRM verbunden",
     "crmSettings.noProviderMessage" : "Ihre Lizenz umfasst eine CRM-Anbindung, aber es wurde noch kein CRM verbunden.",
@@ -2036,7 +2036,7 @@
 
     "crmExport.title" : "CRM Stapel-Export",
     "crmExport.inactiveTitle" : "CRM-Modul nicht aktiviert",
-    "crmExport.inactiveMessage" : "Die Salesforce-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
+    "crmExport.inactiveMessage" : "Die CRM-Anbindung ist für diesen Mandanten nicht freigeschaltet.",
     "crmExport.inactiveHint" : "Dieses Modul wird aktiviert, sobald das Salesforce-Paket gebucht wurde. Bei Interesse wenden Sie sich bitte an Ihren LeadSuccess-Ansprechpartner.",
     "crmExport.noProviderTitle" : "Noch kein CRM verbunden",
     "crmExport.noProviderMessage" : "Ihre Lizenz umfasst eine CRM-Anbindung, aber es wurde noch kein CRM verbunden.",
@@ -2415,5 +2415,7 @@
     "crmExport.changesMultiMerged": "Mehrfachauswahl ergänzt",
     "crmExport.changesNone": "Keine Felder geändert, nur Notiz hinzugefügt",
     "crmExport.merged": "Zusammengeführt",
-    "crmExport.mergedHint": "In einen bestehenden Datensatz mit derselben E-Mail zusammengeführt"
+    "crmExport.mergedHint": "In einen bestehenden Datensatz mit derselben E-Mail zusammengeführt",
+    "crmExport.changesNoneNoNote": "Keine Felder geändert",
+    "crmExport.noChangesNoteExists": "Keine Änderung, Notiz bereits vorhanden"
 }		
