@@ -625,6 +625,8 @@
     "userinfo.state"        : "Stato",
     "userinfo.presence"     : "Presenza",
 
+    "userMessages.count"    : "Totale",
+
     "label.home"            : "Inizio",
     "label.start"           : "Dashboard",
     "label.contact"         : "Contatto",

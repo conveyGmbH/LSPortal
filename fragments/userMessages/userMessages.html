@@ -17,10 +17,10 @@
 		                <div class="message-item">
 			                <div class="user-message-item box-bkg"
 			                     data-win-bind="style.display: EmpfaengerID Binding.Converter.toDisplayNone">
-                                <div class="user-message-title win-type-caption">
-                                    <span data-win-bind="textContent: Login"></span>
-                                    <span data-win-bind="textContent: SendTS Binding.Converter.toDateString"></span>
-                                </div>
+				                <div class="user-message-title win-type-caption">
+					                <span data-win-bind="textContent: Login"></span>
+					                <span data-win-bind="textContent: SendTS Binding.Converter.toDateString"></span>
+				                </div>
 				                <div class="user-message-body" data-win-bind="textContent: InfoText; style.fontWeight: newInfo1Flag Binding.Converter.toBold"></div> <!--; style.fontWeight: newInfo1Flag Binding.Converter.toBold-->
 			                </div>
 			                <div class="desk-message-item navigation-background-color"
@@ -32,11 +32,27 @@
 			                </div>
 		                </div>
 	                </div>
+	                <div class="headerFooterPlaceholder">
+		                <div class="list-footer">
+			                <div class="status">
+				                <div class="progress"
+				                     data-win-bind="style.display: loading Binding.Converter.toDisplay">
+					                <progress class="win-ring win-medium wait-circle"></progress>
+				                </div>
+				                <div class="counter"
+				                     data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+					                <span data-win-res="{textContent: 'userMessages.count'}"></span><span>: </span>
+					                <span data-win-bind="textContent: count"></span>
+				                </div>
+			                </div>
+		                </div>
+	                </div>
                     <div id="userMessageList"
-                         class="listview win-selectionstylefilled"
-                         data-win-control="WinJS.UI.ListView"
-                         data-win-options="{
+	                     class="listview win-selectionstylefilled"
+	                     data-win-control="WinJS.UI.ListView"
+	                     data-win-options="{
                             itemTemplate: select('.userMessageList-template'),
+                            footer: select('.list-footer'),
                             tapBehavior: 'none',
                             selectionMode: 'none'
                          }">

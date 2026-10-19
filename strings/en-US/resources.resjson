@@ -628,6 +628,8 @@
     "userinfo.state"        : "State",
     "userinfo.presence"     : "Presence",
 
+    "userMessages.count"    : "Count",
+
     "label.home"            : "Start",
     "label.start"           : "Dashboard",
     "label.contact"         : "Contact",

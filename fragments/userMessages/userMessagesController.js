@@ -15,8 +15,15 @@
     var namespaceName = "UserMessages";
 
     WinJS.Namespace.define("UserMessages", {
-        Controller: WinJS.Class.derive(Fragments.Controller, function Controller(fragmentElement, commandList, options) {
+        Controller: WinJS.Class.derive(Fragments.RecordsetController, function Controller(fragmentElement, commandList, options) {
             Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + (options && options.recordId));
+            var listView = fragmentElement.querySelector("#userMessageList.listview");
+            Fragments.RecordsetController.apply(this, [fragmentElement, {
+                recordId: options ? options.recordId : null,
+                newInfo1Flag: 0,
+                message: ""
+            }, commandList, null, UserMessages.userMessageView, listView]);
+            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var getRecordId = function () {
                 return UserMessages._userId;
             }
@@ -30,14 +37,7 @@
             if (options && options.recordId) {
                 setRecordId(options.recordId);
             }
-            Fragments.Controller.apply(this, [fragmentElement, {
-                recordId: options ? options.recordId : null,
-                newInfo1Flag: 0,
-                message: ""
-            }, commandList]);
-            this.messages = null;
 
-            var pageBinding = AppBar.scope && AppBar.scope.binding;
             var that = this;
 
             this.refreshPromise = null;
@@ -61,7 +61,6 @@
             var layout = null;
 
             // now do anything...
-            var listView = fragmentElement.querySelector("#userMessageList.listview");
 
             var eventHandlers = {
                 /*clickSendMessage: function (event) {
@@ -98,19 +97,25 @@
                                 }
                             }
                         } else if (listView.winControl.loadingState === "complete") {
-                            if (that.loading) {
-                                that.loading = false;
+                            if (that.nextUrl) {
+                                that.loadNext();
+                            } else if (that.binding.loading) {
+                                that.binding.loading = false;
                             }
                         }
                     }
+                    that.loadingStateChanged(eventInfo);
                     Log.ret(Log.l.trace);
                 }
             }
             this.eventHandlers = eventHandlers;
 
-            var disableHandlers = {
-                clickSendMessage: AppBar.busy || !AppBar.modified || !that.binding.message
+            /*var disableHandlers = {
+                clickSendMessage: function() {
+                    return AppBar.busy || !AppBar.modified || !that.binding.message;
+                }
             }
+            this.disableHandlers = disableHandlers;*/
 
             // register ListView event handler
             if (listView) {
@@ -135,7 +140,8 @@
             }
             this.resultConverter = resultConverter;
 
-            var loadData = function () {
+            var loadData = this.loadData;
+            var newLoadData = function () {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
                 AppData.getMessagesData();
                 AppData.setErrorMsg(pageBinding);
@@ -143,32 +149,12 @@
                     BenutzerID: AppBar.scope.binding.dataBenutzer.BenutzerVIEWID
                 }
                 var ret = new WinJS.Promise.as().then(function () {
-                    Log.print(Log.l.trace, "calling select userMessageView...");
-                    return UserMessages.userMessageView.select(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "userMessageView: success!");
-                        if (json && json.d) {
-                            if (!that.messages) {
-                                that.messages = new WinJS.Binding.List([]);
-                                if (listView.winControl) {
-                                    // add ListView dataSource
-                                    listView.winControl.itemDataSource = that.messages.dataSource;
-                                }
-                            } else {
-                                that.messages.length = 0;
-                            }
-                            json.d.results.forEach(function (item, index) {
-                                that.resultConverter(item, index);
-                                // push to that.messages if (item.Info1) is not empty!
-                                that.messages.push(item);
-                            });
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        AppData.setErrorMsg(pageBinding, errorResponse);
-                    }, restriction);
+                    if (typeof loadData === "function") {
+                        Log.print(Log.l.trace, "calling select userMessageView...");
+                        return loadData(restriction);
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     Log.print(Log.l.trace, "Data loaded");
                     that.cancelPromises();
@@ -179,7 +165,7 @@
                 Log.ret(Log.l.trace);
                 return ret;
             };
-            this.loadData = loadData;
+            this.loadData = newLoadData;
 
             var insertData = function (complete, error) {
                 Log.call(Log.l.trace, namespaceName + ".Controller.");
