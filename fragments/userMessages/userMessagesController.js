@@ -78,6 +78,25 @@
                                 layout = UserMessages.ListLayout.MessagesLayout;
                                 listView.winControl.layout = { type: layout };
                             }
+                            // single list selection
+                            if (listView.winControl.selectionMode !== WinJS.UI.SelectionMode.none) {
+                                listView.winControl.selectionMode = WinJS.UI.SelectionMode.none;
+                            }
+                            // direct selection on each tap
+                            if (listView.winControl.tapBehavior !== WinJS.UI.TapBehavior.none) {
+                                listView.winControl.tapBehavior = WinJS.UI.TapBehavior.none;
+                            }
+                        } else if (listView.winControl.loadingState === "itemsLoaded") {
+                            var indexOfFirstVisible = listView.winControl.indexOfFirstVisible;
+                            var indexOfLastVisible = listView.winControl.indexOfLastVisible;
+                            for (var i = indexOfFirstVisible; i <= indexOfLastVisible; i++) {
+                                var element = listView.winControl.elementFromIndex(i);
+                                if (element && element.parentElement) {
+                                    if (!WinJS.Utilities.hasClass(element.parentElement, "win-nonselectable")) {
+                                        WinJS.Utilities.addClass(element.parentElement, "win-nonselectable");
+                                    }
+                                }
+                            }
                         } else if (listView.winControl.loadingState === "complete") {
                             if (that.loading) {
                                 that.loading = false;

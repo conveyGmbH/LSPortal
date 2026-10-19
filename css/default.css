@@ -2082,3 +2082,8 @@ button.win-command .win-label {
     word-wrap: normal !important;
     word-break: normal !important;
 }
+html.win-hoverable .win-listview.win-selectionstylefilled .win-container:hover .win-itembox.win-nonselectable,
+html.win-hoverable .win-itemcontainer.win-selectionstylefilled.win-container:hover .win-itembox.win-nonselectable {
+    background-color: inherit;
+    color: inherit;
+}

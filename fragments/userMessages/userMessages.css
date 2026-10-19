@@ -45,3 +45,6 @@
     width: 100%;
     height: 100%;
 }
+#userMessageList.listview .win-selectionbackground {
+    display: none;
+}
