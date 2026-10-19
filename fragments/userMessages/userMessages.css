@@ -10,6 +10,7 @@
 .user-message-item {
     float: left;
     width: auto;
+    max-width: calc(100% - 48px);
     min-height: 40px;
     border-top-right-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -18,6 +19,7 @@
 .desk-message-item {
     float: right;
     width: auto;
+    max-width: calc(100% - 48px);
     min-height: 40px;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
