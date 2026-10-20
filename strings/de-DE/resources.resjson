@@ -2461,5 +2461,8 @@
     "crmExport.merged": "Zusammengeführt",
     "crmExport.mergedHint": "In einen bestehenden Datensatz mit derselben E-Mail zusammengeführt",
     "crmExport.changesNoneNoNote": "Keine Felder geändert",
-    "crmExport.noChangesNoteExists": "Keine Änderung, Notiz bereits vorhanden"
+    "crmExport.noChangesNoteExists": "Keine Änderung, Notiz bereits vorhanden",
+    "crmSettings.dupFillEmptyDescFiles": "Datensatz per E-Mail finden, nur leere Felder füllen, Dateien des Leads anhängen.",
+    "crmSettings.dupFilesAdded": "+ Dateien des Leads am {0}",
+    "crmSettings.dupSfBlockRuleWarning": "Eine Salesforce-Dublettenregel mit der Aktion „Blockieren“ kann die Anlage trotzdem verhindern."
 }		

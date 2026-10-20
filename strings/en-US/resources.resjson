@@ -2458,5 +2458,8 @@
     "crmExport.merged": "Merged",
     "crmExport.mergedHint": "Merged into an existing record with the same e-mail",
     "crmExport.changesNoneNoNote": "No field changed",
-    "crmExport.noChangesNoteExists": "No changes, note already present"
+    "crmExport.noChangesNoteExists": "No changes, note already present",
+    "crmSettings.dupFillEmptyDescFiles": "Find the record by e-mail, only fill empty fields, attach the lead's files.",
+    "crmSettings.dupFilesAdded": "+ Lead files attached to the {0}",
+    "crmSettings.dupSfBlockRuleWarning": "A Salesforce duplicate rule with the action \"Block\" can still prevent a lead from being created."
 }
