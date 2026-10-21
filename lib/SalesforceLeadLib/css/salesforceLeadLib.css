@@ -1423,6 +1423,12 @@ thead .sf-fieldmap-table__col-name { z-index: 2; }
     border-radius: var(--sf-radius-md);
     background: var(--sf-accent); color: #fff; font-size: 17px;
 }
+/* Variant holding a CRM logo: a coloured logo needs a neutral tile. */
+.sf-cl-page-header__icon--logo {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    font-size: 22px;
+}
 .sf-cl-page-header__text { min-width: 0; }
 .sf-cl-page-header__title { margin: 0; font-size: 19px; font-weight: 700; color: var(--sf-text); line-height: 1.2; }
 .sf-cl-page-header__sub { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 13px; color: var(--sf-text-2); }
