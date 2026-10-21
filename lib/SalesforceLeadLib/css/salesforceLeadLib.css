@@ -1933,7 +1933,8 @@ html.sf-modal-open body {
 /* Official CRM logos, used on <i> tags in place of a Font Awesome class, so
    they size like a glyph: 1em high, aligned with the text. */
 .crm-icon-dynamics,
-.crm-icon-salesforce {
+.crm-icon-salesforce,
+.crm-icon-hubspot {
     display: inline-block;
     width: 1em;
     height: 1em;
@@ -1942,6 +1943,9 @@ html.sf-modal-open body {
 }
 .crm-icon-dynamics {
     background-image: url("../../../images/Dynamics365_scalable.svg");
+}
+.crm-icon-hubspot {
+    background-image: url("../../../images/hubspot.svg");
 }
 /* The Salesforce cloud is wider than high (256x180). */
 .crm-icon-salesforce {
