@@ -249,7 +249,13 @@
                             that.img = new Image();
                             photoItemBox.appendChild(that.img);
                             WinJS.Utilities.addClass(that.img, "active");
+                            var dataURLMimeType = "data:image/jpeg;base64,";
+                            if (getPhotoData().substr(0, dataURLMimeType.length) === dataURLMimeType) {
+                                that.img.src = getPhotoData();
+                            } else {
                             that.img.src = "data:image/jpeg;base64," + getPhotoData();
+                            }
+                            //that.img.src = "data:image/jpeg;base64," + getPhotoData();
                             if (photoItemBox.childElementCount > 1) {
                                 var oldElement = photoItemBox.firstElementChild || photoItemBox.firstChild;
                                 if (oldElement) {
