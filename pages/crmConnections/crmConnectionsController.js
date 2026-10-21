@@ -28,7 +28,7 @@
     var CATALOG = [
         { id: "salesforce", label: "Salesforce", icon: "fa-brands fa-salesforce", iconColor: "#00a1e0", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
         { id: "hubspot", label: "HubSpot", icon: "fa-brands fa-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts, notes & files sync.", auth: "OAuth 2.0" },
-        { id: "dynamics", label: "MS Dynamics 365", icon: "fa-solid fa-building", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" }
+        { id: "dynamics", label: "MS Dynamics 365", icon: "crm-icon-dynamics", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" }
     ];
 
     // A cold provider backend (Dynamics measured at ~13 s) must not hold up

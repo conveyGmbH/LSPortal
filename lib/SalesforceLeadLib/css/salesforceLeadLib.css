@@ -1929,3 +1929,13 @@ html.sf-modal-open body {
 /* [style*=…] dark-mode overrides removed — every migrated view now styles
    through token classes, so there are no hardcoded inline colors left to
    patch. */
+
+/* Official Dynamics 365 logo (Font Awesome has none). Used on <i> tags in
+   place of an FA class, so it sizes like a glyph: 1em, aligned with text. */
+.crm-icon-dynamics {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    background: url("../../../images/Dynamics365_scalable.svg") center / contain no-repeat;
+}
