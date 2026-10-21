@@ -1930,12 +1930,21 @@ html.sf-modal-open body {
    through token classes, so there are no hardcoded inline colors left to
    patch. */
 
-/* Official Dynamics 365 logo (Font Awesome has none). Used on <i> tags in
-   place of an FA class, so it sizes like a glyph: 1em, aligned with text. */
-.crm-icon-dynamics {
+/* Official CRM logos, used on <i> tags in place of a Font Awesome class, so
+   they size like a glyph: 1em high, aligned with the text. */
+.crm-icon-dynamics,
+.crm-icon-salesforce {
     display: inline-block;
     width: 1em;
     height: 1em;
     vertical-align: -0.125em;
-    background: url("../../../images/Dynamics365_scalable.svg") center / contain no-repeat;
+    background: center / contain no-repeat;
+}
+.crm-icon-dynamics {
+    background-image: url("../../../images/Dynamics365_scalable.svg");
+}
+/* The Salesforce cloud is wider than high (256x180). */
+.crm-icon-salesforce {
+    width: 1.43em;
+    background-image: url("../../../images/salesforce.svg");
 }
