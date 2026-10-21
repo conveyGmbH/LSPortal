@@ -1423,6 +1423,12 @@ thead .sf-fieldmap-table__col-name { z-index: 2; }
     border-radius: var(--sf-radius-md);
     background: var(--sf-accent); color: #fff; font-size: 17px;
 }
+/* Variant holding a CRM logo: a coloured logo needs a neutral tile. */
+.sf-cl-page-header__icon--logo {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    font-size: 22px;
+}
 .sf-cl-page-header__text { min-width: 0; }
 .sf-cl-page-header__title { margin: 0; font-size: 19px; font-weight: 700; color: var(--sf-text); line-height: 1.2; }
 .sf-cl-page-header__sub { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 13px; color: var(--sf-text-2); }
@@ -1929,3 +1935,26 @@ html.sf-modal-open body {
 /* [style*=…] dark-mode overrides removed — every migrated view now styles
    through token classes, so there are no hardcoded inline colors left to
    patch. */
+
+/* Official CRM logos, used on <i> tags in place of a Font Awesome class, so
+   they size like a glyph: 1em high, aligned with the text. */
+.crm-icon-dynamics,
+.crm-icon-salesforce,
+.crm-icon-hubspot {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    background: center / contain no-repeat;
+}
+.crm-icon-dynamics {
+    background-image: url("../../../images/Dynamics365_scalable.svg");
+}
+.crm-icon-hubspot {
+    background-image: url("../../../images/hubspot.svg");
+}
+/* The Salesforce cloud is wider than high (256x180). */
+.crm-icon-salesforce {
+    width: 1.43em;
+    background-image: url("../../../images/salesforce.svg");
+}

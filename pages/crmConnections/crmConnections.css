@@ -281,6 +281,14 @@ body.cnv-ui-dark .crm-conn-filter-select {
     color: var(--sf-accent);
 }
 
+/* CRM logos are coloured: give them a neutral tile and glyph size, as in
+   the CRM Export header (13px is meant for initials). */
+.crm-conn-avatar:has(> [class^="crm-icon-"]) {
+    background: var(--sf-surface);
+    border: 1px solid var(--sf-border);
+    font-size: 22px;
+}
+
 .crm-conn-card-title {
     display: flex;
     flex-direction: column;
