@@ -478,11 +478,11 @@
                         Log.ret(Log.l.trace);
                     });
                 },
-                clickExportQrcode: function(event) {
+                clickExportQrcode: function (event) {
                     Log.call(Log.l.trace, namespaceName + ".Controller.");
                     AppBar.busy = true;
                     //AppBar.triggerDisableHandlers();
-                    WinJS.Promise.timeout(0).then(function() {
+                    WinJS.Promise.timeout(0).then(function () {
                         return that.exportPwdQrCodeEmployeePdf();
                     });
                     Log.ret(Log.l.trace);
@@ -523,7 +523,7 @@
                         var master = Application.navigator.masterControl;
                         if (master && master.controller &&
                             typeof master.controller.loadData === "function") {
-                            master.controller.loadData(getRecordId()).then(function() {
+                            master.controller.loadData(getRecordId()).then(function () {
                                 AppBar.triggerDisableHandlers();
                             });
                         }
@@ -612,7 +612,7 @@
                     }
                 },
                 clickDelete2fa: function () {
-                    return AppBar.modified || !getHasTwoFactor() || 
+                    return AppBar.modified || !getHasTwoFactor() ||
                         that.binding.dataEmployee && that.binding.dataEmployee.MitarbeiterVIEWID === AppData.getRecordId("Mitarbeiter") ||
                         AppBar.busy;
                 },
@@ -738,7 +738,24 @@
                     pAPUserRoleID: dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string" ? parseInt(dataEmployee.INITAPUserRoleID) : dataEmployee.INITAPUserRoleID
                 }, function (json) {
                     // called asynchronously if ok
-                    Log.print(Log.l.info, "employeeData update: success!");
+                    var result = json.d.results[0];
+                    if (result.ResultCode !== 0) {
+                        Log.print(Log.l.info, "employeeData update: no success!");
+                        err = result;
+                        return confirmModal(null, result.ResultMessage, getResourceText("genDataEmployee.chooseEventOk"), null, function (confirm) {
+                            if (confirm) {
+                                Log.print(Log.l.trace, "confirmModal: user choice OK");
+                                AppData.getErrorMsgFromErrorStack(err).then(function () {
+                                    AppData.setErrorMsg(that.binding, result.ResultMessage);
+                                    if (typeof error === "function") {
+                                        error(err);
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        Log.print(Log.l.info, "employeeData update: success!");
+                    }
                 }, function (errorResponse) {
                     err = errorResponse;
                     AppData.getErrorMsgFromErrorStack(errorResponse).then(function () {

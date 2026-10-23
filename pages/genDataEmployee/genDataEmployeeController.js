@@ -1003,7 +1003,24 @@
                         pAPUserRoleID: dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string" ? parseInt(dataEmployee.INITAPUserRoleID) : dataEmployee.INITAPUserRoleID
                     }, function (json) {
                         // called asynchronously if ok
-                        Log.print(Log.l.info, "employeeData PRC_SaveUserAccountData: success!");
+                        var result = json.d.results[0];
+                        if (result.ResultCode !== 0) {
+                            Log.print(Log.l.info, "genDataEmployee update: no success!");
+                            err = result;
+                            return confirmModal(null, result.ResultMessage, getResourceText("genDataEmployee.chooseEventOk"), null, function (confirm) {
+                                if (confirm) {
+                                    Log.print(Log.l.trace, "confirmModal: user choice OK");
+                                    AppData.getErrorMsgFromErrorStack(err).then(function () {
+                                        AppData.setErrorMsg(that.binding, result.ResultMessage);
+                                        if (typeof error === "function") {
+                                            error(err);
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            Log.print(Log.l.info, "genDataEmployee update: success!");
+                        }
                     }, function (errorResponse) {
                         err = errorResponse;
                         Log.print(Log.l.error, "call PRC_SaveUserAccountData error");

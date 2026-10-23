@@ -379,7 +379,8 @@
                 } else {
                     that.binding.restriction.MitarbeiterID = recordId;
                 }
-                AppData.setErrorMsg(pageBinding);
+                // Fehlermeldung nicht ausblenden -> #8908
+                // AppData.setErrorMsg(pageBinding);
                 if (recordId) {
                     that.binding.loadingState = null;
                     ret = GenFragEvents.BenutzerView.select(function (json) {
