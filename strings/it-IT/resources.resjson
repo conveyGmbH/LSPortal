@@ -2394,7 +2394,7 @@
     "crmSettings.dupConfirmText": "Nei prossimi trasferimenti, i valori di LeadSuccess sovrascrivono i dati esistenti in {0}, ad esempio azienda o telefono.",
     "crmSettings.dupConfirmNotRetro": "I lead già trasferiti restano invariati, la modifica non è retroattiva.",
     "crmSettings.dupConfirmEmpty": "I valori vuoti non sovrascrivono mai i dati esistenti.",
-    "crmSettings.dupConfirmProtected": "Proprietario, stato / ciclo di vita e origine del lead non vengono mai sovrascritti.",
+    "crmSettings.dupConfirmProtected": "E-mail, proprietario, fase del ciclo di vita e stato del lead non vengono mai sovrascritti se hanno già un valore.",
     "crmSettings.dupConfirmCancel": "Annulla",
     "crmSettings.dupConfirmOk": "Attiva",
     "crmExport.changesFilled": "Compilato",

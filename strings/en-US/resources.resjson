@@ -2448,7 +2448,7 @@
     "crmSettings.dupConfirmText": "For future transfers, values from LeadSuccess overwrite existing data in {0}, e.g. company or phone.",
     "crmSettings.dupConfirmNotRetro": "Leads already transferred stay unchanged, the change is not retroactive.",
     "crmSettings.dupConfirmEmpty": "Empty values never overwrite existing data.",
-    "crmSettings.dupConfirmProtected": "Owner, status / lifecycle and lead source are never overwritten.",
+    "crmSettings.dupConfirmProtected": "E-mail, owner, lifecycle stage and lead status are never overwritten once they have a value.",
     "crmSettings.dupConfirmCancel": "Cancel",
     "crmSettings.dupConfirmOk": "Activate",
     "crmExport.changesFilled": "Filled",

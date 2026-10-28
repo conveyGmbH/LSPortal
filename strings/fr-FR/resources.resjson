@@ -2419,7 +2419,7 @@
     "crmSettings.dupConfirmText": "Lors des prochains transferts, les valeurs LeadSuccess remplacent les données existantes dans {0}, par exemple la société ou le téléphone.",
     "crmSettings.dupConfirmNotRetro": "Les leads déjà transférés restent inchangés, la modification n'est pas rétroactive.",
     "crmSettings.dupConfirmEmpty": "Les valeurs vides ne remplacent jamais les données existantes.",
-    "crmSettings.dupConfirmProtected": "Le propriétaire, le statut / cycle de vie et la source du lead ne sont jamais remplacés.",
+    "crmSettings.dupConfirmProtected": "L’e-mail, le propriétaire, la phase du cycle de vie et le statut du lead ne sont jamais remplacés dès qu’ils ont une valeur.",
     "crmSettings.dupConfirmCancel": "Annuler",
     "crmSettings.dupConfirmOk": "Activer",
     "crmExport.changesFilled": "Complété",
