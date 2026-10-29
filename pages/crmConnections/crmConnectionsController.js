@@ -277,7 +277,7 @@
                     "</div>" +
                     '<div class="crm-conn-hint">' +
                         '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>' +
-                        "<span>One active CRM per licence — connecting a new one replaces the current.</span>" +
+                        "<span>One active CRM per licence. To connect a different CRM, delete the current connection first.</span>" +
                     "</div>" +
                     '<div class="crm-conn-filterbar">' +
                         '<div class="crm-conn-search">' +
@@ -327,7 +327,7 @@
             function showDeleteConfirm(providerLabel, onConfirm) {
                 var overlay = catalogContainer.querySelector(".crm-conn-delete-overlay");
                 var text = overlay.querySelector(".crm-conn-delete-text");
-                text.textContent = "This will delete your " + providerLabel + " connection and you'll need to reconfigure your field mappings if you reconnect. Continue?";
+                text.textContent = "This will delete your " + providerLabel + " connection. Your field mappings are kept and apply again when you reconnect. Continue?";
                 overlay.style.display = "flex";
 
                 var cancelBtn = overlay.querySelector('[data-action="delete-cancel"]');
