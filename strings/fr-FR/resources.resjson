@@ -1249,6 +1249,12 @@
     "siteeventsneuaus.exhibitorcategory" : "Catégorie",
     "siteeventsneuaus.language" : "Langue",
     "siteeventsneuaus.mailerrortext" : "Adresse électronique invalide !",
+    "siteeventsneuaus.existingaccounttitle" : "Compte déjà existant",
+    "siteeventsneuaus.existingaccounttext" : "Un compte existe déjà avec cette adresse e-mail. Choisissez le mandant auquel rattacher le nouveau stand, ou créez quand même un nouveau compte.",
+    "siteeventsneuaus.existingaccountevents" : "Salons",
+    "siteeventsneuaus.existingaccountmerge" : "Fusionner avec le mandant",
+    "siteeventsneuaus.existingaccountnew" : "Créer un nouveau compte",
+    "siteeventsneuaus.existingaccountcancel" : "Annuler",
     "siteeventsneuaus.mandatoryerrormsgadd" : "sont des champs obligatoires. Veuillez compléter les informations !",
 
     "siteeventsbennach.title" : "réassorts",

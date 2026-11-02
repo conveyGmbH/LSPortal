@@ -1254,6 +1254,12 @@
     "siteeventsneuaus.exhibitorcategory" : "Kategorie",
     "siteeventsneuaus.language" : "Sprache",
     "siteeventsneuaus.mailerrortext" : "Ungültige Emailadresse erkannt! Speichern mit ungültiger Emailadresse?",
+    "siteeventsneuaus.existingaccounttitle" : "Konto bereits vorhanden",
+    "siteeventsneuaus.existingaccounttext" : "Mit dieser E-Mail-Adresse existiert bereits ein Konto. Wählen Sie den Mandanten, dem der neue Stand zugeordnet werden soll, oder legen Sie trotzdem ein neues Konto an.",
+    "siteeventsneuaus.existingaccountevents" : "Veranstaltungen",
+    "siteeventsneuaus.existingaccountmerge" : "Mit Mandant zusammenführen",
+    "siteeventsneuaus.existingaccountnew" : "Neues Konto anlegen",
+    "siteeventsneuaus.existingaccountcancel" : "Abbrechen",
     "siteeventsneuaus.mandatoryerrormsgadd" : "sind Pflichtfeld/er. Bitte ergänzen Sie die Angaben!",
 
     "siteeventsbennach.title" : "Nachbestellungen",
