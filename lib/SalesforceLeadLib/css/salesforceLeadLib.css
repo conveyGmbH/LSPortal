@@ -1940,7 +1940,8 @@ html.sf-modal-open body {
    they size like a glyph: 1em high, aligned with the text. */
 .crm-icon-dynamics,
 .crm-icon-salesforce,
-.crm-icon-hubspot {
+.crm-icon-hubspot,
+.crm-icon-pipedrive {
     display: inline-block;
     width: 1em;
     height: 1em;
@@ -1952,6 +1953,9 @@ html.sf-modal-open body {
 }
 .crm-icon-hubspot {
     background-image: url("../../../images/hubspot.svg");
+}
+.crm-icon-pipedrive {
+    background-image: url("../../../images/pipedrive.svg");
 }
 /* The Salesforce cloud is wider than high (256x180). */
 .crm-icon-salesforce {
