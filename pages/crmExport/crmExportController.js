@@ -80,6 +80,9 @@
                 if (window.DynamicsLeadLib) {
                     DynamicsLeadLib.init(serverUrl, apiName, user, password);
                 }
+                if (window.PipedriveLeadLib) {
+                    PipedriveLeadLib.init(serverUrl, apiName, user, password);
+                }
                 if (window.CrmProviders && CrmProviders.LeadReportSource) {
                     CrmProviders.LeadReportSource.init(serverUrl, apiName, user, password);
                 }

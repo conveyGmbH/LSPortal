@@ -1,0 +1,10 @@
+/* PipedriveLeadLib - reuses SalesforceLeadLib's shared --sf-* tokens and
+   .sf-* component classes (lib/SalesforceLeadLib/css/salesforceLeadLib.css),
+   like HubspotLeadLib. Only what that stylesheet doesn't define goes here. */
+
+.sf-fieldmap-card__sub {
+    display: block;
+    font-size: 12px;
+    color: var(--sf-text-2);
+    margin-top: 2px;
+}
