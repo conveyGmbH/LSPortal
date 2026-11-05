@@ -98,6 +98,7 @@
             this.eventHandlers = {
                 clickOk: function (event) {
                     Log.call(Log.l.trace, "Login.Controller.");
+                    AppBar.modified = true;
                     that.saveData(function (response) {
                         // called asynchronously if ok
                         var splitviewPaneWrapper = document.querySelector(".win-splitview-panewrapper");

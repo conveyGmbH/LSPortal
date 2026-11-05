@@ -956,7 +956,7 @@
             // here evaluate to "use odata_online with those stale creds", which 401s
             // and triggers the browser's native Basic Auth popup, blocking the
             // portal menu until dismissed.
-            }, true).then(function () {
+            }, !AppData.getOnlineLogin(false) || !AppData.getOnlinePassword(false)).then(function () {
                 return result;
             });
             Log.ret(Log.l.trace);
