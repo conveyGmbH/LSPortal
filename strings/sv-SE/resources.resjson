@@ -849,6 +849,7 @@
     "employee.userStatus" : "Status",
     "employee.eventTarget" : "Target Event",
     "employee.eventActual" : "Current event",
+    "employee.storeClearPassword" : "Passwort für Mailversand im Klartext speichern",
 
     "empList.title"         : "User accounts",
     "empList.count"         : "Count",
@@ -1621,6 +1622,7 @@
     "genDataEmployee.licenseLimitReach1" : "User limit reached\nThe maximum number of users for this event has been reached.",
     "genDataEmployee.licenseLimitReach2" : "users are currently inactive.",
     "genDataEmployee.licenseLimitReach3" : "To activate additional users, please either add more licenses or deactivate an active user. Any newly created or assigned users will remain inactive until licenses are available.",
+    "genDataEmployee.storeClearPassword" : "Store password as clear text for inclusion in mails",
 
     "adminAppHelpTextList.title"			: "Pages",
     "adminAppHelpTextList.inactive"     : "Inactive",

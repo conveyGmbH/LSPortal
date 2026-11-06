@@ -936,6 +936,7 @@
     "employee.eventTarget"	 : "Veranstaltung Ziel",
 	"employee.eventActual"   : "Aktuelle Veranstaltung",
     "employee.groups"   : "Gruppen",
+	"employee.storeClearPassword" : "Passwort für Mailversand im Klartext speichern",
 
     "empList.title"         : "Benutzerkonten",
     "empList.count"         : "Anzahl",
@@ -1942,6 +1943,7 @@
 	"genDataEmployee.licenseLimitReach1" : "Benutzerlimit erreicht\nDie maximale Anzahl von Benutzern für dieses Ereignis wurde erreicht.",
     "genDataEmployee.licenseLimitReach2" : "Benutzer sind derzeit inaktiv.",
     "genDataEmployee.licenseLimitReach3" : "Um zusätzliche Benutzer zu aktivieren, fügen Sie bitte weitere Lizenzen hinzu oder deaktivieren Sie einen aktiven Benutzer. Neu erstellte oder zugewiesene Benutzer bleiben inaktiv, bis Lizenzen verfügbar sind.",
+    "genDataEmployee.storeClearPassword" : "Passwort für Mailversand im Klartext speichern",
 
     "eventProducts.title"			: "Features",
     "eventProducts.ProductTitle"			: "Feature Name",

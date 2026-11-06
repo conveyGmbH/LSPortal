@@ -930,6 +930,7 @@
     "employee.eventTarget" : "Target Event",
     "employee.eventActual" : "Evento attuale",
     "employee.groups"   : "Gruppi",
+    "employee.storeClearPassword" : "Memorizzare la password in chiaro per includerla nelle e-mail",
 
     "empList.title"         : "Utenti",
     "empList.count"         : "Numero",
@@ -1916,6 +1917,7 @@
     "genDataEmployee.licenseLimitReach1" : "Limite utenti raggiunto\nÈ stato raggiunto il numero massimo di utenti per questo evento.",
     "genDataEmployee.licenseLimitReach2" : "gli utenti sono attualmente inattivi.",
     "genDataEmployee.licenseLimitReach3" : "Per attivare utenti aggiuntivi, aggiungere ulteriori licenze oppure disattivare un utente attivo. Tutti gli utenti appena creati o assegnati rimarranno inattivi fino a quando non saranno disponibili delle licenze.",
+    "genDataEmployee.storeClearPassword" : "Memorizzare la password in chiaro per includerla nelle e-mail",
 
     "eventProducts.title"			: "Caratteristiche",
     "eventProducts.ProductTitle"			: "Nome del Caratteristica",

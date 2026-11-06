@@ -54,7 +54,8 @@
                 VeranstaltungID: AppData.getRecordId("Veranstaltung2"),
                 INITAPUserRoleID: 3,
                 errorLicenseExceeded: false,
-                Password2: ""
+                Password2: "",
+                storeClearPassword: false
             },
             defaultRestriction: {
                 Vorname: "",

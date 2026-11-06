@@ -54,7 +54,8 @@
                 Password: "",
                 VeranstaltungID: 0, // Auf Server im INSERT Trigger ermittelt für "einfache" Benutzerverwaltung
                 INITAPUserRoleID: 3,
-                Password2: ""
+                Password2: "",
+                storeClearPassword: false
             },
             defaultRestriction: {
                 Vorname: "",

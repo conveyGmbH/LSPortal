@@ -72,11 +72,19 @@
                             <input class="input_field win-textbox" type="password" autocomplete="new-password"
                                    data-win-bind="value: dataEmployee.Password2 Binding.Mode.twoway; disabled: disablePassword" />
                         </div>
+                        <div class="line-separator" data-win-bind="style.display: passwordChanged Binding.Converter.toDisplay"></div>
+                        <div class="field_line field_line_odd" data-win-bind="style.display: passwordChanged Binding.Converter.toDisplay">
+                            <label class="checkbox input_field">
+                                <input type="checkbox" class="win-checkbox checkbox" value="1"
+                                       data-win-bind="checked: dataEmployee.storeClearPassword Binding.Mode.twoway" />
+                                <span class="checkbox" data-win-res="{textContent: 'employee.storeClearPassword'}"></span>
+                            </label>
+                        </div>
                         <div class="line-separator"></div>
                         <div class="field_line field_line_odd">
                             <span class="label win-type-caption portrait_only" data-win-res="{textContent: 'employee.roles'}"></span>
                             <span class="label landscape_only" data-win-res="{textContent: 'employee.roles'}"></span>
-                            <select id="roles"
+                            <select id="rolesEmployee"
                                     class="input_field win-dropdown"
                                     data-win-control="WinJS.UI.Repeater"
                                     data-win-bind="value: dataEmployee.INITAPUserRoleID Binding.Mode.twoway; disabled: disableRoles">

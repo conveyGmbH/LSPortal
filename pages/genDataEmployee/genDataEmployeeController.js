@@ -45,7 +45,7 @@
             var layout = null;
             this.events = null;
 
-            var roles = pageElement.querySelector("#roles");
+            var roles = pageElement.querySelector("#rolesGenDataEmployee");
             var myDomain = pageElement.querySelector('#myDomain');
 
             that.loadDataDelayedPromise = null;
@@ -400,12 +400,12 @@
                         var recordId = getRecordId();
                         if (AppData.getRecordId("Mitarbeiter") === recordId && that.binding.passwordChanged) {
                             Log.print(Log.l.info, "ignore loaddata when password of logged user was changed");
-                            that.binding.passwordChanged = false;
                             AppBar.modified = false;
                             return WinJS.Promise.as();
                         } else {
                             that.loadData();
                         }
+                        that.binding.passwordChanged = false;
                     }, function (errorResponse) {
                         Log.print(Log.l.error, "error saving employee");
                     });
@@ -1000,11 +1000,12 @@
                         pLastName: dataEmployee.Nachname,
                         pLogin: dataEmployee.Login,
                         pPassword: dataEmployee.Password,
-                        pAPUserRoleID: dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string" ? parseInt(dataEmployee.INITAPUserRoleID) : dataEmployee.INITAPUserRoleID
+                        pAPUserRoleID: dataEmployee.INITAPUserRoleID && typeof dataEmployee.INITAPUserRoleID === "string" ? parseInt(dataEmployee.INITAPUserRoleID) : dataEmployee.INITAPUserRoleID,
+                        pStoreClearPW: dataEmployee.storeClearPassword ? 1 : 0
                     }, function (json) {
                         // called asynchronously if ok
                         var result = json.d.results[0];
-                        if (result.ResultCode !== 0) {
+                        if (result && result.ResultCode && result.ResultCode !== 0) {
                             Log.print(Log.l.info, "genDataEmployee update: no success!");
                             err = result;
                             return confirmModal(null, result.ResultMessage, getResourceText("genDataEmployee.chooseEventOk"), null, function (confirm) {
