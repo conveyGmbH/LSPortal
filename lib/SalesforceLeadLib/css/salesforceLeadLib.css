@@ -1962,3 +1962,16 @@ html.sf-modal-open body {
     width: 1.43em;
     background-image: url("../../../images/salesforce.svg");
 }
+
+/* ---- HubSpot marketing event card (CRM settings) ---- */
+.sf-me-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+}
+.sf-me-row .sf-select {
+    flex: 1;
+    min-width: 0;
+    max-width: 520px;
+}
