@@ -74,3 +74,7 @@ docu/*.png
 .sfdx/
 .forceignore.local
 
+
+# Claude outputs
+Claude outputs/
+AGENTS.md
