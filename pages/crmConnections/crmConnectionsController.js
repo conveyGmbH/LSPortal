@@ -26,15 +26,26 @@
     // dynamics-backend's centralized Azure AD app — same multi-tenant-app
     // model as Salesforce/HubSpot.
     var CATALOG = [
-        { id: "salesforce", label: "Salesforce", icon: "crm-icon-salesforce", iconColor: "#00a1e0", badge: null, description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
-        { id: "hubspot", label: "HubSpot", icon: "crm-icon-hubspot", iconColor: "#ff7a59", badge: null, description: "Contacts, notes & files sync.", auth: "OAuth 2.0" },
-        { id: "dynamics", label: "MS Dynamics 365", icon: "crm-icon-dynamics", iconColor: "#0078d4", badge: null, description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" },
-        { id: "pipedrive", label: "Pipedrive", icon: "crm-icon-pipedrive", iconColor: "#017737", badge: null, description: "Persons, organizations, notes & files sync.", auth: "OAuth 2.0" }
+        { id: "salesforce", label: "Salesforce", icon: "crm-icon-salesforce", iconColor: "#00a1e0", badge: null, descKey: "crmConnections.descSalesforce", description: "Push leads to Leads/Contacts; bidirectional sync.", auth: "OAuth 2.0" },
+        { id: "hubspot", label: "HubSpot", icon: "crm-icon-hubspot", iconColor: "#ff7a59", badge: null, descKey: "crmConnections.descHubspot", description: "Contacts, notes & files sync.", auth: "OAuth 2.0" },
+        { id: "dynamics", label: "MS Dynamics 365", icon: "crm-icon-dynamics", iconColor: "#0078d4", badge: null, descKey: "crmConnections.descDynamics", description: "Sync with Dynamics Sales & Customer Insights.", auth: "OAuth 2.0" },
+        { id: "pipedrive", label: "Pipedrive", icon: "crm-icon-pipedrive", iconColor: "#017737", badge: null, descKey: "crmConnections.descPipedrive", description: "Persons, organizations, notes & files sync.", auth: "OAuth 2.0" }
     ];
 
     // A cold provider backend (Dynamics measured at ~13 s) must not hold up
     // the other cards: each status check gets its own deadline.
     var STATUS_CHECK_TIMEOUT_MS = 8000;
+
+    // {0}, {1} in a resource string are replaced by the extra arguments.
+    function t(key, fallback) {
+        var text = fallback;
+        try {
+            var res = WinJS.Resources.getString(key);
+            if (res && !res.empty) { text = res.value; }
+        } catch (e) { /* keep fallback */ }
+        var args = Array.prototype.slice.call(arguments, 2);
+        return text.replace(/\{(\d+)\}/g, function (m, i) { return args[i] != null ? args[i] : m; });
+    }
 
     WinJS.Namespace.define(namespaceName, {
 
@@ -74,7 +85,7 @@
                         '<div class="sf-cl-page-header__main">' +
                             '<div class="sf-cl-page-header__icon"><i class="fa-solid fa-plug" aria-hidden="true"></i></div>' +
                             '<div class="sf-cl-page-header__text">' +
-                                '<h1 class="sf-cl-page-header__title">CRM Connections</h1>' +
+                                '<h1 class="sf-cl-page-header__title">' + esc(t("label.crmConnections", "CRM Connections")) + "</h1>" +
                             "</div>" +
                         "</div>" +
                     "</div>"
@@ -175,10 +186,10 @@
 
             function badgeHtml(entry) {
                 if (entry.badge === "popular") {
-                    return '<span class="crm-conn-badge crm-conn-badge--popular">Popular</span>';
+                    return '<span class="crm-conn-badge crm-conn-badge--popular">' + esc(t("crmConnections.badgePopular", "Popular")) + "</span>";
                 }
                 if (entry.badge === "soon") {
-                    return '<span class="crm-conn-badge crm-conn-badge--soon">Soon</span>';
+                    return '<span class="crm-conn-badge crm-conn-badge--soon">' + esc(t("crmConnections.soon", "Soon")) + "</span>";
                 }
                 return "";
             }
@@ -206,7 +217,7 @@
                 });
 
                 if (visibleEntries.length === 0) {
-                    gridEl.innerHTML = '<div class="crm-conn-empty">No CRM matches your search.</div>';
+                    gridEl.innerHTML = '<div class="crm-conn-empty">' + esc(t("crmConnections.noMatch", "No CRM matches your search.")) + "</div>";
                     return;
                 }
 
@@ -222,20 +233,20 @@
 
                     var actionHtml;
                     if (isSoon) {
-                        actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="Coming soon"><i class="fa-solid fa-lock" aria-hidden="true"></i> Soon</button>';
+                        actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="' + esc(t("crmConnections.comingSoon", "Coming soon")) + '"><i class="fa-solid fa-lock" aria-hidden="true"></i> ' + esc(t("crmConnections.soon", "Soon")) + "</button>";
                     } else if (isActive) {
                         actionHtml =
-                            '<button class="sf-btn sf-btn--secondary crm-conn-action crm-conn-action--manage" data-action="manage" data-provider="' + entry.id + '">Manage</button>' +
-                            '<button class="sf-btn sf-btn--danger-outline crm-conn-action crm-conn-action--delete" data-action="disconnect" data-provider="' + entry.id + '">Delete connection</button>';
+                            '<button class="sf-btn sf-btn--secondary crm-conn-action crm-conn-action--manage" data-action="manage" data-provider="' + entry.id + '">' + esc(t("crmConnections.manage", "Manage")) + "</button>" +
+                            '<button class="sf-btn sf-btn--danger-outline crm-conn-action crm-conn-action--delete" data-action="disconnect" data-provider="' + entry.id + '">' + esc(t("crmConnections.deleteConnection", "Delete connection")) + "</button>";
                     } else if (isLockedByOther) {
-                        actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="Delete the current connection before connecting a different CRM"><i class="fa-solid fa-lock" aria-hidden="true"></i> Locked</button>';
+                        actionHtml = '<button class="sf-btn sf-btn--secondary crm-conn-action" disabled title="' + esc(t("crmConnections.lockedTitle", "Delete the current connection before connecting a different CRM")) + '"><i class="fa-solid fa-lock" aria-hidden="true"></i> ' + esc(t("crmConnections.locked", "Locked")) + "</button>";
                     } else {
-                        actionHtml = '<button class="sf-btn sf-btn--primary crm-conn-action" data-action="connect" data-provider="' + entry.id + '"><i class="fa-solid fa-plus" aria-hidden="true"></i> Connect</button>';
+                        actionHtml = '<button class="sf-btn sf-btn--primary crm-conn-action" data-action="connect" data-provider="' + entry.id + '"><i class="fa-solid fa-plus" aria-hidden="true"></i> ' + esc(t("crmConnections.connect", "Connect")) + "</button>";
                     }
 
                     return (
                         '<div class="crm-conn-card' + (isActive ? " crm-conn-card--active" : "") + (isLockedByOther ? " crm-conn-card--locked" : "") + '" data-provider-card="' + entry.id + '">' +
-                            (isActive ? '<span class="crm-conn-badge crm-conn-badge--active">Active</span>' : "") +
+                            (isActive ? '<span class="crm-conn-badge crm-conn-badge--active">' + esc(t("crmConnections.active", "Active")) + "</span>" : "") +
                             '<div class="crm-conn-card-head">' +
                                 '<div class="crm-conn-avatar"><i class="' + entry.icon + '" aria-hidden="true" style="color:' + entry.iconColor + ';"></i></div>' +
                                 '<div class="crm-conn-card-title">' +
@@ -244,17 +255,19 @@
                                         badgeHtml(entry) +
                                     "</div>" +
                                     '<div class="crm-conn-auth">' +
-                                        (status.connected ? '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '"><span class="crm-conn-status-dot"></span>Connected · </span>' : "") +
+                                        (status.connected ? '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '"><span class="crm-conn-status-dot"></span>' + esc(t("crmConnections.connected", "Connected")) + " · </span>" : "") +
                                         esc(entry.auth) +
                                     "</div>" +
                                 "</div>" +
                             "</div>" +
-                            '<p class="crm-conn-desc">' + esc(entry.description) + "</p>" +
+                            '<p class="crm-conn-desc">' + esc(t(entry.descKey, entry.description)) + "</p>" +
                             (isActive && status.userInfo ? '<div class="crm-conn-meta"><i class="fa-regular fa-user" aria-hidden="true"></i> ' + esc(status.userInfo) + "</div>" : "") +
                             (!isActive ? '<div class="crm-conn-card-footer">' +
                                 '<span class="crm-conn-status' + (status.connected ? " crm-conn-status--connected" : "") + '">' +
                                     '<span class="crm-conn-status-dot"></span>' +
-                                    (status.connected ? "Connected" : status.unavailable ? "Status unavailable" : "Not connected") +
+                                    esc(status.connected ? t("crmConnections.connected", "Connected")
+                                        : status.unavailable ? t("crmConnections.statusUnavailable", "Status unavailable")
+                                        : t("crmConnections.notConnected", "Not connected")) +
                                 "</span>" +
                             "</div>" : "") +
                             '<div class="crm-conn-actions' + (isActive ? " crm-conn-actions--full" : "") + '">' + actionHtml + "</div>" +
@@ -277,21 +290,23 @@
                 catalogContainer.innerHTML =
                     pageHeaderHtml() +
                     '<div class="crm-conn-toolbar">' +
-                        '<div class="crm-conn-count">' + connectedCount + " of " + CATALOG.length + " CRMs connected</div>" +
+                        '<div class="crm-conn-count">' + esc(t("crmConnections.connectedCount", "{0} of {1} CRMs connected", connectedCount, CATALOG.length)) + "</div>" +
                     "</div>" +
                     '<div class="crm-conn-hint">' +
                         '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>' +
-                        "<span>One active CRM per licence — connecting a new one replaces the current.</span>" +
+                        "<span>" + esc(t("crmConnections.oneCrmHint", "One active CRM per licence. To connect a different CRM, delete the current connection first.")) + "</span>" +
                     "</div>" +
                     '<div class="crm-conn-filterbar">' +
                         '<div class="crm-conn-search">' +
                             '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>' +
-                            '<input type="text" class="crm-conn-search-input" placeholder="Search a CRM..." value="' + esc(filterState.query) + '" aria-label="Search a CRM" />' +
+                            '<input type="text" class="crm-conn-search-input" placeholder="' + esc(t("crmConnections.searchPlaceholder", "Search a CRM...")) + '" value="' + esc(filterState.query) + '" aria-label="' + esc(t("crmConnections.searchPlaceholder", "Search a CRM...")) + '" />' +
                         "</div>" +
-                        '<select class="crm-conn-filter-select" aria-label="Filter CRMs">' +
+                        '<select class="crm-conn-filter-select" aria-label="' + esc(t("crmConnections.filterLabel", "Filter CRMs")) + '">' +
                             ["all", "connected", "available"].map(function (tab) {
-                                var tabLabel = tab === "all" ? "All" : tab === "connected" ? "Connected" : "Available";
-                                return '<option value="' + tab + '"' + (filterState.tab === tab ? " selected" : "") + '>' + tabLabel + "</option>";
+                                var tabLabel = tab === "all" ? t("crmConnections.filterAll", "All")
+                                    : tab === "connected" ? t("crmConnections.connected", "Connected")
+                                    : t("crmConnections.filterAvailable", "Available");
+                                return '<option value="' + tab + '"' + (filterState.tab === tab ? " selected" : "") + '>' + esc(tabLabel) + "</option>";
                             }).join("") +
                         "</select>" +
                     "</div>" +
@@ -301,12 +316,12 @@
                     '<div class="sf-modal-overlay crm-conn-delete-overlay" style="display:none;" role="presentation">' +
                         '<div class="sf-modal sf-modal--sm" role="alertdialog" aria-modal="true" aria-labelledby="crm-conn-delete-title">' +
                             '<div class="sf-modal__body" style="padding: 24px;">' +
-                                '<h3 class="sf-modal__title" id="crm-conn-delete-title">Delete connection?</h3>' +
+                                '<h3 class="sf-modal__title" id="crm-conn-delete-title">' + esc(t("crmConnections.deleteTitle", "Delete connection?")) + "</h3>" +
                                 '<p class="crm-conn-delete-text" style="margin: 12px 0 0; color: var(--sf-text-2);"></p>' +
                             "</div>" +
                             '<div class="sf-modal__footer">' +
-                                '<button class="sf-btn sf-btn--secondary" data-action="delete-cancel">Cancel</button>' +
-                                '<button class="sf-btn sf-btn--danger" data-action="delete-confirm">Delete connection</button>' +
+                                '<button class="sf-btn sf-btn--secondary" data-action="delete-cancel">' + esc(t("crmConnections.cancel", "Cancel")) + "</button>" +
+                                '<button class="sf-btn sf-btn--danger" data-action="delete-confirm">' + esc(t("crmConnections.deleteConnection", "Delete connection")) + "</button>" +
                             "</div>" +
                         "</div>" +
                     "</div>";
@@ -331,7 +346,7 @@
             function showDeleteConfirm(providerLabel, onConfirm) {
                 var overlay = catalogContainer.querySelector(".crm-conn-delete-overlay");
                 var text = overlay.querySelector(".crm-conn-delete-text");
-                text.textContent = "This will delete your " + providerLabel + " connection and you'll need to reconfigure your field mappings if you reconnect. Continue?";
+                text.textContent = t("crmConnections.deleteText", "This will delete your {0} connection. Your field mappings are kept and apply again when you reconnect. Continue?", providerLabel);
                 overlay.style.display = "flex";
 
                 var cancelBtn = overlay.querySelector('[data-action="delete-cancel"]');
@@ -359,12 +374,12 @@
 
             function connectFailureMessage(label, error) {
                 if (error === "popup_blocked") {
-                    return "Your browser blocked the " + label + " sign-in window. Allow pop-ups for this site, then click Connect again.";
+                    return t("crmConnections.popupBlocked", "Your browser blocked the {0} sign-in window. Allow pop-ups for this site, then click Connect again.", label);
                 }
                 if (!error || error === "cancelled") {
-                    return "The " + label + " sign-in window was closed before the connection was authorized. Click Connect to try again.";
+                    return t("crmConnections.popupClosed", "The {0} sign-in window was closed before the connection was authorized. Click Connect to try again.", label);
                 }
-                return label + " sign-in failed: " + error + ". Click Connect to try again.";
+                return t("crmConnections.signInFailed", "{0} sign-in failed: {1}. Click Connect to try again.", label, error);
             }
 
             // connect() payloads carry the account as an object; checkConnection()
@@ -395,12 +410,12 @@
                             var cancelBtn = null;
                             var resetButton = function () {
                                 btn.disabled = false;
-                                btn.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Connect';
+                                btn.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> ' + esc(t("crmConnections.connect", "Connect"));
                                 if (cancelBtn && cancelBtn.parentNode) { cancelBtn.parentNode.removeChild(cancelBtn); }
                                 cancelBtn = null;
                             };
                             btn.disabled = true;
-                            btn.textContent = "Connecting…";
+                            btn.textContent = t("crmConnections.connecting", "Connecting…");
                             connectInFlight = true;
                             // Adapters that don't take options (Salesforce, Dynamics) ignore them.
                             var connectOptions = {
@@ -409,12 +424,12 @@
                                 // finishing (see openOAuthPopup's pollResult): keep
                                 // waiting visibly, with a way out.
                                 onWaiting: function () {
-                                    btn.textContent = "Waiting for " + connectLabel + " authorization…";
+                                    btn.textContent = t("crmConnections.waiting", "Waiting for {0} authorization…", connectLabel);
                                     if (cancelBtn || !btn.parentNode) { return; }
                                     cancelBtn = document.createElement("button");
                                     cancelBtn.type = "button";
                                     cancelBtn.className = "sf-btn sf-btn--secondary crm-conn-action";
-                                    cancelBtn.textContent = "Cancel";
+                                    cancelBtn.textContent = t("crmConnections.cancel", "Cancel");
                                     cancelBtn.addEventListener("click", function () {
                                         userCancelled = true;
                                         if (cancelConnect) { cancelConnect(); }
@@ -466,7 +481,7 @@
                             }).catch(function (err) {
                                 Log.print(Log.l.error, namespaceName + ".Controller. connect error: " + (err && err.message));
                                 resetButton();
-                                showAlert("Not available", err && err.message);
+                                showAlert(t("crmConnections.notAvailable", "Not available"), err && err.message);
                             }).then(function () {
                                 connectInFlight = false;
                             });
@@ -510,7 +525,7 @@
                         '<div class="sf-skeleton" style="height: 38px; flex: 1; max-width: 320px;"></div>' +
                         '<div class="sf-skeleton" style="height: 38px; width: 220px; border-radius: var(--sf-radius-pill);"></div>' +
                     "</div>" +
-                    '<div class="crm-conn-grid" aria-busy="true" aria-label="Loading CRM connections">' +
+                    '<div class="crm-conn-grid" aria-busy="true" aria-label="' + esc(t("crmConnections.loading", "Loading CRM connections")) + '">' +
                         CATALOG.map(function () {
                             return (
                                 '<div class="crm-conn-card">' +
