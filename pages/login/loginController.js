@@ -141,9 +141,10 @@
 
             this.disableHandlers = {
                 clickOk: function () {
+                    var homePageId = Application.getPageId(Application.startPage);
                     var ret = AppBar.busy || !that.binding.dataLogin.Login || !that.binding.dataLogin.Password || !that.binding.isPrivacyPolicyFlag;
                     if (ret) {
-                        NavigationBar.disablePage("home");
+                        NavigationBar.disablePage(homePageId);
                         NavigationBar.disablePage("localevents");
                         NavigationBar.disablePage("siteevents");
                         NavigationBar.disablePage("events");
@@ -156,9 +157,10 @@
                         NavigationBar.disablePage("settings");
                         NavigationBar.disablePage("info");
                         NavigationBar.disablePage("search");
+                        NavigationBar.disablePage("optionsGrp");
                         NavigationBar.disablePage("support");
                     } else {
-                        NavigationBar.enablePage("home");
+                        NavigationBar.enablePage(homePageId);
                     }
                     if (!that.binding.dataLogin.Login || !that.binding.dataLogin.Password) {
                         that.binding.dataLogin.privacyPolicyFlag = false;
@@ -421,7 +423,8 @@
                                 Log.print(Log.l.trace, "appListSpecView: success!");
                                 // kontaktanzahlView returns object already parsed from json file in response
                                 AppBar.busy = false;
-                                NavigationBar.enablePage("home");
+                                var homePageId = Application.getPageId(Application.startPage);
+                                NavigationBar.enablePage(homePageId);
                                 NavigationBar.enablePage("localevents");
                                 NavigationBar.enablePage("siteevents");
                                 NavigationBar.enablePage("events");
@@ -434,6 +437,7 @@
                                 NavigationBar.enablePage("settings");
                                 NavigationBar.enablePage("info");
                                 NavigationBar.enablePage("search");
+                                NavigationBar.enablePage("optionsGrp");
                                 NavigationBar.enablePage("support");
                                 if (json && json.d && json.d.results) {
                                     NavigationBar.showGroupsMenu(json.d.results);

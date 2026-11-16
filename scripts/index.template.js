@@ -388,8 +388,19 @@
     Application.prevNavigateNewId = "newContact";
     // some more default page navigation handling
     Application.navigateByIdOverride = function (id, event, noNavigate) {
+        var homePage;
+        Application.pageframe.hideSplashScreen();
+
         Log.call(Log.l.trace, "Application.", "id=" + id);
-        if (id === "dashBoard") {
+        if (id === "home") {
+            homePage = Application.getPageId(Application.startPage);
+            if (id !== homePage) {
+                id = homePage;
+                WinJS.Promise.timeout(250).then(function() {
+                    Application.pageframe.hideSplashScreen();
+                });
+            }
+        } else if (id === "dashBoard") {
             id = "start";
         } else if (id === "startPremium" && (parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 3 || parseInt(AppData._persistentStates.showdashboardMesagoCombo) === 4)) {
             id = "dashboardFN";
