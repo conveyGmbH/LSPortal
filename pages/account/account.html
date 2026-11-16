@@ -155,8 +155,11 @@
                         </div>
 
                         <!-- Anmeldung und Sicherheit -->
-                        <h3 class="acc-grp" data-win-res="{textContent: 'account.security'}"></h3>
-                        <div id="tfa-container"></div>
+                        <h3 class="acc-grp" 
+                            data-win-res="{textContent: 'account.security'}"
+                            data-win-bind="style.display: hide2fa Binding.Converter.toDisplayNone"></h3>
+                        <div id="tfa-container"
+                             data-win-bind="style.display: hide2fa Binding.Converter.toDisplayNone"></div>
                     </div>
                 </div>
                 <div class="error-message"

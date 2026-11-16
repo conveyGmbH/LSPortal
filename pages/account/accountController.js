@@ -45,7 +45,9 @@
                 showServerList: false,
                 showWaitCircle: false,
                 eventName: (typeof AppHeader === "object" && AppHeader.controller && AppHeader.controller.binding &&
-                    AppHeader.controller.binding.userData && AppHeader.controller.binding.userData.VeranstaltungName) || ""
+                    AppHeader.controller.binding.userData && AppHeader.controller.binding.userData.VeranstaltungName) || "",
+                hide2fa: (typeof AppHeader === "object" && AppHeader.controller && AppHeader.controller.binding &&
+                    AppHeader.controller.binding.userData && AppHeader.controller.binding.userData.APRoleNames === "APP-User")
             }, commandList]);
 
             if (typeof navigator.globalization === "object") {
@@ -60,7 +62,11 @@
             var globalUserServer = pageElement.querySelector("#GlobalUserServer");
 
             // TFA UI
-            var tfaContainer = pageElement.querySelector("#tfa-container");
+
+            var tfaContainer;
+            if (!(this.binding.hide2fa)) {
+                tfaContainer = pageElement.querySelector("#tfa-container");
+            }
 
             var prevLocationId = null;
             if (AppHeader && AppHeader.controller && AppHeader.controller.binding) {
