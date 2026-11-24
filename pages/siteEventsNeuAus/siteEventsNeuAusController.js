@@ -31,7 +31,8 @@
             var companyname = pageElement.querySelector("#firmenname");
             var ordernr = pageElement.querySelector("#OrderNumber");
             var eventname = pageElement.querySelector("#veranstaltungname");
-            
+            var existingMandantDialog = pageElement.querySelector("#existingMandantDialog");
+
             var creatingExhibitorCategory = function() {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
                 var exhibitorCategory = [
@@ -203,34 +204,39 @@
             }
             this.getExibitorData = getExibitorData;
 
-            var saveExhibitor = function () {
-                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+            // fairMandantID: bestehender Mandant (Mantis#7883) oder null für das bisherige Verhalten
+            var saveExhibitor = function (fairMandantID) {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.", "fairMandantID=" + fairMandantID);
                     AppData.setErrorMsg(that.binding);
                     var dataExibitor = getExibitorData();
                     Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
                     AppData.setErrorMsg(that.binding);
-                    return AppData.call("PRC_CreateSiteVeranstaltung",
-                        {
-                            pVeranstaltungTerminID: that.binding.VeranstaltungTerminID,
-                            pVeranstaltungName: that.binding.VeranstaltungName,
-                            pFirmenName: dataExibitor.FirmenName,
-                            pStrasse: dataExibitor.Strasse,
-                            pPLZ: dataExibitor.PLZ,
-                            pStadt: dataExibitor.Stadt,
-                            pLandID: dataExibitor.LandID,
-                            pWebAdresse: dataExibitor.WebAdresse,
-                            pLoginEmail: dataExibitor.LoginEmail,
-                            pAppUser: dataExibitor.AppUser,
-                            pOrderNumber: dataExibitor.OrderNumber,
-                            pStandHall: dataExibitor.StandHall,
-                            pStandNo: dataExibitor.StandNo,
-                            pInfoText: dataExibitor.InfoText,
-                            pSpracheID: dataExibitor.INITSpracheID,
-                            pDBSYNCLogin: dataExibitor.DBSYNCLogin,
-                            pDBSYNCPassword: dataExibitor.DBSYNCPassword,
-                            pCustomerID: dataExibitor.CustomerID,
-                            pExhibitorCategory: dataExibitor.ExhibitorCategory
-                        }, function (json) {
+                    var params = {
+                        pVeranstaltungTerminID: that.binding.VeranstaltungTerminID,
+                        pVeranstaltungName: that.binding.VeranstaltungName,
+                        pFirmenName: dataExibitor.FirmenName,
+                        pStrasse: dataExibitor.Strasse,
+                        pPLZ: dataExibitor.PLZ,
+                        pStadt: dataExibitor.Stadt,
+                        pLandID: dataExibitor.LandID,
+                        pWebAdresse: dataExibitor.WebAdresse,
+                        pLoginEmail: dataExibitor.LoginEmail,
+                        pAppUser: dataExibitor.AppUser,
+                        pOrderNumber: dataExibitor.OrderNumber,
+                        pStandHall: dataExibitor.StandHall,
+                        pStandNo: dataExibitor.StandNo,
+                        pInfoText: dataExibitor.InfoText,
+                        pSpracheID: dataExibitor.INITSpracheID,
+                        pDBSYNCLogin: dataExibitor.DBSYNCLogin,
+                        pDBSYNCPassword: dataExibitor.DBSYNCPassword,
+                        pCustomerID: dataExibitor.CustomerID,
+                        pExhibitorCategory: dataExibitor.ExhibitorCategory
+                    };
+                    if (fairMandantID) {
+                        // Stand dem bestehenden Mandanten zuordnen, die Procedure macht den Admin bei >1 Veranstaltung zum Midi-Admin
+                        params.pFairMandantID = fairMandantID;
+                    }
+                    return AppData.call("PRC_CreateSiteVeranstaltung", params, function (json) {
                             Log.print(Log.l.info, "call success! ");
                             AppBar.busy = false;
                             Application.navigateById("siteevents", event);
@@ -244,6 +250,130 @@
                 
             }
             this.saveExhibitor = saveExhibitor;
+
+            // Mantis#7883: Auswahl-Dialog wenn die Login-E-Mail schon zu Mandanten gehört
+            var showExistingMandantDialog = function (mandants) {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.", "mandants=" + mandants.length);
+                if (!existingMandantDialog || !existingMandantDialog.winControl) {
+                    Log.ret(Log.l.error, "no existingMandantDialog");
+                    AppBar.busy = false;
+                    return WinJS.Promise.as();
+                }
+                var list = existingMandantDialog.querySelector("#existingMandantList");
+                while (list.firstChild) {
+                    list.removeChild(list.firstChild);
+                }
+                mandants.forEach(function (mandant, index) {
+                    var item = document.createElement("label");
+                    item.className = "existing-mandant-item";
+                    var radio = document.createElement("input");
+                    radio.type = "radio";
+                    radio.name = "existingMandant";
+                    radio.value = mandant.FairMandantID;
+                    radio.checked = (index === 0);
+                    var info = document.createElement("div");
+                    var name = document.createElement("span");
+                    name.className = "existing-mandant-name";
+                    name.textContent = (mandant.Name || "") + " (ID " + mandant.FairMandantID + ")";
+                    var events = document.createElement("span");
+                    events.className = "existing-mandant-events";
+                    events.textContent = getResourceText("siteeventsneuaus.existingaccountevents") +
+                        " (" + (mandant.EventCount || 0) + ")" + (mandant.EventList ? ": " + mandant.EventList : "");
+                    info.appendChild(name);
+                    info.appendChild(events);
+                    item.appendChild(radio);
+                    item.appendChild(info);
+                    list.appendChild(item);
+                });
+                var dialog = existingMandantDialog.winControl;
+                dialog.title = getResourceText("siteeventsneuaus.existingaccounttitle");
+                dialog.primaryCommandText = getResourceText("siteeventsneuaus.existingaccountmerge");
+                dialog.secondaryCommandText = getResourceText("siteeventsneuaus.existingaccountnew");
+                existingMandantDialog.style.display = "";
+                // busy erst wieder setzen wenn wirklich angelegt wird
+                AppBar.busy = false;
+                var ret = dialog.show().then(function (eventInfo) {
+                    var result = eventInfo && eventInfo.result;
+                    if (result === WinJS.UI.ContentDialog.DismissalResult.primary) {
+                        var checked = list.querySelector("input[name='existingMandant']:checked");
+                        var fairMandantID = checked ? parseInt(checked.value) : null;
+                        Log.print(Log.l.trace, "existingMandantDialog: merge with FairMandantID=" + fairMandantID);
+                        if (fairMandantID) {
+                            AppBar.busy = true;
+                            return that.saveExhibitor(fairMandantID);
+                        }
+                    } else if (result === WinJS.UI.ContentDialog.DismissalResult.secondary) {
+                        Log.print(Log.l.trace, "existingMandantDialog: create new account");
+                        AppBar.busy = true;
+                        return that.saveExhibitor(null);
+                    } else {
+                        Log.print(Log.l.trace, "existingMandantDialog: cancel");
+                    }
+                    return WinJS.Promise.as();
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.showExistingMandantDialog = showExistingMandantDialog;
+
+            // Mantis#7883: vor dem Anlegen prüfen ob die Login-E-Mail schon ein Konto / einen Mandanten hat.
+            // Nutzt dieselbe Mandanten-Suche wie clientManagementSearchList (PRC_GetMandantList, nur GlobalAdmin).
+            // Ohne Rechte (ResultCode 5) wird wie bisher direkt angelegt.
+            var checkExistingAccount = function () {
+                Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
+                AppData.setErrorMsg(that.binding);
+                var dataExibitor = getExibitorData();
+                var loginEmail = dataExibitor.LoginEmail ? dataExibitor.LoginEmail.trim() : "";
+                if (!loginEmail) {
+                    Log.ret(Log.l.trace, "no LoginEmail");
+                    return that.saveExhibitor(null);
+                }
+                var ret = AppData.call("PRC_GetMandantList", {
+                    pSearchString: loginEmail,
+                    pSearchOptions: "ALL",
+                    pFirstRowNum: 1,
+                    pOrderAttribute: "Name",
+                    pOrderDesc: 0
+                }, function (json) {
+                    Log.print(Log.l.info, "call PRC_GetMandantList: success!");
+                    var results = (json && json.d && json.d.results) || [];
+                    if (results.length > 0 && results[0].ResultCode === 5) {
+                        Log.print(Log.l.trace, "PRC_GetMandantList: access denied, create without check");
+                        that.saveExhibitor(null);
+                        return;
+                    }
+                    if (results.length > 0 && results[0].ResultCode > 0) {
+                        AppBar.busy = false;
+                        AppData.setErrorMsg(that.binding, {
+                            status: results[0].ResultCode,
+                            statusText: results[0].ResultMessage
+                        });
+                        return;
+                    }
+                    var mandants = results.filter(function (item) {
+                        return item.ResultCode === 0 && item.FairMandantVIEWID;
+                    }).map(function (item) {
+                        return {
+                            FairMandantID: item.FairMandantVIEWID,
+                            Name: item.Name,
+                            EventCount: item.EventCount,
+                            EventList: item.EventList
+                        };
+                    });
+                    if (mandants.length > 0) {
+                        that.showExistingMandantDialog(mandants);
+                    } else {
+                        that.saveExhibitor(null);
+                    }
+                }, function (errorResponse) {
+                    Log.print(Log.l.error, "call PRC_GetMandantList: error");
+                    AppBar.busy = false;
+                    AppData.setErrorMsg(that.binding, errorResponse);
+                });
+                Log.ret(Log.l.trace);
+                return ret;
+            }
+            this.checkExistingAccount = checkExistingAccount;
 
             var checkedEmail = function () {
                 Log.call(Log.l.trace, "SiteEventsNeuAus.Controller.");
@@ -311,7 +441,7 @@
                             var confirmTitle = getResourceText("siteeventsneuaus.mailerrortext");
                             confirm(confirmTitle, function (result) {
                                 if (result) {
-                                    that.saveExhibitor();
+                                    that.checkExistingAccount();
                                     Log.print(Log.l.trace, "clickOk: event choice Ok");
                                 } else {
                                     Log.print(Log.l.trace, "clickDelete: event choice CANCEL");
@@ -319,7 +449,7 @@
                                 }
                             });
                         } else {
-                            that.saveExhibitor();
+                            that.checkExistingAccount();
                         }
                     }
                     Log.ret(Log.l.trace);
@@ -470,7 +600,34 @@
             }).then(function () {
                 that.setMandetoryFields();
                 Log.print(Log.l.trace, "setMandetoryFields loaded!");
+            }).then(function () {
+                // Der Dialog muss direkt unter <body> hängen, sonst liegt der win-clickeater
+                // des ContentDialog (z-index 1002, unter <body>) über den Buttons
+                if (existingMandantDialog && existingMandantDialog.parentNode !== document.body) {
+                    document.body.appendChild(existingMandantDialog);
+                }
+                var cancelButton = existingMandantDialog && existingMandantDialog.querySelector("#existingMandantCancel");
+                if (cancelButton) {
+                    that.addRemovableEventListener(cancelButton, "click", function () {
+                        if (existingMandantDialog && existingMandantDialog.winControl) {
+                            existingMandantDialog.winControl.hide(WinJS.UI.ContentDialog.DismissalResult.none);
+                        }
+                    });
+                }
             });
+
+            // Dialog wurde unter <body> verschoben und wird beim Verlassen der Seite nicht mit entfernt
+            this.dispose = function () {
+                if (existingMandantDialog) {
+                    if (existingMandantDialog.winControl) {
+                        existingMandantDialog.winControl.dispose();
+                    }
+                    if (existingMandantDialog.parentNode) {
+                        existingMandantDialog.parentNode.removeChild(existingMandantDialog);
+                    }
+                    existingMandantDialog = null;
+                }
+            };
             Log.ret(Log.l.trace);
         }, {
                 eventChangeId: null

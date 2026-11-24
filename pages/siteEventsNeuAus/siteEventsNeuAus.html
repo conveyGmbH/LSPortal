@@ -161,6 +161,16 @@
                 <div class="error-message"
                      data-win-bind="style.display: error.displayErrorMsg; textContent: error.errorMsg"></div>
             </section>
+            <!-- Mantis#7883: Login-E-Mail gehört schon zu einem oder mehreren Mandanten -->
+            <div id="existingMandantDialog" class="use-border-radius"
+                 data-win-control="WinJS.UI.ContentDialog"
+                 style="display: none">
+                <div class="existing-mandant-text" data-win-res="{textContent: 'siteeventsneuaus.existingaccounttext'}"></div>
+                <div id="existingMandantList" class="existing-mandant-list"></div>
+                <button id="existingMandantCancel"
+                        class="win-button existing-mandant-cancel"
+                        data-win-res="{textContent: 'siteeventsneuaus.existingaccountcancel'}"></button>
+            </div>
         </div>
     </div>
 </body>
