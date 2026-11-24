@@ -566,7 +566,7 @@
                         }, STATUS_CHECK_TIMEOUT_MS);
                     });
                     var check = Promise.resolve(adapter.checkConnection()).then(function (result) {
-                        return { id: entry.id, connected: !!(result && result.connected), userInfo: (result && result.userInfo) || "" };
+                        return { id: entry.id, connected: !!(result && result.connected), userInfo: (result && result.userInfo) || "", unavailable: !!(result && result.unavailable) };
                     }).catch(function () {
                         return { id: entry.id, connected: false, userInfo: "" };
                     });
