@@ -10,6 +10,28 @@
     margin-left: 38px;
     width: 150px;
 }
+.existing-mandant-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 12px 0;
+}
+.existing-mandant-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 6px 0;
+    cursor: pointer;
+}
+.existing-mandant-item input {
+    margin: 4px 8px 0 0;
+}
+.existing-mandant-name {
+    display: block;
+    font-weight: 600;
+}
+.existing-mandant-events {
+    display: block;
+    opacity: 0.8;
+}
 /*#exibitorcategory {
     margin-left: 38px;
 }*/
