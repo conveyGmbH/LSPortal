@@ -238,67 +238,54 @@
                 that.binding.appSettings.odata.onlinePath = AppData._persistentStatesDefaults.odata.onlinePath;
                 that.binding.appSettings.odata.registerPath = AppData._persistentStatesDefaults.odata.registerPath;
                 var ret = new WinJS.Promise.as().then(function () {
-                    var languageId = AppData.getLanguageId();
-                    Log.print(Log.l.trace, "calling PRC_GetLangText (with Register-login)...");
-                    return AppData.call("PRC_GetLangText", {
-                        pLanguageID: languageId,
-                        pTextTitle: 'login',
-                        pResourceTypeID: 20004
-                    }, function (json) {
-                        Log.print(Log.l.info, "call PRC_GetLangText: success! ");
-                        var results = json.d.results;
-                        var myResourceStrings = '';
-                        for (var i = 0; i < results.length; i++) {
-                            myResourceStrings = myResourceStrings + results[i].ResultText + '\n';
-                        }
-                        Log.print(Log.l.trace, "myResourceStrings= " + myResourceStrings);
-                    }, function (errorResponse) {
-                        Log.print(Log.l.error, "call PRC_GetLangText error: " +
-                            AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
-                    }, true);
-                }).then(function () {
-                    Log.print(Log.l.trace, "calling insert loginRequest (with Register-login)... LoginName=" + that.binding.appSettings.odata.login);
-                    return DBInit.loginRequest.insert(function (json) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-                        Log.print(Log.l.trace, "insert loginRequest: success!");
-                        // loginData returns object already parsed from json file in response
-                        if (json && json.d && json.d.ODataLocation) {
-                            if (json.d.InactiveFlag) {
-                                AppBar.busy = false;
-                                err = { status: 503, statusText: getResourceText("account.inactive") };
-                                AppData.setErrorMsg(that.binding, err);
-                                error(err);
-                            } else {
-                                var location = json.d.ODataLocation;
-                                if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
-                                    that.binding.appSettings.odata.onlinePath =
-                                        location + that.binding.appSettings.odata.onlinePath;
-                                    that.binding.appSettings.odata.registerPath =
-                                        location + that.binding.appSettings.odata.registerPath;
+                    if (that.binding.appSettings.odata.login) {
+                        Log.print(Log.l.trace, "calling insert loginRequest (with Register-login)... LoginName=" + that.binding.appSettings.odata.login);
+                        return DBInit.loginRequest.insert(function (json) {
+                            // this callback will be called asynchronously
+                            // when the response is available
+                            Log.print(Log.l.trace, "insert loginRequest: success!");
+                            // loginData returns object already parsed from json file in response
+                            if (json && json.d && json.d.ODataLocation) {
+                                if (json.d.InactiveFlag) {
+                                    AppBar.busy = false;
+                                    err = { status: 503, statusText: getResourceText("account.inactive") };
+                                    AppData.setErrorMsg(that.binding, err);
+                                    error(err);
+                                } else {
+                                    var location = json.d.ODataLocation;
+                                    if (location !== AppData._persistentStatesDefaults.odata.onlinePath) {
+                                        that.binding.appSettings.odata.onlinePath =
+                                            location + that.binding.appSettings.odata.onlinePath;
+                                        that.binding.appSettings.odata.registerPath =
+                                            location + that.binding.appSettings.odata.registerPath;
+                                    }
+                                    Application.pageframe.savePersistentStates();
                                 }
-                                Application.pageframe.savePersistentStates();
+                            } else {
+                                AppBar.busy = false;
+                                err = { status: 404, statusText: getResourceText("login.unknown") };
+                                AppData.setErrorMsg(that.binding, err);
+                                if (typeof error === "function") {
+                                    error(err);
+                                }
                             }
-                        } else {
-                            AppBar.busy = false;
-                            err = { status: 404, statusText: getResourceText("login.unknown") };
-                            AppData.setErrorMsg(that.binding, err);
-                            if (typeof error === "function") {
-                                error(err);
-                            }
-                        }
-                    }, function (errorResponse) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                        Log.print(Log.l.info, "insert loginRequest error: " +
-                            AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
-                        // ignore this error here for compatibility!
-                    }, {
-                        LoginName: that.binding.appSettings.odata.login
-                    });
+                        }, function (errorResponse) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                            Log.print(Log.l.info, "insert loginRequest error: " +
+                                AppData.getErrorMsgFromResponse(errorResponse) + " ignored for compatibility!");
+                            // ignore this error here for compatibility!
+                        }, {
+                                LoginName: that.binding.appSettings.odata.login
+                        });
+                    } else {
+                        return WinJS.Promise.as();
+                    }
                 }).then(function () {
                     // #7573 Check Mitarbeiter_Anmeldung && prevOnlinePath !== that.binding.appSettings.odata.onlinePath
-                    if (!err) {
+                    if (that.binding.appSettings.odata.login &&
+                        that.binding.appSettings.odata.password &&
+                        !err) {
                         var dataLogin = {
                             Login: that.binding.appSettings.odata.login, // || that.binding.dataLogin.Login
                             Password: that.binding.appSettings.odata.password, //|| that.binding.dataLogin.Password
