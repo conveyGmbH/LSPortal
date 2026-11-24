@@ -51,16 +51,18 @@
                             }">
                         </div>
                     </div>
-                    <div id="info" name="info" class="tile tile-navigationcolor tile-bottom">
-                        <div class="tile-button-color">
-                            <div class="half-circle half-circle-lightcolor">&nbsp;</div>
-                            <div class="content-header-line win-type-caption">
-                                <span class="id-field"></span>
-                                <span class="caption-field text-lightcolor"
-                                      data-win-res="{textContent: 'home.info'}"></span>
-                                <span class="date-field"></span>
-                            </div>
-                        </div>
+                    <div id="info" name="info" 
+                         class="tile tile-navigationcolor tile-bottom"
+                         data-win-bind="style.display: comment Binding.Converter.toDisplay">
+	                    <div class="tile-button-color">
+		                    <div class="half-circle half-circle-lightcolor">&nbsp;</div>
+		                    <div class="content-header-line win-type-caption">
+			                    <span class="id-field"></span>
+			                    <span class="caption-field text-lightcolor"
+			                          data-win-res="{textContent: 'home.info'}"></span>
+			                    <span class="date-field"></span>
+		                    </div>
+	                    </div>
                         <div class="field_line field_line_full no-border">
                             <span class="win-type-body text-lightcolor"
                                   data-win-bind="innerHTML: comment"></span>

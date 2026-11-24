@@ -286,20 +286,16 @@
                             } else {
                                 NavigationBar.enablePage("genDataSkillEntry");
                             }
-                            if (typeof AppHeader === "object" &&
-                                AppHeader.controller && AppHeader.controller.binding) {
-                                AppHeader.controller.binding.userData = AppData._userData;
-                                AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
-                                AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;
-                                // Call in homeController
+                            if (typeof AppHeader === "object" && AppHeader.controller) {
                                 AppHeader.controller.loadData();
                             }
                             if (typeof AppBar === "object" && AppBar.scope) {
                                 if (typeof AppBar.scope.updateActions === "function" &&
                                     (!prevUserData ||
-                                        prevUserData.VeranstaltungName !== AppData._userData.VeranstaltungName ||
-                                        prevUserData.userName !== AppData._userData.userName ||
-                                        prevUserData.AnzLokaleKontakte !== AppData._userData.AnzLokaleKontakte)) {
+                                    prevUserData.VeranstaltungName !== AppData._userData.VeranstaltungName ||
+                                    prevUserData.userName !== AppData._userData.userName ||
+                                    prevUserData.AnzLokaleKontakte !== AppData._userData.AnzLokaleKontakte ||
+                                    prevUserData.APRoleNames !== AppData._userData.APRoleNames)) {
                                     AppBar.scope.updateActions();
                                 }
                                 if (AppBar.scope.binding && AppBar.scope.binding.generalData) {

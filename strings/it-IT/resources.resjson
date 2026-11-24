@@ -219,6 +219,7 @@
     "home.lsvideodetext"    : "LS Video DE",
     "home.lsvideoentext"    : "LS Video EN",
     "home.howtoorder"       : "Ordinare prodotti supplementari",
+    "home.message"          : "Nota bene: ha effettuato l’accesso come “{ROLLE}”, pertanto sono disponibili solo alcune applicazioni. Per avere accesso completo a tutte le applicazioni e modificare le impostazioni dell’app e del portale, effettui l’accesso con il Suo utente amministratore. Se non conosce il Suo utente amministratore o ha dei dubbi, ci contatti all’indirizzo LS-Support@convey.de.",
 
     "start.title"           : "Dashboard",
     "start.comment"         : "Panoramica e statistiche.",

@@ -182,6 +182,7 @@
     "home.lsvideodetext"    : "LS Video DE",
     "home.lsvideoentext"    : "LS Video EN",
     "home.howtoorder"       : "Order more products",
+    "home.message"          : "Please note: You are logged in as “{ROLLE}”, so only selected applications are available to you. To get full access to all applications and to change the settings of the app and portal, please log in with your admin user. If you don’t know your admin user or are unsure, please contact us at LS-Support@convey.de.",
 
     "start.title"           : "Dashboard",
     "start.comment"         : "Übersicht und Statistiken.",

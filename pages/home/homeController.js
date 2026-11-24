@@ -25,7 +25,7 @@
 
             Application.Controller.apply(this, [pageElement, {
                 count: 0,
-                comment: getResourceText("info.comment"),
+                comment: "",
                 lsmobileUrl: "https://" + getResourceText("home.lsmobilelink"),
                 lsserviceplusUrl: "https://" + getResourceText("home.lsservicepluslink"),
                 lskioskUrl: "https://" + getResourceText("home.lskiosklink"),
@@ -217,7 +217,7 @@
                             var results = json.d.results;
                             var tileCount = results.length;
                             results.forEach(function (item, index) {
-                            that.resultConverter(item, index);
+                                that.resultConverter(item, index);
                             });
                             that.resizeTileContainer(tileCount);
                             Log.print(Log.l.trace, "StartPageTileView: success!");
@@ -232,11 +232,31 @@
                     });
                 }).then(function () {
                     that.setImg();
+                    that.updateActions();
                 });
                 Log.ret(Log.l.trace);
                 return ret;
             };
             this.loadData = loadData;
+
+            var updateActions = function() {
+                Log.call(Log.l.trace, namespaceName + ".Controller.");
+                if (AppData._userData) {
+                    if (AppData._userData.IsNoAdminUser) {
+                        that.binding.comment = getResourceText("home.message").replace("{ROLLE}", AppData._userData.APRoleNames);
+                    } else {
+                        that.binding.comment = "";
+                    }
+                    var pageControl = pageElement.winControl;
+                    if (pageControl && pageControl.updateLayout) {
+                        pageControl.prevWidth = 0;
+                        pageControl.prevHeight = 0;
+                        pageControl.updateLayout.call(pageControl, pageElement);
+                    }
+                }
+                Log.ret(Log.l.trace);
+            };
+            this.updateActions = updateActions;
 
             // finally, load the data
             that.processAll().then(function () {
@@ -287,13 +307,6 @@
                     return WinJS.Promise.as();
                 }
             }).then(function () {
-                if(typeof AppHeader === "object" &&
-                    AppHeader.controller && AppHeader.controller.binding) {
-                    /*AppHeader.controller.binding.userData = AppData._userData;
-                    AppHeader.controller.binding.userMessagesDataCount = AppData._userMessagesData.MessagesCounter;
-                    AppHeader.controller.binding.showNameInHeader = AppData._persistentStates.showNameInHeader;*/
-                    AppHeader.controller.loadData();
-                }
                 if (AppData._persistentStates.eventColor) {
                     Colors.accentColor = AppData._persistentStates.eventColor;
                 }

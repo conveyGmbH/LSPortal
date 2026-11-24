@@ -219,6 +219,7 @@
     "home.lsvideodetext"    : "LS Video DE",
     "home.lsvideoentext"    : "LS Video EN",
     "home.howtoorder"       : "Commander des produits supplémentaires",
+    "home.message"          : "Veuillez noter : vous êtes connecté(e) en tant que « {ROLLE} », seules certaines applications sont donc disponibles. Pour accéder à toutes les applications et modifier les paramètres de l’application et du portail, veuillez vous connecter avec votre utilisateur administrateur. Si vous ne connaissez pas votre utilisateur administrateur ou avez un doute, contactez-nous à l’adresse LS-Support@convey.de.",
 
     "start.title"           : "Dashboard",
     "start.comment"         : "Aperçu et statistiques.",
