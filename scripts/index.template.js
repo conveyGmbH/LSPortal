@@ -389,8 +389,6 @@
     // some more default page navigation handling
     Application.navigateByIdOverride = function (id, event, noNavigate) {
         var homePage;
-        Application.pageframe.hideSplashScreen();
-
         Log.call(Log.l.trace, "Application.", "id=" + id);
         if (id === "home") {
             homePage = Application.getPageId(Application.startPage);
