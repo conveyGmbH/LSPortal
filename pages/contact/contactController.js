@@ -1319,6 +1319,9 @@
                                             error(errorResponse);
                                         }
                                     }, dataContactNote.KontaktNotizVIEWID, dataSketch);
+                                } else if (!dataContactNote.Quelltext) {
+                                    // No comment yet and none typed: don't create an empty KontaktNotiz.
+                                    return WinJS.Promise.as();
                                 } else {
                                     return Contact.contactNoteView.insert(function (json) {
                                         // this callback will be called asynchronously
