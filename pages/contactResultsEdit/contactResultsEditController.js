@@ -1270,6 +1270,9 @@
                                     AppData.setErrorMsg(that.binding, errorResponse);
                                     error(errorResponse);
                                 }, that.binding.dataContactNote.KontaktNotizVIEWID, dataSketch);
+                            } else if (!that.binding.dataContactNote.Quelltext) {
+                                // No comment yet and none typed: don't create an empty KontaktNotiz.
+                                return WinJS.Promise.as();
                             } else {
                                 return ContactResultsEdit.contactNoteView.insert(function (json) {
                                     // this callback will be called asynchronously
