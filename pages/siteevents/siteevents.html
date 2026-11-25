@@ -28,7 +28,7 @@
                     </div>
                     <div class="field_line scroll-line">
                         <table id="tableId">
-                            <thead class="table-header">
+                            <thead class="table-header" data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
                                 <tr>
                                     <th id="FairMandant_Name" data-win-res="{textContent: 'siteevents.exhibitorname'}"></th>
                                     <th id="FairMandant_Ansprechpartner" data-win-res="{textContent: 'siteevents.contact'}"></th>
@@ -60,37 +60,51 @@
                                 </tr>
                             </thead>
                             <tbody class="table-body" data-win-control="WinJS.UI.Repeater">
-                                <tr class="row" data-win-bind="value: VeranstaltungVIEWID">
-                                    <td data-win-bind="textContent: FairMandant_Name"></td>
-                                    <td data-win-bind="textContent: FairMandant_Ansprechpartner"></td>
-                                    <td data-win-bind="textContent: AdminLoginList"></td>
-                                    <td data-win-bind="textContent: AdminContactList"></td>
-                                    <td data-win-bind="textContent: StandHall"></td>
-                                    <td data-win-bind="textContent: StandNo"></td>
-                                    <td data-win-bind="textContent: NumUsers"></td>
-                                    <td data-win-bind="textContent: NumUsedUsers"></td>
-                                    <td data-win-bind="textContent: NumLockedContacts"></td>
-                                    <td data-win-bind="textContent: NumActiveUsers"></td>
-                                    <td data-win-bind="textContent: NumContacts"></td>
-                                    <td data-win-bind="textContent: NumContactsBC"></td>
-                                    <td data-win-bind="textContent: NumContactsVC"></td>
-                                    <td data-win-bind="textContent: NumContactsMan"></td>
-                                    <td data-win-bind="textContent: NumExports"></td>
-                                    <td data-win-bind="textContent: LastExportTS"></td>
-                                    <td data-win-bind="textContent: FBStatus"></td>
-                                    <td data-win-bind="textContent: NumSentEmails"></td>
-                                    <td data-win-bind="textContent: PortalLoginTS"></td>
-                                    <td data-win-bind="textContent: FairCustomerNo"></td>
-                                    <td data-win-bind="textContent: StandSize"></td>
-                                    <td data-win-bind="textContent: DUNSNumber"></td>
-                                    <td data-win-bind="textContent: Auswertungsvariante"></td>
-                                    <td data-win-bind="textContent: OrderNumber"></td>
-                                    <td data-win-bind="textContent: ServerName"></td>
-                                    <td data-win-bind="textContent: MailCategory"></td>
-                                    <td data-win-bind="textContent: ProductList"></td>
+                            <tr class="row" data-win-bind="value: VeranstaltungVIEWID">
+                                <td data-win-bind="textContent: FairMandant_Name"></td>
+                                <td data-win-bind="textContent: FairMandant_Ansprechpartner"></td>
+                                <td data-win-bind="textContent: AdminLoginList"></td>
+                                <td data-win-bind="textContent: AdminContactList"></td>
+                                <td data-win-bind="textContent: StandHall"></td>
+                                <td data-win-bind="textContent: StandNo"></td>
+                                <td data-win-bind="textContent: NumUsers"></td>
+                                <td data-win-bind="textContent: NumUsedUsers"></td>
+                                <td data-win-bind="textContent: NumLockedContacts"></td>
+                                <td data-win-bind="textContent: NumActiveUsers"></td>
+                                <td data-win-bind="textContent: NumContacts"></td>
+                                <td data-win-bind="textContent: NumContactsBC"></td>
+                                <td data-win-bind="textContent: NumContactsVC"></td>
+                                <td data-win-bind="textContent: NumContactsMan"></td>
+                                <td data-win-bind="textContent: NumExports"></td>
+                                <td data-win-bind="textContent: LastExportTS"></td>
+                                <td data-win-bind="textContent: FBStatus"></td>
+                                <td data-win-bind="textContent: NumSentEmails"></td>
+                                <td data-win-bind="textContent: PortalLoginTS"></td>
+                                <td data-win-bind="textContent: FairCustomerNo"></td>
+                                <td data-win-bind="textContent: StandSize"></td>
+                                <td data-win-bind="textContent: DUNSNumber"></td>
+                                <td data-win-bind="textContent: Auswertungsvariante"></td>
+                                <td data-win-bind="textContent: OrderNumber"></td>
+                                <td data-win-bind="textContent: ServerName"></td>
+                                <td data-win-bind="textContent: MailCategory"></td>
+                                <td data-win-bind="textContent: ProductList"></td>
 
-                                </tr>
+                            </tr>
                             </tbody>
+                            
+                            <div class="list-footer">
+                                <div class="status">
+                                    <div class="progress"
+                                         data-win-bind="style.display: loading Binding.Converter.toDisplay">
+                                        <progress class="win-ring win-medium wait-circle"></progress>
+                                    </div>
+                                    <div class="counter"
+                                         data-win-bind="style.display: loading Binding.Converter.toDisplayNone">
+                                        <span data-win-res="{textContent: 'empList.count'}"></span><span>: </span>
+                                        <span data-win-bind="textContent: count"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </table>
                     </div>
                 </div>

@@ -323,6 +323,7 @@
                         master.controller.licenceWarningSelected = false;
                         master.controller.loadData();
                     }
+                    that.loadData();
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {

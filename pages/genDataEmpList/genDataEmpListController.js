@@ -27,7 +27,8 @@
                 licenceWarning: false,
                 btnFirstNameText: getResourceText("employee.firstname"),
                 btnNameText: getResourceText("employee.name"),
-                btnEmployeeLicenceText: getResourceText("employee.licence")
+                btnEmployeeLicenceText: getResourceText("employee.licence"),
+                showEventCombo: AppHeader.controller.binding.userData.SiteAdmin || AppHeader.controller.binding.userData.HasLocalEvents,
             }, commandList, true]);
             this.nextUrl = null;
             this.employees = null;
@@ -87,7 +88,7 @@
             }
             this.getOrderLicenceBtn = getOrderLicenceBtn;
 
-            var highlightorderLicenceBtn = function(state) {
+            var highlightorderLicenceBtn = function (state) {
                 if (state === 1) {
                     pageElement.querySelector("#orderLicenceBtn").style.borderColor = Colors.offColor;
                 } else {
@@ -173,8 +174,8 @@
                             listView.winControl.selection.set(0);
                             var curPageId = Application.getPageId(nav.location);
                             if ((curPageId === "genDataEmployee" ||
-                                 curPageId === "genDataSkillEntry" ||
-                                 curPageId === "genDataUserInfo") &&
+                                curPageId === "genDataSkillEntry" ||
+                                curPageId === "genDataUserInfo") &&
                                 typeof AppBar.scope.loadData === "function") {
                                 employee = that.employees.getAt(0);
                                 if (employee) {
@@ -189,8 +190,8 @@
                         //#8512 Mitarbeiter auf der Detail Page neuladen weil User hängt an neue Veranstaltung - die Anzahl der Lizenzen (aktive und gesamt) eine andere ist als die vorherige Veranstaltung.
                         var curPageId = Application.getPageId(nav.location);
                         if ((curPageId === "genDataEmployee" ||
-                                curPageId === "genDataSkillEntry" ||
-                                curPageId === "genDataUserInfo") &&
+                            curPageId === "genDataSkillEntry" ||
+                            curPageId === "genDataUserInfo") &&
                             typeof AppBar.scope.loadData === "function") {
                             AppBar.scope.loadData(that.binding.employeeId);
                         }
@@ -267,7 +268,7 @@
                 item.fullName = (item.Vorname && item.Nachname)
                     ? (item.Vorname + " " + item.Nachname)
                     : (item.Vorname ? item.Vorname
-                    : (item.Nachname ? item.Nachname : ""));
+                        : (item.Nachname ? item.Nachname : ""));
                 item.nameInitial = (item.Vorname && item.Nachname)
                     ? item.Vorname.substr(0, 1) + item.Nachname.substr(0, 1)
                     : (item.Vorname ? item.Vorname.substr(0, 2) : item.Nachname ? item.Nachname.substr(0, 2) : "");
@@ -354,17 +355,33 @@
                                                 var curPageId = Application.getPageId(nav.location);
                                                 if ((curPageId === "genDataEmployee" ||
                                                     curPageId === "genDataSkillEntry" ||
-                                                    curPageId === "genDataUserInfo") &&
+                                                    curPageId === "genDataUserInfo" ||
+                                                    //curPageId === "employeeGenPWList" ||
+                                                    curPageId === "employee" ||
+                                                    curPageId === "skillentry" ||
+                                                    curPageId === "employeeVisitorFlow") &&
                                                     typeof AppBar.scope.loadData === "function") {
                                                     AppBar.scope.loadData(that.binding.employeeId);
-                                                } else {
+                                                } /*else {
                                                     Application.navigateById("genDataEmployee");
-                                                }
+                                                }*/
                                             }, function (errorResponse) {
-                                                if (that.binding.employeeId) {
-                                                    that.selectRecordId();
-                                                }
-                                            });
+                                                    if (that.binding.employeeId) {
+                                                        that.selectRecordId();
+                                                    }
+                                                });
+                                        } else {
+                                            that.binding.employeeId = item.data.MitarbeiterVIEWID;
+                                            that.binding.hasTwoFactor = item.data.HasTwoFactor;
+                                            that.binding.locked = item.data.Locked;
+                                            that.binding.selIdx = item.index;
+                                            var curPageId = Application.getPageId(nav.location);
+                                            if ((curPageId === "employeeGenPWList") &&
+                                                typeof AppBar.scope.loadData === "function") {
+                                                AppBar.scope.loadData(that.binding.employeeId);
+                                            } else {
+                                                Application.navigateById("genDataEmployee");
+                                            }
                                         }
                                     }
                                 });
@@ -520,7 +537,7 @@
                         that.binding.btnNameText = getResourceText("employee.nameAsc");
                     }
                     that.binding.btnEmployeeLicenceText = getResourceText("employee.licence");
-                } else if (restriction.OrderAttribute === "NichtLizenzierteApp" ) {
+                } else if (restriction.OrderAttribute === "NichtLizenzierteApp") {
                     that.binding.btnFirstNameText = getResourceText("employee.firstname");
                     that.binding.btnNameText = getResourceText("employee.name");
                     /*if (restriction.OrderDesc) {
@@ -535,49 +552,63 @@
                 }
                 AppData.setErrorMsg(that.binding);
                 var ret = new WinJS.Promise.as().then(function () {
-                    if (!that.events) {
-                        return GenDataEmpList.eventView.select(function(json) {
-                            // this callback will be called asynchronously
-                            // when the response is available
-                            Log.print(Log.l.trace, "eventView: success!");
-                            // eventView returns object already parsed from json file in response
-                            if (json && json.d && json.d.results.length > 0) {
-                                var results = [{
-                                    VeranstaltungVIEWID: 0,
-                                    FairMandantVeranstID: 0,
-                                    Name: ""
-                                }].concat(json.d.results);
-                                that.events = new WinJS.Binding.List(results);
-                                if (eventsDropdown && eventsDropdown.winControl) {
-                                    eventsDropdown.winControl.data = that.events;
-                                    // Prüfen ob es Veranstaltung2 gesetzt ist?!
-                                    if (AppData.getRecordId("Veranstaltung2")) {
-                                        that.binding.eventId = AppData.getRecordId("Veranstaltung2");
-                                    } else {
-                                        that.binding.eventId = AppData.getRecordId("Veranstaltung");
-                                    }
-                                    AppData.setRecordId("Veranstaltung2", that.binding.eventId);
-                                    restriction.VeranstaltungID = that.binding.eventId;
-                                    AppData.setRestriction("Employee", restriction);
-                                    var fairMandantVeranstID = null;
-                                    for (var i = 0; i < that.events.length; i++) {
-                                        var event = that.events.getAt(i);
-                                        if (that.binding.eventId === event.VeranstaltungVIEWID) {
-                                            fairMandantVeranstID = event.FairMandantVeranstID;
-                                            break;
-                                        }
-                                    }
-                                    AppData.setRecordId("VeranstaltungAnlage", -fairMandantVeranstID);
-                                }
-                            }
-                        },
-                        function (errorResponse) {
-                            // called asynchronously if an error occurs
-                            // or server returns response with an error status.
-                            AppData.setErrorMsg(that.binding, errorResponse);
-                        });
-                    } else {
+                    if (!(AppHeader.controller.binding.userData.SiteAdmin ||
+                        AppHeader.controller.binding.userData.HasLocalEvents)) {
+                        that.binding.showEventCombo = false;
                         return WinJS.Promise.as();
+                    } else {
+                        if (!that.events) {
+                            return GenDataEmpList.eventView.select(function (json) {
+                                // this callback will be called asynchronously
+                                // when the response is available
+                                Log.print(Log.l.trace, "eventView: success!");
+                                // eventView returns object already parsed from json file in response
+                                if (json && json.d && json.d.results.length > 0) {
+                                    if (json.d.results.length <= 1) {
+                                        that.binding.showEventCombo = false;
+                                    } else {
+                                        var results = [
+                                            {
+                                                VeranstaltungVIEWID: 0,
+                                                FairMandantVeranstID: 0,
+                                                Name: ""
+                                            }
+                                        ].concat(json.d.results);
+                                        that.events = new WinJS.Binding.List(results);
+                                        if (eventsDropdown && eventsDropdown.winControl) {
+                                            eventsDropdown.winControl.data = that.events;
+                                            // Prüfen ob es Veranstaltung2 gesetzt ist?!
+                                            if (AppData.getRecordId("Veranstaltung2")) {
+                                                that.binding.eventId = AppData.getRecordId("Veranstaltung2");
+                                            } else {
+                                                that.binding.eventId = AppData.getRecordId("Veranstaltung");
+                                            }
+                                            AppData.setRecordId("Veranstaltung2", that.binding.eventId);
+                                            restriction.VeranstaltungID = that.binding.eventId;
+                                            AppData.setRestriction("Employee", restriction);
+                                            var fairMandantVeranstID = null;
+                                            for (var i = 0; i < that.events.length; i++) {
+                                                var event = that.events.getAt(i);
+                                                if (that.binding.eventId === event.VeranstaltungVIEWID) {
+                                                    fairMandantVeranstID = event.FairMandantVeranstID;
+                                                    break;
+                                                }
+                                            }
+                                            AppData.setRecordId("VeranstaltungAnlage", -fairMandantVeranstID);
+                                        }
+                                        that.binding.showEventCombo = true;
+                                    }
+                                } else {
+                                    that.binding.showEventCombo = false;
+                                }
+                            }, function (errorResponse) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                                AppData.setErrorMsg(that.binding, errorResponse);
+                            });
+                        } else {
+                            return WinJS.Promise.as();
+                        }
                     }
                 }).then(function () {
                     if (!that.licenceWarningSelected) {
@@ -603,7 +634,7 @@
                         }, function (errorResponse) {
                             Log.print(Log.l.error, "call FCT_ExistsLicenceWarning: error");
                             AppData.setErrorMsg(that.binding, errorResponse);
-                        });       
+                        });
                     } else {
                         return WinJS.Promise.as();
                     }

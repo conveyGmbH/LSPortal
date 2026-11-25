@@ -28,6 +28,7 @@
                 dataSiteeventsHeaderText: getEmptyDefaultValue(SiteEvents.defaultHeaderRestriction),
                 mailingtrackingrestriction: null,
                 count: 0,
+                loading: false,
                 veranstaltungId: 0,
                 fairmandantId: 0,
                 firstentry: 0,
@@ -523,6 +524,7 @@
                 var ret;
                 var recordId = AppData.getRecordId("VeranstaltungTermin");
                 if (recordId) {
+                    that.binding.loading = true;
                     ret = AppData.call("PRC_GetExhibitorList", {
                         pVeranstaltungTerminID: recordId,
                         pSearchString: cleanSearchString,
@@ -545,6 +547,7 @@
                             that.setTableCellRed();
                             that.binding.count = results.length;
                             AppBar.busy = false;
+                            that.binding.loading = false;
                             AppBar.triggerDisableHandlers();
                         }
                     }, function (error) {
@@ -1069,7 +1072,7 @@
                 var eventdataset;
                 Log.call(Log.l.trace, namespaceName + ".Controller.", "recordId=" + recordId);
                 var recordIdNotFound = true;
-                if (recordId && tableBody && tableBody.winControl &&  that.siteeventsdata) {
+                if (recordId && tableBody && tableBody.winControl && that.siteeventsdata) {
                     for (var i = 0; i < that.siteeventsdata.length; i++) {
                         eventdataset = that.siteeventsdata.getAt(i);
                         if (eventdataset &&
@@ -1100,6 +1103,7 @@
                 that.siteeventsdata = null;
                 that.siteeventsdataraw = null;
                 that.loading = true;
+                that.binding.loading = true;
                 if (tableBody && tableBody.winControl) {
                     if (tableBody.winControl.data) {
                         tableBody.winControl.data.length = 0;
@@ -1154,7 +1158,7 @@
                                                 block: "nearest"
                                             });
                                         }
-                                   });
+                                    });
                                 });
                             }
                             Log.print(Log.l.trace, "Data loaded");
@@ -1177,6 +1181,7 @@
                             }
                             that.loading = false;
                         }
+                        that.binding.loading = false;
                     }, function (error) {
                         Log.print(Log.l.error, "call error");
                         AppBar.busy = false;
