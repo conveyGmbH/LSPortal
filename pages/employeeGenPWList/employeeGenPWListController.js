@@ -296,8 +296,23 @@
                         that.binding.restriction.VeranstaltungID = event.target.value;
                         // use Veranstaltung2 for event selection of multi-event administrators !== Veranstaltung (admin's own event!)
                         AppData.setRecordId("Veranstaltung2",
-                            (typeof that.binding.restriction.VeranstaltungID === "string") ?
-                            parseInt(that.binding.restriction.VeranstaltungID) : that.binding.restriction.VeranstaltungID);
+                            (typeof that.binding.restriction.VeranstaltungID === "string")
+                                ? parseInt(that.binding.restriction.VeranstaltungID)
+                                : that.binding.restriction.VeranstaltungID);
+
+                        var fairMandantVeranstID = null;
+                        var master = Application.navigator.masterControl;
+                        var events = [];
+                        if (master && master.controller && master.controller.events) {
+                            events = master.controller.events;
+                        }
+                        for (var i = 0; i < events.length - 1; i++) {
+                            var currentEvent = events.getAt(i);
+                            if (AppData.getRecordId("Veranstaltung2") === currentEvent.VeranstaltungVIEWID) {
+                                fairMandantVeranstID = currentEvent.FairMandantVeranstID;
+                            }
+                        }
+                        AppData.setRecordId("VeranstaltungAnlage", -fairMandantVeranstID);
                     } else {
                         delete that.binding.restriction.VeranstaltungID;
                         AppData.setRecordId("Veranstaltung2", 0);
@@ -305,9 +320,9 @@
                     that.saveRestriction();
                     var master = Application.navigator.masterControl;
                     if (master && master.controller) {
+                        master.controller.licenceWarningSelected = false;
                         master.controller.loadData();
                     }
-                    that.loadData();
                     Log.ret(Log.l.trace);
                 },
                 clickOrderFirstname: function (event) {
